@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans default-lazy-init="false">
+
+
+	<bean id="orderDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.OrderDAOHibernate"
+				autowire="byName">
+				<property name="transportCostDAO" ref="transportCostDAO" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="customerDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.CustomerDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+
+	<bean id="applicationUserDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.ApplicationUserDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+
+	<bean id="constructionTypeDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.ConstructionTypeDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+
+	<bean id="transportDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.TransportDAOHibernate"
+				autowire="byName">
+				<!--property name="orderLineDAO" ref="orderLineDAO"/-->
+			</bean>
+		</property>
+	</bean>
+	<bean id="articleTypeDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.ArticleTypeDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="attributeDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.AttributeDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="costTypeDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.CostTypeDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="costUnitDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.CostUnitDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="orderLineDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.OrderLineDAOHibernate"
+				autowire="byName">
+				<property name="ordlnDAO" ref="ordlnDAO" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="applicationParamDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.ApplicationParamDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="assemblyDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.AssemblyDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="colliDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.ColliDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="deviationDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.DeviationDAOHibernate"
+				autowire="byName">
+				<property name="orderLineDAO" ref="orderLineDAO" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="jobFunctionDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.JobFunctionDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="deviationStatusDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.DeviationStatusDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="orderCostDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.OrderCostDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="userTypeDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.UserTypeDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="functionCategoryDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.FunctionCategoryDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="mainPackageVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.MainPackageVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="veggProductionVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.VeggProductionVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="sumOrderReadyVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.SumOrderReadyVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="gulvsponPackageVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.GulvsponPackageVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="gavlProductionVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.GavlProductionVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="postShipmentDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.PostShipmentDAOHibernate"
+				autowire="byName">
+				<property name="orderLineDAO" ref="orderLineDAO" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="faktureringVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.FaktureringVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="incomingOrderDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.IncomingOrderDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+
+	<bean id="supplierDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.SupplierDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="databasePkgDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.pkg.DatabasePkgDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+
+	<bean id="constructionTypeArticleDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.ConstructionTypeArticleDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="supplierTypeDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.SupplierTypeDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="employeeTypeDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.EmployeeTypeDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="employeeDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.EmployeeDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="externalOrderDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.ExternalOrderDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="externalOrderLineDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.ExternalOrderLineDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="assemblyOverdueVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.AssemblyOverdueVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="packlistVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.PacklistVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="windowAccessDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.WindowAccessDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="transportSumVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.TransportSumVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="takstolProductionVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.TakstolProductionVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="takstolPackageVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.TakstolPackageVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="frontProductionVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.FrontProductionVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="budgetDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.BudgetDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="nokkelProduksjonVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.NokkelProduksjonVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="infoDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.InfoDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="orderPacklistReadyVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.OrderPacklistReadyVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="notInvoicedVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.NotInvoicedVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="orderStatusNotSentVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.OrderStatusNotSentVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="ownProductionVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.OwnProductionVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="postShipmentCountVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.PostShipmentCountVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="productAreaDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.ProductAreaDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+
+	<bean id="paidVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.PaidVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="taksteinSkarpnesVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.TaksteinSkarpnesVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="preventiveActionDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.PreventiveActionDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="deviationSumVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.DeviationSumVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="nokkelSalgVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.NokkelSalgVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="nokkelDriftProsjekteringVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.NokkelDriftProsjekteringVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="nokkelTransportVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.NokkelTransportVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="nokkelMonteringVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.NokkelMonteringVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="nokkelOkonomiVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.NokkelOkonomiVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="orderReserveVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.OrderReserveVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="sumAvvikVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.SumAvvikVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="productAreaGroupDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.ProductAreaGroupDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="transportCostDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.TransportCostDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="transportCostAdditionDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.TransportCostAdditionDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="transportCostBasisDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.TransportCostBasisDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="areaDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.AreaDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="countyDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.CountyDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="craningCostDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.CraningCostDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="salesVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.SalesVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="salesDataSnapshotDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.SalesDataSnapshotDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="importOrderVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.ImportOrderVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="accidentDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.AccidentDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="drawerVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.DrawerVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="procentDoneDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.ProcentDoneDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="productionUnitDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.ProductionUnitDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="commentTypeDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.CommentTypeDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="attributeChoiceDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.AttributeChoiceDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="saleStatusVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.SaleStatusVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="articleTypeAttributeDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.ArticleTypeAttributeDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="deviationVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.DeviationVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="cuttingDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.CuttingDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="ordchgrHeadVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.OrdchgrHeadVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="ordchgrLineVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.OrdchgrLineVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="takstolInfoVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.TakstolInfoVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="takstolAllVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.TakstolAllVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="takstolProbability90VDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.TakstolProbability90VDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="deviationSumJobFunctionVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.DeviationSumJobFunctionVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="intelleVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.IntelleVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="takstoltegnerVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.TakstoltegnerVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+	<bean id="saleStatusOrderReserveVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.SaleStatusOrderReserveVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
+
+	<!--Superoffice-->
+	<bean id="contactDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.ContactDAOHibernate"
+				autowire="byName">
+				<property name="sessionFactory">
+					<ref bean="sessionFactorySuperoffice" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="udsalesmallDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.UdsalesmallDAOHibernate"
+				autowire="byName">
+				<property name="sessionFactory">
+					<ref bean="sessionFactorySuperoffice" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="saleDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.SaleDAOHibernate"
+				autowire="byName">
+				<property name="sessionFactory">
+					<ref bean="sessionFactorySuperoffice" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="projectDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.ProjectDAOHibernate"
+				autowire="byName">
+				<property name="sessionFactory">
+					<ref bean="sessionFactorySuperoffice" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="documentDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.DocumentDAOHibernate"
+				autowire="byName">
+				<property name="sessionFactory">
+					<ref bean="sessionFactorySuperoffice" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<!--Visma-->
+	<bean id="ordlnDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.OrdlnDAOHibernate"
+				autowire="byName">
+				<property name="sessionFactory">
+					<ref bean="sessionFactoryVisma" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="custTrDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.CustTrDAOHibernate"
+				autowire="byName">
+				<property name="sessionFactory">
+					<ref bean="sessionFactoryVisma" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+</beans>

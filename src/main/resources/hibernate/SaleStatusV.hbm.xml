@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class name="no.ugland.utransprod.model.SaleStatusV" table="SALE_STATUS_V">
+<id name="orderNr" type="java.lang.String" column="ORDER_NR">
+        <generator class="assigned"/>
+        </id>
+
+    
+
+    <property
+        name="customerNr"
+        type="java.lang.Integer"
+        column="CUSTOMER_NR"
+        length="32"
+    />
+    <property
+        name="customerName"
+        type="java.lang.String"
+        column="CUSTOMER_NAME"
+        length="255"
+    />
+	<property
+        name="amount"
+        type="java.math.BigDecimal"
+        column="AMOUNT"
+        length="32"
+    />
+	<property
+        name="probability"
+        type="java.lang.Integer"
+        column="PROBABILITY"
+        length="32"
+    />
+	<property
+        name="saledate"
+        type="java.lang.Integer"
+        column="SALEDATE"
+        length="32"
+    />
+	<property
+        name="buildDate"
+        type="java.lang.Integer"
+        column="BUILD_DATE"
+        length="32"
+    />
+	<property
+        name="saleStatus"
+        type="java.lang.String"
+        column="SALE_STATUS"
+        length="32"
+    />
+	<property
+        name="salesman"
+        type="java.lang.String"
+        column="SALESMAN"
+        length="32"
+    />
+	<property
+        name="deptno"
+        type="java.lang.Integer"
+        column="DEPTNO"
+        length="32"
+    />
+
+    
+  
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.PreventiveAction" 
+    table="PREVENTIVE_ACTION"
+>
+<id name="preventiveActionId" type="java.lang.Integer" column="PREVENTIVE_ACTION_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<!--property
+        name="preventiveActionNr"
+        type="java.lang.String"
+        column="PREVENTIVE_ACTION_NR"
+        length="50"
+    /-->
+    <property
+        name="manager"
+        type="java.lang.String"
+        column="MANAGER"
+        length="50"
+    />
+	<property
+        name="description"
+        type="java.lang.String"
+        column="DESCRIPTION"
+        length="1000"
+    />
+	<property
+        name="expectedOutcome"
+        type="java.lang.String"
+        column="EXPECTED_OUTCOME"
+        length="1000"
+    />
+	<property
+        name="closedDate"
+        type="java.util.Date"
+        column="CLOSED_DATE"
+        length="32"
+    />
+	<property
+        name="preventiveActionName"
+        type="java.lang.String"
+        column="PREVENTIVE_ACTION_NAME"
+        length="32"
+    />
+
+    
+    <!-- Associations -->
+	<many-to-one
+        name="jobFunction"
+        class="no.ugland.utransprod.model.JobFunction"
+        not-null="true"
+    >
+        <column name="JOB_FUNCTION_ID" />
+    </many-to-one>
+	<many-to-one
+        name="functionCategory"
+        class="no.ugland.utransprod.model.FunctionCategory"
+        not-null="false"
+    >
+        <column name="FUNCTION_CATEGORY_ID" />
+    </many-to-one>
+	<set
+        name="preventiveActionComments"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+		order-by="COMMENT_DATE desc"
+    >
+        <key>
+            <column name="PREVENTIVE_ACTION_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.PreventiveActionComment"
+        />
+    </set>
+	
+
+</class>
+</hibernate-mapping>

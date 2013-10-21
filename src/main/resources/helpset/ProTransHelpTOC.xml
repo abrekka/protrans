@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='ISO-8859-1'  ?>
+<!DOCTYPE toc
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
+         "../dtd/toc_2_0.dtd">
+<toc version="2.0">
+<tocitem text="ProTrans" image="toplevelfolder">
+
+   <tocitem text="Introduksjon til ProTrans Online Hjelp" target="protrans.intro"/>
+   
+   <tocitem text="Kunder" target="protrans.customer" expand="false">
+       <tocitem text="Oversikt over kunder" target="protrans.customer.cutomer_overview"/>
+       <tocitem text="Ny kunde" target="protrans.customer.new_customer"/>
+       <tocitem text="Editere kunde" target="protrans.customer.edit_customer"/>
+       <tocitem text="Søk kunder" target="protrans.customer.search_customer"/>
+   </tocitem>
+   
+   <tocitem text="Ordre" target="protrans.order" expand="false">
+       <tocitem text="Oversikt over ordre" target="protrans.order.order_overview"/>
+       <tocitem text="Ny ordre" target="protrans.order.new_order"/>
+       <tocitem text="Editere ordre" target="protrans.order.edit_order"/>
+       <tocitem text="Søk ordre" target="protrans.order.search_order"/>
+   </tocitem>
+   
+
+</tocitem>
+</toc>

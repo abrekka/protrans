@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.ApplicationParam" 
+    table="APPLICATION_PARAM"
+>
+<id name="paramId" type="java.lang.Integer" column="PARAM_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="paramName"
+        type="java.lang.String"
+        column="PARAM_NAME"
+        length="50"
+    />
+    
+    <property
+        name="paramValue"
+        type="java.lang.String"
+        column="PARAM_VALUE"
+        length="50"
+    />
+	<property
+        name="paramType"
+        type="java.lang.String"
+        column="PARAM_TYPE"
+        length="50"
+    />
+    <property
+        name="userAccessible"
+        type="java.lang.Integer"
+        column="USER_ACCESSIBLE"
+        length="32"
+    />
+
+    
+    <!-- Associations -->
+  
+
+</class>
+</hibernate-mapping>

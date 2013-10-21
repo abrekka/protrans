@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class name="no.ugland.utransprod.model.Person" table="crm5.PERSON">
+<!--class name="no.ugland.utransprod.model.Person" table="PERSON"-->
+<id name="personId" type="java.lang.Integer" column="PERSON_ID">
+        <generator class="assigned"/>
+        </id>
+
+    
+
+	<property
+        name="firstname"
+        type="java.lang.String"
+        column="FIRSTNAME"
+        length="255"
+    />
+    <property
+        name="lastname"
+        type="java.lang.String"
+        column="LASTNAME"
+        length="255"
+    />
+
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<class 
+    name="no.ugland.utransprod.model.AttributeChoice" 
+    table="ATTRIBUTE_CHOICE"
+>
+<id name="attributeChoiceId" type="java.lang.Integer" column="ATTRIBUTE_CHOICE_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="choiceValue"
+        type="java.lang.String"
+        column="CHOICE_VALUE"
+        length="255"
+    />
+    <property
+        name="comment"
+        type="java.lang.String"
+        column="COMMENT"
+        length="255"
+    />
+    <property
+        name="prodCatNo"
+        type="java.lang.Integer"
+        column="PROD_CAT_NO"
+        length="32"
+    />
+	<property
+        name="prodCatNo2"
+        type="java.lang.Integer"
+        column="PROD_CAT_NO_2"
+        length="32"
+    />
+    
+    <!-- Associations -->
+<many-to-one
+        name="attribute"
+        class="no.ugland.utransprod.model.Attribute"
+        not-null="true"
+    >
+        <column name="ATTRIBUTE_ID" />
+    </many-to-one>  
+
+</class>
+</hibernate-mapping>

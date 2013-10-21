@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.CostUnit" 
+    table="COST_UNIT"
+>
+<id name="costUnitId" type="java.lang.Integer" column="COST_UNIT_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="costUnitName"
+        type="java.lang.String"
+        column="COST_UNIT_NAME"
+        length="50"
+    />
+    
+    <property
+        name="description"
+        type="java.lang.String"
+        column="DESCRIPTION"
+        length="50"
+    />
+  <set
+        name="orderCosts"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="COST_UNIT_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.OrderCost"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

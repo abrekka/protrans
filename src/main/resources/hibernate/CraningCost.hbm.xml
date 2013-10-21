@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.CraningCost" 
+    table="CRANING_COST"
+>
+<id name="craningCostId" type="java.lang.Integer" column="CRANING_COST_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="ruleId"
+        type="java.lang.String"
+        column="RULE_ID"
+        length="100"
+    />
+	<property
+        name="description"
+        type="java.lang.String"
+        column="DESCRIPTION"
+        length="100"
+    />
+	<property
+        name="costValue"
+        type="java.math.BigDecimal"
+        column="COST_VALUE"
+        length="32"
+    />
+    
+  
+
+</class>
+</hibernate-mapping>

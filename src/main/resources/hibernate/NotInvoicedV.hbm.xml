@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.NotInvoicedV" 
+    table="NOT_INVOICED_V"
+>
+<id name="orderId" type="java.lang.Integer" column="ORDER_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="orderDetails"
+        type="java.lang.String"
+        column="ORDER_DETAILS"
+        length="32"
+    />
+    
+    <property
+        name="sent"
+        type="java.util.Date"
+        column="SENT"
+        length="32"
+    />
+	
+	<property
+        name="garageValue"
+        type="java.math.BigDecimal"
+        column="GARAGE_VALUE"
+        length="32"
+    />
+	<property
+        name="productArea"
+        type="java.lang.String"
+        column="PRODUCT_AREA"
+        length="32"
+    />
+    
+    
+    <!-- Associations -->
+  
+
+</class>
+</hibernate-mapping>

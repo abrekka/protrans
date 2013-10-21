@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.ArticleType" 
+    table="ARTICLE_TYPE"
+>
+<id name="articleTypeId" type="java.lang.Integer" column="ARTICLE_TYPE_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="articleTypeName"
+        type="java.lang.String"
+        column="ARTICLE_TYPE_NAME"
+        length="50"
+    />
+    <property
+        name="description"
+        type="java.lang.String"
+        column="DESCRIPTION"
+        length="255"
+    />
+    <property
+        name="topLevel"
+        type="java.lang.Integer"
+        column="TOP_LEVEL"
+        length="32"
+    />
+	 <property
+        name="isExtra"
+        type="java.lang.Integer"
+        column="IS_EXTRA"
+        length="32"
+    />
+	 <property
+        name="metric"
+        type="java.lang.String"
+        column="METRIC"
+        length="50"
+    />
+	<property
+        name="prodCatNo"
+        type="java.lang.Integer"
+        column="PROD_CAT_NO"
+        length="32"
+    />
+    <property
+        name="prodCatNo2"
+        type="java.lang.Integer"
+        column="PROD_CAT_NO_2"
+        length="32"
+    />
+    <property
+        name="forceImport"
+        type="java.lang.Integer"
+        column="FORCE_IMPORT"
+        length="32"
+    />
+    
+    <!-- Associations -->
+    <set
+        name="articleTypeAttributes"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="ARTICLE_TYPE_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.ArticleTypeAttribute"
+        />
+    </set>
+    
+    <set
+        name="articleTypeArticleTypes"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="ARTICLE_TYPE_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.ArticleTypeArticleType"
+        />
+    </set>
+    
+    <set
+        name="articleTypeArticleTypeRefs"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="ARTICLE_TYPE_ID_REF" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.ArticleTypeArticleType"
+        />
+    </set>
+    
+    <set
+        name="constructionTypeArticles"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="ARTICLE_TYPE_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.ConstructionTypeArticle"
+        />
+    </set>
+    
+  
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.County" 
+    table="COUNTY"
+>
+<id name="countyNr" type="java.lang.String" column="COUNTY_NR">
+        <generator class="assigned"/>
+        </id>
+
+    
+
+	<property
+        name="countyName"
+        type="java.lang.String"
+        column="COUNTY_NAME"
+        length="100"
+    />
+    
+  
+
+</class>
+</hibernate-mapping>

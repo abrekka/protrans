@@ -1,0 +1,66 @@
+package no.ugland.utransprod.gui;
+
+import java.awt.event.KeyEvent;
+
+import javax.swing.Action;
+import javax.swing.JMenu;
+
+import no.ugland.utransprod.gui.action.FrontProductionAction;
+import no.ugland.utransprod.gui.action.GavlProductionAction;
+import no.ugland.utransprod.gui.action.ProductionOverviewAction;
+import no.ugland.utransprod.gui.action.TakstolProductionAction;
+import no.ugland.utransprod.gui.action.VeggProductionAction;
+
+import com.google.inject.Inject;
+
+public class ProductionMenu extends ProTransMenu {
+	private GavlProductionAction gavlProductionAction;
+	private TakstolProductionAction takstolProductionAction;
+	private VeggProductionAction veggProductionAction;
+	private FrontProductionAction frontProductionAction;
+	private ProductionBudgetAction productionBudgetAction;
+	private ProductionOverviewAction productionOverviewAction;
+
+	public ProductionMenu(Login aLogin){
+		super(aLogin);
+	}
+	
+	@Inject
+	public ProductionMenu(Login aLogin,
+			GavlProductionAction aGavlProductionAction,
+			TakstolProductionAction aTakstolProductionAction,
+			VeggProductionAction aVeggProductionAction,FrontProductionAction aFrontProductionAction,ProductionBudgetAction aProductionBudgetAction,ProductionOverviewAction aProductionOverviewAction) {
+		super(aLogin);
+		productionOverviewAction=aProductionOverviewAction;
+		productionBudgetAction=aProductionBudgetAction;
+		frontProductionAction=aFrontProductionAction;
+		veggProductionAction = aVeggProductionAction;
+		takstolProductionAction = aTakstolProductionAction;
+		gavlProductionAction = aGavlProductionAction;
+	}
+
+	@Override
+	public JMenu buildMenu() {
+		JMenu menuProduction = addMenu("Produksjon", KeyEvent.VK_P);
+		addMenuItem(menuProduction, gavlProductionAction, KeyEvent.VK_G, null,
+				null, null, "Gavl", false);
+		addMenuItem(menuProduction, takstolProductionAction, KeyEvent.VK_T,
+				null, null, null, "Takstol", false);
+		addMenuItem(menuProduction, veggProductionAction, KeyEvent.VK_T, null,
+				null, null, "Vegg", false);
+		addMenuItem(menuProduction, frontProductionAction, KeyEvent.VK_F, null,
+				null, null, "Front", false);
+		addMenuItem(menuProduction, productionBudgetAction, KeyEvent.VK_B,
+				null, null, null, "Budsjett", false);
+		addMenuItem(menuProduction, productionOverviewAction, KeyEvent.VK_O,
+				null, null, null, "Produksjonsoversikt", false);
+		return menuProduction;
+	}
+
+	public void setGavlProductionAction(
+			GavlProductionAction aGavlProductionAction) {
+		gavlProductionAction=aGavlProductionAction;
+		
+	}
+
+}

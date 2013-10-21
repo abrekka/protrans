@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.TransportSumV" 
+    table="TRANSPORT_SUM_V"
+>
+<composite-id name="transportSumVPK" class="no.ugland.utransprod.model.TransportSumVPK">
+        <key-property 
+            name="productAreaGroupName" 
+            column="PRODUCT_AREA_GROUP_NAME" 
+            type="java.lang.String"
+            length="255"
+        />
+        <key-property 
+            name="transportWeek" 
+            column="TRANSPORT_WEEK" 
+            type="java.lang.Integer"
+            length="255"
+        />
+	<key-property 
+            name="transportYear" 
+            column="TRANSPORT_YEAR" 
+            type="java.lang.Integer"
+            length="255"
+        />
+
+    </composite-id>   
+    
+
+	<property
+        name="orderCount"
+        type="java.lang.Integer"
+        column="ORDER_COUNT"
+        length="32"
+    />
+	<property
+        name="garageCost"
+        type="java.math.BigDecimal"
+        column="GARAGE_COST"
+        length="32"
+    />
+
+    
+
+</class>
+</hibernate-mapping>

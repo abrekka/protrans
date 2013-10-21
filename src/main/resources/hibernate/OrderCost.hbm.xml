@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.OrderCost" 
+    table="ORDER_COST"
+>
+<id name="orderCostId" type="java.lang.Integer" column="ORDER_COST_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="costAmount"
+        type="java.math.BigDecimal"
+        column="COST_AMOUNT"
+        length="32"
+    />
+    
+    <property
+        name="inclVat"
+        type="java.lang.Integer"
+        column="INCL_VAT"
+        length="1"
+    />
+	
+	<property
+        name="invoiceNr"
+        type="java.lang.String"
+        column="INVOICE_NR"
+        length="1"
+    />
+	<property
+        name="comment"
+        type="java.lang.String"
+        column="COMMENT"
+        length="1000"
+    />
+	
+  
+  <!-- Associations -->
+	
+    
+     <many-to-one
+        name="order"
+        class="no.ugland.utransprod.model.Order"
+    >
+        <column name="ORDER_ID" />
+    </many-to-one>
+    
+    <many-to-one
+        name="costType"
+        class="no.ugland.utransprod.model.CostType"
+    >
+        <column name="COST_TYPE_ID" />
+    </many-to-one>
+    
+    <many-to-one
+        name="costUnit"
+        class="no.ugland.utransprod.model.CostUnit"
+    >
+        <column name="COST_UNIT_ID" />
+    </many-to-one>
+	<many-to-one
+        name="supplier"
+        class="no.ugland.utransprod.model.Supplier"
+    >
+        <column name="SUPPLIER_ID" />
+    </many-to-one>
+	<many-to-one
+        name="deviation"
+        class="no.ugland.utransprod.model.Deviation"
+    >
+        <column name="DEVIATION_ID" />
+    </many-to-one>
+	<many-to-one
+        name="transportCostBasis"
+        class="no.ugland.utransprod.model.TransportCostBasis"
+    >
+        <column name="TRANSPORT_COST_BASIS_ID" />
+    </many-to-one>
+
+	<many-to-one
+        name="postShipment"
+        class="no.ugland.utransprod.model.PostShipment"
+        column="POST_SHIPMENT_ID"
+		fetch="join"
+        unique="true"
+    />
+</class>
+</hibernate-mapping>

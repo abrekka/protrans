@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.ArticleTypeAttribute" 
+    table="ARTICLE_TYPE_ATTRIBUTE"
+>
+<id name="articleTypeAttributeId" type="java.lang.Integer" column="ARTICLE_TYPE_ATTRIBUTE_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+	<property
+        name="attributeFormula"
+        type="java.lang.String"
+        column="ATTRIBUTE_FORMULA"
+        length="1000"
+    />
+    <property
+        name="inactive"
+        type="java.lang.Integer"
+        column="INACTIVE"
+        length="32"
+    />
+
+    
+    <!-- Associations -->
+    <many-to-one
+        name="articleType"
+        class="no.ugland.utransprod.model.ArticleType"
+        not-null="true"
+    >
+        <column name="ARTICLE_TYPE_ID" />
+    </many-to-one>
+    
+    <many-to-one
+        name="attribute"
+        class="no.ugland.utransprod.model.Attribute"
+        not-null="true"
+    >
+        <column name="ATTRIBUTE_ID" />
+    </many-to-one>
+  <set
+        name="constructionTypeArticleAttributes"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="ARTICLE_TYPE_ATTRIBUTE_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.ConstructionTypeArticleAttribute"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

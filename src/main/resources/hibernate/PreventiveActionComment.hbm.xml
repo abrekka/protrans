@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.PreventiveActionComment" 
+    table="PREVENTIVE_ACTION_COMMENT"
+>
+<id name="preventiveActionCommentId" type="java.lang.Integer" column="PREVENTIVE_ACTION_COMMENT_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="userName"
+        type="java.lang.String"
+        column="USER_NAME"
+        length="32"
+    />
+    <property
+        name="commentDate"
+        type="java.util.Date"
+        column="COMMENT_DATE"
+        length="32"
+    />
+	<property
+        name="comment"
+        type="java.lang.String"
+        column="COMMENT"
+        length="255"
+    />
+	<!--property
+        name="commentType"
+        type="java.lang.Integer"
+        column="COMMENT_TYPE"
+        length="32"
+    /-->
+
+    
+    <!-- Associations -->
+	<many-to-one
+        name="preventiveAction"
+        class="no.ugland.utransprod.model.PreventiveAction"
+        not-null="true"
+    >
+        <column name="PREVENTIVE_ACTION_ID" />
+    </many-to-one>
+
+	<set
+        name="preventiveActionCommentCommentTypes"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key>
+            <column name="PREVENTIVE_ACTION_COMMENT_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.PreventiveActionCommentCommentType"
+        />
+    </set>
+</class>
+</hibernate-mapping>

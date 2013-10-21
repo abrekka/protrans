@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class name="no.ugland.utransprod.model.Contact" table="crm5.CONTACT">
+<!--class name="no.ugland.utransprod.model.Contact" table="CONTACT"-->
+<id name="contactId" type="java.lang.Integer" column="CONTACT_ID">
+        <generator class="assigned"/>
+        </id>
+
+    
+
+	<property
+        name="name"
+        type="java.lang.String"
+        column="NAME"
+        length="50"
+    />
+    <property
+        name="number2"
+        type="java.lang.String"
+        column="NUMBER2"
+        length="255"
+    />
+    <property
+        name="categoryIdx"
+        type="java.lang.Integer"
+        column="CATEGORY_IDX"
+        length="32"
+    />
+	<property
+        name="updated"
+        type="java.lang.Integer"
+        column="UPDATED"
+        length="32"
+    />
+
+    
+    <!-- Associations -->
+    <set
+        name="sales"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="CONTACT_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.Sale"
+        />
+    </set>
+	<set
+        name="offerAddresses"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="CONTACT_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.OfferAddress"
+        />
+    </set>
+	<set
+        name="phones"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="OWNER_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.Phone"
+        />
+    </set>
+	<set
+        name="addresses"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="OWNER_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.Address"
+        />
+    </set>
+   
+   <many-to-one
+        name="associate"
+        class="no.ugland.utransprod.model.Associate"
+
+    >
+        <column name="ASSOCIATE_ID" />
+    </many-to-one>  
+
+</class>
+</hibernate-mapping>

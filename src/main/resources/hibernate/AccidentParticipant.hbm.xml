@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.AccidentParticipant" 
+    table="ACCIDENT_PARTICIPANT"
+>
+<id name="accidentParticipantId" type="java.lang.Integer" column="ACCIDENT_PARTICIPANT_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="firstName"
+        type="java.lang.String"
+        column="FIRST_NAME"
+        length="100"
+    />
+    
+    <property
+        name="lastName"
+        type="java.lang.String"
+        column="LAST_NAME"
+        length="100"
+    />
+
+    
+    <!-- Associations -->
+  <many-to-one
+        name="accident"
+        class="no.ugland.utransprod.model.Accident"
+        not-null="true"
+    >
+        <column name="ACCIDENT_ID" />
+    </many-to-one>
+	<many-to-one
+        name="employeeType"
+        class="no.ugland.utransprod.model.EmployeeType"
+        not-null="true"
+    >
+        <column name="EMPLOYEE_TYPE_ID" />
+    </many-to-one>
+	
+
+</class>
+</hibernate-mapping>

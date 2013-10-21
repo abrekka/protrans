@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.OrderComment" 
+    table="ORDER_COMMENT"
+>
+<id name="orderCommentId" type="java.lang.Integer" column="ORDER_COMMENT_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="userName"
+        type="java.lang.String"
+        column="USER_NAME"
+        length="32"
+    />
+    <property
+        name="commentDate"
+        type="java.util.Date"
+        column="COMMENT_DATE"
+        length="32"
+    />
+	<property
+        name="comment"
+        type="java.lang.String"
+        column="COMMENT"
+        length="255"
+    />
+	<!--property
+        name="forTransport"
+        type="java.lang.Integer"
+        column="FOR_TRANSPORT"
+        length="32"
+    /-->
+	<!--property
+        name="forPackage"
+        type="java.lang.Integer"
+        column="FOR_PACKAGE"
+        length="32"
+    /-->
+
+    
+    <!-- Associations -->
+	<many-to-one
+        name="deviation"
+        class="no.ugland.utransprod.model.Deviation"
+        not-null="true"
+    >
+        <column name="DEVIATION_ID" />
+    </many-to-one>
+	<many-to-one
+        name="order"
+        class="no.ugland.utransprod.model.Order"
+        not-null="true"
+    >
+        <column name="ORDER_ID" />
+    </many-to-one>
+	<set
+        name="orderCommentCommentTypes"
+        lazy="false"
+        inverse="true"
+		cascade="all"
+    >
+        <key>
+            <column name="ORDER_COMMENT_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.OrderCommentCommentType"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

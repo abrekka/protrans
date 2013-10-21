@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.Accident" 
+    table="ACCIDENT"
+>
+<id name="accidentId" type="java.lang.Integer" column="ACCIDENT_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="registeredBy"
+        type="java.lang.String"
+        column="REGISTERED_BY"
+        length="100"
+    />
+    
+    <property
+        name="registrationDate"
+        type="java.util.Date"
+        column="REGISTRATION_DATE"
+        length="32"
+    />
+	<property
+        name="personalInjury"
+        type="java.lang.Integer"
+        column="PERSONAL_INJURY"
+        length="32"
+    />
+	<property
+        name="accidentDate"
+        type="java.util.Date"
+        column="ACCIDENT_DATE"
+        length="32"
+    />
+	<property
+        name="accidentTime"
+        type="java.lang.String"
+        column="ACCIDENT_TIME"
+        length="50"
+    />
+	<property
+        name="accidentDescription"
+        type="java.lang.String"
+        column="ACCIDENT_DESCRIPTION"
+        length="4000"
+    />
+	<property
+        name="accidentCause"
+        type="java.lang.String"
+        column="ACCIDENT_CAUSE"
+        length="4000"
+    />
+	<property
+        name="reportedLeader"
+        type="java.lang.Integer"
+        column="REPORTED_LEADER"
+        length="32"
+    />
+	<property
+        name="reportedPolice"
+        type="java.lang.Integer"
+        column="REPORTED_POLICE"
+        length="32"
+    />
+	<property
+        name="reportedSocialSecurity"
+        type="java.lang.Integer"
+        column="REPORTED_SOCIAL_SECURITY"
+        length="32"
+    />
+    <property
+        name="preventiveActionComment"
+        type="java.lang.String"
+        column="PREVENTIVE_ACTION_COMMENT"
+        length="4000"
+    />
+	 <property
+        name="responsible"
+        type="java.lang.String"
+        column="RESPONSIBLE"
+        length="200"
+    />
+     <property
+        name="absentDays"
+        type="java.math.BigDecimal"
+        column="ABSENT_DAYS"
+        length="32"
+    />
+     <property
+        name="doneDate"
+        type="java.util.Date"
+        column="DONE_DATE"
+        length="32"
+    />
+    
+    <!-- Associations -->
+  <many-to-one
+        name="jobFunction"
+        class="no.ugland.utransprod.model.JobFunction"
+        not-null="true"
+    >
+        <column name="JOB_FUNCTION_ID" />
+    </many-to-one>
+	
+	<set
+        name="accidentParticipants"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="ACCIDENT_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.AccidentParticipant"
+        />
+    </set>
+    
+    <many-to-one
+        name="deviationStatus"
+        class="no.ugland.utransprod.model.DeviationStatus"
+        not-null="false"
+    >
+        <column name="DEVIATION_STATUS_ID" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

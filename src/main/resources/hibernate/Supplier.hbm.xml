@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.Supplier" 
+    table="SUPPLIER"
+>
+<id name="supplierId" type="java.lang.Integer" column="SUPPLIER_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="supplierName"
+        type="java.lang.String"
+        column="SUPPLIER_NAME"
+        length="255"
+    />
+    
+    <property
+        name="supplierDescription"
+        type="java.lang.String"
+        column="SUPPLIER_DESCRIPTION"
+        length="255"
+    />
+    <property
+        name="phone"
+        type="java.lang.String"
+        column="PHONE"
+        length="255"
+    />
+	<property
+        name="address"
+        type="java.lang.String"
+        column="ADDRESS"
+        length="255"
+    />
+	<property
+        name="postalCode"
+        type="java.lang.String"
+        column="POSTAL_CODE"
+        length="255"
+    />
+	<property
+        name="postOffice"
+        type="java.lang.String"
+        column="POST_OFFICE"
+        length="255"
+    />
+	<property
+        name="fax"
+        type="java.lang.String"
+        column="FAX"
+        length="255"
+    />
+	<property
+        name="inactive"
+        type="java.lang.Integer"
+        column="INACTIVE"
+        length="32"
+    />
+    
+    <!-- Associations -->
+    <many-to-one
+        name="supplierType"
+        class="no.ugland.utransprod.model.SupplierType"
+    >
+        <column name="SUPPLIER_TYPE_ID" />
+    </many-to-one> 
+	<set
+        name="employees"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="SUPPLIER_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.Employee"
+        />
+    </set>
+	<set
+        name="assemblies"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="SUPPLIER_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.Assembly"
+        />
+    </set>
+
+	<set
+        name="supplierProductAreaGroups"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="SUPPLIER_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.SupplierProductAreaGroup"
+        />
+    </set>
+</class>
+</hibernate-mapping>

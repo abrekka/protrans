@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.ArticleTypeArticleType" 
+    table="ARTICLE_TYPE_ARTICLE_TYPE"
+>
+<id name="articleTypeArticleTypeId" type="java.lang.Integer" column="ARTICLE_TYPE_ARTICLE_TYPE_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+    <!-- Associations -->
+	<many-to-one
+        name="articleType"
+        class="no.ugland.utransprod.model.ArticleType"
+        not-null="true"
+    >
+        <column name="ARTICLE_TYPE_ID" />
+    </many-to-one>
+    <many-to-one
+        name="articleTypeRef"
+        class="no.ugland.utransprod.model.ArticleType"
+        not-null="true"
+    >
+        <column name="ARTICLE_TYPE_ID_REF" />
+    </many-to-one>  
+
+</class>
+</hibernate-mapping>

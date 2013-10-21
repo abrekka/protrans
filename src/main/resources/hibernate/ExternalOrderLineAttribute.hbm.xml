@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<class 
+    name="no.ugland.utransprod.model.ExternalOrderLineAttribute" 
+    table="EXTERNAL_ORDER_LINE_ATTRIBUTE"
+>
+<id name="externalOrderLineAttributeId" type="java.lang.Integer" column="EXTERNAL_ORDER_LINE_ATTRIBUTE_ID">
+        <generator class="identity"/>
+        </id>
+
+    <property
+        name="externalOrderLineAttributeValue"
+        type="java.lang.String"
+        column="EXTERNAL_ORDER_LINE_ATTRIBUTE_VALUE"
+        length="32"
+    />
+	<property
+        name="externalOrderLineAttributeName"
+        type="java.lang.String"
+        column="EXTERNAL_ORDER_LINE_ATTRIBUTE_NAME"
+        length="255"
+    />
+
+    
+    <!-- Associations -->
+	
+    
+     <many-to-one
+        name="externalOrderLine"
+        class="no.ugland.utransprod.model.ExternalOrderLine"
+        lazy="proxy"
+        
+    >
+        <column name="EXTERNAL_ORDER_LINE_ID" />
+    </many-to-one>
+    
+    
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.ConstructionType" 
+    table="CONSTRUCTION_TYPE"
+>
+<id name="constructionTypeId" type="java.lang.Integer" column="CONSTRUCTION_TYPE_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="name"
+        type="java.lang.String"
+        column="NAME"
+        length="50"
+    />
+    <property
+        name="description"
+        type="java.lang.String"
+        column="DESCRIPTION"
+        length="255"
+    />
+    <property
+        name="isMaster"
+        type="java.lang.Integer"
+        column="IS_MASTER"
+        length="1"
+    />
+	 <property
+        name="sketchName"
+        type="java.lang.String"
+        column="SKETCH_NAME"
+        length="1"
+    />
+	<!--property
+        name="villa"
+        type="java.lang.Integer"
+        column="VILLA"
+        length="1"
+    /-->
+
+    
+    <!-- Associations -->
+    <set
+        name="constructionTypeAttributes"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="CONSTRUCTION_TYPE_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.ConstructionTypeAttribute"
+        />
+    </set>
+    <set
+        name="constructionTypeArticles"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="CONSTRUCTION_TYPE_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.ConstructionTypeArticle"
+        />
+    </set>
+    
+    <set
+        name="orders"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="CONSTRUCTION_TYPE_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.Order"
+        />
+    </set>
+  <many-to-one
+        name="productArea"
+        class="no.ugland.utransprod.model.ProductArea"
+	   lazy="proxy"
+    >
+        <column name="PRODUCT_AREA_ID" />
+    </many-to-one> 
+
+</class>
+</hibernate-mapping>

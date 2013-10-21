@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.SumOrderReadyV" 
+    table="SUM_ORDER_READY_V"
+>
+<composite-id name="sumOrderReadyVPK" class="no.ugland.utransprod.model.SumOrderReadyVPK">
+        <key-property 
+            name="productArea" 
+            column="PRODUCT_AREA" 
+            type="java.lang.String"
+            length="255"
+        />
+        <key-property 
+            name="orderReady" 
+            column="ORDER_READY" 
+            type="java.lang.String"
+            length="255"
+        />
+
+    </composite-id>   
+
+    
+
+	<property
+        name="packageSum"
+        type="java.math.BigDecimal"
+        column="PACKAGE_SUM"
+        length="32"
+    />
+	<property
+        name="orderReadyWeek"
+        type="java.lang.Integer"
+        column="ORDER_READY_WEEK"
+        length="32"
+    />
+	<property
+        name="orderReadyYear"
+        type="java.lang.Integer"
+        column="ORDER_READY_YEAR"
+        length="32"
+    />
+	<property
+        name="productAreaGroupName"
+        type="java.lang.String"
+        column="PRODUCT_AREA_GROUP_NAME"
+        length="32"
+    />
+
+    
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.PaidV" 
+    table="PAID_V"
+>
+<id name="orderId" type="java.lang.Integer" column="ORDER_ID">
+        <generator class="assigned"/>
+        </id>
+
+    
+
+	<property
+        name="customerNr"
+        type="java.lang.Integer"
+        column="CUSTOMER_NR"
+        length="255"
+    />
+
+	
+    
+    <property
+        name="firstName"
+        type="java.lang.String"
+        column="FIRST_NAME"
+        length="32"
+    />
+    
+	
+	
+	
+	<property
+        name="lastName"
+        type="java.lang.String"
+        column="LAST_NAME"
+        length="2"
+    />
+
+	<property
+        name="postalCode"
+        type="java.lang.String"
+        column="POSTAL_CODE"
+        length="100"
+    />
+		<property
+        name="postOffice"
+        type="java.lang.String"
+        column="POST_OFFICE"
+        length="255"
+    />
+	<property
+        name="constructionName"
+        type="java.lang.String"
+        column="CONSTRUCTION_NAME"
+        length="255"
+    />
+	<property
+        name="sent"
+        type="java.util.Date"
+        column="SENT"
+        length="255"
+    />
+	<property
+        name="customerCost"
+        type="java.math.BigDecimal"
+        column="CUSTOMER_COST"
+        length="32"
+    />
+	<property
+        name="orderNr"
+        type="java.lang.String"
+        column="ORDER_NR"
+        length="32"
+    />
+	<property
+        name="paidDate"
+        type="java.util.Date"
+        column="PAID_DATE"
+        length="32"
+    />
+	<property
+        name="comment"
+        type="java.lang.String"
+        column="COMMENT"
+        length="32"
+    />
+	<property
+        name="doAssembly"
+        type="java.lang.Integer"
+        column="DO_ASSEMBLY"
+        length="32"
+    />
+	<property
+        name="productAreaGroupName"
+        type="java.lang.String"
+        column="PRODUCT_AREA_GROUP_NAME"
+        length="32"
+    />
+    <!-- Associations -->
+
+</class>
+</hibernate-mapping>

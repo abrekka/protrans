@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.Customer" 
+    table="CUSTOMER"
+>
+<id name="customerId" type="java.lang.Integer" column="CUSTOMER_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="customerNr"
+        type="java.lang.Integer"
+        column="CUSTOMER_NR"
+        length="50"
+    />
+    
+    <property
+        name="firstName"
+        type="java.lang.String"
+        column="FIRST_NAME"
+        length="50"
+    />
+    <property
+        name="lastName"
+        type="java.lang.String"
+        column="LAST_NAME"
+        length="50"
+    />
+
+    
+    <!-- Associations -->
+    <set
+        name="orders"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key>
+            <column name="CUSTOMER_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.Order"
+        />
+    </set>
+  
+
+</class>
+</hibernate-mapping>

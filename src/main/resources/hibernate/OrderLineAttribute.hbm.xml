@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<class 
+    name="no.ugland.utransprod.model.OrderLineAttribute" 
+    table="ORDER_LINE_ATTRIBUTE"
+>
+<id name="orderLineAttributeId" type="java.lang.Integer" column="ORDER_LINE_ATTRIBUTE_ID">
+        <generator class="identity"/>
+        </id>
+
+    <property
+        name="orderLineAttributeValue"
+        type="java.lang.String"
+        column="ORDER_LINE_ATTRIBUTE_VALUE"
+        length="32"
+    />
+    <property
+        name="dialogOrder"
+        type="java.lang.Integer"
+        column="DIALOG_ORDER"
+        length="32"
+    /><property
+        name="orderLineAttributeName"
+        type="java.lang.String"
+        column="ORDER_LINE_ATTRIBUTE_NAME"
+        length="255"
+    />
+
+    
+    <!-- Associations -->
+	
+    
+     <many-to-one
+        name="orderLine"
+        class="no.ugland.utransprod.model.OrderLine"
+        lazy="proxy"
+        
+    >
+        <column name="ORDER_LINE_ID" />
+    </many-to-one>
+    
+    <many-to-one
+        name="constructionTypeArticleAttribute"
+        class="no.ugland.utransprod.model.ConstructionTypeArticleAttribute"
+        not-null="true"
+        lazy="proxy"
+    >
+        <column name="CONSTRUCTION_TYPE_ARTICLE_ATTRIBUTE_ID" />
+    </many-to-one>
+   
+   <many-to-one
+        name="constructionTypeAttribute"
+        class="no.ugland.utransprod.model.ConstructionTypeAttribute"
+        lazy="proxy"
+    >
+        <column name="CONSTRUCTION_TYPE_ATTRIBUTE_ID" />
+    </many-to-one> 
+    <many-to-one
+        name="articleTypeAttribute"
+        class="no.ugland.utransprod.model.ArticleTypeAttribute"
+        lazy="proxy"
+    >
+        <column name="ARTICLE_TYPE_ATTRIBUTE_ID" />
+    </many-to-one> 
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.Employee" 
+    table="EMPLOYEE"
+>
+<id name="employeeId" type="java.lang.Integer" column="EMPLOYEE_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="firstName"
+        type="java.lang.String"
+        column="FIRST_NAME"
+        length="255"
+    />
+    <property
+        name="inactive"
+        type="java.lang.Integer"
+        column="INACTIVE"
+        length="32"
+    />
+    
+    <property
+        name="lastName"
+        type="java.lang.String"
+        column="LAST_NAME"
+        length="255"
+    />
+    <property
+        name="phone"
+        type="java.lang.String"
+        column="PHONE"
+        length="255"
+    />
+    
+    <!-- Associations -->
+    <many-to-one
+        name="employeeType"
+        class="no.ugland.utransprod.model.EmployeeType"
+    >
+        <column name="EMPLOYEE_TYPE_ID" />
+    </many-to-one> 
+	<many-to-one
+        name="supplier"
+        class="no.ugland.utransprod.model.Supplier"
+    >
+        <column name="SUPPLIER_ID" />
+    </many-to-one> 
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.Area" 
+    table="AREA"
+>
+<id name="areaCode" type="java.lang.String" column="AREA_CODE">
+        <generator class="assigned"/>
+        </id>
+
+    
+
+	<property
+        name="areaName"
+        type="java.lang.String"
+        column="AREA_NAME"
+        length="100"
+    />
+    <property
+        name="snowloadBasicValue"
+        type="java.math.BigDecimal"
+        column="SNOWLOAD_BASIC_VALUE"
+        length="32"
+    />
+    <property
+        name="heightLimit"
+        type="java.lang.Integer"
+        column="HEIGHT_LIMIT"
+        length="32"
+    />
+    <property
+        name="deltaSnowload"
+        type="java.math.BigDecimal"
+        column="DELTA_SNOWLOAD"
+        length="32"
+    />
+    <property
+        name="snowloadMax"
+        type="java.math.BigDecimal"
+        column="SNOWLOAD_MAX"
+        length="32"
+    />
+    <property
+        name="snowloadComment"
+        type="java.lang.String"
+        column="SNOWLOAD_COMMENT"
+        length="150"
+    />
+    
+<many-to-one
+        name="county"
+        class="no.ugland.utransprod.model.County"
+        not-null="true"
+    >
+        <column name="COUNTY_NR" />
+    </many-to-one>
+  
+
+</class>
+</hibernate-mapping>

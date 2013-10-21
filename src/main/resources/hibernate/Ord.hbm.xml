@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class name="no.ugland.utransprod.model.Ord" table="dbo.ORD">
+<!--class name="no.ugland.utransprod.model.Ord" table="ORD"-->
+	<id name="ordno" type="java.lang.Integer" column="ORDNO">
+        <generator class="assigned"/>
+        </id>
+
+	 <property
+        name="inf6"
+        type="java.lang.String"
+        column="INF6"
+        length="32"
+    />
+    <property
+        name="inf"
+        type="java.lang.String"
+        column="INF"
+        length="50"
+    />
+     <property
+        name="free1"
+        type="java.lang.String"
+        column="FREE1"
+        length="50"
+    />
+<property
+        name="free2"
+        type="java.lang.String"
+        column="FREE2"
+        length="50"
+    />
+    <property
+        name="yrRef"
+        type="java.lang.String"
+        column="YRREF"
+        length="50"
+    />
+  
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.NokkelOkonomiV" 
+    table="NOKKEL_OKONOMI_V"
+>
+	<composite-id name="nokkelOkonomiVPK" class="no.ugland.utransprod.model.NokkelOkonomiVPK">
+        <key-property 
+            name="invoiceYear" 
+            column="INVOICE_YEAR" 
+            type="java.lang.Integer"
+            length="32"
+        />
+        <key-property 
+            name="invoiceWeek" 
+            column="INVOICE_WEEK" 
+            type="java.lang.Integer"
+            length="32"
+        />
+		<!--key-property 
+            name="villa" 
+            column="VILLA" 
+            type="java.lang.Integer"
+            length="32"
+        /-->
+		<key-property 
+            name="productArea" 
+            column="PRODUCT_AREA" 
+            type="java.lang.String"
+            length="255"
+        />
+
+    </composite-id>   
+	
+    
+
+	<property
+        name="orderCount"
+        type="java.lang.Integer"
+        column="ORDER_COUNT"
+        length="32"
+    />
+	<property
+        name="invoicedAmount"
+        type="java.math.BigDecimal"
+        column="INVOICED_AMOUNT"
+        length="32"
+    />
+
+	<property
+        name="deviationCount"
+        type="java.lang.Integer"
+        column="DEVIATION_COUNT"
+        length="32"
+    />
+    
+    <property
+        name="internalCost"
+        type="java.math.BigDecimal"
+        column="INTERNAL_COST"
+        length="32"
+    />
+	
+    
+    
+    <!-- Associations -->
+	
+    
+    
+
+</class>
+</hibernate-mapping>

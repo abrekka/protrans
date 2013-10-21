@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.OrdchgrLineV" 
+    table="ORDCHGR_LINE_V"
+>
+	<composite-id name="ordchgrLineVPK" class="no.ugland.utransprod.model.OrdchgrLineVPK">
+        <key-property 
+            name="ordNo" 
+            column="ORDNO" 
+            type="java.lang.Integer"
+            length="32"
+        />
+        <key-property 
+            name="lnNo" 
+            column="LNNO" 
+            type="java.lang.Integer"
+            length="32"
+        />
+    </composite-id>   
+    
+    <property
+        name="lineStatus"
+        type="java.lang.Integer"
+        column="LINESTATUS"
+        length="32"
+    />
+
+</class>
+</hibernate-mapping>

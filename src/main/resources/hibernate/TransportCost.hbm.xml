@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.TransportCost" 
+    table="TRANSPORT_COST"
+>
+<id name="transportCostId" type="java.lang.Integer" column="TRANSPORT_COST_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="postalCode"
+        type="java.lang.String"
+        column="POSTAL_CODE"
+        length="10"
+    />
+	<property
+        name="place"
+        type="java.lang.String"
+        column="PLACE"
+        length="255"
+    />
+	<property
+        name="cost"
+        type="java.math.BigDecimal"
+        column="COST"
+        length="32"
+    />
+	<property
+        name="addition"
+        type="java.math.BigDecimal"
+        column="ADDITION"
+        length="32"
+    />
+	<property
+        name="valid"
+        type="java.lang.Integer"
+        column="VALID"
+        length="32"
+    />
+	<property
+        name="maxAddition"
+        type="java.lang.Integer"
+        column="MAX_ADDITION"
+        length="32"
+    />
+    <many-to-one
+        name="area"
+        class="no.ugland.utransprod.model.Area"
+        not-null="true"
+    >
+        <column name="AREA_CODE" />
+    </many-to-one>
+
+
+</class>
+</hibernate-mapping>

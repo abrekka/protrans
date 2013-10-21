@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping default-lazy="false">
+
+<class
+    name="no.ugland.utransprod.model.PacklistV"
+    table="PACKLIST_V"
+>
+<id name="orderId" type="java.lang.Integer" column="ORDER_ID">
+        <generator class="assigned"/>
+        </id>
+	<property
+        name="customerNr"
+        type="java.lang.Integer"
+        column="CUSTOMER_NR"
+        length="2"
+    />
+
+
+	<property
+        name="customerDetails"
+        type="java.lang.String"
+        column="CUSTOMER_DETAILS"
+        length="255"
+    />
+
+
+
+    <property
+        name="orderNr"
+        type="java.lang.String"
+        column="ORDER_NR"
+        length="32"
+    />
+
+
+
+
+	<property
+        name="address"
+        type="java.lang.String"
+        column="ADDRESS"
+        length="2"
+    />
+
+	<property
+        name="info"
+        type="java.lang.String"
+        column="INFO"
+        length="100"
+    />
+		<property
+        name="constructionTypeName"
+        type="java.lang.String"
+        column="CONSTRUCTION_TYPE_NAME"
+        length="255"
+    />
+
+
+
+	<property
+        name="loadingDate"
+        type="java.util.Date"
+        column="LOADING_DATE"
+        length="32"
+    />
+	<property
+        name="packlistReady"
+        type="java.util.Date"
+        column="PACKLIST_READY"
+        length="32"
+    />
+
+
+	<property
+        name="comment"
+        type="java.lang.String"
+        column="COMMENT"
+        length="255"
+    />
+	<property
+        name="numberOfTakstol"
+        type="java.lang.Integer"
+        column="NUMBER_OF_TAKSTOL"
+        length="255"
+    />
+	<property
+        name="hasGulvspon"
+        type="java.lang.Integer"
+        column="HAS_GULVSPON"
+        length="255"
+    />
+	<property
+        name="numberOfGulvspon"
+        type="java.lang.Integer"
+        column="NUMBER_OF_GULVSPON"
+        length="255"
+    />
+	<property
+        name="productAreaGroupName"
+        type="java.lang.String"
+        column="PRODUCT_AREA_GROUP_NAME"
+        length="255"
+    />
+    <property
+        name="transportDetails"
+        type="java.lang.String"
+        column="TRANSPORT_DETAILS"
+        length="255"
+    />
+	<property
+        name="trossReady"
+        type="java.util.Date"
+        column="TROSS_READY"
+        length="32"
+    />
+    <property
+        name="trossDrawer"
+        type="java.lang.String"
+        column="TROSS_DRAWER"
+        length="100"
+    />
+    <property
+        name="transportYear"
+        type="java.lang.Integer"
+        column="TRANSPORT_YEAR"
+        length="32"
+    />
+    <property
+        name="transportWeek"
+        type="java.lang.Integer"
+        column="TRANSPORT_WEEK"
+        length="32"
+    />
+    <property
+        name="orderStatus"
+        type="java.lang.String"
+        column="ORDER_STATUS"
+        length="255"
+    />
+    <property
+        name="productionBasis"
+        type="java.lang.Integer"
+        column="PRODUCTION_BASIS"
+        length="32"
+    />
+
+
+    <!-- Associations -->
+
+
+
+
+</class>
+</hibernate-mapping>

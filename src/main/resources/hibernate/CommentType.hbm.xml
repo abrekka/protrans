@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.CommentType" 
+    table="COMMENT_TYPE"
+>
+<id name="commentTypeId" type="java.lang.Integer" column="COMMENT_TYPE_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="commentTypeName"
+        type="java.lang.String"
+        column="COMMENT_TYPE_NAME"
+        length="100"
+    />
+    <property
+        name="commentTypeComment"
+        type="java.lang.String"
+        column="COMMENT_TYPE_COMMENT"
+        length="100"
+    />
+</class>
+</hibernate-mapping>

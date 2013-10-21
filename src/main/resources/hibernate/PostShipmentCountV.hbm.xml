@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.PostShipmentCountV" 
+    table="POST_SHIPMENT_COUNT_V"
+>
+	<composite-id name="postShipmentCountVPK" class="no.ugland.utransprod.model.PostShipmentCountVPK">
+        <key-property 
+            name="sentYear" 
+            column="SENT_YEAR" 
+            type="java.lang.Integer"
+            length="32"
+        />
+        <key-property 
+            name="sentWeek" 
+            column="SENT_WEEK" 
+            type="java.lang.Integer"
+            length="32"
+        />
+		<key-property 
+            name="jobFunctionName" 
+            column="JOB_FUNCTION_NAME" 
+            type="java.lang.String"
+            length="32"
+        />
+		<key-property 
+            name="productArea" 
+            column="PRODUCT_AREA" 
+            type="java.lang.String"
+            length="32"
+        />
+
+    </composite-id>   
+
+    
+
+	<property
+        name="postShipmentCount"
+        type="java.lang.Integer"
+        column="POST_SHIPMENT_COUNT"
+        length="32"
+    />
+
+    
+    <!-- Associations -->
+	
+    
+    
+
+</class>
+</hibernate-mapping>

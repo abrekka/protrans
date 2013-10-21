@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.NokkelTransportV" 
+    table="NOKKEL_TRANSPORT_V"
+>
+	<composite-id name="nokkelTransportVPK" class="no.ugland.utransprod.model.NokkelTransportVPK">
+        <key-property 
+            name="orderSentYear" 
+            column="ORDER_SENT_YEAR" 
+            type="java.lang.Integer"
+            length="32"
+        />
+        <key-property 
+            name="orderSentWeek" 
+            column="ORDER_SENT_WEEK" 
+            type="java.lang.Integer"
+            length="32"
+        />
+		<!--key-property 
+            name="villa" 
+            column="VILLA" 
+            type="java.lang.Integer"
+            length="32"
+        /-->
+		<key-property 
+            name="productArea" 
+            column="PRODUCT_AREA" 
+            type="java.lang.String"
+            length="255"
+        />
+
+    </composite-id>   
+	
+    
+
+	<property
+        name="assemblied"
+        type="java.lang.Integer"
+        column="ASSEMBLIED"
+        length="32"
+    />
+	<property
+        name="notAssemblied"
+        type="java.lang.Integer"
+        column="NOT_ASSEMBLIED"
+        length="32"
+    />
+	<property
+        name="garageCost"
+        type="java.math.BigDecimal"
+        column="GARAGE_COST"
+        length="32"
+    />
+	<property
+        name="transportCost"
+        type="java.math.BigDecimal"
+        column="TRANSPORT_COST"
+        length="32"
+    />
+	<property
+        name="assemblyCost"
+        type="java.math.BigDecimal"
+        column="ASSEMBLY_COST"
+        length="32"
+    />
+
+	<property
+        name="deviationCount"
+        type="java.lang.Integer"
+        column="DEVIATION_COUNT"
+        length="32"
+    />
+    
+    <property
+        name="internalCost"
+        type="java.math.BigDecimal"
+        column="INTERNAL_COST"
+        length="32"
+    />
+	
+    
+    
+    <!-- Associations -->
+	
+    
+    
+
+</class>
+</hibernate-mapping>

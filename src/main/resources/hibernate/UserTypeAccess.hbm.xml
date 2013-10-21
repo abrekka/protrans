@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.UserTypeAccess" 
+    table="USER_TYPE_ACCESS"
+>
+<id name="userTypeAccessId" type="java.lang.Integer" column="USER_TYPE_ACCESS_ID">
+        <generator class="identity"/>
+        </id>
+
+	<property
+        name="writeAccess"
+        type="java.lang.Integer"
+        column="WRITE_ACCESS"
+        length="32"
+    />  
+
+    <!-- Associations -->
+	<many-to-one
+        name="userType"
+        class="no.ugland.utransprod.model.UserType"
+    >
+        <column name="USER_TYPE_ID" />
+    </many-to-one> 
+	<many-to-one
+        name="windowAccess"
+        class="no.ugland.utransprod.model.WindowAccess"
+    >
+        <column name="WINDOW_ACCESS_ID" />
+    </many-to-one> 
+
+</class>
+</hibernate-mapping>

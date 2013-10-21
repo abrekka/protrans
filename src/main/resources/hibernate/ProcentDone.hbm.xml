@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.ProcentDone" 
+    table="PROCENT_DONE"
+>
+<id name="procentDoneId" type="java.lang.Integer" column="PROCENT_DONE_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="procentDoneYear"
+        type="java.lang.Integer"
+        column="PROCENT_DONE_YEAR"
+        length="32"
+    />
+    
+    <property
+        name="procentDoneWeek"
+        type="java.lang.Integer"
+        column="PROCENT_DONE_WEEK"
+        length="32"
+    />
+	<property
+        name="procent"
+        type="java.lang.Integer"
+        column="PROCENT"
+        length="32"
+    />
+	<property
+        name="procentDoneComment"
+        type="java.lang.String"
+        column="PROCENT_DONE_COMMENT"
+        length="1000"
+    />
+	<property
+        name="changeDate"
+        type="java.util.Date"
+        column="CHANGE_DATE"
+        length="32"
+    />
+	<property
+        name="userName"
+        type="java.lang.String"
+        column="USER_NAME"
+        length="100"
+    />
+
+    
+    <!-- Associations -->
+  <many-to-one
+        name="order"
+        class="no.ugland.utransprod.model.Order"
+        not-null="true"
+    >
+        <column name="ORDER_ID" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.DeviationStatus" 
+    table="DEVIATION_STATUS"
+>
+<id name="deviationStatusId" type="java.lang.Integer" column="DEVIATION_STATUS_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+	<property
+        name="deviationStatusName"
+        type="java.lang.String"
+        column="DEVIATION_STATUS_NAME"
+        length="255"
+    />
+    <property
+        name="deviationStatusDescription"
+        type="java.lang.String"
+        column="DEVIATION_STATUS_DESCRIPTION"
+        length="255"
+    />
+	 <property
+        name="forManager"
+        type="java.lang.Integer"
+        column="FOR_MANAGER"
+        length="32"
+    />
+	<property
+        name="deviationDone"
+        type="java.lang.Integer"
+        column="DEVIATION_DONE"
+        length="32"
+    />
+	<property
+        name="forDeviation"
+        type="java.lang.Integer"
+        column="FOR_DEVIATION"
+        length="32"
+    />
+    <property
+        name="forAccident"
+        type="java.lang.Integer"
+        column="FOR_ACCIDENT"
+        length="32"
+    />
+    
+    <!-- Associations -->
+
+</class>
+</hibernate-mapping>

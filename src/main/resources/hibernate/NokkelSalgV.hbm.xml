@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.NokkelSalgV" 
+    table="NOKKEL_SALG_V"
+>
+	<composite-id name="nokkelSalgVPK" class="no.ugland.utransprod.model.NokkelSalgVPK">
+        <key-property 
+            name="agreementYear" 
+            column="AGREEMENT_YEAR" 
+            type="java.lang.Integer"
+            length="32"
+        />
+        <key-property 
+            name="agreementWeek" 
+            column="AGREEMENT_WEEK" 
+            type="java.lang.Integer"
+            length="32"
+        />
+		<!--key-property 
+            name="villa" 
+            column="VILLA" 
+            type="java.lang.Integer"
+            length="32"
+        /-->
+		<key-property 
+            name="productArea" 
+            column="PRODUCT_AREA" 
+            type="java.lang.String"
+            length="255"
+        />
+
+    </composite-id>   
+
+    
+
+	<property
+        name="orderCount"
+        type="java.lang.Integer"
+        column="ORDER_COUNT"
+        length="32"
+    />
+
+	<property
+        name="deviationCount"
+        type="java.lang.Integer"
+        column="DEVIATION_COUNT"
+        length="32"
+    />
+    
+    <property
+        name="internalCost"
+        type="java.math.BigDecimal"
+        column="INTERNAL_COST"
+        length="32"
+    />
+    
+    
+    <!-- Associations -->
+	
+    
+    
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class name="no.ugland.utransprod.model.ImportOrderV" table="IMPORT_ORDER_V">
+<!--class name="no.ugland.utransprod.model.Sale" table="SALE"-->
+<id name="saleId" type="java.lang.Integer" column="SALE_ID">
+        <generator class="assigned"/>
+        </id>
+
+    
+
+    <property
+        name="number1"
+        type="java.lang.String"
+        column="NUMBER1"
+        length="255"
+    />
+    <property
+        name="amount"
+        type="java.math.BigDecimal"
+        column="AMOUNT"
+        length="32"
+    />
+	<property
+        name="saledate"
+        type="java.lang.Integer"
+        column="SALEDATE"
+        length="32"
+    />
+	<property
+        name="userdefId"
+        type="java.lang.Integer"
+        column="USERDEF_ID"
+        length="32"
+    />
+	<property
+        name="registered"
+        type="java.lang.Integer"
+        column="REGISTERED"
+        length="32"
+    />
+	<property
+        name="probability"
+        type="java.lang.Integer"
+        column="PROBABILITY"
+        length="32"
+    />
+	<property
+        name="contactId"
+        type="java.lang.Integer"
+        column="CONTACT_ID"
+        length="32"
+    />
+	<property
+        name="productAreaNr"
+        type="java.lang.Integer"
+        column="PRODUCT_AREA_NR"
+        length="32"
+    />
+    <property
+        name="deliveryAddress"
+        type="java.lang.String"
+        column="DELIVERY_ADDRESS"
+        length="32"
+    />
+    <property
+        name="postalCode"
+        type="java.lang.String"
+        column="POSTAL_CODE"
+        length="32"
+    />
+    <property
+        name="postoffice"
+        type="java.lang.String"
+        column="POSTOFFICE"
+        length="32"
+    />
+    <property
+        name="salesMan"
+        type="java.lang.String"
+        column="SALES_MAN"
+        length="32"
+    />
+    <property
+        name="telephoneNrSite"
+        type="java.lang.String"
+        column="TELEPHONENR_SITE"
+        length="32"
+    />
+    <property
+        name="maksHoyde"
+        type="java.lang.Integer"
+        column="MAKS_HOYDE"
+        length="32"
+    />
+
+</class>
+</hibernate-mapping>

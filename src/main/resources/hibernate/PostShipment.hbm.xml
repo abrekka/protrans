@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.PostShipment" 
+    table="POST_SHIPMENT"
+>
+<id name="postShipmentId" type="java.lang.Integer" column="POST_SHIPMENT_ID">
+        <generator class="identity"/>
+        </id>
+
+    <property
+        name="sent"
+        type="java.util.Date"
+        column="SENT"
+        length="32"
+    />
+	<property
+        name="postShipmentComplete"
+        type="java.util.Date"
+        column="POST_SHIPMENT_COMPLETE"
+        length="32"
+    />
+	<property
+        name="postShipmentReady"
+        type="java.util.Date"
+        column="POST_SHIPMENT_READY"
+        length="32"
+    />
+	<property
+        name="status"
+        type="java.lang.String"
+        column="STATUS"
+        length="500"
+    />
+	<property
+        name="packedBy"
+        type="java.lang.String"
+        column="PACKED_BY"
+        length="32"
+    />
+	<property
+        name="garageColliHeight"
+        type="java.math.BigDecimal"
+        column="GARAGE_COLLI_HEIGHT"
+        length="32"
+    />
+	<!--property
+        name="comment"
+        type="java.lang.String"
+        column="COMMENT"
+        length="1000"
+    /-->
+	<property
+        name="cachedComment"
+        type="java.lang.String"
+        column="CACHED_COMMENT"
+        length="2000"
+    />
+    <property
+        name="takstolHeight"
+        type="java.lang.Integer"
+        column="TAKSTOL_HEIGHT"
+        length="32"
+    />
+     <property
+        name="defaultColliesGenerated"
+        type="java.lang.Integer"
+        column="DEFAULT_COLLIES_GENERATED"
+        length="32"
+    />
+	
+    
+    <!-- Associations -->
+	<many-to-one
+        name="order"
+        class="no.ugland.utransprod.model.Order"
+        not-null="false"
+		fetch="join"
+    >
+        <column name="ORDER_ID" />
+    </many-to-one>
+	<many-to-one
+        name="transport"
+        class="no.ugland.utransprod.model.Transport"
+        not-null="false"
+
+		
+    >
+        <column name="TRANSPORT_ID" />
+    </many-to-one>
+	<many-to-one
+        name="deviation"
+		fetch="join"
+        class="no.ugland.utransprod.model.Deviation"
+        not-null="false"
+
+		
+    >
+        <column name="DEVIATION_ID" />
+    </many-to-one>
+	<many-to-one
+        name="postShipmentRef"
+        class="no.ugland.utransprod.model.PostShipment"
+        not-null="false"
+    >
+        <column name="POST_SHIPMENT_REF" />
+    </many-to-one>
+	<set
+        name="collies"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="POST_SHIPMENT_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.Colli"
+        />
+    </set>
+	<set
+        name="orderLines"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="POST_SHIPMENT_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.OrderLine"
+        />
+    </set>
+	<set
+        name="postShipmentRefs"
+        lazy="true"
+        inverse="true"
+		cascade="delete"
+    >
+        <key>
+            <column name="POST_SHIPMENT_REF" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.PostShipment"
+        />
+    </set>
+	<one-to-one
+        name="orderCost"
+        class="no.ugland.utransprod.model.OrderCost"
+        property-ref="postShipment"
+		lazy="proxy"
+    />
+
+</class>
+</hibernate-mapping>

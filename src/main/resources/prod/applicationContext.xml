@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+
+<beans default-lazy-init="false">
+
+	<!-- Hibernate SessionFactory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+
+		<property name="mappingResources">
+			<list>
+				<value>hibernate/Order.hbm.xml</value>
+				<value>hibernate/ConstructionType.hbm.xml</value>
+				<value>hibernate/Transport.hbm.xml</value>
+				<value>hibernate/Customer.hbm.xml</value>
+				<value>hibernate/ApplicationUser.hbm.xml</value>
+				<value>hibernate/UserRole.hbm.xml</value>
+				<value>hibernate/UserType.hbm.xml</value>
+				<value>hibernate/Assembly.hbm.xml</value>
+				<value>hibernate/ArticleType.hbm.xml</value>
+				<value>hibernate/Attribute.hbm.xml</value>
+				<value>hibernate/ArticleTypeAttribute.hbm.xml</value>
+				<value>hibernate/ConstructionTypeAttribute.hbm.xml</value>
+				<value>hibernate/ConstructionTypeArticle.hbm.xml</value>
+				<value>hibernate/ConstructionTypeArticleAttribute.hbm.xml</value>
+				<value>hibernate/OrderLine.hbm.xml</value>
+				<value>hibernate/OrderLineAttribute.hbm.xml</value>
+				<value>hibernate/ArticleTypeArticleType.hbm.xml</value>
+				<value>hibernate/CostType.hbm.xml</value>
+				<value>hibernate/CostUnit.hbm.xml</value>
+				<value>hibernate/OrderCost.hbm.xml</value>
+				<value>hibernate/AttributeChoice.hbm.xml</value>
+				<value>hibernate/ApplicationParam.hbm.xml</value>
+				<value>hibernate/Colli.hbm.xml</value>
+				<value>hibernate/Deviation.hbm.xml</value>
+				<value>hibernate/DeviationStatus.hbm.xml</value>
+				<value>hibernate/FunctionCategory.hbm.xml</value>
+				<value>hibernate/JobFunction.hbm.xml</value>
+				<value>hibernate/MainPackageV.hbm.xml</value>
+				<value>hibernate/VeggProductionV.hbm.xml</value>
+				<value>hibernate/SumOrderReadyV.hbm.xml</value>
+				<value>hibernate/GulvsponPackageV.hbm.xml</value>
+				<value>hibernate/GavlProductionV.hbm.xml</value>
+				<value>hibernate/PostShipment.hbm.xml</value>
+				<value>hibernate/FaktureringV.hbm.xml</value>
+				<value>hibernate/Supplier.hbm.xml</value>
+				<value>hibernate/SupplierType.hbm.xml</value>
+				<value>hibernate/EmployeeType.hbm.xml</value>
+				<value>hibernate/Employee.hbm.xml</value>
+				<value>hibernate/ExternalOrder.hbm.xml</value>
+				<value>hibernate/ExternalOrderLine.hbm.xml</value>
+				<value>hibernate/ExternalOrderLineAttribute.hbm.xml</value>
+				<value>hibernate/AssemblyOverdueV.hbm.xml</value>
+				<value>hibernate/PacklistV.hbm.xml</value>
+				<value>hibernate/WindowAccess.hbm.xml</value>
+				<value>hibernate/UserTypeAccess.hbm.xml</value>
+				<value>hibernate/TransportSumV.hbm.xml</value>
+				<value>hibernate/TakstolProductionV.hbm.xml</value>
+				<value>hibernate/TakstolPackageV.hbm.xml</value>
+				<value>hibernate/FrontProductionV.hbm.xml</value>
+				<value>hibernate/Budget.hbm.xml</value>
+				<value>hibernate/NokkelProduksjonV.hbm.xml</value>
+				<value>hibernate/Info.hbm.xml</value>
+				<value>hibernate/OrderPacklistReadyV.hbm.xml</value>
+				<value>hibernate/NotInvoicedV.hbm.xml</value>
+				<value>hibernate/OrderStatusNotSentV.hbm.xml</value>
+				<value>hibernate/OwnProductionV.hbm.xml</value>
+				<value>hibernate/PostShipmentCountV.hbm.xml</value>
+				<value>hibernate/ProductArea.hbm.xml</value>
+				<value>hibernate/PaidV.hbm.xml</value>
+				<value>hibernate/OrderComment.hbm.xml</value>
+				<value>hibernate/TaksteinSkarpnesV.hbm.xml</value>
+				<value>hibernate/PreventiveAction.hbm.xml</value>
+				<value>hibernate/PreventiveActionComment.hbm.xml</value>
+				<value>hibernate/DeviationSumV.hbm.xml</value>
+				<value>hibernate/NokkelSalgV.hbm.xml</value>
+				<value>hibernate/NokkelDriftProsjekteringV.hbm.xml</value>
+				<value>hibernate/NokkelTransportV.hbm.xml</value>
+				<value>hibernate/NokkelMonteringV.hbm.xml</value>
+				<value>hibernate/NokkelOkonomiV.hbm.xml</value>
+				<value>hibernate/OrderReserveV.hbm.xml</value>
+				<value>hibernate/SumAvvikV.hbm.xml</value>
+				<value>hibernate/ProductAreaGroup.hbm.xml</value>
+				<value>hibernate/UserProductAreaGroup.hbm.xml</value>
+				<value>hibernate/TransportCost.hbm.xml</value>
+				<value>hibernate/TransportCostAddition.hbm.xml</value>
+				<value>hibernate/TransportCostBasis.hbm.xml</value>
+				<value>hibernate/County.hbm.xml</value>
+				<value>hibernate/Area.hbm.xml</value>
+				<value>hibernate/CraningCost.hbm.xml</value>
+				<value>hibernate/SalesV.hbm.xml</value>
+				<value>hibernate/SalesDataSnapshot.hbm.xml</value>
+				<value>hibernate/ImportOrderV.hbm.xml</value>
+				<value>hibernate/Accident.hbm.xml</value>
+				<value>hibernate/AccidentParticipant.hbm.xml</value>
+				<value>hibernate/DrawerV.hbm.xml</value>
+				<value>hibernate/ProcentDone.hbm.xml</value>
+				<value>hibernate/ProductionUnit.hbm.xml</value>
+				<value>hibernate/ProductionUnitProductAreaGroup.hbm.xml</value>
+				<value>hibernate/PreventiveActionCommentCommentType.hbm.xml</value>
+				<value>hibernate/CommentType.hbm.xml</value>
+				<value>hibernate/OrderCommentCommentType.hbm.xml</value>
+				<value>hibernate/SaleStatusV.hbm.xml</value>
+				<value>hibernate/DeviationV.hbm.xml</value>
+				<value>hibernate/Cutting.hbm.xml</value>
+				<value>hibernate/CuttingLine.hbm.xml</value>
+				<value>hibernate/OrdchgrHeadV.hbm.xml</value>
+				<value>hibernate/OrdchgrLineV.hbm.xml</value>
+				<value>hibernate/TakstolInfoV.hbm.xml</value>
+				<value>hibernate/TakstolAllV.hbm.xml</value>
+				<value>hibernate/TakstolProbability90V.hbm.xml</value>
+				<value>hibernate/DeviationSumJobFunctionV.hbm.xml</value>
+				<value>hibernate/IntelleV.hbm.xml</value>
+				<value>hibernate/TakstoltegnerV.hbm.xml</value>
+				<value>hibernate/SaleStatusOrderReserveV.hbm.xml</value>
+				<value>hibernate/SupplierProductAreaGroup.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="sessionFactorySuperoffice"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSourceSuperoffice" />
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>hibernate/Contact.hbm.xml</value>
+				<value>hibernate/Sale.hbm.xml</value>
+				<value>hibernate/OfferAddress.hbm.xml</value>
+				<value>hibernate/Phone.hbm.xml</value>
+				<value>hibernate/Address.hbm.xml</value>
+				<value>hibernate/Person.hbm.xml</value>
+				<value>hibernate/Associate.hbm.xml</value>
+				<value>hibernate/Udsalesmall.hbm.xml</value>
+				<value>hibernate/Project.hbm.xml</value>
+				<value>hibernate/Document.hbm.xml</value>
+				<value>hibernate/Appointment.hbm.xml</value>
+				<value>hibernate/Doctmpl.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="sessionFactoryVisma"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSourceVisma" />
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>hibernate/Ordln.hbm.xml</value>
+				<value>hibernate/Ord.hbm.xml</value>
+				<value>hibernate/CustTr.hbm.xml</value>
+				<value>hibernate/Prod.hbm.xml</value>
+				<value>hibernate/PrDcMat.hbm.xml</value>
+				<value>hibernate/StcBal.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:hibernate.properties</value>
+			</list>
+		</property>
+	</bean>
+
+
+	<!--
+		Transaction manager for a single Hibernate SessionFactory (alternative
+		to JTA)
+	-->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="transactionManagerSuperoffice"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactorySuperoffice" />
+		</property>
+	</bean>
+	<bean id="transactionManagerVisma"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryVisma" />
+		</property>
+	</bean>
+
+
+
+	<!--
+		Transaction template for Managers, from:
+		http://blog.exis.com/colin/archives/2004/07/31/concise-transaction-definitions-spring-11/
+	-->
+	<bean id="txProxyTemplate" abstract="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		lazy-init="false">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="txProxyTemplateSuperoffice" abstract="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		lazy-init="false">
+		<property name="transactionManager">
+			<ref bean="transactionManagerSuperoffice" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="txProxyTemplateVisma" abstract="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		lazy-init="false">
+		<property name="transactionManager">
+			<ref bean="transactionManagerVisma" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!--
+		============================== CACHE =============================
+	-->
+
+
+	
+</beans>

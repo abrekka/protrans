@@ -1,0 +1,268 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.Deviation" 
+    table="DEVIATION"
+>
+<id name="deviationId" type="java.lang.Integer" column="DEVIATION_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="registrationDate"
+        type="java.util.Date"
+        column="REGISTRATION_DATE"
+        length="32"
+    />
+    <property
+        name="userName"
+        type="java.lang.String"
+        column="USER_NAME"
+        length="255"
+    />
+	<property
+        name="description"
+        type="java.lang.String"
+        column="DESCRIPTION"
+        length="255"
+    />
+	<property
+        name="customerNr"
+        type="java.lang.Integer"
+        column="CUSTOMER_NR"
+        length="32"
+    />
+	<property
+        name="orderNr"
+        type="java.lang.String"
+        column="ORDER_NR"
+        length="32"
+    />
+	<property
+        name="dateClosed"
+        type="java.util.Date"
+        column="DATE_CLOSED"
+        length="32"
+    />
+	<!--property
+        name="freeText"
+        type="java.lang.String"
+        column="FREE_TEXT"
+        length="500"
+    /-->
+	<property
+        name="productName"
+        type="java.lang.String"
+        column="PRODUCT_NAME"
+        length="500"
+    />
+	<!--property
+        name="preventiveAction"
+        type="java.lang.String"
+        column="PREVENTIVE_ACTION"
+        length="500"
+    /-->
+	<property
+        name="customerName"
+        type="java.lang.String"
+        column="CUSTOMER_NAME"
+        length="255"
+    />
+	<property
+        name="doAssembly"
+        type="java.lang.Integer"
+        column="DO_ASSEMBLY"
+        length="32"
+    />
+	<property
+        name="responsible"
+        type="java.lang.String"
+        column="RESPONSIBLE"
+        length="100"
+    />
+	<property
+        name="checked"
+        type="java.lang.Integer"
+        column="CHECKED"
+        length="32"
+    />
+	<property
+        name="initiatedBy"
+        type="java.lang.String"
+        column="INITIATED_BY"
+        length="32"
+    />
+	<property
+        name="lastChanged"
+        type="java.lang.String"
+        column="LAST_CHANGED"
+        length="100"
+    />
+	<property
+        name="projectNr"
+        type="java.lang.String"
+        column="PROJECT_NR"
+        length="100"
+    />
+	<property
+        name="cachedComment"
+        type="java.lang.String"
+        column="CACHED_COMMENT"
+        length="4000"
+    />
+    <property
+        name="procedureCheck"
+        type="java.util.Date"
+        column="PROCEDURE_CHECK"
+        length="32"
+    />
+
+    
+    <!-- Associations -->
+	<many-to-one
+        name="ownFunction"
+        class="no.ugland.utransprod.model.JobFunction"
+        not-null="true"
+    >
+        <column name="OWN_FUNCTION_ID" />
+    </many-to-one>
+	<many-to-one
+        name="deviationFunction"
+        class="no.ugland.utransprod.model.JobFunction"
+        not-null="true"
+    >
+        <column name="DEVIATION_FUNCTION_ID" />
+    </many-to-one>
+	
+	<many-to-one
+        name="deviationStatus"
+        class="no.ugland.utransprod.model.DeviationStatus"
+        not-null="false"
+    >
+        <column name="DEVIATION_STATUS_ID" />
+    </many-to-one>
+	<many-to-one
+        name="functionCategory"
+        class="no.ugland.utransprod.model.FunctionCategory"
+        not-null="false"
+    >
+        <column name="FUNCTION_CATEGORY_ID" />
+    </many-to-one>
+	<!--many-to-one
+        name="internalCost"
+        class="no.ugland.utransprod.model.OrderCost"
+        not-null="false"
+    >
+        <column name="INTERNAL_COST_ID" />
+    </many-to-one-->
+	<!--many-to-one
+        name="externalCost"
+        class="no.ugland.utransprod.model.OrderCost"
+        not-null="false"
+    >
+        <column name="EXTERNAL_COST_ID" />
+    </many-to-one-->
+	<many-to-one
+        name="productArea"
+        class="no.ugland.utransprod.model.ProductArea"
+        not-null="false"
+    >
+        <column name="PRODUCT_AREA_ID" />
+    </many-to-one>
+  
+	<one-to-one
+        name="postShipment"
+        class="no.ugland.utransprod.model.PostShipment"
+        property-ref="deviation"
+		lazy="proxy"
+		cascade="all"
+
+    />
+	
+	<!--set
+        name="postShipments"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key>
+            <column name="DEVIATION_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.PostShipment"
+        />
+    </set-->
+	<set
+        name="orderComments"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+		order-by="COMMENT_DATE desc"
+    >
+        <key>
+            <column name="DEVIATION_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.OrderComment"
+        />
+    </set>
+	
+	<many-to-one
+        name="order"
+        class="no.ugland.utransprod.model.Order"
+        not-null="false"
+    >
+        <column name="ORDER_ID" />
+    </many-to-one>
+	
+	<set
+        name="orderLines"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+
+    >
+        <key>
+            <column name="DEVIATION_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.OrderLine"
+        />
+    </set>
+	<set
+        name="orderCosts"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+
+    >
+        <key>
+            <column name="DEVIATION_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.OrderCost"
+        />
+    </set>
+	<many-to-one
+        name="preventiveAction"
+        class="no.ugland.utransprod.model.PreventiveAction"
+        not-null="false"
+    >
+        <column name="PREVENTIVE_ACTION_ID" />
+    </many-to-one>
+
+	<one-to-one
+        name="assembly"
+        class="no.ugland.utransprod.model.Assembly"
+        property-ref="deviation"
+		lazy="proxy"
+    />
+</class>
+</hibernate-mapping>

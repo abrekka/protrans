@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<class 
+    name="no.ugland.utransprod.model.ExternalOrderLine" 
+    table="EXTERNAL_ORDER_LINE"
+>
+<id name="externalOrderLineId" type="java.lang.Integer" column="EXTERNAL_ORDER_LINE_ID">
+        <generator class="identity"/>
+        </id>
+
+	<property
+        name="articleName"
+        type="java.lang.String"
+        column="ARTICLE_NAME"
+        length="255"
+    />
+    <property
+        name="numberOfItems"
+        type="java.lang.Integer"
+        column="NUMBER_OF_ITEMS"
+        length="32"
+    />
+    
+    <property
+        name="attributeInfo"
+        type="java.lang.String"
+        column="ATTRIBUTE_INFO"
+        length="1000"
+    />
+	
+    
+    <!-- Associations -->
+	
+    
+     <many-to-one
+        name="externalOrder"
+        class="no.ugland.utransprod.model.ExternalOrder"
+    >
+        <column name="EXTERNAL_ORDER_ID" />
+    </many-to-one>
+    
+    <many-to-one
+        name="orderLine"
+        class="no.ugland.utransprod.model.OrderLine"
+        not-null="true"
+    >
+        <column name="ORDER_LINE_ID" />
+    </many-to-one>
+   
+    <set
+        name="externalOrderLineAttributes"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+		order-by="EXTERNAL_ORDER_LINE_ATTRIBUTE_NAME"
+    >
+        <key>
+            <column name="EXTERNAL_ORDER_LINE_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.ExternalOrderLineAttribute"
+        />
+    </set>
+
+
+</class>
+</hibernate-mapping>

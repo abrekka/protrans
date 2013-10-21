@@ -1,0 +1,31 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="ProTrans">
+<!--   <test verbose="2" name="no.ugland.utransprod.gui.single.OrderOverviewViewTest" annotations="JDK"> -->
+<test name="test">
+<!--    <groups> -->
+<!--     <run> -->
+<!--       <include name="maven"  /> -->
+<!--     </run> -->
+<!--   </groups> -->
+<!--   <packages> -->
+<!--       <package name="no.ugland.utransprod.dao" /> -->
+<!--       <package name="no.ugland.utransprod.gui" /> -->
+<!--       <package name="no.ugland.utransprod.gui.checker" /> -->
+<!--       <package name="no.ugland.utransprod.gui.group1" /> -->
+<!--       <package name="no.ugland.utransprod.gui.handlers.tester" /> -->
+<!--       <package name="no.ugland.utransprod.gui.importing" /> -->
+<!--       <package name="no.ugland.utransprod.gui.overview" /> -->
+<!--       <package name="no.ugland.utransprod.gui.overview2" /> -->
+<!--       <package name="no.ugland.utransprod.model" /> -->
+<!--       <package name="no.ugland.utransprod.service" /> -->
+<!--       <package name="no.ugland.utransprod.util" /> -->
+<!--       <package name="no.ugland.utransprod.util.excel" /> -->
+<!--       <package name="no.ugland.utransprod.util.report" /> -->
+<!--       <package name="no.ugland.utransprod.util.rules" /> -->
+<!--    </packages> -->
+  
+    <!-- classes>
+      <class name="no.ugland.utransprod.gui.single.OrderOverviewViewTest"/>
+    </classes> -->
+  </test>
+</suite>

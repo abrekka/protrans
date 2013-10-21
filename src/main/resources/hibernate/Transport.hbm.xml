@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.Transport" 
+    table="TRANSPORT"
+>
+<id name="transportId" type="java.lang.Integer" column="TRANSPORT_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="transportYear"
+        type="java.lang.Integer"
+        column="TRANSPORT_YEAR"
+        length="32"
+    />
+    
+    <property
+        name="transportWeek"
+        type="java.lang.Integer"
+        column="TRANSPORT_WEEK"
+        length="32"
+    />
+    
+    <property
+        name="loadingDate"
+        type="java.util.Date"
+        column="LOADING_DATE"
+        length="32"
+    />
+    <property
+        name="transportName"
+        type="java.lang.String"
+        column="TRANSPORT_NAME"
+        not-null="true"
+        length="50"
+    />
+    <property
+        name="sent"
+        type="java.util.Date"
+        column="SENT"
+        length="32"
+    />
+	<property
+        name="loadTime"
+        type="java.lang.String"
+        column="LOAD_TIME"
+        length="10"
+    />
+	<property
+        name="trolley"
+        type="java.lang.String"
+        column="TROLLEY"
+        length="255"
+    />
+	<property
+        name="transportComment"
+        type="java.lang.String"
+        column="TRANSPORT_COMMENT"
+        length="1000"
+    />
+    
+    <!-- Associations -->
+    <set
+        name="orders"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="TRANSPORT_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.Order"
+        />
+    </set>
+	
+	<set
+        name="postShipments"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="TRANSPORT_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.PostShipment"
+        />
+    </set>
+    <many-to-one
+        name="supplier"
+        class="no.ugland.utransprod.model.Supplier"
+    >
+        <column name="SUPPLIER_ID" />
+    </many-to-one> 
+	<many-to-one
+        name="employee"
+        class="no.ugland.utransprod.model.Employee"
+    >
+        <column name="EMPLOYEE_ID" />
+    </many-to-one> 
+    
+
+</class>
+</hibernate-mapping>

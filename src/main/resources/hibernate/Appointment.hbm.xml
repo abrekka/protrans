@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class name="no.ugland.utransprod.model.Appointment" table="crm5.APPOINTMENT">
+<id name="appointmentId" type="java.lang.Integer" column="APPOINTMENT_ID">
+        <generator class="assigned"/>
+        </id>
+
+	 <property
+        name="registered"
+        type="java.lang.Integer"
+        column="REGISTERED"
+        length="32"
+    />
+    
+
+    <property
+        name="taskIdx"
+        type="java.lang.Integer"
+        column="TASK_IDX"
+        length="32"
+    />
+	
+    <property
+        name="contactId"
+        type="java.lang.Integer"
+        column="CONTACT_ID"
+        length="32"
+    />
+	<property
+        name="documentId"
+        type="java.lang.Integer"
+        column="DOCUMENT_ID"
+        length="32"
+    />
+	<property
+        name="associateId"
+        type="java.lang.Integer"
+        column="ASSOCIATE_ID"
+        length="32"
+    />
+
+    
+
+</class>
+</hibernate-mapping>

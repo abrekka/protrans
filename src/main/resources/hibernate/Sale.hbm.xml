@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class name="no.ugland.utransprod.model.Sale" table="crm5.SALE">
+<!--class name="no.ugland.utransprod.model.Sale" table="SALE"-->
+<id name="saleId" type="java.lang.Integer" column="SALE_ID">
+        <generator class="assigned"/>
+        </id>
+
+    
+
+    <property
+        name="number1"
+        type="java.lang.String"
+        column="NUMBER1"
+        length="255"
+    />
+    <property
+        name="amount"
+        type="java.math.BigDecimal"
+        column="AMOUNT"
+        length="32"
+    />
+	<property
+        name="saledate"
+        type="java.lang.Integer"
+        column="SALEDATE"
+        length="32"
+    />
+	<property
+        name="userdefId"
+        type="java.lang.Integer"
+        column="USERDEF_ID"
+        length="32"
+    />
+	<property
+        name="groupIdx"
+        type="java.lang.Integer"
+        column="GROUP_IDX"
+        length="32"
+    />
+	<property
+        name="registered"
+        type="java.lang.Integer"
+        column="REGISTERED"
+        length="32"
+    />
+	<property
+        name="probability"
+        type="java.lang.Integer"
+        column="PROBABILITY"
+        length="32"
+    />
+	<property
+        name="projectId"
+        type="java.lang.Integer"
+        column="PROJECT_ID"
+        length="32"
+    />
+	
+
+    
+    <!-- Associations -->
+    <many-to-one
+        name="contact"
+        class="no.ugland.utransprod.model.Contact"
+		not-null="false"
+    >
+        <column name="CONTACT_ID" />
+    </many-to-one> 
+   
+	 <!--one-to-one
+		 
+        name="udsalesmall"
+        class="no.ugland.utransprod.model.Udsalesmall"
+        property-ref="sale"
+		 
+    /-->
+	<!--set
+        name="udsalesmalls"
+        lazy="false"
+    >
+		<key column="UDSALESMALL_ID" property-ref="userdefId"/> 
+
+        <one-to-many 
+            class="no.ugland.utransprod.model.Udsalesmall"
+        />
+    </set-->
+  
+
+</class>
+</hibernate-mapping>

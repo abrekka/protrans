@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.NokkelProduksjonV" 
+    table="NOKKEL_PRODUKSJON_V"
+>
+	<composite-id name="nokkelProduksjonVPK" class="no.ugland.utransprod.model.NokkelProduksjonVPK">
+        <key-property 
+            name="orderReadyYear" 
+            column="ORDER_READY_YEAR" 
+            type="java.lang.Integer"
+            length="32"
+        />
+        <key-property 
+            name="orderReadyWeek" 
+            column="ORDER_READY_WEEK" 
+            type="java.lang.Integer"
+            length="32"
+        />
+		<!--key-property 
+            name="villa" 
+            column="VILLA" 
+            type="java.lang.Integer"
+            length="32"
+        /-->
+		<key-property 
+            name="productArea" 
+            column="PRODUCT_AREA" 
+            type="java.lang.String"
+            length="255"
+        />
+		<key-property 
+            name="productAreaGroupName" 
+            column="PRODUCT_AREA_GROUP_NAME" 
+            type="java.lang.String"
+            length="255"
+        />
+
+    </composite-id>   
+
+    
+
+	<property
+        name="countOrderReady"
+        type="java.lang.Integer"
+        column="COUNT_ORDER_READY"
+        length="32"
+    />
+
+	<property
+        name="packageSumWeek"
+        type="java.math.BigDecimal"
+        column="PACKAGE_SUM_WEEK"
+        length="32"
+    />
+    
+    <property
+        name="deviationCount"
+        type="java.lang.Integer"
+        column="DEVIATION_COUNT"
+        length="32"
+    />
+    
+    <property
+        name="internalCost"
+        type="java.math.BigDecimal"
+        column="INTERNAL_COST"
+        length="32"
+    />
+	<property
+        name="budgetValue"
+        type="java.math.BigDecimal"
+        column="BUDGET_VALUE"
+        length="32"
+    />
+	<property
+        name="budgetDeviation"
+        type="java.math.BigDecimal"
+        column="BUDGET_DEVIATION"
+        length="32"
+    />
+	<property
+        name="budgetDeviationProc"
+        type="java.math.BigDecimal"
+        column="BUDGET_DEVIATION_PROC"
+        length="32"
+    />
+    
+    <!-- Associations -->
+	
+    
+    
+
+</class>
+</hibernate-mapping>

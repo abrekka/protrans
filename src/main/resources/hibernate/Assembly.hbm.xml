@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.Assembly" 
+    table="ASSEMBLY"
+>
+<id name="assemblyId" type="java.lang.Integer" column="ASSEMBLY_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="assemblyYear"
+        type="java.lang.Integer"
+        column="ASSEMBLY_YEAR"
+        length="32"
+    />
+    
+    <property
+        name="assemblyWeek"
+        type="java.lang.Integer"
+        column="ASSEMBLY_WEEK"
+        length="32"
+    />
+    <!--property
+        name="invoiced"
+        type="java.lang.Integer"
+        column="INVOICED"
+        length="32"
+    /-->
+    <!--property
+        name="comment"
+        type="java.lang.String"
+        column="COMMENT"
+        length="255"
+    /-->
+    <property
+        name="planned"
+        type="java.lang.String"
+        column="PLANNED"
+        length="255"
+    />
+    <property
+        name="firstPlanned"
+        type="java.lang.String"
+        column="FIRST_PLANNED"
+        length="255"
+    />
+    <!--property
+        name="assemblied"
+        type="java.lang.String"
+        column="ASSEMBLIED"
+        length="3"
+    /-->
+    <!--property
+        name="invoiced"
+        type="java.lang.String"
+        column="INVOICED"
+        length="3"
+    /-->
+	<property
+        name="assembliedDate"
+        type="java.util.Date"
+        column="ASSEMBLIED_DATE"
+        length="32"
+    />
+	<property
+        name="inactive"
+        type="java.lang.Integer"
+        column="INACTIVE"
+        length="32"
+    />
+    
+    <!-- Associations -->
+  <many-to-one
+        name="supplier"
+        class="no.ugland.utransprod.model.Supplier"
+		fetch="join"
+    >
+        <column name="SUPPLIER_ID" />
+    </many-to-one> 
+    
+    <!--set
+        name="orders"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="ASSEMBLY_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.Order"
+        />
+    </set-->
+    
+    <many-to-one
+        name="order"
+        class="no.ugland.utransprod.model.Order"
+        column="ORDER_ID"
+		fetch="join"
+        unique="true"
+    />
+	<many-to-one
+        name="deviation"
+        class="no.ugland.utransprod.model.Deviation"
+        column="DEVIATION_ID"
+        unique="true"
+    />
+
+    <!--many-to-one
+        name="order"
+        class="no.ugland.utransprod.model.Order"
+    >
+        <column name="ORDER_ID" />
+    </many-to-one--> 
+
+</class>
+</hibernate-mapping>

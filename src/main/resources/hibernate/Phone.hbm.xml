@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class name="no.ugland.utransprod.model.Phone" table="crm5.PHONE">
+<!--class name="no.ugland.utransprod.model.Phone" table="PHONE"-->
+<id name="phoneId" type="java.lang.Integer" column="PHONE_ID">
+        <generator class="assigned"/>
+        </id>
+
+    
+
+    <property
+        name="ptypeIdx"
+        type="java.lang.Integer"
+        column="PTYPE_IDX"
+        length="32"
+    />
+    <property
+        name="phone"
+        type="java.lang.String"
+        column="PHONE"
+        length="255"
+    />
+	<property
+        name="description"
+        type="java.lang.String"
+        column="DESCRIPTION"
+        length="255"
+    />
+
+    
+    <!-- Associations -->
+    <many-to-one
+        name="contact"
+        class="no.ugland.utransprod.model.Contact"
+    >
+        <column name="OWNER_ID" />
+    </many-to-one> 
+   
+  
+
+</class>
+</hibernate-mapping>

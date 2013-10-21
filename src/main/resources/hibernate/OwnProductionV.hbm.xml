@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.OwnProductionV" 
+    table="OWN_PRODUCTION_V"
+>
+<id name="orderId" type="java.lang.Integer" column="ORDER_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="packedBy"
+        type="java.lang.String"
+        column="PACKED_BY"
+        length="32"
+    />
+    
+    <property
+        name="transportYear"
+        type="java.lang.Integer"
+        column="TRANSPORT_YEAR"
+        length="32"
+    />
+	
+	<property
+        name="transportWeek"
+        type="java.lang.Integer"
+        column="TRANSPORT_WEEK"
+        length="32"
+    />
+	<property
+        name="customerNr"
+        type="java.lang.Integer"
+        column="CUSTOMER_NR"
+        length="32"
+    />
+	<property
+        name="customerName"
+        type="java.lang.String"
+        column="CUSTOMER_NAME"
+        length="32"
+    />
+	<property
+        name="garageValue"
+        type="java.math.BigDecimal"
+        column="GARAGE_VALUE"
+        length="32"
+    />
+	<property
+        name="orderReadyYear"
+        type="java.lang.Integer"
+        column="ORDER_READY_YEAR"
+        length="32"
+    />
+	<property
+        name="orderReadyWeek"
+        type="java.lang.Integer"
+        column="ORDER_READY_WEEK"
+        length="32"
+    />
+	<property
+        name="orderReadyDay"
+        type="java.lang.Integer"
+        column="ORDER_READY_DAY"
+        length="32"
+    />
+	<property
+        name="packlistReady"
+        type="java.util.Date"
+        column="PACKLIST_READY"
+        length="32"
+    />
+	<property
+        name="invoiceDate"
+        type="java.util.Date"
+        column="INVOICE_DATE"
+        length="32"
+    />
+
+	<property
+        name="productArea"
+        type="java.lang.String"
+        column="PRODUCT_AREA"
+        length="255"
+    />
+	<property
+        name="sent"
+        type="java.util.Date"
+        column="SENT"
+        length="32"
+    />
+	<property
+        name="orderNr"
+        type="java.lang.String"
+        column="ORDER_NR"
+        length="10"
+    />
+	<property
+        name="productAreaGroupName"
+        type="java.lang.String"
+        column="PRODUCT_AREA_GROUP_NAME"
+        length="255"
+    />
+    
+    
+    <!-- Associations -->
+  
+
+</class>
+</hibernate-mapping>

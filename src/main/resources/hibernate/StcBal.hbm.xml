@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class name="no.ugland.utransprod.model.StcBal" table="dbo.STCBAL">
+	<id name="prodNo" type="java.lang.String" column="PRODNO">
+        <generator class="identity"/>
+        </id>
+   
+
+
+	 <property
+        name="minBal"
+        type="java.lang.Integer"
+        column="MINBAL"
+        length="32"
+    />
+    
+
+	
+ 
+</class>
+</hibernate-mapping>

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.ProductAreaGroup" 
+    table="PRODUCT_AREA_GROUP"
+>
+<id name="productAreaGroupId" type="java.lang.Integer" column="PRODUCT_AREA_GROUP_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+	<property
+        name="productAreaGroupName"
+        type="java.lang.String"
+        column="PRODUCT_AREA_GROUP_NAME"
+        length="1000"
+    />
+    <property
+        name="usePrepayment"
+        type="java.lang.Integer"
+        column="USE_PREPAYMENT"
+        length="32"
+    />
+
+    
+    <!-- Associations -->
+	<set
+        name="productAreas"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+    >
+        <key>
+            <column name="PRODUCT_AREA_GROUP_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.ProductArea"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.ConstructionTypeAttribute" 
+    table="CONSTRUCTION_TYPE_ATTRIBUTE"
+>
+<id name="constructionTypeAttributeId" type="java.lang.Integer" column="CONSTRUCTION_TYPE_ATTRIBUTE_ID">
+        <generator class="identity"/>
+        </id>
+
+    <property
+        name="attributeValue"
+        type="java.lang.String"
+        column="ATTRIBUTE_VALUE"
+        length="50"
+    />
+     <property
+        name="dialogOrder"
+        type="java.lang.Integer"
+        column="DIALOG_ORDER"
+        length="50"
+    />
+
+	
+    
+    <!-- Associations -->
+    <many-to-one
+        name="constructionType"
+        class="no.ugland.utransprod.model.ConstructionType"
+        not-null="true"
+    >
+        <column name="CONSTRUCTION_TYPE_ID" />
+    </many-to-one>
+    <many-to-one
+        name="attribute"
+        class="no.ugland.utransprod.model.Attribute"
+        not-null="true"
+    >
+        <column name="ATTRIBUTE_ID" />
+    </many-to-one>
+    
+    <set
+        name="orderLineAttributes"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="CONSTRUCTION_TYPE_ATTRIBUTE_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.OrderLineAttribute"
+        />
+    </set>
+  
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class name="no.ugland.utransprod.model.Udsalesmall" table="crm5.UDSALESMALL">
+<!--class name="no.ugland.utransprod.model.Udsalesmall" table="UDSALESMALL"-->
+<id name="udsalesmallId" type="java.lang.Integer" column="UDSALESMALL_ID">
+        <generator class="assigned"/>
+        </id>
+
+    
+
+    <property
+        name="egenprodVerdiKunde"
+        type="java.math.BigDecimal"
+        column="DOUBLE05"
+        length="32"
+    />
+    <property
+        name="fraktKunde"
+        type="java.math.BigDecimal"
+        column="DOUBLE06"
+        length="32"
+    />
+	<property
+        name="monteringKunde"
+        type="java.math.BigDecimal"
+        column="DOUBLE07"
+        length="32"
+    />
+
+    
+    <property
+        name="kostEgenProd"
+        type="java.math.BigDecimal"
+        column="DOUBLE10"
+        length="32"
+    />
+	<property
+        name="jaLinjer"
+        type="java.math.BigDecimal"
+        column="DOUBLE08"
+        length="32"
+    />
+   <property
+        name="orderDate"
+        type="java.lang.Integer"
+        column="LONG03"
+        length="32"
+    />
+   <property
+        name="wantedDeliveryDate"
+        type="java.lang.Integer"
+        column="LONG01"
+        length="32"
+    />
+
+</class>
+</hibernate-mapping>

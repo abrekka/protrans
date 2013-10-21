@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.OrderStatusNotSentV" 
+    table="ORDER_STATUS_NOT_SENT_V"
+>
+<id name="orderId" type="java.lang.Integer" column="ORDER_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="packlistReady"
+        type="java.util.Date"
+        column="PACKLIST_READY"
+        length="32"
+    />
+    <property
+        name="orderReady"
+        type="java.util.Date"
+        column="ORDER_READY"
+        length="32"
+    />
+    <property
+        name="garageValue"
+        type="java.math.BigDecimal"
+        column="GARAGE_VALUE"
+        length="32"
+    />
+	<property
+        name="productArea"
+        type="java.lang.String"
+        column="PRODUCT_AREA"
+        length="32"
+    />
+    <!-- Associations -->
+    
+  
+
+</class>
+</hibernate-mapping>

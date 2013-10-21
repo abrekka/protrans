@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans default-lazy-init="false">
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${hibernate.sqlserver.connection.driver_class}"/>
+		<property name="jdbcUrl" value="${hibernate.sqlserver.connection.url}"/>
+		<property name="user" value="${hibernate.sqlserver.connection.username}"/>
+        <property name="password" value="${hibernate.sqlserver.connection.password}"/>
+		
+		<property name="minPoolSize" value="1"/>
+		<property name="maxPoolSize" value="10"/>
+		<property name="maxIdleTime" value="60"/>
+		<property name="maxStatements" value="0"/>
+		
+		<property name="autoCommitOnClose" value="true"/>
+		
+    </bean>
+	
+	<bean id="dataSourceSuperoffice" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${hibernate.sqlserver.connection.driver_class}"/>
+		<property name="jdbcUrl" value="${hibernate.sqlserver.superoffice.connection.url}"/>
+		<property name="user" value="${hibernate.sqlserver.connection.username}"/>
+        <property name="password" value="${hibernate.sqlserver.connection.password}"/>
+		
+		<property name="minPoolSize" value="1"/>
+		<property name="maxPoolSize" value="10"/>
+		<property name="maxIdleTime" value="60"/>
+		<property name="maxStatements" value="0"/>
+		
+		<property name="autoCommitOnClose" value="true"/>
+		
+    </bean>
+	<bean id="dataSourceVisma" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${hibernate.sqlserver.connection.driver_class}"/>
+		<property name="jdbcUrl" value="${hibernate.sqlserver.visma.connection.url}"/>
+		<property name="user" value="${hibernate.sqlserver.connection.username}"/>
+        <property name="password" value="${hibernate.sqlserver.connection.password}"/>
+		
+		<property name="minPoolSize" value="1"/>
+		<property name="maxPoolSize" value="10"/>
+		<property name="maxIdleTime" value="60"/>
+		<property name="maxStatements" value="0"/>
+		
+		<property name="autoCommitOnClose" value="true"/>
+		
+    </bean>
+	</beans>

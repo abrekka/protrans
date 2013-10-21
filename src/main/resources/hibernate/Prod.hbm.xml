@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class name="no.ugland.utransprod.model.Prod" table="dbo.PROD">
+	<id name="prodNo" type="java.lang.String" column="PRODNO">
+        <generator class="identity"/>
+        </id>
+   
+
+
+	 <property
+        name="prCatNo"
+        type="java.lang.Integer"
+        column="PRCATNO"
+        length="32"
+    />
+    
+
+    <property
+        name="prCatNo2"
+        type="java.lang.Integer"
+        column="PRCATNO2"
+        length="32"
+    />
+	 <property
+        name="inf"
+        type="java.lang.String"
+        column="INF"
+        length="255"
+    />
+ 
+</class>
+</hibernate-mapping>

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.SupplierType" 
+    table="SUPPLIER_TYPE"
+>
+<id name="supplierTypeId" type="java.lang.Integer" column="SUPPLIER_TYPE_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="supplierTypeName"
+        type="java.lang.String"
+        column="SUPPLIER_TYPE_NAME"
+        length="255"
+    />
+    
+    <property
+        name="description"
+        type="java.lang.String"
+        column="DESCRIPTION"
+        length="255"
+    />
+    <!-- Associations -->
+    
+
+</class>
+</hibernate-mapping>

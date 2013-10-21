@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.AssemblyOverdueV" 
+    table="ASSEMBLY_OVERDUE_V"
+>
+<id name="assemblyYear" type="java.lang.Integer" column="ASSEMBLY_YEAR">
+        <generator class="assigned"/>
+        </id>
+
+    
+
+	<property
+        name="assemblyWeek"
+        type="java.lang.Integer"
+        column="ASSEMBLY_WEEK"
+        length="255"
+    />
+    
+    <!-- Associations -->
+
+</class>
+</hibernate-mapping>

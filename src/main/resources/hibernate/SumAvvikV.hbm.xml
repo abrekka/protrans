@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.SumAvvikV" 
+    table="SUM_AVVIK_V"
+>
+<composite-id name="sumAvvikVPK" class="no.ugland.utransprod.model.SumAvvikVPK">
+        <key-property 
+            name="productArea" 
+            column="PRODUCT_AREA" 
+            type="java.lang.String"
+            length="255"
+        />
+        <key-property 
+            name="jobFunctionName" 
+            column="JOB_FUNCTION_NAME" 
+            type="java.lang.String"
+            length="255"
+        />
+		<key-property 
+            name="registrationYear" 
+            column="REGISTRATION_YEAR" 
+            type="java.lang.Integer"
+            length="32"
+        />
+		<key-property 
+            name="registrationWeek" 
+            column="REGISTRATION_WEEK" 
+            type="java.lang.Integer"
+            length="32"
+        />
+	<key-property 
+            name="closed" 
+            column="CLOSED" 
+            type="java.lang.Integer"
+            length="32"
+        />
+
+    </composite-id>   
+
+    
+
+	<property
+        name="deviationCount"
+        type="java.lang.Integer"
+        column="DEVIATION_COUNT"
+        length="32"
+    />
+	<property
+        name="internalCost"
+        type="java.math.BigDecimal"
+        column="INTERNAL_COST"
+        length="32"
+    />
+	<property
+        name="registrationMonth"
+        type="java.lang.Integer"
+        column="REGISTRATION_MONTH"
+        length="32"
+    />
+
+    
+
+</class>
+</hibernate-mapping>

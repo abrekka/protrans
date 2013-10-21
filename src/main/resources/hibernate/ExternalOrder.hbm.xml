@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.ExternalOrder" 
+    table="EXTERNAL_ORDER"
+>
+<id name="externalOrderId" type="java.lang.Integer" column="EXTERNAL_ORDER_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="externalOrderNr"
+        type="java.lang.String"
+        column="EXTERNAL_ORDER_NR"
+        length="50"
+    />
+
+	<property
+        name="deliveryDate"
+        type="java.util.Date"
+        column="DELIVERY_DATE"
+        length="32"
+    />
+	<property
+        name="att"
+        type="java.lang.String"
+        column="ATT"
+        length="32"
+    />
+	<property
+        name="ourRef"
+        type="java.lang.String"
+        column="OUR_REF"
+        length="32"
+    />
+	<property
+        name="markedWith"
+        type="java.lang.String"
+        column="MARKED_WITH"
+        length="32"
+    />
+	<property
+        name="phoneNr"
+        type="java.lang.String"
+        column="PHONE_NR"
+        length="32"
+    />
+	<property
+        name="faxNr"
+        type="java.lang.String"
+        column="FAX_NR"
+        length="32"
+    />
+    
+    <!-- Associations -->
+	
+    
+     <many-to-one
+        name="supplier"
+        class="no.ugland.utransprod.model.Supplier"
+    >
+        <column name="SUPPLIER_ID" />
+    </many-to-one>
+    
+    <many-to-one
+        name="order"
+        class="no.ugland.utransprod.model.Order"
+        not-null="true"
+    >
+        <column name="ORDER_ID" />
+    </many-to-one>
+   
+    <set
+        name="externalOrderLines"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="EXTERNAL_ORDER_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.ExternalOrderLine"
+        />
+    </set>
+    
+    
+
+    
+
+</class>
+</hibernate-mapping>

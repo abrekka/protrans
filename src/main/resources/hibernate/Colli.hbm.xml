@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.Colli" 
+    table="COLLI"
+>
+<id name="colliId" type="java.lang.Integer" column="COLLI_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="colliName"
+        type="java.lang.String"
+        column="COLLI_NAME"
+        length="50"
+    />
+    <property
+        name="sent"
+        type="java.util.Date"
+        column="SENT"
+        length="32"
+    />
+	 <property
+        name="height"
+        type="java.math.BigDecimal"
+        column="HEIGHT"
+        length="32"
+    />
+	<property
+        name="packageDate"
+        type="java.util.Date"
+        column="PACKAGE_DATE"
+        length="32"
+    />
+	<property
+        name="numberOfCollies"
+        type="java.lang.Integer"
+        column="NUMBER_OF_COLLIES"
+        length="32"
+    />
+    
+    <!-- Associations -->
+    <set
+        name="orderLines"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="COLLI_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.OrderLine"
+        />
+    </set>
+	
+	<many-to-one
+        name="order"
+        class="no.ugland.utransprod.model.Order"
+        not-null="true"
+    >
+        <column name="ORDER_ID" />
+    </many-to-one>
+	
+	<many-to-one
+        name="transport"
+        class="no.ugland.utransprod.model.Transport"
+        not-null="false"
+    >
+        <column name="TRANSPORT_ID" />
+    </many-to-one>
+  
+	<many-to-one
+        name="postShipment"
+        class="no.ugland.utransprod.model.PostShipment"
+        not-null="true"
+    >
+        <column name="POST_SHIPMENT_ID" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

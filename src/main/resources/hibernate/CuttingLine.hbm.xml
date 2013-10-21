@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.CuttingLine" 
+    table="CUTTING_LINE"
+>
+<id name="cuttingLineId" type="java.lang.Integer" column="CUTTING_LINE_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="name"
+        type="java.lang.String"
+        column="NAME"
+        length="50"
+    />
+    
+    <property
+        name="cutId"
+        type="java.lang.String"
+        column="CUT_ID"
+        length="50"
+    />
+    <property
+        name="cutLine"
+        type="java.lang.String"
+        column="CUT_LINE"
+        length="4000"
+    />
+    <property
+        name="lineNr"
+        type="java.lang.Integer"
+        column="LINE_NR"
+        length="4000"
+    />
+    <property
+        name="area"
+        type="java.lang.String"
+        column="AREA"
+        length="50"
+    />
+    <property
+        name="grade"
+        type="java.lang.String"
+        column="GRADE"
+        length="50"
+    />
+    <property
+        name="tickness"
+        type="java.lang.String"
+        column="TICKNESS"
+        length="50"
+    />
+    <property
+        name="depth"
+        type="java.lang.String"
+        column="DEPTH"
+        length="50"
+    />
+    <property
+        name="totalLength"
+        type="java.lang.String"
+        column="TOTAL_LENGTH"
+        length="50"
+    />
+    <property
+        name="lengthCenter"
+        type="java.lang.String"
+        column="LENGTH_CENTER"
+        length="50"
+    />
+    <property
+        name="description"
+        type="java.lang.String"
+        column="DESCRIPTION"
+        length="50"
+    />
+    <property
+        name="numberOf"
+        type="java.lang.String"
+        column="NUMBER_OF"
+        length="50"
+    />
+    <property
+        name="timberMarking"
+        type="java.lang.String"
+        column="TIMBER_MARKING"
+        length="50"
+    />
+    <property
+        name="grossLength"
+        type="java.lang.String"
+        column="GROSS_LENGTH"
+        length="50"
+    />
+    <property
+        name="delPcBelongsTo"
+        type="java.lang.String"
+        column="DEL_PC_BELONGS_TO"
+        length="50"
+    />
+    
+    <many-to-one
+        name="cutting"
+        class="no.ugland.utransprod.model.Cutting"
+    >
+        <column name="CUTTING_ID" />
+    </many-to-one> 
+  
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.UserType" 
+    table="USER_TYPE"
+>
+<id name="userTypeId" type="java.lang.Integer" column="USER_TYPE_ID">
+        <generator class="identity"/>
+        </id>
+
+	<property
+        name="description"
+        type="java.lang.String"
+        column="DESCRIPTION"
+        length="50"
+    />    
+    
+    <property
+        name="startupWindow"
+        type="java.lang.String"
+        column="STARTUP_WINDOW"
+        length="50"
+    />    
+	<property
+        name="isAdmin"
+        type="java.lang.Integer"
+        column="IS_ADMIN"
+        length="32"
+    />   
+   
+
+    <!-- Associations -->
+	<set
+        name="userTypeAccesses"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="USER_TYPE_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.UserTypeAccess"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

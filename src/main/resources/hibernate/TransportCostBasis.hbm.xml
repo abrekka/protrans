@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.TransportCostBasis" 
+    table="TRANSPORT_COST_BASIS"
+>
+<id name="transportCostBasisId" type="java.lang.Integer" column="TRANSPORT_COST_BASIS_ID">
+        <generator class="identity"/>
+        </id>
+
+
+	<property
+        name="periode"
+        type="java.lang.String"
+        column="PERIODE"
+        length="50"
+    />    
+	<property
+        name="invoiceNr"
+        type="java.lang.String"
+        column="INVOICE_NR"
+        length="50"
+    />   
+
+  
+  <!-- Associations -->
+	
+    
+     <many-to-one
+        name="supplier"
+        class="no.ugland.utransprod.model.Supplier"
+    >
+        <column name="SUPPLIER_ID" />
+    </many-to-one>
+
+	 <set
+        name="orderCosts"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="TRANSPORT_COST_BASIS_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.OrderCost"
+        />
+    </set>    
+
+</class>
+</hibernate-mapping>

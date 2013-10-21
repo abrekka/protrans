@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.OrderCommentCommentType" 
+    table="ORDER_COMMENT_COMMENT_TYPE"
+>
+<id name="orderCommentCommentTypeId" type="java.lang.Integer" column="ORDER_COMMENT_COMMENT_TYPE_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+
+    
+    <!-- Associations -->
+	<many-to-one
+        name="orderComment"
+        class="no.ugland.utransprod.model.OrderComment"
+        not-null="true"
+    >
+        <column name="ORDER_COMMENT_ID" />
+    </many-to-one>
+
+	<many-to-one
+        name="commentType"
+        class="no.ugland.utransprod.model.CommentType"
+        not-null="true"
+    >
+        <column name="COMMENT_TYPE_ID" />
+    </many-to-one>
+</class>
+</hibernate-mapping>

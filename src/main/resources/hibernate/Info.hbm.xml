@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.Info" 
+    table="INFO"
+>
+<id name="infoId" type="java.lang.Integer" column="INFO_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="infoText"
+        type="java.lang.String"
+        column="INFO_TEXT"
+        length="2000"
+    />
+    
+    <property
+        name="dateFrom"
+        type="java.util.Date"
+        column="DATE_FROM"
+        length="32"
+    />
+	<property
+        name="dateTo"
+        type="java.util.Date"
+        column="DATE_TO"
+        length="32"
+    />
+    
+  
+
+</class>
+</hibernate-mapping>

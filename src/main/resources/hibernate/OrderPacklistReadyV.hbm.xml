@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.OrderPacklistReadyV" 
+    table="ORDER_PACKLIST_READY_V"
+>
+	<composite-id name="orderPacklistReadyVPK" class="no.ugland.utransprod.model.OrderPacklistReadyVPK">
+        <key-property 
+            name="packlistYear" 
+            column="PACKLIST_YEAR" 
+            type="java.lang.Integer"
+            length="32"
+        />
+        <key-property 
+            name="packlistWeek" 
+            column="PACKLIST_WEEK" 
+            type="java.lang.Integer"
+            length="32"
+        />
+		<!--key-property 
+            name="villa" 
+            column="VILLA" 
+            type="java.lang.Integer"
+            length="32"
+        /-->
+		<key-property 
+            name="productArea" 
+            column="PRODUCT_AREA" 
+            type="java.lang.String"
+            length="255"
+        />
+			
+
+    </composite-id>   
+
+    
+
+	<property
+        name="orderCount"
+        type="java.lang.Integer"
+        column="ORDER_COUNT"
+        length="32"
+    />
+
+	<property
+        name="customerCost"
+        type="java.math.BigDecimal"
+        column="CUSTOMER_COST"
+        length="32"
+    />
+    
+    <!-- Associations -->
+	
+    
+    
+
+</class>
+</hibernate-mapping>

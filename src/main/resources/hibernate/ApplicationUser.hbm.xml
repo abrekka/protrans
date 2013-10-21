@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.ApplicationUser" 
+    table="APPLICATION_USER"
+>
+<id name="userId" type="java.lang.Integer" column="USER_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="userName"
+        type="java.lang.String"
+        column="USER_NAME"
+        length="50"
+    />
+    
+    <property
+        name="firstName"
+        type="java.lang.String"
+        column="FIRST_NAME"
+        length="50"
+    />
+    <property
+        name="lastName"
+        type="java.lang.String"
+        column="LAST_NAME"
+        length="50"
+    />
+    <property
+        name="password"
+        type="java.lang.String"
+        column="PASSWORD"
+        length="50"
+    />
+	<property
+        name="groupUser"
+        type="java.lang.String"
+        column="GROUP_USER"
+        length="32"
+    />
+
+    
+    <!-- Associations -->
+    <set
+        name="userRoles"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="USER_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.UserRole"
+        />
+    </set>
+
+	<many-to-one
+        name="jobFunction"
+        class="no.ugland.utransprod.model.JobFunction"
+        not-null="false"
+		lazy="no-proxy"
+    >
+        <column name="JOB_FUNCTION_ID" />
+    </many-to-one>  
+	<many-to-one
+        name="productArea"
+        class="no.ugland.utransprod.model.ProductArea"
+        not-null="false"
+
+    >
+        <column name="PRODUCT_AREA_ID" />
+    </many-to-one>  
+
+	 <set
+        name="userProductAreaGroups"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="USER_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.UserProductAreaGroup"
+        />
+    </set>
+</class>
+</hibernate-mapping>

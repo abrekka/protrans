@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.OrderReserveV" 
+    table="ORDER_RESERVE_V"
+>
+	<composite-id name="orderReserveVPK" class="no.ugland.utransprod.model.OrderReserveVPK">
+        <key-property 
+            name="isPacklistReady" 
+            column="IS_PACKLIST_READY" 
+            type="java.lang.String"
+            length="5"
+        />
+		<key-property 
+            name="productArea" 
+            column="PRODUCT_AREA" 
+            type="java.lang.String"
+            length="255"
+        />
+
+    </composite-id>   
+
+    
+
+	<property
+        name="orderCount"
+        type="java.lang.Integer"
+        column="ORDER_COUNT"
+        length="32"
+    />
+
+	<property
+        name="customerCost"
+        type="java.math.BigDecimal"
+        column="CUSTOMER_COST"
+        length="32"
+    />
+    <property
+        name="ownProduction"
+        type="java.math.BigDecimal"
+        column="OWN_PRODUCTION"
+        length="32"
+    />
+    
+    
+    <!-- Associations -->
+	
+    
+    
+
+</class>
+</hibernate-mapping>

@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans default-lazy-init="false">
+		
+		
+		
+		<bean id="orderManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.OrderManagerImpl">
+                <property name="dao" ref="orderDAO"/>
+            </bean>
+        </property>
+		</bean>
+		
+		<bean id="customerManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.CustomerManagerImpl">
+                <property name="dao" ref="customerDAO"/>
+            </bean>
+        </property>
+		</bean>
+		
+		<bean id="applicationUserManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.ApplicationUserManagerImpl">
+                <property name="dao" ref="applicationUserDAO"/>
+				<property name="jobFunctionManager" ref="jobFunctionManager"/>
+            </bean>
+        </property>
+		</bean>
+		
+		<bean id="constructionTypeManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.ConstructionTypeManagerImpl">
+                <property name="dao" ref="constructionTypeDAO"/>
+            </bean>
+        </property>
+		</bean>
+		
+		<bean id="transportManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.TransportManagerImpl">
+                <property name="dao" ref="transportDAO"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="articleTypeManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.ArticleTypeManagerImpl">
+                <property name="dao" ref="articleTypeDAO"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="attributeManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.AttributeManagerImpl">
+                <property name="dao" ref="attributeDAO"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="costTypeManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.CostTypeManagerImpl">
+                <property name="dao" ref="costTypeDAO"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="costUnitManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.CostUnitManagerImpl">
+                <property name="dao" ref="costUnitDAO"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="orderLineManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.OrderLineManagerImpl">
+                <property name="orderLineDAO" ref="orderLineDAO"/>
+                <property name="articleTypeManager" ref="articleTypeManager"/>
+                <property name="orderManager" ref="orderManager"/>
+                <property name="ordlnManager" ref="ordlnManager"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="applicationParamManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.ApplicationParamManagerImpl">
+                <property name="dao" ref="applicationParamDAO"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="assemblyManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.AssemblyManagerImpl">
+                <property name="dao" ref="assemblyDAO"/>
+            </bean>
+        </property>
+		</bean>
+	
+	<bean id="colliManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.ColliManagerImpl">
+                <property name="dao" ref="colliDAO"/>
+            </bean>
+        </property>
+		</bean>
+		
+		<!-- bean id="menuBarBuilder" parent="txProxyTemplate" singleton="true">
+        <property name="target">
+            <bean class="no.ugland.utransprod.gui.MenuBarBuilder">
+				<property name="windowFactory" ref="windowFactory"/>
+            </bean>
+        </property>
+		</bean-->
+		
+		
+		<bean id="deviationManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.DeviationManagerImpl">
+                <property name="dao" ref="deviationDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="jobFunctionManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.JobFunctionManagerImpl">
+                <property name="dao" ref="jobFunctionDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="deviationStatusManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.DeviationStatusManagerImpl">
+                <property name="dao" ref="deviationStatusDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="orderCostManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.OrderCostManagerImpl">
+                <property name="orderCostDAO" ref="orderCostDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="userTypeManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.UserTypeManagerImpl">
+                <property name="dao" ref="userTypeDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="functionCategoryManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.FunctionCategoryManagerImpl">
+                <property name="dao" ref="functionCategoryDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="mainPackageVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.MainPackageVManagerImpl">
+                <property name="mainPackageVDAO" ref="mainPackageVDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="veggProductionVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.VeggProductionVManagerImpl">
+                <property name="veggProductionVDAO" ref="veggProductionVDAO"/>
+                <property name="orderLineDAO" ref="orderLineDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="sumOrderReadyVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.SumOrderReadyVManagerImpl">
+                <property name="sumOrderReadyVDAO" ref="sumOrderReadyVDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="gulvsponPackageVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.GulvsponPackageVManagerImpl">
+                <property name="gulvsponPackageVDAO" ref="gulvsponPackageVDAO"/>
+                <property name="orderLineDAO" ref="orderLineDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="gavlProductionVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.GavlProductionVManagerImpl">
+                <property name="gavlProductionVDAO" ref="gavlProductionVDAO"/>
+                <property name="orderLineDAO" ref="orderLineDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="postShipmentManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.PostShipmentManagerImpl">
+                <property name="dao" ref="postShipmentDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="faktureringVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.FaktureringVManagerImpl">
+                <property name="faktureringVDAO" ref="faktureringVDAO"/>
+                <property name="orderLineDAO" ref="orderLineDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="supplierManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.SupplierManagerImpl">
+                <property name="dao" ref="supplierDAO"/>
+				<property name="orderCostDAO" ref="orderCostDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="incomingOrderManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.IncomingOrderManagerImpl">
+				<property name="contactDAO" ref="contactDAO"/>
+				<property name="customerDAO" ref="customerDAO"/>
+				<property name="udsalesmallDAO" ref="udsalesmallDAO"/>
+				<property name="importOrderVDAO" ref="importOrderVDAO"/>
+				<property name="ordlnDAO" ref="ordlnDAO"/>
+				<property name="articleTypeDAO" ref="articleTypeDAO"/>
+				<property name="ordlnManager" ref="ordlnManager"/>
+				<property name="constructionTypeManager" ref="constructionTypeManager"/>
+				<property name="costTypeManager" ref="costTypeManager"/>
+			<property name="costUnitManager" ref="costUnitManager"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="databaseManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.DatabaseManagerImpl">
+                <property name="databasePkgDAO" ref="databasePkgDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<!-- bean id="windowFactory" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.gui.model.WindowFactoryImpl">
+					</bean>
+        </property>
+		</bean-->
+	<bean id="constructionTypeArticleManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.ConstructionTypeArticleManagerImpl">
+                <property name="dao" ref="constructionTypeArticleDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="supplierTypeManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.SupplierTypeManagerImpl">
+                <property name="dao" ref="supplierTypeDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="employeeTypeManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.EmployeeTypeManagerImpl">
+                <property name="dao" ref="employeeTypeDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="employeeManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.EmployeeManagerImpl">
+                <property name="dao" ref="employeeDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="externalOrderManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.ExternalOrderManagerImpl">
+                <property name="dao" ref="externalOrderDAO"/>
+				<property name="externalOrderLineManager" ref="externalOrderLineManager"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="externalOrderLineManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.ExternalOrderLineManagerImpl">
+                <property name="dao" ref="externalOrderLineDAO"/>
+            </bean>
+        </property>
+		</bean>
+	
+	<!--bean id="managerFactory" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.util.ManagerFactory">
+				<property name="externalOrderManager" ref="externalOrderManager"/>
+				<property name="supplierManager" ref="supplierManager"/>
+				<property name="customerManager" ref="customerManager"/>
+				<property name="constructionTypeManager" ref="constructionTypeManager"/>
+				<property name="transportManager" ref="transportManager"/>
+				<property name="assemblyTeamManager" ref="assemblyTeamManager"/>
+				<property name="attributeManager" ref="attributeManager"/>
+				<property name="articleTypeManager" ref="articleTypeManager"/>
+				<property name="costUnitManager" ref="costUnitManager"/>
+				<property name="costTypeManager" ref="costTypeManager"/>
+				<property name="assemblyManager" ref="assemblyManager"/>
+				<property name="orderManager" ref="orderManager"/>
+				<property name="applicationParamManager" ref="applicationParamManager"/>
+				<property name="orderLineManager" ref="orderLineManager"/>
+					</bean>
+        </property>
+		</bean-->
+	<bean id="assemblyOverdueVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.AssemblyOverdueVManagerImpl">
+                <property name="assemblyOverdueVDAO" ref="assemblyOverdueVDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="packlistVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.PacklistVManagerImpl">
+                <property name="packlistVDAO" ref="packlistVDAO"/>
+                <property name="orderLineDAO" ref="orderLineDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="windowAccessManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.WindowAccessManagerImpl">
+                <property name="windowAccessDAO" ref="windowAccessDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="transportSumVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.TransportSumVManagerImpl">
+                <property name="transportSumVDAO" ref="transportSumVDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="takstolProductionVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.TakstolProductionVManagerImpl">
+                <property name="takstolProductionVDAO" ref="takstolProductionVDAO"/>
+                <property name="orderLineDAO" ref="orderLineDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="takstolPackageVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.TakstolPackageVManagerImpl">
+                <property name="takstolPackageVDAO" ref="takstolPackageVDAO"/>
+                <property name="orderLineDAO" ref="orderLineDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="frontProductionVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.FrontProductionVManagerImpl">
+                <property name="frontProductionVDAO" ref="frontProductionVDAO"/>
+                <property name="orderLineDAO" ref="orderLineDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="budgetManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.BudgetManagerImpl">
+                <property name="dao" ref="budgetDAO"/>
+				<property name="productAreaManager" ref="productAreaManager"/>
+				<property name="applicationUserDAO" ref="applicationUserDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="nokkelProduksjonVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.NokkelProduksjonVManagerImpl">
+                <property name="nokkelProduksjonVDAO" ref="nokkelProduksjonVDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="infoManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.InfoManagerImpl">
+                <property name="dao" ref="infoDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="orderPacklistReadyVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.OrderPacklistReadyVManagerImpl">
+                <property name="orderPacklistReadyVDAO" ref="orderPacklistReadyVDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="notInvoicedVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.NotInvoicedVManagerImpl">
+                <property name="notInvoicedVDAO" ref="notInvoicedVDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="orderStatusNotSentVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.OrderStatusNotSentVManagerImpl">
+                <property name="orderStatusNotSentVDAO" ref="orderStatusNotSentVDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="ownProductionVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.OwnProductionVManagerImpl">
+                <property name="ownProductionVDAO" ref="ownProductionVDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="postShipmentCountVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.PostShipmentCountVManagerImpl">
+                <property name="postShipmentCountVDAO" ref="postShipmentCountVDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="productAreaManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.ProductAreaManagerImpl">
+                <property name="productAreaDAO" ref="productAreaDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="paidVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.PaidVManagerImpl">
+                <property name="paidVDAO" ref="paidVDAO"/>
+                <property name="orderLineDAO" ref="orderLineDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="taksteinSkarpnesVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.TaksteinSkarpnesVManagerImpl">
+                <property name="taksteinSkarpnesVDAO" ref="taksteinSkarpnesVDAO"/>
+                <property name="orderLineDAO" ref="orderLineDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="preventiveActionManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.PreventiveActionManagerImpl">
+                <property name="dao" ref="preventiveActionDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="deviationSumVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.DeviationSumVManagerImpl">
+                <property name="deviationSumVDAO" ref="deviationSumVDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="nokkelSalgVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.NokkelSalgVManagerImpl">
+                <property name="nokkelSalgVDAO" ref="nokkelSalgVDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="nokkelDriftProsjekteringVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.NokkelDriftProsjekteringVManagerImpl">
+                <property name="nokkelDriftProsjekteringVDAO" ref="nokkelDriftProsjekteringVDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="nokkelTransportVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.NokkelTransportVManagerImpl">
+                <property name="nokkelTransportVDAO" ref="nokkelTransportVDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="nokkelMonteringVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.NokkelMonteringVManagerImpl">
+                <property name="nokkelMonteringVDAO" ref="nokkelMonteringVDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="nokkelOkonomiVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.NokkelOkonomiVManagerImpl">
+                <property name="nokkelOkonomiVDAO" ref="nokkelOkonomiVDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="orderReserveVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.OrderReserveVManagerImpl">
+                <property name="orderReserveVDAO" ref="orderReserveVDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="sumAvvikVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.SumAvvikVManagerImpl">
+                <property name="sumAvvikVDAO" ref="sumAvvikVDAO"/>
+				<property name="preventiveActionDAO" ref="preventiveActionDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="productAreaGroupManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.ProductAreaGroupManagerImpl">
+                <property name="productAreaGroupDAO" ref="productAreaGroupDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="transportCostManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.TransportCostManagerImpl">
+                <property name="transportCostDAO" ref="transportCostDAO"/>
+				<property name="transportCostAdditionManager" ref="transportCostAdditionManager"/>
+				<property name="costTypeManager" ref="costTypeManager"/>
+				<property name="costUnitManager" ref="costUnitManager"/>
+				<property name="transportCostBasisManager" ref="transportCostBasisManager"/>
+				<!--property name="orderManager" ref="orderManager"/-->
+				<!--property name="postShipmentManager" ref="postShipmentManager"/-->
+				<property name="transportManager" ref="transportManager"/>
+				<property name="areaManager" ref="areaManager"/>
+				<property name="countyManager" ref="countyManager"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="transportCostAdditionManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.TransportCostAdditionManagerImpl">
+                <property name="transportCostAdditionDAO" ref="transportCostAdditionDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="transportCostBasisManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.TransportCostBasisManagerImpl">
+                <property name="dao" ref="transportCostBasisDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="areaManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.AreaManagerImpl">
+                <property name="areaDAO" ref="areaDAO"/>
+				<property name="transportCostDAO" ref="transportCostDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="countyManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.CountyManagerImpl">
+                <property name="countyDAO" ref="countyDAO"/>
+				<property name="areaManager" ref="areaManager"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="ordlnManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.OrdlnManagerImpl">
+                <property name="ordlnDAO" ref="ordlnDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="craningCostManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.CraningCostManagerImpl">
+                <property name="craningCostDAO" ref="craningCostDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="salesVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.SalesVManagerImpl">
+                <property name="salesVDAO" ref="salesVDAO"/>
+				<property name="orderManager" ref="orderManager"/>
+				<property name="salesDataSnapshotDAO" ref="salesDataSnapshotDAO"/>
+				<property name="productAreaManager" ref="productAreaManager"/>
+				<property name="budgetManager" ref="budgetManager"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="custTrManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.CustTrManagerImpl">
+                <property name="custTrDAO" ref="custTrDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="accidentManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.AccidentManagerImpl">
+                <property name="dao" ref="accidentDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="drawerVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.DrawerVManagerImpl">
+                <property name="drawerVDAO" ref="drawerVDAO"/>
+				<property name="documentDAO" ref="documentDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="projectManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.ProjectManagerImpl">
+                <property name="projectDAO" ref="projectDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="procentDoneManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.ProcentDoneManagerImpl">
+                <property name="dao" ref="procentDoneDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="productionUnitManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.ProductionUnitManagerImpl">
+                <property name="dao" ref="productionUnitDAO"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="commentTypeManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.CommentTypeManagerImpl">
+                <property name="dao" ref="commentTypeDAO"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="attributeChoiceManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.AttributeChoiceManagerImpl">
+                <property name="dao" ref="attributeChoiceDAO"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="saleStatusVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.SaleStatusVManagerImpl">
+                <property name="saleStatusVDAO" ref="saleStatusVDAO"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="articleTypeAttributeManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.ArticleTypeAttributeManagerImpl">
+                <property name="dao" ref="articleTypeAttributeDAO"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="deviationVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.DeviationVManagerImpl">
+                <property name="deviationVDAO" ref="deviationVDAO"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="cuttingManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.CuttingManagerImpl">
+                <property name="dao" ref="cuttingDAO"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="ordchgrHeadVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.OrdchgrHeadVManagerImpl">
+                <property name="ordchgrHeadVDAO" ref="ordchgrHeadVDAO"/>
+                <property name="ordchgrLineVDAO" ref="ordchgrLineVDAO"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="takstolInfoVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.TakstolInfoVManagerImpl">
+                <property name="takstolInfoVDAO" ref="takstolInfoVDAO"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="takstolAllVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.TakstolAllVManagerImpl">
+                <property name="takstolAllVDAO" ref="takstolAllVDAO"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="takstolProbability90VManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.TakstolProbability90VManagerImpl">
+                <property name="takstolProbability90VDAO" ref="takstolProbability90VDAO"/>
+                <property name="takstolAllVManager" ref="takstolAllVManager"/>
+            </bean>
+        </property>
+		</bean>
+	<bean id="deviationSumJobFunctionVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.DeviationSumJobFunctionVManagerImpl">
+                <property name="deviationSumJobFunctionVDAO" ref="deviationSumJobFunctionVDAO"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="udsalesmallManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.UdsalesmallManagerImpl">
+                <property name="udsalesmallDAO" ref="udsalesmallDAO"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="salesWebManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.SalesWebManagerImpl">
+                <property name="salesVManager" ref="salesVManager"/>
+                <property name="productAreaManager" ref="productAreaManager"/>
+                <property name="budgetManager" ref="budgetManager"/>
+                <property name="orderReserveVManager" ref="orderReserveVManager"/>
+                <property name="saleStatusOrderReserveVManager" ref="saleStatusOrderReserveVManager"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="intelleVManager" parent="txProxyTemplate">
+          <property name="target">
+          <bean class="no.ugland.utransprod.service.impl.IntelleVManagerImpl">
+                <property name="intelleVDAO" ref="intelleVDAO"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="takstoltegnerVManager" parent="txProxyTemplate">
+          <property name="target">
+          <bean class="no.ugland.utransprod.service.impl.TakstoltegnerVManagerImpl">
+                <property name="takstoltegnerVDAO" ref="takstoltegnerVDAO"/>
+            </bean>
+        </property>
+		</bean>
+		<bean id="saleStatusOrderReserveVManager" parent="txProxyTemplate">
+          <property name="target">
+          <bean class="no.ugland.utransprod.service.impl.SaleStatusOrderReserveVManagerImpl">
+                <property name="saleStatusOrderReserveVDAO" ref="saleStatusOrderReserveVDAO"/>
+            </bean>
+        </property>
+		</bean>
+</beans>

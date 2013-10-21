@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class name="no.ugland.utransprod.model.Address" table="crm5.ADDRESS">
+<!--class name="no.ugland.utransprod.model.Address" table="ADDRESS"-->
+<id name="addressId" type="java.lang.Integer" column="ADDRESS_ID">
+        <generator class="assigned"/>
+        </id>
+
+	 <property
+        name="atypeIdx"
+        type="java.lang.Integer"
+        column="ATYPE_IDX"
+        length="32"
+    />
+    
+
+    <property
+        name="address1"
+        type="java.lang.String"
+        column="ADDRESS1"
+        length="255"
+    />
+	
+    <property
+        name="zipcode"
+        type="java.lang.String"
+        column="ZIPCODE"
+        length="32"
+    />
+	<property
+        name="city"
+        type="java.lang.String"
+        column="CITY"
+        length="32"
+    />
+
+    
+    <!-- Associations -->
+    <many-to-one
+        name="contact"
+        class="no.ugland.utransprod.model.Contact"
+    >
+        <column name="OWNER_ID" />
+    </many-to-one> 
+   
+  
+
+</class>
+</hibernate-mapping>

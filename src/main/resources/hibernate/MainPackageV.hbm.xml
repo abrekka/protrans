@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.MainPackageV" 
+    table="MAIN_PACKAGE_V"
+>
+<id name="orderId" type="java.lang.Integer" column="ORDER_ID">
+        <generator class="assigned"/>
+        </id>
+
+    
+
+	<property
+        name="customerDetails"
+        type="java.lang.String"
+        column="CUSTOMER_DETAILS"
+        length="255"
+    />
+
+	<property
+        name="transportDetails"
+        type="java.lang.String"
+        column="TRANSPORT_DETAILS"
+        length="255"
+    />
+    
+    <property
+        name="packageReady"
+        type="java.lang.Integer"
+        column="PACKAGE_READY"
+        length="1"
+    />
+    
+    <property
+        name="donePackage"
+        type="java.util.Date"
+        column="DONE_PACKAGE"
+        length="32"
+    />
+	<property
+        name="comment"
+        type="java.lang.String"
+        column="COMMENT"
+        length="255"
+    />
+	<property
+        name="transportYear"
+        type="java.lang.Integer"
+        column="TRANSPORT_YEAR"
+        length="4"
+    />
+	<property
+        name="transportWeek"
+        type="java.lang.Integer"
+        column="TRANSPORT_WEEK"
+        length="2"
+    />
+	<property
+        name="orderNr"
+        type="java.lang.String"
+        column="ORDER_NR"
+        length="6"
+    />
+	<property
+        name="address"
+        type="java.lang.String"
+        column="ADDRESS"
+        length="2"
+    />
+	<property
+        name="constructionTypeName"
+        type="java.lang.String"
+        column="CONSTRUCTION_TYPE_NAME"
+        length="2"
+    />
+	<property
+        name="info"
+        type="java.lang.String"
+        column="INFO"
+        length="100"
+    />
+	<property
+        name="customerNr"
+        type="java.lang.Integer"
+        column="CUSTOMER_NR"
+        length="100"
+    />
+	<property
+        name="loadingDate"
+        type="java.util.Date"
+        column="LOADING_DATE"
+        length="100"
+    />
+	<property
+        name="productAreaGroupName"
+        type="java.lang.String"
+        column="PRODUCT_AREA_GROUP_NAME"
+        length="100"
+    />
+    <property
+        name="probability"
+        type="java.lang.Integer"
+        column="PROBABILITY"
+        length="32"
+    />
+    
+    
+    <!-- Associations -->
+	
+    
+    
+
+</class>
+</hibernate-mapping>

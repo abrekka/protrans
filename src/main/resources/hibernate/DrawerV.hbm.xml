@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class name="no.ugland.utransprod.model.DrawerV" table="DRAWER_V">
+<id name="orderNr" type="java.lang.String" column="ORDER_NR">
+        <generator class="assigned"/>
+        </id>
+
+    
+
+	<property
+        name="customerNr"
+        type="java.lang.Integer"
+        column="CUSTOMER_NR"
+        length="32"
+    />
+    <!-- property
+        name="groupIdx"
+        type="java.lang.Integer"
+        column="GROUP_IDX"
+        length="32"
+    /-->
+    <property
+        name="productAreaNr"
+        type="java.lang.Integer"
+        column="PRODUCT_AREA_NR"
+        length="32"
+    />
+    <property
+        name="customerName"
+        type="java.lang.String"
+        column="CUSTOMER_NAME"
+        length="32"
+    />
+	<property
+        name="categoryName"
+        type="java.lang.String"
+        column="CATEGORY_NAME"
+        length="100"
+    />
+	<property
+        name="registered"
+        type="java.lang.Integer"
+        column="REGISTERED"
+        length="32"
+    />
+	<property
+        name="ownProduction"
+        type="java.math.BigDecimal"
+        column="OWN_PRODUCTION"
+        length="32"
+    />
+	<property
+        name="drawerName"
+        type="java.lang.String"
+        column="DRAWER_NAME"
+        length="100"
+    />
+	<property
+        name="documentId"
+        type="java.lang.Integer"
+        column="DOCUMENT_ID"
+        length="32"
+    />
+</class>
+</hibernate-mapping>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.WindowAccess" 
+    table="WINDOW_ACCESS"
+>
+<id name="windowAccessId" type="java.lang.Integer" column="WINDOW_ACCESS_ID">
+        <generator class="identity"/>
+        </id>
+
+	<property
+        name="windowName"
+        type="java.lang.String"
+        column="WINDOW_NAME"
+        length="50"
+    />    
+	<property
+        name="tableNames"
+        type="java.lang.String"
+        column="TABLE_NAMES"
+        length="1000"
+    />    
+    
+    <!-- Associations -->
+	
+
+</class>
+</hibernate-mapping>

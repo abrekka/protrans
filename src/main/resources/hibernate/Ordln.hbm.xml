@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class name="no.ugland.utransprod.model.Ordln" table="dbo.ORDLN">
+<!--class name="no.ugland.utransprod.model.Ordln" table="ORDLN"-->
+	<composite-id name="ordlnPK" class="no.ugland.utransprod.model.OrdlnPK">
+        <key-property 
+            name="lnno" 
+            column="LNNO" 
+            type="java.lang.Integer"
+            length="32"
+        />
+        <key-property 
+            name="ordno" 
+            column="ORDNO" 
+            type="java.lang.Integer"
+            length="32"
+        />
+    </composite-id>   
+
+
+	 <!-- property
+        name="productnr"
+        type="java.lang.String"
+        column="PRODNO"
+        length="32"
+    /-->
+    
+
+    <property
+        name="description"
+        type="java.lang.String"
+        column="DESCR"
+        length="255"
+    />
+	
+    <!-- property
+        name="numberOf"
+        type="java.math.BigDecimal"
+        column="NOINVOAB"
+        length="32"
+    /-->
+	<property
+        name="discount"
+        type="java.math.BigDecimal"
+        column="DC1P"
+        length="32"
+    />
+	<property
+        name="free1"
+        type="java.math.BigDecimal"
+        column="FREE1"
+        length="32"
+    />
+    <property
+        name="free4"
+        type="java.math.BigDecimal"
+        column="FREE4"
+        length="32"
+    />
+	<property
+        name="costPrice"
+        type="java.math.BigDecimal"
+        column="CSTPR"
+        length="32"
+    />
+	<property
+        name="price"
+        type="java.math.BigDecimal"
+        column="PRICE"
+        length="32"
+    />
+    <property
+        name="noOrg"
+        type="java.math.BigDecimal"
+        column="NOORG"
+        length="32"
+    />
+    <property
+        name="lgtU"
+        type="java.math.BigDecimal"
+        column="LGTU"
+        length="32"
+    />
+    <property
+        name="hgtU"
+        type="java.math.BigDecimal"
+        column="HGTU"
+        length="32"
+    />
+    <property
+        name="ccstPr"
+        type="java.math.BigDecimal"
+        column="CCSTPR"
+        length="32"
+    />
+     <property
+        name="wdtu"
+        type="java.math.BigDecimal"
+        column="WDTU"
+        length="32"
+    />
+    <property
+        name="am"
+        type="java.math.BigDecimal"
+        column="AM"
+        length="32"
+    />
+   
+    <many-to-one
+        name="prod"
+        class="no.ugland.utransprod.model.Prod"
+        not-found="ignore"
+    >
+        <column name="PRODNO" />
+    </many-to-one> 
+ 
+</class>
+</hibernate-mapping>

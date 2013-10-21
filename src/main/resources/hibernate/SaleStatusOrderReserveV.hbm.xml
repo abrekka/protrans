@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class name="no.ugland.utransprod.model.SaleStatusOrderReserveV" table="SALE_STATUS_ORDER_RESERVE_V">
+<id name="deptno" type="java.lang.Integer" column="DEPTNO">
+        <generator class="assigned"/>
+        </id>
+
+    
+
+    <property
+        name="orderReserve"
+        type="java.math.BigDecimal"
+        column="ORDER_RESERVE"
+        length="32"
+    />
+  
+
+</class>
+</hibernate-mapping>

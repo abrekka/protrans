@@ -1,0 +1,400 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping default-lazy="false">
+
+<class
+    name="no.ugland.utransprod.model.Order"
+    table="CUSTOMER_ORDER"
+>
+<id name="orderId" type="java.lang.Integer" column="ORDER_ID">
+        <generator class="identity"/>
+        </id>
+
+	<timestamp
+		column="CHANGE_DATE"
+		name="changeDate"
+		unsaved-value="undefined"
+	/>
+
+
+	<property
+        name="orderNr"
+        type="java.lang.String"
+        column="ORDER_NR"
+        length="50"
+    />
+
+	<property
+        name="deliveryAddress"
+        type="java.lang.String"
+        column="DELIVERY_ADDRESS"
+        length="50"
+    />
+
+    <property
+        name="postalCode"
+        type="java.lang.String"
+        column="POSTAL_CODE"
+        length="50"
+    />
+
+    <property
+        name="postOffice"
+        type="java.lang.String"
+        column="POST_OFFICE"
+        length="50"
+    />
+
+    <property
+        name="doAssembly"
+        type="java.lang.Integer"
+        column="DO_ASSEMBLY"
+        length="32"
+    />
+    <property
+        name="orderDate"
+        type="java.util.Date"
+        column="ORDER_DATE"
+        length="32"
+    />
+    <property
+        name="invoiceDate"
+        type="java.util.Date"
+        column="INVOICE_DATE"
+        length="32"
+    />
+    <property
+        name="sent"
+        type="java.util.Date"
+        column="SENT"
+        length="32"
+    />
+    <property
+        name="info"
+        type="java.lang.String"
+        column="INFO"
+        length="100"
+    />
+	<property
+        name="status"
+        type="java.lang.String"
+        column="STATUS"
+        length="500"
+    />
+	<property
+        name="colliesDone"
+        type="java.lang.Integer"
+        column="COLLIES_DONE"
+        length="32"
+    />
+	<property
+        name="orderReady"
+        type="java.util.Date"
+        column="ORDER_READY"
+        length="32"
+    />
+	<property
+        name="orderComplete"
+        type="java.util.Date"
+        column="ORDER_COMPLETE"
+        length="32"
+    />
+	<property
+        name="packageStarted"
+        type="java.util.Date"
+        column="PACKAGE_STARTED"
+        length="32"
+    />
+	<property
+        name="agreementDate"
+        type="java.util.Date"
+        column="AGREEMENT_DATE"
+        length="32"
+    />
+	<property
+        name="specialConcern"
+        type="java.lang.String"
+        column="SPECIAL_CONCERN"
+        length="32"
+    />
+	<property
+        name="deliveryWeek"
+        type="java.lang.Integer"
+        column="DELIVERY_WEEK"
+        length="32"
+    />
+	<property
+        name="telephoneNr"
+        type="java.lang.String"
+        column="TELEPHONE_NR"
+        length="255"
+    />
+	<property
+        name="packlistReady"
+        type="java.util.Date"
+        column="PACKLIST_READY"
+        length="32"
+    />
+	<property
+        name="packedBy"
+        type="java.lang.String"
+        column="PACKED_BY"
+        length="100"
+    />
+	<property
+        name="salesman"
+        type="java.lang.String"
+        column="SALESMAN"
+        length="255"
+    />
+	<property
+        name="paidDate"
+        type="java.util.Date"
+        column="PAID_DATE"
+        length="32"
+    />
+	<property
+        name="cachedComment"
+        type="java.lang.String"
+        column="CACHED_COMMENT"
+        length="2000"
+    />
+	<property
+        name="garageColliHeight"
+        type="java.math.BigDecimal"
+        column="GARAGE_COLLI_HEIGHT"
+        length="32"
+    />
+	<property
+        name="hasMissingCollies"
+        type="java.lang.Integer"
+        column="HAS_MISSING_COLLIES"
+        length="32"
+    />
+	<property
+        name="registrationDate"
+        type="java.util.Date"
+        column="REGISTRATION_DATE"
+        length="32"
+    />
+	<property
+        name="productionDate"
+        type="java.util.Date"
+        column="PRODUCTION_DATE"
+        length="32"
+    />
+    <property
+        name="takstolHeight"
+        type="java.lang.Integer"
+        column="TAKSTOL_HEIGHT"
+        length="32"
+    />
+     <property
+        name="probability"
+        type="java.lang.Integer"
+        column="PROBABILITY"
+        length="32"
+    />
+    <property
+        name="telephoneNrSite"
+        type="java.lang.String"
+        column="TELEPHONENR_SITE"
+        length="32"
+    />
+    <property
+        name="trossDrawer"
+        type="java.lang.String"
+        column="TROSS_DRAWER"
+        length="255"
+    />
+    <property
+        name="trossReady"
+        type="java.util.Date"
+        column="TROSS_READY"
+        length="32"
+    />
+    <property
+        name="trossStart"
+        type="java.util.Date"
+        column="TROSS_STARTED"
+        length="32"
+    />
+    <property
+        name="defaultColliesGenerated"
+        type="java.lang.Integer"
+        column="DEFAULT_COLLIES_GENERATED"
+        length="32"
+    />
+    <property
+        name="maxTrossHeight"
+        type="java.lang.Integer"
+        column="MAX_TROSS_HEIGHT"
+        length="32"
+    />
+    <property
+        name="productionBasis"
+        type="java.lang.Integer"
+        column="PRODUCTION_BASIS"
+        length="32"
+    />
+
+    <!-- Associations -->
+
+
+     <many-to-one
+        name="transport"
+        class="no.ugland.utransprod.model.Transport"
+		 lazy="proxy"
+    >
+        <column name="TRANSPORT_ID" />
+    </many-to-one>
+
+    <many-to-one
+        name="customer"
+        class="no.ugland.utransprod.model.Customer"
+        not-null="true"
+    >
+        <column name="CUSTOMER_ID" />
+    </many-to-one>
+
+   <many-to-one
+        name="constructionType"
+        class="no.ugland.utransprod.model.ConstructionType"
+	   lazy="proxy"
+    >
+        <column name="CONSTRUCTION_TYPE_ID" />
+    </many-to-one>
+	<many-to-one
+        name="productArea"
+        class="no.ugland.utransprod.model.ProductArea"
+	   lazy="proxy"
+    >
+        <column name="PRODUCT_AREA_ID" />
+    </many-to-one>
+
+    <set
+        name="orderLines"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="ORDER_ID" />
+        </key>
+        <one-to-many
+            class="no.ugland.utransprod.model.OrderLine"
+        />
+    </set>
+
+    <set
+        name="orderCosts"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="ORDER_ID" />
+        </key>
+        <one-to-many
+            class="no.ugland.utransprod.model.OrderCost"
+        />
+    </set>
+
+    <one-to-one
+        name="assembly"
+        class="no.ugland.utransprod.model.Assembly"
+        property-ref="order"
+		cascade="delete"
+    />
+
+	<set
+        name="collies"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="ORDER_ID" />
+        </key>
+        <one-to-many
+            class="no.ugland.utransprod.model.Colli"
+        />
+    </set>
+	<set
+        name="postShipments"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="ORDER_ID" />
+        </key>
+        <one-to-many
+            class="no.ugland.utransprod.model.PostShipment"
+        />
+    </set>
+	<set
+        name="externalOrders"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+    >
+        <key>
+            <column name="ORDER_ID" />
+        </key>
+        <one-to-many
+            class="no.ugland.utransprod.model.ExternalOrder"
+        />
+    </set>
+<set
+        name="orderComments"
+        lazy="true"
+        inverse="true"
+		cascade="all"
+		order-by="COMMENT_DATE desc"
+    >
+        <key>
+            <column name="ORDER_ID" />
+        </key>
+        <one-to-many
+            class="no.ugland.utransprod.model.OrderComment"
+        />
+    </set>
+	<set
+        name="deviations"
+        lazy="true"
+    >
+        <key>
+            <column name="ORDER_ID" />
+        </key>
+        <one-to-many
+            class="no.ugland.utransprod.model.Deviation"
+        />
+    </set>
+	<set
+        name="procentDones"
+        lazy="true"
+		inverse="true"
+		cascade="all-delete-orphan"
+		order-by="PROCENT_DONE_YEAR,PROCENT_DONE_WEEK"
+    >
+        <key>
+            <column name="ORDER_ID" />
+        </key>
+        <one-to-many
+            class="no.ugland.utransprod.model.ProcentDone"
+        />
+    </set>
+
+	<one-to-one
+        name="cutting"
+        class="no.ugland.utransprod.model.Cutting"
+        property-ref="order"
+		cascade="delete"
+    />
+
+</class>
+</hibernate-mapping>

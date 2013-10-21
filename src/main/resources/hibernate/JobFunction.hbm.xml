@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.JobFunction" 
+    table="JOB_FUNCTION"
+>
+<id name="jobFunctionId" type="java.lang.Integer" column="JOB_FUNCTION_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+	<property
+        name="jobFunctionName"
+        type="java.lang.String"
+        column="JOB_FUNCTION_NAME"
+        length="255"
+    />
+    <property
+        name="jobFunctionDescription"
+        type="java.lang.String"
+        column="JOB_FUNCTION_DESCRIPTION"
+        length="255"
+    />
+
+    
+    <!-- Associations -->
+	<many-to-one
+        name="manager"
+        class="no.ugland.utransprod.model.ApplicationUser"
+        not-null="false"
+    >
+        <column name="USER_ID" />
+    </many-to-one>
+	<set
+        name="ownDeviations"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="OWN_FUNCTION_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.Deviation"
+        />
+    </set>
+	<set
+        name="deviations"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="DEVIATION_FUNCTION_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.Deviation"
+        />
+    </set>
+	<set
+        name="functionCategories"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="JOB_FUNCTION_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.FunctionCategory"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

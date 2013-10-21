@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.Attribute" 
+    table="ATTRIBUTE"
+>
+<id name="attributeId" type="java.lang.Integer" column="ATTRIBUTE_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="name"
+        type="java.lang.String"
+        column="NAME"
+        length="50"
+    />
+    <property
+        name="description"
+        type="java.lang.String"
+        column="DESCRIPTION"
+        length="255"
+    />
+    <property
+        name="yesNo"
+        type="java.lang.Integer"
+        column="YES_NO"
+        length="1"
+    />
+	<property
+        name="specialConcern"
+        type="java.lang.Integer"
+        column="SPECIAL_CONCERN"
+        length="1"
+    />
+    <property
+        name="prodCatNo"
+        type="java.lang.Integer"
+        column="PROD_CAT_NO"
+        length="32"
+    />
+	<property
+        name="prodCatNo2"
+        type="java.lang.Integer"
+        column="PROD_CAT_NO_2"
+        length="32"
+    />
+    <property
+        name="attributeDataType"
+        type="java.lang.String"
+        column="ATTRIBUTE_DATA_TYPE"
+        length="32"
+    />
+
+    
+    <!-- Associations -->
+    <set
+        name="articleTypeAttributes"
+        lazy="true"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="ATTRIBUTE_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.ArticleTypeAttribute"
+        />
+    </set>
+    <set
+        name="attributeChoices"
+        lazy="false"
+        inverse="true"
+		cascade="all-delete-orphan"
+		order-by="CHOICE_VALUE"
+    >
+        <key>
+            <column name="ATTRIBUTE_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.AttributeChoice"
+        />
+    </set>
+    <set
+        name="constructionTypeAttributes"
+        lazy="false"
+        inverse="true"
+		cascade="none"
+    >
+        <key>
+            <column name="ATTRIBUTE_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.ConstructionTypeAttribute"
+        />
+    </set>
+  
+
+</class>
+</hibernate-mapping>

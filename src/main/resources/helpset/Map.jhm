@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE map
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
+         "http://java.sun.com/products/javahelp/map_1_0.dtd">
+
+<map version="1.0">
+	<mapID target="top" url="protranshelp/protrans.html" />
+    <mapID target="protrans.intro" url="protranshelp/protrans.html" />
+    <mapID target="protrans.customer" url="protranshelp/customer/customer.html" />
+    <mapID target="protrans.customer.cutomer_overview" url="protranshelp/customer/customer_overview.html" />
+    <mapID target="protrans.customer.new_customer" url="protranshelp/customer/new_customer.html" />
+    <mapID target="protrans.customer.edit_customer" url="protranshelp/customer/edit_customer.html" />
+    <mapID target="protrans.customer.search_customer" url="protranshelp/customer/search_customer.html" />
+    
+    <mapID target="protrans.order" url="protranshelp/order/order.html" />
+    <mapID target="protrans.order.order_overview" url="protranshelp/order/order_overview.html" />
+    <mapID target="protrans.order.new_order" url="protranshelp/order/new_order.html" />
+    <mapID target="protrans.order.edit_order" url="protranshelp/order/edit_order.html" />
+    <mapID target="protrans.order.search_order" url="protranshelp/order/search_order.html" />
+    
+    <mapID target="mainicon" url="images/ugland.jpg" />
+	<mapID target="toplevelfolder" url="images/toplevel.gif" />
+	<mapID target="top" url="protranshelp/protrans.html" />
+</map>

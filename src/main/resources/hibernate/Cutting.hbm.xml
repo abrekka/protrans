@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.Cutting" 
+    table="CUTTING"
+>
+<id name="cuttingId" type="java.lang.Integer" column="CUTTING_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="version"
+        type="java.lang.String"
+        column="VERSION"
+        length="50"
+    />
+    
+    <property
+        name="proSign"
+        type="java.lang.String"
+        column="PRO_SIGN"
+        length="50"
+    />
+    <property
+        name="proId"
+        type="java.lang.String"
+        column="PRO_ID"
+        length="50"
+    />
+    
+    <set
+        name="cuttingLines"
+        lazy="true"
+        inverse="true"
+		cascade="all-delete-orphan"
+		order-by="LINE_NR"
+    >
+        <key>
+            <column name="CUTTING_ID" />
+        </key>
+        <one-to-many 
+            class="no.ugland.utransprod.model.CuttingLine"
+        />
+    </set>
+    <many-to-one
+        name="order"
+        class="no.ugland.utransprod.model.Order"
+        column="ORDER_ID"
+		fetch="join"
+        unique="true"
+    />
+  
+
+</class>
+</hibernate-mapping>

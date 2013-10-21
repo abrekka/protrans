@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.DeviationSumJobFunctionV" 
+    table="DEVIATION_SUM_JOB_FUNCTION_V"
+>
+	<composite-id name="deviationSumJobFunctionVPK" class="no.ugland.utransprod.model.DeviationSumJobFunctionVPK">
+        <key-property 
+            name="registrationYear" 
+            column="REGISTRATION_YEAR" 
+            type="java.lang.Integer"
+            length="32"
+        />
+        <key-property 
+            name="month" 
+            column="MONTH" 
+            type="java.lang.Integer"
+            length="32"
+        />
+		<key-property 
+            name="registrationWeek" 
+            column="REGISTRATION_WEEK" 
+            type="java.lang.Integer"
+            length="32"
+        />
+		<key-property 
+            name="deviationFunction" 
+            column="DEVIATION_FUNCTION" 
+            type="java.lang.String"
+            length="50"
+        />
+		<key-property 
+            name="functionCategoryName" 
+            column="FUNCTION_CATEGORY_NAME" 
+            type="java.lang.String"
+            length="50"
+        />
+        <key-property 
+            name="productAreaGroupName" 
+            column="PRODUCT_AREA_GROUP_NAME" 
+            type="java.lang.String"
+            length="50"
+        />
+
+    </composite-id>   
+
+    
+
+	<property
+        name="countDeviations"
+        type="java.lang.Integer"
+        column="COUNT_DEVIATIONS"
+        length="32"
+    />
+    
+    
+    <!-- Associations -->
+	
+    
+    
+
+</class>
+</hibernate-mapping>

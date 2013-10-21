@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.DeviationSumV" 
+    table="DEVIATION_SUM_V"
+>
+	<composite-id name="deviationSumVPK" class="no.ugland.utransprod.model.DeviationSumVPK">
+        <key-property 
+            name="jobFunctionName" 
+            column="JOB_FUNCTION_NAME" 
+            type="java.lang.String"
+            length="255"
+        />
+        <key-property 
+            name="functionCategoryName" 
+            column="FUNCTION_CATEGORY_NAME" 
+            type="java.lang.String"
+            length="255"
+        />
+		<key-property 
+            name="deviationStatusName" 
+            column="DEVIATION_STATUS_NAME" 
+            type="java.lang.String"
+            length="255"
+        />
+		<key-property 
+            name="registrationWeek" 
+            column="REGISTRATION_WEEK" 
+            type="java.lang.Integer"
+            length="32"
+        />
+		<key-property 
+            name="registrationYear" 
+            column="REGISTRATION_YEAR" 
+            type="java.lang.Integer"
+            length="32"
+        />
+
+    </composite-id>   
+
+    
+
+	<property
+        name="internalCost"
+        type="java.math.BigDecimal"
+        column="INTERNAL_COST"
+        length="32"
+    />
+	<property
+        name="externalCost"
+        type="java.math.BigDecimal"
+        column="EXTERNAL_COST"
+        length="32"
+    />
+	<property
+        name="numberOfDeviations"
+        type="java.lang.Integer"
+        column="NUMBER_OF_DEVIATIONS"
+        length="32"
+    />
+	<property
+        name="productArea"
+        type="java.lang.String"
+        column="PRODUCT_AREA"
+        length="32"
+    />
+    
+    
+    <!-- Associations -->
+	
+    
+    
+
+</class>
+</hibernate-mapping>

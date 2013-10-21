@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.ProductionUnitProductAreaGroup" 
+    table="PRODUCTION_UNIT_PRODUCT_AREA_GROUP"
+>
+<id name="productionUnitProductAreaGroupId" type="java.lang.Integer" column="PRODUCTION_UNIT_PRODUCT_AREA_GROUP_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+    
+
+    
+    <!-- Associations -->
+  <many-to-one
+        name="productionUnit"
+        class="no.ugland.utransprod.model.ProductionUnit"
+        not-null="true"
+    >
+        <column name="PRODUCTION_UNIT_ID" />
+    </many-to-one>
+	
+	<many-to-one
+        name="productAreaGroup"
+        class="no.ugland.utransprod.model.ProductAreaGroup"
+        not-null="true"
+    >
+        <column name="PRODUCT_AREA_GROUP_ID" />
+    </many-to-one>
+</class>
+</hibernate-mapping>

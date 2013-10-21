@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping default-lazy="false">
+
+<class
+    name="no.ugland.utransprod.model.DeviationV"
+    table="DEVIATION_V"
+>
+<id name="deviationId" type="java.lang.Integer" column="DEVIATION_ID">
+        <generator class="identity"/>
+        </id>
+
+    <property
+        name="registrationDate"
+        type="java.util.Date"
+        column="REGISTRATION_DATE"
+        length="32"
+    />
+
+	<property
+        name="userName"
+        type="java.lang.String"
+        column="USER_NAME"
+        length="255"
+    />
+	<property
+        name="customerNr"
+        type="java.lang.Integer"
+        column="CUSTOMER_NR"
+        length="32"
+    />
+	<property
+        name="customerName"
+        type="java.lang.String"
+        column="CUSTOMER_NAME"
+        length="255"
+    />
+	<property
+        name="orderNr"
+        type="java.lang.String"
+        column="ORDER_NR"
+        length="50"
+    />
+    <property
+        name="productArea"
+        type="java.lang.String"
+        column="PRODUCT_AREA"
+        length="50"
+    />
+    <property
+        name="responsible"
+        type="java.lang.String"
+        column="RESPONSIBLE"
+        length="50"
+    />
+    <property
+        name="ownFunction"
+        type="java.lang.String"
+        column="OWN_FUNCTION"
+        length="50"
+    />
+    <property
+        name="deviationFunction"
+        type="java.lang.String"
+        column="DEVIATION_FUNCTION"
+        length="50"
+    />
+    <property
+        name="functionCategoryName"
+        type="java.lang.String"
+        column="FUNCTION_CATEGORY_NAME"
+        length="50"
+    />
+    <property
+        name="deviationStatusName"
+        type="java.lang.String"
+        column="DEVIATION_STATUS_NAME"
+        length="50"
+    />
+    <property
+        name="registrationWeek"
+        type="java.lang.Integer"
+        column="REGISTRATION_WEEK"
+        length="32"
+    />
+    <property
+        name="registrationYear"
+        type="java.lang.Integer"
+        column="REGISTRATION_YEAR"
+        length="32"
+    />
+    <property
+        name="internalCost"
+        type="java.math.BigDecimal"
+        column="INTERNAL_COST"
+        length="32"
+    />
+    <property
+        name="externalCost"
+        type="java.math.BigDecimal"
+        column="EXTERNAL_COST"
+        length="32"
+    />
+    <property
+        name="initiatedBy"
+        type="java.lang.String"
+        column="INITIATED_BY"
+        length="32"
+    />
+
+
+    <!-- Associations -->
+
+
+
+
+</class>
+</hibernate-mapping>

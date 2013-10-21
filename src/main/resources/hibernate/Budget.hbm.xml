@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.Budget" 
+    table="BUDGET"
+>
+<id name="budgetId" type="java.lang.Integer" column="BUDGET_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="budgetYear"
+        type="java.lang.Integer"
+        column="BUDGET_YEAR"
+        length="50"
+    />
+    
+    <property
+        name="budgetWeek"
+        type="java.lang.Integer"
+        column="BUDGET_WEEK"
+        length="50"
+    />
+    <property
+        name="budgetValue"
+        type="java.math.BigDecimal"
+        column="BUDGET_VALUE"
+        length="50"
+    />
+	<property
+        name="budgetType"
+        type="java.lang.Integer"
+        column="BUDGET_TYPE"
+        length="32"
+    />
+    <property
+        name="budgetValueOffer"
+        type="java.math.BigDecimal"
+        column="BUDGET_VALUE_OFFER"
+        length="50"
+    />
+    <property
+        name="budgetHours"
+        type="java.math.BigDecimal"
+        column="BUDGET_HOURS"
+        length="50"
+    />
+    
+    <!-- Associations -->
+  <many-to-one
+        name="productArea"
+        class="no.ugland.utransprod.model.ProductArea"
+	   lazy="proxy"
+    >
+        <column name="PRODUCT_AREA_ID" />
+    </many-to-one>
+    <many-to-one
+        name="applicationUser"
+        class="no.ugland.utransprod.model.ApplicationUser"
+	   lazy="proxy"
+    >
+        <column name="USER_ID" />
+    </many-to-one>  
+
+</class>
+</hibernate-mapping>

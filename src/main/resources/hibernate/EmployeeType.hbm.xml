@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.EmployeeType" 
+    table="EMPLOYEE_TYPE"
+>
+<id name="employeeTypeId" type="java.lang.Integer" column="EMPLOYEE_TYPE_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="employeeTypeName"
+        type="java.lang.String"
+        column="EMPLOYEE_TYPE_NAME"
+        length="255"
+    />
+    
+    <property
+        name="employeeTypeDescription"
+        type="java.lang.String"
+        column="EMPLOYEE_TYPE_DESCRIPTION"
+        length="255"
+    />
+    <!-- Associations -->
+    
+
+</class>
+</hibernate-mapping>

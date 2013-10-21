@@ -1,0 +1,176 @@
+#created on: 14.des.2008
+package no.ugland.utransprod.util.rules
+
+import no.ugland.utransprod.util.rules.CraningEnum;
+import no.ugland.utransprod.util.rules.Craning;
+import no.ugland.utransprod.service.CraningCostManager;
+global CraningCostManager craningCostManager;
+
+rule "Standard kraning1"
+salience 100	
+lock-on-active true
+	when
+		#Vinkel <25 grader vegglengde fra og med 680 bredde
+		craning : Craning(degrees<25,width>=680)
+	then 
+		craning.getCranings().add(CraningEnum.STANDARD);
+		update(craning);
+end
+
+rule "Standard kraning2"
+salience 100	
+lock-on-active true
+	when
+		#Vinkel 26-35 grader vegglengde fra og med 560 bredde
+		craning : Craning(degrees>=25,degrees<35,width>=560)
+	then 
+		craning.getCranings().add(CraningEnum.STANDARD);
+		update(craning);
+end
+
+
+rule "Standard kraning3"
+salience 100
+lock-on-active true
+	when
+		#Vinkel >36 grader vegglengde fra og med 500 bredde
+		craning : Craning(degrees>=36,width>=500)
+	then 
+		craning.getCranings().add(CraningEnum.STANDARD);
+		update(craning);
+end
+
+rule "Lange vegger"
+salience 100
+lock-on-active true
+	when
+		#Lange vegger
+		craning : Craning(longWalls==Boolean.TRUE)
+	then 
+		craning.getCranings().add(CraningEnum.LONG_HIGH);
+		update(craning);
+end
+
+rule "Høye vegger"
+salience 100
+lock-on-active true
+	when
+		#Dersom høye vegger, fra og med 230
+		craning : Craning(wallHeight>=230)
+	then 
+		craning.getCranings().add(CraningEnum.LONG_HIGH);
+		update(craning);
+end
+
+rule "Høy mur"
+salience 100
+lock-on-active true
+	when
+		#Dersom høy mur, fra og med 50
+		craning : Craning(brickWallHeight>=50)
+	then 
+		craning.getCranings().add(CraningEnum.LONG_HIGH);
+		update(craning);
+end
+
+rule "Bæring over port"
+salience 100
+lock-on-active true
+	when
+		#Dersom bæring over port m/bredde over 300
+		craning : Craning(portSupport==Boolean.TRUE,portWidth>300)
+	then 
+		craning.getCranings().add(CraningEnum.PORT_SUPPORT);
+		update(craning);
+end
+
+rule "Kvist"
+salience 100
+lock-on-active true
+	when
+		#Dersom kvist
+		craning : Craning(attic==Boolean.TRUE)
+	then 
+		craning.getCranings().add(CraningEnum.ATTIC);
+		update(craning);
+end
+
+
+rule "Standard kraning pluss"
+salience 50
+no-loop true
+	when
+		#Dersom standard kraning og vegglengde er fra og med 860
+		craning : Craning(cranings contains(CraningEnum.STANDARD),length>=860)
+	then 
+		craning.getCranings().add(CraningEnum.STANDARD_PLUSS);
+		update(craning);
+end
+
+rule "Inneholder bare en kraning"
+salience 45
+no-loop true
+	when
+		#Dersom det bare er en kraning i liste
+		craning : Craning(craningsSize == 1)
+	then 
+		craning.setCostValue(craningCostManager.findCostByCraningEnum(craning.getCranings().get(0)));
+		retract(craning);
+end
+
+rule "Inneholder bare en standard og standard pluss"
+salience 40
+no-loop true
+	when
+		#Dersom bare standard kraning og standard pluss i liste
+		craning : Craning(craningsSize == 2&&cranings contains(CraningEnum.STANDARD)&&cranings contains(CraningEnum.STANDARD_PLUSS))
+	then 
+		craning.setCostValue(craningCostManager.findCostByCraningEnum(CraningEnum.STANDARD_PLUSS));
+		retract(craning);
+end
+
+rule "Inneholder bare lange vegger/høye vegger/høy mur og bæring over port"
+salience 40
+no-loop true
+	#include attributes such as "salience" here...
+	when
+		#Dersom bare lange vegger/høye vegger/høy mur og bæring over port
+		craning : Craning(craningsSize == 2&&cranings contains(CraningEnum.LONG_HIGH)&&cranings contains(CraningEnum.PORT_SUPPORT))
+	then 
+		craning.setCostValue(craningCostManager.findCostByCraningEnum(CraningEnum.LONG_HIGH));
+		retract(craning);
+end
+
+
+rule "Standard kraning + lange vegger/høye vegger/høy mur"
+salience 30
+no-loop true
+	when
+		#Dersom standard kraning + lange vegger/høye vegger/høy mur
+		craning : Craning(cranings contains(CraningEnum.STANDARD) && cranings contains(CraningEnum.LONG_HIGH))
+	then 
+		craning.setCostValue(craningCostManager.findCostByCraningEnum(CraningEnum.STANDARD_LONG_HIGH));
+		retract(craning);
+end
+
+rule "Standard kraning + bæring over port"
+salience 20
+no-loop true
+	when
+		#Dersom standard kraning + bæring over port
+		craning : Craning(cranings contains(CraningEnum.STANDARD) && cranings contains(CraningEnum.PORT_SUPPORT))
+	then 
+		craning.setCostValue(craningCostManager.findCostByCraningEnum(CraningEnum.STANDARD_PORT_SUPPORT));
+		retract(craning);
+end
+
+rule "Standard kraning + kvist"
+salience 10
+no-loop true
+	when
+		#Dersom standard kraning + kvist
+		craning : Craning(cranings contains(CraningEnum.STANDARD) && cranings contains(CraningEnum.ATTIC))
+	then 
+		craning.setCostValue(craningCostManager.findCostByCraningEnum(CraningEnum.STANDARD_LONG_HIGH));
+		retract(craning);
+end
