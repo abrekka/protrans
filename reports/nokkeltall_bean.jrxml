@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="nokkeltall"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="842"
+		 pageHeight="595"
+		 columnWidth="782"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="8"
+		 bottomMargin="8"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="ugland_logo" isForPrompting="false" class="java.io.InputStream"/>
+
+	<field name="nokkelTallSalgWeekN3" class="java.util.List"/>
+	<field name="productArea" class="java.lang.String"/>
+	<field name="reportYear" class="java.lang.Integer"/>
+	<field name="weekN3" class="java.lang.Integer"/>
+	<field name="weekN2" class="java.lang.Integer"/>
+	<field name="weekN1" class="java.lang.Integer"/>
+	<field name="reportWeek" class="java.lang.Integer"/>
+	<field name="week1N" class="java.lang.Integer"/>
+	<field name="nokkelTallSalgWeekN2" class="java.util.List"/>
+	<field name="nokkelTallSalgWeekN1" class="java.util.List"/>
+	<field name="nokkelTallSalgWeekN" class="java.util.List"/>
+	<field name="nokkelTallSalgAggregate" class="java.util.List"/>
+	<field name="nokkelTallSalgWeek1N" class="java.util.List"/>
+	<field name="nokkelTallDriftProsjekteringWeekN3" class="java.util.List"/>
+	<field name="nokkelTallDriftProsjekteringWeekN2" class="java.util.List"/>
+	<field name="nokkelTallDriftProsjekteringWeekN1" class="java.util.List"/>
+	<field name="nokkelTallDriftProsjekteringWeekN" class="java.util.List"/>
+	<field name="nokkelTallDriftProsjekteringWeek1N" class="java.util.List"/>
+	<field name="nokkelTallDriftProsjekteringAggregate" class="java.util.List"/>
+	<field name="nokkelTallTransportWeekN3" class="java.util.List"/>
+	<field name="nokkelTallTransportWeekN2" class="java.util.List"/>
+	<field name="nokkelTallTransportWeekN1" class="java.util.List"/>
+	<field name="nokkelTallTransportWeekN" class="java.util.List"/>
+	<field name="nokkelTallTransportAggregate" class="java.util.List"/>
+	<field name="nokkelTallTransportWeek1N" class="java.util.List"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="58"  isSplitAllowed="true" >
+				<image  isUsingCache="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="12"
+						y="4"
+						width="94"
+						height="52"
+						key="image-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.io.InputStream"><![CDATA[$P{ugland_logo}]]></imageExpression>
+				</image>
+				<elementGroup><!--  Start: 1 !-->
+				<elementGroup><!--  Start: 1.2 !-->
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="133"
+						y="35"
+						width="516"
+						height="21"
+						key="textField-6"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="14" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["NØKKELTALLSRAPPORT - Salg/Drift/Transport - "+$F{productArea}+" - " + $F{reportYear}]]></textFieldExpression>
+				</textField>
+				</elementGroup><!-- End 1.2 !-->
+				</elementGroup><!-- End 1 !-->
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="672"
+						y="35"
+						width="105"
+						height="20"
+						key="textField-7"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+				</textField>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="2"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="20"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="140"
+						y="2"
+						width="25"
+						height="17"
+						key="staticText-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Uke]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="165"
+						y="2"
+						width="36"
+						height="17"
+						key="textField"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{weekN3}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="249"
+						y="2"
+						width="25"
+						height="17"
+						key="staticText-7"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Uke]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="274"
+						y="2"
+						width="36"
+						height="17"
+						key="textField-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{weekN2}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="358"
+						y="2"
+						width="25"
+						height="17"
+						key="staticText-8"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Uke]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="383"
+						y="2"
+						width="36"
+						height="17"
+						key="textField-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{weekN1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="467"
+						y="2"
+						width="25"
+						height="17"
+						key="staticText-9"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Uke]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="492"
+						y="2"
+						width="36"
+						height="17"
+						key="textField-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{reportWeek}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="576"
+						y="2"
+						width="68"
+						height="17"
+						key="staticText-10"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Akkumulert]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="686"
+						y="2"
+						width="25"
+						height="17"
+						key="staticText-11"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Uke]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="711"
+						y="2"
+						width="36"
+						height="17"
+						key="textField-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{week1N}]]></textFieldExpression>
+				</textField>
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="388"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="5"
+						y="5"
+						width="130"
+						height="18"
+						key="staticText-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Salg]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="23"
+						width="130"
+						height="18"
+						key="staticText-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Antall avrop]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="41"
+						width="130"
+						height="18"
+						key="staticText-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Antall avvik]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="59"
+						width="130"
+						height="18"
+						key="staticText-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Kostnad avvik]]></text>
+				</staticText>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="140"
+						y="21"
+						width="90"
+						height="61"
+						key="subreport-1"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{nokkelTallSalgWeekN3})]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_salg_bean.jasper"]]></subreportExpression>
+				</subreport>
+				<staticText>
+					<reportElement
+						x="5"
+						y="211"
+						width="130"
+						height="18"
+						key="staticText-17"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Transport]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="229"
+						width="130"
+						height="18"
+						key="staticText-18"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Verdi egenproduksjon]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="247"
+						width="130"
+						height="18"
+						key="staticText-19"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Verdi frakt]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="265"
+						width="130"
+						height="18"
+						key="staticText-20"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Verdi montering]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="283"
+						width="130"
+						height="18"
+						key="staticText-21"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Transportert montert]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="301"
+						width="130"
+						height="18"
+						key="staticText-22"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Transportert byggesett]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="319"
+						width="130"
+						height="18"
+						key="staticText-23"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Antall avvik]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="337"
+						width="130"
+						height="18"
+						key="staticText-24"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Kostnad avvik]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="95"
+						width="130"
+						height="18"
+						key="staticText-30"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Drift/prosjektering]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="113"
+						width="130"
+						height="18"
+						key="staticText-31"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Antall pakklister]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="149"
+						width="130"
+						height="18"
+						key="staticText-32"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Antall avvik]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="167"
+						width="130"
+						height="18"
+						key="staticText-33"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Kostnad avvik]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="131"
+						width="130"
+						height="18"
+						key="staticText-34"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Verdi]]></text>
+				</staticText>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="249"
+						y="21"
+						width="90"
+						height="61"
+						key="subreport-2"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{nokkelTallSalgWeekN2})]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_salg_bean.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="358"
+						y="21"
+						width="90"
+						height="61"
+						key="subreport-3"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{nokkelTallSalgWeekN1})]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_salg_bean.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="467"
+						y="21"
+						width="90"
+						height="61"
+						key="subreport-4"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{nokkelTallSalgWeekN})]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_salg_bean.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="576"
+						y="21"
+						width="90"
+						height="61"
+						key="subreport-5"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{nokkelTallSalgAggregate})]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_salg_bean.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="686"
+						y="21"
+						width="90"
+						height="61"
+						key="subreport-6"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{nokkelTallSalgWeek1N})]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_salg_bean.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="140"
+						y="112"
+						width="90"
+						height="73"
+						key="subreport-7"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{nokkelTallDriftProsjekteringWeekN3})]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_drift_prosjektering_bean.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="249"
+						y="112"
+						width="90"
+						height="73"
+						key="subreport-8"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{nokkelTallDriftProsjekteringWeekN2})]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_drift_prosjektering_bean.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="358"
+						y="112"
+						width="90"
+						height="73"
+						key="subreport-9"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{nokkelTallDriftProsjekteringWeekN1})]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_drift_prosjektering_bean.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="467"
+						y="112"
+						width="90"
+						height="73"
+						key="subreport-10"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{nokkelTallDriftProsjekteringWeekN})]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_drift_prosjektering_bean.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="576"
+						y="112"
+						width="90"
+						height="73"
+						key="subreport-11"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{nokkelTallDriftProsjekteringAggregate})]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_drift_prosjektering_bean.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="686"
+						y="112"
+						width="90"
+						height="73"
+						key="subreport-12"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{nokkelTallDriftProsjekteringWeek1N})]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_drift_prosjektering_bean.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="140"
+						y="226"
+						width="80"
+						height="129"
+						key="subreport-13"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{nokkelTallTransportWeekN3})]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_transport_bean.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="249"
+						y="226"
+						width="80"
+						height="129"
+						key="subreport-14"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{nokkelTallTransportWeekN2})]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_transport_bean.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="358"
+						y="226"
+						width="80"
+						height="129"
+						key="subreport-15"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{nokkelTallTransportWeekN1})]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_transport_bean.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="467"
+						y="226"
+						width="80"
+						height="129"
+						key="subreport-16"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{nokkelTallTransportWeekN})]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_transport_bean.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="576"
+						y="226"
+						width="80"
+						height="129"
+						key="subreport-17"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{nokkelTallTransportAggregate})]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_transport_bean.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="686"
+						y="226"
+						width="80"
+						height="129"
+						key="subreport-18"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{nokkelTallTransportWeek1N})]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_transport_bean.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="4"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<lastPageFooter>
+			<band height="1"  isSplitAllowed="true" >
+			</band>
+		</lastPageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

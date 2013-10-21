@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="nokkeltall_okonomi_sub"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="842"
+		 pageHeight="595"
+		 columnWidth="842"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="AllSectionsNoDetail"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="2" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="NOKKEL_YEAR" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="N_3" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="DB_CONNECTION" isForPrompting="false" class="java.sql.Connection"/>
+	<parameter name="N_2" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="N_1" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="N" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="1_N" isForPrompting="false" class="java.lang.Integer"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="4"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="229"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="5"
+						y="3"
+						width="130"
+						height="18"
+						key="staticText-1"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Økonomi]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="39"
+						width="130"
+						height="18"
+						key="staticText-2"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Fakturert verdi]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="57"
+						width="130"
+						height="18"
+						key="staticText-3"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Antall avvik]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="75"
+						width="130"
+						height="18"
+						key="staticText-4"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Kostnad avvik]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="5"
+						y="21"
+						width="130"
+						height="18"
+						key="staticText-5"/>
+					<box topBorder="None" topBorderColor="#000000" leftBorder="None" leftBorderColor="#000000" rightBorder="None" rightBorderColor="#000000" bottomBorder="None" bottomBorderColor="#000000"/>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isBold="false"/>
+					</textElement>
+				<text><![CDATA[Antall fakturert]]></text>
+				</staticText>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="140"
+						y="16"
+						width="90"
+						height="80"
+						key="subreport-1"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<subreportParameter  name="SALG_YEAR">
+						<subreportParameterExpression><![CDATA[$P{NOKKEL_YEAR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="SALG_WEEK">
+						<subreportParameterExpression><![CDATA[$P{N_3}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{DB_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_okonomi.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="249"
+						y="16"
+						width="90"
+						height="80"
+						key="subreport-2"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<subreportParameter  name="SALG_YEAR">
+						<subreportParameterExpression><![CDATA[$P{NOKKEL_YEAR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="SALG_WEEK">
+						<subreportParameterExpression><![CDATA[$P{N_2}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{DB_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_okonomi.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="358"
+						y="16"
+						width="90"
+						height="80"
+						key="subreport-3"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<subreportParameter  name="SALG_YEAR">
+						<subreportParameterExpression><![CDATA[$P{NOKKEL_YEAR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="SALG_WEEK">
+						<subreportParameterExpression><![CDATA[$P{N_1}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{DB_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_okonomi.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="467"
+						y="16"
+						width="90"
+						height="80"
+						key="subreport-4"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<subreportParameter  name="SALG_YEAR">
+						<subreportParameterExpression><![CDATA[$P{NOKKEL_YEAR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="SALG_WEEK">
+						<subreportParameterExpression><![CDATA[$P{N}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{DB_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_okonomi.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="576"
+						y="16"
+						width="90"
+						height="80"
+						key="subreport-5"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<subreportParameter  name="SALG_YEAR">
+						<subreportParameterExpression><![CDATA[$P{NOKKEL_YEAR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="SALG_WEEK">
+						<subreportParameterExpression><![CDATA[$P{N}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{DB_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_okonomi_aar.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="686"
+						y="16"
+						width="90"
+						height="80"
+						key="subreport-6"
+						stretchType="RelativeToBandHeight"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<subreportParameter  name="SALG_YEAR">
+						<subreportParameterExpression><![CDATA[$P{NOKKEL_YEAR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="SALG_WEEK">
+						<subreportParameterExpression><![CDATA[$P{1_N}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{DB_CONNECTION}]]></connectionExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["reports/Nokkeltall_okonomi.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="2"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="4"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>
