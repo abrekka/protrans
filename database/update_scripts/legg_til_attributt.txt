@@ -1,0 +1,12 @@
+insert into order_line_attribute(order_line_id,construction_type_attribute_id,order_line_attribute_value,order_line_attribute_name)
+(select order_line.order_line_id,construction_type_attribute.construction_type_attribute_id,'205','Vegghøyde' 
+	from order_line,construction_type_attribute
+	where exists(select 1 from customer_order where customer_order.order_id=order_line.order_id and
+													customer_order.order_nr='39709') and
+		order_line.article_path='Garasjetype' and
+		exists(select 1 from attribute 
+					where attribute.attribute_id=construction_type_attribute.attribute_id and name='Vegghøyde') and
+		exists(select 1 from customer_order 
+						where customer_order.order_id=order_line.order_id and
+								customer_order.construction_type_id=construction_type_attribute.construction_type_id))
+		

@@ -1,0 +1,1 @@
+update post_shipment set cached_comment=null where cached_comment is not null and datalength(cached_comment)=0

@@ -1,0 +1,1 @@
+alter table customer_order add probability int;

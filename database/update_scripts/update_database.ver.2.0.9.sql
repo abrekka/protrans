@@ -1,0 +1,1 @@
+alter table transport add transport_comment nvarchar(1000);

@@ -1,0 +1,1 @@
+update customer set last_name=ltrim(last_name);

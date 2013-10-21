@@ -1,0 +1,1 @@
+alter table article_type_attribute add inactive int;

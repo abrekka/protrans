@@ -1,0 +1,1 @@
+alter table article_type add is_extra int;

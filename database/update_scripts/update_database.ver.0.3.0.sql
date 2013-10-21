@@ -1,0 +1,1 @@
+alter table order_line add attribute_info nvarchar(1000);

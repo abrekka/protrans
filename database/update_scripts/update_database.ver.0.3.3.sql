@@ -1,0 +1,1 @@
+alter table application_user add job_function_id int references job_function(job_function_id) null;

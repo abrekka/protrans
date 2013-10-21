@@ -1,0 +1,1 @@
+insert into application_param(param_name,param_value) values('not_package','Takstoler;Gavl;Gulvspon');

@@ -1,0 +1,1 @@
+alter table construction_type add sketch_name nvarchar(255);

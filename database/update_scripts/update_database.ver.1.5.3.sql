@@ -1,0 +1,1 @@
+alter table order_comment add for_package int;
