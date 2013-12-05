@@ -22,7 +22,7 @@ public class DrawerV extends BaseObject {
 
     private String categoryName;
 
-    private Integer registered;
+    private Date registered;
 
     private BigDecimal ownProduction;
 
@@ -36,7 +36,7 @@ public class DrawerV extends BaseObject {
     public DrawerV(final Integer aCustomerNr, final String aOrderNr, 
             //final Integer aGroupIdx,
             final Integer aProductAreaNr,
-            final String aCustomerName, final String aCategoryName, final Integer isRegistered,
+            final String aCustomerName, final String aCategoryName, final Date isRegistered,
             final BigDecimal aOwnProduction, final String aDrawerName,final Integer aDocumentId) {
         super();
         this.customerNr = aCustomerNr;
@@ -114,11 +114,11 @@ public class DrawerV extends BaseObject {
         this.ownProduction = aOwnProduction;
     }
 
-    public final Integer getRegistered() {
+    public final Date getRegistered() {
         return registered;
     }
 
-    public final void setRegistered(final Integer isRegistered) {
+    public final void setRegistered(final Date isRegistered) {
         this.registered = isRegistered;
     }
 
@@ -141,7 +141,7 @@ public class DrawerV extends BaseObject {
     
     public String getRegisteredDate(){
         if(registered!=null){
-            return Util.formatDate(Util.convertIntToDate(registered),Util.SHORT_DATE_FORMAT);
+            return Util.formatDate(registered,Util.SHORT_DATE_FORMAT);
         }
         return null;
     }

@@ -90,11 +90,12 @@ public final class MainClass {
         if (dllUrl == null) {
             Util.showErrorDialog((Component)null, "Feil", "Finner ikke jdic.dll");
         }else{
-            System.load(dllUrl.getPath());
+        	System.loadLibrary("jdic");
+//            System.load(dllUrl.getPath());
         }
-        if (dllUrl != null) {
-            System.load(dllUrl.getPath());
-        }
+//        if (dllUrl != null) {
+//            System.load(dllUrl.getPath());
+//        }
     }
 
     /**

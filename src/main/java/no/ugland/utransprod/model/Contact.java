@@ -1,5 +1,6 @@
 package no.ugland.utransprod.model;
 
+import java.util.Date;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -42,7 +43,7 @@ public class Contact extends BaseObject {
 	/**
 	 * 
 	 */
-	private Integer updated;
+	private Date updated;
 
 	/**
 	 * 
@@ -88,7 +89,7 @@ public class Contact extends BaseObject {
 	 * @param associate
 	 */
 	public Contact(Integer contactId, String name, String number2,
-			Integer categoryIdx, Integer updated, Set<Sale> sales,
+			Integer categoryIdx, Date updated, Set<Sale> sales,
 			Set<OfferAddress> offerAddresses, Set<Phone> phones,
 			Set<Address> addresses, Associate associate) {
 		super();
@@ -163,14 +164,14 @@ public class Contact extends BaseObject {
 	/**
 	 * @return oppdatertdato
 	 */
-	public Integer getUpdated() {
+	public Date getUpdated() {
 		return updated;
 	}
 
 	/**
 	 * @param updated
 	 */
-	public void setUpdated(Integer updated) {
+	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
 

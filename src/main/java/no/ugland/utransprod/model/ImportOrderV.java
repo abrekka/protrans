@@ -1,6 +1,7 @@
 package no.ugland.utransprod.model;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -20,7 +21,7 @@ public class ImportOrderV extends BaseObject {
 
     private BigDecimal amount;
 
-    private Integer saledate;
+    private Date saledate;
 
     private Integer contactId;
 
@@ -28,7 +29,7 @@ public class ImportOrderV extends BaseObject {
 
 
     private Integer productAreaNr;//100-rekke,200-villa,300-takstol,400-byggelement
-    private Integer registered;
+    private Date registered;
 
     private Integer probability;
     private String deliveryAddress;
@@ -86,14 +87,14 @@ public class ImportOrderV extends BaseObject {
     /**
      * @return salgsdato
      */
-    public final Integer getSaledate() {
+    public final Date getSaledate() {
         return saledate;
     }
 
     /**
      * @param asSaledate
      */
-    public final void setSaledate(final Integer asSaledate) {
+    public final void setSaledate(final Date asSaledate) {
         this.saledate = asSaledate;
     }
 
@@ -158,11 +159,11 @@ public class ImportOrderV extends BaseObject {
         this.productAreaNr = aProductAreaNr;
     }
 
-    public final Integer getRegistered() {
+    public final Date getRegistered() {
         return registered;
     }
 
-    public final void setRegistered(final Integer isRegistered) {
+    public final void setRegistered(final Date isRegistered) {
         this.registered = isRegistered;
     }
 

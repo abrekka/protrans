@@ -11,7 +11,7 @@
     http://www.hibernate.org/
 -->
 
-<class name="no.ugland.utransprod.model.Doctmpl" table="crm5.DOCTMPL">
+<class name="no.ugland.utransprod.model.Doctmpl" table="crm7.DOCTMPL">
 <id name="doctmplId" type="java.lang.Integer" column="DOCTMPL_ID">
         <generator class="assigned"/>
         </id>

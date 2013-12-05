@@ -44,7 +44,7 @@
     />
 	<property
         name="saledate"
-        type="java.lang.Integer"
+        type="java.util.Date"
         column="SALEDATE"
         length="32"
     />

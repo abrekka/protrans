@@ -11,7 +11,7 @@
     http://www.hibernate.org/
 -->
 
-<class name="no.ugland.utransprod.model.Udsalesmall" table="crm5.UDSALESMALL">
+<class name="no.ugland.utransprod.model.Udsalesmall" table="crm7.UDSALESMALL">
 <!--class name="no.ugland.utransprod.model.Udsalesmall" table="UDSALESMALL"-->
 <id name="udsalesmallId" type="java.lang.Integer" column="UDSALESMALL_ID">
         <generator class="assigned"/>

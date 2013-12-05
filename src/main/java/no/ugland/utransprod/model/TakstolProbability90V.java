@@ -1,6 +1,7 @@
 package no.ugland.utransprod.model;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -10,9 +11,9 @@ public class TakstolProbability90V extends BaseObject {
 	private Integer saleId;
 	private String number1;
 	private BigDecimal amount;
-	private Integer saledate;
+	private Date saledate;
 	private Integer userdefId;
-	private Integer registered;
+	private Date registered;
 	private Integer probability;
 	private Integer contactId;
 	private Integer productAreaNr;
@@ -50,11 +51,11 @@ public class TakstolProbability90V extends BaseObject {
 		this.amount = amount;
 	}
 
-	public Integer getSaledate() {
+	public Date getSaledate() {
 		return saledate;
 	}
 
-	public void setSaledate(Integer saledate) {
+	public void setSaledate(Date saledate) {
 		this.saledate = saledate;
 	}
 
@@ -66,11 +67,11 @@ public class TakstolProbability90V extends BaseObject {
 		this.userdefId = userdefId;
 	}
 
-	public Integer getRegistered() {
+	public Date getRegistered() {
 		return registered;
 	}
 
-	public void setRegistered(Integer registered) {
+	public void setRegistered(Date registered) {
 		this.registered = registered;
 	}
 

@@ -11,7 +11,7 @@
     http://www.hibernate.org/
 -->
 
-<class name="no.ugland.utransprod.model.Address" table="crm5.ADDRESS">
+<class name="no.ugland.utransprod.model.Address" table="crm7.ADDRESS">
 <!--class name="no.ugland.utransprod.model.Address" table="ADDRESS"-->
 <id name="addressId" type="java.lang.Integer" column="ADDRESS_ID">
         <generator class="assigned"/>

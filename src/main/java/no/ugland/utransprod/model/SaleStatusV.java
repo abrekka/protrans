@@ -15,7 +15,7 @@ public class SaleStatusV extends BaseObject {
     private String orderNr;
     private BigDecimal amount;
     private Integer probability;
-    private Integer saledate;
+    private Date saledate;
     private Integer buildDate;
     private String saleStatus;
     private String salesman;
@@ -26,7 +26,7 @@ public class SaleStatusV extends BaseObject {
     }
 
     public SaleStatusV(Integer customerNr, String customerName, String orderNr, BigDecimal amount,
-            Integer probability, Integer saledate, Integer buildDate, String saleStatus, String salesman,
+            Integer probability, Date saledate, Integer buildDate, String saleStatus, String salesman,
             Integer deptno) {
         super();
         this.customerNr = customerNr;
@@ -81,11 +81,11 @@ public class SaleStatusV extends BaseObject {
         this.probability = probability;
     }
 
-    public Integer getSaledate() {
+    public Date getSaledate() {
         return saledate;
     }
 
-    public void setSaledate(Integer saledate) {
+    public void setSaledate(Date saledate) {
         this.saledate = saledate;
     }
 
@@ -144,15 +144,15 @@ public class SaleStatusV extends BaseObject {
     }
 
     public String getSaleDateAsDate() {
-        return Util.formatDate(Util.convertIntToDate(saledate), Util.SHORT_DATE_FORMAT);
+        return Util.formatDate(saledate, Util.SHORT_DATE_FORMAT);
     }
 
     public Integer getSaleWeek() {
-        return Util.getWeekPart(Util.convertIntToDate(saledate));
+        return Util.getWeekPart(saledate);
     }
 
     public Integer getSaleYear() {
-        return Util.getYearPart(Util.convertIntToDate(saledate));
+        return Util.getYearPart(saledate);
     }
 
     public String getProductArea() {

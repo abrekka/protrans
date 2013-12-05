@@ -437,8 +437,7 @@ public class IncomingOrderManagerImpl extends ManagerImpl<Order> implements
 					.getOrderDate()));
 
 		}
-		incomingOrder.setRegistrationDate(Util.convertIntToDate(importOrderV
-				.getRegistered()));
+		incomingOrder.setRegistrationDate(importOrderV.getRegistered());
 		if (udsalesmall.getWantedDeliveryDate() != null
 				&& udsalesmall.getWantedDeliveryDate().intValue() != 0) {
 			incomingOrder.setDeliveryWeek(Util.getWeekPart(Util

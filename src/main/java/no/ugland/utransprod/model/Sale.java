@@ -1,6 +1,7 @@
 package no.ugland.utransprod.model;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -18,7 +19,7 @@ public class Sale extends BaseObject {
 
     private BigDecimal amount;
 
-    private Integer saledate;
+    private Date saledate;
 
     private Contact contact;
 
@@ -28,7 +29,7 @@ public class Sale extends BaseObject {
 
     // garasje,3-rekke,4-takstol,6-byggelement)
 
-    private Integer registered;
+    private Date registered;
 
     private Integer probability;
 
@@ -39,9 +40,9 @@ public class Sale extends BaseObject {
     }
 
     public Sale(final Integer aSaleId, final String aNumber1,
-            final BigDecimal aAmount, final Integer aSaledate,
+            final BigDecimal aAmount, final Date aSaledate,
             final Contact aContact, final Integer aUserdefId,
-            final Integer aGroupIdx, final Integer isRegistered,
+            final Integer aGroupIdx, final Date isRegistered,
             final Integer aProbability, final Integer aProjectId) {
         super();
         this.saleId = aSaleId;
@@ -101,14 +102,14 @@ public class Sale extends BaseObject {
     /**
      * @return salgsdato
      */
-    public final Integer getSaledate() {
+    public final Date getSaledate() {
         return saledate;
     }
 
     /**
      * @param asSaledate
      */
-    public final void setSaledate(final Integer asSaledate) {
+    public final void setSaledate(final Date asSaledate) {
         this.saledate = asSaledate;
     }
 
@@ -171,11 +172,11 @@ public class Sale extends BaseObject {
         this.groupIdx = aGroupIdx;
     }
 
-    public final Integer getRegistered() {
+    public final Date getRegistered() {
         return registered;
     }
 
-    public final void setRegistered(final Integer isRegistered) {
+    public final void setRegistered(final Date isRegistered) {
         this.registered = isRegistered;
     }
 

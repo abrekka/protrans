@@ -1,13 +1,15 @@
 package no.ugland.utransprod.model;
 
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import java.util.Date;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 public class Appointment extends BaseObject{
     private Integer appointmentId;
-    private Integer registered;
+    private Date registered;
     private Integer taskIdx;
     private Integer contactId;
     private Integer documentId;
@@ -15,7 +17,7 @@ public class Appointment extends BaseObject{
     public Appointment() {
         super();
     }
-    public Appointment(Integer appointmentId, Integer registered, Integer taskIdx, Integer contactId, Integer documentId, Integer associateId) {
+    public Appointment(Integer appointmentId, Date registered, Integer taskIdx, Integer contactId, Integer documentId, Integer associateId) {
         super();
         this.appointmentId = appointmentId;
         this.registered = registered;
@@ -48,10 +50,10 @@ public class Appointment extends BaseObject{
     public void setDocumentId(Integer documentId) {
         this.documentId = documentId;
     }
-    public Integer getRegistered() {
+    public Date getRegistered() {
         return registered;
     }
-    public void setRegistered(Integer registered) {
+    public void setRegistered(Date registered) {
         this.registered = registered;
     }
     public Integer getTaskIdx() {

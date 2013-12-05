@@ -11,7 +11,7 @@
     http://www.hibernate.org/
 -->
 
-<class name="no.ugland.utransprod.model.Sale" table="crm5.SALE">
+<class name="no.ugland.utransprod.model.Sale" table="crm7.SALE">
 <!--class name="no.ugland.utransprod.model.Sale" table="SALE"-->
 <id name="saleId" type="java.lang.Integer" column="SALE_ID">
         <generator class="assigned"/>
@@ -33,7 +33,7 @@
     />
 	<property
         name="saledate"
-        type="java.lang.Integer"
+        type="java.util.Date"
         column="SALEDATE"
         length="32"
     />
@@ -51,7 +51,7 @@
     />
 	<property
         name="registered"
-        type="java.lang.Integer"
+        type="java.util.Date"
         column="REGISTERED"
         length="32"
     />

@@ -76,8 +76,8 @@ public class SalesWebManagerIntegrationTest {
 		// assertEquals(BigDecimal.valueOf(0).setScale(2),
 		// statistic.getSumDGProcent());
 		assertEquals(BigDecimal.valueOf(32.31), statistic.getSumDGProcent());
-		assertEquals(BigDecimal.valueOf(0), statistic.getSaleBudget());
-		assertEquals(SalesGoal.GOAL_0, statistic.getSalesGoalWeek());
+		assertEquals(BigDecimal.valueOf(2500000), statistic.getSaleBudget());
+		assertEquals(SalesGoal.GOAL_100, statistic.getSalesGoalWeek());
 		assertEquals(BigDecimal.valueOf(12465248), statistic.getOrderReserve());
 
 		assertEquals(BigDecimal.valueOf(22369809), statistic
@@ -92,9 +92,9 @@ public class SalesWebManagerIntegrationTest {
 				.getAccumulatedNumberOfOrder());
 		assertEquals(Integer.valueOf(97), statistic
 				.getAccumulatedNumberOfConfirmedOrder());
-		assertEquals(BigDecimal.valueOf(0), statistic
+		assertEquals(BigDecimal.valueOf(19500000), statistic
 				.getAccumulatedSaleBudget());
-		assertEquals(SalesGoal.GOAL_0, statistic.getSalesGoalYear());
+		assertEquals(SalesGoal.GOAL_100, statistic.getSalesGoalYear());
 	}
 
 	@Test
@@ -156,7 +156,7 @@ public class SalesWebManagerIntegrationTest {
 		// assertEquals(BigDecimal.valueOf(0).setScale(2),
 		// statistic.getSumDGProcent());
 		assertEquals(BigDecimal.valueOf(31.78), statistic.getSumDGProcent());
-		assertEquals(BigDecimal.valueOf(0), statistic.getSaleBudget());
+		assertEquals(BigDecimal.valueOf(1000000), statistic.getSaleBudget());
 		assertEquals(SalesGoal.GOAL_0, statistic.getSalesGoalWeek());
 		assertEquals(BigDecimal.valueOf(12465248), statistic.getOrderReserve());
 
@@ -172,8 +172,8 @@ public class SalesWebManagerIntegrationTest {
 				.getAccumulatedNumberOfOrder());
 		assertEquals(Integer.valueOf(26), statistic
 				.getAccumulatedNumberOfConfirmedOrder());
-		assertEquals(BigDecimal.valueOf(0), statistic
+		assertEquals(BigDecimal.valueOf(6700000), statistic
 				.getAccumulatedSaleBudget());
-		assertEquals(SalesGoal.GOAL_0, statistic.getSalesGoalYear());
+		assertEquals(SalesGoal.GOAL_100, statistic.getSalesGoalYear());
 	}
 }

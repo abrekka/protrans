@@ -50,7 +50,7 @@ public class SaleReportData implements Comparable<SaleReportData> {
 			Integer customerNr, String customerName, String orderNr,
 			BigDecimal ownProductionCost, BigDecimal transportCost,
 			BigDecimal assemblyCost, BigDecimal yesLines, BigDecimal db,
-			Integer aSalesDate, Integer aRegsiteredDate, Integer aOrderDate,
+			Date aSalesDate, Date aRegsiteredDate, Integer aOrderDate,
 			BigDecimal aContributionMargin) {
 		super();
 		this.contributionMargin = aContributionMargin;
@@ -71,10 +71,10 @@ public class SaleReportData implements Comparable<SaleReportData> {
 		}
 
 		if (aSalesDate != null) {
-			this.salesDate = Util.convertIntToDate(aSalesDate);
+			this.salesDate = aSalesDate;
 		}
 		if (aRegsiteredDate != null) {
-			this.registered = Util.convertIntToDate(aRegsiteredDate);
+			this.registered = aRegsiteredDate;
 		}
 		if (aOrderDate != null) {
 			this.orderDate = Util.convertIntToDate(aOrderDate);

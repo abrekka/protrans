@@ -5,7 +5,7 @@
     
 <hibernate-mapping default-lazy="false">
 
-<class name="no.ugland.utransprod.model.Contact" table="crm5.CONTACT">
+<class name="no.ugland.utransprod.model.Contact" table="crm7.CONTACT">
 <!--class name="no.ugland.utransprod.model.Contact" table="CONTACT"-->
 <id name="contactId" type="java.lang.Integer" column="CONTACT_ID">
         <generator class="assigned"/>
@@ -33,7 +33,7 @@
     />
 	<property
         name="updated"
-        type="java.lang.Integer"
+        type="java.util.Date"
         column="UPDATED"
         length="32"
     />

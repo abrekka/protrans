@@ -1,6 +1,7 @@
 package no.ugland.utransprod.model;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -19,9 +20,9 @@ public class SalesDataSnapshot extends BaseObject {
     //private Integer groupIdx;
     private Integer productAreaNr;
 
-    private Integer saledate;
+    private Date saledate;
 
-    private Integer registered;
+    private Date registered;
 
     private Integer customerNr;
 
@@ -57,8 +58,8 @@ public class SalesDataSnapshot extends BaseObject {
             final String aOrderNr, final Integer aProbability,
             //final Integer aGroupIdx,
             final Integer aProductAreaNr,
-            final Integer aSaledate,
-            final Integer isRegistered, final Integer aCustomerNr,
+            final Date aSaledate,
+            final Date isRegistered, final Integer aCustomerNr,
             final String aCustomerName, final String aDeliveryAddress,
             final String aPostalCode, final String aPostOffice,
             final BigDecimal aOwnProductionCost,
@@ -193,19 +194,19 @@ public class SalesDataSnapshot extends BaseObject {
         this.probability = aProbability;
     }
 
-    public final Integer getRegistered() {
+    public final Date getRegistered() {
         return registered;
     }
 
-    public final void setRegistered(final Integer isRegistered) {
+    public final void setRegistered(final Date isRegistered) {
         this.registered = isRegistered;
     }
 
-    public final Integer getSaledate() {
+    public final Date getSaledate() {
         return saledate;
     }
 
-    public final void setSaledate(final Integer aSaledate) {
+    public final void setSaledate(final Date aSaledate) {
         this.saledate = aSaledate;
     }
 

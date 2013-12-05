@@ -1,5 +1,6 @@
 package no.ugland.utransprod.dao.hibernate;
 
+import java.util.Date;
 import java.util.List;
 
 import no.ugland.utransprod.dao.DrawerVDAO;
@@ -25,10 +26,10 @@ public class DrawerVDAOHibernate extends BaseDAOHibernate<DrawerV> implements
                 new HibernateCallback() {
 
                     public Object doInHibernate(final Session session) {
-                        Integer startDate = Util.convertDateToInt(periode
-                                .getStartDate());
-                        Integer endDate = Util.convertDateToInt(periode
-                                .getEndDate());
+                        Date startDate = periode
+                                .getStartDate();
+                        Date endDate = periode
+                                .getEndDate();
                         String sql = "select new no.ugland.utransprod.util.report.DrawerGroup("
                                 + "                                   count(drawerV.orderNr),"
                                 + "            drawerV.categoryName,"
@@ -54,14 +55,12 @@ public class DrawerVDAOHibernate extends BaseDAOHibernate<DrawerV> implements
                 new HibernateCallback() {
 
                     public Object doInHibernate(final Session session) {
-                        Integer startDate = Util.convertDateToInt(periode
-                                .getStartDate());
-                        Integer endDate = Util.convertDateToInt(periode
-                                .getEndDate());
+                        Date startDate = periode.getStartDate();
+                        Date endDate = periode.getEndDate();
                         return session.createCriteria(DrawerV.class).add(
-                                Restrictions.in("productAreaNr", productAreaNrList)).add(
-                                Restrictions.between("registered", startDate,
-                                        endDate)).list();
+                                Restrictions.in("productAreaNr", productAreaNrList))
+                                .add(Restrictions.between("registered", startDate,endDate))
+                                .list();
                     }
 
                 });
@@ -73,10 +72,8 @@ public class DrawerVDAOHibernate extends BaseDAOHibernate<DrawerV> implements
                 new HibernateCallback() {
 
                     public Object doInHibernate(final Session session) {
-                        Integer startDate = Util.convertDateToInt(periode
-                                .getStartDate());
-                        Integer endDate = Util.convertDateToInt(periode
-                                .getEndDate());
+                        Date startDate = periode.getStartDate();
+                        Date endDate = periode.getEndDate();
                         String sql = "select distinct drawerV.documentId"
                                 + "       from DrawerV drawerV"
                                 + "       where   drawerV.registered between :startDate and :endDate";

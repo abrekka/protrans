@@ -1,17 +1,19 @@
 package no.ugland.utransprod.model;
 
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import java.util.Date;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 public class Document extends BaseObject{
     private Integer documentId;
-    private Integer registered;
+    private Date registered;
     public Document() {
         super();
     }
-    public Document(Integer documentId, Integer registered) {
+    public Document(Integer documentId, Date registered) {
         super();
         this.documentId = documentId;
         this.registered = registered;
@@ -22,10 +24,10 @@ public class Document extends BaseObject{
     public void setDocumentId(Integer documentId) {
         this.documentId = documentId;
     }
-    public Integer getRegistered() {
+    public Date getRegistered() {
         return registered;
     }
-    public void setRegistered(Integer registered) {
+    public void setRegistered(Date registered) {
         this.registered = registered;
     }
     @Override

@@ -1,5 +1,6 @@
 package no.ugland.utransprod.dao.hibernate;
 
+import java.util.Date;
 import java.util.List;
 
 import no.ugland.utransprod.model.ProductArea;
@@ -11,6 +12,7 @@ import no.ugland.utransprod.util.report.SaleReportSum;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
@@ -35,10 +37,6 @@ public class SalesDataDao<T> extends BaseDAOHibernate<T> {
 				new HibernateCallback() {
 
 					public Object doInHibernate(final Session session) {
-						Integer startDate = Util.convertDateToInt(periode
-								.getStartDate());
-						Integer endDate = Util.convertDateToInt(periode
-								.getEndDate());
 						String sql = "select new no.ugland.utransprod.util.report.SaleReportSum("
 								+ "               count($TABLE_VAR_NAME$.saleId),"
 								+ "               sum($TABLE_VAR_NAME$.ownProductionCost),"
@@ -60,17 +58,17 @@ public class SalesDataDao<T> extends BaseDAOHibernate<T> {
 								tableName);
 						sql = StringUtils.replace(sql, "$TABLE_VAR_NAME$",
 								tableName);
-						return session
+						
+						Query query=session
 								.createQuery(sql)
 								.setParameterList("probabilityList",
 										probabilityEnum.getProbabilityList())
 								.setParameterList("productAreaNr",
 										productArea.getProductAreaNrList())
-								.setParameter("startDate", startDate)
-								.setParameter("endDate", endDate)
 								.setParameter("ownProductionCostLimit",
-										productArea.getOwnProductionCostLimit())
-								.list();
+										productArea.getOwnProductionCostLimit());
+						query=setDateParameter(query, probabilityEnum, periode);
+								return query.list();
 					}
 
 				});
@@ -84,10 +82,6 @@ public class SalesDataDao<T> extends BaseDAOHibernate<T> {
 				new HibernateCallback() {
 
 					public Object doInHibernate(final Session session) {
-						Integer startDate = Util.convertDateToInt(periode
-								.getStartDate());
-						Integer endDate = Util.convertDateToInt(periode
-								.getEndDate());
 						String sql = "select new no.ugland.utransprod.util.report.SaleReportSum("
 								+ "               count($TABLE_VAR_NAME$.saleId),"
 								+ "               sum($TABLE_VAR_NAME$.ownProductionCost),"
@@ -109,17 +103,16 @@ public class SalesDataDao<T> extends BaseDAOHibernate<T> {
 								tableName);
 						sql = StringUtils.replace(sql, "$TABLE_VAR_NAME$",
 								tableName);
-						return session
+						Query query=session
 								.createQuery(sql)
 								.setParameterList("probabilityList",
 										probabilityEnum.getProbabilityList())
 								.setParameterList("productAreaNr",
 										productArea.getProductAreaNrList())
-								.setParameter("startDate", startDate)
-								.setParameter("endDate", endDate)
 								.setParameter("ownProductionCostLimit",
-										productArea.getOwnProductionCostLimit())
-								.list();
+										productArea.getOwnProductionCostLimit());
+						query=setDateParameter(query, probabilityEnum, periode);
+								return query.list();
 					}
 
 				});
@@ -133,10 +126,8 @@ public class SalesDataDao<T> extends BaseDAOHibernate<T> {
 
 					@SuppressWarnings("unchecked")
 					public Object doInHibernate(final Session session) {
-						Integer startDate = Util.convertDateToInt(periode
-								.getStartDate());
-						Integer endDate = Util.convertDateToInt(periode
-								.getEndDate());
+						
+						
 						String sql = "select count($TABLE_VAR_NAME$.$ID_COLUMN_NAME$)"
 								+ "   from $TABLE_NAME$ $TABLE_VAR_NAME$ "
 								+ "   where   $TABLE_VAR_NAME$.productAreaNr in (:productAreaNr) and "
@@ -152,17 +143,18 @@ public class SalesDataDao<T> extends BaseDAOHibernate<T> {
 								tableName);
 						sql = StringUtils.replace(sql, "$ID_COLUMN_NAME$",
 								idColumnName);
-						List<Integer> countList = session
-								.createQuery(sql)
-								.setParameterList("probabilityList",
-										probabilityEnum.getProbabilityList())
-								.setParameterList("productAreaNr",
-										productArea.getProductAreaNrList())
-								.setParameter("startDate", startDate)
-								.setParameter("endDate", endDate)
-								.setParameter("ownProductionCostLimit",
-										productArea.getOwnProductionCostLimit())
-								.list();
+						
+						Query query = session
+						.createQuery(sql)
+						.setParameterList("probabilityList",
+								probabilityEnum.getProbabilityList())
+						.setParameterList("productAreaNr",
+								productArea.getProductAreaNrList())
+						.setParameter("ownProductionCostLimit",
+								productArea.getOwnProductionCostLimit());
+						query = setDateParameter(query,probabilityEnum,periode);
+						
+						List<Integer> countList = query.list();
 
 						if (countList != null && countList.size() == 1) {
 							return countList.get(0);
@@ -170,7 +162,38 @@ public class SalesDataDao<T> extends BaseDAOHibernate<T> {
 						return 0;
 					}
 
+					
+
 				});
+	}
+	
+	private Query setDateParameter(Query query,
+			ProbabilityEnum probabilityEnum,Periode periode) {
+		if(probabilityEnum.getDateString().equalsIgnoreCase("orderDate")){
+			return setOrderDateParameter(probabilityEnum,query,periode);
+		}else{
+			return setDateDateParameter(probabilityEnum,query,periode);
+		}
+	}
+
+	private Query setDateDateParameter(ProbabilityEnum probabilityEnum,
+			Query query, Periode periode) {
+		Date startDate = periode.getStartDate();
+		Date endDate = periode.getEndDate();
+		query.setParameter("startDate", startDate)
+		.setParameter("endDate", endDate);
+		return query;
+	}
+
+	private Query setOrderDateParameter(ProbabilityEnum probabilityEnum,
+			Query query, Periode periode) {
+		Integer startDate = Util.convertDateToInt(periode
+				.getStartDate());
+		Integer endDate = Util.convertDateToInt(periode
+				.getEndDate());
+		query.setParameter("startDate", startDate)
+		.setParameter("endDate", endDate);
+		return query;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -182,10 +205,8 @@ public class SalesDataDao<T> extends BaseDAOHibernate<T> {
 				new HibernateCallback() {
 
 					public Object doInHibernate(final Session session) {
-						Integer startDate = Util.convertDateToInt(periode
-								.getStartDate());
-						Integer endDate = Util.convertDateToInt(periode
-								.getEndDate());
+						Date startDate = periode.getStartDate();
+						Date endDate = periode.getEndDate();
 						String sql = "select new no.ugland.utransprod.util.report.SaleReportData($TABLE_VAR_NAME$.probability,"
 								+ "               $TABLE_VAR_NAME$.countyName,"
 								+ "               $TABLE_VAR_NAME$.salesman,"
@@ -228,10 +249,8 @@ public class SalesDataDao<T> extends BaseDAOHibernate<T> {
 				new HibernateCallback() {
 
 					public Object doInHibernate(final Session session) {
-						Integer startDate = Util.convertDateToInt(periode
-								.getStartDate());
-						Integer endDate = Util.convertDateToInt(periode
-								.getEndDate());
+						Date startDate = periode.getStartDate();
+						Date endDate = periode.getEndDate();
 						String sql = "select new no.ugland.utransprod.util.report.SaleReportData($TABLE_VAR_NAME$.probability,"
 								+ "               $TABLE_VAR_NAME$.countyName,"
 								+ "               $TABLE_VAR_NAME$.salesman,"
@@ -275,12 +294,6 @@ public class SalesDataDao<T> extends BaseDAOHibernate<T> {
 				new HibernateCallback() {
 
 					public Object doInHibernate(final Session session) {
-						Integer startDate = Util.convertDateToInt(periode
-								.getStartDate());
-						Integer endDate = Util.convertDateToInt(periode
-								.getEndDate());
-						LOGGER.debug("startDate: " + startDate);
-						LOGGER.debug("endDate: " + endDate);
 						String sql = "select new no.ugland.utransprod.util.report.SaleReportSum("
 								+ "               count(distinct sale.saleId),"
 								+ "               sum(sale.ownProductionCost),"
@@ -302,17 +315,17 @@ public class SalesDataDao<T> extends BaseDAOHibernate<T> {
 								tableName);
 						// sql = StringUtils.replace(sql, "$TABLE_VAR_NAME$",
 						// tableName);
-						List<SaleReportSum> list = session
+						
+								Query query=session
 								.createQuery(sql)
 								.setParameterList("probabilityList",
 										probability.getNotProbabilityList())
 								.setParameterList("productAreaNr",
 										productArea.getProductAreaNrList())
-								.setParameter("startDate", startDate)
-								.setParameter("endDate", endDate)
 								.setParameter("ownProductionCostLimit",
-										productArea.getOwnProductionCostLimit())
-								.list();
+										productArea.getOwnProductionCostLimit());
+						query=setDateParameter(query, probability, periode);
+						List<SaleReportSum> list = query.list();
 
 						return list != null && list.size() == 1 ? list.get(0)
 								: SaleReportSum.UNKNOWN;

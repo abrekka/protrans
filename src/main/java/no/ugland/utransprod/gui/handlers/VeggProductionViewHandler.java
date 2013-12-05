@@ -19,6 +19,7 @@ import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.Produceable;
 import no.ugland.utransprod.model.VeggProductionV;
 import no.ugland.utransprod.service.ManagerRepository;
+import no.ugland.utransprod.service.enums.LazyLoadEnum;
 import no.ugland.utransprod.util.Util;
 
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
@@ -156,8 +157,8 @@ public class VeggProductionViewHandler extends ProductionViewHandler {
 						Order order = managerRepository.getOrderManager()
 								.findByOrderNr(prod.getOrderNr());
 						if (order != null) {
-							managerRepository.getOrderManager().lazyLoadTree(
-									order);
+//							managerRepository.getOrderManager().lazyLoadTree(order);
+							managerRepository.getOrderManager().lazyLoad(order,new LazyLoadEnum[][]{{LazyLoadEnum.ORDER_LINES,LazyLoadEnum.ORDER_LINE_ATTRIBUTES}} );
 							status = frontChecker.getArticleStatus(order);
 							statusMap
 									.put(frontChecker.getArticleName(), status);

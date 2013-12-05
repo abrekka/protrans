@@ -11,14 +11,14 @@
     http://www.hibernate.org/
 -->
 
-<class name="no.ugland.utransprod.model.Appointment" table="crm5.APPOINTMENT">
+<class name="no.ugland.utransprod.model.Appointment" table="crm7.APPOINTMENT">
 <id name="appointmentId" type="java.lang.Integer" column="APPOINTMENT_ID">
         <generator class="assigned"/>
         </id>
 
 	 <property
         name="registered"
-        type="java.lang.Integer"
+        type="java.util.Date"
         column="REGISTERED"
         length="32"
     />

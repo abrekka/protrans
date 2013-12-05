@@ -5,7 +5,7 @@
     
 <hibernate-mapping default-lazy="false">
 
-<class name="no.ugland.utransprod.model.Document" table="crm5.DOCUMENT">
+<class name="no.ugland.utransprod.model.Document" table="crm7.DOCUMENT">
 <id name="documentId" type="java.lang.Integer" column="DOCUMENT_ID">
         <generator class="assigned"/>
         </id>
@@ -14,7 +14,7 @@
 
 	<property
         name="registered"
-        type="java.lang.Integer"
+        type="java.util.Date"
         column="REGISTERED"
         length="32"
     />

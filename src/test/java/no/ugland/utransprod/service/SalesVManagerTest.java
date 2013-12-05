@@ -103,7 +103,7 @@ public class SalesVManagerTest {
 				// ProductAreaEnum.GARAGE_VILLA,
 						periode);
 		assertNotNull(salesReportConfirm);
-		assertEquals(1, salesReportConfirm.size());
+		assertEquals(6, salesReportConfirm.size());
 
 //		SaleReportSum sum = salesReportConfirm.get(0);
 //		assertEquals("", sum.getCountyName());
