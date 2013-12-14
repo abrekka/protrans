@@ -5,7 +5,7 @@
     
 <hibernate-mapping default-lazy="false">
 
-<class name="no.ugland.utransprod.model.Person" table="crm5.PERSON">
+<class name="no.ugland.utransprod.model.Person" table="crm7.PERSON">
 <!--class name="no.ugland.utransprod.model.Person" table="PERSON"-->
 <id name="personId" type="java.lang.Integer" column="PERSON_ID">
         <generator class="assigned"/>
