@@ -69,11 +69,13 @@ public enum IconEnum {
 	/**
 	 * Ikon som brukes på dialoger
 	 */
-	ICON_UGLAND("images/ugland.png"),
+//	ICON_UGLAND("images/ugland.png"),
+	ICON_UGLAND("images/G.png"),
 	/**
 	 * 
 	 */
-	ICON_UGLAND2("images/ugland2.jpg"),
+//	ICON_UGLAND2("images/ugland2.jpg"),
+	ICON_UGLAND2("images/G_stor.png"),
 
 	/**
 	 * Ikon systemlogg
