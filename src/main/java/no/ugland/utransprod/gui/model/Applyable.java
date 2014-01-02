@@ -1,5 +1,6 @@
 package no.ugland.utransprod.gui.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -13,34 +14,36 @@ import no.ugland.utransprod.model.Ordln;
  * 
  */
 public interface Applyable {
-	String getOrderNr();
+    String getOrderNr();
 
-	Boolean isForPostShipment();
+    Boolean isForPostShipment();
 
-	Integer getOrderLineId();
+    Integer getOrderLineId();
 
-	void setOrdln(Ordln ordln);
+    void setOrdln(Ordln ordln);
 
-	Ordln getOrdln();
+    Ordln getOrdln();
 
-	String getArticleName();
+    String getArticleName();
 
-	Colli getColli();
+    Colli getColli();
 
-	void setProduced(Date produced);
+    void setProduced(Date produced);
 
-	Date getProduced();
+    Date getProduced();
 
-	void setColli(Colli colli);
+    void setColli(Colli colli);
 
-	List<Applyable> getRelatedArticles();
+    List<Applyable> getRelatedArticles();
 
-	void setRelatedArticles(List<Applyable> relatedArticles);
+    void setRelatedArticles(List<Applyable> relatedArticles);
 
-	boolean isRelatedArticlesComplete();
+    boolean isRelatedArticlesComplete();
 
-	Integer getNumberOfItems();
+    Integer getNumberOfItems();
 
-	String getProductionUnitName();
+    String getProductionUnitName();
+
+    BigDecimal getRealProductionHours();
 
 }

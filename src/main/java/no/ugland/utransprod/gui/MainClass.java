@@ -29,6 +29,7 @@ import com.google.inject.Injector;
 
 /**
  * Oppstartsklasse for ProTrans
+ * 
  * @author atle.brekka
  */
 public final class MainClass {
@@ -41,133 +42,126 @@ public final class MainClass {
     private LoginImpl login;
 
     static {
-        try {
+	try {
 
-            UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
-            JFrame.setDefaultLookAndFeelDecorated(true);
+	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
+	    JFrame.setDefaultLookAndFeelDecorated(true);
 
-            JDialog.setDefaultLookAndFeelDecorated(true);
+	    JDialog.setDefaultLookAndFeelDecorated(true);
 
-            LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-            LiquidLookAndFeel.setPanelTransparency(false);
+	    LiquidLookAndFeel.setPanelTransparency(false);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
 
-        ResourceBundle configuration = ResourceBundle.getBundle("application");
+	ResourceBundle configuration = ResourceBundle.getBundle("application");
 
-        version = configuration.getString("version");
-        isTest = Boolean.valueOf(configuration.getString("test"))
-                .booleanValue();
+	version = configuration.getString("version");
+	isTest = Boolean.valueOf(configuration.getString("test")).booleanValue();
 
-        String testString = "";
+	String testString = "";
 
-        if (isTest) {
-            testString += " test";
-        }
+	if (isTest) {
+	    testString += " test";
+	}
 
-        LoadView loadView = new LoadView(version + testString, "ProTrans");
-        loadDialog = loadView.buildDialog();
+	LoadView loadView = new LoadView(version + testString, "ProTrans - Grimstad Industrier");
+	loadDialog = loadView.buildDialog();
 
-        Util.locateOnScreenCenter(loadDialog);
-        loadDialog.setVisible(true);
+	Util.locateOnScreenCenter(loadDialog);
+	loadDialog.setVisible(true);
 
-        BaseManagerImpl.setTest(isTest);
-        
-        initDesktopDll();
+	BaseManagerImpl.setTest(isTest);
+
+	initDesktopDll();
     }
 
     @Inject
     private MainClass(final LoginImpl aLogin) {
-        login=aLogin;
+	login = aLogin;
     }
-    
+
     private static void initDesktopDll() {
-		MainClass.class.getClassLoader();
-		URL dllUrl = ClassLoader.getSystemResource("jdic.dll");
-        if (dllUrl == null) {
-            Util.showErrorDialog((Component)null, "Feil", "Finner ikke jdic.dll");
-        }else{
-        	System.loadLibrary("jdic");
-//            System.load(dllUrl.getPath());
-        }
-//        if (dllUrl != null) {
-//            System.load(dllUrl.getPath());
-//        }
+	MainClass.class.getClassLoader();
+	URL dllUrl = ClassLoader.getSystemResource("jdic.dll");
+	if (dllUrl == null) {
+	    Util.showErrorDialog((Component) null, "Feil", "Finner ikke jdic.dll");
+	} else {
+	    System.loadLibrary("jdic");
+	    // System.load(dllUrl.getPath());
+	}
+	// if (dllUrl != null) {
+	// System.load(dllUrl.getPath());
+	// }
     }
 
     /**
      * Oppstart av ProTrans
+     * 
      * @param args
      */
     public static void main(final String[] args) {
-        Thread
-                .setDefaultUncaughtExceptionHandler(new ProtransUncaughtHandler());
-        ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE);
-        Injector injector = Guice.createInjector(new ProtransModule());
-        MainClass mainClass = injector.getInstance(MainClass.class);
-        mainClass.startUp(injector);
-        loadDialog.dispose();
+	Thread.setDefaultUncaughtExceptionHandler(new ProtransUncaughtHandler());
+	ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE);
+	Injector injector = Guice.createInjector(new ProtransModule());
+	MainClass mainClass = injector.getInstance(MainClass.class);
+	mainClass.startUp(injector);
+	loadDialog.dispose();
 
     }
 
     /**
      * Starter opp riktig vindu iht bruker
+     * 
      * @param applicationUser
      */
     private void startUp(final Injector injector) {
-        login.login();
-        if(login.getApplicationUser()==null){
-            System.exit(0);
-        }
+	login.login();
+	if (login.getApplicationUser() == null) {
+	    System.exit(0);
+	}
 
-        ApplicationUserManager applicationUserManager = (ApplicationUserManager) ModelUtil
-                .getBean(ApplicationUserManager.MANAGER_NAME);
-        applicationUserManager
-                .lazyLoad(
-                        login.getApplicationUser(),
-                        new LazyLoadEnum[][] {{LazyLoadEnum.USER_ROLES,LazyLoadEnum.NONE}});
-        Set<UserRole> roles = login.getApplicationUser().getUserRoles();
-        UserType userType;
-        UserRole userRole = null;
+	ApplicationUserManager applicationUserManager = (ApplicationUserManager) ModelUtil.getBean(ApplicationUserManager.MANAGER_NAME);
+	applicationUserManager.lazyLoad(login.getApplicationUser(), new LazyLoadEnum[][] { { LazyLoadEnum.USER_ROLES, LazyLoadEnum.NONE } });
+	Set<UserRole> roles = login.getApplicationUser().getUserRoles();
+	UserType userType;
+	UserRole userRole = null;
 
-        if (roles != null) {
-            if (roles.size() > 1) {
-                userRole = (UserRole) JOptionPane.showInputDialog(null,
-                        "Velg rolle", "Velg rolle",
-                        JOptionPane.QUESTION_MESSAGE, null, roles.toArray(),
-                        null);
-            } else if (roles.size() == 1) {
-                userRole = roles.iterator().next();
-            }
-        }
-        if (userRole != null) {
-            userType = userRole.getUserType();
-            login.setUserType(userType);
-            try {
-                Class<?> windowClass = Class.forName(userType
-                        .getStartupWindow());
-                MainWindow mainWindow = (MainWindow)injector.getInstance(windowClass);
-                mainWindow.setLogin(login);
+	if (roles != null) {
+	    if (roles.size() > 1) {
+		userRole = (UserRole) JOptionPane.showInputDialog(null, "Velg rolle", "Velg rolle", JOptionPane.QUESTION_MESSAGE, null,
+			roles.toArray(), null);
+	    } else if (roles.size() == 1) {
+		userRole = roles.iterator().next();
+	    }
+	}
+	if (userRole != null) {
+	    userType = userRole.getUserType();
+	    login.setUserType(userType);
+	    try {
+		Class<?> windowClass = Class.forName(userType.getStartupWindow());
+		MainWindow mainWindow = (MainWindow) injector.getInstance(windowClass);
+		mainWindow.setLogin(login);
 
-                mainWindow.buildMainWindow(new SystemReadyListener() {
+		mainWindow.buildMainWindow(new SystemReadyListener() {
 
-                    public void systemReady() {
-                        loadDialog.dispose();
+		    public void systemReady() {
+			loadDialog.dispose();
 
-                    }
+		    }
 
-                }, injector.getInstance(ManagerRepositoryImpl.class));
+		}, injector.getInstance(ManagerRepositoryImpl.class));
 
-            } catch (Exception e) {
+	    } catch (Exception e) {
 
-                e.printStackTrace();
-                System.exit(0);
-            }
-        } else {
-            System.exit(0);
-        }
+		e.printStackTrace();
+		System.exit(0);
+	    }
+	} else {
+	    System.exit(0);
+	}
     }
 }

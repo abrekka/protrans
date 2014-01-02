@@ -1,23 +1,50 @@
 package no.ugland.utransprod.service;
 
 import static org.junit.Assert.assertNotNull;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import no.ugland.utransprod.model.OrderLine;
+import no.ugland.utransprod.model.Produceable;
+import no.ugland.utransprod.model.VeggProductionV;
 import no.ugland.utransprod.test.FastTests;
 import no.ugland.utransprod.util.ModelUtil;
 
+import org.fest.assertions.Assertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 /**
  * @author atle.brekka
- *
+ * 
  */
 @Category(FastTests.class)
 public class VeggProductionVManagerTest {
+    private VeggProductionVManager veggProductionVManager = (VeggProductionVManager) ModelUtil.getBean("veggProductionVManager");
+    private OrderLineManager orderLineManager = (OrderLineManager) ModelUtil.getBean(OrderLineManager.MANAGER_NAME);
 
-	@Test
-	public void testFindAll(){
-		VeggProductionVManager veggProductionVManager=(VeggProductionVManager)ModelUtil.getBean("veggProductionVManager");
-		
-		assertNotNull(veggProductionVManager.findAllApplyable());
+    @Test
+    public void skalHaOverstyrtTidsforbruk() {
+	List<Produceable> allApplyable = veggProductionVManager.findAllApplyable();
+	VeggProductionV vegg = (VeggProductionV) allApplyable.get(0);
+	OrderLine orderLine = orderLineManager.findByOrderLineId(vegg.getOrderLineId());
+	orderLine.setRealProductionHours(BigDecimal.valueOf(2.5));
+	orderLineManager.saveOrderLine(orderLine);
+
+	allApplyable = veggProductionVManager.findAllApplyable();
+	boolean funnetGavl = false;
+	for (Produceable produceable : allApplyable) {
+	    if (produceable.getOrderLineId().equals(orderLine.getOrderLineId())) {
+		funnetGavl = true;
+		Assertions.assertThat(((VeggProductionV) produceable).getRealProductionHours()).isEqualByComparingTo(BigDecimal.valueOf(2.5));
+	    }
 	}
+	Assertions.assertThat(funnetGavl).isTrue();
+    }
+
+    @Test
+    public void testFindAll() {
+	assertNotNull(veggProductionVManager.findAllApplyable());
+    }
 }

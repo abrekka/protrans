@@ -12,6 +12,12 @@
         <generator class="identity"/>
         </id>
 
+<property
+        name="realProductionHours"
+        type="java.math.BigDecimal"
+        column="REAL_PRODUCTION_HOURS"
+        length="32"
+    />
     <property
         name="numberOfItems"
         type="java.lang.Integer"

@@ -1,5 +1,6 @@
 package no.ugland.utransprod.gui.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -23,68 +24,67 @@ import com.google.inject.Inject;
  * 
  */
 public class PaidApplyList extends AbstractApplyList<PaidV> {
-	/**
-	 * @param aUserType
-	 * @param manager
-	 */
-	@Inject
-	public PaidApplyList(Login login,PaidVManager manager) {
-		super(login,manager,null);
-	}
-
-	/**
-	 * @param object
-	 * @param applied
-	 * @param window
-	 * @see no.ugland.utransprod.gui.model.ApplyListInterface#setApplied(no.ugland.utransprod.gui.model.Applyable,
-	 *      boolean, no.ugland.utransprod.gui.WindowInterface)
-	 */
-	public void setApplied(PaidV object, boolean applied, WindowInterface window) {
-		OrderManager orderManager = (OrderManager) ModelUtil
-				.getBean("orderManager");
-		Order order = orderManager.findByOrderNr(object.getOrderNr());
-		if (applied) {
-			Date invoiceDate = Util.getDate(window);
-			order.setPaidDate(invoiceDate);
-		} else {
-			order.setPaidDate(null);
-		}
-		try {
-			orderManager.saveOrder(order);
-		} catch (ProTransException e) {
-			Util.showErrorDialog(window, "Feil", e.getMessage());
-			e.printStackTrace();
-		}
-		applyListManager.refresh(object);
-
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.model.ApplyListInterface#hasWriteAccess()
-	 */
-	public boolean hasWriteAccess() {
-		return UserUtil.hasWriteAccess(login.getUserType(), "Betaling");
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.model.ApplyListInterface#getApplyObject(no.ugland.utransprod.gui.model.Transportable)
-	 */
-	public PaidV getApplyObject(Transportable transportable,WindowInterface window) {
-		List<PaidV> list = applyListManager
-				.findApplyableByOrderNr(transportable.getOrder().getOrderNr());
-		if (list != null && list.size() == 1) {
-			return list.get(0);
-		}
-		return null;
-	}
-
-    
-
-    public void setStarted(PaidV object, boolean started) {
-        // TODO Auto-generated method stub
-        
+    /**
+     * @param aUserType
+     * @param manager
+     */
+    @Inject
+    public PaidApplyList(Login login, PaidVManager manager) {
+	super(login, manager, null);
     }
 
+    /**
+     * @param object
+     * @param applied
+     * @param window
+     * @see no.ugland.utransprod.gui.model.ApplyListInterface#setApplied(no.ugland.utransprod.gui.model.Applyable,
+     *      boolean, no.ugland.utransprod.gui.WindowInterface)
+     */
+    public void setApplied(PaidV object, boolean applied, WindowInterface window) {
+	OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
+	Order order = orderManager.findByOrderNr(object.getOrderNr());
+	if (applied) {
+	    Date invoiceDate = Util.getDate(window);
+	    order.setPaidDate(invoiceDate);
+	} else {
+	    order.setPaidDate(null);
+	}
+	try {
+	    orderManager.saveOrder(order);
+	} catch (ProTransException e) {
+	    Util.showErrorDialog(window, "Feil", e.getMessage());
+	    e.printStackTrace();
+	}
+	applyListManager.refresh(object);
 
+    }
+
+    /**
+     * @see no.ugland.utransprod.gui.model.ApplyListInterface#hasWriteAccess()
+     */
+    public boolean hasWriteAccess() {
+	return UserUtil.hasWriteAccess(login.getUserType(), "Betaling");
+    }
+
+    /**
+     * @see no.ugland.utransprod.gui.model.ApplyListInterface#getApplyObject(no.ugland.utransprod.gui.model.Transportable)
+     */
+    public PaidV getApplyObject(Transportable transportable, WindowInterface window) {
+	List<PaidV> list = applyListManager.findApplyableByOrderNr(transportable.getOrder().getOrderNr());
+	if (list != null && list.size() == 1) {
+	    return list.get(0);
+	}
+	return null;
+    }
+
+    public void setStarted(PaidV object, boolean started) {
+	// TODO Auto-generated method stub
+
+    }
+
+    public void setRealProductionHours(PaidV object, BigDecimal overstyrtTidsforbruk) {
+	// TODO Auto-generated method stub
+
+    }
 
 }

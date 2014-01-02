@@ -17,6 +17,7 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 @Category(FastTests.class)
 public class UtilTest extends TestCase {
+	
 
 	@Test
 	public void skalHaandtereNull() {

@@ -13,7 +13,12 @@
         <generator class="assigned"/>
         </id>
 
-    
+    <property
+        name="realProductionHours"
+        type="java.math.BigDecimal"
+        column="REAL_PRODUCTION_HOURS"
+        length="32"
+    />
 
 	<property
         name="customerDetails"

@@ -21,58 +21,55 @@ import com.google.inject.Inject;
  * @author atle.brekka
  * 
  */
-public class GavlProductionWindow extends
-		AbstractProductionPackageWindow<Produceable> {
+public class GavlProductionWindow extends AbstractProductionPackageWindow<Produceable> {
 
+    private DeviationViewHandlerFactory deviationViewHandlerFactory;
+    private ManagerRepository managerRepository;
+    private SetProductionUnitActionFactory setProductionUnitActionFactory;
 
-	private DeviationViewHandlerFactory deviationViewHandlerFactory;
-	private ManagerRepository managerRepository;
-	private SetProductionUnitActionFactory setProductionUnitActionFactory;
-	
-	@Inject
-	public GavlProductionWindow(Login login,ManagerRepository aManagerRepository,DeviationViewHandlerFactory aDeviationViewHandlerFactory,SetProductionUnitActionFactory aSetProductionUnitActionFactory){
-		super(login);
-		setProductionUnitActionFactory=aSetProductionUnitActionFactory;
-		managerRepository=aManagerRepository;
-		deviationViewHandlerFactory=aDeviationViewHandlerFactory;
-	}
+    @Inject
+    public GavlProductionWindow(Login login, ManagerRepository aManagerRepository, DeviationViewHandlerFactory aDeviationViewHandlerFactory,
+	    SetProductionUnitActionFactory aSetProductionUnitActionFactory) {
+	super(login);
+	setProductionUnitActionFactory = aSetProductionUnitActionFactory;
+	managerRepository = aManagerRepository;
+	deviationViewHandlerFactory = aDeviationViewHandlerFactory;
+    }
 
-	/**
-	 * @see no.ugland.utransprod.gui.AbstractProductionPackageWindow#getParamArticleName()
-	 */
-	@Override
-	protected String getParamArticleName() {
-		return "gavl_artikkel";
-	}
+    /**
+     * @see no.ugland.utransprod.gui.AbstractProductionPackageWindow#getParamArticleName()
+     */
+    @Override
+    protected String getParamArticleName() {
+	return "gavl_artikkel";
+    }
 
-	/**
-	 * @see no.ugland.utransprod.gui.AbstractProductionPackageWindow#getWindowTitle()
-	 */
-	@Override
-	protected String getWindowTitle() {
-		return "Produksjon av gavl";
-	}
+    /**
+     * @see no.ugland.utransprod.gui.AbstractProductionPackageWindow#getWindowTitle()
+     */
+    @Override
+    protected String getWindowTitle() {
+	return "Produksjon av gavl";
+    }
 
-	/**
-	 * @see no.ugland.utransprod.gui.AbstractProductionPackageWindow#getViewHandler()
-	 */
-	@Override
-	public AbstractProductionPackageViewHandler<Produceable> getViewHandler() {
-		GavlProductionVManager gavlProductionVManager = (GavlProductionVManager) ModelUtil
-				.getBean("gavlProductionVManager");
-        ArticleTypeManager articleTypeManager=(ArticleTypeManager)ModelUtil.getBean("articleTypeManager");
-        ArticleType articleType = articleTypeManager.findByName(ApplicationParamUtil.findParamByName(getParamArticleName()));
-		return new GavlProductionViewHandler(new ProductionApplyList(login,
-				gavlProductionVManager, "Gavl", "Gavl", 
-				null,managerRepository), "Gavlproduksjon", login,articleType,managerRepository,deviationViewHandlerFactory,setProductionUnitActionFactory);
-	}
+    /**
+     * @see no.ugland.utransprod.gui.AbstractProductionPackageWindow#getViewHandler()
+     */
+    @Override
+    public AbstractProductionPackageViewHandler<Produceable> getViewHandler() {
+	GavlProductionVManager gavlProductionVManager = (GavlProductionVManager) ModelUtil.getBean("gavlProductionVManager");
+	ArticleTypeManager articleTypeManager = (ArticleTypeManager) ModelUtil.getBean("articleTypeManager");
+	ArticleType articleType = articleTypeManager.findByName(ApplicationParamUtil.findParamByName(getParamArticleName()));
+	return new GavlProductionViewHandler(new ProductionApplyList(login, gavlProductionVManager, "Gavl", "Gavl", null, managerRepository),
+		"Gavlproduksjon", login, articleType, managerRepository, deviationViewHandlerFactory, setProductionUnitActionFactory);
+    }
 
-	/**
-	 * @see no.ugland.utransprod.gui.AbstractProductionPackageWindow#usePrintButton()
-	 */
-	@Override
-	protected boolean usePrintButton() {
-		return false;
-	}
+    /**
+     * @see no.ugland.utransprod.gui.AbstractProductionPackageWindow#usePrintButton()
+     */
+    @Override
+    protected boolean usePrintButton() {
+	return false;
+    }
 
 }

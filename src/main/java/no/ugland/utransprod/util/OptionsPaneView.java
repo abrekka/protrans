@@ -32,6 +32,7 @@ import com.jgoodies.forms.layout.FormLayout;
 
 /**
  * Brukes for å vise dialog med valg.
+ * 
  * @author atle.brekka
  */
 public class OptionsPaneView implements Closeable {
@@ -58,6 +59,7 @@ public class OptionsPaneView implements Closeable {
     boolean comboBox = false;
 
     String inputLabelText;
+    private String defaultValue;
 
     private JTextField textFieldInput;
 
@@ -72,91 +74,91 @@ public class OptionsPaneView implements Closeable {
      * @param aInputLabelText
      * @param useOnlyOkButton
      */
-    public OptionsPaneView(final Collection<?> objects, final boolean useOkButton,
-            final boolean checkBoxAll, final boolean useComboBox, final Object defaultObject,
-            final String aInputLabelText, final boolean useOnlyOkButton) {
-        onlyOkButton = useOnlyOkButton;
-        inputLabelText = aInputLabelText;
-        comboBox = useComboBox;
-        if (inputLabelText == null) {
-            createObjectList(objects, defaultObject);
-        }
-        okButton = useOkButton;
-        useCheckBox = checkBoxAll;
+    public OptionsPaneView(final Collection<?> objects, final boolean useOkButton, final boolean checkBoxAll, final boolean useComboBox,
+	    final Object defaultObject, final String aInputLabelText, final boolean useOnlyOkButton, final String defaultValue) {
+	this.defaultValue = defaultValue;
+	onlyOkButton = useOnlyOkButton;
+	inputLabelText = aInputLabelText;
+	comboBox = useComboBox;
+	if (inputLabelText == null) {
+	    createObjectList(objects, defaultObject);
+	}
+	okButton = useOkButton;
+	useCheckBox = checkBoxAll;
     }
 
     private void createObjectList(final Collection<?> objects, final Object defaultObject) {
-        objectList = new ArrayListModel(objects);
+	objectList = new ArrayListModel(objects);
 
-        objectSelectionList = new SelectionInList((ListModel) objectList);
-        if (defaultObject != null) {
-            objectSelectionList.setSelection(defaultObject);
-        }
+	objectSelectionList = new SelectionInList((ListModel) objectList);
+	if (defaultObject != null) {
+	    objectSelectionList.setSelection(defaultObject);
+	}
     }
 
     /**
      * Initierer vinduskomponenter.
+     * 
      * @param window
      */
     private void initComponents(final WindowInterface window) {
-        if (inputLabelText != null) {
-            textFieldInput = new JTextField();
-            textFieldInput.setName("TextFieldInput");
-        } else {
-            if (comboBox) {
-                comboBoxOptions = new JComboBox(new ComboBoxAdapter(
-                        objectSelectionList));
-                comboBoxOptions.setName("ComboBoxOptions");
-            } else {
-                listOptions = new JXList(objectList);
-                listOptions.setName("ListOptions");
-            }
-        }
-        buttonOk = new JButton(new OkAction(window));
-        buttonOk.setIcon(IconEnum.ICON_OK.getIcon());
-        buttonOk.setName("ButtonOk");
-        buttonCancel = new CancelButton(window, this, true);
-        buttonCancel.setName("ButtonCancel");
-        checkBoxSelectAll = new JCheckBox(new SelectAllAction());
+	if (inputLabelText != null) {
+	    textFieldInput = new JTextField();
+	    textFieldInput.setName("TextFieldInput");
+	    if (defaultValue != null) {
+		textFieldInput.setText(defaultValue);
+	    }
+	} else {
+	    if (comboBox) {
+		comboBoxOptions = new JComboBox(new ComboBoxAdapter(objectSelectionList));
+		comboBoxOptions.setName("ComboBoxOptions");
+	    } else {
+		listOptions = new JXList(objectList);
+		listOptions.setName("ListOptions");
+	    }
+	}
+	buttonOk = new JButton(new OkAction(window));
+	buttonOk.setIcon(IconEnum.ICON_OK.getIcon());
+	buttonOk.setName("ButtonOk");
+	buttonCancel = new CancelButton(window, this, true);
+	buttonCancel.setName("ButtonCancel");
+	checkBoxSelectAll = new JCheckBox(new SelectAllAction());
     }
 
     /**
      * Bygger panel.
+     * 
      * @param window
      * @return panel
      */
     public final JPanel buildPanel(final WindowInterface window) {
-        initComponents(window);
-        FormLayout layout = new FormLayout("10dlu,p,10dlu",
-                "10dlu,p,3dlu,p,3dlu,p,5dlu");
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
+	initComponents(window);
+	FormLayout layout = new FormLayout("20dlu,p,20dlu", "10dlu,p,3dlu,p,3dlu,p,5dlu");
+	PanelBuilder builder = new PanelBuilder(layout);
+	CellConstraints cc = new CellConstraints();
 
-        if (inputLabelText != null) {
-            builder.addLabel(inputLabelText, cc.xy(2, 2));
-            builder.add(textFieldInput, cc.xy(2, 4));
-        } else {
-            if (useCheckBox) {
-                builder.add(checkBoxSelectAll, cc.xy(2, 2));
-            }
-            if (comboBox) {
-                builder.add(comboBoxOptions, cc.xy(2, 4));
-            } else {
-                builder.add(new JScrollPane(listOptions), cc.xy(2, 4));
-            }
-        }
-        if (onlyOkButton) {
-            builder.add(ButtonBarFactory.buildCenteredBar(buttonOk), cc
-                    .xy(2, 6));
-        } else if (okButton) {
-            builder.add(ButtonBarFactory.buildCenteredBar(buttonOk,
-                    buttonCancel), cc.xy(2, 6));
-        } else {
-            builder.add(ButtonBarFactory.buildCenteredBar(buttonCancel), cc.xy(
-                    2, 6));
-        }
+	if (inputLabelText != null) {
+	    builder.addLabel(inputLabelText, cc.xy(2, 2));
+	    builder.add(textFieldInput, cc.xy(2, 4));
+	} else {
+	    if (useCheckBox) {
+		builder.add(checkBoxSelectAll, cc.xy(2, 2));
+	    }
+	    if (comboBox) {
+		builder.add(comboBoxOptions, cc.xy(2, 4));
+	    } else {
+		builder.add(new JScrollPane(listOptions), cc.xy(2, 4));
+	    }
+	}
+	if (onlyOkButton) {
+	    builder.add(ButtonBarFactory.buildCenteredBar(buttonOk), cc.xy(2, 6));
+	} else if (okButton) {
+	    builder.add(ButtonBarFactory.buildCenteredBar(buttonOk, buttonCancel), cc.xy(2, 6));
+	} else {
+	    builder.add(ButtonBarFactory.buildCenteredBar(buttonCancel), cc.xy(2, 6));
+	}
 
-        return builder.getPanel();
+	return builder.getPanel();
     }
 
     /**
@@ -164,93 +166,96 @@ public class OptionsPaneView implements Closeable {
      *      no.ugland.utransprod.gui.WindowInterface)
      */
     public final boolean canClose(final String actionString, final WindowInterface window) {
-        if (inputLabelText == null) {
-            selectedObjects = null;
-            objectSelectionList.clearSelection();
-        }
-        return true;
+	if (inputLabelText == null) {
+	    selectedObjects = null;
+	    objectSelectionList.clearSelection();
+	}
+	return true;
     }
 
     /**
      * Håndterer OK.
+     * 
      * @author atle.brekka
      */
     private class OkAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-        private WindowInterface window;
+	private WindowInterface window;
 
-        /**
-         * @param aWindow
-         */
-        public OkAction(final WindowInterface aWindow) {
-            super("Ok");
-            window = aWindow;
-        }
+	/**
+	 * @param aWindow
+	 */
+	public OkAction(final WindowInterface aWindow) {
+	    super("Ok");
+	    window = aWindow;
+	}
 
-        /**
-         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-         */
-        public final void actionPerformed(final ActionEvent arg0) {
-            if (!comboBox && inputLabelText == null) {
-                Object[] selection = listOptions.getSelectedValues();
-                if (selection.length != 0) {
+	/**
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public final void actionPerformed(final ActionEvent arg0) {
+	    if (!comboBox && inputLabelText == null) {
+		Object[] selection = listOptions.getSelectedValues();
+		if (selection.length != 0) {
 
-                    selectedObjects = new ArrayList<Object>(Arrays
-                            .asList(selection));
-                }
-            }
-            window.dispose();
+		    selectedObjects = new ArrayList<Object>(Arrays.asList(selection));
+		}
+	    }
+	    window.dispose();
 
-        }
+	}
     }
 
     /**
      * Henter liste med valg.
+     * 
      * @return valg
      */
     public final List<Object> getSelectedObjects() {
-        return selectedObjects;
+	return selectedObjects;
     }
 
     /**
      * Henter inntastet tekst.
+     * 
      * @return tekst
      */
     public final String getInputText() {
-        return textFieldInput.getText();
+	return textFieldInput.getText();
     }
 
     /**
      * Håndterer at alle skal velges.
+     * 
      * @author atle.brekka
      */
     private class SelectAllAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-        public SelectAllAction() {
-            super("Velg alle");
-        }
+	public SelectAllAction() {
+	    super("Velg alle");
+	}
 
-        /**
-         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-         */
-        public final void actionPerformed(final ActionEvent event) {
-            if (checkBoxSelectAll.isSelected()) {
-                listOptions.addSelectionInterval(0, objectList.getSize() - 1);
-            } else {
-                listOptions
-                        .removeSelectionInterval(0, objectList.getSize() - 1);
-            }
+	/**
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public final void actionPerformed(final ActionEvent event) {
+	    if (checkBoxSelectAll.isSelected()) {
+		listOptions.addSelectionInterval(0, objectList.getSize() - 1);
+	    } else {
+		listOptions.removeSelectionInterval(0, objectList.getSize() - 1);
+	    }
 
-        }
+	}
     }
 
     /**
      * Henter valg.
+     * 
      * @return valg
      */
     public final Object getSelectedObject() {
-        return objectSelectionList.getSelection();
+	return objectSelectionList.getSelection();
     }
 }

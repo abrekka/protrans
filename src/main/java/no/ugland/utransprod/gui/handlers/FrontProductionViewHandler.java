@@ -1,5 +1,6 @@
 package no.ugland.utransprod.gui.handlers;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.Map;
@@ -21,12 +22,14 @@ import no.ugland.utransprod.model.Produceable;
 import no.ugland.utransprod.model.VeggProductionV;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.enums.LazyLoadEnum;
+import no.ugland.utransprod.util.Tidsforbruk;
 import no.ugland.utransprod.util.Util;
 
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 
 /**
  * Hjelpeklasse for frontproduksjon
+ * 
  * @author atle.brekka
  */
 public class FrontProductionViewHandler extends ProductionViewHandler {
@@ -34,15 +37,15 @@ public class FrontProductionViewHandler extends ProductionViewHandler {
     /**
      * @param productionInterface
      * @param title
-     * @param deviationViewHandlerFactory 
+     * @param deviationViewHandlerFactory
      * @param userType
      * @param applicationUser
      */
-    public FrontProductionViewHandler(
-            ApplyListInterface<Produceable> productionInterface, String title,
-            Login login,ArticleType articleType,ManagerRepository managerRepository, DeviationViewHandlerFactory deviationViewHandlerFactory,SetProductionUnitActionFactory aSetProductionUnitActionFactory) {
-        super(productionInterface, title, login,null,
-                "produksjon",TableEnum.TABLEPRODUCTIONFRONT,articleType,managerRepository,deviationViewHandlerFactory,aSetProductionUnitActionFactory);
+    public FrontProductionViewHandler(ApplyListInterface<Produceable> productionInterface, String title, Login login, ArticleType articleType,
+	    ManagerRepository managerRepository, DeviationViewHandlerFactory deviationViewHandlerFactory,
+	    SetProductionUnitActionFactory aSetProductionUnitActionFactory) {
+	super(productionInterface, title, login, null, "produksjon", TableEnum.TABLEPRODUCTIONFRONT, articleType, managerRepository,
+		deviationViewHandlerFactory, aSetProductionUnitActionFactory);
     }
 
     /**
@@ -50,7 +53,7 @@ public class FrontProductionViewHandler extends ProductionViewHandler {
      */
     @Override
     protected TableModel getTableModel(WindowInterface window) {
-        return new FrontProductionTableModel(getObjectSelectionList(), window);
+	return new FrontProductionTableModel(getObjectSelectionList(), window);
     }
 
     /**
@@ -58,192 +61,179 @@ public class FrontProductionViewHandler extends ProductionViewHandler {
      */
     @Override
     protected void initColumnWidthExt() {
-        // Transportdato
-        table.getColumnExt(table.getModel().getColumnName(0)).setPreferredWidth(100);
+	// Transportdato
+	table.getColumnExt(table.getModel().getColumnName(0)).setPreferredWidth(100);
 
-        // Ordre
-        table.getColumnExt(table.getModel().getColumnName(1)).setPreferredWidth(200);
-        // Pro.dato
-        table.getColumnExt(table.getModel().getColumnName(2)).setPreferredWidth(60);
+	// Ordre
+	table.getColumnExt(table.getModel().getColumnName(1)).setPreferredWidth(200);
+	// Pro.dato
+	table.getColumnExt(table.getModel().getColumnName(2)).setPreferredWidth(60);
 
-        // Antall
-        table.getColumnExt(table.getModel().getColumnName(3)).setPreferredWidth(50);
+	// Antall
+	table.getColumnExt(table.getModel().getColumnName(3)).setPreferredWidth(50);
 
-        // vegg
-        table.getColumnExt(table.getModel().getColumnName(4)).setPreferredWidth(50);
-        // opplasting
-        table.getColumnExt(table.getModel().getColumnName(5)).setPreferredWidth(70);
-        // produktområde
-        table.getColumnExt(table.getModel().getColumnName(6)).setPreferredWidth(90);
+	// vegg
+	table.getColumnExt(table.getModel().getColumnName(4)).setPreferredWidth(70);
+	// opplasting
+	table.getColumnExt(table.getModel().getColumnName(5)).setPreferredWidth(100);
+	// produsert
+	table.getColumnExt(table.getModel().getColumnName(6)).setPreferredWidth(110);
+	// produsert
+	table.getColumnExt(table.getModel().getColumnName(8)).setPreferredWidth(110);
+	// reell tidsforbruk
+	table.getColumnExt(table.getModel().getColumnName(9)).setPreferredWidth(110);
     }
 
     /**
      * Tabellmodell for frontproduksjon
+     * 
      * @author atle.brekka
      */
     final class FrontProductionTableModel extends AbstractTableAdapter {
 
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-        /**
-         * 
-         */
-        private StatusCheckerInterface<Transportable> veggChecker;
+	private StatusCheckerInterface<Transportable> veggChecker;
 
-        /**
-         * 
-         */
-        private WindowInterface window;
+	private WindowInterface window;
 
-        /**
-         * @param listModel
-         * @param aWindow
-         */
-        public FrontProductionTableModel(ListModel listModel,
-                WindowInterface aWindow) {
-            super(listModel, new String[] {"Transport", "Ordre", "Prod.dato",
-                    "Antall", "Vegg", "Opplasting", "Produsert",
-                    "Produktområde","Prod.enhet", "Startet"});
-            window = aWindow;
-            veggChecker = Util.getVeggChecker();
-            initStatus(listModel);
+	public FrontProductionTableModel(ListModel listModel, WindowInterface aWindow) {
+	    super(listModel, new String[] { "Transport", "Ordre", "Antall", "Vegg", "Opplasting", "Produsert", "Produktområde", "Prod.enhet",
+		    "Startet", "Reell tidsforbruk" });
+	    window = aWindow;
+	    veggChecker = Util.getVeggChecker();
+	    initStatus(listModel);
 
-        }
+	}
 
-        /**
-         * Initierer status for vegg
-         * @param list
-         */
-        private void initStatus(ListModel list) {
-            if (list != null) {
-                Map<String, String> statusMap;// = new Hashtable<String,
-                // String>();
-                String status;
-                int rowCount = getRowCount();
+	private void initStatus(ListModel list) {
+	    if (list != null) {
+		Map<String, String> statusMap;
+		String status;
+		int rowCount = getRowCount();
 
-                FrontProductionV prod;
-                for (int i = 0; i < rowCount; i++) {
-                    // for (VeggProductionV prod : list) {
-                    prod = (FrontProductionV) getRow(i);
-                    statusMap = Util.createStatusMap(prod.getOrderStatus());
-                    status = statusMap.get(veggChecker.getArticleName());
+		FrontProductionV prod;
+		for (int i = 0; i < rowCount; i++) {
+		    prod = (FrontProductionV) getRow(i);
+		    statusMap = Util.createStatusMap(prod.getOrderStatus());
+		    status = statusMap.get(veggChecker.getArticleName());
 
-                    if (status == null) {
-                        Order order = managerRepository.getOrderManager().findByOrderNr(prod
-                                .getOrderNr());
-                        if (order != null) {
-//                        	managerRepository.getOrderManager().lazyLoadTree(order);
-                        	managerRepository.getOrderManager().lazyLoad(order,new LazyLoadEnum[][]{{LazyLoadEnum.ORDER_LINES,LazyLoadEnum.ORDER_LINE_ATTRIBUTES}} );
-                            status = veggChecker.getArticleStatus(order);
-                            statusMap.put(veggChecker.getArticleName(), status);
-                            order.setStatus(Util.statusMapToString(statusMap));
-                            try {
-                            	managerRepository.getOrderManager().saveOrder(order);
-                            } catch (ProTransException e) {
-                                Util.showErrorDialog(window, "Feil", e
-                                        .getMessage());
-                                e.printStackTrace();
-                            }
-                            applyListInterface.refresh(prod);
-                        }
-                    }
-                }
-            }
+		    if (status == null) {
+			Order order = managerRepository.getOrderManager().findByOrderNr(prod.getOrderNr());
+			if (order != null) {
+			    managerRepository.getOrderManager().lazyLoad(order,
+				    new LazyLoadEnum[][] { { LazyLoadEnum.ORDER_LINES, LazyLoadEnum.ORDER_LINE_ATTRIBUTES } });
+			    status = veggChecker.getArticleStatus(order);
+			    statusMap.put(veggChecker.getArticleName(), status);
+			    order.setStatus(Util.statusMapToString(statusMap));
+			    try {
+				managerRepository.getOrderManager().saveOrder(order);
+			    } catch (ProTransException e) {
+				Util.showErrorDialog(window, "Feil", e.getMessage());
+				e.printStackTrace();
+			    }
+			    applyListInterface.refresh(prod);
+			}
+		    }
+		}
+	    }
 
-        }
+	}
 
-        /**
-         * Henter verdi
-         * @param rowIndex
-         * @param columnIndex
-         * @return verdi
-         */
-        public Object getValueAt(int rowIndex, int columnIndex) {
-            FrontProductionV frontProductionV = (FrontProductionV) getRow(rowIndex);
-            DecimalFormat decimalFormat = new DecimalFormat();
-            decimalFormat.setDecimalSeparatorAlwaysShown(false);
-            decimalFormat.setParseIntegerOnly(true);
-            Map<String, String> statusMap = Util
-                    .createStatusMap(frontProductionV.getOrderStatus());
+	public Object getValueAt(int rowIndex, int columnIndex) {
+	    FrontProductionV frontProductionV = (FrontProductionV) getRow(rowIndex);
+	    DecimalFormat decimalFormat = new DecimalFormat();
+	    decimalFormat.setDecimalSeparatorAlwaysShown(false);
+	    decimalFormat.setParseIntegerOnly(true);
+	    Map<String, String> statusMap = Util.createStatusMap(frontProductionV.getOrderStatus());
 
-            switch (columnIndex) {
-            case 0:
-                return frontProductionV.getTransportDetails();
+	    switch (columnIndex) {
+	    case 0:
+		return frontProductionV.getTransportDetails();
 
-            case 1:
-                return frontProductionV;
-            case 2:
-                return Util.formatDate(frontProductionV.getProductionDate(),
-                        Util.SHORT_DATE_FORMAT);
-            case 3:
-                if (frontProductionV.getNumberOfItems() != null) {
-                    return decimalFormat.format(frontProductionV
-                            .getNumberOfItems());
-                }
-                return "";
+	    case 1:
+		return frontProductionV;
+	    case 2:
+		if (frontProductionV.getNumberOfItems() != null) {
+		    return decimalFormat.format(frontProductionV.getNumberOfItems());
+		}
+		return "";
 
-            case 4:
-                return statusMap.get(veggChecker.getArticleName());
-            case 5:
+	    case 3:
+		return statusMap.get(veggChecker.getArticleName());
+	    case 4:
 
-                Date loadingDate = frontProductionV.getLoadingDate();
-                if (loadingDate != null) {
-                    return Util.SHORT_DATE_FORMAT.format(loadingDate);
-                }
-                return null;
+		Date loadingDate = frontProductionV.getLoadingDate();
+		if (loadingDate != null) {
+		    return Util.SHORT_DATE_FORMAT.format(loadingDate);
+		}
+		return null;
 
-            case 6:
-                if (frontProductionV.getProduced() != null) {
-                    return Util.SHORT_DATE_FORMAT.format(frontProductionV
-                            .getProduced());
-                }
-                return "---";
-            case 7:
-                if (frontProductionV.getProductAreaGroupName() != null) {
-                    return frontProductionV.getProductAreaGroupName();
-                }
-                return "";
-            case 8:
-                return frontProductionV.getProductionUnitName();
-            case 9:
-                if (frontProductionV.getActionStarted() != null) {
-                    return Util.SHORT_DATE_FORMAT.format(frontProductionV
-                            .getActionStarted());
-                }
-                return "---";
-            default:
-                throw new IllegalStateException("Unknown column");
-            }
+	    case 5:
+		if (frontProductionV.getProduced() != null) {
+		    return Util.SHORT_DATE_TIME_FORMAT.format(frontProductionV.getProduced());
+		}
+		return "---";
+	    case 6:
+		if (frontProductionV.getProductAreaGroupName() != null) {
+		    return frontProductionV.getProductAreaGroupName();
+		}
+		return "";
+	    case 7:
+		return frontProductionV.getProductionUnitName();
+	    case 8:
+		if (frontProductionV.getActionStarted() != null) {
+		    return Util.SHORT_DATE_TIME_FORMAT.format(frontProductionV.getActionStarted());
+		}
+		return "---";
+	    case 9:
+		return frontProductionV.getRealProductionHours() == null ? Tidsforbruk.beregnTidsforbruk(frontProductionV.getActionStarted(),
+			frontProductionV.getProduced()) : frontProductionV.getRealProductionHours();
+	    default:
+		throw new IllegalStateException("Unknown column");
+	    }
 
-        }
+	}
 
-        /**
-         * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
-         */
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            switch (columnIndex) {
-            case 0:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 7:
-            case 8:
-            case 9:
-                return String.class;
-            case 1:
-                return VeggProductionV.class;
-            case 6:
-                return Object.class;
-            default:
-                throw new IllegalStateException("Unknown column");
-            }
-        }
+	/**
+	 * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
+	 */
+	@Override
+	public Class<?> getColumnClass(int columnIndex) {
+	    switch (columnIndex) {
+	    case 0:
+	    case 2:
+	    case 3:
+	    case 4:
+	    case 6:
+	    case 7:
+	    case 8:
+		return String.class;
+	    case 1:
+		return VeggProductionV.class;
+	    case 5:
+		return Object.class;
+	    case 9:
+		return BigDecimal.class;
+	    default:
+		throw new IllegalStateException("Unknown column");
+	    }
+	}
 
     }
 
+    @Override
+    protected int getProductAreaColumn() {
+	return 6;
+    }
+
+    @Override
+    protected Integer getStartColumn() {
+	return 8;
+    }
+
+    @Override
+    protected Integer getApplyColumn() {
+	return 5;
+    }
 }
