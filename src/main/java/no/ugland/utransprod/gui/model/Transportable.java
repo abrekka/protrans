@@ -1,6 +1,5 @@
 package no.ugland.utransprod.gui.model;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -27,172 +26,76 @@ import no.ugland.utransprod.model.Transport;
  * @author atle.brekka
  */
 public interface Transportable {
-    /**
-     * @return status
-     */
     String getStatus();
 
-    /**
-     * @return om objekt skal monteres
-     */
     Integer getDoAssembly();
 
-    /**
-     * @return transport
-     */
     Transport getTransport();
 
-    /**
-     * @return om sendt
-     */
     Boolean getSentBool();
 
-    /**
-     * @return om ordre er klar
-     */
     Date getOrderReady();
 
     void setOrderReady(Date orderReady);
 
-    /**
-     * @return om ordre er komplett
-     */
     Date getOrderComplete();
 
     void setOrderComplete(Date date);
 
-    /**
-     * @return når pakking er startet
-     */
     Date getPackageStarted();
 
     void setPackageStarted(Date date);
 
-    /**
-     * @return transportstreng
-     */
     String getTransportString();
 
-    /**
-     * @return kommentar
-     */
     String getComment();
 
-    /**
-     * @param status
-     */
     void setStatus(String status);
 
-    /**
-     * @param isSent
-     */
     void setSentBool(Boolean isSent);
 
-    /**
-     * @param transport
-     */
     void setTransport(Transport transport);
 
-    /**
-     * @return spesielle hensyn
-     */
     String getSpecialConcern();
 
-    /**
-     * @return dato for sending
-     */
     Date getSent();
 
-    /**
-     * @param sentDate
-     */
     void setSent(Date sentDate);
 
-    /**
-     * @return kollier
-     */
     Set<Colli> getCollies();
 
-    /**
-     * @return ordrelinjer som ikke er sendt
-     */
     List<OrderLine> getOrderLinesNotSent();
 
-    /**
-     * @return ordre
-     */
     Order getOrder();
 
-    /**
-     * @return ordrelinjer
-     */
     Set<OrderLine> getOrderLines();
 
     void setOrderLines(Set<OrderLine> orderLines);
 
-    /**
-     * @return ettersendinger
-     */
     Set<PostShipment> getPostShipments();
 
-    /**
-     * @return ettersending
-     */
     PostShipment getPostShipment();
 
-    /**
-     * @return manglende kollier
-     */
     List<OrderLine> getMissingCollies();
 
-    /**
-     * @return transportstreng for rapport
-     */
     String getTransportReportString();
 
-    /**
-     * @return garasjetype
-     */
     ConstructionType getConstructionType();
 
-    /**
-     * @return dato for betaling
-     */
     Date getPaidDate();
 
-    /**
-     * @return transportkommentarer
-     */
     String getTransportComments();
 
-    /**
-     * @return høyde på garasjekolli
-     */
-    BigDecimal getGarageColliHeight();
+    Integer getGarageColliHeight();
 
-    /**
-     * Cache kommentarer
-     */
     void cacheComments();
 
-    /**
-     * Cache høyde på garasjekolli
-     */
     void cacheGarageColliHeight();
 
-    /**
-     * @return monteringsteam
-     */
     String getAssemblyTeamName();
 
-    /**
-     * @return dato for pakkliste
-     */
     Date getPacklistReady();
 
-    /**
-     * @return produktområdegruppe
-     */
     ProductAreaGroup getProductAreaGroup();
 
     OrderLine getOrderLine(String articlePath);
@@ -225,7 +128,7 @@ public interface Transportable {
 
     Set<OrderComment> getOrderComments();
 
-    void setGarageColliHeight(BigDecimal garageColliHeight);
+    void setGarageColliHeight(Integer garageColliHeight);
 
     Integer getColliesDone();
 
@@ -287,8 +190,8 @@ public interface Transportable {
 	    return 0;
 	}
 
-	public BigDecimal getGarageColliHeight() {
-	    return BigDecimal.ZERO;
+	public Integer getGarageColliHeight() {
+	    return 0;
 	}
 
 	public ProcentDone getLastProcentDone() {
@@ -413,7 +316,7 @@ public interface Transportable {
 	public void setCustTrs(List<CustTr> custTr) {
 	}
 
-	public void setGarageColliHeight(BigDecimal garageColliHeight) {
+	public void setGarageColliHeight(Integer garageColliHeight) {
 	}
 
 	public void setOrderComplete(Date date) {

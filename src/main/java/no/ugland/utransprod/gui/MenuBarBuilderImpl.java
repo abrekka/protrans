@@ -40,14 +40,12 @@ import no.ugland.utransprod.gui.action.ImportSaleBudgetAction;
 import no.ugland.utransprod.gui.action.ImportSalesmanBudgetAction;
 import no.ugland.utransprod.gui.action.ImportSnowloadAction;
 import no.ugland.utransprod.gui.action.JobFunctionAction;
-import no.ugland.utransprod.gui.action.OrdrereserveTakstolReportAction;
 import no.ugland.utransprod.gui.action.RegisterAccidentAction;
 import no.ugland.utransprod.gui.action.RegisterDeviationAction;
 import no.ugland.utransprod.gui.action.SalesGoalReportAction;
 import no.ugland.utransprod.gui.action.SupplierAction;
 import no.ugland.utransprod.gui.action.SupplierTypeAction;
 import no.ugland.utransprod.gui.action.TakstolProductionUnitReportAction;
-import no.ugland.utransprod.gui.action.TrossDrawReportAction;
 import no.ugland.utransprod.gui.action.UpdateTransportPricesAction;
 import no.ugland.utransprod.gui.checker.StatusCheckerInterface;
 import no.ugland.utransprod.gui.handlers.ExcelReportViewHandler;
@@ -133,7 +131,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 
     private TakstolProductionUnitReportAction takstolProductionUnitReportAction;
 
-    private OrdrereserveTakstolReportAction ordrereserveTakstolReportAction;
+    // private OrdrereserveTakstolReportAction ordrereserveTakstolReportAction;
 
     private ImportPostalCodesAction importPostalCodesAction;
 
@@ -150,7 +148,8 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
     private ImportSaleBudgetAction importSaleBudgetAction;
     private SalesGoalReportAction salesGoalReportAction;
     private ImportSalesmanBudgetAction importSalesmanBudgetAction;
-    private TrossDrawReportAction trossDrawReportAction;
+
+    // private TrossDrawReportAction trossDrawReportAction;
 
     public MenuBarBuilderImpl(Login aLogin) {
 	login = aLogin;
@@ -166,15 +165,18 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	    JobFunctionAction aJobFunctionAction, FunctionCategoryAction aFunctionCategoryAction, DeviationStatusAction aDeviationStatusAction,
 	    AdminAccidentAction aAdminAccidentAction,
 
-	    ConfirmReportAction aConfirmReportAction, AdminMenu aAdminMenu, GarageMenu aGarageMenu, PackMenu aPackMenu, Login aLogin,
-	    ProductionMenu aProductionMenu, TakstolProductionUnitReportAction aTakstolProductionUnitReportAction,
-	    OrdrereserveTakstolReportAction aOrdrereserveTakstolReportAction, ImportPostalCodesAction aImportPostalCodesAction,
-	    ImportCountiesAction aImportCountiesAction, ImportAreasAction aImportAreasAction,
+	    ConfirmReportAction aConfirmReportAction, AdminMenu aAdminMenu, GarageMenu aGarageMenu, PackMenu aPackMenu,
+	    Login aLogin,
+	    ProductionMenu aProductionMenu,
+	    TakstolProductionUnitReportAction aTakstolProductionUnitReportAction,
+	    // OrdrereserveTakstolReportAction aOrdrereserveTakstolReportAction,
+	    ImportPostalCodesAction aImportPostalCodesAction, ImportCountiesAction aImportCountiesAction, ImportAreasAction aImportAreasAction,
 	    UpdateTransportPricesAction aUpdateTransportPricesAction, ImportSnowloadAction aImportSnowloadAction,
 	    ImportProductionBudgetAction aImportBudgetAction, ImportSaleBudgetAction aImportSaleBudgetAction,
-	    SalesGoalReportAction aSalesGoalReportAction, ImportSalesmanBudgetAction aImportSalesmanBudgetAction,
-	    TrossDrawReportAction aTrossDrawReportAction) {
-	trossDrawReportAction = aTrossDrawReportAction;
+	    SalesGoalReportAction aSalesGoalReportAction, ImportSalesmanBudgetAction aImportSalesmanBudgetAction)
+    // TrossDrawReportAction aTrossDrawReportAction)
+    {
+	// trossDrawReportAction = aTrossDrawReportAction;
 	importSalesmanBudgetAction = aImportSalesmanBudgetAction;
 	salesGoalReportAction = aSalesGoalReportAction;
 	importSaleBudgetAction = aImportSaleBudgetAction;
@@ -184,7 +186,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	importAreasAction = aImportAreasAction;
 	importCountiesAction = aImportCountiesAction;
 	importPostalCodesAction = aImportPostalCodesAction;
-	ordrereserveTakstolReportAction = aOrdrereserveTakstolReportAction;
+	// ordrereserveTakstolReportAction = aOrdrereserveTakstolReportAction;
 	takstolProductionUnitReportAction = aTakstolProductionUnitReportAction;
 	productionMenu = aProductionMenu;
 	login = aLogin;
@@ -300,15 +302,18 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	JMenu menuProject = addMenu("Drift og prosjektering", KeyEvent.VK_D);
 	addMenuItem(menuProject, new PacklistNotReadyReportAction(), KeyEvent.VK_K, null, null, null, "Pakkliste ikke klar", false);
 	addMenuItem(menuProject, new DrawReportAction(), KeyEvent.VK_T, null, null, null, "Tegningsrapport", false);
-	addMenuItem(menuProject, trossDrawReportAction, KeyEvent.VK_T, null, null, null, "Takstoltegning", false);
+	// addMenuItem(menuProject, trossDrawReportAction, KeyEvent.VK_T, null,
+	// null, null, "Takstoltegning", false);
 	menuReport.add(menuProject);
 
 	JMenu menuProduction = addMenu("Produksjon", KeyEvent.VK_P);
 	addMenuItem(menuProduction, new OwnProductionReportAction(), KeyEvent.VK_E, null, null, null, "Egenproduksjon", false);
 	addMenuItem(menuProduction, new ProductivityReportAction(), KeyEvent.VK_P, null, null, null, "Produktivitet", false);
-	addMenuItem(menuProduction, new TakstolOwnProductionReportAction(), KeyEvent.VK_I, null, null, null, "Internordre takstol", false);
+	// addMenuItem(menuProduction, new TakstolOwnProductionReportAction(),
+	// KeyEvent.VK_I, null, null, null, "Internordre takstol", false);
 	addMenuItem(menuProduction, takstolProductionUnitReportAction, KeyEvent.VK_J, null, null, null, "Jiggrapport", false);
-	addMenuItem(menuProduction, ordrereserveTakstolReportAction, KeyEvent.VK_O, null, null, null, "Ordrereserve takstol", false);
+	// addMenuItem(menuProduction, ordrereserveTakstolReportAction,
+	// KeyEvent.VK_O, null, null, null, "Ordrereserve takstol", false);
 	menuReport.add(menuProduction);
 
 	JMenu menuTransport = addMenu("Transport", KeyEvent.VK_T);

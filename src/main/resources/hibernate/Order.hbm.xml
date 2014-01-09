@@ -164,7 +164,7 @@
     />
 	<property
         name="garageColliHeight"
-        type="java.math.BigDecimal"
+        type="java.lang.Integer"
         column="GARAGE_COLLI_HEIGHT"
         length="32"
     />

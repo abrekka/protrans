@@ -35,8 +35,20 @@
     />
 	 <property
         name="height"
-        type="java.math.BigDecimal"
+        type="java.lang.Integer"
         column="HEIGHT"
+        length="32"
+    />
+    <property
+        name="lenght"
+        type="java.lang.Integer"
+        column="LENGHT"
+        length="32"
+    />
+    <property
+        name="widht"
+        type="java.lang.Integer"
+        column="WIDHT"
         length="32"
     />
 	<property
