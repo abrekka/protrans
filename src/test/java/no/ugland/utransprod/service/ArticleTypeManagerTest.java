@@ -22,64 +22,61 @@ import org.junit.experimental.categories.Category;
  */
 @Category(FastTests.class)
 public class ArticleTypeManagerTest {
-	private ArticleTypeManager articleTypeManager;
+    private ArticleTypeManager articleTypeManager;
 
-	private ArticleType articleType;
+    private ArticleType articleType;
 
-@After
-	public void tearDown() throws Exception {
-		if (articleType != null && articleType.getArticleTypeId() != null) {
-			articleTypeManager.removeArticleType(articleType);
-			articleType=null;
-		}
+    @After
+    public void tearDown() throws Exception {
+	if (articleType != null && articleType.getArticleTypeId() != null) {
+	    articleTypeManager.removeArticleType(articleType);
+	    articleType = null;
 	}
+    }
 
-	@Before
-	public void setUp() throws Exception {
-		articleTypeManager = (ArticleTypeManager) ModelUtil
-				.getBean("articleTypeManager");
-	}
+    @Before
+    public void setUp() throws Exception {
+	articleTypeManager = (ArticleTypeManager) ModelUtil.getBean("articleTypeManager");
+    }
 
-	@Test
-	public void testInsert() {
-		articleType = new ArticleType();
-		articleType.setArticleTypeName("Test");
-		articleType.setDescription("Test");
-		articleTypeManager.saveArticleType(articleType);
+    @Test
+    public void testInsert() {
+	articleType = new ArticleType();
+	articleType.setArticleTypeName("Test");
+	articleType.setDescription("Test");
+	articleTypeManager.saveArticleType(articleType);
 
-		ArticleType articleTypeTest = articleTypeManager.findByName("Vegg");
-		assertNotNull(articleTypeTest);
+	ArticleType articleTypeTest = articleTypeManager.findByName("Vegg");
+	assertNotNull(articleTypeTest);
 
-	}
+    }
 
-	@Test
-	public void testFindAll() {
-		articleType = new ArticleType();
-		articleType.setArticleTypeName("Test");
-		articleType.setDescription("Test");
-		articleTypeManager.saveArticleType(articleType);
+    @Test
+    public void testFindAll() {
+	articleType = new ArticleType();
+	articleType.setArticleTypeName("Test");
+	articleType.setDescription("Test");
+	articleTypeManager.saveArticleType(articleType);
 
-		List<ArticleType> all = articleTypeManager.findAll();
+	List<ArticleType> all = articleTypeManager.findAll();
 
-		assertNotNull(all);
-		assertEquals(true, all.size() > 0);
-	}
+	assertNotNull(all);
+	assertEquals(true, all.size() > 0);
+    }
 
-	@Test
-	public void testFindArticle() {
-		ArticleType testType = new ArticleType();
+    @Test
+    public void testFindArticle() {
+	ArticleType testType = new ArticleType();
 
-		testType = articleTypeManager.findByName("Gavlkledning");
-		articleTypeManager.lazyLoad(testType, new LazyLoadArticleTypeEnum[] {
-				LazyLoadArticleTypeEnum.ARTICLE_TYPE_ARTICLE_TYPE,
-				LazyLoadArticleTypeEnum.ARTICLE_TYPE_ARTICLE_TYPE_REF });
-		assertNotNull(testType);
-	}
+	testType = articleTypeManager.findByName("Gavlkledning");
+	articleTypeManager.lazyLoad(testType, new LazyLoadArticleTypeEnum[] { LazyLoadArticleTypeEnum.ARTICLE_TYPE_ARTICLE_TYPE,
+		LazyLoadArticleTypeEnum.ARTICLE_TYPE_ARTICLE_TYPE_REF });
+	assertNotNull(testType);
+    }
 
-	@Test
-	public void testFindAllConstructionTypeAttributes() {
-		List<Attribute> attributes = articleTypeManager
-				.findAllConstructionTypeAttributes();
-		assertNotNull(attributes);
-	}
+    @Test
+    public void testFindAllConstructionTypeAttributes() {
+	List<Attribute> attributes = articleTypeManager.findAllConstructionTypeAttributes();
+	assertNotNull(attributes);
+    }
 }
