@@ -12,6 +12,7 @@ import no.ugland.utransprod.util.ModelUtil;
 
 import org.fest.assertions.Assertions;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -25,6 +26,7 @@ public class OrderLineManagerTest {
     }
 
     @Test
+    @Ignore
     public void skalLagreOverstyringAvTidsforbruk() {
 	OrderLine orderLine = orderLineManager.findByOrderLineId(26);
 	orderLine.setRealProductionHours(BigDecimal.valueOf(20));

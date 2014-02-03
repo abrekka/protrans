@@ -6,18 +6,21 @@ import no.ugland.utransprod.ProTransException;
 
 /**
  * Interface for manger som skal brukes i visning av objekter
+ * 
  * @author atle.brekka
  * @param <E>
  */
-public interface OverviewManager<E>  extends Manager<E>{
+public interface OverviewManager<E> extends Manager<E> {
     /**
      * Hent alle
+     * 
      * @return objekter
      */
     List<E> findAll();
 
     /**
      * Finn basert på eksempel
+     * 
      * @param object
      * @return objekter
      */
@@ -25,12 +28,14 @@ public interface OverviewManager<E>  extends Manager<E>{
 
     /**
      * Fjern objekt
+     * 
      * @param object
      */
     void removeObject(E object);
 
     /**
      * Lagre objekt
+     * 
      * @param object
      * @throws ProTransException
      */
@@ -38,8 +43,12 @@ public interface OverviewManager<E>  extends Manager<E>{
 
     /**
      * Oppdaterer objekt
+     * 
      * @param object
      */
     void refreshObject(E object);
-    //void lazyLoad(Object object,Enum[] enums);
+
+    // void lazyLoad(Object object,Enum[] enums);
+
+    E merge(E object);
 }

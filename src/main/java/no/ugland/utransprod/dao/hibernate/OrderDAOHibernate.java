@@ -45,1516 +45,1188 @@ import com.google.common.collect.Lists;
  * 
  * @author atle.brekka
  */
-public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements
-		OrderDAO {
-	OrderLineDAO orderLineDAO;
+public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderDAO {
+    OrderLineDAO orderLineDAO;
 
-	TransportCostDAO transportCostDAO;
+    TransportCostDAO transportCostDAO;
 
-	public final void setOrderLineDAO(final OrderLineDAO aOrderLineDAO) {
-		this.orderLineDAO = aOrderLineDAO;
+    public final void setOrderLineDAO(final OrderLineDAO aOrderLineDAO) {
+	this.orderLineDAO = aOrderLineDAO;
+    }
+
+    public final void setTransportCostDAO(final TransportCostDAO aTransportCostDAO) {
+	this.transportCostDAO = aTransportCostDAO;
+    }
+
+    public OrderDAOHibernate() {
+	super(Order.class);
+    }
+
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#removeAll()
+     */
+    @Override
+    public final void removeAll() {
+	getHibernateTemplate().bulkUpdate("delete from Order");
+
+    }
+
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#getAllNewOrders()
+     */
+    @SuppressWarnings("unchecked")
+    public final List<Order> getAllNewOrders() {
+	return (List<Order>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		Criteria crit = session.createCriteria(Order.class).add(Restrictions.isNull("transport"));
+		crit.setFetchMode("assembly", FetchMode.JOIN);
+		crit.setFetchMode("assembly.assemblyTeam", FetchMode.JOIN);
+		return crit.list();
+	    }
+
+	});
+    }
+
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#findByOrder(no.ugland.utransprod.model.Order)
+     */
+    @SuppressWarnings("unchecked")
+    public final List<Order> findByOrder(final Order order) {
+	return (List<Order>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		Example example = Example.create(order);
+		example.enableLike(MatchMode.ANYWHERE);
+		example.ignoreCase();
+		example.excludeZeroes();
+
+		Criteria crit = session.createCriteria(Order.class).add(example);
+
+		if (order.getCustomer() != null) {
+		    Customer customer = order.getCustomer();
+		    crit = crit.createCriteria("customer");
+		    if (customer.getCustomerNr() != null) {
+			crit.add(Restrictions.eq("customerNr", customer.getCustomerNr()));
+		    }
+		    if (customer.getFirstName() != null) {
+			crit.add(Restrictions.ilike("firstName", customer.getFirstName()));
+		    }
+		    if (customer.getLastName() != null) {
+			crit.add(Restrictions.ilike("lastName", customer.getLastName()));
+		    }
+		}
+		if (order.getConstructionType() != null) {
+		    crit.add(Restrictions.eq("constructionType", order.getConstructionType()));
+		}
+		if (order.getTransport() != null) {
+		    crit.add(Restrictions.eq("transport", order.getTransport()));
+		}
+		return crit.list();
+	    }
+
+	});
+    }
+
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#refreshObject(no.ugland.utransprod.model.Order)
+     */
+    public final void refreshObject(final Order order) {
+	if (order.getOrderId() != null) {
+	    getHibernateTemplate().execute(new HibernateCallback() {
+
+		public Object doInHibernate(final Session session) {
+		    session.flush();
+		    session.load(order, order.getOrderId());
+		    Set<?> set = order.getOrderLines();
+		    set.iterator();
+		    set = order.getCollies();
+		    set.iterator();
+		    set = order.getOrderComments();
+		    set.iterator();
+		    return null;
+		}
+
+	    });
 	}
+    }
 
-	public final void setTransportCostDAO(
-			final TransportCostDAO aTransportCostDAO) {
-		this.transportCostDAO = aTransportCostDAO;
-	}
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#lazyLoad(no.ugland.utransprod.model.Order,
+     *      no.ugland.utransprod.service.enums.LazyLoadOrderEnum[])
+     */
+    public final void lazyLoad(final Order order, final LazyLoadOrderEnum[] lazyEnums) {
+	if (order != null && order.getOrderId() != null) {
+	    getHibernateTemplate().execute(new HibernateCallback() {
 
-	public OrderDAOHibernate() {
-		super(Order.class);
-	}
+		@SuppressWarnings("incomplete-switch")
+		public Object doInHibernate(final Session session) {
+		    if (!session.contains(order)) {
+			session.load(order, order.getOrderId());
+		    }
+		    Set<?> set;
+		    List<LazyLoadOrderEnum> enumList = Arrays.asList(lazyEnums);
 
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#removeAll()
-	 */
-	@Override
-	public final void removeAll() {
-		getHibernateTemplate().bulkUpdate("delete from Order");
+		    for (LazyLoadOrderEnum lazyEnum : lazyEnums) {
+			switch (lazyEnum) {
+			case ORDER_LINES:
 
-	}
+			    Set<OrderLine> orderLines = order.getOrderLines();
+			    if (!Hibernate.isInitialized(orderLines)) {
+				orderLines.size();
+			    }
+			    if (enumList.contains(LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES)) {
+				for (OrderLine orderLine : orderLines) {
 
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#getAllNewOrders()
-	 */
-	@SuppressWarnings("unchecked")
-	public final List<Order> getAllNewOrders() {
-		return (List<Order>) getHibernateTemplate().execute(
-				new HibernateCallback() {
+				    orderLineDAO.lazyLoad(orderLine, new LazyLoadOrderLineEnum[] { LazyLoadOrderLineEnum.ORDER_LINES,
+					    LazyLoadOrderLineEnum.ORDER_LINES_ORDER_LINES, LazyLoadOrderLineEnum.ORDER_LINE_ATTRIBUTE });
 
-					public Object doInHibernate(final Session session) {
-						Criteria crit = session.createCriteria(Order.class)
-								.add(Restrictions.isNull("transport"));
-						crit.setFetchMode("assembly", FetchMode.JOIN);
-						crit.setFetchMode("assembly.assemblyTeam",
-								FetchMode.JOIN);
-						return crit.list();
-					}
+				}
+			    } else if (enumList.contains(LazyLoadOrderEnum.ORDER_LINE_ATTRIBUTES)) {
+				for (OrderLine orderLine : orderLines) {
 
-				});
-	}
+				    orderLineDAO.lazyLoad(orderLine, new LazyLoadOrderLineEnum[] { LazyLoadOrderLineEnum.ORDER_LINE_ATTRIBUTE });
 
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#findByOrder(no.ugland.utransprod.model.Order)
-	 */
-	@SuppressWarnings("unchecked")
-	public final List<Order> findByOrder(final Order order) {
-		return (List<Order>) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					public Object doInHibernate(final Session session) {
-						Example example = Example.create(order);
-						example.enableLike(MatchMode.ANYWHERE);
-						example.ignoreCase();
-						example.excludeZeroes();
-
-						Criteria crit = session.createCriteria(Order.class)
-								.add(example);
-
-						if (order.getCustomer() != null) {
-							Customer customer = order.getCustomer();
-							crit = crit.createCriteria("customer");
-							if (customer.getCustomerNr() != null) {
-								crit.add(Restrictions.eq("customerNr",
-										customer.getCustomerNr()));
-							}
-							if (customer.getFirstName() != null) {
-								crit.add(Restrictions.ilike("firstName",
-										customer.getFirstName()));
-							}
-							if (customer.getLastName() != null) {
-								crit.add(Restrictions.ilike("lastName",
-										customer.getLastName()));
-							}
-						}
-						if (order.getConstructionType() != null) {
-							crit.add(Restrictions.eq("constructionType",
-									order.getConstructionType()));
-						}
-						if (order.getTransport() != null) {
-							crit.add(Restrictions.eq("transport",
-									order.getTransport()));
-						}
-						return crit.list();
-					}
-
-				});
-	}
-
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#refreshObject(no.ugland.utransprod.model.Order)
-	 */
-	public final void refreshObject(final Order order) {
-		if (order.getOrderId() != null) {
-			getHibernateTemplate().execute(new HibernateCallback() {
-
-				public Object doInHibernate(final Session session) {
-					session.flush();
-					session.load(order, order.getOrderId());
-					Set<?> set = order.getOrderLines();
-					set.iterator();
-					set = order.getCollies();
-					set.iterator();
-					set = order.getOrderComments();
-					set.iterator();
-					return null;
 				}
 
-			});
-		}
-	}
-
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#lazyLoad(no.ugland.utransprod.model.Order,
-	 *      no.ugland.utransprod.service.enums.LazyLoadOrderEnum[])
-	 */
-	public final void lazyLoad(final Order order,
-			final LazyLoadOrderEnum[] lazyEnums) {
-		if (order != null && order.getOrderId() != null) {
-			getHibernateTemplate().execute(new HibernateCallback() {
-
-				@SuppressWarnings("incomplete-switch")
-				public Object doInHibernate(final Session session) {
-					if (!session.contains(order)) {
-						session.load(order, order.getOrderId());
-					}
-					Set<?> set;
-					List<LazyLoadOrderEnum> enumList = Arrays.asList(lazyEnums);
-
-					for (LazyLoadOrderEnum lazyEnum : lazyEnums) {
-						switch (lazyEnum) {
-						case ORDER_LINES:
-
-							Set<OrderLine> orderLines = order.getOrderLines();
-							if (!Hibernate.isInitialized(orderLines)) {
-								orderLines.size();
-							}
-							if (enumList
-									.contains(LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES)) {
-								for (OrderLine orderLine : orderLines) {
-
-									orderLineDAO
-											.lazyLoad(
-													orderLine,
-													new LazyLoadOrderLineEnum[] {
-															LazyLoadOrderLineEnum.ORDER_LINES,
-															LazyLoadOrderLineEnum.ORDER_LINES_ORDER_LINES,
-															LazyLoadOrderLineEnum.ORDER_LINE_ATTRIBUTE });
-
-								}
-							} else if (enumList
-									.contains(LazyLoadOrderEnum.ORDER_LINE_ATTRIBUTES)) {
-								for (OrderLine orderLine : orderLines) {
-
-									orderLineDAO
-											.lazyLoad(
-													orderLine,
-													new LazyLoadOrderLineEnum[] { LazyLoadOrderLineEnum.ORDER_LINE_ATTRIBUTE });
-
-								}
-
-							}
-							break;
-						case ORDER_COSTS:
-							set = order.getOrderCosts();
-							set.iterator();
-							break;
-						case POST_SHIPMENTS:
-							set = order.getPostShipments();
-							set.iterator();
-							break;
-						case COLLIES:
-							Set<Colli> collies = order.getCollies();
-							if (!Hibernate.isInitialized(collies)) {
-								collies.size();
-							}
-							if (collies != null) {
-								for (Colli colli : collies) {
-									set = colli.getOrderLines();
-									if (!Hibernate.isInitialized(set)) {
-										set.size();
-									}
-								}
-							}
-
-							break;
-						case EXTERNAL_ORDER:
-							set = order.getExternalOrders();
-							set.iterator();
-							break;
-						case COMMENTS:
-							Set<OrderComment> comments = order
-									.getOrderComments();
-							if (comments != null) {
-								for (OrderComment comment : comments) {
-									set = comment.getOrderCommentCommentTypes();
-									set.iterator();
-								}
-							}
-							break;
-						case DEVIATIONS:
-							set = order.getDeviations();
-							set.iterator();
-							break;
-						case PROCENT_DONE:
-							set = order.getProcentDones();
-							set.iterator();
-							break;
-						default:
-							break;
-						}
-					}
-					return null;
+			    }
+			    break;
+			case ORDER_COSTS:
+			    set = order.getOrderCosts();
+			    set.iterator();
+			    break;
+			case POST_SHIPMENTS:
+			    set = order.getPostShipments();
+			    set.iterator();
+			    break;
+			case COLLIES:
+			    Set<Colli> collies = order.getCollies();
+			    if (!Hibernate.isInitialized(collies)) {
+				collies.size();
+			    }
+			    if (collies != null) {
+				for (Colli colli : collies) {
+				    set = colli.getOrderLines();
+				    if (!Hibernate.isInitialized(set)) {
+					set.size();
+				    }
 				}
+			    }
 
-			});
-		}
-
-	}
-
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#findAllAssemblyOrders()
-	 */
-	@SuppressWarnings("unchecked")
-	public final List<Order> findAllAssemblyOrders() {
-		return (List<Order>) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					public Object doInHibernate(final Session session) {
-						StringBuffer sqlBuffer = new StringBuffer(
-								"select customerOrder from Order customerOrder where ")
-								.append("customerOrder.doAssembly = 1 and ")
-								.append("not exists(select 1 from Assembly assembly where ")
-								.append("assembly.order = customerOrder and ((inactive is null or "
-										+ "inactive = 0)) and assembly.supplier is not null)");
-						return session.createQuery(sqlBuffer.toString()).list();
-					}
-
-				});
-	}
-
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#lazyLoadTree(no.ugland.utransprod.model.Order)
-	 */
-	public final void lazyLoadTree(final Order order) {
-		if (order != null && order.getOrderId() != null) {
-			getHibernateTemplate().execute(new HibernateCallback() {
-
-				public Object doInHibernate(final Session session) {
-
-					session.load(order, order.getOrderId());
-
-					Set<?> set;
-					set = order.getCollies();
-					set.iterator();
-
-					set = order.getOrderCosts();
-					set.iterator();
-
-					Set<OrderComment> comments = order.getOrderComments();
-					if (comments != null) {
-						for (OrderComment comment : comments) {
-							set = comment.getOrderCommentCommentTypes();
-							set.iterator();
-						}
-					}
-
-					Set<OrderLine> orderLines = order.getOrderLines();
-					lazyLoadTreeOrderLines(orderLines);
-
-					return null;
+			    break;
+			case EXTERNAL_ORDER:
+			    set = order.getExternalOrders();
+			    set.iterator();
+			    break;
+			case COMMENTS:
+			    Set<OrderComment> comments = order.getOrderComments();
+			    if (comments != null) {
+				for (OrderComment comment : comments) {
+				    set = comment.getOrderCommentCommentTypes();
+				    set.iterator();
 				}
-			});
-		}
-
-	}
-
-	/**
-	 * Lazy laster ordrelinjer
-	 * 
-	 * @param orderLines
-	 */
-	final void lazyLoadTreeOrderLines(final Set<OrderLine> orderLines) {
-		if (orderLines == null) {
-			return;
-		}
-		Set<?> set;
-		for (OrderLine orderLine : orderLines) {
-			set = orderLine.getOrderLineAttributes();
-			set.iterator();
-			lazyLoadTreeOrderLines(orderLine.getOrderLines());
-		}
-	}
-
-	public final List<Object[]> getOrdersPostShipmentsAndCosts(
-			final String fromString, final String toString,
-			final TransportConstraintEnum transportConstraintEnum,
-			final ProductArea productArea) {
-		List<Object[]> list = getOrdersAndCosts(fromString, toString,
-				transportConstraintEnum, productArea);
-		List<Object[]> listPostShipment = getPostShipmentsAndCosts(fromString,
-				toString, transportConstraintEnum, productArea);
-		list.addAll(listPostShipment);
-		return list;
-	}
-
-	/**
-	 * Henter ut etterleveringer og kostnader
-	 * 
-	 * @param fromString
-	 * @param toString
-	 * @param transportConstraintEnum
-	 * @param productArea
-	 * @return etterleveringer og kostnader
-	 */
-	@SuppressWarnings("unchecked")
-	private List<Object[]> getPostShipmentsAndCosts(final String fromString,
-			final String toString,
-			final TransportConstraintEnum transportConstraintEnum,
-			final ProductArea productArea) {
-		return (List<Object[]>) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					public Object doInHibernate(final Session session) {
-						StringBuffer queryString = new StringBuffer(
-								"select customerOrder.order_Id,"
-										+ "customerOrder.order_Nr,"
-										+ "customer.customer_Nr,"
-										+ "customer.first_Name+' '+customer.last_Name,"
-										+ "customerOrder.delivery_Address,"
-										+ "customerOrder.postal_Code,"
-										+ "transport.transport_Name,"
-										+ "transport.transport_Year,"
-										+ "transport.transport_Week,"
-										+ "costType.cost_Type_Name,"
-										+ "       orderCost.cost_Amount,"
-										+ "costUnit.cost_Unit_Name,"
-										+ "       postShipment.post_Shipment_Id "
-										+ "FROM   Post_shipment AS postShipment INNER JOIN "
-										+ " Customer_order AS customerOrder ON postShipment.order_id = "
-										+ "customerOrder.Order_id INNER JOIN "
-										+ " Customer AS customer ON customerOrder.Customer_id = "
-										+ "customer.Customer_id INNER JOIN "
-										+ " Transport AS transport ON postShipment.transport_id = "
-										+ "transport.Transport_id LEFT OUTER JOIN "
-										+ " Cost_unit AS costUnit INNER JOIN "
-										+ " Order_cost AS orderCost INNER JOIN "
-										+ " Deviation AS deviation ON orderCost.deviation_id = "
-										+ "deviation.deviation_id INNER JOIN "
-										+ " Cost_type AS costType ON orderCost.Cost_type_id = "
-										+ "costType.Cost_type_id ON "
-										+ " costUnit.Cost_unit_id = orderCost.Cost_unit_id ON "
-										+ " postShipment.deviation_id = deviation.deviation_id "
-										+ "WHERE customerOrder.product_area_id=:productAreaId and "
-										+ " (CAST(transport.Transport_Year AS varchar(255)) + "
-										+ "CAST(transport.Transport_Week + 10 AS varchar(255)) "
-										+ " BETWEEN :fromString AND :toString)");
-
-						switch (transportConstraintEnum) {
-						case TRANSPORTED:
-							queryString
-									.append(" and postShipment.sent is not null");
-							break;
-						case TRANSPORT_PLANNED:
-							queryString
-									.append(" and postShipment.sent is null");
-							break;
-						case ALL:
-							break;
-						default:
-							break;
-						}
-
-						queryString
-								.append(" order by customerOrder.order_Id,postShipment.post_Shipment_Id");
-
-						return session
-								.createSQLQuery(queryString.toString())
-								.setParameter("fromString", fromString)
-								.setParameter("toString", toString)
-								.setParameter("productAreaId",
-										productArea.getProductAreaId()).list();
-
-					}
-				});
-
-	}
-
-	/**
-	 * Henter ut ordre og kostnader for en gitt periode
-	 * 
-	 * @param fromString
-	 * @param toString
-	 * @param transportConstraintEnum
-	 * @param productArea
-	 * @return order og kostnader
-	 */
-	@SuppressWarnings("unchecked")
-	private List<Object[]> getOrdersAndCosts(final String fromString,
-			final String toString,
-			final TransportConstraintEnum transportConstraintEnum,
-			final ProductArea productArea) {
-		return (List<Object[]>) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					public Object doInHibernate(final Session session) {
-						StringBuffer queryString = new StringBuffer(
-								"select customerOrder.orderId,"
-										+ "customerOrder.orderNr,"
-										+ "customer.customerNr,"
-										+ "customer.firstName+' '+customer.lastName,"
-										+ "customerOrder.deliveryAddress,"
-										+ "customerOrder.postalCode,"
-										+ "transport.transportName,"
-										+ "transport.transportYear,"
-										+ "transport.transportWeek,"
-										+ "costType.costTypeName,"
-										+ "orderCost.costAmount,"
-										+ "costUnit.costUnitName,"
-										+ "       -1 as postShipmentId "
-										+ "from Customer customer,"
-										+ " OrderCost orderCost,"
-										+ " Order customerOrder,"
-										+ " Transport transport,"
-										+ " CostType costType, "
-										+ " CostUnit costUnit "
-										+ "where customer = customerOrder.customer and "
-										+ " orderCost.order = customerOrder and "
-										+ " orderCost.costType = costType and "
-										+ " orderCost.costUnit = costUnit and "
-										+ " customerOrder.productArea=:productArea and "
-										+ " not exists(select 1 from Deviation deviation where deviation="
-										+ "orderCost.deviation and deviation.postShipment is not null) and"
-										+ " customerOrder.transport = transport and "
-										+ " cast(transport.transportYear as string)||"
-										+ "cast(transport.transportWeek+10 as string) "
-										+ " between  :fromString and :toString");
-
-						switch (transportConstraintEnum) {
-						case TRANSPORTED:
-							queryString
-									.append(" and customerOrder.sent is not null");
-							break;
-						case TRANSPORT_PLANNED:
-							queryString
-									.append(" and customerOrder.sent is null");
-							break;
-						case ALL:
-							break;
-						default:
-							break;
-						}
-
-						queryString.append(" order by customerOrder.orderId");
-
-						return session.createQuery(queryString.toString())
-								.setParameter("fromString", fromString)
-								.setParameter("toString", toString)
-								.setParameter("productArea", productArea)
-								.list();
-
-					}
-				});
-
-	}
-
-	/**
-	 * Teller etterleveringer og summerer kostnader for etterleveringer i en
-	 * gitt periode
-	 * 
-	 * @param fromString
-	 * @param toString
-	 * @param transportConstraintEnum
-	 * @param productArea
-	 * @return etterleveringer og summerte kostnader
-	 */
-	@SuppressWarnings("unchecked")
-	private List<Object[]> countPostShipmentAndCosts(final String fromString,
-			final String toString,
-			final TransportConstraintEnum transportConstraintEnum,
-			final ProductArea productArea) {
-		return (List<Object[]>) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					public Object doInHibernate(final Session session) {
-						StringBuffer queryString = new StringBuffer(
-								"select count(postShipment.postShipmentId),"
-										+ "       transport.transportYear,"
-										+ "       transport.transportWeek,"
-										+ "       costType.costTypeName,"
-										+ "       sum(orderCost.costAmount),"
-										+ "       costUnit.costUnitName "
-										+ "from OrderCost orderCost,"
-										+ "     PostShipment postShipment,"
-										+ "     Transport transport,"
-										+ "     CostType costType, "
-										+ "     CostUnit costUnit, "
-										+ "     Deviation deviation,"
-										+ "     Order customerOrder "
-										+ "where postShipment.order=customerOrder and "
-										+ "      customerOrder.productArea=:productArea and "
-										+ "      postShipment.deviation=deviation and "
-										+ "      orderCost.deviation = deviation and "
-										+ "      orderCost.costType = costType and "
-										+ "      orderCost.costUnit = costUnit and "
-										+ "      postShipment.transport = transport and "
-										+ "     cast(transport.transportYear as string)"
-										+ "     ||cast(transport.transportWeek+10 as string) between  "
-										+ "     :fromString and :toString");
-
-						switch (transportConstraintEnum) {
-						case TRANSPORTED:
-							queryString
-									.append(" and postShipment.sent is not null");
-							break;
-						case TRANSPORT_PLANNED:
-							queryString
-									.append(" and postShipment.sent is null");
-							break;
-						case ALL:
-							break;
-						default:
-							break;
-						}
-
-						queryString
-								.append(" group by transport.transportYear,")
-								.append("transport.transportWeek,")
-								.append("costType.costTypeName,costUnit.costUnitName");
-						queryString
-								.append(" order by transport.transportYear,transport.transportWeek");
-
-						return session.createQuery(queryString.toString())
-								.setParameter("fromString", fromString)
-								.setParameter("toString", toString)
-								.setParameter("productArea", productArea)
-								.list();
-					}
-
-				});
-	}
-
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#countOrderPostShipmentAndCosts(java.lang.String,
-	 *      java.lang.String,
-	 *      no.ugland.utransprod.gui.handlers.ReportConstraintViewHandler.TransportConstraintEnum,
-	 *      no.ugland.utransprod.model.ProductArea)
-	 */
-	public final List<Object[]> countOrderPostShipmentAndCosts(
-			final String fromString, final String toString,
-			final TransportConstraintEnum transportConstraintEnum,
-			final ProductArea productArea) {
-		List<Object[]> list = countOrderAndCosts(fromString, toString,
-				transportConstraintEnum, productArea);
-		list.addAll(countPostShipmentAndCosts(fromString, toString,
-				transportConstraintEnum, productArea));
-		return list;
-
-	}
-
-	/**
-	 * Teller ordre og summerer kostander for en gitt periode
-	 * 
-	 * @param fromString
-	 * @param toString
-	 * @param transportConstraintEnum
-	 * @param productArea
-	 * @return antall ordre og summerte kostnader
-	 */
-	@SuppressWarnings("unchecked")
-	private List<Object[]> countOrderAndCosts(final String fromString,
-			final String toString,
-			final TransportConstraintEnum transportConstraintEnum,
-			final ProductArea productArea) {
-		return (List<Object[]>) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					public Object doInHibernate(final Session session) {
-						StringBuffer queryString = new StringBuffer(
-								"select count(customerOrder.orderId),"
-										+ "       transport.transportYear,"
-										+ "       transport.transportWeek,"
-										+ "       costType.costTypeName,"
-										+ "       sum(orderCost.costAmount),"
-										+ "       costUnit.costUnitName "
-										+ "from OrderCost orderCost,"
-										+ "     Order customerOrder,"
-										+ "     Transport transport,"
-										+ "     CostType costType, "
-										+ "     CostUnit costUnit "
-										+ "where customerOrder.productArea=:productArea and "
-										+ "      orderCost.order = customerOrder and "
-										+ "      orderCost.costType = costType and "
-										+ "      orderCost.costUnit = costUnit and "
-										+ "      not exists(select 1 from Deviation deviation where deviation"
-										+ "      =orderCost.deviation and deviation.postShipment is not null)"
-										+ " and customerOrder.transport = transport and "
-										+ "    cast(transport.transportYear as string)"
-										+ "    ||cast(transport.transportWeek+10 as string) between  "
-										+ "    :fromString and :toString");
-
-						switch (transportConstraintEnum) {
-						case TRANSPORTED:
-							queryString
-									.append(" and customerOrder.sent is not null");
-							break;
-						case TRANSPORT_PLANNED:
-							queryString
-									.append(" and customerOrder.sent is null");
-							break;
-						case ALL:
-							break;
-						default:
-							break;
-						}
-
-						queryString
-								.append(" group by transport.transportYear,transport.transportWeek,")
-								.append("costType.costTypeName,costUnit.costUnitName");
-						queryString
-								.append(" order by transport.transportYear,transport.transportWeek");
-
-						return session.createQuery(queryString.toString())
-								.setParameter("fromString", fromString)
-								.setParameter("toString", toString)
-								.setParameter("productArea", productArea)
-								.list();
-					}
-
-				});
-	}
-
-	/**
-	 * Teller antall etterleveringer i en gitt periode
-	 * 
-	 * @param fromString
-	 * @param toString
-	 * @param transportConstraintEnum
-	 * @param productArea
-	 * @return antall
-	 */
-	@SuppressWarnings("unchecked")
-	public final Map<String, Integer> getCountPostShipment(
-			final String fromString, final String toString,
-			final TransportConstraintEnum transportConstraintEnum,
-			final ProductArea productArea) {
-		return (Map<String, Integer>) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					public Object doInHibernate(final Session session) {
-						StringBuffer queryString = new StringBuffer(
-								"select count(*),transport.transportYear,transport.transportWeek"
-										+ " from "
-										+ "PostShipment postShipment,Transport transport,Order customerOrder"
-										+ " where ")
-								.append(" postShipment.transport = transport")
-								.append(" and postShipment.order=customerOrder")
-								.append(" and customerOrder.productArea=:productArea")
-								.append(" and cast(transport.transportYear as string)")
-								.append("||cast(transport.transportWeek+10 as string) between ")
-								.append(" :fromString and :toString");
-
-						switch (transportConstraintEnum) {
-						case TRANSPORTED:
-							queryString
-									.append(" and postShipment.sent is not null");
-							break;
-						case TRANSPORT_PLANNED:
-							queryString
-									.append(" and postShipment.sent is null");
-							break;
-						case ALL:
-							break;
-						default:
-							break;
-						}
-
-						queryString
-								.append(" group by transport.transportYear,transport.transportWeek");
-						queryString
-								.append(" order by transport.transportYear,transport.transportWeek");
-
-						List<Object[]> counts = session
-								.createQuery(queryString.toString())
-								.setParameter("fromString", fromString)
-								.setParameter("toString", toString)
-								.setParameter("productArea", productArea)
-								.list();
-
-						Map<String, Integer> yearMap = new Hashtable<String, Integer>();
-						if (counts != null) {
-							for (Object[] year : counts) {
-								yearMap.put(String.format("%1$d%2$02d",
-										year[1], year[2]), (Integer) year[0]);
-							}
-						}
-						return yearMap;
-					}
-
-				});
-
-	}
-
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#getCountOrderAndPostShipment(java.lang.String,
-	 *      java.lang.String,
-	 *      no.ugland.utransprod.gui.handlers.ReportConstraintViewHandler.TransportConstraintEnum,
-	 *      no.ugland.utransprod.model.ProductArea)
-	 */
-	public final Map<String, Integer> getCountOrderAndPostShipment(
-			final String fromString, final String toString,
-			final TransportConstraintEnum transportConstraintEnum,
-			final ProductArea productArea) {
-
-		Map<String, Integer> countMapOrder = getCountOrder(fromString,
-				toString, transportConstraintEnum, productArea);
-		Map<String, Integer> countMapPostShipment = getCountPostShipment(
-				fromString, toString, transportConstraintEnum, productArea);
-
-		if (countMapPostShipment != null) {
-			Set<String> keys = countMapPostShipment.keySet();
-			for (String key : keys) {
-				Integer count = countMapOrder.get(key);
-				if (count != null) {
-					count = count + countMapPostShipment.get(key);
-				} else {
-					count = countMapPostShipment.get(key);
-				}
-				countMapOrder.put(key, count);
+			    }
+			    break;
+			case DEVIATIONS:
+			    set = order.getDeviations();
+			    set.iterator();
+			    break;
+			case PROCENT_DONE:
+			    set = order.getProcentDones();
+			    set.iterator();
+			    break;
+			default:
+			    break;
 			}
+		    }
+		    return null;
 		}
-		return countMapOrder;
+
+	    });
 	}
 
-	/**
-	 * Teller antall ordre for en gitt periode
-	 * 
-	 * @param fromString
-	 * @param toString
-	 * @param transportConstraintEnum
-	 * @param productArea
-	 * @return antall
-	 */
-	@SuppressWarnings("unchecked")
-	private Map<String, Integer> getCountOrder(final String fromString,
-			final String toString,
-			final TransportConstraintEnum transportConstraintEnum,
-			final ProductArea productArea) {
-		return (Map<String, Integer>) getHibernateTemplate().execute(
-				new HibernateCallback() {
+    }
 
-					public Object doInHibernate(final Session session) {
-						StringBuffer queryString = new StringBuffer(
-								"select count(*),transport.transportYear,transport.transportWeek"
-										+ " from "
-										+ "Order customerOrder,Transport transport"
-										+ " where ")
-								.append(" customerOrder.transport = transport")
-								.append(" and customerOrder.productArea=:productArea")
-								.append(" and cast(transport.transportYear as string)||")
-								.append("cast(transport.transportWeek+10 as string) between ")
-								.append(" :fromString and :toString");
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#findAllAssemblyOrders()
+     */
+    @SuppressWarnings("unchecked")
+    public final List<Order> findAllAssemblyOrders() {
+	return (List<Order>) getHibernateTemplate().execute(new HibernateCallback() {
 
-						switch (transportConstraintEnum) {
-						case TRANSPORTED:
-							queryString
-									.append(" and customerOrder.sent is not null");
-							break;
-						case TRANSPORT_PLANNED:
-							queryString
-									.append(" and customerOrder.sent is null");
-							break;
-						case ALL:
-							break;
-						default:
-							break;
-						}
+	    public Object doInHibernate(final Session session) {
+		StringBuffer sqlBuffer = new StringBuffer("select customerOrder from Order customerOrder where ")
+			.append("customerOrder.doAssembly = 1 and ").append("not exists(select 1 from Assembly assembly where ")
+			.append("assembly.order = customerOrder and ((inactive is null or " + "inactive = 0)) and assembly.supplier is not null)");
+		return session.createQuery(sqlBuffer.toString()).list();
+	    }
 
-						queryString
-								.append(" group by transport.transportYear,transport.transportWeek");
-						queryString
-								.append(" order by transport.transportYear,transport.transportWeek");
+	});
+    }
 
-						List<Object[]> counts = session
-								.createQuery(queryString.toString())
-								.setParameter("fromString", fromString)
-								.setParameter("toString", toString)
-								.setParameter("productArea", productArea)
-								.list();
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#lazyLoadTree(no.ugland.utransprod.model.Order)
+     */
+    public final void lazyLoadTree(final Order order) {
+	if (order != null && order.getOrderId() != null) {
+	    getHibernateTemplate().execute(new HibernateCallback() {
 
-						Map<String, Integer> yearMap = new Hashtable<String, Integer>();
-						if (counts != null) {
-							for (Object[] year : counts) {
-								yearMap.put(String.format("%1$d%2$02d",
-										year[1], year[2]), (Integer) year[0]);
-							}
-						}
-						return yearMap;
-					}
+		public Object doInHibernate(final Session session) {
 
-				});
+		    session.load(order, order.getOrderId());
 
-	}
+		    Set<?> set;
+		    set = order.getCollies();
+		    set.iterator();
 
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#findNotSent()
-	 */
-	@SuppressWarnings("unchecked")
-	public final Set<Order> findNotSent() {
-		return (Set<Order>) getHibernateTemplate().execute(
-				new HibernateCallback() {
+		    set = order.getOrderCosts();
+		    set.iterator();
 
-					public Object doInHibernate(final Session session) {
-
-						StringBuffer sqlBuffer = new StringBuffer(
-								"select distinct customerOrder from ")
-								.append("Order customerOrder left outer join customerOrder.transport ")
-								.append(" where ")
-								.append("customerOrder.sent is null")
-								.append(" and(customerOrder.transport is null or")
-								.append(" customerOrder.transport.transportName <> 'Historisk')");
-
-						return new HashSet<Order>(session.createQuery(
-								sqlBuffer.toString()).list());
-					}
-
-				});
-	}
-
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#lazyLoadOrderLineAndCollies(java.lang.Integer)
-	 */
-	public final Order lazyLoadOrderLineAndCollies(final Integer orderId) {
-		return (Order) getHibernateTemplate().execute(new HibernateCallback() {
-
-			public Object doInHibernate(final Session session) {
-				StringBuffer sqlBuffer = new StringBuffer(
-						"select customerOrder from Order customerOrder")
-						.append(" left outer join fetch customerOrder.orderLines")
-						.append(" left outer join fetch customerOrder.collies")
-						.append(" left outer join fetch customerOrder.orderComments")
-						.append(" where customerOrder.orderId = :orderId");
-				return session.createQuery(sqlBuffer.toString())
-						.setParameter("orderId", orderId).uniqueResult();
-
+		    Set<OrderComment> comments = order.getOrderComments();
+		    if (comments != null) {
+			for (OrderComment comment : comments) {
+			    set = comment.getOrderCommentCommentTypes();
+			    set.iterator();
 			}
+		    }
 
-		});
+		    Set<OrderLine> orderLines = order.getOrderLines();
+		    lazyLoadTreeOrderLines(orderLines);
 
-	}
-
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#getAllDeviationOrderLines()
-	 */
-	@SuppressWarnings("unchecked")
-	public final List<OrderLine> getAllDeviationOrderLines() {
-		return (List<OrderLine>) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					public Object doInHibernate(final Session session) {
-						StringBuffer sqlBuffer = new StringBuffer(
-								"select orderLine from Order customerOrder,OrderLine orderLine,"
-										+ "ConstructionTypeArticle constructionTypeArticle,"
-										+ "ArticleType articleType ");
-
-						sqlBuffer
-								.append("where orderLine.constructionTypeArticle = constructionTypeArticle ")
-								.append("and constructionTypeArticle.articleType = articleType ")
-								.append("and articleType.topLevel=1 ")
-								.append("and orderLine.colli is null ")
-
-								.append("and customerOrder = orderLine.order ")
-								.append("and customerOrder.transport is not null ")
-								.append("and customerOrder.sent is not null ")
-								.append("order by customerOrder.customer");
-
-						return session.createQuery(sqlBuffer.toString()).list();
-
-					}
-
-				});
-
-	}
-
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#findReadyForInvoice(java.lang.String)
-	 */
-	@SuppressWarnings("unchecked")
-	public final List<Order> findReadyForInvoice(final String orderNr) {
-		return (List<Order>) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					public Object doInHibernate(final Session session) {
-						StringBuffer sqlBuffer = new StringBuffer(
-								"select customerOrder from Order customerOrder");
-
-						sqlBuffer
-								.append(" where (customerOrder.sent is not null");
-						if (orderNr != null) {
-							sqlBuffer.append(" and customerOrder.orderNr='")
-									.append(orderNr).append("' ");
-						}
-						sqlBuffer
-								.append(" and exists(select 1 from Assembly assembly where assembly.order=")
-								.append("customerOrder and assembly.assemblied='Ja'))")
-								.append(" or(customerOrder.sent is not null ");
-						if (orderNr != null) {
-							sqlBuffer.append(" and customerOrder.orderNr='")
-									.append(orderNr).append("' ");
-						}
-						sqlBuffer.append(
-								" and (customerOrder.doAssembly is null or ")
-								.append("customerOrder.doAssembly=0))");
-
-						sqlBuffer.append(" order by customerOrder.sent");
-
-						return session.createQuery(sqlBuffer.toString()).list();
-					}
-
-				});
-	}
-
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#findReadyForInvoiceCustomerNr(java.lang.Integer)
-	 */
-	@SuppressWarnings("unchecked")
-	public final List<Order> findReadyForInvoiceCustomerNr(
-			final Integer customerNr) {
-		return (List<Order>) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					public Object doInHibernate(final Session session) {
-						StringBuffer sqlBuffer = new StringBuffer(
-								"select customerOrder from Order customerOrder,Customer customer");
-
-						sqlBuffer
-								.append(" where (customerOrder.sent is not null")
-								.append(" and customerOrder.customer=customer and ")
-								.append("customer.customerNr=")
-								.append(customerNr)
-								.append(" ")
-								.append(" and exists(select 1 from Assembly assembly where assembly.order=")
-								.append("customerOrder and assembly.assemblied='Ja'))")
-								.append(" or(customerOrder.sent is not null ")
-								.append(" and customerOrder.customer=customer and ")
-								.append("customer.customerNr=")
-								.append(customerNr)
-								.append(" ")
-								.append(" and (customerOrder.doAssembly is null or ")
-								.append("customerOrder.doAssembly=0))");
-
-						sqlBuffer.append(" order by customerOrder.sent");
-
-						return session.createQuery(sqlBuffer.toString()).list();
-					}
-
-				});
-	}
-
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#findByOrderNr(java.lang.String)
-	 */
-	public final Order findByOrderNr(final String orderNr) {
-		return (Order) getHibernateTemplate().execute(new HibernateCallback() {
-
-			@SuppressWarnings("unchecked")
-			public Object doInHibernate(final Session session) {
-				List<Order> list = session.createCriteria(Order.class)
-						.add(Restrictions.eq("orderNr", orderNr)).list();
-				if (list != null && list.size() == 1) {
-					return list.get(0);
-				}
-				return null;
-			}
-
-		});
-	}
-
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#findAllNotSent(java.lang.String,
-	 *      java.lang.String)
-	 */
-	@SuppressWarnings("unchecked")
-	public final List<Order> findAllNotSent(final String criteria,
-			final String orderBy) {
-		return (List<Order>) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					public Object doInHibernate(final Session session) {
-						Criteria crit = session.createCriteria(Order.class)
-								.add(Restrictions.isNull("sent"));
-
-						if (criteria != null) {
-							crit = crit.createCriteria(criteria);
-						}
-						if (orderBy != null) {
-							crit.addOrder(org.hibernate.criterion.Order
-									.asc(orderBy));
-						}
-						return crit.list();
-
-					}
-
-				});
-	}
-
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#findNotSentByCustomerNr(java.lang.Integer)
-	 */
-	@SuppressWarnings("unchecked")
-	public final List<Order> findNotSentByCustomerNr(final Integer customerNr) {
-		return (List<Order>) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					public Object doInHibernate(final Session session) {
-						return session.createCriteria(Order.class)
-								.add(Restrictions.isNull("sent"))
-								.createCriteria("customer")
-								.add(Restrictions.eq("customerNr", customerNr))
-								.list();
-					}
-
-				});
-	}
-
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#findNotSentByOrderNr(java.lang.String)
-	 */
-	@SuppressWarnings("unchecked")
-	public final List<Order> findNotSentByOrderNr(final String orderNr) {
-		return (List<Order>) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					public Object doInHibernate(final Session session) {
-						return session.createCriteria(Order.class)
-								.add(Restrictions.isNull("sent"))
-								.add(Restrictions.eq("orderNr", orderNr))
-								.list();
-					}
-
-				});
-	}
-
-	@SuppressWarnings("unchecked")
-	public final List<Order> findSentInPeriod(final Periode periode,
-			final String productAreaGroupName) {
-		return (List<Order>) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					public Object doInHibernate(final Session session) {
-						Date fromDate = Util.getFirstDateInWeek(
-								periode.getYear(), periode.getWeek());
-						Date toDate = Util.getLastDateInWeek(periode.getYear(),
-								periode.getToWeek());
-						return session
-								.createCriteria(Order.class)
-								.add(Restrictions.isNotNull("transport"))
-								.add(Restrictions.between("sent", fromDate,
-										toDate))
-								.createCriteria("productArea")
-								.createCriteria("productAreaGroup")
-								.add(Restrictions.ilike("productAreaGroupName",
-										productAreaGroupName)).list();
-					}
-
-				});
-	}
-
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#getPacklistCountForWeek(java.util.Date,
-	 *      java.util.Date)
-	 */
-	public final Integer getPacklistCountForWeek(final Date fromDate,
-			final Date toDate) {
-		return (Integer) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					@SuppressWarnings("unchecked")
-					public Object doInHibernate(final Session session) {
-						String query = "select count(customerOrder.orderId) from Order customerOrder where "
-								+ "customerOrder.packlistReady between :fromDate and :toDate";
-						List<Integer> list = session.createQuery(query)
-								.setParameter("fromDate", fromDate)
-								.setParameter("toDate", toDate).list();
-						if (list != null && list.size() == 1) {
-							return list.get(0);
-						}
-						return null;
-					}
-
-				});
-	}
-
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#saveOrder(no.ugland.utransprod.model.Order)
-	 */
-	public final String saveOrder(final Order order) {
-		return (String) getHibernateTemplate().execute(new HibernateCallback() {
-
-			public Object doInHibernate(final Session session) {
-				if (Hibernate.isInitialized(order.getOrderLines())) {
-					if (order.getOrderLines() == null
-							|| order.getOrderLines().size() == 0) {
-
-						return "Order " + order + " mangler artikler!";
-					}
-				}
-
-				session.saveOrUpdate(order);
-				return null;
-			}
-
-		});
-
-	}
-
-	/**
-	 * @see no.ugland.utransprod.dao.OrderDAO#getPacklistCountForWeekByProductAreaGroupName(java.util.Date,
-	 *      java.util.Date, no.ugland.utransprod.model.ProductAreaGroup)
-	 */
-	public final Integer getPacklistCountForWeekByProductAreaGroupName(
-			final Date fromDate, final Date toDate, final ProductAreaGroup group) {
-		return (Integer) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					@SuppressWarnings("unchecked")
-					public Object doInHibernate(final Session session) {
-						String query = "select count(customerOrder.orderId) "
-								+ " from Order customerOrder "
-								+ " where customerOrder.packlistReady between :fromDate and :toDate and "
-								+ "customerOrder.productArea.productAreaGroup.productAreaGroupName="
-								+ ":groupName";
-						List<Integer> list = session
-								.createQuery(query)
-								.setParameter("fromDate", fromDate)
-								.setParameter("toDate", toDate)
-								.setParameter("groupName",
-										group.getProductAreaGroupName()).list();
-						if (list != null && list.size() == 1) {
-							Object object = list.get(0);
-							if (object instanceof Long) {
-								return ((Long) object).intValue();
-							} else {
-								return object;
-							}
-						}
-						return null;
-					}
-
-				});
-	}
-
-	@SuppressWarnings("unchecked")
-	public final List<Order> findAllNotSentByProductArea(final String criteria,
-			final String orderBy, final ProductArea productArea) {
-		return (List<Order>) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					public Object doInHibernate(final Session session) {
-						Criteria crit = session
-								.createCriteria(Order.class)
-								.add(Restrictions.isNull("sent"))
-								.add(Restrictions
-										.eq("productArea", productArea));
-
-						if (criteria != null) {
-							crit = crit.createCriteria(criteria);
-						}
-						if (orderBy != null) {
-							crit.addOrder(org.hibernate.criterion.Order
-									.asc(orderBy));
-						}
-						return crit.list();
-
-					}
-
-				});
-	}
-
-	@SuppressWarnings("unchecked")
-	public final List<Order> findSentInPeriodByProductArea(final Integer year,
-			final Integer weekFrom, final Integer weekTo,
-			final ProductArea productArea) {
-		return (List<Order>) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					public Object doInHibernate(final Session session) {
-						Date fromDate = Util.getFirstDateInWeek(year, weekFrom);
-						Date toDate = Util.getLastDateInWeek(year, weekTo);
-						return session
-								.createCriteria(Order.class)
-								.add(Restrictions.between("sent", fromDate,
-										toDate))
-								.add(Restrictions
-										.eq("productArea", productArea))
-								.addOrder(
-										org.hibernate.criterion.Order
-												.asc("sent")).list();
-					}
-
-				});
-	}
-
-	@SuppressWarnings("unchecked")
-	public final List<Order> findByConfirmWeekProductArea(final Integer year,
-			final Integer weekFrom, final Integer weekTo,
-			final String productAreaName) {
-		return (List<Order>) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					public Object doInHibernate(final Session session) {
-						Criteria criteria = session
-								.createCriteria(Order.class)
-								.add(Expression.sql(
-										"datepart(year,agreement_date)=?",
-										year, Hibernate.INTEGER))
-								.add(Expression
-										.sql("dbo.GetISOWeekNumberFromDate(agreement_date) between ? and ?",
-												new Object[] { weekFrom, weekTo },
-												new Type[] { Hibernate.INTEGER,
-														Hibernate.INTEGER }))
-								.addOrder(
-										org.hibernate.criterion.Order
-												.asc("salesman"))
-								.createCriteria("constructionType")
-								.add(Restrictions.not(Restrictions.ilike(
-										"name", "%tilleggsordre%")));
-						if (productAreaName != null) {
-							criteria.createCriteria("productArea").add(
-									Restrictions.eq("productArea",
-											productAreaName));
-						}
-						return criteria.list();
-					}
-
-				});
-	}
-
-	public final List<SaleReportSum> groupSumCountyByProductAreaConfirmPeriode(
-			final ProductArea productArea, final Periode periode) {
-
-		List<Order> confirmedOrders = findByConfirmWeekProductArea(
-				periode.getYear(), periode.getWeek(), periode.getToWeek(),
-				productArea.getProductArea());
-
-		Map<String, List<Order>> orderByCountyMap = arrangeOrdersByCounty(confirmedOrders);
-
-		List<SaleReportSum> saleReportSums = aggregateCountySaleReportSums(orderByCountyMap);
-
-		return saleReportSums;
-	}
-
-	public final List<SaleReportSum> sumByProductAreaConfirmPeriode(
-			final ProductArea productArea, final Periode periode) {
-
-		List<Order> confirmedOrders = findByConfirmWeekProductArea(
-				periode.getYear(), periode.getWeek(), periode.getToWeek(),
-				productArea.getProductArea());
-
-		SaleReportSum saleReportSum = aggregateSaleReportSumForCountyOrders(
-				confirmedOrders, "Alle");
-
-		return Lists.newArrayList(saleReportSum);
-	}
-
-	public final List<SaleReportSum> groupSumSalesmanByProductAreaConfirmPeriode(
-			final ProductArea productArea, final Periode periode) {
-
-		List<Order> confirmedOrders = findByConfirmWeekProductArea(
-				periode.getYear(), periode.getWeek(), periode.getToWeek(),
-				productArea.getProductArea());
-
-		Map<String, List<Order>> orderByCountyMap = arrangeOrdersBySalesman(confirmedOrders);
-
-		List<SaleReportSum> saleReportSums = aggregateSalesmanSaleReportSums(orderByCountyMap);
-
-		return saleReportSums;
-	}
-
-	private List<SaleReportSum> aggregateCountySaleReportSums(
-			final Map<String, List<Order>> countyOrders) {
-		List<SaleReportSum> saleReportSums = new ArrayList<SaleReportSum>();
-		if (countyOrders != null) {
-			Set<String> countyNames = countyOrders.keySet();
-			for (String countyName : countyNames) {
-				List<Order> orders = countyOrders.get(countyName);
-				saleReportSums.add(aggregateSaleReportSumForCountyOrders(
-						orders, countyName));
-			}
+		    return null;
 		}
-		return saleReportSums;
+	    });
 	}
 
-	private List<SaleReportSum> aggregateSalesmanSaleReportSums(
-			final Map<String, List<Order>> salesmanOrders) {
-		List<SaleReportSum> saleReportSums = new ArrayList<SaleReportSum>();
-		if (salesmanOrders != null) {
-			Set<String> salesmanNames = salesmanOrders.keySet();
-			for (String name : salesmanNames) {
-				List<Order> orders = salesmanOrders.get(name);
-				saleReportSums.add(aggregateSaleReportSumForSalesmanOrders(
-						orders, name));
-			}
-		}
-		return saleReportSums;
+    }
+
+    /**
+     * Lazy laster ordrelinjer
+     * 
+     * @param orderLines
+     */
+    final void lazyLoadTreeOrderLines(final Set<OrderLine> orderLines) {
+	if (orderLines == null) {
+	    return;
 	}
+	Set<?> set;
+	for (OrderLine orderLine : orderLines) {
+	    set = orderLine.getOrderLineAttributes();
+	    set.iterator();
+	    lazyLoadTreeOrderLines(orderLine.getOrderLines());
+	}
+    }
 
-	private SaleReportSum aggregateSaleReportSumForCountyOrders(
-			final List<Order> orders, final String countyName) {
-		SaleReportSum saleReportSum = new SaleReportSum();
-		saleReportSum.setCountyName(countyName);
+    public final List<Object[]> getOrdersPostShipmentsAndCosts(final String fromString, final String toString,
+	    final TransportConstraintEnum transportConstraintEnum, final ProductArea productArea) {
+	List<Object[]> list = getOrdersAndCosts(fromString, toString, transportConstraintEnum, productArea);
+	List<Object[]> listPostShipment = getPostShipmentsAndCosts(fromString, toString, transportConstraintEnum, productArea);
+	list.addAll(listPostShipment);
+	return list;
+    }
 
-		for (Order order : orders) {
-			lazyLoad(order,
-					new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_COSTS });
-			saleReportSum.increaseCount();
+    /**
+     * Henter ut etterleveringer og kostnader
+     * 
+     * @param fromString
+     * @param toString
+     * @param transportConstraintEnum
+     * @param productArea
+     * @return etterleveringer og kostnader
+     */
+    @SuppressWarnings("unchecked")
+    private List<Object[]> getPostShipmentsAndCosts(final String fromString, final String toString,
+	    final TransportConstraintEnum transportConstraintEnum, final ProductArea productArea) {
+	return (List<Object[]>) getHibernateTemplate().execute(new HibernateCallback() {
 
-			saleReportSum.addSumAssembly(order.getAssemblyCost());
-			saleReportSum.addSumOwnProduction(order.getGarageValue());
-			saleReportSum.addSumTransport(order.getTransportValue());
-			saleReportSum.addSumDb(order.getContributionMargin());
-			saleReportSum.addSumYesLines(order.getJaLinjer());
+	    public Object doInHibernate(final Session session) {
+		StringBuffer queryString = new StringBuffer("select customerOrder.order_Id," + "customerOrder.order_Nr," + "customer.customer_Nr,"
+			+ "customer.first_Name+' '+customer.last_Name," + "customerOrder.delivery_Address," + "customerOrder.postal_Code,"
+			+ "transport.transport_Name," + "transport.transport_Year," + "transport.transport_Week," + "costType.cost_Type_Name,"
+			+ "       orderCost.cost_Amount," + "costUnit.cost_Unit_Name," + "       postShipment.post_Shipment_Id "
+			+ "FROM   Post_shipment AS postShipment INNER JOIN " + " Customer_order AS customerOrder ON postShipment.order_id = "
+			+ "customerOrder.Order_id INNER JOIN " + " Customer AS customer ON customerOrder.Customer_id = "
+			+ "customer.Customer_id INNER JOIN " + " Transport AS transport ON postShipment.transport_id = "
+			+ "transport.Transport_id LEFT OUTER JOIN " + " Cost_unit AS costUnit INNER JOIN " + " Order_cost AS orderCost INNER JOIN "
+			+ " Deviation AS deviation ON orderCost.deviation_id = " + "deviation.deviation_id INNER JOIN "
+			+ " Cost_type AS costType ON orderCost.Cost_type_id = " + "costType.Cost_type_id ON "
+			+ " costUnit.Cost_unit_id = orderCost.Cost_unit_id ON " + " postShipment.deviation_id = deviation.deviation_id "
+			+ "WHERE customerOrder.product_area_id=:productAreaId and " + " (CAST(transport.Transport_Year AS varchar(255)) + "
+			+ "CAST(transport.Transport_Week + 10 AS varchar(255)) " + " BETWEEN :fromString AND :toString)");
 
+		switch (transportConstraintEnum) {
+		case TRANSPORTED:
+		    queryString.append(" and postShipment.sent is not null");
+		    break;
+		case TRANSPORT_PLANNED:
+		    queryString.append(" and postShipment.sent is null");
+		    break;
+		case ALL:
+		    break;
+		default:
+		    break;
 		}
 
-		return saleReportSum;
-	}
+		queryString.append(" order by customerOrder.order_Id,postShipment.post_Shipment_Id");
 
-	private SaleReportSum aggregateSaleReportSumForSalesmanOrders(
-			final List<Order> orders, final String salesmanName) {
-		SaleReportSum saleReportSum = new SaleReportSum();
-		saleReportSum.setSalesman(salesmanName);
+		return session.createSQLQuery(queryString.toString()).setParameter("fromString", fromString).setParameter("toString", toString)
+			.setParameter("productAreaId", productArea.getProductAreaId()).list();
 
-		for (Order order : orders) {
-			lazyLoad(order,
-					new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_COSTS });
-			saleReportSum.increaseCount();
+	    }
+	});
 
-			saleReportSum.addSumAssembly(order.getAssemblyCost());
-			saleReportSum.addSumOwnProduction(order.getGarageValue());
-			saleReportSum.addSumTransport(order.getTransportValue());
-			saleReportSum.addSumDb(order.getContributionMargin());
-			saleReportSum.addSumYesLines(order.getJaLinjer());
+    }
 
+    /**
+     * Henter ut ordre og kostnader for en gitt periode
+     * 
+     * @param fromString
+     * @param toString
+     * @param transportConstraintEnum
+     * @param productArea
+     * @return order og kostnader
+     */
+    @SuppressWarnings("unchecked")
+    private List<Object[]> getOrdersAndCosts(final String fromString, final String toString, final TransportConstraintEnum transportConstraintEnum,
+	    final ProductArea productArea) {
+	return (List<Object[]>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		StringBuffer queryString = new StringBuffer("select customerOrder.orderId," + "customerOrder.orderNr," + "customer.customerNr,"
+			+ "customer.firstName+' '+customer.lastName," + "customerOrder.deliveryAddress," + "customerOrder.postalCode,"
+			+ "transport.transportName," + "transport.transportYear," + "transport.transportWeek," + "costType.costTypeName,"
+			+ "orderCost.costAmount," + "costUnit.costUnitName," + "       -1 as postShipmentId " + "from Customer customer,"
+			+ " OrderCost orderCost," + " Order customerOrder," + " Transport transport," + " CostType costType, "
+			+ " CostUnit costUnit " + "where customer = customerOrder.customer and " + " orderCost.order = customerOrder and "
+			+ " orderCost.costType = costType and " + " orderCost.costUnit = costUnit and "
+			+ " customerOrder.productArea=:productArea and " + " not exists(select 1 from Deviation deviation where deviation="
+			+ "orderCost.deviation and deviation.postShipment is not null) and" + " customerOrder.transport = transport and "
+			+ " cast(transport.transportYear as string)||" + "cast(transport.transportWeek+10 as string) "
+			+ " between  :fromString and :toString");
+
+		switch (transportConstraintEnum) {
+		case TRANSPORTED:
+		    queryString.append(" and customerOrder.sent is not null");
+		    break;
+		case TRANSPORT_PLANNED:
+		    queryString.append(" and customerOrder.sent is null");
+		    break;
+		case ALL:
+		    break;
+		default:
+		    break;
 		}
 
-		return saleReportSum;
-	}
+		queryString.append(" order by customerOrder.orderId");
 
-	private Map<String, List<Order>> arrangeOrdersByCounty(
-			final List<Order> orders) {
-		Map<String, List<Order>> countyOrders = new Hashtable<String, List<Order>>();
+		return session.createQuery(queryString.toString()).setParameter("fromString", fromString).setParameter("toString", toString)
+			.setParameter("productArea", productArea).list();
 
-		if (orders != null) {
-			for (Order order : orders) {
-				addOrderToCountyMap(countyOrders, order);
-			}
+	    }
+	});
+
+    }
+
+    /**
+     * Teller etterleveringer og summerer kostnader for etterleveringer i en
+     * gitt periode
+     * 
+     * @param fromString
+     * @param toString
+     * @param transportConstraintEnum
+     * @param productArea
+     * @return etterleveringer og summerte kostnader
+     */
+    @SuppressWarnings("unchecked")
+    private List<Object[]> countPostShipmentAndCosts(final String fromString, final String toString,
+	    final TransportConstraintEnum transportConstraintEnum, final ProductArea productArea) {
+	return (List<Object[]>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		StringBuffer queryString = new StringBuffer("select count(postShipment.postShipmentId)," + "       transport.transportYear,"
+			+ "       transport.transportWeek," + "       costType.costTypeName," + "       sum(orderCost.costAmount),"
+			+ "       costUnit.costUnitName " + "from OrderCost orderCost," + "     PostShipment postShipment,"
+			+ "     Transport transport," + "     CostType costType, " + "     CostUnit costUnit, " + "     Deviation deviation,"
+			+ "     Order customerOrder " + "where postShipment.order=customerOrder and "
+			+ "      customerOrder.productArea=:productArea and " + "      postShipment.deviation=deviation and "
+			+ "      orderCost.deviation = deviation and " + "      orderCost.costType = costType and "
+			+ "      orderCost.costUnit = costUnit and " + "      postShipment.transport = transport and "
+			+ "     cast(transport.transportYear as string)" + "     ||cast(transport.transportWeek+10 as string) between  "
+			+ "     :fromString and :toString");
+
+		switch (transportConstraintEnum) {
+		case TRANSPORTED:
+		    queryString.append(" and postShipment.sent is not null");
+		    break;
+		case TRANSPORT_PLANNED:
+		    queryString.append(" and postShipment.sent is null");
+		    break;
+		case ALL:
+		    break;
+		default:
+		    break;
 		}
-		return countyOrders;
-	}
 
-	private Map<String, List<Order>> arrangeOrdersBySalesman(
-			final List<Order> orders) {
-		Map<String, List<Order>> salesmanOrders = new Hashtable<String, List<Order>>();
+		queryString.append(" group by transport.transportYear,").append("transport.transportWeek,")
+			.append("costType.costTypeName,costUnit.costUnitName");
+		queryString.append(" order by transport.transportYear,transport.transportWeek");
 
-		if (orders != null) {
-			for (Order order : orders) {
-				addOrderToSalesmanMap(salesmanOrders, order);
-			}
+		return session.createQuery(queryString.toString()).setParameter("fromString", fromString).setParameter("toString", toString)
+			.setParameter("productArea", productArea).list();
+	    }
+
+	});
+    }
+
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#countOrderPostShipmentAndCosts(java.lang.String,
+     *      java.lang.String,
+     *      no.ugland.utransprod.gui.handlers.ReportConstraintViewHandler.TransportConstraintEnum,
+     *      no.ugland.utransprod.model.ProductArea)
+     */
+    public final List<Object[]> countOrderPostShipmentAndCosts(final String fromString, final String toString,
+	    final TransportConstraintEnum transportConstraintEnum, final ProductArea productArea) {
+	List<Object[]> list = countOrderAndCosts(fromString, toString, transportConstraintEnum, productArea);
+	list.addAll(countPostShipmentAndCosts(fromString, toString, transportConstraintEnum, productArea));
+	return list;
+
+    }
+
+    /**
+     * Teller ordre og summerer kostander for en gitt periode
+     * 
+     * @param fromString
+     * @param toString
+     * @param transportConstraintEnum
+     * @param productArea
+     * @return antall ordre og summerte kostnader
+     */
+    @SuppressWarnings("unchecked")
+    private List<Object[]> countOrderAndCosts(final String fromString, final String toString, final TransportConstraintEnum transportConstraintEnum,
+	    final ProductArea productArea) {
+	return (List<Object[]>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		StringBuffer queryString = new StringBuffer("select count(customerOrder.orderId)," + "       transport.transportYear,"
+			+ "       transport.transportWeek," + "       costType.costTypeName," + "       sum(orderCost.costAmount),"
+			+ "       costUnit.costUnitName " + "from OrderCost orderCost," + "     Order customerOrder," + "     Transport transport,"
+			+ "     CostType costType, " + "     CostUnit costUnit " + "where customerOrder.productArea=:productArea and "
+			+ "      orderCost.order = customerOrder and " + "      orderCost.costType = costType and "
+			+ "      orderCost.costUnit = costUnit and " + "      not exists(select 1 from Deviation deviation where deviation"
+			+ "      =orderCost.deviation and deviation.postShipment is not null)" + " and customerOrder.transport = transport and "
+			+ "    cast(transport.transportYear as string)" + "    ||cast(transport.transportWeek+10 as string) between  "
+			+ "    :fromString and :toString");
+
+		switch (transportConstraintEnum) {
+		case TRANSPORTED:
+		    queryString.append(" and customerOrder.sent is not null");
+		    break;
+		case TRANSPORT_PLANNED:
+		    queryString.append(" and customerOrder.sent is null");
+		    break;
+		case ALL:
+		    break;
+		default:
+		    break;
 		}
-		return salesmanOrders;
-	}
 
-	private void addOrderToCountyMap(
-			final Map<String, List<Order>> countyOrders, final Order order) {
-		String countyName = getCountyName(order);
-		List<Order> countyOrderList = countyOrders.get(countyName);
-		if (countyOrderList == null) {
-			countyOrderList = new ArrayList<Order>();
+		queryString.append(" group by transport.transportYear,transport.transportWeek,")
+			.append("costType.costTypeName,costUnit.costUnitName");
+		queryString.append(" order by transport.transportYear,transport.transportWeek");
+
+		return session.createQuery(queryString.toString()).setParameter("fromString", fromString).setParameter("toString", toString)
+			.setParameter("productArea", productArea).list();
+	    }
+
+	});
+    }
+
+    /**
+     * Teller antall etterleveringer i en gitt periode
+     * 
+     * @param fromString
+     * @param toString
+     * @param transportConstraintEnum
+     * @param productArea
+     * @return antall
+     */
+    @SuppressWarnings("unchecked")
+    public final Map<String, Integer> getCountPostShipment(final String fromString, final String toString,
+	    final TransportConstraintEnum transportConstraintEnum, final ProductArea productArea) {
+	return (Map<String, Integer>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		StringBuffer queryString = new StringBuffer("select count(*),transport.transportYear,transport.transportWeek" + " from "
+			+ "PostShipment postShipment,Transport transport,Order customerOrder" + " where ")
+			.append(" postShipment.transport = transport").append(" and postShipment.order=customerOrder")
+			.append(" and customerOrder.productArea=:productArea").append(" and cast(transport.transportYear as string)")
+			.append("||cast(transport.transportWeek+10 as string) between ").append(" :fromString and :toString");
+
+		switch (transportConstraintEnum) {
+		case TRANSPORTED:
+		    queryString.append(" and postShipment.sent is not null");
+		    break;
+		case TRANSPORT_PLANNED:
+		    queryString.append(" and postShipment.sent is null");
+		    break;
+		case ALL:
+		    break;
+		default:
+		    break;
 		}
-		countyOrderList.add(order);
-		countyOrders.put(countyName, countyOrderList);
-	}
 
-	private void addOrderToSalesmanMap(
-			final Map<String, List<Order>> salesmanOrders, final Order order) {
-		String salesmanName = order.getSalesman() != null ? order.getSalesman()
-				: "";
+		queryString.append(" group by transport.transportYear,transport.transportWeek");
+		queryString.append(" order by transport.transportYear,transport.transportWeek");
 
-		List<Order> salesmanOrderList = salesmanOrders.get(salesmanName);
-		if (salesmanOrderList == null) {
-			salesmanOrderList = new ArrayList<Order>();
+		List<Object[]> counts = session.createQuery(queryString.toString()).setParameter("fromString", fromString)
+			.setParameter("toString", toString).setParameter("productArea", productArea).list();
+
+		Map<String, Integer> yearMap = new Hashtable<String, Integer>();
+		if (counts != null) {
+		    for (Object[] year : counts) {
+			yearMap.put(String.format("%1$d%2$02d", year[1], year[2]), (Integer) year[0]);
+		    }
 		}
-		salesmanOrderList.add(order);
-		salesmanOrders.put(salesmanName, salesmanOrderList);
-	}
+		return yearMap;
+	    }
 
-	private String getCountyName(final Order order) {
+	});
 
-		String countyName = transportCostDAO.findCountyNameByPostalCode(order
-				.getPostalCode());
-		if (countyName == null) {
-			countyName = "";
-		}
-		return countyName;
-	}
+    }
 
-	public final Integer countByProductAreaPeriode(
-			final ProductArea productArea, final Periode periode) {
-		List<Order> confirmedOrders = findByConfirmWeekProductArea(
-				periode.getYear(), periode.getWeek(), periode.getToWeek(),
-				productArea.getProductArea());
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#getCountOrderAndPostShipment(java.lang.String,
+     *      java.lang.String,
+     *      no.ugland.utransprod.gui.handlers.ReportConstraintViewHandler.TransportConstraintEnum,
+     *      no.ugland.utransprod.model.ProductArea)
+     */
+    public final Map<String, Integer> getCountOrderAndPostShipment(final String fromString, final String toString,
+	    final TransportConstraintEnum transportConstraintEnum, final ProductArea productArea) {
 
-		if (confirmedOrders != null) {
-			return confirmedOrders.size();
-		}
-		return 0;
-	}
+	Map<String, Integer> countMapOrder = getCountOrder(fromString, toString, transportConstraintEnum, productArea);
+	Map<String, Integer> countMapPostShipment = getCountPostShipment(fromString, toString, transportConstraintEnum, productArea);
 
-	public final List<SaleReportData> getSaleReportByProductAreaPeriode(
-			final ProductArea productArea, final Periode periode) {
-		List<Order> confirmedOrders = findByConfirmWeekProductArea(
-				periode.getYear(), periode.getWeek(), periode.getToWeek(),
-				productArea.getProductArea());
-
-		return createSaleReportList(confirmedOrders);
-	}
-
-	private List<SaleReportData> createSaleReportList(final List<Order> orders) {
-		List<SaleReportData> saleReportDataList = new ArrayList<SaleReportData>();
-		if (orders != null) {
-			for (Order order : orders) {
-				lazyLoad(
-						order,
-						new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_COSTS });
-				String countyName = transportCostDAO
-						.findCountyNameByPostalCode(order.getPostalCode());
-				saleReportDataList.add(new SaleReportData("Avrop", countyName,
-						order.getSalesman(), order.getCustomer()
-								.getCustomerNr(), order.getCustomer()
-								.getFullName(), order.getOrderNr(), order
-								.getGarageValue(), order.getTransportValue(),
-						order.getAssemblyCost(), order.getJaLinjer(), order
-								.getContributionMargin(), order
-								.getContributionRate(), order.getOrderDate()));
-			}
-		}
-		return saleReportDataList;
-	}
-
-	@SuppressWarnings("unchecked")
-	public final List<Order> findByConfirmWeekProductAreaGroup(
-			final Integer year, final Integer weekFrom, final Integer weekTo,
-			final ProductAreaGroup productAreaGroup) {
-		return (List<Order>) getHibernateTemplate().execute(
-				new HibernateCallback() {
-
-					public Object doInHibernate(final Session session) {
-						Criteria criteria = session
-								.createCriteria(Order.class)
-								.add(Expression.sql(
-										"datepart(year,agreement_date)=?",
-										year, Hibernate.INTEGER))
-								.add(Expression
-										.sql("dbo.GetISOWeekNumberFromDate(agreement_date) between ? and ?",
-												new Object[] { weekFrom, weekTo },
-												new Type[] { Hibernate.INTEGER,
-														Hibernate.INTEGER }))
-								.addOrder(
-										org.hibernate.criterion.Order
-												.asc("salesman"));
-						if (productAreaGroup != null) {
-							criteria.createCriteria("productArea").add(
-									Restrictions.eq("productAreaGroup",
-											productAreaGroup));
-						}
-						return criteria.list();
-					}
-
-				});
-	}
-
-	public String saveOrder(Order order, boolean allowEmptyArticles) {
-		String errorMsg = null;
-		if (allowEmptyArticles) {
-			getHibernateTemplate().saveOrUpdate(order);
+	if (countMapPostShipment != null) {
+	    Set<String> keys = countMapPostShipment.keySet();
+	    for (String key : keys) {
+		Integer count = countMapOrder.get(key);
+		if (count != null) {
+		    count = count + countMapPostShipment.get(key);
 		} else {
-			errorMsg = saveOrder(order);
+		    count = countMapPostShipment.get(key);
 		}
-		return errorMsg;
+		countMapOrder.put(key, count);
+	    }
+	}
+	return countMapOrder;
+    }
+
+    /**
+     * Teller antall ordre for en gitt periode
+     * 
+     * @param fromString
+     * @param toString
+     * @param transportConstraintEnum
+     * @param productArea
+     * @return antall
+     */
+    @SuppressWarnings("unchecked")
+    private Map<String, Integer> getCountOrder(final String fromString, final String toString, final TransportConstraintEnum transportConstraintEnum,
+	    final ProductArea productArea) {
+	return (Map<String, Integer>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		StringBuffer queryString = new StringBuffer("select count(*),transport.transportYear,transport.transportWeek" + " from "
+			+ "Order customerOrder,Transport transport" + " where ").append(" customerOrder.transport = transport")
+			.append(" and customerOrder.productArea=:productArea").append(" and cast(transport.transportYear as string)||")
+			.append("cast(transport.transportWeek+10 as string) between ").append(" :fromString and :toString");
+
+		switch (transportConstraintEnum) {
+		case TRANSPORTED:
+		    queryString.append(" and customerOrder.sent is not null");
+		    break;
+		case TRANSPORT_PLANNED:
+		    queryString.append(" and customerOrder.sent is null");
+		    break;
+		case ALL:
+		    break;
+		default:
+		    break;
+		}
+
+		queryString.append(" group by transport.transportYear,transport.transportWeek");
+		queryString.append(" order by transport.transportYear,transport.transportWeek");
+
+		List<Object[]> counts = session.createQuery(queryString.toString()).setParameter("fromString", fromString)
+			.setParameter("toString", toString).setParameter("productArea", productArea).list();
+
+		Map<String, Integer> yearMap = new Hashtable<String, Integer>();
+		if (counts != null) {
+		    for (Object[] year : counts) {
+			yearMap.put(String.format("%1$d%2$02d", year[1], year[2]), (Integer) year[0]);
+		    }
+		}
+		return yearMap;
+	    }
+
+	});
+
+    }
+
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#findNotSent()
+     */
+    @SuppressWarnings("unchecked")
+    public final Set<Order> findNotSent() {
+	return (Set<Order>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+
+		StringBuffer sqlBuffer = new StringBuffer("select distinct customerOrder from ")
+			.append("Order customerOrder left outer join customerOrder.transport ").append(" where ")
+			.append("customerOrder.sent is null").append(" and(customerOrder.transport is null or")
+			.append(" customerOrder.transport.transportName <> 'Historisk')");
+
+		return new HashSet<Order>(session.createQuery(sqlBuffer.toString()).list());
+	    }
+
+	});
+    }
+
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#lazyLoadOrderLineAndCollies(java.lang.Integer)
+     */
+    public final Order lazyLoadOrderLineAndCollies(final Integer orderId) {
+	return (Order) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		StringBuffer sqlBuffer = new StringBuffer("select customerOrder from Order customerOrder")
+			.append(" left outer join fetch customerOrder.orderLines").append(" left outer join fetch customerOrder.collies")
+			.append(" left outer join fetch customerOrder.orderComments").append(" where customerOrder.orderId = :orderId");
+		return session.createQuery(sqlBuffer.toString()).setParameter("orderId", orderId).uniqueResult();
+
+	    }
+
+	});
+
+    }
+
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#getAllDeviationOrderLines()
+     */
+    @SuppressWarnings("unchecked")
+    public final List<OrderLine> getAllDeviationOrderLines() {
+	return (List<OrderLine>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		StringBuffer sqlBuffer = new StringBuffer("select orderLine from Order customerOrder,OrderLine orderLine,"
+			+ "ConstructionTypeArticle constructionTypeArticle," + "ArticleType articleType ");
+
+		sqlBuffer.append("where orderLine.constructionTypeArticle = constructionTypeArticle ")
+			.append("and constructionTypeArticle.articleType = articleType ").append("and articleType.topLevel=1 ")
+			.append("and orderLine.colli is null ")
+
+			.append("and customerOrder = orderLine.order ").append("and customerOrder.transport is not null ")
+			.append("and customerOrder.sent is not null ").append("order by customerOrder.customer");
+
+		return session.createQuery(sqlBuffer.toString()).list();
+
+	    }
+
+	});
+
+    }
+
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#findReadyForInvoice(java.lang.String)
+     */
+    @SuppressWarnings("unchecked")
+    public final List<Order> findReadyForInvoice(final String orderNr) {
+	return (List<Order>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		StringBuffer sqlBuffer = new StringBuffer("select customerOrder from Order customerOrder");
+
+		sqlBuffer.append(" where (customerOrder.sent is not null");
+		if (orderNr != null) {
+		    sqlBuffer.append(" and customerOrder.orderNr='").append(orderNr).append("' ");
+		}
+		sqlBuffer.append(" and exists(select 1 from Assembly assembly where assembly.order=")
+			.append("customerOrder and assembly.assemblied='Ja'))").append(" or(customerOrder.sent is not null ");
+		if (orderNr != null) {
+		    sqlBuffer.append(" and customerOrder.orderNr='").append(orderNr).append("' ");
+		}
+		sqlBuffer.append(" and (customerOrder.doAssembly is null or ").append("customerOrder.doAssembly=0))");
+
+		sqlBuffer.append(" order by customerOrder.sent");
+
+		return session.createQuery(sqlBuffer.toString()).list();
+	    }
+
+	});
+    }
+
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#findReadyForInvoiceCustomerNr(java.lang.Integer)
+     */
+    @SuppressWarnings("unchecked")
+    public final List<Order> findReadyForInvoiceCustomerNr(final Integer customerNr) {
+	return (List<Order>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		StringBuffer sqlBuffer = new StringBuffer("select customerOrder from Order customerOrder,Customer customer");
+
+		sqlBuffer.append(" where (customerOrder.sent is not null").append(" and customerOrder.customer=customer and ")
+			.append("customer.customerNr=").append(customerNr).append(" ")
+			.append(" and exists(select 1 from Assembly assembly where assembly.order=")
+			.append("customerOrder and assembly.assemblied='Ja'))").append(" or(customerOrder.sent is not null ")
+			.append(" and customerOrder.customer=customer and ").append("customer.customerNr=").append(customerNr).append(" ")
+			.append(" and (customerOrder.doAssembly is null or ").append("customerOrder.doAssembly=0))");
+
+		sqlBuffer.append(" order by customerOrder.sent");
+
+		return session.createQuery(sqlBuffer.toString()).list();
+	    }
+
+	});
+    }
+
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#findByOrderNr(java.lang.String)
+     */
+    public final Order findByOrderNr(final String orderNr) {
+	return (Order) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    @SuppressWarnings("unchecked")
+	    public Object doInHibernate(final Session session) {
+		List<Order> list = session.createCriteria(Order.class).add(Restrictions.eq("orderNr", orderNr)).list();
+		if (list != null && list.size() == 1) {
+		    return list.get(0);
+		}
+		return null;
+	    }
+
+	});
+    }
+
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#findAllNotSent(java.lang.String,
+     *      java.lang.String)
+     */
+    @SuppressWarnings("unchecked")
+    public final List<Order> findAllNotSent(final String criteria, final String orderBy) {
+	return (List<Order>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		Criteria crit = session.createCriteria(Order.class).add(Restrictions.isNull("sent"));
+
+		if (criteria != null) {
+		    crit = crit.createCriteria(criteria);
+		}
+		if (orderBy != null) {
+		    crit.addOrder(org.hibernate.criterion.Order.asc(orderBy));
+		}
+		return crit.list();
+
+	    }
+
+	});
+    }
+
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#findNotSentByCustomerNr(java.lang.Integer)
+     */
+    @SuppressWarnings("unchecked")
+    public final List<Order> findNotSentByCustomerNr(final Integer customerNr) {
+	return (List<Order>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		return session.createCriteria(Order.class).add(Restrictions.isNull("sent")).createCriteria("customer")
+			.add(Restrictions.eq("customerNr", customerNr)).list();
+	    }
+
+	});
+    }
+
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#findNotSentByOrderNr(java.lang.String)
+     */
+    @SuppressWarnings("unchecked")
+    public final List<Order> findNotSentByOrderNr(final String orderNr) {
+	return (List<Order>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		return session.createCriteria(Order.class).add(Restrictions.isNull("sent")).add(Restrictions.eq("orderNr", orderNr)).list();
+	    }
+
+	});
+    }
+
+    @SuppressWarnings("unchecked")
+    public final List<Order> findSentInPeriod(final Periode periode, final String productAreaGroupName) {
+	return (List<Order>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		Date fromDate = Util.getFirstDateInWeek(periode.getYear(), periode.getWeek());
+		Date toDate = Util.getLastDateInWeek(periode.getYear(), periode.getToWeek());
+		return session.createCriteria(Order.class).add(Restrictions.isNotNull("transport"))
+			.add(Restrictions.between("sent", fromDate, toDate)).createCriteria("productArea").createCriteria("productAreaGroup")
+			.add(Restrictions.ilike("productAreaGroupName", productAreaGroupName)).list();
+	    }
+
+	});
+    }
+
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#getPacklistCountForWeek(java.util.Date,
+     *      java.util.Date)
+     */
+    public final Integer getPacklistCountForWeek(final Date fromDate, final Date toDate) {
+	return (Integer) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    @SuppressWarnings("unchecked")
+	    public Object doInHibernate(final Session session) {
+		String query = "select count(customerOrder.orderId) from Order customerOrder where "
+			+ "customerOrder.packlistReady between :fromDate and :toDate";
+		List<Integer> list = session.createQuery(query).setParameter("fromDate", fromDate).setParameter("toDate", toDate).list();
+		if (list != null && list.size() == 1) {
+		    return list.get(0);
+		}
+		return null;
+	    }
+
+	});
+    }
+
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#saveOrder(no.ugland.utransprod.model.Order)
+     */
+    public final String saveOrder(final Order order) {
+	return (String) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		if (Hibernate.isInitialized(order.getOrderLines())) {
+		    if (order.getOrderLines() == null || order.getOrderLines().size() == 0) {
+
+			return "Order " + order + " mangler artikler!";
+		    }
+		}
+
+		session.saveOrUpdate(order);
+		return null;
+	    }
+
+	});
+
+    }
+
+    /**
+     * @see no.ugland.utransprod.dao.OrderDAO#getPacklistCountForWeekByProductAreaGroupName(java.util.Date,
+     *      java.util.Date, no.ugland.utransprod.model.ProductAreaGroup)
+     */
+    public final Integer getPacklistCountForWeekByProductAreaGroupName(final Date fromDate, final Date toDate, final ProductAreaGroup group) {
+	return (Integer) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    @SuppressWarnings("unchecked")
+	    public Object doInHibernate(final Session session) {
+		String query = "select count(customerOrder.orderId) " + " from Order customerOrder "
+			+ " where customerOrder.packlistReady between :fromDate and :toDate and "
+			+ "customerOrder.productArea.productAreaGroup.productAreaGroupName=" + ":groupName";
+		List<Integer> list = session.createQuery(query).setParameter("fromDate", fromDate).setParameter("toDate", toDate)
+			.setParameter("groupName", group.getProductAreaGroupName()).list();
+		if (list != null && list.size() == 1) {
+		    Object object = list.get(0);
+		    if (object instanceof Long) {
+			return ((Long) object).intValue();
+		    } else {
+			return object;
+		    }
+		}
+		return null;
+	    }
+
+	});
+    }
+
+    @SuppressWarnings("unchecked")
+    public final List<Order> findAllNotSentByProductArea(final String criteria, final String orderBy, final ProductArea productArea) {
+	return (List<Order>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		Criteria crit = session.createCriteria(Order.class).add(Restrictions.isNull("sent")).add(Restrictions.eq("productArea", productArea));
+
+		if (criteria != null) {
+		    crit = crit.createCriteria(criteria);
+		}
+		if (orderBy != null) {
+		    crit.addOrder(org.hibernate.criterion.Order.asc(orderBy));
+		}
+		return crit.list();
+
+	    }
+
+	});
+    }
+
+    @SuppressWarnings("unchecked")
+    public final List<Order> findSentInPeriodByProductArea(final Integer year, final Integer weekFrom, final Integer weekTo,
+	    final ProductArea productArea) {
+	return (List<Order>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		Date fromDate = Util.getFirstDateInWeek(year, weekFrom);
+		Date toDate = Util.getLastDateInWeek(year, weekTo);
+		return session.createCriteria(Order.class).add(Restrictions.between("sent", fromDate, toDate))
+			.add(Restrictions.eq("productArea", productArea)).addOrder(org.hibernate.criterion.Order.asc("sent")).list();
+	    }
+
+	});
+    }
+
+    @SuppressWarnings("unchecked")
+    public final List<Order> findByConfirmWeekProductArea(final Integer year, final Integer weekFrom, final Integer weekTo,
+	    final String productAreaName) {
+	return (List<Order>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		Criteria criteria = session
+			.createCriteria(Order.class)
+			.add(Expression.sql("datepart(year,agreement_date)=?", year, Hibernate.INTEGER))
+			.add(Expression.sql("dbo.GetISOWeekNumberFromDate(agreement_date) between ? and ?", new Object[] { weekFrom, weekTo },
+				new Type[] { Hibernate.INTEGER, Hibernate.INTEGER })).addOrder(org.hibernate.criterion.Order.asc("salesman"))
+			.createCriteria("constructionType").add(Restrictions.not(Restrictions.ilike("name", "%tilleggsordre%")));
+		if (productAreaName != null) {
+		    criteria.createCriteria("productArea").add(Restrictions.eq("productArea", productAreaName));
+		}
+		return criteria.list();
+	    }
+
+	});
+    }
+
+    public final List<SaleReportSum> groupSumCountyByProductAreaConfirmPeriode(final ProductArea productArea, final Periode periode) {
+
+	List<Order> confirmedOrders = findByConfirmWeekProductArea(periode.getYear(), periode.getWeek(), periode.getToWeek(),
+		productArea.getProductArea());
+
+	Map<String, List<Order>> orderByCountyMap = arrangeOrdersByCounty(confirmedOrders);
+
+	List<SaleReportSum> saleReportSums = aggregateCountySaleReportSums(orderByCountyMap);
+
+	return saleReportSums;
+    }
+
+    public final List<SaleReportSum> sumByProductAreaConfirmPeriode(final ProductArea productArea, final Periode periode) {
+
+	List<Order> confirmedOrders = findByConfirmWeekProductArea(periode.getYear(), periode.getWeek(), periode.getToWeek(),
+		productArea.getProductArea());
+
+	SaleReportSum saleReportSum = aggregateSaleReportSumForCountyOrders(confirmedOrders, "Alle");
+
+	return Lists.newArrayList(saleReportSum);
+    }
+
+    public final List<SaleReportSum> groupSumSalesmanByProductAreaConfirmPeriode(final ProductArea productArea, final Periode periode) {
+
+	List<Order> confirmedOrders = findByConfirmWeekProductArea(periode.getYear(), periode.getWeek(), periode.getToWeek(),
+		productArea.getProductArea());
+
+	Map<String, List<Order>> orderByCountyMap = arrangeOrdersBySalesman(confirmedOrders);
+
+	List<SaleReportSum> saleReportSums = aggregateSalesmanSaleReportSums(orderByCountyMap);
+
+	return saleReportSums;
+    }
+
+    private List<SaleReportSum> aggregateCountySaleReportSums(final Map<String, List<Order>> countyOrders) {
+	List<SaleReportSum> saleReportSums = new ArrayList<SaleReportSum>();
+	if (countyOrders != null) {
+	    Set<String> countyNames = countyOrders.keySet();
+	    for (String countyName : countyNames) {
+		List<Order> orders = countyOrders.get(countyName);
+		saleReportSums.add(aggregateSaleReportSumForCountyOrders(orders, countyName));
+	    }
+	}
+	return saleReportSums;
+    }
+
+    private List<SaleReportSum> aggregateSalesmanSaleReportSums(final Map<String, List<Order>> salesmanOrders) {
+	List<SaleReportSum> saleReportSums = new ArrayList<SaleReportSum>();
+	if (salesmanOrders != null) {
+	    Set<String> salesmanNames = salesmanOrders.keySet();
+	    for (String name : salesmanNames) {
+		List<Order> orders = salesmanOrders.get(name);
+		saleReportSums.add(aggregateSaleReportSumForSalesmanOrders(orders, name));
+	    }
+	}
+	return saleReportSums;
+    }
+
+    private SaleReportSum aggregateSaleReportSumForCountyOrders(final List<Order> orders, final String countyName) {
+	SaleReportSum saleReportSum = new SaleReportSum();
+	saleReportSum.setCountyName(countyName);
+
+	for (Order order : orders) {
+	    lazyLoad(order, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_COSTS });
+	    saleReportSum.increaseCount();
+
+	    saleReportSum.addSumAssembly(order.getAssemblyCost());
+	    saleReportSum.addSumOwnProduction(order.getGarageValue());
+	    saleReportSum.addSumTransport(order.getTransportValue());
+	    saleReportSum.addSumDb(order.getContributionMargin());
+	    saleReportSum.addSumYesLines(order.getJaLinjer());
 
 	}
 
-	public SaleReportSum groupSumByProductAreaConfirmPeriode(
-			final ProductArea productArea, final Periode periode) {
-		List<Order> confirmedOrders = findByConfirmWeekProductArea(
-				periode.getYear(), periode.getWeek(), periode.getToWeek(),
-				productArea.getProductArea());
+	return saleReportSum;
+    }
 
-		SaleReportSum saleReportSum = aggregateSaleReportSumForCountyOrders(
-				confirmedOrders, "");
+    private SaleReportSum aggregateSaleReportSumForSalesmanOrders(final List<Order> orders, final String salesmanName) {
+	SaleReportSum saleReportSum = new SaleReportSum();
+	saleReportSum.setSalesman(salesmanName);
 
-		return saleReportSum;
+	for (Order order : orders) {
+	    lazyLoad(order, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_COSTS });
+	    saleReportSum.increaseCount();
+
+	    saleReportSum.addSumAssembly(order.getAssemblyCost());
+	    saleReportSum.addSumOwnProduction(order.getGarageValue());
+	    saleReportSum.addSumTransport(order.getTransportValue());
+	    saleReportSum.addSumDb(order.getContributionMargin());
+	    saleReportSum.addSumYesLines(order.getJaLinjer());
 
 	}
+
+	return saleReportSum;
+    }
+
+    private Map<String, List<Order>> arrangeOrdersByCounty(final List<Order> orders) {
+	Map<String, List<Order>> countyOrders = new Hashtable<String, List<Order>>();
+
+	if (orders != null) {
+	    for (Order order : orders) {
+		addOrderToCountyMap(countyOrders, order);
+	    }
+	}
+	return countyOrders;
+    }
+
+    private Map<String, List<Order>> arrangeOrdersBySalesman(final List<Order> orders) {
+	Map<String, List<Order>> salesmanOrders = new Hashtable<String, List<Order>>();
+
+	if (orders != null) {
+	    for (Order order : orders) {
+		addOrderToSalesmanMap(salesmanOrders, order);
+	    }
+	}
+	return salesmanOrders;
+    }
+
+    private void addOrderToCountyMap(final Map<String, List<Order>> countyOrders, final Order order) {
+	String countyName = getCountyName(order);
+	List<Order> countyOrderList = countyOrders.get(countyName);
+	if (countyOrderList == null) {
+	    countyOrderList = new ArrayList<Order>();
+	}
+	countyOrderList.add(order);
+	countyOrders.put(countyName, countyOrderList);
+    }
+
+    private void addOrderToSalesmanMap(final Map<String, List<Order>> salesmanOrders, final Order order) {
+	String salesmanName = order.getSalesman() != null ? order.getSalesman() : "";
+
+	List<Order> salesmanOrderList = salesmanOrders.get(salesmanName);
+	if (salesmanOrderList == null) {
+	    salesmanOrderList = new ArrayList<Order>();
+	}
+	salesmanOrderList.add(order);
+	salesmanOrders.put(salesmanName, salesmanOrderList);
+    }
+
+    private String getCountyName(final Order order) {
+
+	String countyName = transportCostDAO.findCountyNameByPostalCode(order.getPostalCode());
+	if (countyName == null) {
+	    countyName = "";
+	}
+	return countyName;
+    }
+
+    public final Integer countByProductAreaPeriode(final ProductArea productArea, final Periode periode) {
+	List<Order> confirmedOrders = findByConfirmWeekProductArea(periode.getYear(), periode.getWeek(), periode.getToWeek(),
+		productArea.getProductArea());
+
+	if (confirmedOrders != null) {
+	    return confirmedOrders.size();
+	}
+	return 0;
+    }
+
+    public final List<SaleReportData> getSaleReportByProductAreaPeriode(final ProductArea productArea, final Periode periode) {
+	List<Order> confirmedOrders = findByConfirmWeekProductArea(periode.getYear(), periode.getWeek(), periode.getToWeek(),
+		productArea.getProductArea());
+
+	return createSaleReportList(confirmedOrders);
+    }
+
+    private List<SaleReportData> createSaleReportList(final List<Order> orders) {
+	List<SaleReportData> saleReportDataList = new ArrayList<SaleReportData>();
+	if (orders != null) {
+	    for (Order order : orders) {
+		lazyLoad(order, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_COSTS });
+		String countyName = transportCostDAO.findCountyNameByPostalCode(order.getPostalCode());
+		saleReportDataList.add(new SaleReportData("Avrop", countyName, order.getSalesman(), order.getCustomer().getCustomerNr(), order
+			.getCustomer().getFullName(), order.getOrderNr(), order.getGarageValue(), order.getTransportValue(), order.getAssemblyCost(),
+			order.getJaLinjer(), order.getContributionMargin(), order.getContributionRate(), order.getOrderDate()));
+	    }
+	}
+	return saleReportDataList;
+    }
+
+    @SuppressWarnings("unchecked")
+    public final List<Order> findByConfirmWeekProductAreaGroup(final Integer year, final Integer weekFrom, final Integer weekTo,
+	    final ProductAreaGroup productAreaGroup) {
+	return (List<Order>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		Criteria criteria = session
+			.createCriteria(Order.class)
+			.add(Expression.sql("datepart(year,agreement_date)=?", year, Hibernate.INTEGER))
+			.add(Expression.sql("dbo.GetISOWeekNumberFromDate(agreement_date) between ? and ?", new Object[] { weekFrom, weekTo },
+				new Type[] { Hibernate.INTEGER, Hibernate.INTEGER })).addOrder(org.hibernate.criterion.Order.asc("salesman"));
+		if (productAreaGroup != null) {
+		    criteria.createCriteria("productArea").add(Restrictions.eq("productAreaGroup", productAreaGroup));
+		}
+		return criteria.list();
+	    }
+
+	});
+    }
+
+    public String saveOrder(Order order, boolean allowEmptyArticles) {
+	String errorMsg = null;
+	if (allowEmptyArticles) {
+	    getHibernateTemplate().saveOrUpdate(order);
+	} else {
+	    errorMsg = saveOrder(order);
+	}
+	return errorMsg;
+
+    }
+
+    public SaleReportSum groupSumByProductAreaConfirmPeriode(final ProductArea productArea, final Periode periode) {
+	List<Order> confirmedOrders = findByConfirmWeekProductArea(periode.getYear(), periode.getWeek(), periode.getToWeek(),
+		productArea.getProductArea());
+
+	SaleReportSum saleReportSum = aggregateSaleReportSumForCountyOrders(confirmedOrders, "");
+
+	return saleReportSum;
+
+    }
+
+    public Order merge(Order order) {
+	return (Order) getHibernateTemplate().merge(order);
+
+    }
 
 }

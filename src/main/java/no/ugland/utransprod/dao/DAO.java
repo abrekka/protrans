@@ -18,69 +18,71 @@ import no.ugland.utransprod.service.enums.LazyLoadEnum;
  */
 public interface DAO<E> {
 
-	/**
-	 * Generic method used to get all objects of a particular type. This is the
-	 * same as lookup up all rows in a table.
-	 * 
-	 * @return List of populated objects
-	 */
-	List<E> getObjects();
+    /**
+     * Generic method used to get all objects of a particular type. This is the
+     * same as lookup up all rows in a table.
+     * 
+     * @return List of populated objects
+     */
+    List<E> getObjects();
 
-	/**
-	 * Henter alle objekter med sortering
-	 * 
-	 * @param orderBy
-	 * @return objekter
-	 */
-	List<E> getObjects(String orderBy);
+    /**
+     * Henter alle objekter med sortering
+     * 
+     * @param orderBy
+     * @return objekter
+     */
+    List<E> getObjects(String orderBy);
 
-	/**
-	 * Generic method to get an object based on class and identifier. An
-	 * ObjectRetrievalFailureException Runtime Exception is thrown if nothing is
-	 * found.
-	 * 
-	 * @param objectId
-	 *            the identifier (primary key) of the class
-	 * @return a populated object
-	 */
-	E getObject(Serializable objectId);
+    /**
+     * Generic method to get an object based on class and identifier. An
+     * ObjectRetrievalFailureException Runtime Exception is thrown if nothing is
+     * found.
+     * 
+     * @param objectId
+     *            the identifier (primary key) of the class
+     * @return a populated object
+     */
+    E getObject(Serializable objectId);
 
-	/**
-	 * Generic method to save an object - handles both update and insert.
-	 * 
-	 * @param object
-	 *            the object to save
-	 */
-	void saveObject(E object);
+    /**
+     * Generic method to save an object - handles both update and insert.
+     * 
+     * @param object
+     *            the object to save
+     */
+    void saveObject(E object);
 
-	/**
-	 * Generic method to delete an object based on class and id
-	 * 
-	 * @param objectId
-	 *            the identifier (primary key) of the class
-	 */
-	void removeObject(Serializable objectId);
+    /**
+     * Generic method to delete an object based on class and id
+     * 
+     * @param objectId
+     *            the identifier (primary key) of the class
+     */
+    void removeObject(Serializable objectId);
 
-	/**
-	 * Finner objekter ved hjelp av eksempel
-	 * 
-	 * @param example
-	 * @return objekter
-	 */
-	List<E> findByExample(E example);
+    /**
+     * Finner objekter ved hjelp av eksempel
+     * 
+     * @param example
+     * @return objekter
+     */
+    List<E> findByExample(E example);
 
-	/**
-	 * finner objekter ved hjelp av eksempel og bruk av like
-	 * 
-	 * @param example
-	 * @return objekter
-	 */
-	List<E> findByExampleLike(E example);
+    /**
+     * finner objekter ved hjelp av eksempel og bruk av like
+     * 
+     * @param example
+     * @return objekter
+     */
+    List<E> findByExampleLike(E example);
 
-	void removeAll();
+    void removeAll();
 
-	void refreshObject(Object object, Serializable id);
+    void refreshObject(Object object, Serializable id);
 
-	void lazyLoad(Object object, Serializable id, LazyLoadEnum[][] enums);
+    void lazyLoad(Object object, Serializable id, LazyLoadEnum[][] enums);
+
+    E merge(E object);
 
 }

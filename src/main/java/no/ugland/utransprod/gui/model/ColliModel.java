@@ -62,7 +62,7 @@ public class ColliModel extends AbstractModel<Colli, ColliModel> {
 
     public void setHeight(String height) {
 	String oldHeight = getHeight();
-	object.setHeight(StringUtils.isEmpty(height) ? null : Integer.valueOf(height));
+	object.setHeight(StringUtils.isEmpty(height) ? null : Integer.valueOf(StringUtils.trim(height)));
 	firePropertyChange(PROPERTY_HEIGHT, oldHeight, height);
     }
 
@@ -72,7 +72,7 @@ public class ColliModel extends AbstractModel<Colli, ColliModel> {
 
     public void setWidht(String widht) {
 	String oldWidht = getWidht();
-	object.setWidht(StringUtils.isEmpty(widht) ? null : Integer.valueOf(widht));
+	object.setWidht(StringUtils.isEmpty(widht) ? null : Integer.valueOf(StringUtils.trim(widht)));
 	firePropertyChange(PROPERTY_WIDHT, oldWidht, widht);
     }
 
@@ -82,7 +82,7 @@ public class ColliModel extends AbstractModel<Colli, ColliModel> {
 
     public void setLenght(String lenght) {
 	String oldLenght = getLenght();
-	object.setLenght(StringUtils.isEmpty(lenght) ? null : Integer.valueOf(lenght));
+	object.setLenght(StringUtils.isEmpty(lenght) ? null : Integer.valueOf(StringUtils.trim(lenght)));
 	firePropertyChange(PROPERTY_LENGHT, oldLenght, lenght);
     }
 

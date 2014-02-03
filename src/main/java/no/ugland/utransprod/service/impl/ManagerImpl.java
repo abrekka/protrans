@@ -12,37 +12,42 @@ public abstract class ManagerImpl<T> implements Manager<T> {
     protected DAO<T> dao;
 
     public void setDao(DAO<T> aDao) {
-        dao = aDao;
+	dao = aDao;
     }
 
     protected abstract Serializable getObjectId(T object);
 
     public List<T> findAll() {
-        return dao.getObjects();
+	return dao.getObjects();
     }
 
     public List<T> findByObject(T object) {
-        return dao.findByExampleLike(object);
+	return dao.findByExampleLike(object);
     }
 
     public void refreshObject(T object) {
-        dao.refreshObject(object, getObjectId(object));
+	dao.refreshObject(object, getObjectId(object));
 
     }
 
     public void removeObject(T object) {
-        dao.removeObject(getObjectId(object));
+	dao.removeObject(getObjectId(object));
 
     }
 
     public void saveObject(T object) throws ProTransException {
-        dao.saveObject(object);
+	dao.saveObject(object);
+
+    }
+
+    public T merge(T object) throws ProTransException {
+	return dao.merge(object);
 
     }
 
     public void lazyLoad(T object, LazyLoadEnum[][] enums) {
-        if (object != null) {
-            dao.lazyLoad(object, getObjectId(object), enums);
-        }
+	if (object != null) {
+	    dao.lazyLoad(object, getObjectId(object), enums);
+	}
     }
 }

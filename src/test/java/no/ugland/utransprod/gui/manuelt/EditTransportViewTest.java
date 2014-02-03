@@ -48,128 +48,125 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.birosoft.liquid.LiquidLookAndFeel;
+
 @Category(ManuellTest.class)
 public class EditTransportViewTest {
-	static {
-		try {
+    static {
+	try {
 
-			UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
-			JFrame.setDefaultLookAndFeelDecorated(true);
-			LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+	    LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+    }
+
+    private DialogFixture dialogFixture;
+
+    @Mock
+    private ApplicationParamManager applicationParamManager;
+    @Mock
+    private Login login;
+    @Mock
+    private ManagerRepository managerRepository;
+    @Mock
+    private DeviationViewHandlerFactory deviationViewHandlerFactory;
+    @Mock
+    private OrderViewHandlerFactory orderViewHandlerFactory;
+    @Mock
+    private ShowTakstolInfoActionFactory showTakstolInfoActionFactory;
+    @Mock
+    private ProductAreaManager productAreaManager;
+    @Mock
+    private ArticleTypeManager articleTypeManager;
+    @Mock
+    private SupplierManager supplierManager;
+
+    @Before
+    public void setUp() throws Exception {
+	FailOnThreadViolationRepaintManager.install();
+	MockitoAnnotations.initMocks(this);
+	when(managerRepository.getProductAreaManager()).thenReturn(productAreaManager);
+	when(managerRepository.getArticleTypeManager()).thenReturn(articleTypeManager);
+	when(managerRepository.getSupplierManager()).thenReturn(supplierManager);
+
+	final UserType userType = new UserType();
+	Set<UserTypeAccess> userTypeAccesses = new HashSet<UserTypeAccess>();
+	UserTypeAccess userTypeAccess = new UserTypeAccess();
+	WindowAccess windowAccess = new WindowAccess();
+	windowAccess.setWindowName("test");
+	userTypeAccess.setWindowAccess(windowAccess);
+	userTypeAccesses.add(userTypeAccess);
+	userType.setUserTypeAccesses(userTypeAccesses);
+	when(login.getUserType()).thenReturn(userType);
+	ApplicationParamUtil.setApplicationParamManger(applicationParamManager);
+
+	final UserTypeManager userTypeManager = new UserTypeManagerTest();
+	UserUtil.setUserTypeManagerForTest(userTypeManager);
+
+	JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
+	    protected JDialog executeInEDT() {
+		Transport transport = new Transport();
+		TransportViewHandler transportViewHandler = new TransportViewHandler(orderViewHandlerFactory, login, managerRepository,
+			deviationViewHandlerFactory, showTakstolInfoActionFactory, new VismaFileCreatorImpl(null, true));
+
+		final EditTransportView editTransportView = new EditTransportView(transportViewHandler, transport, false);
+
+		JDialog dialog = new JDialog();
+		WindowInterface window = new JDialogAdapter(dialog);
+		dialog.add(editTransportView.buildPanel(window));
+		dialog.pack();
+		return dialog;
+	    }
+	});
+	dialogFixture = new DialogFixture(dialog);
+	dialogFixture.show();
+
+    }
+
+    @After
+    public void tearDown() throws Exception {
+	dialogFixture.cleanUp();
+    }
+
+    @Test
+    public void testOpenDialog() {
+	dialogFixture.requireVisible();
+
+	dialogFixture.textBox("TextAreaComment").requireVisible();
+    }
+
+    private class UserTypeManagerTest implements UserTypeManager {
+
+	public int getNumberOfUsers(UserType userType) {
+	    return 0;
 	}
 
-	private DialogFixture dialogFixture;
-
-	@Mock
-	private ApplicationParamManager applicationParamManager;
-	@Mock
-	private Login login;
-	@Mock
-	private ManagerRepository managerRepository;
-	@Mock
-	private DeviationViewHandlerFactory deviationViewHandlerFactory;
-	@Mock
-	private OrderViewHandlerFactory orderViewHandlerFactory;
-	@Mock
-	private ShowTakstolInfoActionFactory showTakstolInfoActionFactory;
-	@Mock
-	private ProductAreaManager productAreaManager;
-	@Mock
-	private ArticleTypeManager articleTypeManager;
-	@Mock
-	private SupplierManager supplierManager;
-
-	@Before
-	public void setUp() throws Exception {
-		FailOnThreadViolationRepaintManager.install();
-		MockitoAnnotations.initMocks(this);
-		when(managerRepository.getProductAreaManager()).thenReturn(
-				productAreaManager);
-		when(managerRepository.getArticleTypeManager()).thenReturn(
-				articleTypeManager);
-		when(managerRepository.getSupplierManager())
-				.thenReturn(supplierManager);
-
-		final UserType userType = new UserType();
-		Set<UserTypeAccess> userTypeAccesses = new HashSet<UserTypeAccess>();
-		UserTypeAccess userTypeAccess = new UserTypeAccess();
-		WindowAccess windowAccess = new WindowAccess();
-		windowAccess.setWindowName("test");
-		userTypeAccess.setWindowAccess(windowAccess);
-		userTypeAccesses.add(userTypeAccess);
-		userType.setUserTypeAccesses(userTypeAccesses);
-		when(login.getUserType()).thenReturn(userType);
-		ApplicationParamUtil.setApplicationParamManger(applicationParamManager);
-
-		
-		final UserTypeManager userTypeManager = new UserTypeManagerTest();
-		UserUtil.setUserTypeManagerForTest(userTypeManager);
-
-		
-		JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
-			protected JDialog executeInEDT() {
-				Transport transport = new Transport();
-				TransportViewHandler transportViewHandler = new TransportViewHandler(
-						orderViewHandlerFactory, login, managerRepository,
-						deviationViewHandlerFactory, showTakstolInfoActionFactory,
-						new VismaFileCreatorImpl(null, true));
-
-				final EditTransportView editTransportView = new EditTransportView(
-						transportViewHandler, transport, false);
-
-				JDialog dialog = new JDialog();
-				WindowInterface window = new JDialogAdapter(dialog);
-				dialog.add(editTransportView.buildPanel(window));
-				dialog.pack();
-				return dialog;
-			}
-		});
-		dialogFixture = new DialogFixture(dialog);
-		dialogFixture.show();
-
+	public List<UserType> findAll() {
+	    return null;
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		dialogFixture.cleanUp();
+	public List<UserType> findByObject(UserType object) {
+	    return null;
 	}
 
-	@Test
-	public void testOpenDialog() {
-		dialogFixture.requireVisible();
-
-		dialogFixture.textBox("TextAreaComment").requireVisible();
+	public void refreshObject(UserType object) {
 	}
 
-	private class UserTypeManagerTest implements UserTypeManager {
-
-		public int getNumberOfUsers(UserType userType) {
-			return 0;
-		}
-
-		public List<UserType> findAll() {
-			return null;
-		}
-
-		public List<UserType> findByObject(UserType object) {
-			return null;
-		}
-
-		public void refreshObject(UserType object) {
-		}
-
-		public void removeObject(UserType object) {
-		}
-
-		public void saveObject(UserType object) throws ProTransException {
-		}
-
-		public void lazyLoad(UserType object, LazyLoadEnum[][] enums) {
-		}
-
+	public void removeObject(UserType object) {
 	}
+
+	public void saveObject(UserType object) throws ProTransException {
+	}
+
+	public void lazyLoad(UserType object, LazyLoadEnum[][] enums) {
+	}
+
+	public UserType merge(UserType object) {
+	    return null;
+	}
+
+    }
 }

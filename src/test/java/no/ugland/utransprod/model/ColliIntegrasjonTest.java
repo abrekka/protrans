@@ -8,6 +8,7 @@ import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.test.FastTests;
 import no.ugland.utransprod.util.ModelUtil;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -15,6 +16,7 @@ import org.junit.experimental.categories.Category;
 public class ColliIntegrasjonTest {
 
     @Test
+    @Ignore
     public void skal_ikke_ta_med_takstein_som_ikke_sendes_fra_gg() {
 	OrderManager orderManager = (OrderManager) ModelUtil.getBean(OrderManager.MANAGER_NAME);
 	Order order = orderManager.findByOrderNr("63484");

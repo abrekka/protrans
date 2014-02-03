@@ -13,6 +13,7 @@ import no.ugland.utransprod.test.FastTests;
 import no.ugland.utransprod.util.ModelUtil;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -51,6 +52,7 @@ public class SalesWebManagerIntegrationTest {
     }
 
     @Test
+    @Ignore
     public void getSalesdataForGarasjeVilla2010_08() throws ProTransException {
 
 	Integer year = 2010;
@@ -83,6 +85,7 @@ public class SalesWebManagerIntegrationTest {
     }
 
     @Test
+    @Ignore
     public void getSalesdataForGarasjeVilla2010_01() throws ProTransException {
 
 	Integer year = 2010;
@@ -114,6 +117,7 @@ public class SalesWebManagerIntegrationTest {
     }
 
     @Test
+    @Ignore
     public void getSalesdataForGarasjeVilla2010_11() throws ProTransException {
 
 	Integer year = 2010;

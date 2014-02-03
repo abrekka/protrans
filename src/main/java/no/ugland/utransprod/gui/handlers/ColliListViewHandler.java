@@ -236,8 +236,10 @@ public class ColliListViewHandler implements ColliListener, Updateable, ColliVie
 	if (!refreshing) {
 	    OverviewManager overviewManager = (OverviewManager) ModelUtil.getBean(packable.getManagerName());
 	    if (!defaultColliesGenerated()) {
+		overviewManager.refreshObject(packable);
 		packable.setDefaultColliesGenerated(1);
 		overviewManager.saveObject(packable);
+		// packable = (Packable) overviewManager.merge(packable);
 		List<Colli> collies = packable.getColliList();
 		List<OrderLine> orderLines = packable.getOrderLineList();
 		Colli tmpColli;
@@ -336,6 +338,8 @@ public class ColliListViewHandler implements ColliListener, Updateable, ColliVie
 					colliViewHandler.addColliSelectionListener(this);
 					addColliListener(colliViewHandler);
 				    }
+				    fireOrderLineRemoved(null);
+				    fireListChanged();
 				} catch (ProTransException e) {
 				    Util.showErrorDialog(window, "Feil", e.getMessage());
 				    e.printStackTrace();
