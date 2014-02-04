@@ -23,56 +23,56 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import com.birosoft.liquid.LiquidLookAndFeel;
+
 @Category(GUITests.class)
 public class OrdlnViewTest {
-	static {
-		try {
+    static {
+	try {
 
-			UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
-			JFrame.setDefaultLookAndFeelDecorated(true);
-			LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+	    LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
+    }
 
-	private DialogFixture dialogFixture;
+    private DialogFixture dialogFixture;
 
-	@Before
-	public void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
 
-		OrdlnViewHandler ordlnViewHandler = new OrdlnViewHandler("11");
-		final OrdlnView ordlnView = new OrdlnView(ordlnViewHandler);
+	OrdlnViewHandler ordlnViewHandler = new OrdlnViewHandler("11");
+	final OrdlnView ordlnView = new OrdlnView(ordlnViewHandler);
 
-		JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
-			protected JDialog executeInEDT() {
-				JDialog dialog = new JDialog();
-				WindowInterface window = new JDialogAdapter(dialog);
-				dialog.add(ordlnView.buildPanel(window));
-				dialog.pack();
-				return dialog;
-			}
-		});
-		dialogFixture = new DialogFixture(dialog);
-		dialogFixture.show();
+	JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
+	    protected JDialog executeInEDT() {
+		JDialog dialog = new JDialog();
+		WindowInterface window = new JDialogAdapter(dialog);
+		dialog.add(ordlnView.buildPanel(window));
+		dialog.pack();
+		return dialog;
+	    }
+	});
+	dialogFixture = new DialogFixture(dialog);
+	dialogFixture.show();
 
-	}
+    }
 
-	@After
-	public void tearDown() throws Exception {
-		dialogFixture.cleanUp();
-	}
+    @After
+    public void tearDown() throws Exception {
+	dialogFixture.cleanUp();
+    }
 
-	@Test
-	public void testOpenWindow() throws Exception {
-		dialogFixture.requireVisible();
+    @Test
+    public void testOpenWindow() throws Exception {
+	dialogFixture.requireVisible();
 
-		assertEquals(12, ((JXTable) dialogFixture.table("TableOrdln").target)
-				.getRowCount());
+	assertEquals(13, ((JXTable) dialogFixture.table("TableOrdln").target).getRowCount());
 
-		dialogFixture.button("ButtonCancelOrdlnView");
+	dialogFixture.button("ButtonCancelOrdlnView");
 
-	}
+    }
 
 }

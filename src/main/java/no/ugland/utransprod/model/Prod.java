@@ -31,7 +31,7 @@ public class Prod extends BaseObject {
     }
 
     public final Integer getPrCatNo() {
-	return prCatNo2 != null && prCatNo2.equals(3) ? null : prCatNo;
+	return prCatNo;
     }
 
     public final void setPrCatNo(final Integer aPrCatNo) {

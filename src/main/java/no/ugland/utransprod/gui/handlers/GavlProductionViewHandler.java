@@ -110,23 +110,20 @@ public class GavlProductionViewHandler extends ProductionViewHandler {
 		return gavlProductionV;
 	    }
 	},
-	// PROD_DATO("Prod.dato") {
-	// @SuppressWarnings("unchecked")
-	// @Override
-	// public Class getColumnClass() {
-	// return String.class;
-	// }
-	//
-	// @Override
-	// public Object getValue(GavlProductionV gavlProductionV,
-	// StatusCheckerInterface<Transportable> takstolChecker,
-	// Map<String, String> statusMap, WindowInterface window,
-	// ManagerRepository managerRepository,
-	// ApplyListInterface<Produceable> applyListInterface) {
-	// return Util.formatDate(gavlProductionV.getProductionDate(),
-	// Util.SHORT_DATE_TIME_FORMAT);
-	// }
-	// },
+	PROD_DATO("Prod.dato") {
+	    @SuppressWarnings("unchecked")
+	    @Override
+	    public Class getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public Object getValue(GavlProductionV gavlProductionV, StatusCheckerInterface<Transportable> takstolChecker,
+		    Map<String, String> statusMap, WindowInterface window, ManagerRepository managerRepository,
+		    ApplyListInterface<Produceable> applyListInterface) {
+		return Util.formatDate(gavlProductionV.getProductionDate(), Util.SHORT_DATE_TIME_FORMAT);
+	    }
+	},
 	ANTALL("Antall") {
 	    @Override
 	    public Class getColumnClass() {
@@ -379,7 +376,7 @@ public class GavlProductionViewHandler extends ProductionViewHandler {
      */
     @Override
     protected int getProductAreaColumn() {
-	return 7;
+	return 8;
     }
 
     /**
@@ -387,7 +384,7 @@ public class GavlProductionViewHandler extends ProductionViewHandler {
      */
     @Override
     protected Integer getStartColumn() {
-	return 9;
+	return 10;
     }
 
     @Override
@@ -428,11 +425,11 @@ public class GavlProductionViewHandler extends ProductionViewHandler {
 	    filterList.add(filterApplied);
 	}
 	if (!checkBoxFilterStandard.isSelected()) {
-	    Filter filterStandard = new PatternFilter("nei", Pattern.CASE_INSENSITIVE, 10);
+	    Filter filterStandard = new PatternFilter("nei", Pattern.CASE_INSENSITIVE, 11);
 	    filterList.add(filterStandard);
 	}
 	if (!checkBoxFilterOwn.isSelected()) {
-	    Filter filterStandard = new PatternFilter("ja", Pattern.CASE_INSENSITIVE, 10);
+	    Filter filterStandard = new PatternFilter("ja", Pattern.CASE_INSENSITIVE, 11);
 	    filterList.add(filterStandard);
 	}
 	if (group != null) {
@@ -471,22 +468,21 @@ public class GavlProductionViewHandler extends ProductionViewHandler {
 	// Ordre
 	table.getColumnExt(table.getModel().getColumnName(1)).setPreferredWidth(200);
 	// Prod.dato
-	// table.getColumnExt(table.getModel().getColumnName(2))
-	// .setPreferredWidth(70);
+	table.getColumnExt(table.getModel().getColumnName(2)).setPreferredWidth(70);
 
 	// Antall
-	table.getColumnExt(table.getModel().getColumnName(2)).setPreferredWidth(50);
+	table.getColumnExt(table.getModel().getColumnName(3)).setPreferredWidth(50);
 
 	// Spesifikasjon
-	table.getColumnExt(table.getModel().getColumnName(3)).setPreferredWidth(400);
+	table.getColumnExt(table.getModel().getColumnName(4)).setPreferredWidth(400);
 
 	// Produsert
-	table.getColumnExt(table.getModel().getColumnName(6)).setPreferredWidth(110);
+	table.getColumnExt(table.getModel().getColumnName(7)).setPreferredWidth(110);
 
 	// Startet
-	table.getColumnExt(table.getModel().getColumnName(9)).setPreferredWidth(110);
+	table.getColumnExt(table.getModel().getColumnName(10)).setPreferredWidth(110);
 	// kalkulert tidsforbruk
-	table.getColumnExt(table.getModel().getColumnName(11)).setPreferredWidth(120);
+	table.getColumnExt(table.getModel().getColumnName(12)).setPreferredWidth(120);
 
     }
 

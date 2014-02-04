@@ -525,7 +525,12 @@ public class IncomingOrderManagerImpl extends ManagerImpl<Order> implements Inco
     private ArticleType getArticleTypeByProdCatNo(Ordln ordln) {
 	ArticleType articleType = ArticleType.UNKNOWN;
 	if (ordln.getProd() != null) {
-	    articleType = articleTypeDAO.findByProdCatNoAndProdCatNo2(ordln.getProd().getPrCatNo(), ordln.getProd().getPrCatNo2());
+	    if (ordln.getProd().getPrCatNo2() != null && ordln.getProd().getPrCatNo2().equals(3)) {// dersom
+												   // kledning
+		articleType = articleTypeDAO.findByProdCatNoAndProdCatNo2(null, ordln.getProd().getPrCatNo2());
+	    } else {
+		articleType = articleTypeDAO.findByProdCatNoAndProdCatNo2(ordln.getProd().getPrCatNo(), ordln.getProd().getPrCatNo2());
+	    }
 	}
 	return articleType;
     }

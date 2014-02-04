@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -29,6 +30,7 @@ import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
+import com.toedter.calendar.JDateChooser;
 
 /**
  * Brukes for å vise dialog med valg.
@@ -58,11 +60,13 @@ public class OptionsPaneView implements Closeable {
 
     boolean comboBox = false;
 
-    String inputLabelText;
+    private String inputLabelText;
+    private String inputLabelDate;
     private String defaultValue;
 
     private JTextField textFieldInput;
 
+    private JDateChooser dateChooser;
     private boolean onlyOkButton;
 
     /**
@@ -75,12 +79,13 @@ public class OptionsPaneView implements Closeable {
      * @param useOnlyOkButton
      */
     public OptionsPaneView(final Collection<?> objects, final boolean useOkButton, final boolean checkBoxAll, final boolean useComboBox,
-	    final Object defaultObject, final String aInputLabelText, final boolean useOnlyOkButton, final String defaultValue) {
+	    final Object defaultObject, final String aInputLabelText, final boolean useOnlyOkButton, final String defaultValue, String inputLabelDate) {
 	this.defaultValue = defaultValue;
+	this.inputLabelDate = inputLabelDate;
 	onlyOkButton = useOnlyOkButton;
 	inputLabelText = aInputLabelText;
 	comboBox = useComboBox;
-	if (inputLabelText == null) {
+	if (inputLabelText == null && inputLabelDate == null) {
 	    createObjectList(objects, defaultObject);
 	}
 	okButton = useOkButton;
@@ -108,7 +113,11 @@ public class OptionsPaneView implements Closeable {
 	    if (defaultValue != null) {
 		textFieldInput.setText(defaultValue);
 	    }
-	} else {
+	} else if (inputLabelDate != null) {
+	    dateChooser = new JDateChooser();
+	}
+
+	else {
 	    if (comboBox) {
 		comboBoxOptions = new JComboBox(new ComboBoxAdapter(objectSelectionList));
 		comboBoxOptions.setName("ComboBoxOptions");
@@ -140,6 +149,9 @@ public class OptionsPaneView implements Closeable {
 	if (inputLabelText != null) {
 	    builder.addLabel(inputLabelText, cc.xy(2, 2));
 	    builder.add(textFieldInput, cc.xy(2, 4));
+	} else if (inputLabelDate != null) {
+	    builder.addLabel(inputLabelDate, cc.xy(2, 2));
+	    builder.add(dateChooser, cc.xy(2, 4));
 	} else {
 	    if (useCheckBox) {
 		builder.add(checkBoxSelectAll, cc.xy(2, 2));
@@ -195,7 +207,7 @@ public class OptionsPaneView implements Closeable {
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public final void actionPerformed(final ActionEvent arg0) {
-	    if (!comboBox && inputLabelText == null) {
+	    if (!comboBox && inputLabelText == null && inputLabelDate == null) {
 		Object[] selection = listOptions.getSelectedValues();
 		if (selection.length != 0) {
 
@@ -223,6 +235,10 @@ public class OptionsPaneView implements Closeable {
      */
     public final String getInputText() {
 	return textFieldInput.getText();
+    }
+
+    public final Date getInputDate() {
+	return dateChooser.getDate();
     }
 
     /**

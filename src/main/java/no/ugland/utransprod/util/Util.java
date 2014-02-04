@@ -630,28 +630,34 @@ public final class Util {
     }
 
     public static String showInputDialog(final WindowInterface window, final String heading, final String labelText) {
-	OptionsPaneView optionsPaneView = new OptionsPaneView(null, true, false, false, null, labelText, true, null);
+	OptionsPaneView optionsPaneView = new OptionsPaneView(null, true, false, false, null, labelText, true, null, null);
 	showOptionsPane(window, heading, optionsPaneView);
 	return optionsPaneView.getInputText();
     }
 
+    public static Date showInputDialogDate(final WindowInterface window, final String heading, final String labelText) {
+	OptionsPaneView optionsPaneView = new OptionsPaneView(null, true, false, false, null, null, true, null, labelText);
+	showOptionsPane(window, heading, optionsPaneView);
+	return optionsPaneView.getInputDate();
+    }
+
     public static String showInputDialogWithdefaultValue(final WindowInterface window, final String heading, final String labelText,
 	    final String defaultValue) {
-	OptionsPaneView optionsPaneView = new OptionsPaneView(null, true, false, false, null, labelText, true, defaultValue);
+	OptionsPaneView optionsPaneView = new OptionsPaneView(null, true, false, false, null, labelText, true, defaultValue, null);
 	showOptionsPane(window, heading, optionsPaneView);
 	return optionsPaneView.getInputText();
     }
 
     public static Collection<?> showOptionsDialog(final WindowInterface window, final Collection<?> objects, final String heading,
 	    final boolean useOkButton, final boolean checkBoxAll) {
-	OptionsPaneView optionsPaneView = new OptionsPaneView(objects, useOkButton, checkBoxAll, false, null, null, false, null);
+	OptionsPaneView optionsPaneView = new OptionsPaneView(objects, useOkButton, checkBoxAll, false, null, null, false, null, null);
 	showOptionsPane(window, heading, optionsPaneView);
 	return optionsPaneView.getSelectedObjects();
     }
 
     public static Object showOptionsDialogCombo(final WindowInterface window, final Collection<?> objects, final String heading,
 	    final boolean useOkButton, final Object defaultObject) {
-	OptionsPaneView optionsPaneView = new OptionsPaneView(objects, useOkButton, false, true, defaultObject, null, false, null);
+	OptionsPaneView optionsPaneView = new OptionsPaneView(objects, useOkButton, false, true, defaultObject, null, false, null, null);
 	showOptionsPane(window, heading, optionsPaneView);
 	return optionsPaneView.getSelectedObject();
     }

@@ -11,6 +11,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -99,29 +100,18 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Statussjekkere
-     */
     Map<String, StatusCheckerInterface<Transportable>> statusCheckers;
 
-    /**
-     * Hjelpeklasse for å viseordre
-     */
     OrderViewHandler orderViewHandler;
 
-    /**
-     * Høyreklikkmeny i tabell for produksjonsoversikt
-     */
     JPopupMenu popupMenuProduction;
 
-    /**
-     * Meny for å sette pakliste klar/ikke klar
-     */
     JMenuItem menuItemPacklist;
 
     JMenuItem menuItemVegg;
 
     JMenuItem menuItemOpenOrder;
+    private JMenuItem menuItemSetProductionDate;
 
     JMenuItem menuItemShowMissing;
 
@@ -144,12 +134,8 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 
     JMenuItem menuItemSetProcent;
 
-    // ApplicationUser applicationUser;
     private Login login;
 
-    /**
-     * Tabellmodell for produksjonsoversikttabell
-     */
     private TableModel productionOverviewTableModel;
 
     @SuppressWarnings("unchecked")
@@ -211,6 +197,9 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	menuItemOpenOrder = new JMenuItem("Se ordre...");
 	menuItemOpenOrder.setName("MenuItemOpenOrder");
 	popupMenuProduction.add(menuItemOpenOrder);
+	menuItemSetProductionDate = new JMenuItem("Sett produksjonsdato...");
+	menuItemSetProductionDate.setName("MenuItemSetProductionDate");
+	popupMenuProduction.add(menuItemSetProductionDate);
 
 	menuItemPacklist = new JMenuItem("Sett pakkliste klar...");
 	menuItemPacklist.setName("MenuItemPacklist");
@@ -274,9 +263,6 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	menuItemMap.put(ProductionColumn.TAKSTOL.getColumnName() + "ProduksjonEnhet", menuItemProductionUnitTakstol);
     }
 
-    /**
-     * Initierer liste med produktområdegrupper
-     */
     private void initProductAreaGroup() {
 	productAreaGroupModel = new PresentationModel(new ProductAreaGroupModel(ProductAreaGroup.UNKNOWN));
 	productAreaGroupModel.addBeanPropertyChangeListener(new FilterPropertyChangeListener());
@@ -288,126 +274,61 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	}
     }
 
-    /**
-     * Gjør ingenting
-     * 
-     * @param object
-     * @return null
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#checkDeleteObject(java.lang.Object)
-     */
     @Override
     public CheckObject checkDeleteObject(Order object) {
 	return null;
     }
 
-    /**
-     * Gjør ingenting
-     * 
-     * @param object
-     * @param presentationModel
-     * @param window
-     * @return null
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#checkSaveObject(java.lang.Object,
-     *      com.jgoodies.binding.PresentationModel,
-     *      no.ugland.utransprod.gui.WindowInterface)
-     */
     @Override
     public CheckObject checkSaveObject(OrderModel object, PresentationModel presentationModel, WindowInterface window) {
 	return null;
     }
 
-    /**
-     * Gjør ingenting
-     * 
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getAddRemoveString()
-     */
     @Override
     public String getAddRemoveString() {
 	return null;
     }
 
-    /**
-     * Gjør ingenting
-     * 
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getClassName()
-     */
     @Override
     public String getClassName() {
 	return null;
     }
 
-    /**
-     * Gjør ingenting
-     * 
-     * @param handler
-     * @param object
-     * @param searching
-     * @return null
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getEditView(no.ugland.utransprod.gui.handlers.AbstractViewHandler,
-     *      java.lang.Object, boolean)
-     */
     @Override
     protected AbstractEditView<OrderModel, Order> getEditView(AbstractViewHandler<Order, OrderModel> handler, Order object, boolean searching) {
 	return null;
     }
 
-    /**
-     * Gjør ingenting
-     * 
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getNewObject()
-     */
     @Override
     public Order getNewObject() {
 	return null;
     }
 
-    /**
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getTableModel(no.ugland.utransprod.gui.WindowInterface)
-     */
     @Override
     public TableModel getTableModel(WindowInterface window) {
 	return productionOverviewTableModel;
     }
 
-    /**
-     * Gjør ingenting
-     * 
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getTableWidth()
-     */
     @Override
     public String getTableWidth() {
 	return null;
     }
 
-    /**
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getTitle()
-     */
     @Override
     public String getTitle() {
 	return "Produksjonsoversikt";
     }
 
-    /**
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getWindowSize()
-     */
     @Override
     public Dimension getWindowSize() {
 	return new Dimension(930, 600);
     }
 
-    /**
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#hasWriteAccess()
-     */
     @Override
     public Boolean hasWriteAccess() {
 	return UserUtil.hasWriteAccess(userType, "Produksjonsoversikt");
     }
 
-    /**
-     * Gjør ingenting
-     * 
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#setColumnWidth(org.jdesktop.swingx.JXTable)
-     */
     @Override
     public void setColumnWidth(JXTable table) {
     }
@@ -451,33 +372,25 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		return true;
 	    }
 	},
-	// PROD_DATO("Prod.dato") {
-	// @Override
-	// public Class<?> getColumnClass() {
-	// return String.class;
-	// }
-	//
-	// @Override
-	// public Object getValue(
-	// Transportable transportable,
-	// Map<String, String> statusMap,
-	// Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-	// return Util.formatDate(transportable.getProductionDate(),
-	// Util.SHORT_DATE_FORMAT);
-	// }
-	//
-	// @SuppressWarnings("unchecked")
-	// @Override
-	// public boolean setMenus(
-	// Transportable transportable,
-	// Map<String, JMenuItem> menuItemMap,
-	// WindowInterface window,
-	// Map<String, AbstractProductionPackageViewHandler>
-	// productionPackageHandlers,
-	// JPopupMenu popupMenuProduction) {
-	// return true;
-	// }
-	// },
+	PROD_DATO("Prod.dato") {
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return Util.formatDate(transportable.getProductionDate(), Util.SHORT_DATE_FORMAT);
+	    }
+
+	    @SuppressWarnings("unchecked")
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		return true;
+	    }
+	},
 	PAKKLISTE("Pakkliste") {
 	    @Override
 	    public Class<?> getColumnClass() {
@@ -867,49 +780,17 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction);
     }
 
-    /**
-     * Tabellmodell
-     * 
-     * @author atle.brekka
-     */
     public final class ProductionOverviewTableModel extends AbstractTableAdapter {
 
-	/**
-         * 
-         */
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * @param listModel
-	 */
 	ProductionOverviewTableModel(ListModel listModel) {
-	    /*
-	     * super(listModel, new String[] { "Ordre", "Transport",
-	     * "Prod.dato", "Pakkliste", "Vegg", "Front", "Gavl", "Takstol",
-	     * "Takstein", "Gulvspon", "Komplett", "Klar", "Montering",
-	     * "Produktområde", "Rest", "%" });
-	     */
 	    super(listModel, ProductionColumn.getColumnNames());
 
 	}
 
-	/**
-	 * Henter objekt for gjeldende indeks
-	 * 
-	 * @param rowIndex
-	 * @return objekt
-	 */
 	public Transportable getTransportable(int rowIndex) {
 	    return (Transportable) getRow(rowIndex);
 	}
 
-	/**
-	 * Henter verdi
-	 * 
-	 * @param rowIndex
-	 * @param columnIndex
-	 * @return verdi
-	 */
 	public Object getValueAt(int rowIndex, int columnIndex) {
 	    Transportable transportable = (Transportable) getRow(rowIndex);
 
@@ -920,9 +801,6 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 
 	}
 
-	/**
-	 * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
-	 */
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 	    String columnName = StringUtils.upperCase(getColumnName(columnIndex)).replaceAll(" ", "_").replaceAll("\\.", "_")
@@ -930,25 +808,12 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	    return ProductionColumn.valueOf(columnName).getColumnClass();
 	}
 
-	/**
-	 * Henter objekt for gjeldende rad
-	 * 
-	 * @param rowIndex
-	 * @return objekt
-	 */
 	public Transportable getObjectAtRow(int rowIndex) {
 	    return (Transportable) getRow(rowIndex);
 	}
 
     }
 
-    /**
-     * Casher kommentar
-     * 
-     * @param transportable
-     * @param window
-     * @param load
-     */
     void cacheComment(Transportable transportable, WindowInterface window, boolean load) {
 	if (transportable instanceof Order) {
 	    if (load) {
@@ -966,12 +831,6 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	}
     }
 
-    /**
-     * Initierer statuser
-     * 
-     * @param transportable
-     * @param window
-     */
     void initTransportable(Transportable transportable, WindowInterface window) {
 	PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil.getBean("postShipmentManager");
 	CustTrManager custTrManager = (CustTrManager) ModelUtil.getBean("custTrManager");
@@ -1035,12 +894,6 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 
     }
 
-    /**
-     * Initierer objekter med status
-     * 
-     * @param transportables
-     * @param window
-     */
     private void initOrders(List<Transportable> transportables, WindowInterface window) {
 	if (transportables != null) {
 
@@ -1050,9 +903,6 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	}
     }
 
-    /**
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#initObjects()
-     */
     @SuppressWarnings("unchecked")
     @Override
     protected void initObjects() {
@@ -1082,12 +932,6 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	}
     }
 
-    /**
-     * Lager oppdateringsknapp
-     * 
-     * @param window
-     * @return knapp
-     */
     public JButton getButtonRefresh(WindowInterface window) {
 	JButton button = new RefreshButton(this, window);
 	button.setName("ButtonRefresh");
@@ -1095,23 +939,12 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	return button;
     }
 
-    /**
-     * LAger søkeknapp
-     * 
-     * @param window
-     * @return knapp
-     */
     public JButton getButtonSearch(WindowInterface window) {
 	JButton button = new JButton(new SearchAction(window));
 	button.setName("SearchOrder");
 	return button;
     }
 
-    /**
-     * Lager sjekkboks for filtrering av ferdige
-     * 
-     * @return sjekkboks
-     */
     public JCheckBox getCheckBoxFilter() {
 	checkBoxFilter = new JCheckBox("Vis ferdige");
 	checkBoxFilter.setSelected(true);
@@ -1120,26 +953,18 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	return checkBoxFilter;
     }
 
-    /**
-     * Lager komboboks for prosuktområdegrupper
-     * 
-     * @return komboboks
-     */
     public JComboBox getComboBoxProductAreaGroup() {
 	return Util.getComboBoxProductAreaGroup(login.getApplicationUser(), userType, productAreaGroupModel);
     }
 
-    /**
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getTable(no.ugland.utransprod.gui.WindowInterface)
-     */
     @SuppressWarnings("unchecked")
     @Override
     public JXTable getTable(WindowInterface window) {
 	initObjects();
 	initOrders(objectList, window);
 
-	ColorHighlighter readyHighlighter = new ColorHighlighter(new PatternPredicate("Ja", 9), ColorEnum.GREEN.getColor(), null);
-	ColorHighlighter startedPackingHighlighter = new ColorHighlighter(new PatternPredicate("Ja", 10), ColorEnum.YELLOW.getColor(), null);
+	ColorHighlighter readyHighlighter = new ColorHighlighter(new PatternPredicate("Ja", 10), ColorEnum.GREEN.getColor(), null);
+	ColorHighlighter startedPackingHighlighter = new ColorHighlighter(new PatternPredicate("Ja", 11), ColorEnum.YELLOW.getColor(), null);
 
 	table = new JXTable();
 	productionOverviewTableModel = new ProductionOverviewTableModel(objectList);
@@ -1164,31 +989,31 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	// transport
 	table.getColumnExt(1).setPreferredWidth(150);
 	// prod.dato
-	// table.getColumnExt(2).setPreferredWidth(70);
+	table.getColumnExt(2).setPreferredWidth(70);
 	// pakkliste
-	table.getColumnExt(2).setPreferredWidth(80);
+	table.getColumnExt(3).setPreferredWidth(80);
 
 	// vegg
-	table.getColumnExt(3).setPreferredWidth(45);
-	// front
 	table.getColumnExt(4).setPreferredWidth(45);
-	// gavl
+	// front
 	table.getColumnExt(5).setPreferredWidth(45);
+	// gavl
+	table.getColumnExt(6).setPreferredWidth(45);
 	// takstol
-	table.getColumnExt(6).setPreferredWidth(60);
-	// //takstein
 	table.getColumnExt(7).setPreferredWidth(60);
+	// //takstein
+	table.getColumnExt(8).setPreferredWidth(60);
 	// gulvspon
-	table.getColumnExt(8).setPreferredWidth(70);
+	table.getColumnExt(9).setPreferredWidth(70);
 	// montering
-	table.getColumnExt(9).setPreferredWidth(50);
+	table.getColumnExt(10).setPreferredWidth(50);
 	// rest
-	table.getColumnExt(13).setPreferredWidth(50);
+	table.getColumnExt(14).setPreferredWidth(50);
 	// %
-	table.getColumnExt(14).setPreferredWidth(40);
+	table.getColumnExt(15).setPreferredWidth(40);
 
-	table.getColumnModel().getColumn(13).setCellRenderer(new TextPaneRendererCustTr());
-	table.getColumnModel().getColumn(14).setCellRenderer(new TextPaneRendererProcentDone());
+	table.getColumnModel().getColumn(14).setCellRenderer(new TextPaneRendererCustTr());
+	table.getColumnModel().getColumn(15).setCellRenderer(new TextPaneRendererProcentDone());
 
 	/*
 	 * table.getColumnExt(10).setVisible(false);
@@ -1214,6 +1039,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	menuItemTakstein.addActionListener(new ProductionMenuItemListener(window, "Takstein", "Sett takstein pakket"));
 	menuItemGulvspon.addActionListener(new ProductionMenuItemListener(window, "Gulvspon", "Sett gulvspon pakket"));
 	menuItemOpenOrder.addActionListener(new MenuItemListenerOpenOrder(window));
+	menuItemSetProductionDate.addActionListener(new MenuItemListenerSetProductionDate(window));
 	menuItemShowMissing.addActionListener(new MenuItemListenerShowMissing(window));
 	menuItemShowContent.addActionListener(new MenuItemListenerShowContent(window));
 	menuItemDeviation.addActionListener(new MenuItemListenerDeviation(window));
@@ -1387,6 +1213,28 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	    Transportable transportable = getSelectedObject();
 	    if (transportable != null) {
 		openOrderView(transportable.getOrder(), window);
+	    }
+	}
+
+    }
+
+    private class MenuItemListenerSetProductionDate implements ActionListener {
+	private WindowInterface window;
+
+	public MenuItemListenerSetProductionDate(WindowInterface aWindow) {
+	    window = aWindow;
+	}
+
+	public void actionPerformed(ActionEvent actionEvent) {
+
+	    Transportable transportable = getSelectedObject();
+	    if (transportable != null) {
+		Date newProductionDate = Util.showInputDialogDate(window, "Produksjonsdato", "Produksjonsdato");
+		if (newProductionDate != null) {
+		    Order order = transportable.getOrder();
+		    order.setProductionDate(newProductionDate);
+		    ((OrderManager) overviewManager).saveOrder(order);
+		}
 	    }
 	}
 
@@ -1659,14 +1507,14 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	List<Filter> filterList = new ArrayList<Filter>();
 
 	if (!checkBoxFilter.isSelected()) {
-	    PatternFilter filterDone = new PatternFilter("Nei", Pattern.CASE_INSENSITIVE, 9);
+	    PatternFilter filterDone = new PatternFilter("Nei", Pattern.CASE_INSENSITIVE, 10);
 	    filterList.add(filterDone);
 	}
 	if (group != ProductAreaGroup.UNKNOWN) {
 	    if (!group.getProductAreaGroupName().equalsIgnoreCase("Takstol")) {
-		filterList.add(new PatternFilter(group.getProductAreaGroupName(), Pattern.CASE_INSENSITIVE, 12));
+		filterList.add(new PatternFilter(group.getProductAreaGroupName(), Pattern.CASE_INSENSITIVE, 13));
 	    } else {
-		filterList.add(new PatternFilter(".*e.*", Pattern.CASE_INSENSITIVE, 6));
+		filterList.add(new PatternFilter(".*e.*", Pattern.CASE_INSENSITIVE, 7));
 	    }
 
 	}
