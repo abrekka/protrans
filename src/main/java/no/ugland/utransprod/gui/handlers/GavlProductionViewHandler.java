@@ -80,7 +80,7 @@ public class GavlProductionViewHandler extends ProductionViewHandler {
      */
     @Override
     protected Integer getApplyColumn() {
-	return 6;
+	return 7;
     }
 
     public static enum GavlColumn {

@@ -60,7 +60,7 @@ public class GavlProductionWindow extends AbstractProductionPackageWindow<Produc
 	GavlProductionVManager gavlProductionVManager = (GavlProductionVManager) ModelUtil.getBean("gavlProductionVManager");
 	ArticleTypeManager articleTypeManager = (ArticleTypeManager) ModelUtil.getBean("articleTypeManager");
 	ArticleType articleType = articleTypeManager.findByName(ApplicationParamUtil.findParamByName(getParamArticleName()));
-	return new GavlProductionViewHandler(new ProductionApplyList(login, gavlProductionVManager, "Gavl", "Gavl", null, managerRepository),
+	return new GavlProductionViewHandler(new ProductionApplyList(login, gavlProductionVManager, "Takstol", "Gavl", null, managerRepository),
 		"Gavlproduksjon", login, articleType, managerRepository, deviationViewHandlerFactory, setProductionUnitActionFactory);
     }
 

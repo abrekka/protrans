@@ -43,6 +43,12 @@
         column="DESCR"
         length="255"
     />
+    <property
+        name="prodTp"
+        type="java.lang.Integer"
+        column="PRODTP"
+        length="32"
+    />
 	
     <!-- property
         name="numberOf"

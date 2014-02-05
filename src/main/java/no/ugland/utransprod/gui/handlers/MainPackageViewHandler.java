@@ -125,6 +125,7 @@ import org.springframework.orm.hibernate3.HibernateOptimisticLockingFailureExcep
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import com.google.inject.internal.Lists;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
@@ -811,7 +812,8 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	 * @param aWindow
 	 */
 	public PackageOrderLineTableModel(ListModel listModel, OrderLineManager aOrderLineManager, WindowInterface aWindow) {
-	    super(listModel, new String[] { "Artikkel", "#", "Klar", "Spesifikasjon", "Kolli", "Top level", "Har artikkel", "Startet" });
+	    super(listModel,
+		    new String[] { "Artikkel", "#", "Klar", "Spesifikasjon", "Kolli", "Top level", "Har artikkel", "Startet", "Produkttype" });
 	    orderLineManager1 = aOrderLineManager;
 	    window = aWindow;
 	}
@@ -873,6 +875,12 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 			return Util.SHORT_DATE_FORMAT.format(orderLine.getActionStarted());
 		    }
 		    return "---";
+		case 8:
+		    if (orderLine.getOrdln() != null) {
+			return orderLine.getOrdln().getProdTp();
+		    } else {
+			return 0;
+		    }
 		default:
 		    throw new IllegalStateException("Unknown column");
 		}
@@ -895,6 +903,8 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	    case 6:
 	    case 7:
 		return String.class;
+	    case 8:
+		return Integer.class;
 
 	    default:
 		throw new IllegalStateException("Unknown column");
@@ -1959,6 +1969,12 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
      */
     public JComboBox getComboBoxProductAreaGroup() {
 	return Util.getComboBoxProductAreaGroup(login.getApplicationUser(), login.getUserType(), productAreaGroupModel);
+    }
+
+    public JComboBox getComboBoxPakketype() {
+	JComboBox comboBox = new JComboBox(Lists.newArrayList(10, 20, 30).toArray());
+	comboBox.setName("ComboBoxPakketype");
+	return comboBox;
     }
 
     /**
