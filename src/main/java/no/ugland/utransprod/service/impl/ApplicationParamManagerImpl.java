@@ -1,14 +1,15 @@
 package no.ugland.utransprod.service.impl;
 
 import java.io.Serializable;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 import no.ugland.utransprod.ProTransRuntimeException;
 import no.ugland.utransprod.dao.ApplicationParamDAO;
 import no.ugland.utransprod.model.ApplicationParam;
 import no.ugland.utransprod.service.ApplicationParamManager;
+
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 
 /**
  * @author atle.brekka
@@ -29,11 +30,11 @@ public class ApplicationParamManagerImpl extends ManagerImpl<ApplicationParam> i
     /**
      * @see no.ugland.utransprod.service.ApplicationParamManager#getColliSetup()
      */
-    public final Map<String, String> getColliSetup() {
+    public final Multimap<String, String> getColliSetup() {
 	ApplicationParam example = new ApplicationParam();
 	example.setParamName("kolli_%");
 	List<ApplicationParam> params = dao.findByExampleLike(example);
-	Map<String, String> colliSetup = new Hashtable<String, String>();
+	Multimap<String, String> colliSetup = ArrayListMultimap.create();
 	String paramValue;
 	String[] paramValueSplit;
 	for (ApplicationParam param : params) {

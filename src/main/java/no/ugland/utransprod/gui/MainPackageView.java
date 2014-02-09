@@ -17,7 +17,6 @@ import no.ugland.utransprod.util.InternalFrameBuilder;
 import org.jdesktop.swingx.JXTable;
 
 import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.debug.FormDebugPanel;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -82,6 +81,7 @@ public class MainPackageView implements Viewer {
      * @param window
      */
     private void initComponents(WindowInterface window) {
+	comboBoxPakketype = viewHandler.getComboBoxPakketype();
 	tableOrders = viewHandler.getTableOrders(window);
 	tablePostShipment = viewHandler.getTablePostShipment(window);
 	buttonCancel = viewHandler.getButtonCancel(window);
@@ -107,7 +107,7 @@ public class MainPackageView implements Viewer {
 
 	buttonAddComment = viewHandler.getButtonAddComment(window);
 	comboBoxProductAreaGroup = viewHandler.getComboBoxProductAreaGroup();
-	comboBoxPakketype = viewHandler.getComboBoxPakketype();
+
     }
 
     private JPanel buildColliesMainPanel() {
@@ -228,10 +228,10 @@ public class MainPackageView implements Viewer {
 	builder.add(buildFilterPanel(), cc.xy(2, 2));
 	builder.add(buildOrderPanel(), cc.xy(2, 4));
 	builder.add(buildPostShipmentPanel(), cc.xy(2, 6));
-	builder.add(buildStatisticsPanel(), cc.xyw(4, 2, 3));
+	builder.add(buildStatisticsPanel(), cc.xyw(4, 2, 2));
 	builder.add(buildOrderLineAndCommentPanel(), cc.xywh(4, 4, 1, 3));
 
-	// builder.add(buildOrderlineFilterPanel(), cc.xy(6, 1));
+	builder.add(buildOrderlineFilterPanel(), cc.xy(6, 2));
 
 	builder.add(panelColliesMain, cc.xywh(6, 4, 1, 3));
 
@@ -240,9 +240,10 @@ public class MainPackageView implements Viewer {
     }
 
     private Component buildOrderlineFilterPanel() {
-	FormLayout layout = new FormLayout("p,3dlu,p", "p,3dlu,10dlu");
-	PanelBuilder builder = new PanelBuilder(new FormDebugPanel(), layout);
-	// PanelBuilder builder = new PanelBuilder(layout);
+	FormLayout layout = new FormLayout("p,3dlu,p", "p");
+	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),
+	// layout);
+	PanelBuilder builder = new PanelBuilder(layout);
 	CellConstraints cc = new CellConstraints();
 
 	builder.addLabel("Pakketype:", cc.xy(1, 1));

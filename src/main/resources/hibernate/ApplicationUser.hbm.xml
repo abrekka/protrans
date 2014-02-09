@@ -52,6 +52,12 @@
         column="GROUP_USER"
         length="32"
     />
+    <property
+        name="packageType"
+        type="java.lang.Integer"
+        column="PACKAGE_TYPE"
+        length="32"
+    />
 
     
     <!-- Associations -->

@@ -19,6 +19,18 @@
         column="CUSTOMER_NR"
         length="2"
     />
+    <property
+        name="purcno"
+        type="java.lang.Integer"
+        column="PURCNO"
+        length="32"
+    />
+    <property
+        name="rest"
+        type="java.lang.Integer"
+        column="REST"
+        length="32"
+    />
 
 	<property
         name="customerDetails"

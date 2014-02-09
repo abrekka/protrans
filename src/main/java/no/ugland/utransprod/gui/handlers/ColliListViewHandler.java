@@ -2,6 +2,7 @@ package no.ugland.utransprod.gui.handlers;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,7 @@ import no.ugland.utransprod.util.Util;
 
 import org.hibernate.Hibernate;
 
+import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
@@ -50,7 +52,7 @@ public class ColliListViewHandler implements ColliListener, Updateable, ColliVie
     private JButton buttonEditColli;
     private JButton buttonAddColli;
     boolean refreshing = false;
-    Map<String, String> colliSetup;
+    private Multimap<String, String> colliSetup;
     private List<ListDataListener> colliListListeners = new ArrayList<ListDataListener>();
     List<ColliListener> colliListeners = new ArrayList<ColliListener>();
 
@@ -58,7 +60,7 @@ public class ColliListViewHandler implements ColliListener, Updateable, ColliVie
     private Packable packable;
 
     @Inject
-    public ColliListViewHandler(Login aLogin, ManagerRepository aManagerRepository, @Assisted Map<String, String> aColliSetup) {
+    public ColliListViewHandler(Login aLogin, ManagerRepository aManagerRepository, @Assisted Multimap<String, String> aColliSetup) {
 	login = aLogin;
 	managerRepository = aManagerRepository;
 	this.colliSetup = aColliSetup;
@@ -297,14 +299,14 @@ public class ColliListViewHandler implements ColliListener, Updateable, ColliVie
 		.convertNumberToBoolean(packable.getDefaultColliesGenerated());
     }
 
-    private boolean shouldHaveColli(List<OrderLine> orderLines, String articleName, Transportable transportable) {
+    private boolean shouldHaveColli(List<OrderLine> orderLines, Collection<String> articlenames, Transportable transportable) {
 	OrderLineManager orderLineManager = (OrderLineManager) ModelUtil.getBean("orderLineManager");
 	if (orderLines != null) {
 	    for (OrderLine orderLine : orderLines) {
 		if (orderLine.getHasArticle() == null) {
 		    orderLineManager.lazyLoad(orderLine, new LazyLoadOrderLineEnum[] { LazyLoadOrderLineEnum.ORDER_LINE_ATTRIBUTE });
 		}
-		if (orderLine.getArticleName().equalsIgnoreCase(articleName) && orderLine.hasArticle() && orderLine.belongTo(transportable)) {
+		if (articlenames.contains(orderLine.getArticleName()) && orderLine.hasArticle() && orderLine.belongTo(transportable)) {
 		    return true;
 		}
 	    }

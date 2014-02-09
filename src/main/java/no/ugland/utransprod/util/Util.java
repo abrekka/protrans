@@ -101,6 +101,7 @@ import org.apache.commons.lang.builder.CompareToBuilder;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.SortOrder;
 
+import com.google.common.collect.Multimap;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.adapter.ComboBoxAdapter;
@@ -1634,15 +1635,15 @@ public final class Util {
     }
 
     public static String getColliName(String articleName) {
-	Map<String, String> colliSetup = ApplicationParamUtil.getColliSetup();
+	Multimap<String, String> colliSetup = ApplicationParamUtil.getColliSetup();
 	String useColliName = null;
 	if (colliSetup.containsValue(articleName)) {
 	    Set<String> colliNames = colliSetup.keySet();
 
-	    String tmpStr;
+	    Collection<String> tmpStr;
 	    for (String colliName : colliNames) {
 		tmpStr = colliSetup.get(colliName);
-		if (tmpStr.equalsIgnoreCase(articleName)) {
+		if (tmpStr.contains(articleName)) {
 		    useColliName = colliName;
 		    break;
 		}

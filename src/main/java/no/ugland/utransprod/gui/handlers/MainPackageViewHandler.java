@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
@@ -88,6 +90,7 @@ import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderComment;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.OrderLineAttribute;
+import no.ugland.utransprod.model.Packagetype;
 import no.ugland.utransprod.model.PostShipment;
 import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.SumOrderReadyV;
@@ -123,6 +126,7 @@ import org.jdesktop.swingx.decorator.PatternFilter;
 import org.jdesktop.swingx.decorator.PatternPredicate;
 import org.springframework.orm.hibernate3.HibernateOptimisticLockingFailureException;
 
+import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.internal.Lists;
@@ -141,6 +145,7 @@ import com.jgoodies.binding.list.SelectionInList;
  */
 public class MainPackageViewHandler implements Closeable, Updateable, ListDataListener, ColliListener {
     private final ArrayListModel mainPackageVList;
+    private JComboBox comboBoxPakketype;
 
     private final ArrayListModel postShipmentList;
 
@@ -150,7 +155,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 
     private SelectionInList orderLineSelectionList;
 
-    private Map<String, String> colliSetup;
+    private Multimap<String, String> colliSetup;
 
     private List<PropertyChangeListener> bufferingListeners = new ArrayList<PropertyChangeListener>();
 
@@ -237,7 +242,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
     @Inject
     public MainPackageViewHandler(VismaFileCreator aVismaFileCreator, OrderViewHandlerFactory orderViewHandlerFactory, Login aLogin,
 	    ManagerRepository aManagerRepository, DeviationViewHandlerFactory aDeviationViewHandlerFactory,
-	    @Assisted Map<String, String> aColliSetup, @Assisted Map<String, StatusCheckerInterface<OrderLine>> chekers) {
+	    @Assisted Multimap<String, String> aColliSetup, @Assisted Map<String, StatusCheckerInterface<OrderLine>> chekers) {
 	deviationViewHandlerFactory = aDeviationViewHandlerFactory;
 	login = aLogin;
 	managerRepository = aManagerRepository;
@@ -429,12 +434,12 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
      */
     public JXTable getTableOrderLines(WindowInterface window) {
 	menuItemPack.addActionListener(new MenuItemListenerPack(window, colliListViewHandler));
+
 	OrderLineManager orderLineManager = (OrderLineManager) ModelUtil.getBean("orderLineManager");
-	Filter[] filters = new Filter[] { new PatternFilter("Ja", Pattern.CASE_INSENSITIVE, 5),
-		new PatternFilter("---", Pattern.CASE_INSENSITIVE, 4), new PatternFilter("Ja", Pattern.CASE_INSENSITIVE, 6), };
-	FilterPipeline filterPipeline1 = new FilterPipeline(filters);
+
 	tableOrderLines = new JXTable();
-	tableOrderLines.setFilters(filterPipeline1);
+	setTableOrderLinesFilters();
+
 	tableModelOrderLines = new PackageOrderLineTableModel(orderLineSelectionList, orderLineManager, window);
 	tableOrderLines.setModel(tableModelOrderLines);
 	tableOrderLines.setSelectionModel(new SingleListSelectionAdapter(orderLineSelectionList.getSelectionIndexHolder()));
@@ -448,6 +453,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	tableOrderLines.getColumnExt(4).setVisible(false);
 	tableOrderLines.getColumnExt(4).setVisible(false);
 	tableOrderLines.getColumnExt(4).setVisible(false);
+	tableOrderLines.getColumnExt(5).setVisible(false);
 
 	tableOrderLines.getColumnExt(0).setPreferredWidth(80);
 	tableOrderLines.getColumnExt(1).setPreferredWidth(30);
@@ -461,6 +467,21 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 
 	tableOrderLines.addHighlighter(patternStart);
 	return tableOrderLines;
+    }
+
+    private void setTableOrderLinesFilters() {
+	Packagetype pakketype = (Packagetype) comboBoxPakketype.getSelectedItem();
+	List<PatternFilter> filters = Lists.newArrayList(new PatternFilter("Ja", Pattern.CASE_INSENSITIVE, 5), new PatternFilter("---",
+		Pattern.CASE_INSENSITIVE, 4), new PatternFilter("Ja", Pattern.CASE_INSENSITIVE, 6));
+	if (!Packagetype.ALLE.equals(pakketype)) {
+	    filters.add(new PatternFilter(String.valueOf(pakketype.getVerdi()), Pattern.CASE_INSENSITIVE, 8));
+	}
+	Filter[] tableFilters = new Filter[filters.size()];
+	filters.toArray(tableFilters);
+	FilterPipeline filterPipeline1 = new FilterPipeline(tableFilters);
+	if (tableOrderLines != null) {
+	    tableOrderLines.setFilters(filterPipeline1);
+	}
     }
 
     /**
@@ -1972,9 +1993,14 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
     }
 
     public JComboBox getComboBoxPakketype() {
-	JComboBox comboBox = new JComboBox(Lists.newArrayList(10, 20, 30).toArray());
-	comboBox.setName("ComboBoxPakketype");
-	return comboBox;
+	comboBoxPakketype = new JComboBox(Packagetype.values());
+	comboBoxPakketype.setName("ComboBoxPakketype");
+	comboBoxPakketype.addItemListener(new PakketypeListener());
+
+	Packagetype defaultPakketype = Packagetype.getPackageType(login.getApplicationUser().getPackageType());
+	comboBoxPakketype.setSelectedItem(defaultPakketype);
+
+	return comboBoxPakketype;
     }
 
     /**
@@ -2636,6 +2662,14 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 
     public void refreshCollies() {
 	// TODO Auto-generated method stub
+
+    }
+
+    public class PakketypeListener implements ItemListener {
+
+	public void itemStateChanged(ItemEvent arg0) {
+	    setTableOrderLinesFilters();
+	}
 
     }
 }

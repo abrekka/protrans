@@ -20,6 +20,10 @@ public class TakstolPackageV extends PackageProduction implements TextRenderable
 
     private Integer defaultArticle;
 
+    private Integer purcno;
+
+    private Integer rest;
+
     public TakstolPackageV() {
 	super();
     }
@@ -132,4 +136,19 @@ public class TakstolPackageV extends PackageProduction implements TextRenderable
 	return null;
     }
 
+    public Integer getPurcno() {
+	return purcno;
+    }
+
+    public Integer getRest() {
+	return rest;
+    }
+
+    public void setPurcno(Integer purcno) {
+	this.purcno = purcno;
+    }
+
+    public void setRest(Integer rest) {
+	this.rest = rest;
+    }
 }
