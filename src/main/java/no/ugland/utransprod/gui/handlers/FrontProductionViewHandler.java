@@ -98,7 +98,7 @@ public class FrontProductionViewHandler extends ProductionViewHandler {
 	private WindowInterface window;
 
 	public FrontProductionTableModel(ListModel listModel, WindowInterface aWindow) {
-	    super(listModel, new String[] { "Transport", "Ordre", "Prod. dato", "Antall", "Vegg", "Opplasting", "Produsert", "Produktområde",
+	    super(listModel, new String[] { "Transport", "Ordre", "Prod. uke", "Antall", "Vegg", "Opplasting", "Produsert", "Produktområde",
 		    "Prod.enhet", "Startet", "Reell tidsforbruk" });
 	    window = aWindow;
 	    veggChecker = Util.getVeggChecker();
@@ -154,7 +154,7 @@ public class FrontProductionViewHandler extends ProductionViewHandler {
 	    case 1:
 		return frontProductionV;
 	    case 2:
-		return Util.formatDate(frontProductionV.getProductionDate(), Util.SHORT_DATE_FORMAT);
+		return frontProductionV.getProductionWeek();
 	    case 3:
 		if (frontProductionV.getNumberOfItems() != null) {
 		    return decimalFormat.format(frontProductionV.getNumberOfItems());
@@ -204,7 +204,7 @@ public class FrontProductionViewHandler extends ProductionViewHandler {
 	public Class<?> getColumnClass(int columnIndex) {
 	    switch (columnIndex) {
 	    case 0:
-	    case 2:
+
 	    case 3:
 	    case 4:
 	    case 5:
@@ -212,6 +212,8 @@ public class FrontProductionViewHandler extends ProductionViewHandler {
 	    case 8:
 	    case 9:
 		return String.class;
+	    case 2:
+		return Integer.class;
 	    case 1:
 		return VeggProductionV.class;
 	    case 6:

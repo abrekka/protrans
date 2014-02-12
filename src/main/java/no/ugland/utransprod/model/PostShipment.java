@@ -898,4 +898,8 @@ public class PostShipment extends AbstractTransportable implements TextRenderabl
 	return false;
     }
 
+    public Integer getProductionWeek() {
+	return order.getProductionWeek();
+    }
+
 }

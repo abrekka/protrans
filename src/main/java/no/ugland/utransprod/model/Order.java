@@ -152,6 +152,8 @@ public class Order extends AbstractTransportable implements TextRenderable, Arti
 
     private Integer productionBasis;
 
+    private Integer productionWeek;
+
     public static final Order UNKNOWN = new Order() {
 	private static final long serialVersionUID = 1L;
     };
@@ -1768,6 +1770,14 @@ public class Order extends AbstractTransportable implements TextRenderable, Arti
 
     public Integer getProductionBasis() {
 	return productionBasis;
+    }
+
+    public Integer getProductionWeek() {
+	return productionWeek;
+    }
+
+    public void setProductionWeek(Integer productionWeek) {
+	this.productionWeek = productionWeek;
     }
 
 }

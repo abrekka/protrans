@@ -1081,4 +1081,11 @@ public class Deviation extends AbstractTransportable implements Articleable, IAs
 	return null;
     }
 
+    public Integer getProductionWeek() {
+	if (order != null) {
+	    return order.getProductionWeek();
+	}
+	return null;
+    }
+
 }

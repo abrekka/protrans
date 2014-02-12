@@ -19,6 +19,13 @@
         column="REAL_PRODUCTION_HOURS"
         length="32"
     />    
+    
+    <property
+        name="productionWeek"
+        type="java.lang.Integer"
+        column="PRODUCTION_WEEK"
+        length="32"
+    />
 
 	<property
         name="customerDetails"
@@ -26,6 +33,7 @@
         column="CUSTOMER_DETAILS"
         length="255"
     />
+    
 
 	
     

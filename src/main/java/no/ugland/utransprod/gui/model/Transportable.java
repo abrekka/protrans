@@ -386,6 +386,11 @@ public interface Transportable {
 	    return null;
 	}
 
+	public Integer getProductionWeek() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
     };
 
     List<OrderLine> getOrderLineList(String articleTypeName);
@@ -395,5 +400,7 @@ public interface Transportable {
     String getTrossDrawer();
 
     Integer getMaxTrossHeight();
+
+    Integer getProductionWeek();
 
 }

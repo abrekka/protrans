@@ -18,6 +18,13 @@
 		name="changeDate"
 		unsaved-value="undefined"
 	/>
+	
+	<property
+        name="productionWeek"
+        type="java.lang.Integer"
+        column="PRODUCTION_WEEK"
+        length="32"
+    />
 
 
 	<property

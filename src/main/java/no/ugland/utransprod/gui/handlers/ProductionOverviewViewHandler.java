@@ -11,7 +11,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -111,7 +110,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
     JMenuItem menuItemVegg;
 
     JMenuItem menuItemOpenOrder;
-    private JMenuItem menuItemSetProductionDate;
+    private JMenuItem menuItemSetProductionWeek;
 
     JMenuItem menuItemShowMissing;
 
@@ -197,9 +196,9 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	menuItemOpenOrder = new JMenuItem("Se ordre...");
 	menuItemOpenOrder.setName("MenuItemOpenOrder");
 	popupMenuProduction.add(menuItemOpenOrder);
-	menuItemSetProductionDate = new JMenuItem("Sett produksjonsdato...");
-	menuItemSetProductionDate.setName("MenuItemSetProductionDate");
-	popupMenuProduction.add(menuItemSetProductionDate);
+	menuItemSetProductionWeek = new JMenuItem("Sett produksjonsuke...");
+	menuItemSetProductionWeek.setName("MenuItemSetProductionweek");
+	popupMenuProduction.add(menuItemSetProductionWeek);
 
 	menuItemPacklist = new JMenuItem("Sett pakkliste klar...");
 	menuItemPacklist.setName("MenuItemPacklist");
@@ -372,16 +371,16 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		return true;
 	    }
 	},
-	PROD_DATO("Prod.dato") {
+	PROD_UKE("Prod.uke") {
 	    @Override
 	    public Class<?> getColumnClass() {
-		return String.class;
+		return Integer.class;
 	    }
 
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
 		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return Util.formatDate(transportable.getProductionDate(), Util.SHORT_DATE_FORMAT);
+		return transportable.getProductionWeek();
 	    }
 
 	    @SuppressWarnings("unchecked")
@@ -1039,7 +1038,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	menuItemTakstein.addActionListener(new ProductionMenuItemListener(window, "Takstein", "Sett takstein pakket"));
 	menuItemGulvspon.addActionListener(new ProductionMenuItemListener(window, "Gulvspon", "Sett gulvspon pakket"));
 	menuItemOpenOrder.addActionListener(new MenuItemListenerOpenOrder(window));
-	menuItemSetProductionDate.addActionListener(new MenuItemListenerSetProductionDate(window));
+	menuItemSetProductionWeek.addActionListener(new MenuItemListenerSetProductionWeek(window));
 	menuItemShowMissing.addActionListener(new MenuItemListenerShowMissing(window));
 	menuItemShowContent.addActionListener(new MenuItemListenerShowContent(window));
 	menuItemDeviation.addActionListener(new MenuItemListenerDeviation(window));
@@ -1218,10 +1217,10 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 
     }
 
-    private class MenuItemListenerSetProductionDate implements ActionListener {
+    private class MenuItemListenerSetProductionWeek implements ActionListener {
 	private WindowInterface window;
 
-	public MenuItemListenerSetProductionDate(WindowInterface aWindow) {
+	public MenuItemListenerSetProductionWeek(WindowInterface aWindow) {
 	    window = aWindow;
 	}
 
@@ -1229,10 +1228,12 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 
 	    Transportable transportable = getSelectedObject();
 	    if (transportable != null) {
-		Date newProductionDate = Util.showInputDialogDate(window, "Produksjonsdato", "Produksjonsdato");
-		if (newProductionDate != null) {
-		    Order order = transportable.getOrder();
-		    order.setProductionDate(newProductionDate);
+		Order order = transportable.getOrder();
+		String newProductionWeek = Util.showInputDialogWithdefaultValue(window, "Produksjonsuke", "Produksjonsuke",
+			order.getProductionWeek() == null ? "" : String.valueOf(order.getProductionWeek()));
+		if (newProductionWeek != null) {
+
+		    order.setProductionWeek(Integer.valueOf(newProductionWeek));
 		    ((OrderManager) overviewManager).saveOrder(order);
 		}
 	    }

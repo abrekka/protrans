@@ -110,18 +110,18 @@ public class GavlProductionViewHandler extends ProductionViewHandler {
 		return gavlProductionV;
 	    }
 	},
-	PROD_DATO("Prod.dato") {
+	PROD_UKE("Prod.uke") {
 	    @SuppressWarnings("unchecked")
 	    @Override
 	    public Class getColumnClass() {
-		return String.class;
+		return Integer.class;
 	    }
 
 	    @Override
 	    public Object getValue(GavlProductionV gavlProductionV, StatusCheckerInterface<Transportable> takstolChecker,
 		    Map<String, String> statusMap, WindowInterface window, ManagerRepository managerRepository,
 		    ApplyListInterface<Produceable> applyListInterface) {
-		return Util.formatDate(gavlProductionV.getProductionDate(), Util.SHORT_DATE_TIME_FORMAT);
+		return gavlProductionV.getProductionWeek();
 	    }
 	},
 	ANTALL("Antall") {

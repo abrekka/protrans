@@ -67,6 +67,8 @@ public class GavlProductionV extends BaseObject implements TextRenderable, Produ
 
     private BigDecimal realProductionHours;
 
+    private Integer productionWeek;
+
     public GavlProductionV() {
 	super();
     }
@@ -508,5 +510,13 @@ public class GavlProductionV extends BaseObject implements TextRenderable, Produ
 
     public void setRealProductionHours(BigDecimal realProductionHours) {
 	this.realProductionHours = realProductionHours;
+    }
+
+    public Integer getProductionWeek() {
+	return productionWeek;
+    }
+
+    public void setProductionWeek(Integer productionWeek) {
+	this.productionWeek = productionWeek;
     }
 }
