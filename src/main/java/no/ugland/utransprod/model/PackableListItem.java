@@ -1,7 +1,6 @@
 package no.ugland.utransprod.model;
 
 import java.util.Date;
-import java.util.List;
 
 import no.ugland.utransprod.gui.model.Applyable;
 import no.ugland.utransprod.gui.model.TextRenderable;
@@ -13,55 +12,57 @@ import no.ugland.utransprod.gui.model.TextRenderable;
  * 
  */
 public interface PackableListItem extends TextRenderable, Applyable {
-	/**
-	 * @return kolli
-	 */
-	Colli getColli();
+    /**
+     * @return kolli
+     */
+    Colli getColli();
 
-	/**
-	 * @return transportdetaljer
-	 */
-	String getTransportDetails();
+    /**
+     * @return transportdetaljer
+     */
+    String getTransportDetails();
 
-	/**
-	 * @return antall
-	 */
-	Integer getNumberOfItems();
+    /**
+     * @return antall
+     */
+    Integer getNumberOfItems();
 
-	/**
-	 * @return opplastingsdato
-	 */
-	Date getLoadingDate();
+    /**
+     * @return opplastingsdato
+     */
+    Date getLoadingDate();
 
-	/**
-	 * @return attributtinfo
-	 */
-	String getAttributeInfo();
+    /**
+     * @return attributtinfo
+     */
+    String getAttributeInfo();
 
-	/**
-	 * @return ordrelinjeid
-	 */
-	Integer getOrderLineId();
+    /**
+     * @return ordrelinjeid
+     */
+    Integer getOrderLineId();
 
-	/**
-	 * @return produktområdegruppenavn
-	 */
-	String getProductAreaGroupName();
+    /**
+     * @return produktområdegruppenavn
+     */
+    String getProductAreaGroupName();
+
     Date getActionStarted();
+
     String getArticleName();
+
     void setColli(Colli colli);
 
-	Integer getTransportYear();
+    Integer getTransportYear();
 
-	Integer getTransportWeek();
+    Integer getTransportWeek();
 
-	String getLoadTime();
+    String getLoadTime();
 
-	boolean isRelatedArticlesStarted();
+    boolean isRelatedArticlesStarted();
 
-	Integer getProbability();
+    Integer getProbability();
 
-    
+    Integer getRest();
 
-    
 }

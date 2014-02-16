@@ -25,7 +25,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.ListModel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
 import no.ugland.utransprod.ProTransException;
@@ -987,8 +989,11 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	table.getColumnExt(0).setPreferredWidth(220);
 	// transport
 	table.getColumnExt(1).setPreferredWidth(150);
-	// prod.dato
+	// prod uke
 	table.getColumnExt(2).setPreferredWidth(70);
+	DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
+	tableCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+	table.getColumn(2).setCellRenderer(tableCellRenderer);
 	// pakkliste
 	table.getColumnExt(3).setPreferredWidth(80);
 

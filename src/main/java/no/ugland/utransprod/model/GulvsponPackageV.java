@@ -476,4 +476,9 @@ public class GulvsponPackageV extends BaseObject implements TextRenderable, Pack
 	return null;
     }
 
+    public Integer getRest() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
 }

@@ -14,7 +14,6 @@ import no.ugland.utransprod.gui.model.ColorEnum;
 import no.ugland.utransprod.gui.model.Packable;
 import no.ugland.utransprod.gui.model.TakstolPackageApplyList;
 import no.ugland.utransprod.model.PackableListItem;
-import no.ugland.utransprod.model.TakstolPackageV;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.util.Util;
 
@@ -283,7 +282,7 @@ public class TakstolPackageViewHandler extends PackageViewHandler {
 	REST("Rest") {
 	    @Override
 	    public Object getValue(PackableListItem packable) {
-		return ((TakstolPackageV) packable).getPurcno() == null ? 0 : ((TakstolPackageV) packable).getRest();
+		return packable.getRest() == null ? 0 : packable.getRest();
 	    }
 
 	    @Override

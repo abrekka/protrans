@@ -1473,4 +1473,9 @@ public class OrderLine extends BaseObject implements Comparable<OrderLine>, IArt
     public BigDecimal getRealProductionHours() {
 	return realProductionHours;
     }
+
+    public Integer getRest() {
+	// TODO Auto-generated method stub
+	return null;
+    }
 }
