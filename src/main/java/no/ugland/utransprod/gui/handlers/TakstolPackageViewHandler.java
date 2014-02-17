@@ -282,7 +282,7 @@ public class TakstolPackageViewHandler extends PackageViewHandler {
 	REST("Rest") {
 	    @Override
 	    public Object getValue(PackableListItem packable) {
-		return packable.getRest() == null ? 0 : packable.getRest();
+		return packable.getColli() != null ? -1 : packable.getRest() == null ? 0 : packable.getRest();
 	    }
 
 	    @Override
