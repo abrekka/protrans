@@ -227,7 +227,7 @@ public class Colli extends BaseObject implements Comparable<Colli>, TransportLet
 	    return false;
 	Colli castOther = (Colli) other;
 	return new EqualsBuilder().append(order, castOther.order).append(colliName, castOther.colliName).append(postShipment, castOther.postShipment)
-		.append(packageDate, castOther.packageDate).isEquals();
+		.append(colliId, castOther.colliId).isEquals();
     }
 
     /**
@@ -235,7 +235,7 @@ public class Colli extends BaseObject implements Comparable<Colli>, TransportLet
      */
     @Override
     public int hashCode() {
-	return new HashCodeBuilder().append(order).append(colliName).append(postShipment).toHashCode();
+	return new HashCodeBuilder().append(order).append(colliName).append(postShipment).append(colliId).toHashCode();
     }
 
     /**

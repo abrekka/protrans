@@ -538,7 +538,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	 * @param listModel
 	 */
 	public PackageOrderTableModel(ListModel listModel) {
-	    super(listModel, new String[] { "Ordre", "Transport", "Pakket", "Klar", "Opplasting", "Produktområde", "Sannsynlighet" });
+	    super(listModel, new String[] { "Ordre", "Transport", "Pakket", "Klar", "Opplasting", "Produktområde", "Sannsynlighet", "Prod.uke" });
 	}
 
 	/**
@@ -564,6 +564,8 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		return mainPackageV.getProductAreaGroupName();
 	    case 6:
 		return mainPackageV.getProbability();
+	    case 7:
+		return mainPackageV.getProductionWeek();
 	    default:
 		throw new IllegalStateException("Unknown column");
 	    }
@@ -583,6 +585,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	    case 2:
 	    case 3:
 	    case 6:
+	    case 7:
 		return Integer.class;
 	    case 4:
 		return Date.class;
