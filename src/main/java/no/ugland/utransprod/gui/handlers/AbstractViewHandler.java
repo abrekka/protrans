@@ -262,7 +262,7 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
      *            true dersom det skal søkes
      * @param parentWindow
      */
-    protected final void openEditView(final T object, final boolean searching, final WindowInterface parentWindow) {
+    protected final boolean openEditView(final T object, final boolean searching, final WindowInterface parentWindow) {
 	boolean hasOpenViewExt = false;
 	if (viewHandlerExt != null) {
 	    hasOpenViewExt = viewHandlerExt.openEditViewExt(object, searching, parentWindow);
@@ -282,7 +282,9 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
 		    updateViewList(object, parentWindow);
 		}
 	    }
+	    return !view.isCanceled();
 	}
+	return true;
     }
 
     /**

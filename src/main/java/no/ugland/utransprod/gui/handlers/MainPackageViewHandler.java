@@ -38,9 +38,11 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.ListModel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.gui.ApplyListView;
@@ -126,6 +128,8 @@ import org.jdesktop.swingx.decorator.PatternFilter;
 import org.jdesktop.swingx.decorator.PatternPredicate;
 import org.springframework.orm.hibernate3.HibernateOptimisticLockingFailureException;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -387,6 +391,9 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	tableOrders.getColumnModel().getColumn(0).setCellRenderer(new TextPaneRendererOrder());
 	tableOrders.getColumnExt(0).setPreferredWidth(200);
 	tableOrders.getColumnExt(1).setPreferredWidth(150);
+	DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
+	tableCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+	tableOrders.getColumnExt(3).setCellRenderer(tableCellRenderer);
 	tableOrders.setSortable(false);
 	tableOrders.clearSelection();
 	orderSelectionList.clearSelection();
@@ -442,7 +449,8 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 
 	tableModelOrderLines = new PackageOrderLineTableModel(orderLineSelectionList, orderLineManager, window);
 	tableOrderLines.setModel(tableModelOrderLines);
-	tableOrderLines.setSelectionModel(new SingleListSelectionAdapter(orderLineSelectionList.getSelectionIndexHolder()));
+	// tableOrderLines.setSelectionModel(new
+	// SingleListSelectionAdapter(orderLineSelectionList.getSelectionIndexHolder()));
 	tableOrderLines.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	tableOrderLines.setColumnControlVisible(true);
 
@@ -2073,9 +2081,10 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
     }
 
-    private void packOrderLine(OrderLine orderLine, Packable packable, WindowInterface window, ArticlePacker articlePacker, boolean useDefaultColli) {
+    private void packOrderLines(List<OrderLine> orderLines, Packable packable, WindowInterface window, ArticlePacker articlePacker,
+	    boolean useDefaultColli) {
 
-	articlePacker.packOrderLine(orderLine, packable, window, useDefaultColli);
+	articlePacker.packOrderLines(orderLines, packable, window, useDefaultColli);
 	refreshTableOrder(null, false, window, true);
     }
 
@@ -2114,16 +2123,17 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 
 	private void handleMouseClick(MouseEvent mouseEvent, Packable packable) {
 	    ArticlePacker articlePacker = new ArticlePacker(colliViewHandlerProvider, colliSetup, vismaFileCreator);
-	    OrderLine orderLine = getSelectedOrderLine();
+	    List<OrderLine> orderLines = getSelectedOrderLines();
 	    if (SwingUtilities.isLeftMouseButton(mouseEvent) && mouseEvent.getClickCount() == 2 && hasWriteAccess()) {
-		if (orderLine != null) {
+		if (!orderLines.isEmpty()) {
 		    orderLineSelectionList.clearSelection();
 
-		    packOrderLine(orderLine, packable, window, articlePacker, true);
+		    packOrderLines(orderLines, packable, window, articlePacker, true);
 
 		}
 	    } else if (SwingUtilities.isRightMouseButton(mouseEvent) && hasWriteAccess()) {
-		if (articlePacker.canPack(orderLine.getArticleName())) {
+		List<String> articleNames = Lists.newArrayList(Iterables.transform(orderLines, tilArticleName()));
+		if (!orderLines.isEmpty() && articlePacker.canPack(articleNames)) {
 		    popupMenuOrderLine.show((JXTable) mouseEvent.getSource(), mouseEvent.getX(), mouseEvent.getY());
 		}
 	    }
@@ -2131,9 +2141,29 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 
     }
 
-    private OrderLine getSelectedOrderLine() {
-	return orderLineSelectionList.hasSelection() ? (OrderLine) orderLineSelectionList.getElementAt(tableOrderLines
-		.convertRowIndexToModel(orderLineSelectionList.getSelectionIndex())) : null;
+    private Function<OrderLine, String> tilArticleName() {
+	return new Function<OrderLine, String>() {
+
+	    @Override
+	    public String apply(OrderLine orderline) {
+		return orderline.getArticleName();
+	    }
+	};
+    }
+
+    private List<OrderLine> getSelectedOrderLines() {
+	int[] selectedRows = tableOrderLines.getSelectedRows();
+	List<OrderLine> orderlines = Lists.newArrayList();
+	if (selectedRows.length > 0) {
+	    for (int i : selectedRows) {
+		orderlines.add((OrderLine) orderLineSelectionList.getElementAt(tableOrderLines.convertRowIndexToModel(i)));
+	    }
+	}
+	return orderlines;
+	// return orderLineSelectionList.hasSelection() ? (OrderLine)
+	// orderLineSelectionList.getElementAt(tableOrderLines
+	// .convertRowIndexToModel(orderLineSelectionList.getSelectionIndex()))
+	// : null;
     }
 
     /**
@@ -2525,9 +2555,9 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	 */
 	public void actionPerformed(ActionEvent arg0) {
 	    ArticlePacker articlePacker = new ArticlePacker(colliViewHandlerProvider, colliSetup, vismaFileCreator);
-	    OrderLine orderLine = getSelectedOrderLine();
+	    List<OrderLine> orderLines = getSelectedOrderLines();
 	    Packable packable = (Packable) presentationModelPackable.getBean();
-	    packOrderLine(orderLine, packable, window, articlePacker, false);
+	    packOrderLines(orderLines, packable, window, articlePacker, false);
 	}
 
     }

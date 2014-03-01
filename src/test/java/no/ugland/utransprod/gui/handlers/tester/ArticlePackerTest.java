@@ -46,6 +46,7 @@ import org.mockito.MockitoAnnotations;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import com.google.inject.internal.Lists;
 
 @Category(FastTests.class)
 public class ArticlePackerTest {
@@ -126,7 +127,7 @@ public class ArticlePackerTest {
 
 	WindowInterface window = null;
 
-	articlePacker.packOrderLine(orderLine, packable, window, true);
+	articlePacker.packOrderLines(Lists.newArrayList(orderLine), packable, window, true);
 
 	assertNotNull(orderLine.getColli());
 	assertEquals("Port", orderLine.getColli().getColliName());

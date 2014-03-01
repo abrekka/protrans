@@ -16,7 +16,10 @@ import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.util.ApplicationParamUtil;
 import no.ugland.utransprod.util.Util;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
+import com.google.inject.internal.Lists;
 
 public class ArticlePacker {
     private ColliViewHandlerProvider colliViewHandlerProvider;
@@ -30,29 +33,49 @@ public class ArticlePacker {
 	colliViewHandlerProvider = aColliViewHandlerProvider;
     }
 
-    public void packOrderLine(final OrderLine orderLine, Packable packable, final WindowInterface window, final boolean useDefaultColli) {
-	String articleName = orderLine.getArticleName();
-	if (canPack(articleName)) {
-	    createColliAndPackArticle(articleName, packable, orderLine, window, useDefaultColli);
+    public void packOrderLines(final List<OrderLine> orderLines, Packable packable, final WindowInterface window, final boolean useDefaultColli) {
+	List<String> articleNames = Lists.newArrayList(Iterables.transform(orderLines, tilArticleName()));
+	if (canPack(articleNames)) {
+	    createColliAndPackArticle(articleNames, packable, orderLines, window, useDefaultColli);
 	} else {
 	    Util.showMsgDialog(window.getComponent(), "Kan ikke pakke artikkel", "Denne artikkelen kan ikke pakkes her!");
 	}
 
     }
 
-    public boolean canPack(String articleName) {
-	return ApplicationParamUtil.getNotPackageList().indexOf(articleName) < 0 ? true : false;
+    private Function<OrderLine, String> tilArticleName() {
+	return new Function<OrderLine, String>() {
+
+	    @Override
+	    public String apply(OrderLine orderline) {
+		return orderline.getArticleName();
+	    }
+	};
     }
 
-    private void createColliAndPackArticle(String articleName, Packable packable, OrderLine orderLine, WindowInterface window, boolean useDefaultColli) {
-	String useColliName = useDefaultColli ? getColliName(articleName) : null;
+    public boolean canPack(List<String> articleNames) {
+	for (String articleName : articleNames) {
+	    if (ApplicationParamUtil.getNotPackageList().indexOf(articleName) > 0) {
+		return false;
+	    }
+	}
+	return true;
+	// return ApplicationParamUtil.getNotPackageList().indexOf(articleName)
+	// < 0 ? true : false;
+    }
+
+    private void createColliAndPackArticle(List<String> articleNames, Packable packable, List<OrderLine> orderLines, WindowInterface window,
+	    boolean useDefaultColli) {
+	String useColliName = useDefaultColli ? getColliName(articleNames) : null;
 	List<Colli> collies = packable.getColliList();
 	Collections.sort(collies, garasjepakkeFoerst());
 
 	Colli useColli = getColliToUse(useColliName, collies, window);
 
 	if (useColli != null) {
-	    addArticleToColliAndSendFileToVisma(orderLine, useColli, window);
+	    for (OrderLine orderLine : orderLines) {
+		addArticleToColliAndSendFileToVisma(orderLine, useColli, window);
+	    }
 	}
     }
 
@@ -129,8 +152,19 @@ public class ArticlePacker {
 	return useColli;
     }
 
-    private String getColliName(String articleName) {
-	return colliSetup.containsValue(articleName) ? getColliNameFromColliSetup(articleName) : null;
+    private String getColliName(List<String> articleNames) {
+	String colliName = null;
+	for (String articleName : articleNames) {
+	    String tmpColliName = colliSetup.containsValue(articleName) ? getColliNameFromColliSetup(articleName) : null;
+	    if (colliName == null) {
+		colliName = tmpColliName;
+	    } else if (!colliName.equalsIgnoreCase(tmpColliName)) {
+		return null;
+	    }
+	}
+	return colliName;
+	// return colliSetup.containsValue(articleName) ?
+	// getColliNameFromColliSetup(articleName) : null;
     }
 
     private String getColliNameFromColliSetup(String articleName) {

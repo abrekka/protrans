@@ -188,11 +188,14 @@ public class ColliListViewHandler implements ColliListener, Updateable, ColliVie
 	ColliViewHandler colliViewHandler = new ColliViewHandler("Kolli", newColli,
 	// abstractOrderModel,
 		packable, login, managerRepository, window);
-	colliViewHandler.openEditView(null, false, window);
+	boolean isOk = colliViewHandler.openEditView(null, false, window);
 	// abstractOrderModel.addColli(newColli);
-	packable.addColli(newColli);
-	colliList.add(newColli);
-	fireListChanged();
+	if (newColli.getColliId() != null) {
+	    packable.addColli(newColli);
+	    colliList.add(newColli);
+	    fireListChanged();
+
+	}
 
     }
 
