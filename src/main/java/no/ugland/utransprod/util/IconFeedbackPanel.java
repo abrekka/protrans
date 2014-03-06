@@ -115,6 +115,7 @@ public final class IconFeedbackPanel extends JLayeredPane {
      * <p>
      * <strong>Note:</strong> You must not add or remove components from the
      * content once this constructor has been invoked.
+     * 
      * @param aModel
      *            the ValidationResultModel to observe
      * @param aContent
@@ -123,21 +124,19 @@ public final class IconFeedbackPanel extends JLayeredPane {
      *             if model or content is <code>null</code>.
      */
     @SuppressWarnings("synthetic-access")
-    public IconFeedbackPanel(final ValidationResultModel aModel,
-            final JComponent aContent) {
-        if (aModel == null) {
-            throw new NullPointerException(
-                    "The validation result model must not be null.");
-        }
-        if (aContent == null) {
-            throw new NullPointerException("The content must not be null.");
-        }
+    public IconFeedbackPanel(final ValidationResultModel aModel, final JComponent aContent) {
+	if (aModel == null) {
+	    throw new NullPointerException("The validation result model must not be null.");
+	}
+	if (aContent == null) {
+	    throw new NullPointerException("The content must not be null.");
+	}
 
-        this.model = aModel;
-        this.content = aContent;
-        setLayout(new SimpleLayout());
-        add(aContent, CONTENT_LAYER);
-        initEventHandling();
+	this.model = aModel;
+	this.content = aContent;
+	setLayout(new SimpleLayout());
+	add(aContent, CONTENT_LAYER);
+	initEventHandling();
     }
 
     // Convenience Code *******************************************************
@@ -147,46 +146,45 @@ public final class IconFeedbackPanel extends JLayeredPane {
      * IconFeedbackPanel where necessary. Such a wrapper is required for all
      * JScrollPanes that contain multiple children and for the root - unless
      * it's a JScrollPane with multiple children.
+     * 
      * @param model
      * @param root
      *            the root of the component tree to wrap
      * @return the wrapped component tree
      */
-    public static JComponent getWrappedComponentTree(
-            final ValidationResultModel model, final JComponent root) {
-        wrapComponentTree(model, root);
+    public static JComponent getWrappedComponentTree(final ValidationResultModel model, final JComponent root) {
+	wrapComponentTree(model, root);
 
-        if (isScrollPaneWithUnmarkableView(root)) {
-            return root;
-        }
-        return new IconFeedbackPanel(model, root);
+	if (isScrollPaneWithUnmarkableView(root)) {
+	    return root;
+	}
+	return new IconFeedbackPanel(model, root);
     }
 
     /**
      * @param model
      * @param container
      */
-    private static void wrapComponentTree(final ValidationResultModel model,
-            final Container container) {
-        if (!(container instanceof JScrollPane)) {
-            int componentCount = container.getComponentCount();
-            for (int i = 0; i < componentCount; i++) {
-                Component child = container.getComponent(i);
-                if (child instanceof Container) {
-                    wrapComponentTree(model, (Container) child);
-                }
-            }
-            return;
-        }
-        JScrollPane scrollPane = (JScrollPane) container;
-        JViewport viewport = scrollPane.getViewport();
-        JComponent view = (JComponent) viewport.getView();
-        if (isMarkable(view)) {
-            return;
-        }
-        Component wrappedView = new IconFeedbackPanel(model, view);
-        viewport.setView(wrappedView);
-        wrapComponentTree(model, view);
+    private static void wrapComponentTree(final ValidationResultModel model, final Container container) {
+	if (!(container instanceof JScrollPane)) {
+	    int componentCount = container.getComponentCount();
+	    for (int i = 0; i < componentCount; i++) {
+		Component child = container.getComponent(i);
+		if (child instanceof Container) {
+		    wrapComponentTree(model, (Container) child);
+		}
+	    }
+	    return;
+	}
+	JScrollPane scrollPane = (JScrollPane) container;
+	JViewport viewport = scrollPane.getViewport();
+	JComponent view = (JComponent) viewport.getView();
+	if (isMarkable(view)) {
+	    return;
+	}
+	Component wrappedView = new IconFeedbackPanel(model, view);
+	viewport.setView(wrappedView);
+	wrapComponentTree(model, view);
     }
 
     /**
@@ -194,13 +192,13 @@ public final class IconFeedbackPanel extends JLayeredPane {
      * @return true or false
      */
     private static boolean isScrollPaneWithUnmarkableView(final Component c) {
-        if (!(c instanceof JScrollPane)) {
-            return false;
-        }
-        JScrollPane scrollPane = (JScrollPane) c;
-        JViewport viewport = scrollPane.getViewport();
-        JComponent view = (JComponent) viewport.getView();
-        return !isMarkable(view);
+	if (!(c instanceof JScrollPane)) {
+	    return false;
+	}
+	JScrollPane scrollPane = (JScrollPane) c;
+	JViewport viewport = scrollPane.getViewport();
+	JComponent view = (JComponent) viewport.getView();
+	return !isMarkable(view);
     }
 
     // Initialization *********************************************************
@@ -210,9 +208,7 @@ public final class IconFeedbackPanel extends JLayeredPane {
      * feedback components.
      */
     private void initEventHandling() {
-        model.addPropertyChangeListener(
-                ValidationResultModel.PROPERTYNAME_RESULT,
-                new ValidationResultChangeHandler());
+	model.addPropertyChangeListener(ValidationResultModel.PROPERTYNAME_RESULT, new ValidationResultChangeHandler());
     }
 
     // Abstract Behavior ******************************************************
@@ -226,6 +222,7 @@ public final class IconFeedbackPanel extends JLayeredPane {
      * label's tooltip text.
      * <p>
      * abstract superclass of general feedback overlay panels.
+     * 
      * @param result
      *            determines the label's icon and tooltip text
      * @param contentComponent
@@ -234,14 +231,12 @@ public final class IconFeedbackPanel extends JLayeredPane {
      * @throws NullPointerException
      *             if the result is <code>null</code>
      */
-    private JComponent createFeedbackComponent(final ValidationResult result,
-            final Component contentComponent) {
-        Icon icon = ValidationResultViewFactory.getSmallIcon(result
-                .getSeverity());
-        JLabel label = new JLabel(icon);
-        label.setToolTipText(result.getMessagesText());
-        label.setSize(label.getPreferredSize());
-        return label;
+    private JComponent createFeedbackComponent(final ValidationResult result, final Component contentComponent) {
+	Icon icon = ValidationResultViewFactory.getSmallIcon(result.getSeverity());
+	JLabel label = new JLabel(icon);
+	label.setToolTipText(result.getMessagesText());
+	label.setSize(label.getPreferredSize());
+	return label;
     }
 
     /**
@@ -253,6 +248,7 @@ public final class IconFeedbackPanel extends JLayeredPane {
      * label's tooltip text.
      * <p>
      * abstract superclass of general feedback overlay panels.
+     * 
      * @param feedbackComponent
      *            the component that overlays the content
      * @param contentComponent
@@ -262,35 +258,31 @@ public final class IconFeedbackPanel extends JLayeredPane {
      *             if the feedback component or content component is
      *             <code>null</code>
      */
-    private Point getFeedbackComponentOrigin(
-            final JComponent feedbackComponent, final Component contentComponent) {
-        boolean isLTR = contentComponent.getComponentOrientation()
-                .isLeftToRight();
-        int addX;
-        if (isLTR) {
-            addX = 0;
-        } else {
-            addX = contentComponent.getWidth() - 1;
-        }
-        int x = contentComponent.getX() + addX - feedbackComponent.getWidth()
-                / 2;
-        int y = contentComponent.getY() + contentComponent.getHeight()
-                - feedbackComponent.getHeight() + 2;
+    private Point getFeedbackComponentOrigin(final JComponent feedbackComponent, final Component contentComponent) {
+	boolean isLTR = contentComponent.getComponentOrientation().isLeftToRight();
+	int addX;
+	if (isLTR) {
+	    addX = 0;
+	} else {
+	    addX = contentComponent.getWidth() - 1;
+	}
+	int x = contentComponent.getX() + addX - feedbackComponent.getWidth() / 2;
+	int y = contentComponent.getY() + contentComponent.getHeight() - feedbackComponent.getHeight() + 2;
 
-        return new Point(x, y);
+	return new Point(x, y);
     }
 
     // Updating the Overlay Components ****************************************
 
     private void removeAllFeedbackComponents() {
-        int componentCount = getComponentCount();
-        for (int i = componentCount - 1; i >= 0; i--) {
-            Component child = getComponent(i);
-            int layer = getLayer(child);
-            if (layer == FEEDBACK_LAYER) {
-                remove(i);
-            }
-        }
+	int componentCount = getComponentCount();
+	for (int i = componentCount - 1; i >= 0; i--) {
+	    Component child = getComponent(i);
+	    int layer = getLayer(child);
+	    if (layer == FEEDBACK_LAYER) {
+		remove(i);
+	    }
+	}
     }
 
     /**
@@ -302,6 +294,7 @@ public final class IconFeedbackPanel extends JLayeredPane {
      * visited component and its associated validation subresult. This subresult
      * is requested from the specified <code>keyMap</code> using the visited
      * component's message key.
+     * 
      * @param container
      *            the component tree root
      * @param keyMap
@@ -310,30 +303,26 @@ public final class IconFeedbackPanel extends JLayeredPane {
      * @param yOffset
      */
     @SuppressWarnings("unchecked")
-    private void visitComponentTree(final Container container,
-            final Map keyMap, final int xOffset, final int yOffset) {
-        int componentCount = container.getComponentCount();
-        for (int i = 0; i < componentCount; i++) {
-            Component child = container.getComponent(i);
-            if (!child.isVisible()) {
-                continue;
-            }
-            if (isMarkable(child)) {
-                if (isScrollPaneView(child)) {
-                    Component containerParent = container.getParent();
-                    addFeedbackComponent(containerParent, (JComponent) child,
-                            keyMap, xOffset - containerParent.getX(), yOffset
-                                    - containerParent.getY());
-                } else {
-                    addFeedbackComponent(child, (JComponent) child, keyMap,
-                            xOffset, yOffset);
-                }
+    private void visitComponentTree(final Container container, final Map keyMap, final int xOffset, final int yOffset) {
+	int componentCount = container.getComponentCount();
+	for (int i = 0; i < componentCount; i++) {
+	    Component child = container.getComponent(i);
+	    if (!child.isVisible()) {
+		continue;
+	    }
+	    if (isMarkable(child)) {
+		if (isScrollPaneView(child)) {
+		    Component containerParent = container.getParent();
+		    addFeedbackComponent(containerParent, (JComponent) child, keyMap, xOffset - containerParent.getX(),
+			    yOffset - containerParent.getY());
+		} else {
+		    addFeedbackComponent(child, (JComponent) child, keyMap, xOffset, yOffset);
+		}
 
-            } else if (child instanceof Container) {
-                visitComponentTree((Container) child, keyMap, xOffset
-                        + child.getX(), yOffset + child.getY());
-            }
-        }
+	    } else if (child instanceof Container) {
+		visitComponentTree((Container) child, keyMap, xOffset + child.getX(), yOffset + child.getY());
+	    }
+	}
     }
 
     /**
@@ -341,26 +330,23 @@ public final class IconFeedbackPanel extends JLayeredPane {
      * @return true dersom scrollpaneview
      */
     private static boolean isScrollPaneView(final Component c) {
-        Container container = c.getParent();
-        Container containerParent = container.getParent();
-        return (container instanceof JViewport)
-                && (containerParent instanceof JScrollPane);
+	Container container = c.getParent();
+	Container containerParent = container.getParent();
+	return (container instanceof JViewport) && (containerParent instanceof JScrollPane);
     }
 
     /**
      * Checks and answers if the given component can be marked or not.
      * <p>
      * <p>
+     * 
      * @param component
      *            the component to be checked
      * @return true if the given component can be marked, false if not
      */
     private static boolean isMarkable(final Component component) {
-        return component instanceof JTextComponent
-                || component instanceof JComboBox
-                || component instanceof JDateChooser
-                || component instanceof JList
-                || component instanceof JRadioButton;
+	return component instanceof JTextComponent || component instanceof JComboBox || component instanceof JDateChooser
+		|| component instanceof JList || component instanceof JRadioButton;
     }
 
     /**
@@ -371,24 +357,23 @@ public final class IconFeedbackPanel extends JLayeredPane {
      * @param yOffset
      */
     @SuppressWarnings("unchecked")
-    private void addFeedbackComponent(final Component contentComponent,
-            final JComponent messageComponent, final Map keyMap, final int xOffset, final int yOffset) {
-        ValidationResult result = getAssociatedResult(messageComponent, keyMap);
-        JComponent feedbackComponent = createFeedbackComponent(result,
-                contentComponent);
-        if (feedbackComponent == null){
-            return;
-        }
-        add(feedbackComponent, new Integer(FEEDBACK_LAYER));
-        Point overlayPosition = getFeedbackComponentOrigin(feedbackComponent,
-                contentComponent);
-        overlayPosition.translate(xOffset, yOffset);
-        feedbackComponent.setLocation(overlayPosition);
+    private void addFeedbackComponent(final Component contentComponent, final JComponent messageComponent, final Map keyMap, final int xOffset,
+	    final int yOffset) {
+	ValidationResult result = getAssociatedResult(messageComponent, keyMap);
+	JComponent feedbackComponent = createFeedbackComponent(result, contentComponent);
+	if (feedbackComponent == null) {
+	    return;
+	}
+	add(feedbackComponent, new Integer(FEEDBACK_LAYER));
+	Point overlayPosition = getFeedbackComponentOrigin(feedbackComponent, contentComponent);
+	overlayPosition.translate(xOffset, yOffset);
+	feedbackComponent.setLocation(overlayPosition);
     }
 
     /**
      * Returns the ValidationResult associated with the given component using
      * the specified validation result key map.
+     * 
      * @param comp
      *            the component may be marked with a validation message key
      * @param keyMap
@@ -397,25 +382,24 @@ public final class IconFeedbackPanel extends JLayeredPane {
      *         provided by the specified validation key map
      */
     @SuppressWarnings("unchecked")
-    private static ValidationResult getAssociatedResult(final JComponent comp,
-            final Map keyMap) {
-        Object messageKey = ValidationComponentUtils.getMessageKey(comp);
-        if ((messageKey == null) || (keyMap == null)){
-            return ValidationResult.EMPTY;
-        }
-        ValidationResult result = (ValidationResult) keyMap.get(messageKey);
-        if(result == null){
-            return ValidationResult.EMPTY;
-        }
-        return result;
+    private static ValidationResult getAssociatedResult(final JComponent comp, final Map keyMap) {
+	Object messageKey = ValidationComponentUtils.getMessageKey(comp);
+	if ((messageKey == null) || (keyMap == null)) {
+	    return ValidationResult.EMPTY;
+	}
+	ValidationResult result = (ValidationResult) keyMap.get(messageKey);
+	if (result == null) {
+	    return ValidationResult.EMPTY;
+	}
+	return result;
     }
 
     // Event Handling *********************************************************
 
     private void updateFeedbackComponents() {
-        removeAllFeedbackComponents();
-        visitComponentTree(content, model.getResult().keyMap(), 0, 0);
-        repaint();
+	removeAllFeedbackComponents();
+	visitComponentTree(content, model.getResult().keyMap(), 0, 0);
+	repaint();
     }
 
     /**
@@ -425,7 +409,7 @@ public final class IconFeedbackPanel extends JLayeredPane {
      * implementation removes all components and re-adds them later.
      */
     private void repositionFeedbackComponents() {
-        updateFeedbackComponents();
+	updateFeedbackComponents();
     }
 
     /**
@@ -436,6 +420,7 @@ public final class IconFeedbackPanel extends JLayeredPane {
      * <p>
      * We reposition the feedback components only, if this panel is visible; if
      * it becomes visible, #validateTree will be invoked.
+     * 
      * @see Container#validateTree()
      * @see #validate()
      * @see #invalidate()
@@ -445,10 +430,10 @@ public final class IconFeedbackPanel extends JLayeredPane {
      */
     @Override
     protected void validateTree() {
-        super.validateTree();
-        if (isVisible()) {
-            repositionFeedbackComponents();
-        }
+	super.validateTree();
+	if (isVisible()) {
+	    repositionFeedbackComponents();
+	}
     }
 
     /**
@@ -457,13 +442,13 @@ public final class IconFeedbackPanel extends JLayeredPane {
      */
     final class ValidationResultChangeHandler implements PropertyChangeListener {
 
-        /**
-         * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
-         */
-        @SuppressWarnings("synthetic-access")
-        public void propertyChange(final PropertyChangeEvent evt) {
-            updateFeedbackComponents();
-        }
+	/**
+	 * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+	 */
+	@SuppressWarnings("synthetic-access")
+	public void propertyChange(final PropertyChangeEvent evt) {
+	    updateFeedbackComponents();
+	}
 
     }
 
@@ -476,64 +461,69 @@ public final class IconFeedbackPanel extends JLayeredPane {
      */
     private final class SimpleLayout implements LayoutManager {
 
-        /**
-         * If the layout manager uses a per-component string, adds the component
-         * <code>comp</code> to the layout, associating it with the string
-         * specified by <code>name</code>.
-         * @param name
-         *            the string to be associated with the component
-         * @param comp
-         *            the component to be added
-         */
-        public void addLayoutComponent(final String name, final Component comp) {
-            // components are well known by the container
-        }
+	/**
+	 * If the layout manager uses a per-component string, adds the component
+	 * <code>comp</code> to the layout, associating it with the string
+	 * specified by <code>name</code>.
+	 * 
+	 * @param name
+	 *            the string to be associated with the component
+	 * @param comp
+	 *            the component to be added
+	 */
+	public void addLayoutComponent(final String name, final Component comp) {
+	    // components are well known by the container
+	}
 
-        /**
-         * Removes the specified component from the layout.
-         * @param comp
-         *            the component to be removed
-         */
-        public void removeLayoutComponent(final Component comp) {
-            // components are well known by the container
-        }
+	/**
+	 * Removes the specified component from the layout.
+	 * 
+	 * @param comp
+	 *            the component to be removed
+	 */
+	public void removeLayoutComponent(final Component comp) {
+	    // components are well known by the container
+	}
 
-        /**
-         * Calculates the preferred size dimensions for the specified container,
-         * given the components it contains.
-         * @param parent
-         *            the container to be laid out
-         * @return the preferred size of the given container
-         * @see #minimumLayoutSize(Container)
-         */
-        @SuppressWarnings("synthetic-access")
-        public Dimension preferredLayoutSize(final Container parent) {
-            return content.getPreferredSize();
-        }
+	/**
+	 * Calculates the preferred size dimensions for the specified container,
+	 * given the components it contains.
+	 * 
+	 * @param parent
+	 *            the container to be laid out
+	 * @return the preferred size of the given container
+	 * @see #minimumLayoutSize(Container)
+	 */
+	@SuppressWarnings("synthetic-access")
+	public Dimension preferredLayoutSize(final Container parent) {
+	    return content.getPreferredSize();
+	}
 
-        /**
-         * Calculates the minimum size dimensions for the specified container,
-         * given the components it contains.
-         * @param parent
-         *            the component to be laid out
-         * @return the minimum size of the given container
-         * @see #preferredLayoutSize(Container)
-         */
-        @SuppressWarnings("synthetic-access")
-        public Dimension minimumLayoutSize(final Container parent) {
-            return content.getMinimumSize();
-        }
+	/**
+	 * Calculates the minimum size dimensions for the specified container,
+	 * given the components it contains.
+	 * 
+	 * @param parent
+	 *            the component to be laid out
+	 * @return the minimum size of the given container
+	 * @see #preferredLayoutSize(Container)
+	 */
+	@SuppressWarnings("synthetic-access")
+	public Dimension minimumLayoutSize(final Container parent) {
+	    return content.getMinimumSize();
+	}
 
-        /**
-         * Lays out the specified container.
-         * @param parent
-         *            the container to be laid out
-         */
-        @SuppressWarnings("synthetic-access")
-        public void layoutContainer(final Container parent) {
-            Dimension size = parent.getSize();
-            content.setBounds(0, 0, size.width, size.height);
-        }
+	/**
+	 * Lays out the specified container.
+	 * 
+	 * @param parent
+	 *            the container to be laid out
+	 */
+	@SuppressWarnings("synthetic-access")
+	public void layoutContainer(final Container parent) {
+	    Dimension size = parent.getSize();
+	    content.setBounds(0, 0, size.width, size.height);
+	}
 
     }
 

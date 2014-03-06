@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.Map;
 
 import javax.swing.ListModel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
 import no.ugland.utransprod.ProTransException;
@@ -67,7 +69,10 @@ public class FrontProductionViewHandler extends ProductionViewHandler {
 	// Ordre
 	table.getColumnExt(table.getModel().getColumnName(1)).setPreferredWidth(200);
 	// Pro.dato
+	DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
+	tableCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 	table.getColumnExt(table.getModel().getColumnName(2)).setPreferredWidth(80);
+	table.getColumnExt(table.getModel().getColumnName(2)).setCellRenderer(tableCellRenderer);
 
 	// Antall
 	table.getColumnExt(table.getModel().getColumnName(3)).setPreferredWidth(50);
@@ -82,6 +87,7 @@ public class FrontProductionViewHandler extends ProductionViewHandler {
 	table.getColumnExt(table.getModel().getColumnName(8)).setPreferredWidth(110);
 	// reell tidsforbruk
 	table.getColumnExt(table.getModel().getColumnName(10)).setPreferredWidth(110);
+	table.getColumnExt(table.getModel().getColumnName(10)).setCellRenderer(tableCellRenderer);
     }
 
     /**

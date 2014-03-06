@@ -11,6 +11,8 @@ import java.util.regex.Pattern;
 
 import javax.swing.JCheckBox;
 import javax.swing.ListModel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
 import no.ugland.utransprod.ProTransException;
@@ -468,14 +470,20 @@ public class GavlProductionViewHandler extends ProductionViewHandler {
 	// Ordre
 	table.getColumnExt(table.getModel().getColumnName(1)).setPreferredWidth(200);
 	// Prod.dato
+	DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
+	tableCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+	table.getColumnExt(table.getModel().getColumnName(2)).setCellRenderer(tableCellRenderer);
 	table.getColumnExt(table.getModel().getColumnName(2)).setPreferredWidth(70);
 
 	// Antall
+	table.getColumnExt(table.getModel().getColumnName(3)).setCellRenderer(tableCellRenderer);
 	table.getColumnExt(table.getModel().getColumnName(3)).setPreferredWidth(50);
 
 	// Spesifikasjon
 	table.getColumnExt(table.getModel().getColumnName(4)).setPreferredWidth(400);
 
+	// Takstol
+	table.getColumnExt(table.getModel().getColumnName(5)).setCellRenderer(tableCellRenderer);
 	// Produsert
 	table.getColumnExt(table.getModel().getColumnName(7)).setPreferredWidth(110);
 
@@ -483,6 +491,7 @@ public class GavlProductionViewHandler extends ProductionViewHandler {
 	table.getColumnExt(table.getModel().getColumnName(10)).setPreferredWidth(110);
 	// kalkulert tidsforbruk
 	table.getColumnExt(table.getModel().getColumnName(12)).setPreferredWidth(120);
+	table.getColumnExt(table.getModel().getColumnName(12)).setCellRenderer(tableCellRenderer);
 
     }
 

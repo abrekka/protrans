@@ -35,150 +35,138 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import com.birosoft.liquid.LiquidLookAndFeel;
 @Category(ManuellTest.class)
 public class EditColliSetupViewTest {
-	static {
-		try {
+    static {
+	try {
 
-			UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
-			JFrame.setDefaultLookAndFeelDecorated(true);
-			LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+	    // LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
+    }
 
-	/**
-	 * test
-	 */
-	private DialogFixture dialogFixture;
+    /**
+     * test
+     */
+    private DialogFixture dialogFixture;
 
-	/**
+    /**
      *
      */
-	private ApplicationParamManager applicationParamManager;
-	private String newColliName = "kolli_6";
+    private ApplicationParamManager applicationParamManager;
+    private String newColliName = "kolli_6";
 
-	/**
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	@Before
-	public void setUp() throws Exception {
-		FailOnThreadViolationRepaintManager.install();
-		setUpDialog();
+    /**
+     * @see junit.framework.TestCase#setUp()
+     */
+    @Before
+    public void setUp() throws Exception {
+	FailOnThreadViolationRepaintManager.install();
+	setUpDialog();
 
+    }
+
+    private void setUpDialog() {
+	applicationParamManager = (ApplicationParamManager) ModelUtil.getBean("applicationParamManager");
+	ApplicationUserManager applicationUserManager = (ApplicationUserManager) ModelUtil.getBean("applicationUserManager");
+	ApplicationUser user;
+	user = applicationUserManager.login("admin", "admin");
+	applicationUserManager.lazyLoad(user, new LazyLoadEnum[][] { { LazyLoadEnum.USER_ROLES, LazyLoadEnum.NONE } });
+	UserType userType = user.getUserRoles().iterator().next().getUserType();
+
+	ApplicationParamViewHandler applicationParamViewHandler = new ApplicationParamViewHandler("Kollier", applicationParamManager, userType);
+
+	final EditColliSetupView editColliSetupView = new EditColliSetupView(applicationParamViewHandler);
+
+	JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
+	    protected JDialog executeInEDT() {
+		JDialog dialog = new JDialog();
+		WindowInterface window = new JDialogAdapter(dialog);
+		dialog.add(editColliSetupView.buildPanel(window));
+		dialog.pack();
+		return dialog;
+	    }
+	});
+	dialogFixture = new DialogFixture(dialog);
+	dialogFixture.show();
+
+    }
+
+    /**
+     * @see junit.framework.TestCase#tearDown()
+     */
+    @After
+    public void tearDown() throws Exception {
+	dialogFixture.cleanUp();
+	ApplicationParam applicationParam = ApplicationParamUtil.findParam(newColliName);
+
+	if (applicationParam != null) {
+	    applicationParamManager.removeObject(applicationParam);
 	}
+    }
 
-	private void setUpDialog() {
-		applicationParamManager = (ApplicationParamManager) ModelUtil
-				.getBean("applicationParamManager");
-		ApplicationUserManager applicationUserManager = (ApplicationUserManager) ModelUtil
-				.getBean("applicationUserManager");
-		ApplicationUser user;
-		user = applicationUserManager.login("admin", "admin");
-		applicationUserManager.lazyLoad(user, new LazyLoadEnum[][] { {
-				LazyLoadEnum.USER_ROLES, LazyLoadEnum.NONE } });
-		UserType userType = user.getUserRoles().iterator().next().getUserType();
+    @Test
+    public void testShow() {
+	dialogFixture.requireVisible();
+	dialogFixture.list("ListCollies").requireVisible();
+    }
 
-		ApplicationParamViewHandler applicationParamViewHandler = new ApplicationParamViewHandler(
-				"Kollier", applicationParamManager, userType);
+    @Test
+    public void testAddColli() {
+	dialogFixture.requireVisible();
+	String[] content = dialogFixture.list("ListCollies").contents();
+	int size = content.length;
+	newColliName = "kolli_" + (size + 1);
+	dialogFixture.button("ButtonAddColli").click();
 
-		final EditColliSetupView editColliSetupView = new EditColliSetupView(
-				applicationParamViewHandler);
+	DialogFixture optionDialog = WindowFinder.findDialog("Kollioppsett").using(dialogFixture.robot);
+	optionDialog.textBox("TextFieldInput").enterText("test1;test1");
+	optionDialog.button("ButtonOk").click();
 
-		JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
-			protected JDialog executeInEDT() {
-				JDialog dialog = new JDialog();
-				WindowInterface window = new JDialogAdapter(dialog);
-				dialog.add(editColliSetupView.buildPanel(window));
-				dialog.pack();
-				return dialog;
-			}
-		});
-		dialogFixture = new DialogFixture(dialog);
-		dialogFixture.show();
+	content = dialogFixture.list("ListCollies").contents();
+	assertEquals(size + 1, content.length);
 
-	}
+	dialogFixture.button("SaveApplicationParam").click();
 
-	/**
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	@After
-	public void tearDown() throws Exception {
-		dialogFixture.cleanUp();
-		ApplicationParam applicationParam = ApplicationParamUtil
-				.findParam(newColliName);
+	ApplicationParam applicationParam = ApplicationParamUtil.findParam(newColliName);
+	assertNotNull(applicationParam);
+    }
 
-		if (applicationParam != null) {
-			applicationParamManager.removeObject(applicationParam);
-		}
-	}
+    @Test
+    public void testRemoveColli() {
+	dialogFixture.requireVisible();
+	dialogFixture.button("ButtonRemoveColli").requireDisabled();
+	JListFixture listFixture = dialogFixture.list("ListCollies");
+	String[] content = listFixture.contents();
+	int size = content.length;
+	newColliName = "kolli_" + (size + 1);
+	dialogFixture.button("ButtonAddColli").click();
 
-	@Test
-	public void testShow() {
-		dialogFixture.requireVisible();
-		dialogFixture.list("ListCollies").requireVisible();
-	}
+	DialogFixture optionDialog = WindowFinder.findDialog("Kollioppsett").using(dialogFixture.robot);
+	optionDialog.textBox("TextFieldInput").enterText("test;test");
+	optionDialog.button("ButtonOk").click();
 
-	@Test
-	public void testAddColli() {
-		dialogFixture.requireVisible();
-		String[] content = dialogFixture.list("ListCollies").contents();
-		int size = content.length;
-		newColliName = "kolli_" + (size + 1);
-		dialogFixture.button("ButtonAddColli").click();
+	content = dialogFixture.list("ListCollies").contents();
+	assertEquals(size + 1, content.length);
+	dialogFixture.button("SaveApplicationParam").click();
+	ApplicationParam applicationParam = ApplicationParamUtil.findParam(newColliName);
+	assertNotNull(applicationParam);
 
-		DialogFixture optionDialog = WindowFinder.findDialog("Kollioppsett")
-				.using(dialogFixture.robot);
-		optionDialog.textBox("TextFieldInput").enterText("test1;test1");
-		optionDialog.button("ButtonOk").click();
+	listFixture.selectItem("test;test");
+	dialogFixture.button("ButtonRemoveColli").click();
+	JOptionPaneFinder.findOptionPane().using(dialogFixture.robot).buttonWithText("Ja").click();
 
-		content = dialogFixture.list("ListCollies").contents();
-		assertEquals(size + 1, content.length);
+	content = dialogFixture.list("ListCollies").contents();
+	assertEquals(size, content.length);
 
-		dialogFixture.button("SaveApplicationParam").click();
+	dialogFixture.button("SaveApplicationParam").click();
 
-		ApplicationParam applicationParam = ApplicationParamUtil
-				.findParam(newColliName);
-		assertNotNull(applicationParam);
-	}
-
-	@Test
-	public void testRemoveColli() {
-		dialogFixture.requireVisible();
-		dialogFixture.button("ButtonRemoveColli").requireDisabled();
-		JListFixture listFixture = dialogFixture.list("ListCollies");
-		String[] content = listFixture.contents();
-		int size = content.length;
-		newColliName = "kolli_" + (size + 1);
-		dialogFixture.button("ButtonAddColli").click();
-
-		DialogFixture optionDialog = WindowFinder.findDialog("Kollioppsett")
-				.using(dialogFixture.robot);
-		optionDialog.textBox("TextFieldInput").enterText("test;test");
-		optionDialog.button("ButtonOk").click();
-
-		content = dialogFixture.list("ListCollies").contents();
-		assertEquals(size + 1, content.length);
-		dialogFixture.button("SaveApplicationParam").click();
-		ApplicationParam applicationParam = ApplicationParamUtil
-				.findParam(newColliName);
-		assertNotNull(applicationParam);
-
-		listFixture.selectItem("test;test");
-		dialogFixture.button("ButtonRemoveColli").click();
-		JOptionPaneFinder.findOptionPane().using(dialogFixture.robot)
-				.buttonWithText("Ja").click();
-
-		content = dialogFixture.list("ListCollies").contents();
-		assertEquals(size, content.length);
-
-		dialogFixture.button("SaveApplicationParam").click();
-
-		applicationParam = ApplicationParamUtil.findParam(newColliName);
-		assertNull(applicationParam);
-	}
+	applicationParam = ApplicationParamUtil.findParam(newColliName);
+	assertNull(applicationParam);
+    }
 
 }

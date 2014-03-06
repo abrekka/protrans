@@ -47,121 +47,105 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.birosoft.liquid.LiquidLookAndFeel;
 @Category(ManuellTest.class)
 public class MenubarOrderMenuTest {
-	static {
-		try {
+    static {
+	try {
 
-			UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
-			JFrame.setDefaultLookAndFeelDecorated(true);
-			LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+	    // LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
+    }
 
-	private FrameFixture frameFixture;
-	@Mock
-	private Login login;
-	@Mock
-	private ManagerRepository managerRepository;
+    private FrameFixture frameFixture;
+    @Mock
+    private Login login;
+    @Mock
+    private ManagerRepository managerRepository;
 
-	@Mock
-	private DeviationOverviewViewFactory deviationOverviewViewFactory;
-	@Mock
-	private DeviationViewHandlerFactory deviationViewHandlerFactory;
-	@Mock
-	private OrderViewHandlerFactory orderViewHandlerFactory;
-	@Mock
-	private ProductAreaManager productAreaManager;
-	@Mock
-	private JobFunctionManager jobFunctionManager;
-	@Mock
-	private DeviationStatusManager deviationStatusManager;
-	@Mock
-	private ApplicationUserManager applicationUserManager;
-	@Mock
-	private OrderManager orderManager;
+    @Mock
+    private DeviationOverviewViewFactory deviationOverviewViewFactory;
+    @Mock
+    private DeviationViewHandlerFactory deviationViewHandlerFactory;
+    @Mock
+    private OrderViewHandlerFactory orderViewHandlerFactory;
+    @Mock
+    private ProductAreaManager productAreaManager;
+    @Mock
+    private JobFunctionManager jobFunctionManager;
+    @Mock
+    private DeviationStatusManager deviationStatusManager;
+    @Mock
+    private ApplicationUserManager applicationUserManager;
+    @Mock
+    private OrderManager orderManager;
 
-	@Before
-	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
+    @Before
+    public void setUp() throws Exception {
+	MockitoAnnotations.initMocks(this);
 
-		when(managerRepository.getProductAreaManager()).thenReturn(
-				productAreaManager);
-		when(managerRepository.getJobFunctionManager()).thenReturn(
-				jobFunctionManager);
-		when(managerRepository.getDeviationStatusManager()).thenReturn(
-				deviationStatusManager);
-		when(managerRepository.getApplicationUserManager()).thenReturn(
-				applicationUserManager);
-		when(managerRepository.getOrderManager()).thenReturn(orderManager);
-		ApplicationUser applicationUser = new ApplicationUser();
-		when(login.getApplicationUser()).thenReturn(applicationUser);
-		UserType userType = new UserType();
-		UserTypeAccess userTypeAccess = new UserTypeAccess();
-		userTypeAccess.setWindowAccess(new WindowAccess(null, "Attributter",
-				null));
-		userType.setIsAdmin(1);
-		Set<UserTypeAccess> userTypeAccesses = new HashSet<UserTypeAccess>();
-		userTypeAccesses.add(userTypeAccess);
-		userType.setUserTypeAccesses(userTypeAccesses);
-		when(login.getUserType()).thenReturn(userType);
+	when(managerRepository.getProductAreaManager()).thenReturn(productAreaManager);
+	when(managerRepository.getJobFunctionManager()).thenReturn(jobFunctionManager);
+	when(managerRepository.getDeviationStatusManager()).thenReturn(deviationStatusManager);
+	when(managerRepository.getApplicationUserManager()).thenReturn(applicationUserManager);
+	when(managerRepository.getOrderManager()).thenReturn(orderManager);
+	ApplicationUser applicationUser = new ApplicationUser();
+	when(login.getApplicationUser()).thenReturn(applicationUser);
+	UserType userType = new UserType();
+	UserTypeAccess userTypeAccess = new UserTypeAccess();
+	userTypeAccess.setWindowAccess(new WindowAccess(null, "Attributter", null));
+	userType.setIsAdmin(1);
+	Set<UserTypeAccess> userTypeAccesses = new HashSet<UserTypeAccess>();
+	userTypeAccesses.add(userTypeAccess);
+	userType.setUserTypeAccesses(userTypeAccesses);
+	when(login.getUserType()).thenReturn(userType);
 
-		OrderViewHandler orderViewHandler = new OrderViewHandler(login,
-				managerRepository, deviationOverviewViewFactory,
-				deviationViewHandlerFactory, true);
-		when(orderViewHandlerFactory.create(anyBoolean())).thenReturn(
-				orderViewHandler);
+	OrderViewHandler orderViewHandler = new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory, deviationViewHandlerFactory,
+		true);
+	when(orderViewHandlerFactory.create(anyBoolean())).thenReturn(orderViewHandler);
 
-		final MenuBarBuilderInterface menuBarBuilder = new MenuBarBuilderImpl(
-				login);
-		final GarageMenu garageMenu = new GarageMenu(login);
+	final MenuBarBuilderInterface menuBarBuilder = new MenuBarBuilderImpl(login);
+	final GarageMenu garageMenu = new GarageMenu(login);
 
-		OrderAction orderAction = new OrderAction(menuBarBuilder,
-				orderViewHandlerFactory);
-		garageMenu.setOrderAction(orderAction);
-		menuBarBuilder.setGarageMenu(garageMenu);
+	OrderAction orderAction = new OrderAction(menuBarBuilder, orderViewHandlerFactory);
+	garageMenu.setOrderAction(orderAction);
+	menuBarBuilder.setGarageMenu(garageMenu);
 
-		ProductionMenu productionMenu = new ProductionMenu(login);
-		GavlProductionWindow gavlProductionWindow = new GavlProductionWindow(
-				login, managerRepository, deviationViewHandlerFactory, null);
-		GavlProductionAction gavlProductionAction = new GavlProductionAction(
-				menuBarBuilder, gavlProductionWindow);
-		productionMenu.setGavlProductionAction(gavlProductionAction);
-		menuBarBuilder.setProductionMenu(productionMenu);
+	ProductionMenu productionMenu = new ProductionMenu(login);
+	GavlProductionWindow gavlProductionWindow = new GavlProductionWindow(login, managerRepository, deviationViewHandlerFactory, null);
+	GavlProductionAction gavlProductionAction = new GavlProductionAction(menuBarBuilder, gavlProductionWindow);
+	productionMenu.setGavlProductionAction(gavlProductionAction);
+	menuBarBuilder.setProductionMenu(productionMenu);
 
-		ProTransMain proTransMain = GuiActionRunner
-				.execute(new GuiQuery<ProTransMain>() {
-					protected ProTransMain executeInEDT() {
-						ProTransMain proTransMain = new ProTransMain(
-								menuBarBuilder, login);
-						proTransMain.buildFrame();
-						return proTransMain;
-					}
-				});
+	ProTransMain proTransMain = GuiActionRunner.execute(new GuiQuery<ProTransMain>() {
+	    protected ProTransMain executeInEDT() {
+		ProTransMain proTransMain = new ProTransMain(menuBarBuilder, login);
+		proTransMain.buildFrame();
+		return proTransMain;
+	    }
+	});
 
-		frameFixture = new FrameFixture(proTransMain);
+	frameFixture = new FrameFixture(proTransMain);
 
-	}
+    }
 
-	@After
-	public void tearDown() throws Exception {
-		frameFixture.cleanUp();
+    @After
+    public void tearDown() throws Exception {
+	frameFixture.cleanUp();
 
-	}
+    }
 
-	@Test
-	public void testOrderMenu() {
-		frameFixture.show();
-		frameFixture.menuItemWithPath(new String[] { "Ordre", "Ordre..." })
-				.click();
+    @Test
+    public void testOrderMenu() {
+	frameFixture.show();
+	frameFixture.menuItemWithPath(new String[] { "Ordre", "Ordre..." }).click();
 
-		Component comp = frameFixture.robot.finder()
-				.findByName("OverviewOrder");
-		assertNotNull(comp);
-	}
+	Component comp = frameFixture.robot.finder().findByName("OverviewOrder");
+	assertNotNull(comp);
+    }
 
 }

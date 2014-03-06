@@ -45,7 +45,7 @@ public class ArticleTypeDAOIntegrationTest {
 
     @Test
     public void testFindByProdCatNoAndProdCatNo2Kledning() {
-	articleType = articleTypeDAO.findByProdCatNoAndProdCatNo2(null, 3);
+	articleType = articleTypeDAO.findByProdCatNoAndProdCatNo2(0, 3);
 	assertNotNull(articleType);
 	assertEquals("Kledning", articleType.getArticleTypeName());
     }

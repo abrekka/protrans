@@ -46,7 +46,7 @@ public class SalesWebManagerIntegrationTest {
     public void skal() throws Exception {
 	Integer year = 2011;
 	Integer week = 6;
-	String productAreaName = "Garasje villa";
+	String productAreaName = "Villa Element";
 	SalesStatistic statistic = salesWebManager.generateSalesStatistics(year, week, productAreaName);
 	assertNotNull(statistic);
     }

@@ -50,22 +50,22 @@
 				</configuration>
 			</plugin>
 			<plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>2.12</version>
-            <dependencies>
-                <dependency>
-                    <groupId>org.apache.maven.surefire</groupId>
-                    <artifactId>surefire-junit47</artifactId>
-                    <version>2.12</version>
-                </dependency>
-            </dependencies>
-            <configuration>
-<!--             <skipTests>true</skipTests> -->
-<groups>no.ugland.utransprod.test.FastTests,no.ugland.utransprod.test.GUITests</groups>
-<exludedGroups>no.ugland.utransprod.test.ManuellTest</exludedGroups>
-            </configuration>
-        </plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.12</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.surefire</groupId>
+						<artifactId>surefire-junit47</artifactId>
+						<version>2.12</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<!-- <skipTests>true</skipTests> -->
+					<groups>no.ugland.utransprod.test.FastTests,no.ugland.utransprod.test.GUITests</groups>
+					<exludedGroups>no.ugland.utransprod.test.ManuellTest</exludedGroups>
+				</configuration>
+			</plugin>
 
 		</plugins>
 	</build>
@@ -118,17 +118,17 @@
 			<version>2.0-m1</version>
 		</dependency>
 		<dependency>
-			<groupId>jgoodies</groupId>
+			<groupId>com.jgoodies</groupId>
 			<artifactId>binding</artifactId>
 			<version>1.4.0</version>
 		</dependency>
 		<dependency>
-			<groupId>jcalendar</groupId>
+			<groupId>com.toedter</groupId>
 			<artifactId>jcalendar</artifactId>
 			<version>1.3.2</version>
 		</dependency>
 		<dependency>
-			<groupId>jgoodies</groupId>
+			<groupId>com.jgoodies</groupId>
 			<artifactId>forms</artifactId>
 			<version>1.0.7</version>
 		</dependency>
@@ -138,19 +138,20 @@
 			<version>1.2</version>
 		</dependency>
 		<dependency>
-			<groupId>jgoodies</groupId>
+			<groupId>com.jgoodies</groupId>
 			<artifactId>validation</artifactId>
 			<version>1.3.0</version>
 		</dependency>
 		<dependency>
-			<groupId>JavaHelp</groupId>
-			<artifactId>JavaHelp</artifactId>
-			<version>2.0.02</version>
+			<groupId>javax.help</groupId>
+			<artifactId>javahelp</artifactId>
+			<version>2.0.05</version>
 		</dependency>
+
 		<dependency>
-			<groupId>abbot</groupId>
-			<artifactId>abbot</artifactId>
-			<version>1.0.0</version>
+		<groupId>abbot</groupId>
+		<artifactId>abbot</artifactId>
+		<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>jdom</groupId>
@@ -158,20 +159,26 @@
 			<version>1.0</version>
 		</dependency>
 		<dependency>
-			<groupId>swingx</groupId>
+			<groupId>org.swinglabs</groupId>
 			<artifactId>swingx</artifactId>
 			<version>0.9.5</version>
 		</dependency>
 		<dependency>
-			<groupId>liquidlnf</groupId>
-			<artifactId>liquidlnf</artifactId>
-			<version>0.2.9</version>
+		<groupId>liquidlnf</groupId>
+		<artifactId>liquidlnf</artifactId>
+		<version>0.2.9</version>
 		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>quaqua</groupId> -->
+		<!-- <artifactId>quaqua</artifactId> -->
+		<!-- <version>8.0.0</version> -->
+		<!-- </dependency> -->
 		<dependency>
-			<groupId>quaqua</groupId>
-			<artifactId>quaqua</artifactId>
-			<version>8.0.0</version>
+			<groupId>org.devzendo</groupId>
+			<artifactId>Quaqua</artifactId>
+			<version>7.3.4</version>
 		</dependency>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -183,17 +190,18 @@
 			<version>1.2.9</version>
 		</dependency>
 		<dependency>
-			<groupId>poi</groupId>
+			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>3.6</version>
 		</dependency>
+
 		<dependency>
 			<groupId>jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
 			<version>3.5.3</version>
 		</dependency>
 		<dependency>
-			<groupId>net.sourceforge</groupId>
+			<groupId>c3p0</groupId>
 			<artifactId>c3p0</artifactId>
 			<version>0.9.1.2</version>
 		</dependency>
@@ -213,9 +221,9 @@
 			<version>1.1</version>
 		</dependency>
 		<dependency>
-			<groupId>jdic</groupId>
+			<groupId>org.jdesktop.jdic</groupId>
 			<artifactId>jdic</artifactId>
-			<version>0.9.4</version>
+			<version>0.9.5</version>
 		</dependency>
 
 		<dependency>
@@ -251,12 +259,12 @@
 			<artifactId>commons-lang</artifactId>
 			<version>2.4</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.testng</groupId> -->
-<!-- 			<artifactId>testng</artifactId> -->
-<!-- 			<version>5.12.1</version> -->
-<!-- 			<scope>test</scope> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.testng</groupId> -->
+		<!-- <artifactId>testng</artifactId> -->
+		<!-- <version>5.12.1</version> -->
+		<!-- <scope>test</scope> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>com.google.collections</groupId>
 			<artifactId>google-collections</artifactId>
@@ -274,5 +282,5 @@
 			<version>2.0</version>
 		</dependency>
 	</dependencies>
-	<version>3.2.1</version>
+	<version>3.2.2</version>
 </project>

@@ -47,125 +47,115 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.birosoft.liquid.LiquidLookAndFeel;
 import com.toedter.calendar.JYearChooser;
+
 @Category(GUITests.class)
 public class ConfirmReportViewTest {
-	static {
-		try {
+    static {
+	try {
 
-			UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
-			JFrame.setDefaultLookAndFeelDecorated(true);
-			LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+	    // LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
+    }
 
-	private DialogFixture dialogFixture;
-	private ConfirmReportViewHandler viewHandler;
+    private DialogFixture dialogFixture;
+    private ConfirmReportViewHandler viewHandler;
 
-	@Mock
-	private Login login;
-	@Mock
-	private ManagerRepository managerRepository;
-	@Mock
-	private DeviationOverviewViewFactory deviationOverviewViewFactory;
-	@Mock
-	private DeviationViewHandlerFactory deviationViewHandlerFactory;
-	@Mock
-	private OrderManager orderManager;
-	@Mock
-	private ProductAreaManager productAreaManager;
-	private ProductAreaGroupManager productAreaGroupManager;
-	@Mock
-	private ApplicationParamManager applicationParamManager;
+    @Mock
+    private Login login;
+    @Mock
+    private ManagerRepository managerRepository;
+    @Mock
+    private DeviationOverviewViewFactory deviationOverviewViewFactory;
+    @Mock
+    private DeviationViewHandlerFactory deviationViewHandlerFactory;
+    @Mock
+    private OrderManager orderManager;
+    @Mock
+    private ProductAreaManager productAreaManager;
+    private ProductAreaGroupManager productAreaGroupManager;
+    @Mock
+    private ApplicationParamManager applicationParamManager;
 
-	@Before
-	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-		productAreaGroupManager=(ProductAreaGroupManager)ModelUtil.getBean(ProductAreaGroupManager.MANAGER_NAME);
+    @Before
+    public void setUp() throws Exception {
+	MockitoAnnotations.initMocks(this);
+	productAreaGroupManager = (ProductAreaGroupManager) ModelUtil.getBean(ProductAreaGroupManager.MANAGER_NAME);
 
-		Util.setProductAreaGroupManager(productAreaGroupManager);
-		ApplicationParamUtil.setApplicationParamManger(applicationParamManager);
-		when(managerRepository.getOrderManager()).thenReturn(orderManager);
-		when(managerRepository.getProductAreaManager()).thenReturn(
-				productAreaManager);
-		List<Order> orderList = new ArrayList<Order>();
-		Order order = new Order();
-		orderList.add(order);
-		when(
-				orderManager.findByConfirmWeekProductAreaGroup(anyInt(),
-						anyInt(), anyInt(), (ProductAreaGroup) anyObject()))
-				.thenReturn(orderList);
+	Util.setProductAreaGroupManager(productAreaGroupManager);
+	ApplicationParamUtil.setApplicationParamManger(applicationParamManager);
+	when(managerRepository.getOrderManager()).thenReturn(orderManager);
+	when(managerRepository.getProductAreaManager()).thenReturn(productAreaManager);
+	List<Order> orderList = new ArrayList<Order>();
+	Order order = new Order();
+	orderList.add(order);
+	when(orderManager.findByConfirmWeekProductAreaGroup(anyInt(), anyInt(), anyInt(), (ProductAreaGroup) anyObject())).thenReturn(orderList);
 
-		OrderViewHandler orderViewHandler = new OrderViewHandler(login,
-				managerRepository, deviationOverviewViewFactory,
-				deviationViewHandlerFactory, true);
+	OrderViewHandler orderViewHandler = new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory, deviationViewHandlerFactory,
+		true);
 
-		viewHandler = new ConfirmReportViewHandler(orderViewHandler,
-				managerRepository);
-		final ConfirmReportView view = new ConfirmReportView(viewHandler);
+	viewHandler = new ConfirmReportViewHandler(orderViewHandler, managerRepository);
+	final ConfirmReportView view = new ConfirmReportView(viewHandler);
 
-		JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
-			protected JDialog executeInEDT() {
-				JDialog dialog = new JDialog();
-				WindowInterface window = new JDialogAdapter(dialog);
-				dialog.add(view.buildPanel(window));
-				dialog.pack();
-				return dialog;
-			}
-		});
-		dialogFixture = new DialogFixture(dialog);
-		dialogFixture.show();
+	JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
+	    protected JDialog executeInEDT() {
+		JDialog dialog = new JDialog();
+		WindowInterface window = new JDialogAdapter(dialog);
+		dialog.add(view.buildPanel(window));
+		dialog.pack();
+		return dialog;
+	    }
+	});
+	dialogFixture = new DialogFixture(dialog);
+	dialogFixture.show();
 
-	}
+    }
 
-	@After
-	public void tearDown() throws Exception {
-		dialogFixture.cleanUp();
-	}
+    @After
+    public void tearDown() throws Exception {
+	dialogFixture.cleanUp();
+    }
 
-	@Test
-	public void testShow() {
-		dialogFixture.requireVisible();
+    @Test
+    public void testShow() {
+	dialogFixture.requireVisible();
 
-		ComponentFinder finder = dialogFixture.robot.finder();
-		finder.find(new JYearChooserFinder("YearChooser"));
+	ComponentFinder finder = dialogFixture.robot.finder();
+	finder.find(new JYearChooserFinder("YearChooser"));
 
-		dialogFixture.comboBox("ComboBoxWeekFrom").requireVisible();
-		dialogFixture.comboBox("ComboBoxWeekTo").requireVisible();
-		dialogFixture.button("ButtonGenerateReport").requireVisible();
+	dialogFixture.comboBox("ComboBoxWeekFrom").requireVisible();
+	dialogFixture.comboBox("ComboBoxWeekTo").requireVisible();
+	dialogFixture.button("ButtonGenerateReport").requireVisible();
 
-		JTabbedPaneFixture tabbedPane = dialogFixture.tabbedPane(
-				"TabbedPaneResult").requireVisible();
-		dialogFixture.table("TableResult").requireVisible();
-		tabbedPane.selectTab(1);
-		dialogFixture.table("TableOrders");
-		dialogFixture.button("ButtonCancel");
-	}
+	JTabbedPaneFixture tabbedPane = dialogFixture.tabbedPane("TabbedPaneResult").requireVisible();
+	dialogFixture.table("TableResult").requireVisible();
+	tabbedPane.selectTab(1);
+	dialogFixture.table("TableOrders");
+	dialogFixture.button("ButtonCancel");
+    }
 
-	@Test
-	public void testGenerateReport() throws Exception {
-		dialogFixture.requireVisible();
+    @Test
+    public void testGenerateReport() throws Exception {
+	dialogFixture.requireVisible();
 
-		ComponentFinder finder = dialogFixture.robot.finder();
-		JYearChooser yearChooser = finder.find(new JYearChooserFinder(
-				"YearChooser"));
-		yearChooser.setYear(2008);
+	ComponentFinder finder = dialogFixture.robot.finder();
+	JYearChooser yearChooser = finder.find(new JYearChooserFinder("YearChooser"));
+	yearChooser.setYear(2008);
 
-		dialogFixture.comboBox("ComboBoxWeekFrom").requireVisible();
-		dialogFixture.comboBox("ComboBoxWeekFrom").target.setSelectedItem(40);
-		dialogFixture.comboBox("ComboBoxWeekTo").requireVisible();
-		dialogFixture.comboBox("ComboBoxWeekTo").target.setSelectedItem(41);
-		dialogFixture.comboBox("ComboBoxProductAreaGroup").target
-				.setSelectedItem(1);
+	dialogFixture.comboBox("ComboBoxWeekFrom").requireVisible();
+	dialogFixture.comboBox("ComboBoxWeekFrom").target.setSelectedItem(40);
+	dialogFixture.comboBox("ComboBoxWeekTo").requireVisible();
+	dialogFixture.comboBox("ComboBoxWeekTo").target.setSelectedItem(41);
+	dialogFixture.comboBox("ComboBoxProductAreaGroup").target.setSelectedItem(1);
 
-		dialogFixture.button("ButtonGenerateReport").click();
-		Pause.pause(1000);
-		assertEquals(true, dialogFixture.table("TableResult").target
-				.getRowCount() != 0);
-	}
+	dialogFixture.button("ButtonGenerateReport").click();
+	Pause.pause(1000);
+	assertEquals(true, dialogFixture.table("TableResult").target.getRowCount() != 0);
+    }
 
 }

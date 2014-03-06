@@ -27,9 +27,11 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
@@ -1002,6 +1004,9 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 
 	    ColorHighlighter greyPattern = new ColorHighlighter(new PatternPredicate("90", 10), ColorEnum.GREY.getColor(), null);
 	    tableOrders.addHighlighter(greyPattern);
+	    DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
+	    tableCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+	    tableOrders.getColumnExt(12).setCellRenderer(tableCellRenderer);
 
 	    break;
 	case ASSEMBLY_ORDERS:

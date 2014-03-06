@@ -37,198 +37,175 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import com.birosoft.liquid.LiquidLookAndFeel;
 @Category(ManuellTest.class)
 public class EditProductionUnitTest {
-	static {
-		try {
+    static {
+	try {
 
-			UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
-			JFrame.setDefaultLookAndFeelDecorated(true);
-			LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+	    // LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
+    }
 
-	/**
-	 * test
-	 */
-	private DialogFixture dialogFixture;
+    /**
+     * test
+     */
+    private DialogFixture dialogFixture;
 
-	/**
+    /**
      *
      */
 
-	private ProductionUnitManager productionUnitManager;
+    private ProductionUnitManager productionUnitManager;
 
-	/**
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	@Before
-	public void setUp() throws Exception {
-		FailOnThreadViolationRepaintManager.install();
-		productionUnitManager = (ProductionUnitManager) ModelUtil
-				.getBean("productionUnitManager");
+    /**
+     * @see junit.framework.TestCase#setUp()
+     */
+    @Before
+    public void setUp() throws Exception {
+	FailOnThreadViolationRepaintManager.install();
+	productionUnitManager = (ProductionUnitManager) ModelUtil.getBean("productionUnitManager");
 
-		ApplicationUserManager applicationUserManager = (ApplicationUserManager) ModelUtil
-				.getBean("applicationUserManager");
-		ApplicationUser user;
-		user = applicationUserManager.login("admin", "admin");
-		applicationUserManager.lazyLoad(user, new LazyLoadEnum[][] { {
-				LazyLoadEnum.USER_ROLES, LazyLoadEnum.NONE } });
-		UserType userType = user.getUserRoles().iterator().next().getUserType();
+	ApplicationUserManager applicationUserManager = (ApplicationUserManager) ModelUtil.getBean("applicationUserManager");
+	ApplicationUser user;
+	user = applicationUserManager.login("admin", "admin");
+	applicationUserManager.lazyLoad(user, new LazyLoadEnum[][] { { LazyLoadEnum.USER_ROLES, LazyLoadEnum.NONE } });
+	UserType userType = user.getUserRoles().iterator().next().getUserType();
 
-		Login login = new LoginImpl(user, userType);
+	Login login = new LoginImpl(user, userType);
 
-		ProductionUnitViewHandler productionUnitViewHandler = new ProductionUnitViewHandler(
-				login, productionUnitManager);
+	ProductionUnitViewHandler productionUnitViewHandler = new ProductionUnitViewHandler(login, productionUnitManager);
 
-		ProductionUnitModel productionUnitModel = new ProductionUnitModel(
-				new ProductionUnit());
-		final EditProductionUnitView editProductionUnitView = new EditProductionUnitView(
-				false, productionUnitModel, productionUnitViewHandler);
+	ProductionUnitModel productionUnitModel = new ProductionUnitModel(new ProductionUnit());
+	final EditProductionUnitView editProductionUnitView = new EditProductionUnitView(false, productionUnitModel, productionUnitViewHandler);
 
-		JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
-			protected JDialog executeInEDT() {
-				JDialog dialog = new JDialog();
-				WindowInterface window = new JDialogAdapter(dialog);
-				dialog.add(editProductionUnitView.buildPanel(window));
-				dialog.pack();
-				return dialog;
-			}
-		});
-		dialogFixture = new DialogFixture(dialog);
-		dialogFixture.show();
+	JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
+	    protected JDialog executeInEDT() {
+		JDialog dialog = new JDialog();
+		WindowInterface window = new JDialogAdapter(dialog);
+		dialog.add(editProductionUnitView.buildPanel(window));
+		dialog.pack();
+		return dialog;
+	    }
+	});
+	dialogFixture = new DialogFixture(dialog);
+	dialogFixture.show();
 
+    }
+
+    /**
+     * @see junit.framework.TestCase#tearDown()
+     */
+    @After
+    public void tearDown() throws Exception {
+	dialogFixture.cleanUp();
+
+	ProductionUnit productionUnit = new ProductionUnit();
+	productionUnit.setProductionUnitName("test");
+	List<ProductionUnit> list = productionUnitManager.findByObject(productionUnit);
+	if (list != null) {
+	    for (ProductionUnit prodUnit : list) {
+		productionUnitManager.removeObject(prodUnit);
+	    }
 	}
+    }
 
-	/**
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	@After
-	public void tearDown() throws Exception {
-		dialogFixture.cleanUp();
+    @Test
+    public void testShow() {
+	dialogFixture.requireVisible();
 
-		ProductionUnit productionUnit = new ProductionUnit();
-		productionUnit.setProductionUnitName("test");
-		List<ProductionUnit> list = productionUnitManager
-				.findByObject(productionUnit);
-		if (list != null) {
-			for (ProductionUnit prodUnit : list) {
-				productionUnitManager.removeObject(prodUnit);
-			}
-		}
-	}
+	dialogFixture.textBox("TextFieldProductionUnitName").requireVisible();
+	dialogFixture.comboBox("ComboBoxArticleType").requireVisible();
+	dialogFixture.list("ListProductAreaGroup").requireVisible();
+	dialogFixture.button("ButtonAddProductAreaGroup").requireVisible();
+	dialogFixture.button("ButtonRemoveProductAreaGroup").requireVisible();
+	dialogFixture.button("ButtonRemoveProductAreaGroup").requireDisabled();
+	dialogFixture.button("SaveProductionUnit").requireVisible();
+	dialogFixture.button("EditCancelProductionUnit").requireVisible();
+    }
 
-	@Test
-	public void testShow() {
-		dialogFixture.requireVisible();
+    @Test
+    public void testInsertProductionUnitWithErrors() {
+	dialogFixture.comboBox("ComboBoxArticleType").selectItem("Takstoler");
+	dialogFixture.textBox("TextFieldProductionUnitName").enterText("test");
 
-		dialogFixture.textBox("TextFieldProductionUnitName").requireVisible();
-		dialogFixture.comboBox("ComboBoxArticleType").requireVisible();
-		dialogFixture.list("ListProductAreaGroup").requireVisible();
-		dialogFixture.button("ButtonAddProductAreaGroup").requireVisible();
-		dialogFixture.button("ButtonRemoveProductAreaGroup").requireVisible();
-		dialogFixture.button("ButtonRemoveProductAreaGroup").requireDisabled();
-		dialogFixture.button("SaveProductionUnit").requireVisible();
-		dialogFixture.button("EditCancelProductionUnit").requireVisible();
-	}
+	dialogFixture.button("SaveProductionUnit").click();
 
-	@Test
-	public void testInsertProductionUnitWithErrors() {
-		dialogFixture.comboBox("ComboBoxArticleType").selectItem("Takstoler");
-		dialogFixture.textBox("TextFieldProductionUnitName").enterText("test");
+	JOptionPaneFinder.findOptionPane().using(dialogFixture.robot);
+    }
 
-		dialogFixture.button("SaveProductionUnit").click();
+    @Test
+    public void testInsertProductionUnit() {
+	dialogFixture.show();
+	dialogFixture.comboBox("ComboBoxArticleType").selectItem("Takstoler");
+	dialogFixture.textBox("TextFieldProductionUnitName").enterText("test");
 
-		JOptionPaneFinder.findOptionPane().using(dialogFixture.robot);
-	}
+	dialogFixture.button("ButtonAddProductAreaGroup").click();
 
-	@Test
-	public void testInsertProductionUnit() {
-		dialogFixture.show();
-		dialogFixture.comboBox("ComboBoxArticleType").selectItem("Takstoler");
-		dialogFixture.textBox("TextFieldProductionUnitName").enterText("test");
+	DialogFixture optionDialog = WindowFinder.findDialog("Velg produktområde").using(dialogFixture.robot);
+	optionDialog.comboBox().selectItem("Takstol");
+	optionDialog.button("ButtonOk").click();
 
-		dialogFixture.button("ButtonAddProductAreaGroup").click();
+	dialogFixture.button("SaveProductionUnit").click();
 
-		DialogFixture optionDialog = WindowFinder.findDialog(
-				"Velg produktområde").using(dialogFixture.robot);
-		optionDialog.comboBox().selectItem("Takstol");
-		optionDialog.button("ButtonOk").click();
+	ProductionUnit productionUnit = new ProductionUnit();
+	productionUnit.setProductionUnitName("test");
+	List<ProductionUnit> list = productionUnitManager.findByObject(productionUnit);
+	assertNotNull(list);
+	assertEquals(1, list.size());
 
-		dialogFixture.button("SaveProductionUnit").click();
+	productionUnit = list.get(0);
+	productionUnitManager.lazyLoad(productionUnit,
+		new LazyLoadEnum[][] { { LazyLoadEnum.PRODUCTION_UNIT_PRODUCT_AREA_GROUPS, LazyLoadEnum.NONE } });
+	assertEquals("Takstoler", productionUnit.getArticleType().getArticleTypeName());
+	assertEquals("test", productionUnit.getProductionUnitName());
 
-		ProductionUnit productionUnit = new ProductionUnit();
-		productionUnit.setProductionUnitName("test");
-		List<ProductionUnit> list = productionUnitManager
-				.findByObject(productionUnit);
-		assertNotNull(list);
-		assertEquals(1, list.size());
+	assertEquals(1, productionUnit.getProductionUnitProductAreaGroups().size());
+	assertEquals("Takstol", productionUnit.getProductionUnitProductAreaGroups().iterator().next().getProductAreaGroup().getProductAreaGroupName());
 
-		productionUnit = list.get(0);
-		productionUnitManager.lazyLoad(productionUnit, new LazyLoadEnum[][] { {
-				LazyLoadEnum.PRODUCTION_UNIT_PRODUCT_AREA_GROUPS,
-				LazyLoadEnum.NONE } });
-		assertEquals("Takstoler", productionUnit.getArticleType()
-				.getArticleTypeName());
-		assertEquals("test", productionUnit.getProductionUnitName());
+    }
 
-		assertEquals(1, productionUnit.getProductionUnitProductAreaGroups()
-				.size());
-		assertEquals("Takstol", productionUnit
-				.getProductionUnitProductAreaGroups().iterator().next()
-				.getProductAreaGroup().getProductAreaGroupName());
+    @Test
+    public void testRemoveProductAreaGroup() {
+	dialogFixture.comboBox("ComboBoxArticleType").selectItem("Takstoler");
+	dialogFixture.textBox("TextFieldProductionUnitName").enterText("test");
 
-	}
+	dialogFixture.button("ButtonAddProductAreaGroup").click();
 
-	@Test
-	public void testRemoveProductAreaGroup() {
-		dialogFixture.comboBox("ComboBoxArticleType").selectItem("Takstoler");
-		dialogFixture.textBox("TextFieldProductionUnitName").enterText("test");
+	DialogFixture optionDialog = WindowFinder.findDialog("Velg produktområde").using(dialogFixture.robot);
+	optionDialog.comboBox().selectItem("Takstol");
+	optionDialog.button("ButtonOk").click();
 
-		dialogFixture.button("ButtonAddProductAreaGroup").click();
+	dialogFixture.button("ButtonAddProductAreaGroup").click();
 
-		DialogFixture optionDialog = WindowFinder.findDialog(
-				"Velg produktområde").using(dialogFixture.robot);
-		optionDialog.comboBox().selectItem("Takstol");
-		optionDialog.button("ButtonOk").click();
+	optionDialog = WindowFinder.findDialog("Velg produktområde").using(dialogFixture.robot);
+	optionDialog.comboBox().selectItem("Garasje");
+	optionDialog.button("ButtonOk").click();
 
-		dialogFixture.button("ButtonAddProductAreaGroup").click();
+	dialogFixture.list("ListProductAreaGroup").selectItem(1);
+	dialogFixture.button("ButtonRemoveProductAreaGroup").requireEnabled();
+	dialogFixture.button("ButtonRemoveProductAreaGroup").click();
 
-		optionDialog = WindowFinder.findDialog("Velg produktområde").using(
-				dialogFixture.robot);
-		optionDialog.comboBox().selectItem("Garasje");
-		optionDialog.button("ButtonOk").click();
+	dialogFixture.button("SaveProductionUnit").click();
 
-		dialogFixture.list("ListProductAreaGroup").selectItem(1);
-		dialogFixture.button("ButtonRemoveProductAreaGroup").requireEnabled();
-		dialogFixture.button("ButtonRemoveProductAreaGroup").click();
+	ProductionUnit productionUnit = new ProductionUnit();
+	productionUnit.setProductionUnitName("test");
+	List<ProductionUnit> list = productionUnitManager.findByObject(productionUnit);
+	assertNotNull(list);
+	assertEquals(1, list.size());
 
-		dialogFixture.button("SaveProductionUnit").click();
+	productionUnit = list.get(0);
+	productionUnitManager.lazyLoad(productionUnit,
+		new LazyLoadEnum[][] { { LazyLoadEnum.PRODUCTION_UNIT_PRODUCT_AREA_GROUPS, LazyLoadEnum.NONE } });
+	assertEquals("Takstoler", productionUnit.getArticleType().getArticleTypeName());
+	assertEquals("test", productionUnit.getProductionUnitName());
 
-		ProductionUnit productionUnit = new ProductionUnit();
-		productionUnit.setProductionUnitName("test");
-		List<ProductionUnit> list = productionUnitManager
-				.findByObject(productionUnit);
-		assertNotNull(list);
-		assertEquals(1, list.size());
+	assertEquals(1, productionUnit.getProductionUnitProductAreaGroups().size());
+	assertEquals("Takstol", productionUnit.getProductionUnitProductAreaGroups().iterator().next().getProductAreaGroup().getProductAreaGroupName());
 
-		productionUnit = list.get(0);
-		productionUnitManager.lazyLoad(productionUnit, new LazyLoadEnum[][] { {
-				LazyLoadEnum.PRODUCTION_UNIT_PRODUCT_AREA_GROUPS,
-				LazyLoadEnum.NONE } });
-		assertEquals("Takstoler", productionUnit.getArticleType()
-				.getArticleTypeName());
-		assertEquals("test", productionUnit.getProductionUnitName());
-
-		assertEquals(1, productionUnit.getProductionUnitProductAreaGroups()
-				.size());
-		assertEquals("Takstol", productionUnit
-				.getProductionUnitProductAreaGroups().iterator().next()
-				.getProductAreaGroup().getProductAreaGroupName());
-
-	}
+    }
 }

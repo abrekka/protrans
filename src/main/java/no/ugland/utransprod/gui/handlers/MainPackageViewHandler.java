@@ -2144,7 +2144,6 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
     private Function<OrderLine, String> tilArticleName() {
 	return new Function<OrderLine, String>() {
 
-	    @Override
 	    public String apply(OrderLine orderline) {
 		return orderline.getArticleName();
 	    }

@@ -69,7 +69,7 @@ public class OrdlnViewTest {
     public void testOpenWindow() throws Exception {
 	dialogFixture.requireVisible();
 
-	assertEquals(13, ((JXTable) dialogFixture.table("TableOrdln").target).getRowCount());
+	assertEquals(12, ((JXTable) dialogFixture.table("TableOrdln").target).getRowCount());
 
 	dialogFixture.button("ButtonCancelOrdlnView");
 

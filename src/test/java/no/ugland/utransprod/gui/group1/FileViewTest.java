@@ -19,60 +19,59 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import com.birosoft.liquid.LiquidLookAndFeel;
 @Category(GUITests.class)
 public class FileViewTest {
-	static {
-		try {
+    static {
+	try {
 
-			UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
-			JFrame.setDefaultLookAndFeelDecorated(true);
-			LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+	    // LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
+    }
 
-	private DialogFixture dialogFixture;
+    private DialogFixture dialogFixture;
 
-	/**
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	@Before
-	public void setUp() throws Exception {
+    /**
+     * @see junit.framework.TestCase#setUp()
+     */
+    @Before
+    public void setUp() throws Exception {
 
-		FileViewHandler fileViewHandler = new FileViewHandler("testinnhold");
-		final FileView viewer = new FileView(fileViewHandler);
+	FileViewHandler fileViewHandler = new FileViewHandler("testinnhold");
+	final FileView viewer = new FileView(fileViewHandler);
 
-		JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
-			protected JDialog executeInEDT() {
-				JDialog dialog = new JDialog();
-				WindowInterface window = new JDialogAdapter(dialog);
-				dialog.add(viewer.buildPanel(window));
-				dialog.pack();
-				return dialog;
-			}
-		});
-		dialogFixture = new DialogFixture(dialog);
-		dialogFixture.show();
+	JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
+	    protected JDialog executeInEDT() {
+		JDialog dialog = new JDialog();
+		WindowInterface window = new JDialogAdapter(dialog);
+		dialog.add(viewer.buildPanel(window));
+		dialog.pack();
+		return dialog;
+	    }
+	});
+	dialogFixture = new DialogFixture(dialog);
+	dialogFixture.show();
 
-	}
+    }
 
-	/**
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	@After
-	public void tearDown() throws Exception {
-		dialogFixture.cleanUp();
-	}
+    /**
+     * @see junit.framework.TestCase#tearDown()
+     */
+    @After
+    public void tearDown() throws Exception {
+	dialogFixture.cleanUp();
+    }
 
-	@Test
-	public void testShowDialog() {
-		dialogFixture.textBox("TextAreaFile").requireVisible();
-		dialogFixture.textBox("TextAreaFile").requireDisabled();
-		dialogFixture.textBox("TextAreaFile").requireText("testinnhold");
-		dialogFixture.button("ButtonOk").click();
-	}
+    @Test
+    public void testShowDialog() {
+	dialogFixture.textBox("TextAreaFile").requireVisible();
+	dialogFixture.textBox("TextAreaFile").requireDisabled();
+	dialogFixture.textBox("TextAreaFile").requireText("testinnhold");
+	dialogFixture.button("ButtonOk").click();
+    }
 
 }

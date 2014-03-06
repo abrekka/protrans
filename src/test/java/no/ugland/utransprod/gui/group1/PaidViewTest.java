@@ -39,107 +39,99 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.birosoft.liquid.LiquidLookAndFeel;
-
 /**
  * @author atle.brekka
  * 
  */
 @Category(GUITests.class)
 public class PaidViewTest {
-	static {
-		try {
+    static {
+	try {
 
-			UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
-			JFrame.setDefaultLookAndFeelDecorated(true);
-			LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+	    // LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
+    }
 
-	private DialogFixture dialogFixture;
+    private DialogFixture dialogFixture;
 
-	@Mock
-	private Login login;
-	@Mock
-	private ManagerRepository managerRepository;
-	@Mock
-	private DeviationViewHandlerFactory deviationViewHandlerFactory;
-	@Mock
-	private JobFunctionManager jobFunctionManager;
-	@Mock
-	private ProductAreaManager productAreaManager;
-	@Mock
-	private DeviationStatusManager deviationStatusManager;
-	@Mock
-	private ApplicationUserManager applicationUserManager;
-	@Mock
-	private PaidVManager paidVManager;
-	private ProductAreaGroupManager productAreaGroupManager;
+    @Mock
+    private Login login;
+    @Mock
+    private ManagerRepository managerRepository;
+    @Mock
+    private DeviationViewHandlerFactory deviationViewHandlerFactory;
+    @Mock
+    private JobFunctionManager jobFunctionManager;
+    @Mock
+    private ProductAreaManager productAreaManager;
+    @Mock
+    private DeviationStatusManager deviationStatusManager;
+    @Mock
+    private ApplicationUserManager applicationUserManager;
+    @Mock
+    private PaidVManager paidVManager;
+    private ProductAreaGroupManager productAreaGroupManager;
 
-	@Before
-	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-		productAreaGroupManager=(ProductAreaGroupManager)ModelUtil.getBean(ProductAreaGroupManager.MANAGER_NAME);
-		Util.setProductAreaGroupManager(productAreaGroupManager);
-		ProductAreaGroup productAreaGroup = new ProductAreaGroup();
-		when(managerRepository.getJobFunctionManager()).thenReturn(
-				jobFunctionManager);
-		when(managerRepository.getProductAreaManager()).thenReturn(
-				productAreaManager);
-		when(managerRepository.getDeviationStatusManager()).thenReturn(
-				deviationStatusManager);
-		when(managerRepository.getApplicationUserManager()).thenReturn(
-				applicationUserManager);
-		when(managerRepository.getProductAreaGroupManager()).thenReturn(
-				productAreaGroupManager);
-		ApplicationUser applicationUser = new ApplicationUser();
+    @Before
+    public void setUp() throws Exception {
+	MockitoAnnotations.initMocks(this);
+	productAreaGroupManager = (ProductAreaGroupManager) ModelUtil.getBean(ProductAreaGroupManager.MANAGER_NAME);
+	Util.setProductAreaGroupManager(productAreaGroupManager);
+	ProductAreaGroup productAreaGroup = new ProductAreaGroup();
+	when(managerRepository.getJobFunctionManager()).thenReturn(jobFunctionManager);
+	when(managerRepository.getProductAreaManager()).thenReturn(productAreaManager);
+	when(managerRepository.getDeviationStatusManager()).thenReturn(deviationStatusManager);
+	when(managerRepository.getApplicationUserManager()).thenReturn(applicationUserManager);
+	when(managerRepository.getProductAreaGroupManager()).thenReturn(productAreaGroupManager);
+	ApplicationUser applicationUser = new ApplicationUser();
 
-		UserType userType = new UserType();
-		userType.setIsAdmin(1);
-		ProductArea productArea = new ProductArea();
-		productArea.setProductAreaGroup(productAreaGroup);
-		applicationUser.setProductArea(productArea);
-		when(login.getUserType()).thenReturn(userType);
-		when(login.getApplicationUser()).thenReturn(applicationUser);
+	UserType userType = new UserType();
+	userType.setIsAdmin(1);
+	ProductArea productArea = new ProductArea();
+	productArea.setProductAreaGroup(productAreaGroup);
+	applicationUser.setProductArea(productArea);
+	when(login.getUserType()).thenReturn(userType);
+	when(login.getApplicationUser()).thenReturn(applicationUser);
 
-		PaidViewHandler paidViewHandler = new PaidViewHandler(
-				new PaidApplyList(login, paidVManager), login,
-				managerRepository, deviationViewHandlerFactory);
+	PaidViewHandler paidViewHandler = new PaidViewHandler(new PaidApplyList(login, paidVManager), login, managerRepository,
+		deviationViewHandlerFactory);
 
-		final PaidView viewer = new PaidView(paidViewHandler, false);
+	final PaidView viewer = new PaidView(paidViewHandler, false);
 
-		JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
-			protected JDialog executeInEDT() {
-				JDialog dialog = new JDialog();
-				WindowInterface window = new JDialogAdapter(dialog);
-				dialog.add(viewer.buildPanel(window));
-				dialog.pack();
-				return dialog;
-			}
-		});
-		dialogFixture = new DialogFixture(dialog);
-		dialogFixture.show();
+	JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
+	    protected JDialog executeInEDT() {
+		JDialog dialog = new JDialog();
+		WindowInterface window = new JDialogAdapter(dialog);
+		dialog.add(viewer.buildPanel(window));
+		dialog.pack();
+		return dialog;
+	    }
+	});
+	dialogFixture = new DialogFixture(dialog);
+	dialogFixture.show();
 
-	}
+    }
 
-	@After
-	public void tearDown() throws Exception {
-		dialogFixture.cleanUp();
-	}
+    @After
+    public void tearDown() throws Exception {
+	dialogFixture.cleanUp();
+    }
 
-	@Test
-	public void testShow() {
-		dialogFixture.requireVisible();
-	}
+    @Test
+    public void testShow() {
+	dialogFixture.requireVisible();
+    }
 
-	@Test
-	public void testFilterButtons() {
-		dialogFixture.radioButton("RadioButtonAll").requireSelected();
-		dialogFixture.radioButton("RadioButtonAssembly").requireVisible();
-		dialogFixture.radioButton("RadioButtonNotAssembly").requireVisible();
-	}
+    @Test
+    public void testFilterButtons() {
+	dialogFixture.radioButton("RadioButtonAll").requireSelected();
+	dialogFixture.radioButton("RadioButtonAssembly").requireVisible();
+	dialogFixture.radioButton("RadioButtonNotAssembly").requireVisible();
+    }
 
 }

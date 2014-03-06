@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.Map;
 
 import javax.swing.ListModel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
 import no.ugland.utransprod.ProTransException;
@@ -74,6 +76,9 @@ public class VeggProductionViewHandler extends ProductionViewHandler {
 	// Ordre
 	table.getColumnExt(table.getModel().getColumnName(1)).setPreferredWidth(200);
 	// Prod.dato
+	DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
+	tableCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+	table.getColumnExt(table.getModel().getColumnName(2)).setCellRenderer(tableCellRenderer);
 	table.getColumnExt(table.getModel().getColumnName(2)).setPreferredWidth(70);
 	// Antall
 	table.getColumnExt(table.getModel().getColumnName(3)).setPreferredWidth(50);
@@ -88,6 +93,10 @@ public class VeggProductionViewHandler extends ProductionViewHandler {
 	// startet
 	table.getColumnExt(table.getModel().getColumnName(10)).setPreferredWidth(100);
 	// reell tidsforbruk
+	// DefaultTableCellRenderer tableCellRenderer = new
+	// DefaultTableCellRenderer();
+	tableCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+	table.getColumnExt(table.getModel().getColumnName(11)).setCellRenderer(tableCellRenderer);
 	table.getColumnExt(table.getModel().getColumnName(11)).setPreferredWidth(120);
     }
 

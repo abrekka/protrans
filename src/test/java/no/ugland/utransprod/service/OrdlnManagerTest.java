@@ -48,7 +48,7 @@ public class OrdlnManagerTest {
     public void testGetOrderLines() {
 	List<Ordln> orderLines = ordlnManager.findByOrderNr("11");
 	assertNotNull(orderLines);
-	assertEquals(13, orderLines.size());
+	assertEquals(12, orderLines.size());
 	int counter = 0;
 	for (Ordln ln : orderLines) {
 	    counter++;
@@ -72,7 +72,7 @@ public class OrdlnManagerTest {
 		assertEquals(BigDecimal.valueOf(300).setScale(2), ln.getPrice().setScale(2));
 	    }
 	}
-	assertEquals(13, counter);
+	assertEquals(12, counter);
     }
 
 }

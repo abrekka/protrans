@@ -44,416 +44,374 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import com.birosoft.liquid.LiquidLookAndFeel;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.toedter.calendar.JDateChooser;
+
 @Category(ManuellTest.class)
 public class EditAccidentViewTest {
-	static {
-		try {
+    static {
+	try {
 
-			UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
-			JFrame.setDefaultLookAndFeelDecorated(true);
-			LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+	    // LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
+    }
 
-	private DialogFixture dialogFixture;
+    private DialogFixture dialogFixture;
 
-	private AccidentManager accidentManager;
-	private ManagerRepository managerRepository;
+    private AccidentManager accidentManager;
+    private ManagerRepository managerRepository;
 
-	/**
-	 * @see junit.framework.TestCase#setUp()
-	 */
+    /**
+     * @see junit.framework.TestCase#setUp()
+     */
 
-	@Before
-	public void setUp() throws Exception {
-//		FailOnThreadViolationRepaintManager.install();
-		accidentManager = (AccidentManager) ModelUtil
-				.getBean("accidentManager");
-		Injector injector = Guice.createInjector(new ProtransModule());
+    @Before
+    public void setUp() throws Exception {
+	// FailOnThreadViolationRepaintManager.install();
+	accidentManager = (AccidentManager) ModelUtil.getBean("accidentManager");
+	Injector injector = Guice.createInjector(new ProtransModule());
 
-		managerRepository = injector.getInstance(ManagerRepository.class);
+	managerRepository = injector.getInstance(ManagerRepository.class);
 
-		ApplicationUserManager applicationUserManager = (ApplicationUserManager) ModelUtil
-				.getBean("applicationUserManager");
-		ApplicationUser user;
-		user = applicationUserManager.login("admin", "admin");
-		applicationUserManager.lazyLoad(user, new LazyLoadEnum[][] { {
-				LazyLoadEnum.USER_ROLES, LazyLoadEnum.NONE } });
-		UserType userType = user.getUserRoles().iterator().next().getUserType();
+	ApplicationUserManager applicationUserManager = (ApplicationUserManager) ModelUtil.getBean("applicationUserManager");
+	ApplicationUser user;
+	user = applicationUserManager.login("admin", "admin");
+	applicationUserManager.lazyLoad(user, new LazyLoadEnum[][] { { LazyLoadEnum.USER_ROLES, LazyLoadEnum.NONE } });
+	UserType userType = user.getUserRoles().iterator().next().getUserType();
 
-		Login login = new LoginImpl(user, userType);
+	Login login = new LoginImpl(user, userType);
 
-		AccidentViewHandler accidentViewHandler = new AccidentViewHandler(
-				login, managerRepository);
+	AccidentViewHandler accidentViewHandler = new AccidentViewHandler(login, managerRepository);
 
-		AccidentModel accidentModel = new AccidentModel(new Accident());
-		final EditAccidentView editAccidentView = new EditAccidentView(false,
-				accidentModel, accidentViewHandler);
+	AccidentModel accidentModel = new AccidentModel(new Accident());
+	final EditAccidentView editAccidentView = new EditAccidentView(false, accidentModel, accidentViewHandler);
 
-		JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
-			protected JDialog executeInEDT() {
-				JDialog dialog = new JDialog();
-				WindowInterface window = new JDialogAdapter(dialog);
-				dialog.add(editAccidentView.buildPanel(window));
-				dialog.pack();
-				return dialog;
-			}
-		});
-		dialogFixture = new DialogFixture(dialog);
-		dialogFixture.show();
-		//
+	JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
+	    protected JDialog executeInEDT() {
+		JDialog dialog = new JDialog();
+		WindowInterface window = new JDialogAdapter(dialog);
+		dialog.add(editAccidentView.buildPanel(window));
+		dialog.pack();
+		return dialog;
+	    }
+	});
+	dialogFixture = new DialogFixture(dialog);
+	dialogFixture.show();
+	//
 
+    }
+
+    @After
+    public void tearDown() throws Exception {
+	dialogFixture.cleanUp();
+
+	Accident accident = new Accident();
+	accident.setRegisteredBy("test");
+	List<Accident> list = accidentManager.findByObject(accident);
+	if (list != null) {
+	    for (Accident acc : list) {
+		accidentManager.removeObject(acc);
+	    }
 	}
+    }
 
-	@After
-	public void tearDown() throws Exception {
-		dialogFixture.cleanUp();
-
-		Accident accident = new Accident();
-		accident.setRegisteredBy("test");
-		List<Accident> list = accidentManager.findByObject(accident);
-		if (list != null) {
-			for (Accident acc : list) {
-				accidentManager.removeObject(acc);
-			}
-		}
-	}
-
-	@Test
-	public void testShow() {
-		dialogFixture.requireVisible();
-		dialogFixture.close();
-	}
-
-	@Test
-	public void testInsertAccident() {
-		dialogFixture.textBox("TextFieldRegisteredBy").enterText("test");
-
-		dialogFixture.robot.finder().findByName("DateChooserRegistrationDate");
-
-		dialogFixture.comboBox("ComboBoxJobFunction").selectItem(0);
-
-		JDateChooser dateChooser = BasicComponentFinder
-				.finderWithCurrentAwtHierarchy().find(
-						new JDateChooserFinder("DateChooserAccidentDate"));
-		dateChooser.setDate(Util.getCurrentDate());
-
-		dialogFixture.textBox("TextAreaDescription").enterText(
-				"testbeskrivelse");
-		dialogFixture.textBox("TextAreaCause").enterText("testårsak");
-
-		dialogFixture.radioButton("RadioButtonPersonalInjury").click();
-		dialogFixture.checkBox("CheckBoxLeader").check();
-		dialogFixture.checkBox("CheckBoxPolice").check();
-		dialogFixture.checkBox("CheckBoxSocialSecurity").check();
-
-		dialogFixture.button("SaveAccident").click();
-
-		Accident accident = new Accident();
-		accident.setRegisteredBy("test");
-
-		List<Accident> list = accidentManager.findByObject(accident);
-		assertNotNull(list);
-		assertEquals(1, list.size());
-
-		accident = list.get(0);
-
-		assertEquals("test", accident.getRegisteredBy());
-		assertEquals("Transport", accident.getJobFunction()
-				.getJobFunctionName());
-		assertEquals("testbeskrivelse", accident.getAccidentDescription());
-		assertEquals("testårsak", accident.getAccidentCause());
-		assertEquals(Integer.valueOf(1), accident.getPersonalInjury());
-		assertEquals(Integer.valueOf(1), accident.getReportedLeader());
-		assertEquals(Integer.valueOf(1), accident.getReportedPolice());
-		assertEquals(Integer.valueOf(1), accident.getReportedSocialSecurity());
-		dialogFixture.close();
-	}
-
-	@Test
-	public void testAddParticipant() {
-		dialogFixture.textBox("TextFieldRegisteredBy").enterText("test");
-		dialogFixture.comboBox("ComboBoxJobFunction").selectItem(0);
-
-		JDateChooser dateChooser = dialogFixture.robot.finder().find(
-				new JDateChooserFinder("DateChooserAccidentDate"));
-		dateChooser.setDate(Util.getCurrentDate());
-		dialogFixture.radioButton("RadioButtonPersonalInjury").click();
-		dialogFixture.textBox("TextAreaDescription").enterText(
-				"testbeskrivelse");
-		dialogFixture.textBox("TextAreaCause").enterText("testårsak");
-
-		dialogFixture.button("ButtonAddParticipant").click();
-
-		DialogFixture participantDialog = WindowFinder.findDialog(
-				"EditAccidentParticipantView").using(dialogFixture.robot);
-
-		participantDialog.textBox("TextFieldFirstName").enterText("Atle");
-		participantDialog.textBox("TextFieldLastName").enterText("Brekka");
-		participantDialog.comboBox("ComboBoxEmployeeType").selectItem(1);
-		participantDialog.button("ButtonOk").click();
-
-		dialogFixture.list("ListParticipant").selectItem(0);
-
-		dialogFixture.button("SaveAccident").click();
-
-		Accident accident = new Accident();
-		accident.setRegisteredBy("test");
-
-		List<Accident> list = accidentManager.findByObject(accident);
-		assertNotNull(list);
-		assertEquals(1, list.size());
-
-		accident = list.get(0);
+    @Test
+    public void testShow() {
+	dialogFixture.requireVisible();
+	dialogFixture.close();
+    }
 
-		accidentManager.lazyLoad(accident, new LazyLoadEnum[][] { {
-				LazyLoadEnum.ACCIDENT_PARTICIPANTS, LazyLoadEnum.NONE } });
+    @Test
+    public void testInsertAccident() {
+	dialogFixture.textBox("TextFieldRegisteredBy").enterText("test");
 
-		assertEquals("test", accident.getRegisteredBy());
-		assertEquals("Transport", accident.getJobFunction()
-				.getJobFunctionName());
-		assertEquals("testbeskrivelse", accident.getAccidentDescription());
-		assertEquals("testårsak", accident.getAccidentCause());
+	dialogFixture.robot.finder().findByName("DateChooserRegistrationDate");
 
-		Set<AccidentParticipant> participants = accident
-				.getAccidentParticipants();
-		assertNotNull(participants);
-		assertEquals(1, participants.size());
+	dialogFixture.comboBox("ComboBoxJobFunction").selectItem(0);
 
-		AccidentParticipant participant = participants.iterator().next();
-		assertEquals("Atle", participant.getFirstName());
-		assertEquals("Brekka", participant.getLastName());
-		assertEquals("Sjåfør", participant.getEmployeeType()
-				.getEmployeeTypeName());
-		dialogFixture.close();
-	}
+	JDateChooser dateChooser = BasicComponentFinder.finderWithCurrentAwtHierarchy().find(new JDateChooserFinder("DateChooserAccidentDate"));
+	dateChooser.setDate(Util.getCurrentDate());
 
-	@Test
-	public void testDeleteParticipant() {
-		dialogFixture.textBox("TextFieldRegisteredBy").enterText("test");
-		dialogFixture.comboBox("ComboBoxJobFunction").selectItem(0);
+	dialogFixture.textBox("TextAreaDescription").enterText("testbeskrivelse");
+	dialogFixture.textBox("TextAreaCause").enterText("testårsak");
 
-		JDateChooser dateChooser = dialogFixture.robot.finder().find(
-				new JDateChooserFinder("DateChooserAccidentDate"));
-		dateChooser.setDate(Util.getCurrentDate());
-		dialogFixture.radioButton("RadioButtonPersonalInjury").click();
-		dialogFixture.textBox("TextAreaDescription").enterText(
-				"testbeskrivelse");
-		dialogFixture.textBox("TextAreaCause").enterText("testårsak");
+	dialogFixture.radioButton("RadioButtonPersonalInjury").click();
+	dialogFixture.checkBox("CheckBoxLeader").check();
+	dialogFixture.checkBox("CheckBoxPolice").check();
+	dialogFixture.checkBox("CheckBoxSocialSecurity").check();
 
-		dialogFixture.button("ButtonDeleteParticipant").requireDisabled();
+	dialogFixture.button("SaveAccident").click();
 
-		dialogFixture.button("ButtonAddParticipant").click();
+	Accident accident = new Accident();
+	accident.setRegisteredBy("test");
 
-		DialogFixture participantDialog = WindowFinder.findDialog(
-				"EditAccidentParticipantView").using(dialogFixture.robot);
+	List<Accident> list = accidentManager.findByObject(accident);
+	assertNotNull(list);
+	assertEquals(1, list.size());
 
-		participantDialog.textBox("TextFieldFirstName").enterText("Atle");
-		participantDialog.textBox("TextFieldLastName").enterText("Brekka");
-		participantDialog.comboBox("ComboBoxEmployeeType").selectItem(1);
-		participantDialog.button("ButtonOk").click();
+	accident = list.get(0);
 
-		dialogFixture.list("ListParticipant").selectItem(0);
+	assertEquals("test", accident.getRegisteredBy());
+	assertEquals("Transport", accident.getJobFunction().getJobFunctionName());
+	assertEquals("testbeskrivelse", accident.getAccidentDescription());
+	assertEquals("testårsak", accident.getAccidentCause());
+	assertEquals(Integer.valueOf(1), accident.getPersonalInjury());
+	assertEquals(Integer.valueOf(1), accident.getReportedLeader());
+	assertEquals(Integer.valueOf(1), accident.getReportedPolice());
+	assertEquals(Integer.valueOf(1), accident.getReportedSocialSecurity());
+	dialogFixture.close();
+    }
 
-		dialogFixture.button("SaveAccident").click();
+    @Test
+    public void testAddParticipant() {
+	dialogFixture.textBox("TextFieldRegisteredBy").enterText("test");
+	dialogFixture.comboBox("ComboBoxJobFunction").selectItem(0);
 
-		Accident accident = new Accident();
-		accident.setRegisteredBy("test");
+	JDateChooser dateChooser = dialogFixture.robot.finder().find(new JDateChooserFinder("DateChooserAccidentDate"));
+	dateChooser.setDate(Util.getCurrentDate());
+	dialogFixture.radioButton("RadioButtonPersonalInjury").click();
+	dialogFixture.textBox("TextAreaDescription").enterText("testbeskrivelse");
+	dialogFixture.textBox("TextAreaCause").enterText("testårsak");
 
-		List<Accident> list = accidentManager.findByObject(accident);
-		assertNotNull(list);
-		assertEquals(1, list.size());
+	dialogFixture.button("ButtonAddParticipant").click();
 
-		accident = list.get(0);
+	DialogFixture participantDialog = WindowFinder.findDialog("EditAccidentParticipantView").using(dialogFixture.robot);
 
-		accidentManager.lazyLoad(accident, new LazyLoadEnum[][] { {
-				LazyLoadEnum.ACCIDENT_PARTICIPANTS, LazyLoadEnum.NONE } });
+	participantDialog.textBox("TextFieldFirstName").enterText("Atle");
+	participantDialog.textBox("TextFieldLastName").enterText("Brekka");
+	participantDialog.comboBox("ComboBoxEmployeeType").selectItem(1);
+	participantDialog.button("ButtonOk").click();
 
-		assertEquals("test", accident.getRegisteredBy());
-		assertEquals("Transport", accident.getJobFunction()
-				.getJobFunctionName());
-		assertEquals("testbeskrivelse", accident.getAccidentDescription());
-		assertEquals("testårsak", accident.getAccidentCause());
+	dialogFixture.list("ListParticipant").selectItem(0);
 
-		Set<AccidentParticipant> participants = accident
-				.getAccidentParticipants();
-		assertNotNull(participants);
-		assertEquals(1, participants.size());
+	dialogFixture.button("SaveAccident").click();
 
-		AccidentParticipant participant = participants.iterator().next();
-		assertEquals("Atle", participant.getFirstName());
-		assertEquals("Brekka", participant.getLastName());
-		assertEquals("Sjåfør", participant.getEmployeeType()
-				.getEmployeeTypeName());
+	Accident accident = new Accident();
+	accident.setRegisteredBy("test");
 
-		dialogFixture.button("ButtonDeleteParticipant").requireEnabled();
-		dialogFixture.button("ButtonDeleteParticipant").click();
+	List<Accident> list = accidentManager.findByObject(accident);
+	assertNotNull(list);
+	assertEquals(1, list.size());
 
-		JOptionPaneFinder.findOptionPane().using(dialogFixture.robot)
-				.buttonWithText("Ja").click();
+	accident = list.get(0);
 
-		assertEquals(0, dialogFixture.list("ListParticipant").target.getModel()
-				.getSize());
+	accidentManager.lazyLoad(accident, new LazyLoadEnum[][] { { LazyLoadEnum.ACCIDENT_PARTICIPANTS, LazyLoadEnum.NONE } });
 
-		dialogFixture.button("SaveAccident").click();
+	assertEquals("test", accident.getRegisteredBy());
+	assertEquals("Transport", accident.getJobFunction().getJobFunctionName());
+	assertEquals("testbeskrivelse", accident.getAccidentDescription());
+	assertEquals("testårsak", accident.getAccidentCause());
 
-		accident = new Accident();
-		accident.setRegisteredBy("test");
+	Set<AccidentParticipant> participants = accident.getAccidentParticipants();
+	assertNotNull(participants);
+	assertEquals(1, participants.size());
 
-		list = accidentManager.findByObject(accident);
-		assertNotNull(list);
-		assertEquals(1, list.size());
+	AccidentParticipant participant = participants.iterator().next();
+	assertEquals("Atle", participant.getFirstName());
+	assertEquals("Brekka", participant.getLastName());
+	assertEquals("Sjåfør", participant.getEmployeeType().getEmployeeTypeName());
+	dialogFixture.close();
+    }
 
-		accident = list.get(0);
+    @Test
+    public void testDeleteParticipant() {
+	dialogFixture.textBox("TextFieldRegisteredBy").enterText("test");
+	dialogFixture.comboBox("ComboBoxJobFunction").selectItem(0);
 
-		accidentManager.lazyLoad(accident, new LazyLoadEnum[][] { {
-				LazyLoadEnum.ACCIDENT_PARTICIPANTS, LazyLoadEnum.NONE } });
+	JDateChooser dateChooser = dialogFixture.robot.finder().find(new JDateChooserFinder("DateChooserAccidentDate"));
+	dateChooser.setDate(Util.getCurrentDate());
+	dialogFixture.radioButton("RadioButtonPersonalInjury").click();
+	dialogFixture.textBox("TextAreaDescription").enterText("testbeskrivelse");
+	dialogFixture.textBox("TextAreaCause").enterText("testårsak");
 
-		participants = accident.getAccidentParticipants();
-		assertNotNull(participants);
-		assertEquals(0, participants.size());
-		dialogFixture.close();
+	dialogFixture.button("ButtonDeleteParticipant").requireDisabled();
 
-	}
+	dialogFixture.button("ButtonAddParticipant").click();
 
-	@Test
-	public void testPrint() {
-		dialogFixture.textBox("TextFieldRegisteredBy").enterText("test");
+	DialogFixture participantDialog = WindowFinder.findDialog("EditAccidentParticipantView").using(dialogFixture.robot);
 
-		dialogFixture.robot.finder().findByName("DateChooserRegistrationDate");
+	participantDialog.textBox("TextFieldFirstName").enterText("Atle");
+	participantDialog.textBox("TextFieldLastName").enterText("Brekka");
+	participantDialog.comboBox("ComboBoxEmployeeType").selectItem(1);
+	participantDialog.button("ButtonOk").click();
 
-		dialogFixture.comboBox("ComboBoxJobFunction").selectItem(0);
+	dialogFixture.list("ListParticipant").selectItem(0);
 
-		JDateChooser dateChooser = BasicComponentFinder
-				.finderWithCurrentAwtHierarchy().find(
-						new JDateChooserFinder("DateChooserAccidentDate"));
-		dateChooser.setDate(Util.getCurrentDate());
+	dialogFixture.button("SaveAccident").click();
 
-		dialogFixture.textBox("TextAreaDescription").enterText(
-				"testbeskrivelse");
-		dialogFixture.textBox("TextAreaCause").enterText("testårsak");
+	Accident accident = new Accident();
+	accident.setRegisteredBy("test");
 
-		dialogFixture.radioButton("RadioButtonPersonalInjury").click();
-		dialogFixture.checkBox("CheckBoxLeader").check();
-		dialogFixture.checkBox("CheckBoxPolice").check();
-		dialogFixture.checkBox("CheckBoxSocialSecurity").check();
+	List<Accident> list = accidentManager.findByObject(accident);
+	assertNotNull(list);
+	assertEquals(1, list.size());
 
-		dialogFixture.button("SaveAccident").click();
+	accident = list.get(0);
 
-		dialogFixture.button("ButtonPrint").click();
+	accidentManager.lazyLoad(accident, new LazyLoadEnum[][] { { LazyLoadEnum.ACCIDENT_PARTICIPANTS, LazyLoadEnum.NONE } });
 
-		DialogFixture printer = WindowFinder.findDialog("Hendelse/ulykke")
-				.withTimeout(20000).using(dialogFixture.robot);
-		printer.button("ButtonCancel").click();
-		dialogFixture.close();
-	}
+	assertEquals("test", accident.getRegisteredBy());
+	assertEquals("Transport", accident.getJobFunction().getJobFunctionName());
+	assertEquals("testbeskrivelse", accident.getAccidentDescription());
+	assertEquals("testårsak", accident.getAccidentCause());
 
-	@Test
-	public void testCancelAddParticipant() {
-		dialogFixture.textBox("TextFieldRegisteredBy").enterText("test");
-		dialogFixture.comboBox("ComboBoxJobFunction").selectItem(0);
+	Set<AccidentParticipant> participants = accident.getAccidentParticipants();
+	assertNotNull(participants);
+	assertEquals(1, participants.size());
 
-		JDateChooser dateChooser = dialogFixture.robot.finder().find(
-				new JDateChooserFinder("DateChooserAccidentDate"));
-		dateChooser.setDate(Util.getCurrentDate());
-		dialogFixture.radioButton("RadioButtonPersonalInjury").click();
-		dialogFixture.textBox("TextAreaDescription").enterText(
-				"testbeskrivelse");
-		dialogFixture.textBox("TextAreaCause").enterText("testårsak");
+	AccidentParticipant participant = participants.iterator().next();
+	assertEquals("Atle", participant.getFirstName());
+	assertEquals("Brekka", participant.getLastName());
+	assertEquals("Sjåfør", participant.getEmployeeType().getEmployeeTypeName());
 
-		dialogFixture.button("ButtonAddParticipant").click();
+	dialogFixture.button("ButtonDeleteParticipant").requireEnabled();
+	dialogFixture.button("ButtonDeleteParticipant").click();
 
-		DialogFixture participantDialog = WindowFinder.findDialog(
-				"EditAccidentParticipantView").using(dialogFixture.robot);
+	JOptionPaneFinder.findOptionPane().using(dialogFixture.robot).buttonWithText("Ja").click();
 
-		participantDialog.button("EditCancelAccidentParticipant").click();
+	assertEquals(0, dialogFixture.list("ListParticipant").target.getModel().getSize());
 
-		assertEquals(0, dialogFixture.list("ListParticipant").target.getModel()
-				.getSize());
+	dialogFixture.button("SaveAccident").click();
 
-		dialogFixture.button("SaveAccident").click();
+	accident = new Accident();
+	accident.setRegisteredBy("test");
 
-		Accident accident = new Accident();
-		accident.setRegisteredBy("test");
+	list = accidentManager.findByObject(accident);
+	assertNotNull(list);
+	assertEquals(1, list.size());
 
-		List<Accident> list = accidentManager.findByObject(accident);
-		assertNotNull(list);
-		assertEquals(1, list.size());
+	accident = list.get(0);
 
-		accident = list.get(0);
+	accidentManager.lazyLoad(accident, new LazyLoadEnum[][] { { LazyLoadEnum.ACCIDENT_PARTICIPANTS, LazyLoadEnum.NONE } });
 
-		accidentManager.lazyLoad(accident, new LazyLoadEnum[][] { {
-				LazyLoadEnum.ACCIDENT_PARTICIPANTS, LazyLoadEnum.NONE } });
+	participants = accident.getAccidentParticipants();
+	assertNotNull(participants);
+	assertEquals(0, participants.size());
+	dialogFixture.close();
 
-		assertEquals("test", accident.getRegisteredBy());
-		assertEquals("Transport", accident.getJobFunction()
-				.getJobFunctionName());
-		assertEquals("testbeskrivelse", accident.getAccidentDescription());
-		assertEquals("testårsak", accident.getAccidentCause());
+    }
 
-		Set<AccidentParticipant> participants = accident
-				.getAccidentParticipants();
-		assertNotNull(participants);
-		assertEquals(0, participants.size());
-		dialogFixture.close();
+    @Test
+    public void testPrint() {
+	dialogFixture.textBox("TextFieldRegisteredBy").enterText("test");
 
-	}
+	dialogFixture.robot.finder().findByName("DateChooserRegistrationDate");
 
-	@Test
-	public void testSetPreventiveActionCommentAndResponsible() {
+	dialogFixture.comboBox("ComboBoxJobFunction").selectItem(0);
 
-		dialogFixture.textBox("TextAreaPreventiveActionComment").enterText(
-				"tiltaksbeskrivelse");
+	JDateChooser dateChooser = BasicComponentFinder.finderWithCurrentAwtHierarchy().find(new JDateChooserFinder("DateChooserAccidentDate"));
+	dateChooser.setDate(Util.getCurrentDate());
 
-		dialogFixture.textBox("TextFieldRegisteredBy").enterText("test");
+	dialogFixture.textBox("TextAreaDescription").enterText("testbeskrivelse");
+	dialogFixture.textBox("TextAreaCause").enterText("testårsak");
 
-		ComponentFinder finder = dialogFixture.robot.finder();
-		dialogFixture.robot.finder().findByName("DateChooserRegistrationDate");
+	dialogFixture.radioButton("RadioButtonPersonalInjury").click();
+	dialogFixture.checkBox("CheckBoxLeader").check();
+	dialogFixture.checkBox("CheckBoxPolice").check();
+	dialogFixture.checkBox("CheckBoxSocialSecurity").check();
 
-		dialogFixture.comboBox("ComboBoxJobFunction").selectItem(0);
+	dialogFixture.button("SaveAccident").click();
 
-		JDateChooser dateChooser = finder.find(new JDateChooserFinder(
-				"DateChooserAccidentDate"));
-		dateChooser.setDate(Util.getCurrentDate());
+	dialogFixture.button("ButtonPrint").click();
 
-		dialogFixture.textBox("TextAreaDescription").enterText(
-				"testbeskrivelse");
-		dialogFixture.textBox("TextAreaCause").enterText("testårsak");
+	DialogFixture printer = WindowFinder.findDialog("Hendelse/ulykke").withTimeout(20000).using(dialogFixture.robot);
+	printer.button("ButtonCancel").click();
+	dialogFixture.close();
+    }
 
-		dialogFixture.radioButton("RadioButtonPersonalInjury").click();
-		dialogFixture.checkBox("CheckBoxLeader").check();
-		dialogFixture.checkBox("CheckBoxPolice").check();
-		dialogFixture.checkBox("CheckBoxSocialSecurity").check();
+    @Test
+    public void testCancelAddParticipant() {
+	dialogFixture.textBox("TextFieldRegisteredBy").enterText("test");
+	dialogFixture.comboBox("ComboBoxJobFunction").selectItem(0);
 
-		dialogFixture.button("SaveAccident").click();
+	JDateChooser dateChooser = dialogFixture.robot.finder().find(new JDateChooserFinder("DateChooserAccidentDate"));
+	dateChooser.setDate(Util.getCurrentDate());
+	dialogFixture.radioButton("RadioButtonPersonalInjury").click();
+	dialogFixture.textBox("TextAreaDescription").enterText("testbeskrivelse");
+	dialogFixture.textBox("TextAreaCause").enterText("testårsak");
 
-		Accident accident = new Accident();
-		accident.setRegisteredBy("test");
+	dialogFixture.button("ButtonAddParticipant").click();
 
-		List<Accident> list = accidentManager.findByObject(accident);
-		assertNotNull(list);
-		assertEquals(1, list.size());
+	DialogFixture participantDialog = WindowFinder.findDialog("EditAccidentParticipantView").using(dialogFixture.robot);
 
-		accident = list.get(0);
+	participantDialog.button("EditCancelAccidentParticipant").click();
 
-		assertEquals("test", accident.getRegisteredBy());
-		assertEquals("Transport", accident.getJobFunction()
-				.getJobFunctionName());
-		assertEquals("tiltaksbeskrivelse", accident
-				.getPreventiveActionComment());
-		assertEquals("testbeskrivelse", accident.getAccidentDescription());
-		assertEquals("testårsak", accident.getAccidentCause());
-		assertEquals(Integer.valueOf(1), accident.getPersonalInjury());
-		assertEquals(Integer.valueOf(1), accident.getReportedLeader());
-		assertEquals(Integer.valueOf(1), accident.getReportedPolice());
-		assertEquals(Integer.valueOf(1), accident.getReportedSocialSecurity());
-		dialogFixture.close();
-	}
+	assertEquals(0, dialogFixture.list("ListParticipant").target.getModel().getSize());
+
+	dialogFixture.button("SaveAccident").click();
+
+	Accident accident = new Accident();
+	accident.setRegisteredBy("test");
+
+	List<Accident> list = accidentManager.findByObject(accident);
+	assertNotNull(list);
+	assertEquals(1, list.size());
+
+	accident = list.get(0);
+
+	accidentManager.lazyLoad(accident, new LazyLoadEnum[][] { { LazyLoadEnum.ACCIDENT_PARTICIPANTS, LazyLoadEnum.NONE } });
+
+	assertEquals("test", accident.getRegisteredBy());
+	assertEquals("Transport", accident.getJobFunction().getJobFunctionName());
+	assertEquals("testbeskrivelse", accident.getAccidentDescription());
+	assertEquals("testårsak", accident.getAccidentCause());
+
+	Set<AccidentParticipant> participants = accident.getAccidentParticipants();
+	assertNotNull(participants);
+	assertEquals(0, participants.size());
+	dialogFixture.close();
+
+    }
+
+    @Test
+    public void testSetPreventiveActionCommentAndResponsible() {
+
+	dialogFixture.textBox("TextAreaPreventiveActionComment").enterText("tiltaksbeskrivelse");
+
+	dialogFixture.textBox("TextFieldRegisteredBy").enterText("test");
+
+	ComponentFinder finder = dialogFixture.robot.finder();
+	dialogFixture.robot.finder().findByName("DateChooserRegistrationDate");
+
+	dialogFixture.comboBox("ComboBoxJobFunction").selectItem(0);
+
+	JDateChooser dateChooser = finder.find(new JDateChooserFinder("DateChooserAccidentDate"));
+	dateChooser.setDate(Util.getCurrentDate());
+
+	dialogFixture.textBox("TextAreaDescription").enterText("testbeskrivelse");
+	dialogFixture.textBox("TextAreaCause").enterText("testårsak");
+
+	dialogFixture.radioButton("RadioButtonPersonalInjury").click();
+	dialogFixture.checkBox("CheckBoxLeader").check();
+	dialogFixture.checkBox("CheckBoxPolice").check();
+	dialogFixture.checkBox("CheckBoxSocialSecurity").check();
+
+	dialogFixture.button("SaveAccident").click();
+
+	Accident accident = new Accident();
+	accident.setRegisteredBy("test");
+
+	List<Accident> list = accidentManager.findByObject(accident);
+	assertNotNull(list);
+	assertEquals(1, list.size());
+
+	accident = list.get(0);
+
+	assertEquals("test", accident.getRegisteredBy());
+	assertEquals("Transport", accident.getJobFunction().getJobFunctionName());
+	assertEquals("tiltaksbeskrivelse", accident.getPreventiveActionComment());
+	assertEquals("testbeskrivelse", accident.getAccidentDescription());
+	assertEquals("testårsak", accident.getAccidentCause());
+	assertEquals(Integer.valueOf(1), accident.getPersonalInjury());
+	assertEquals(Integer.valueOf(1), accident.getReportedLeader());
+	assertEquals(Integer.valueOf(1), accident.getReportedPolice());
+	assertEquals(Integer.valueOf(1), accident.getReportedSocialSecurity());
+	dialogFixture.close();
+    }
 }

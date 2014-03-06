@@ -36,80 +36,73 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.birosoft.liquid.LiquidLookAndFeel;
-
 /**
  * @author atle.brekka
  * 
  */
 @Category(GUITests.class)
 public class ProductionBudgetViewTest {
-	static {
-		try {
+    static {
+	try {
 
-			UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
-			JFrame.setDefaultLookAndFeelDecorated(true);
-			LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+	    // LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
+    }
 
-	private DialogFixture dialogFixture;
-	@Mock
-	private Login login;
+    private DialogFixture dialogFixture;
+    @Mock
+    private Login login;
 
-	@Before
-	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-		UserType userType = new UserType();
-		userType.setIsAdmin(1);
-		when(login.getUserType()).thenReturn(userType);
+    @Before
+    public void setUp() throws Exception {
+	MockitoAnnotations.initMocks(this);
+	UserType userType = new UserType();
+	userType.setIsAdmin(1);
+	when(login.getUserType()).thenReturn(userType);
 
-		BudgetManager productionBudgetManager = (BudgetManager) ModelUtil
-				.getBean(BudgetManager.MANAGER_NAME);
+	BudgetManager productionBudgetManager = (BudgetManager) ModelUtil.getBean(BudgetManager.MANAGER_NAME);
 
-		Set<UserTypeAccess> userTypeAccesses = new HashSet<UserTypeAccess>();
-		UserTypeAccess userTypeAccess = new UserTypeAccess();
-		userTypeAccess.setWindowAccess(new WindowAccess(null, "Attributter",
-				null));
-		userTypeAccesses.add(userTypeAccess);
-		userType.setUserTypeAccesses(userTypeAccesses);
+	Set<UserTypeAccess> userTypeAccesses = new HashSet<UserTypeAccess>();
+	UserTypeAccess userTypeAccess = new UserTypeAccess();
+	userTypeAccess.setWindowAccess(new WindowAccess(null, "Attributter", null));
+	userTypeAccesses.add(userTypeAccess);
+	userType.setUserTypeAccesses(userTypeAccesses);
 
-		final OverviewView<Budget, ProductionBudgetModel> view = new OverviewView<Budget, ProductionBudgetModel>(
-				new ProductionBudgetViewHandler(login, true,
-						productionBudgetManager));
+	final OverviewView<Budget, ProductionBudgetModel> view = new OverviewView<Budget, ProductionBudgetModel>(new ProductionBudgetViewHandler(
+		login, true, productionBudgetManager));
 
-		JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
-			protected JDialog executeInEDT() {
-				JDialog dialog = new JDialog();
-				WindowInterface window = new JDialogAdapter(dialog);
-				dialog.add(view.buildPanel(window));
-				dialog.pack();
-				return dialog;
-			}
-		});
-		dialogFixture = new DialogFixture(dialog);
-		dialogFixture.show();
+	JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
+	    protected JDialog executeInEDT() {
+		JDialog dialog = new JDialog();
+		WindowInterface window = new JDialogAdapter(dialog);
+		dialog.add(view.buildPanel(window));
+		dialog.pack();
+		return dialog;
+	    }
+	});
+	dialogFixture = new DialogFixture(dialog);
+	dialogFixture.show();
 
+    }
+
+    @After
+    public void tearDown() throws Exception {
+	dialogFixture.cleanUp();
+	ConstructionTypeManager constructionTypeManager = (ConstructionTypeManager) ModelUtil.getBean("constructionTypeManager");
+	ConstructionType constructionType = constructionTypeManager.findByName("test");
+	if (constructionType != null) {
+	    constructionTypeManager.removeConstructionType(constructionType);
 	}
+    }
 
-	@After
-	public void tearDown() throws Exception {
-		dialogFixture.cleanUp();
-		ConstructionTypeManager constructionTypeManager = (ConstructionTypeManager) ModelUtil
-				.getBean("constructionTypeManager");
-		ConstructionType constructionType = constructionTypeManager
-				.findByName("test");
-		if (constructionType != null) {
-			constructionTypeManager.removeConstructionType(constructionType);
-		}
-	}
-
-	@Test
-	public void testNewProductionBudget() {
-		dialogFixture.requireVisible();
-	}
+    @Test
+    public void testNewProductionBudget() {
+	dialogFixture.requireVisible();
+    }
 
 }

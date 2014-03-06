@@ -47,8 +47,6 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.birosoft.liquid.LiquidLookAndFeel;
-
 @Category(ManuellTest.class)
 public class EditTransportViewTest {
     static {
@@ -56,7 +54,7 @@ public class EditTransportViewTest {
 
 	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
 	    JFrame.setDefaultLookAndFeelDecorated(true);
-	    LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    // LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
 	} catch (Exception e) {
 	    e.printStackTrace();

@@ -22,67 +22,61 @@ import org.junit.experimental.categories.Category;
  */
 @Category(FastTests.class)
 public class ConstructionTypeManagerTest {
-	private ConstructionTypeManager manager;
+    private ConstructionTypeManager manager;
 
-	private ConstructionType constructionType;
+    private ConstructionType constructionType;
 
-	@Before
-	public void setUp() throws Exception {
-		manager = (ConstructionTypeManager) ModelUtil
-				.getBean("constructionTypeManager");
+    @Before
+    public void setUp() throws Exception {
+	manager = (ConstructionTypeManager) ModelUtil.getBean("constructionTypeManager");
+    }
+
+    @After
+    public void tearDown() throws Exception {
+	if (constructionType != null && constructionType.getConstructionTypeId() != null) {
+	    manager.removeConstructionType(constructionType);
 	}
-
-	@After
-	public void tearDown() throws Exception {
-		if (constructionType != null
-				&& constructionType.getConstructionTypeId() != null) {
-			manager.removeConstructionType(constructionType);
-		}
-		AttributeManager attManager = (AttributeManager) ModelUtil
-		.getBean("attributeManager");
-		Attribute attribute = attManager.findByName("test");
-		if(attribute!=null){
-			attManager.removeAttribute(attribute);
-		}
+	AttributeManager attManager = (AttributeManager) ModelUtil.getBean("attributeManager");
+	Attribute attribute = attManager.findByName("test");
+	if (attribute != null) {
+	    attManager.removeAttribute(attribute);
 	}
+    }
 
-	@Test
-	public void testInsert() {
-		ProductAreaManager productAreaManager=(ProductAreaManager)ModelUtil.getBean("productAreaManager");
-		ProductArea productArea = productAreaManager.findByName("Garasje villa");
-		constructionType = new ConstructionType();
-		constructionType.setName("C2");
-		constructionType.setProductArea(productArea);
-		manager.saveConstructionType(constructionType);
+    @Test
+    public void testInsert() {
+	ProductAreaManager productAreaManager = (ProductAreaManager) ModelUtil.getBean("productAreaManager");
+	ProductArea productArea = productAreaManager.findByName("Villa Element");
+	constructionType = new ConstructionType();
+	constructionType.setName("C2");
+	constructionType.setProductArea(productArea);
+	manager.saveConstructionType(constructionType);
 
-		constructionType = manager.findByName("C2");
-		assertNotNull(constructionType);
-	}
+	constructionType = manager.findByName("C2");
+	assertNotNull(constructionType);
+    }
 
-	@Test
-	public void testInsertAndDeleteAttribute() {
-		ProductAreaManager productAreaManager=(ProductAreaManager)ModelUtil.getBean("productAreaManager");
-		ProductArea productArea = productAreaManager.findByName("Garasje villa");
-		constructionType = new ConstructionType();
-		constructionType.setName("TEST");
-		constructionType.setProductArea(productArea);
+    @Test
+    public void testInsertAndDeleteAttribute() {
+	ProductAreaManager productAreaManager = (ProductAreaManager) ModelUtil.getBean("productAreaManager");
+	ProductArea productArea = productAreaManager.findByName("Villa Element");
+	constructionType = new ConstructionType();
+	constructionType.setName("TEST");
+	constructionType.setProductArea(productArea);
 
-		AttributeManager attManager = (AttributeManager) ModelUtil
-				.getBean("attributeManager");
+	AttributeManager attManager = (AttributeManager) ModelUtil.getBean("attributeManager");
 
-		Attribute attribute = new Attribute(null, "test", null, null, null,
-				null, null, null,null,null,null);
-		attManager.saveAttribute(attribute);
-		ConstructionTypeAttribute att = new ConstructionTypeAttribute(null,
-				constructionType, attribute, "test", null, null);
-		HashSet<ConstructionTypeAttribute> attributes = new HashSet<ConstructionTypeAttribute>();
-		attributes.add(att);
-		constructionType.setConstructionTypeAttributes(attributes);
+	Attribute attribute = new Attribute(null, "test", null, null, null, null, null, null, null, null, null);
+	attManager.saveAttribute(attribute);
+	ConstructionTypeAttribute att = new ConstructionTypeAttribute(null, constructionType, attribute, "test", null, null);
+	HashSet<ConstructionTypeAttribute> attributes = new HashSet<ConstructionTypeAttribute>();
+	attributes.add(att);
+	constructionType.setConstructionTypeAttributes(attributes);
 
-		manager.saveConstructionType(constructionType);
-		attributes.remove(att);
-		att.setConstructionType(null);
-		manager.saveConstructionType(constructionType);
-	}
+	manager.saveConstructionType(constructionType);
+	attributes.remove(att);
+	att.setConstructionType(null);
+	manager.saveConstructionType(constructionType);
+    }
 
 }

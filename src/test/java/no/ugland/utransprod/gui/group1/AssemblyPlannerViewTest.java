@@ -64,8 +64,6 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.birosoft.liquid.LiquidLookAndFeel;
-
 /**
  * @author atle.brekka
  * 
@@ -77,7 +75,7 @@ public class AssemblyPlannerViewTest {
 
 	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
 	    JFrame.setDefaultLookAndFeelDecorated(true);
-	    LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    // LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
 	} catch (Exception e) {
 	    e.printStackTrace();
@@ -122,7 +120,7 @@ public class AssemblyPlannerViewTest {
 	userType.setIsAdmin(1);
 	when(login.getUserType()).thenReturn(userType);
 	ApplicationUser applicationUser = new ApplicationUser();
-	ProductArea productArea = productAreaManager.findByName("Garasje villa");
+	ProductArea productArea = productAreaManager.findByName("Villa Element");
 	applicationUser.setProductArea(productArea);
 	when(login.getApplicationUser()).thenReturn(applicationUser);
 	final Supplier supplier = new Supplier();

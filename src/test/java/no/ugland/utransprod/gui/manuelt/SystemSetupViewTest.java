@@ -20,60 +20,58 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import com.birosoft.liquid.LiquidLookAndFeel;
-
 @Category(ManuellTest.class)
 public class SystemSetupViewTest {
-	static {
-		try {
+    static {
+	try {
 
-			UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
-			JFrame.setDefaultLookAndFeelDecorated(true);
-			LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+	    // LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
+    }
 
-	private DialogFixture dialogFixture;
+    private DialogFixture dialogFixture;
 
-	@Before
-	public void setUp() throws Exception {
-		FailOnThreadViolationRepaintManager.install();
+    @Before
+    public void setUp() throws Exception {
+	FailOnThreadViolationRepaintManager.install();
 
-		SystemSetupViewHandler viewHandler = new SystemSetupViewHandler();
-		final SystemSetupView systemSetupView = new SystemSetupView(viewHandler);
+	SystemSetupViewHandler viewHandler = new SystemSetupViewHandler();
+	final SystemSetupView systemSetupView = new SystemSetupView(viewHandler);
 
-		JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
-			protected JDialog executeInEDT() {
-				JDialog dialog = new JDialog();
-				WindowInterface window = new JDialogAdapter(dialog);
-				dialog.add(systemSetupView.buildPanel(window));
-				dialog.pack();
-				return dialog;
-			}
-		});
-		dialogFixture = new DialogFixture(dialog);
-		dialogFixture.show();
+	JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
+	    protected JDialog executeInEDT() {
+		JDialog dialog = new JDialog();
+		WindowInterface window = new JDialogAdapter(dialog);
+		dialog.add(systemSetupView.buildPanel(window));
+		dialog.pack();
+		return dialog;
+	    }
+	});
+	dialogFixture = new DialogFixture(dialog);
+	dialogFixture.show();
 
-	}
+    }
 
-	@After
-	public void tearDown() throws Exception {
-		dialogFixture.cleanUp();
-	}
+    @After
+    public void tearDown() throws Exception {
+	dialogFixture.cleanUp();
+    }
 
-	@Test
-	public void testShow() {
-		dialogFixture.requireVisible();
+    @Test
+    public void testShow() {
+	dialogFixture.requireVisible();
 
-		dialogFixture.comboBox("ComboBoxWindows").requireVisible();
-		dialogFixture.comboBox("ComboBoxTableNames").requireVisible();
-		dialogFixture.comboBox("ComboBoxProductAreaGroup").requireVisible();
-		dialogFixture.button("ButtonCancel").requireVisible();
-		dialogFixture.button("ButtonSave").requireVisible();
-		dialogFixture.list("ListColumns").requireVisible();
-	}
+	dialogFixture.comboBox("ComboBoxWindows").requireVisible();
+	dialogFixture.comboBox("ComboBoxTableNames").requireVisible();
+	dialogFixture.comboBox("ComboBoxProductAreaGroup").requireVisible();
+	dialogFixture.button("ButtonCancel").requireVisible();
+	dialogFixture.button("ButtonSave").requireVisible();
+	dialogFixture.list("ListColumns").requireVisible();
+    }
 
 }

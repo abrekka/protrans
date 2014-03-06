@@ -38,121 +38,112 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.birosoft.liquid.LiquidLookAndFeel;
 @Category(ManuellTest.class)
 public class EditSupplierTest {
-	static {
-		try {
+    static {
+	try {
 
-			UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
-			JFrame.setDefaultLookAndFeelDecorated(true);
-			LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+	    // LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
+    }
 
-	private DialogFixture dialogFixture;
+    private DialogFixture dialogFixture;
 
-	private SupplierManager supplierManager;
+    private SupplierManager supplierManager;
 
-	@Mock
-	private ManagerRepository managerRepository;
+    @Mock
+    private ManagerRepository managerRepository;
 
-	@Before
-	public void setUp() throws Exception {
-		FailOnThreadViolationRepaintManager.install();
-		MockitoAnnotations.initMocks(this);
-		supplierManager = (SupplierManager) ModelUtil
-				.getBean("supplierManager");
+    @Before
+    public void setUp() throws Exception {
+	FailOnThreadViolationRepaintManager.install();
+	MockitoAnnotations.initMocks(this);
+	supplierManager = (SupplierManager) ModelUtil.getBean("supplierManager");
 
-		ApplicationUserManager applicationUserManager = (ApplicationUserManager) ModelUtil
-				.getBean("applicationUserManager");
-		ApplicationUser user;
-		user = applicationUserManager.login("admin", "admin");
-		applicationUserManager.lazyLoad(user, new LazyLoadEnum[][] { {
-				LazyLoadEnum.USER_ROLES, LazyLoadEnum.NONE } });
-		UserType userType = user.getUserRoles().iterator().next().getUserType();
+	ApplicationUserManager applicationUserManager = (ApplicationUserManager) ModelUtil.getBean("applicationUserManager");
+	ApplicationUser user;
+	user = applicationUserManager.login("admin", "admin");
+	applicationUserManager.lazyLoad(user, new LazyLoadEnum[][] { { LazyLoadEnum.USER_ROLES, LazyLoadEnum.NONE } });
+	UserType userType = user.getUserRoles().iterator().next().getUserType();
 
-		Login login = new LoginImpl(user, userType);
+	Login login = new LoginImpl(user, userType);
 
-		when(managerRepository.getSupplierManager())
-				.thenReturn(supplierManager);
+	when(managerRepository.getSupplierManager()).thenReturn(supplierManager);
 
-		SupplierViewHandler supplierViewHandler = new SupplierViewHandler(
-				login, managerRepository);
+	SupplierViewHandler supplierViewHandler = new SupplierViewHandler(login, managerRepository);
 
-		final EditSupplierView editSupplierView = new EditSupplierView(false,
-				new Supplier(), supplierViewHandler);
+	final EditSupplierView editSupplierView = new EditSupplierView(false, new Supplier(), supplierViewHandler);
 
-		JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
-			protected JDialog executeInEDT() {
-				JDialog dialog = new JDialog();
-				WindowInterface window = new JDialogAdapter(dialog);
-				dialog.add(editSupplierView.buildPanel(window));
-				dialog.pack();
-				return dialog;
-			}
-		});
-		dialogFixture = new DialogFixture(dialog);
-		dialogFixture.show();
+	JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
+	    protected JDialog executeInEDT() {
+		JDialog dialog = new JDialog();
+		WindowInterface window = new JDialogAdapter(dialog);
+		dialog.add(editSupplierView.buildPanel(window));
+		dialog.pack();
+		return dialog;
+	    }
+	});
+	dialogFixture = new DialogFixture(dialog);
+	dialogFixture.show();
 
+    }
+
+    @After
+    public void tearDown() throws Exception {
+	dialogFixture.cleanUp();
+
+	Supplier supplier = new Supplier();
+	supplier.setSupplierName("test");
+	List<Supplier> list = supplierManager.findByObject(supplier);
+	if (list != null) {
+	    for (Supplier sup : list) {
+		supplierManager.removeObject(sup);
+	    }
 	}
+    }
 
-	@After
-	public void tearDown() throws Exception {
-		dialogFixture.cleanUp();
+    @Test
+    public void testShow() {
+	dialogFixture.requireVisible();
+    }
 
-		Supplier supplier = new Supplier();
-		supplier.setSupplierName("test");
-		List<Supplier> list = supplierManager.findByObject(supplier);
-		if (list != null) {
-			for (Supplier sup : list) {
-				supplierManager.removeObject(sup);
-			}
-		}
-	}
+    @Test
+    public void testInsertSupplier() {
 
-	@Test
-	public void testShow() {
-		dialogFixture.requireVisible();
-	}
+	dialogFixture.textBox("TextFieldSupplierName").enterText("test");
+	dialogFixture.comboBox("ComboBoxSupplierType").selectItem(3);
+	dialogFixture.textBox("TextFieldPhone").enterText("1111111");
+	dialogFixture.textBox("TextFieldFax").enterText("2222222");
+	dialogFixture.textBox("TextFieldAddress").enterText("adresse");
+	dialogFixture.textBox("TextFieldPostalCode").enterText("1000");
+	dialogFixture.textBox("TextFieldPostOffice").enterText("poststed");
+	dialogFixture.textBox("TextFieldSupplierDescription").enterText("beskrivelse");
+	dialogFixture.checkBox("CheckBoxInactive").check();
+	dialogFixture.button("SaveSupplier").click();
 
-	@Test
-	public void testInsertSupplier() {
+	Supplier supplier = new Supplier();
+	supplier.setSupplierName("test");
+	List<Supplier> list = supplierManager.findByObject(supplier);
 
-		dialogFixture.textBox("TextFieldSupplierName").enterText("test");
-		dialogFixture.comboBox("ComboBoxSupplierType").selectItem(3);
-		dialogFixture.textBox("TextFieldPhone").enterText("1111111");
-		dialogFixture.textBox("TextFieldFax").enterText("2222222");
-		dialogFixture.textBox("TextFieldAddress").enterText("adresse");
-		dialogFixture.textBox("TextFieldPostalCode").enterText("1000");
-		dialogFixture.textBox("TextFieldPostOffice").enterText("poststed");
-		dialogFixture.textBox("TextFieldSupplierDescription").enterText(
-				"beskrivelse");
-		dialogFixture.checkBox("CheckBoxInactive").check();
-		dialogFixture.button("SaveSupplier").click();
+	assertNotNull(list);
+	assertEquals(1, list.size());
 
-		Supplier supplier = new Supplier();
-		supplier.setSupplierName("test");
-		List<Supplier> list = supplierManager.findByObject(supplier);
+	supplier = list.get(0);
 
-		assertNotNull(list);
-		assertEquals(1, list.size());
-
-		supplier = list.get(0);
-
-		assertEquals("test", supplier.getSupplierName());
-		assertEquals("Montering", supplier.getSupplierType()
-				.getSupplierTypeName());
-		assertEquals("1111111", supplier.getPhone());
-		assertEquals("2222222", supplier.getFax());
-		assertEquals("adresse", supplier.getAddress());
-		assertEquals("1000", supplier.getPostalCode());
-		assertEquals("poststed", supplier.getPostOffice());
-		assertEquals("beskrivelse", supplier.getSupplierDescription());
-		assertEquals(Integer.valueOf(1), supplier.getInactive());
-	}
+	assertEquals("test", supplier.getSupplierName());
+	assertEquals("Montering", supplier.getSupplierType().getSupplierTypeName());
+	assertEquals("1111111", supplier.getPhone());
+	assertEquals("2222222", supplier.getFax());
+	assertEquals("adresse", supplier.getAddress());
+	assertEquals("1000", supplier.getPostalCode());
+	assertEquals("poststed", supplier.getPostOffice());
+	assertEquals("beskrivelse", supplier.getSupplierDescription());
+	assertEquals(Integer.valueOf(1), supplier.getInactive());
+    }
 
 }

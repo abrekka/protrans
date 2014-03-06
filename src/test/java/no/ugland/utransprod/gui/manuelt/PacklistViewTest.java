@@ -52,143 +52,126 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.birosoft.liquid.LiquidLookAndFeel;
-
 /**
  * @author atle.brekka
  * 
  */
 @Category(ManuellTest.class)
 public class PacklistViewTest {
-	static {
-		try {
+    static {
+	try {
 
-			UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
-			JFrame.setDefaultLookAndFeelDecorated(true);
-			LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+	    // LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
+    }
 
-	private DialogFixture dialogFixture;
-	@Mock
-	private Login login;
-	@Mock
-	private ManagerRepository managerRepository;
-	@Mock
-	private DeviationViewHandlerFactory deviationViewHandlerFactory;
-	@Mock
-	private OrderViewHandlerFactory orderViewHandlerFactory;
-	@Mock
-	private JobFunctionManager jobFunctionManager;
-	@Mock
-	private ProductAreaManager productAreaManager;
-	@Mock
-	private DeviationStatusManager deviationStatusManager;
-	@Mock
-	private ApplicationUserManager applicationUserManager;
-	@Mock
-	private ProductAreaGroupManager productAreaGroupManager;
-	@Mock
-	private BudgetManager budgetManager;
-	@Mock
-	private PacklistVManager packlistVManager;
+    private DialogFixture dialogFixture;
+    @Mock
+    private Login login;
+    @Mock
+    private ManagerRepository managerRepository;
+    @Mock
+    private DeviationViewHandlerFactory deviationViewHandlerFactory;
+    @Mock
+    private OrderViewHandlerFactory orderViewHandlerFactory;
+    @Mock
+    private JobFunctionManager jobFunctionManager;
+    @Mock
+    private ProductAreaManager productAreaManager;
+    @Mock
+    private DeviationStatusManager deviationStatusManager;
+    @Mock
+    private ApplicationUserManager applicationUserManager;
+    @Mock
+    private ProductAreaGroupManager productAreaGroupManager;
+    @Mock
+    private BudgetManager budgetManager;
+    @Mock
+    private PacklistVManager packlistVManager;
 
-	@Before
-	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
+    @Before
+    public void setUp() throws Exception {
+	MockitoAnnotations.initMocks(this);
 
-		when(managerRepository.getJobFunctionManager()).thenReturn(
-				jobFunctionManager);
-		when(managerRepository.getProductAreaManager()).thenReturn(
-				productAreaManager);
-		when(managerRepository.getDeviationStatusManager()).thenReturn(
-				deviationStatusManager);
-		when(managerRepository.getApplicationUserManager()).thenReturn(
-				applicationUserManager);
-		when(managerRepository.getProductAreaGroupManager()).thenReturn(
-				productAreaGroupManager);
-		when(managerRepository.getBudgetManager()).thenReturn(budgetManager);
-		final OrderManager orderManager = (OrderManager) ModelUtil
-				.getBean(OrderManager.MANAGER_NAME);
-		when(managerRepository.getOrderManager()).thenReturn(orderManager);
-		when(managerRepository.getPacklistVManager()).thenReturn(
-				packlistVManager);
-		ArticleTypeManager articleTypeManager=(ArticleTypeManager)ModelUtil.getBean(ArticleTypeManager.MANAGER_NAME);
-		when(managerRepository.getArticleTypeManager()).thenReturn(
-				articleTypeManager);
-		ApplicationUser applicationUser = new ApplicationUser();
-		applicationUser.setFirstName("firstName");
-		applicationUser.setLastName("lastName");
-		when(login.getApplicationUser()).thenReturn(applicationUser);
-		UserType userType = new UserType();
-		userType.setIsAdmin(1);
-		when(login.getUserType()).thenReturn(userType);
+	when(managerRepository.getJobFunctionManager()).thenReturn(jobFunctionManager);
+	when(managerRepository.getProductAreaManager()).thenReturn(productAreaManager);
+	when(managerRepository.getDeviationStatusManager()).thenReturn(deviationStatusManager);
+	when(managerRepository.getApplicationUserManager()).thenReturn(applicationUserManager);
+	when(managerRepository.getProductAreaGroupManager()).thenReturn(productAreaGroupManager);
+	when(managerRepository.getBudgetManager()).thenReturn(budgetManager);
+	final OrderManager orderManager = (OrderManager) ModelUtil.getBean(OrderManager.MANAGER_NAME);
+	when(managerRepository.getOrderManager()).thenReturn(orderManager);
+	when(managerRepository.getPacklistVManager()).thenReturn(packlistVManager);
+	ArticleTypeManager articleTypeManager = (ArticleTypeManager) ModelUtil.getBean(ArticleTypeManager.MANAGER_NAME);
+	when(managerRepository.getArticleTypeManager()).thenReturn(articleTypeManager);
+	ApplicationUser applicationUser = new ApplicationUser();
+	applicationUser.setFirstName("firstName");
+	applicationUser.setLastName("lastName");
+	when(login.getApplicationUser()).thenReturn(applicationUser);
+	UserType userType = new UserType();
+	userType.setIsAdmin(1);
+	when(login.getUserType()).thenReturn(userType);
 
-		Set<UserTypeAccess> userTypeAccesses = new HashSet<UserTypeAccess>();
-		UserTypeAccess userTypeAccess = new UserTypeAccess();
-		userTypeAccess.setWindowAccess(new WindowAccess(null, "Attributter",
-				null));
-		userTypeAccesses.add(userTypeAccess);
-		userType.setUserTypeAccesses(userTypeAccesses);
-		ProductArea productArea = new ProductArea();
-		ProductAreaGroup productAreaGroup = new ProductAreaGroup();
-		productArea.setProductAreaGroup(productAreaGroup);
-		applicationUser.setProductArea(productArea);
-		final PacklistVManager packlistVManager = (PacklistVManager) ModelUtil
-				.getBean(PacklistVManager.MANAGER_NAME);
+	Set<UserTypeAccess> userTypeAccesses = new HashSet<UserTypeAccess>();
+	UserTypeAccess userTypeAccess = new UserTypeAccess();
+	userTypeAccess.setWindowAccess(new WindowAccess(null, "Attributter", null));
+	userTypeAccesses.add(userTypeAccess);
+	userType.setUserTypeAccesses(userTypeAccesses);
+	ProductArea productArea = new ProductArea();
+	ProductAreaGroup productAreaGroup = new ProductAreaGroup();
+	productArea.setProductAreaGroup(productAreaGroup);
+	applicationUser.setProductArea(productArea);
+	final PacklistVManager packlistVManager = (PacklistVManager) ModelUtil.getBean(PacklistVManager.MANAGER_NAME);
 
-		AbstractProductionPackageViewHandler<PacklistV> productionViewHandler = new PacklistViewHandler(
-				login, managerRepository, deviationViewHandlerFactory,
-				orderViewHandlerFactory, new PacklistApplyList(login,
-						packlistVManager), null, null);
+	AbstractProductionPackageViewHandler<PacklistV> productionViewHandler = new PacklistViewHandler(login, managerRepository,
+		deviationViewHandlerFactory, orderViewHandlerFactory, new PacklistApplyList(login, packlistVManager), null, null);
 
-		final PacklistView packlistView = new PacklistView(
-				productionViewHandler);
+	final PacklistView packlistView = new PacklistView(productionViewHandler);
 
-		JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
-			protected JDialog executeInEDT() {
-				JDialog dialog = new JDialog();
-				WindowInterface window = new JDialogAdapter(dialog);
-				dialog.add(packlistView.buildPanel(window));
-				dialog.pack();
-				return dialog;
-			}
-		});
-		dialogFixture = new DialogFixture(dialog);
-		dialogFixture.show();
+	JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
+	    protected JDialog executeInEDT() {
+		JDialog dialog = new JDialog();
+		WindowInterface window = new JDialogAdapter(dialog);
+		dialog.add(packlistView.buildPanel(window));
+		dialog.pack();
+		return dialog;
+	    }
+	});
+	dialogFixture = new DialogFixture(dialog);
+	dialogFixture.show();
 
-	}
+    }
 
-	@After
-	public void tearDown() throws Exception {
-		dialogFixture.cleanUp();
-	}
+    @After
+    public void tearDown() throws Exception {
+	dialogFixture.cleanUp();
+    }
 
-	@Test
-	public void testSetApplied() {
-		dialogFixture.checkBox("CheckBoxFilter").uncheck();
+    @Test
+    public void testSetApplied() {
+	dialogFixture.checkBox("CheckBoxFilter").uncheck();
 
-		JTableFixture tableFixture = dialogFixture
-				.table(TableEnum.TABLEPACKLIST.getTableName());
+	JTableFixture tableFixture = dialogFixture.table(TableEnum.TABLEPACKLIST.getTableName());
 
-		tableFixture.cell(row(0).column(1)).click();
+	tableFixture.cell(row(0).column(1)).click();
 
-		dialogFixture.button("ButtonApply").requireEnabled();
-		dialogFixture.button("ButtonUnapply").requireDisabled();
+	dialogFixture.button("ButtonApply").requireEnabled();
+	dialogFixture.button("ButtonUnapply").requireDisabled();
 
-		dialogFixture.button("ButtonApply").click();
+	dialogFixture.button("ButtonApply").click();
 
-		DialogFixture dateView = new DialogFixture(dialogFixture.robot,
-				(JDialog) dialogFixture.robot.finder().findByName("DateView"));
-		dateView.button("ButtonOk").click();
+	DialogFixture dateView = new DialogFixture(dialogFixture.robot, (JDialog) dialogFixture.robot.finder().findByName("DateView"));
+	dateView.button("ButtonOk").click();
 
-		tableFixture.cell(row(0).column(1)).click();
+	tableFixture.cell(row(0).column(1)).click();
 
-		// dialogFixture.button("ButtonApply").requireDisabled();
-		// dialogFixture.button("ButtonUnapply").requireEnabled();
-	}
+	// dialogFixture.button("ButtonApply").requireDisabled();
+	// dialogFixture.button("ButtonUnapply").requireEnabled();
+    }
 
 }

@@ -22,7 +22,6 @@ import no.ugland.utransprod.service.impl.BaseManagerImpl;
 import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.Util;
 
-import com.birosoft.liquid.LiquidLookAndFeel;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -49,9 +48,9 @@ public final class MainClass {
 
 	    JDialog.setDefaultLookAndFeelDecorated(true);
 
-	    LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    // LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-	    LiquidLookAndFeel.setPanelTransparency(false);
+	    // LiquidLookAndFeel.setPanelTransparency(false);
 
 	} catch (Exception e) {
 	    e.printStackTrace();

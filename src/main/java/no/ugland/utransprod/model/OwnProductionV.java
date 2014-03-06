@@ -18,419 +18,372 @@ import org.apache.commons.lang.builder.ToStringStyle;
  * 
  */
 public class OwnProductionV extends BaseObject {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
-	private Integer orderId;
+    private Integer orderId;
 
-	/**
-	 * 
-	 */
-	private String packedBy;
+    private String packedBy;
 
-	/**
-	 * 
-	 */
-	private Integer transportYear;
+    private Integer transportYear;
 
-	/**
-	 * 
-	 */
-	private Integer transportWeek;
+    private Integer transportWeek;
 
-	/**
-	 * 
-	 */
-	private Integer customerNr;
+    private Integer customerNr;
 
-	/**
-	 * 
-	 */
-	private String customerName;
+    private String customerName;
 
-	/**
-	 * 
-	 */
-	private BigDecimal garageValue;
+    private BigDecimal garageValue;
 
-	/**
-	 * 
-	 */
-	private Integer orderReadyYear;
+    private Integer orderReadyYear;
 
-	/**
-	 * 
-	 */
-	private Integer orderReadyWeek;
+    private Integer orderReadyWeek;
 
-	/**
-	 * 
-	 */
-	private Integer orderReadyDay;
+    private Integer orderReadyDay;
 
-	/**
-	 * 
-	 */
-	private Date packlistReady;
+    private Date packlistReady;
 
-	/**
-	 * 
-	 */
-	private Date invoiceDate;
+    private Date invoiceDate;
 
-	/**
-	 * 
-	 */
-	private String productArea;
+    private String productArea;
 
-	/**
-	 * 
-	 */
-	private Date sent;
-	/**
-	 * 
-	 */
-	private String orderNr;
-	private String productAreaGroupName;
+    private Date sent;
+    private String orderNr;
+    private String productAreaGroupName;
+    private Integer productionWeek;
 
-	/**
-	 * 
-	 */
-	public OwnProductionV() {
-		super();
+    public OwnProductionV() {
+	super();
+    }
+
+    /**
+     * @param orderId
+     * @param packedBy
+     * @param transportYear
+     * @param transportWeek
+     * @param customerNr
+     * @param customerName
+     * @param garageValue
+     * @param orderReadyYear
+     * @param orderReadyWeek
+     * @param orderReadyDay
+     * @param packlistReady
+     * @param invoiceDate
+     * @param productArea
+     * @param sent
+     * @param orderNr
+     */
+    public OwnProductionV(Integer orderId, String packedBy, Integer transportYear, Integer transportWeek, Integer customerNr, String customerName,
+	    BigDecimal garageValue, Integer orderReadyYear, Integer orderReadyWeek, Integer orderReadyDay, Date packlistReady, Date invoiceDate,
+	    String productArea, Date sent, String orderNr, String productAreaGroupName) {
+	super();
+	this.orderId = orderId;
+	this.packedBy = packedBy;
+	this.transportYear = transportYear;
+	this.transportWeek = transportWeek;
+	this.customerNr = customerNr;
+	this.customerName = customerName;
+	this.garageValue = garageValue;
+	this.orderReadyYear = orderReadyYear;
+	this.orderReadyWeek = orderReadyWeek;
+	this.orderReadyDay = orderReadyDay;
+	this.packlistReady = packlistReady;
+	this.invoiceDate = invoiceDate;
+	this.productArea = productArea;
+	this.sent = sent;
+	this.orderNr = orderNr;
+	this.productAreaGroupName = productAreaGroupName;
+    }
+
+    /**
+     * @return kundenavn
+     */
+    public String getCustomerName() {
+	return customerName;
+    }
+
+    /**
+     * @param customerName
+     */
+    public void setCustomerName(String customerName) {
+	this.customerName = customerName;
+    }
+
+    /**
+     * @return kundenummer
+     */
+    public Integer getCustomerNr() {
+	return customerNr;
+    }
+
+    /**
+     * @param customerNr
+     */
+    public void setCustomerNr(Integer customerNr) {
+	this.customerNr = customerNr;
+    }
+
+    /**
+     * @return garasjeverdi
+     */
+    public BigDecimal getGarageValue() {
+	return garageValue;
+    }
+
+    /**
+     * @param garageValue
+     */
+    public void setGarageValue(BigDecimal garageValue) {
+	this.garageValue = garageValue;
+    }
+
+    /**
+     * @return fakturadato
+     */
+    public Date getInvoiceDate() {
+	return invoiceDate;
+    }
+
+    /**
+     * @return dfakturadato formatert
+     */
+    public String getInvoiceDateFormat() {
+	if (invoiceDate != null) {
+	    return Util.SHORT_DATE_FORMAT.format(invoiceDate);
 	}
+	return null;
+    }
 
-	/**
-	 * @param orderId
-	 * @param packedBy
-	 * @param transportYear
-	 * @param transportWeek
-	 * @param customerNr
-	 * @param customerName
-	 * @param garageValue
-	 * @param orderReadyYear
-	 * @param orderReadyWeek
-	 * @param orderReadyDay
-	 * @param packlistReady
-	 * @param invoiceDate
-	 * @param productArea
-	 * @param sent
-	 * @param orderNr 
-	 */
-	public OwnProductionV(Integer orderId, String packedBy,
-			Integer transportYear, Integer transportWeek, Integer customerNr,
-			String customerName, BigDecimal garageValue,
-			Integer orderReadyYear, Integer orderReadyWeek,
-			Integer orderReadyDay, Date packlistReady, Date invoiceDate,
-			String productArea, Date sent,String orderNr,String productAreaGroupName) {
-		super();
-		this.orderId = orderId;
-		this.packedBy = packedBy;
-		this.transportYear = transportYear;
-		this.transportWeek = transportWeek;
-		this.customerNr = customerNr;
-		this.customerName = customerName;
-		this.garageValue = garageValue;
-		this.orderReadyYear = orderReadyYear;
-		this.orderReadyWeek = orderReadyWeek;
-		this.orderReadyDay = orderReadyDay;
-		this.packlistReady = packlistReady;
-		this.invoiceDate = invoiceDate;
-		this.productArea = productArea;
-		this.sent = sent;
-		this.orderNr=orderNr;
-		this.productAreaGroupName=productAreaGroupName;
-	}
+    /**
+     * @param invoiceDate
+     */
+    public void setInvoiceDate(Date invoiceDate) {
+	this.invoiceDate = invoiceDate;
+    }
 
-	/**
-	 * @return kundenavn
-	 */
-	public String getCustomerName() {
-		return customerName;
-	}
+    /**
+     * @return ordreid
+     */
+    public Integer getOrderId() {
+	return orderId;
+    }
 
-	/**
-	 * @param customerName
-	 */
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
-	}
+    /**
+     * @param orderId
+     */
+    public void setOrderId(Integer orderId) {
+	this.orderId = orderId;
+    }
 
-	/**
-	 * @return kundenummer
-	 */
-	public Integer getCustomerNr() {
-		return customerNr;
-	}
+    /**
+     * @return 1 dersom ordre er klar
+     */
+    public Integer getOrderReadyDay() {
+	return orderReadyDay;
+    }
 
-	/**
-	 * @param customerNr
-	 */
-	public void setCustomerNr(Integer customerNr) {
-		this.customerNr = customerNr;
+    /**
+     * @return dag når ordre var klar
+     */
+    public String getOrderReadyDayString() {
+	if (orderReadyDay != null) {
+	    return DayEnum.getDayString(orderReadyDay).toString();
 	}
+	return null;
+    }
 
-	/**
-	 * @return garasjeverdi
-	 */
-	public BigDecimal getGarageValue() {
-		return garageValue;
-	}
+    /**
+     * @param orderReadyDay
+     */
+    public void setOrderReadyDay(Integer orderReadyDay) {
+	this.orderReadyDay = orderReadyDay;
+    }
 
-	/**
-	 * @param garageValue
-	 */
-	public void setGarageValue(BigDecimal garageValue) {
-		this.garageValue = garageValue;
-	}
+    /**
+     * @return uke
+     */
+    public Integer getOrderReadyWeek() {
+	return orderReadyWeek;
+    }
 
-	/**
-	 * @return fakturadato
-	 */
-	public Date getInvoiceDate() {
-		return invoiceDate;
-	}
+    /**
+     * @param orderReadyWeek
+     */
+    public void setOrderReadyWeek(Integer orderReadyWeek) {
+	this.orderReadyWeek = orderReadyWeek;
+    }
 
-	/**
-	 * @return dfakturadato formatert
-	 */
-	public String getInvoiceDateFormat() {
-		if (invoiceDate != null) {
-			return Util.SHORT_DATE_FORMAT.format(invoiceDate);
-		}
-		return null;
-	}
+    /**
+     * @return år
+     */
+    public Integer getOrderReadyYear() {
+	return orderReadyYear;
+    }
 
-	/**
-	 * @param invoiceDate
-	 */
-	public void setInvoiceDate(Date invoiceDate) {
-		this.invoiceDate = invoiceDate;
-	}
+    /**
+     * @param orderReadyYear
+     */
+    public void setOrderReadyYear(Integer orderReadyYear) {
+	this.orderReadyYear = orderReadyYear;
+    }
 
-	/**
-	 * @return ordreid
-	 */
-	public Integer getOrderId() {
-		return orderId;
-	}
+    /**
+     * @return pakket av
+     */
+    public String getPackedBy() {
+	return packedBy;
+    }
 
-	/**
-	 * @param orderId
-	 */
-	public void setOrderId(Integer orderId) {
-		this.orderId = orderId;
-	}
+    /**
+     * @param packedBy
+     */
+    public void setPackedBy(String packedBy) {
+	this.packedBy = packedBy;
+    }
 
-	/**
-	 * @return 1 dersom ordre er klar
-	 */
-	public Integer getOrderReadyDay() {
-		return orderReadyDay;
-	}
+    /**
+     * @return dato for når pakkliste var klar
+     */
+    public Date getPacklistReady() {
+	return packlistReady;
+    }
 
-	/**
-	 * @return dag når ordre var klar
-	 */
-	public String getOrderReadyDayString() {
-		if (orderReadyDay != null) {
-			return DayEnum.getDayString(orderReadyDay).toString();
-		}
-		return null;
+    /**
+     * @return dato for pakkliste formatert
+     */
+    public String getPacklistReadyFormat() {
+	if (packlistReady != null) {
+	    return Util.SHORT_DATE_FORMAT.format(packlistReady);
 	}
+	return null;
+    }
 
-	/**
-	 * @param orderReadyDay
-	 */
-	public void setOrderReadyDay(Integer orderReadyDay) {
-		this.orderReadyDay = orderReadyDay;
-	}
+    /**
+     * @param packlistReady
+     */
+    public void setPacklistReady(Date packlistReady) {
+	this.packlistReady = packlistReady;
+    }
 
-	/**
-	 * @return uke
-	 */
-	public Integer getOrderReadyWeek() {
-		return orderReadyWeek;
-	}
+    /**
+     * @return transportuke
+     */
+    public Integer getTransportWeek() {
+	return transportWeek;
+    }
 
-	/**
-	 * @param orderReadyWeek
-	 */
-	public void setOrderReadyWeek(Integer orderReadyWeek) {
-		this.orderReadyWeek = orderReadyWeek;
-	}
+    /**
+     * @param transportWeek
+     */
+    public void setTransportWeek(Integer transportWeek) {
+	this.transportWeek = transportWeek;
+    }
 
-	/**
-	 * @return år
-	 */
-	public Integer getOrderReadyYear() {
-		return orderReadyYear;
-	}
+    /**
+     * @return transportår
+     */
+    public Integer getTransportYear() {
+	return transportYear;
+    }
 
-	/**
-	 * @param orderReadyYear
-	 */
-	public void setOrderReadyYear(Integer orderReadyYear) {
-		this.orderReadyYear = orderReadyYear;
-	}
+    /**
+     * @param transportYear
+     */
+    public void setTransportYear(Integer transportYear) {
+	this.transportYear = transportYear;
+    }
 
-	/**
-	 * @return pakket av
-	 */
-	public String getPackedBy() {
-		return packedBy;
+    /**
+     * @return transport år og uke
+     */
+    public String getTransportYearWeek() {
+	if (transportYear != null) {
+	    return String.valueOf(transportYear) + "-" + transportWeek;
 	}
+	return "";
+    }
 
-	/**
-	 * @param packedBy
-	 */
-	public void setPackedBy(String packedBy) {
-		this.packedBy = packedBy;
-	}
+    /**
+     * @see no.ugland.utransprod.model.BaseObject#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(final Object other) {
+	if (!(other instanceof OwnProductionV))
+	    return false;
+	OwnProductionV castOther = (OwnProductionV) other;
+	return new EqualsBuilder().append(orderId, castOther.orderId).isEquals();
+    }
 
-	/**
-	 * @return dato for når pakkliste var klar
-	 */
-	public Date getPacklistReady() {
-		return packlistReady;
-	}
+    /**
+     * @see no.ugland.utransprod.model.BaseObject#hashCode()
+     */
+    @Override
+    public int hashCode() {
+	return new HashCodeBuilder().append(orderId).toHashCode();
+    }
 
-	/**
-	 * @return dato for pakkliste formatert
-	 */
-	public String getPacklistReadyFormat() {
-		if (packlistReady != null) {
-			return Util.SHORT_DATE_FORMAT.format(packlistReady);
-		}
-		return null;
-	}
+    /**
+     * @see no.ugland.utransprod.model.BaseObject#toString()
+     */
+    @Override
+    public String toString() {
+	return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append("orderId", orderId).toString();
+    }
 
-	/**
-	 * @param packlistReady
-	 */
-	public void setPacklistReady(Date packlistReady) {
-		this.packlistReady = packlistReady;
-	}
+    /**
+     * @return produktområde
+     */
+    public String getProductArea() {
+	return productArea;
+    }
 
-	/**
-	 * @return transportuke
-	 */
-	public Integer getTransportWeek() {
-		return transportWeek;
-	}
+    /**
+     * @param productArea
+     */
+    public void setProductArea(String productArea) {
+	this.productArea = productArea;
+    }
 
-	/**
-	 * @param transportWeek
-	 */
-	public void setTransportWeek(Integer transportWeek) {
-		this.transportWeek = transportWeek;
-	}
+    /**
+     * @return sendtdato
+     */
+    public Date getSent() {
+	return sent;
+    }
 
-	/**
-	 * @return transportår
-	 */
-	public Integer getTransportYear() {
-		return transportYear;
-	}
+    /**
+     * @param sent
+     */
+    public void setSent(Date sent) {
+	this.sent = sent;
+    }
 
-	/**
-	 * @param transportYear
-	 */
-	public void setTransportYear(Integer transportYear) {
-		this.transportYear = transportYear;
-	}
+    /**
+     * @return ordernummer
+     */
+    public String getOrderNr() {
+	return orderNr;
+    }
 
-	/**
-	 * @return transport år og uke
-	 */
-	public String getTransportYearWeek() {
-		if(transportYear!=null){
-		return String.valueOf(transportYear) + "-" + transportWeek;
-		}
-		return "";
-	}
+    /**
+     * @param orderNr
+     */
+    public void setOrderNr(String orderNr) {
+	this.orderNr = orderNr;
+    }
 
-	/**
-	 * @see no.ugland.utransprod.model.BaseObject#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(final Object other) {
-		if (!(other instanceof OwnProductionV))
-			return false;
-		OwnProductionV castOther = (OwnProductionV) other;
-		return new EqualsBuilder().append(orderId, castOther.orderId)
-				.isEquals();
-	}
+    public String getProductAreaGroupName() {
+	return productAreaGroupName;
+    }
 
-	/**
-	 * @see no.ugland.utransprod.model.BaseObject#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder().append(orderId).toHashCode();
-	}
+    public void setProductAreaGroupName(String productAreaGroupName) {
+	this.productAreaGroupName = productAreaGroupName;
+    }
 
-	/**
-	 * @see no.ugland.utransprod.model.BaseObject#toString()
-	 */
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append(
-				"orderId", orderId).toString();
-	}
+    public Integer getProductionWeek() {
+	return productionWeek;
+    }
 
-	/**
-	 * @return produktområde
-	 */
-	public String getProductArea() {
-		return productArea;
-	}
-
-	/**
-	 * @param productArea
-	 */
-	public void setProductArea(String productArea) {
-		this.productArea = productArea;
-	}
-
-	/**
-	 * @return sendtdato
-	 */
-	public Date getSent() {
-		return sent;
-	}
-
-	/**
-	 * @param sent
-	 */
-	public void setSent(Date sent) {
-		this.sent = sent;
-	}
-
-	/**
-	 * @return ordernummer
-	 */
-	public String getOrderNr() {
-		return orderNr;
-	}
-
-	/**
-	 * @param orderNr
-	 */
-	public void setOrderNr(String orderNr) {
-		this.orderNr = orderNr;
-	}
-
-	public String getProductAreaGroupName() {
-		return productAreaGroupName;
-	}
-
-	public void setProductAreaGroupName(String productAreaGroupName) {
-		this.productAreaGroupName = productAreaGroupName;
-	}
+    public void setProductionWeek(Integer productionWeek) {
+	this.productionWeek = productionWeek;
+    }
 }

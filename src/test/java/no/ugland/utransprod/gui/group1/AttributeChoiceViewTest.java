@@ -34,84 +34,79 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.birosoft.liquid.LiquidLookAndFeel;
-
 @Category(GUITests.class)
 public class AttributeChoiceViewTest {
-	static {
-		try {
+    static {
+	try {
 
-			UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
-			JFrame.setDefaultLookAndFeelDecorated(true);
-			LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+	    // LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
+    }
 
-	private DialogFixture dialogFixture;
+    private DialogFixture dialogFixture;
 
-	@Mock
-	private Login login;
+    @Mock
+    private Login login;
 
-	@Mock
-	private ManagerRepository managerRepository;
+    @Mock
+    private ManagerRepository managerRepository;
 
-	@Before
-	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
+    @Before
+    public void setUp() throws Exception {
+	MockitoAnnotations.initMocks(this);
 
-		final UserType userType = new UserType();
-		userType.setIsAdmin(1);
-		Set<UserTypeAccess> userTypeAccesses = new HashSet<UserTypeAccess>();
-		UserTypeAccess userTypeAccess = new UserTypeAccess();
-		userTypeAccess.setWindowAccess(new WindowAccess(null, "Attributter",
-				null));
-		userTypeAccesses.add(userTypeAccess);
-		userType.setUserTypeAccesses(userTypeAccesses);
+	final UserType userType = new UserType();
+	userType.setIsAdmin(1);
+	Set<UserTypeAccess> userTypeAccesses = new HashSet<UserTypeAccess>();
+	UserTypeAccess userTypeAccess = new UserTypeAccess();
+	userTypeAccess.setWindowAccess(new WindowAccess(null, "Attributter", null));
+	userTypeAccesses.add(userTypeAccess);
+	userType.setUserTypeAccesses(userTypeAccesses);
 
-		when(login.getUserType()).thenReturn(userType);
+	when(login.getUserType()).thenReturn(userType);
 
-		final AttributeChoiceOverviewView view = new AttributeChoiceOverviewView(
-				new AttributeChoiceViewHandler(login, managerRepository,
-						new AttributeModel(new Attribute())));
+	final AttributeChoiceOverviewView view = new AttributeChoiceOverviewView(new AttributeChoiceViewHandler(login, managerRepository,
+		new AttributeModel(new Attribute())));
 
-		JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
-			protected JDialog executeInEDT() {
-				JDialog dialog = new JDialog();
-				WindowInterface window = new JDialogAdapter(dialog);
-				dialog.add(view.buildPanel(window));
-				dialog.pack();
-				return dialog;
-			}
-		});
-		dialogFixture = new DialogFixture(dialog);
-		dialogFixture.show();
+	JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
+	    protected JDialog executeInEDT() {
+		JDialog dialog = new JDialog();
+		WindowInterface window = new JDialogAdapter(dialog);
+		dialog.add(view.buildPanel(window));
+		dialog.pack();
+		return dialog;
+	    }
+	});
+	dialogFixture = new DialogFixture(dialog);
+	dialogFixture.show();
 
-	}
+    }
 
-	@After
-	public void tearDown() throws Exception {
-		dialogFixture.cleanUp();
+    @After
+    public void tearDown() throws Exception {
+	dialogFixture.cleanUp();
 
-	}
+    }
 
-	@Test
-	public void testOpenWindow() throws Exception {
-		dialogFixture.requireVisible();
-	}
+    @Test
+    public void testOpenWindow() throws Exception {
+	dialogFixture.requireVisible();
+    }
 
-	@Test
-	public void testNewChoice() throws Exception {
-		dialogFixture.requireVisible();
+    @Test
+    public void testNewChoice() throws Exception {
+	dialogFixture.requireVisible();
 
-		dialogFixture.button("AddAttributeChoice").click();
+	dialogFixture.button("AddAttributeChoice").click();
 
-		DialogFixture editDialog = WindowFinder.findDialog(
-				"EditAttributeChoiceView").using(dialogFixture.robot);
+	DialogFixture editDialog = WindowFinder.findDialog("EditAttributeChoiceView").using(dialogFixture.robot);
 
-		editDialog.textBox("TextFieldChoiceValue").enterText("testattributt");
-	}
+	editDialog.textBox("TextFieldChoiceValue").enterText("testattributt");
+    }
 
 }

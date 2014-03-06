@@ -199,7 +199,7 @@ public class OrderManagerImpl extends ManagerImpl<Order> implements OrderManager
 
 	for (Object[] object : list) {
 	    orderId = (Integer) object[0];
-	    postShipmentId = (Integer) object[12];
+	    postShipmentId = (Integer) object[13];
 	    isPostShipment = isPostShipment(postShipmentId);
 
 	    if (!orderId.equals(currentOrderId) || (!postShipmentId.equals(currentPostShipmentId))) {
@@ -210,7 +210,7 @@ public class OrderManagerImpl extends ManagerImpl<Order> implements OrderManager
 		costs = new Hashtable<String, BigDecimal>();
 
 	    }
-	    if (object[9] != null) {
+	    if (object[10] != null) {
 		createCostColumn(costs, object);
 	    }
 	}
@@ -238,14 +238,14 @@ public class OrderManagerImpl extends ManagerImpl<Order> implements OrderManager
     }
 
     private void createCostColumn(final Map<String, BigDecimal> costs, final Object[] object) {
-	String heading = (String) object[9] + " - " + (String) object[11];
+	String heading = (String) object[10] + " - " + (String) object[12];
 
 	if (costs != null) {
 	    BigDecimal cost = costs.get(heading);
 	    if (cost != null) {
-		cost = cost.add((BigDecimal) object[10]);
+		cost = cost.add((BigDecimal) object[11]);
 	    } else {
-		cost = (BigDecimal) object[10];
+		cost = (BigDecimal) object[11];
 	    }
 	    costs.put(heading, cost);
 	    ReportDataTransport.addCostHeading(heading);
@@ -266,6 +266,7 @@ public class OrderManagerImpl extends ManagerImpl<Order> implements OrderManager
 	reportDataTransport.setTransportName((String) object[6]);
 	reportDataTransport.setYear((Integer) object[7]);
 	reportDataTransport.setWeek((Integer) object[8]);
+	reportDataTransport.setProductionWeek((Integer) object[9]);
 
 	return reportDataTransport;
     }

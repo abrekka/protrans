@@ -45,129 +45,117 @@ import org.mockito.MockitoAnnotations;
 @Category(FastTests.class)
 public class OrderViewHandlerTest {
 
-	private OrderViewHandler viewHandler;
-	@Mock
-	private Login login;
-	@Mock
-	private ManagerRepository managerRepository;
-	@Mock
-	private DeviationViewHandlerFactory deviationViewHandlerFactory;
-	@Mock
-	private DeviationOverviewViewFactory deviationOverviewViewFactory;
-	@Mock
-	private ProductAreaManager productAreaManager;
+    private OrderViewHandler viewHandler;
+    @Mock
+    private Login login;
+    @Mock
+    private ManagerRepository managerRepository;
+    @Mock
+    private DeviationViewHandlerFactory deviationViewHandlerFactory;
+    @Mock
+    private DeviationOverviewViewFactory deviationOverviewViewFactory;
+    @Mock
+    private ProductAreaManager productAreaManager;
 
-	@Before
-	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-		final OrderManager orderManager = (OrderManager) ModelUtil
-				.getBean(OrderManager.MANAGER_NAME);
-		when(managerRepository.getOrderManager()).thenReturn(orderManager);
-		when(managerRepository.getProductAreaManager()).thenReturn(
-				productAreaManager);
-		final UserType userType = new UserType();
-		userType.setIsAdmin(1);
-		Set<UserTypeAccess> userTypeAccesses = new HashSet<UserTypeAccess>();
-		UserTypeAccess userTypeAccess = new UserTypeAccess();
-		userTypeAccess.setWindowAccess(new WindowAccess(null, "Attributter",
-				null));
-		userTypeAccesses.add(userTypeAccess);
-		userType.setUserTypeAccesses(userTypeAccesses);
+    @Before
+    public void setUp() throws Exception {
+	MockitoAnnotations.initMocks(this);
+	final OrderManager orderManager = (OrderManager) ModelUtil.getBean(OrderManager.MANAGER_NAME);
+	when(managerRepository.getOrderManager()).thenReturn(orderManager);
+	when(managerRepository.getProductAreaManager()).thenReturn(productAreaManager);
+	final UserType userType = new UserType();
+	userType.setIsAdmin(1);
+	Set<UserTypeAccess> userTypeAccesses = new HashSet<UserTypeAccess>();
+	UserTypeAccess userTypeAccess = new UserTypeAccess();
+	userTypeAccess.setWindowAccess(new WindowAccess(null, "Attributter", null));
+	userTypeAccesses.add(userTypeAccess);
+	userType.setUserTypeAccesses(userTypeAccesses);
 
-		viewHandler = new OrderViewHandler(login, managerRepository,
-				deviationOverviewViewFactory, deviationViewHandlerFactory,
-				false);
+	viewHandler = new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory, deviationViewHandlerFactory, false);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+	CustomerManager customerManager = (CustomerManager) ModelUtil.getBean(CustomerManager.MANAGER_NAME);
+	Customer customer = customerManager.findByCustomerNr(100000);
+	if (customer != null) {
+	    customerManager.removeCustomer(customer);
 	}
+    }
 
-	@After
-	public void tearDown() throws Exception {
-		CustomerManager customerManager = (CustomerManager) ModelUtil
-				.getBean(CustomerManager.MANAGER_NAME);
-		Customer customer = customerManager.findByCustomerNr(100000);
-		if (customer != null) {
-			customerManager.removeCustomer(customer);
-		}
-	}
+    @Test
+    public void testGetOrderListAtStart() {
+	assertEquals(0, viewHandler.getObjectSelectionListSize());
+    }
 
-	@Test
-	public void testGetOrderListAtStart() {
-		assertEquals(0, viewHandler.getObjectSelectionListSize());
-	}
+    @Test
+    public void testGetAddRemoveString() {
+	assertNotNull(viewHandler.getAddRemoveString());
+	assertEquals("ordre", viewHandler.getAddRemoveString());
+    }
 
-	@Test
-	public void testGetAddRemoveString() {
-		assertNotNull(viewHandler.getAddRemoveString());
-		assertEquals("ordre", viewHandler.getAddRemoveString());
-	}
+    @Test
+    public void testGetNewObject() {
+	assertNotNull(viewHandler.getNewObject());
+	assertEquals(Order.class, viewHandler.getNewObject().getClass());
+    }
 
-	@Test
-	public void testGetNewObject() {
-		assertNotNull(viewHandler.getNewObject());
-		assertEquals(Order.class, viewHandler.getNewObject().getClass());
-	}
+    @Test
+    public void testGetTableModel() {
+	assertNotNull(viewHandler.getTableModel(null));
 
-	@Test
-	public void testGetTableModel() {
-		assertNotNull(viewHandler.getTableModel(null));
+    }
 
-	}
+    @Test
+    public void testGetAllCustomers() {
+	List<Customer> customers = viewHandler.getCustomerList();
+	assertNotNull(customers);
+	assertEquals(true, customers.size() != 0);
+    }
 
-	@Test
-	public void testGetAllCustomers() {
-		List<Customer> customers = viewHandler.getCustomerList();
-		assertNotNull(customers);
-		assertEquals(true, customers.size() != 0);
-	}
+    @Test
+    public void testGetAllConstructionTypes() {
+	List<ConstructionType> types = viewHandler.getConstructionTypeList();
+	assertNotNull(types);
+	assertEquals(true, types.size() != 0);
+    }
 
-	@Test
-	public void testGetAllConstructionTypes() {
-		List<ConstructionType> types = viewHandler.getConstructionTypeList();
-		assertNotNull(types);
-		assertEquals(true, types.size() != 0);
-	}
+    @Test
+    public void testGetAllTransports() {
+	List<Transport> transports = viewHandler.getTransportList(false);
+	assertNotNull(transports);
+	assertEquals(true, transports.size() != 0);
+    }
 
-	@Test
-	public void testGetAllTransports() {
-		List<Transport> transports = viewHandler.getTransportList(false);
-		assertNotNull(transports);
-		assertEquals(true, transports.size() != 0);
-	}
+    @Test
+    public void testFindNewOrders() {
+	assertEquals(true, viewHandler.initAndGetOrderPanelSelectionList(OrderPanelTypeEnum.NEW_ORDERS).getSize() != 0);
+    }
 
-	@Test
-	public void testFindNewOrders() {
-		assertEquals(true, viewHandler.initAndGetOrderPanelSelectionList(
-				OrderPanelTypeEnum.NEW_ORDERS).getSize() != 0);
-	}
-
-	@Test
-	public void testSaveObjectExt() {
-		ProductAreaManager productAreaManager = (ProductAreaManager) ModelUtil
-				.getBean(ProductAreaManager.MANAGER_NAME);
-		ProductArea productArea = productAreaManager
-				.findByName("Garasje villa");
-		ConstructionTypeManager constructionTypeManager = (ConstructionTypeManager) ModelUtil
-				.getBean(ConstructionTypeManager.MANAGER_NAME);
-		ConstructionType constructionType = constructionTypeManager
-				.findByName("A1");
-		OrderLine orderLine = new OrderLine();
-		orderLine.setOrdNo(7);
-		orderLine.setLnNo(13);
-		Order order = new Order();
-		order.setProductArea(productArea);
-		order.setOrderNr("100100100");
-		order.setConstructionType(constructionType);
-		order.addOrderLine(orderLine);
-		orderLine.setArticlePath(orderLine.getGeneratedArticlePath());
-		order.setDeliveryAddress("deliveryAddress");
-		order.setPostalCode("4841");
-		order.setPostOffice("postOffice");
-		order.setOrderDate(Util.getCurrentDate());
-		OrderModel orderModel = new OrderModel(order, false, true, true, null,
-				null);
-		orderModel.setCustomerNr("100000");
-		orderModel.setCustomerFirstName("test");
-		orderModel.setCustomerLastName("testesen");
-		viewHandler.saveObjectExt(orderModel, null);
-		assertEquals(Integer.valueOf(1), orderLine.getIsDefault());
-	}
+    @Test
+    public void testSaveObjectExt() {
+	ProductAreaManager productAreaManager = (ProductAreaManager) ModelUtil.getBean(ProductAreaManager.MANAGER_NAME);
+	ProductArea productArea = productAreaManager.findByName("Villa Element");
+	ConstructionTypeManager constructionTypeManager = (ConstructionTypeManager) ModelUtil.getBean(ConstructionTypeManager.MANAGER_NAME);
+	ConstructionType constructionType = constructionTypeManager.findByName("A1");
+	OrderLine orderLine = new OrderLine();
+	orderLine.setOrdNo(7);
+	orderLine.setLnNo(13);
+	Order order = new Order();
+	order.setProductArea(productArea);
+	order.setOrderNr("100100100");
+	order.setConstructionType(constructionType);
+	order.addOrderLine(orderLine);
+	orderLine.setArticlePath(orderLine.getGeneratedArticlePath());
+	order.setDeliveryAddress("deliveryAddress");
+	order.setPostalCode("4841");
+	order.setPostOffice("postOffice");
+	order.setOrderDate(Util.getCurrentDate());
+	OrderModel orderModel = new OrderModel(order, false, true, true, null, null);
+	orderModel.setCustomerNr("100000");
+	orderModel.setCustomerFirstName("test");
+	orderModel.setCustomerLastName("testesen");
+	viewHandler.saveObjectExt(orderModel, null);
+	assertEquals(Integer.valueOf(1), orderLine.getIsDefault());
+    }
 }

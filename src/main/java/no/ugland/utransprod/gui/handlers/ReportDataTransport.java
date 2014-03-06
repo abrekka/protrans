@@ -15,335 +15,300 @@ import java.util.Set;
  * 
  */
 public class ReportDataTransport {
-	/**
+    private Integer numberOf;
+
+    private Integer year;
+
+    private Integer week;
+
+    private Map<String, BigDecimal> costs;
+
+    private static Set<String> costHeadings = new HashSet<String>();
+
+    private Integer orderId;
+
+    private String orderNr;
+
+    private Integer customerNr;
+
+    private String customerName;
+
+    private String deliveryAddress;
+
+    private String postalCode;
+
+    private String transportName;
+
+    private Boolean isPostShipment;
+    private Integer productionWeek;
+
+    /**
+     * @param numberOf
+     * @param year
+     * @param week
+     * @param costs
+     * @param orderId
+     * @param orderNr
+     * @param customerNr
+     * @param customerName
+     * @param deliveryAddress
+     * @param postalCode
+     * @param transportName
+     * @param isPostShipment
+     */
+    public ReportDataTransport(Integer numberOf, Integer year, Integer week, Map<String, BigDecimal> costs, Integer orderId, String orderNr,
+	    Integer customerNr, String customerName, String deliveryAddress, String postalCode, String transportName, Boolean isPostShipment,
+	    Integer productionWeek) {
+	super();
+	this.numberOf = numberOf;
+	this.year = year;
+	this.week = week;
+	this.costs = costs;
+	this.orderId = orderId;
+	this.orderNr = orderNr;
+	this.customerNr = customerNr;
+	this.customerName = customerName;
+	this.deliveryAddress = deliveryAddress;
+	this.postalCode = postalCode;
+	this.transportName = transportName;
+	this.isPostShipment = isPostShipment;
+	this.productionWeek = productionWeek;
+
+    }
+
+    /**
+     * @param numberOf
+     * @param aYear
+     * @param aWeek
+     * @param costs
+     */
+    public ReportDataTransport(Integer numberOf, Integer aYear, Integer aWeek, Map<String, BigDecimal> costs) {
+	super();
+	this.numberOf = numberOf;
+	this.year = aYear;
+	this.week = aWeek;
+	this.costs = costs;
+
+    }
+
+    /**
 	 * 
 	 */
-	private Integer numberOf;
+    public ReportDataTransport() {
+	super();
+    }
 
-	/**
-	 * 
-	 */
-	private Integer year;
+    /**
+     * @return kostnader
+     */
+    public Map<String, BigDecimal> getCosts() {
+	return costs;
+    }
 
-	/**
-	 * 
-	 */
-	private Integer week;
+    /**
+     * @param costs
+     */
+    public void setCosts(Map<String, BigDecimal> costs) {
+	this.costs = costs;
+    }
 
-	/**
-	 * 
-	 */
-	private Map<String, BigDecimal> costs;
+    /**
+     * @return antall
+     */
+    public Integer getNumberOf() {
+	return numberOf;
+    }
 
-	/**
-	 * 
-	 */
-	private static Set<String> costHeadings = new HashSet<String>();
+    /**
+     * @param numberOf
+     */
+    public void setCounter(Integer numberOf) {
+	this.numberOf = numberOf;
+    }
 
-	/**
-	 * 
-	 */
-	private Integer orderId;
+    /**
+     * @return uke
+     */
+    public Integer getWeek() {
+	return week;
+    }
 
-	/**
-	 * 
-	 */
-	private String orderNr;
+    /**
+     * @param week
+     */
+    public void setWeek(Integer week) {
+	this.week = week;
+    }
 
-	/**
-	 * 
-	 */
-	private Integer customerNr;
+    /**
+     * @return år
+     */
+    public Integer getYear() {
+	return year;
+    }
 
-	/**
-	 * 
-	 */
-	private String customerName;
+    /**
+     * @param year
+     */
+    public void setYear(Integer year) {
+	this.year = year;
+    }
 
-	/**
-	 * 
-	 */
-	private String deliveryAddress;
+    /**
+     * @param numberOf
+     */
+    public void setNumberOf(Integer numberOf) {
+	this.numberOf = numberOf;
+    }
 
-	/**
-	 * 
-	 */
-	private String postalCode;
+    /**
+     * Legger til kostnadsoverskrift
+     * 
+     * @param costHeading
+     */
+    public static void addCostHeading(String costHeading) {
+	costHeadings.add(costHeading);
+    }
 
-	/**
-	 * 
-	 */
-	private String transportName;
+    /**
+     * @return kostnadsoverskrifter
+     */
+    public Set<String> getCostHeadings() {
+	return costHeadings;
+    }
 
-	/**
-	 * 
-	 */
-	private Boolean isPostShipment;
-	
+    /**
+     * Rensker kostnadsoverskrifter
+     */
+    public static void clearCostHeading() {
+	costHeadings.clear();
+    }
 
-	/**
-	 * @param numberOf
-	 * @param year
-	 * @param week
-	 * @param costs
-	 * @param orderId
-	 * @param orderNr
-	 * @param customerNr
-	 * @param customerName
-	 * @param deliveryAddress
-	 * @param postalCode
-	 * @param transportName
-	 * @param isPostShipment
-	 */
-	public ReportDataTransport(Integer numberOf, Integer year, Integer week,
-			Map<String, BigDecimal> costs, Integer orderId, String orderNr,
-			Integer customerNr, String customerName, String deliveryAddress,
-			String postalCode, String transportName, Boolean isPostShipment) {
-		super();
-		this.numberOf = numberOf;
-		this.year = year;
-		this.week = week;
-		this.costs = costs;
-		this.orderId = orderId;
-		this.orderNr = orderNr;
-		this.customerNr = customerNr;
-		this.customerName = customerName;
-		this.deliveryAddress = deliveryAddress;
-		this.postalCode = postalCode;
-		this.transportName = transportName;
-		this.isPostShipment = isPostShipment;
-		
-	}
+    /**
+     * @return kundenummer
+     */
+    public Integer getCustomerNr() {
+	return customerNr;
+    }
 
-	/**
-	 * @param numberOf
-	 * @param aYear
-	 * @param aWeek
-	 * @param costs
-	 */
-	public ReportDataTransport(Integer numberOf, Integer aYear, Integer aWeek,
-			Map<String, BigDecimal> costs) {
-		super();
-		this.numberOf = numberOf;
-		this.year = aYear;
-		this.week = aWeek;
-		this.costs = costs;
-		
-	}
+    /**
+     * @param customerNr
+     */
+    public void setCustomerNr(Integer customerNr) {
+	this.customerNr = customerNr;
+    }
 
-	/**
-	 * 
-	 */
-	public ReportDataTransport() {
-		super();
-	}
+    /**
+     * @return adresse
+     */
+    public String getDeliveryAddress() {
+	return deliveryAddress;
+    }
 
-	/**
-	 * @return kostnader
-	 */
-	public Map<String, BigDecimal> getCosts() {
-		return costs;
-	}
+    /**
+     * @param deliveryAddress
+     */
+    public void setDeliveryAddress(String deliveryAddress) {
+	this.deliveryAddress = deliveryAddress;
+    }
 
-	/**
-	 * @param costs
-	 */
-	public void setCosts(Map<String, BigDecimal> costs) {
-		this.costs = costs;
-	}
+    /**
+     * @return ordreid
+     */
+    public Integer getOrderId() {
+	return orderId;
+    }
 
-	/**
-	 * @return antall
-	 */
-	public Integer getNumberOf() {
-		return numberOf;
-	}
+    /**
+     * @param orderId
+     */
+    public void setOrderId(Integer orderId) {
+	this.orderId = orderId;
+    }
 
-	/**
-	 * @param numberOf
-	 */
-	public void setCounter(Integer numberOf) {
-		this.numberOf = numberOf;
-	}
+    /**
+     * @return ordrenummer
+     */
+    public String getOrderNr() {
+	return orderNr;
+    }
 
-	/**
-	 * @return uke
-	 */
-	public Integer getWeek() {
-		return week;
-	}
+    /**
+     * @param orderNr
+     */
+    public void setOrderNr(String orderNr) {
+	this.orderNr = orderNr;
+    }
 
-	/**
-	 * @param week
-	 */
-	public void setWeek(Integer week) {
-		this.week = week;
-	}
+    /**
+     * @return postnummer
+     */
+    public String getPostalCode() {
+	return postalCode;
+    }
 
-	/**
-	 * @return år
-	 */
-	public Integer getYear() {
-		return year;
-	}
+    /**
+     * @param postalCode
+     */
+    public void setPostalCode(String postalCode) {
+	this.postalCode = postalCode;
+    }
 
-	/**
-	 * @param year
-	 */
-	public void setYear(Integer year) {
-		this.year = year;
-	}
+    /**
+     * @return transportnavn
+     */
+    public String getTransportName() {
+	return transportName;
+    }
 
-	/**
-	 * @param numberOf
-	 */
-	public void setNumberOf(Integer numberOf) {
-		this.numberOf = numberOf;
-	}
+    /**
+     * @param transportName
+     */
+    public void setTransportName(String transportName) {
+	this.transportName = transportName;
+    }
 
-	/**
-	 * Legger til kostnadsoverskrift
-	 * 
-	 * @param costHeading
-	 */
-	public static void addCostHeading(String costHeading) {
-		costHeadings.add(costHeading);
-	}
+    /**
+     * @param costHeadings
+     */
+    public static void setCostHeadings(Set<String> costHeadings) {
+	ReportDataTransport.costHeadings = costHeadings;
+    }
 
-	/**
-	 * @return kostnadsoverskrifter
-	 */
-	public Set<String> getCostHeadings() {
-		return costHeadings;
-	}
+    /**
+     * @return kundenavn
+     */
+    public String getCustomerName() {
+	return customerName;
+    }
 
-	/**
-	 * Rensker kostnadsoverskrifter
-	 */
-	public static void clearCostHeading() {
-		costHeadings.clear();
-	}
+    /**
+     * @param customerName
+     */
+    public void setCustomerName(String customerName) {
+	this.customerName = customerName;
+    }
 
-	/**
-	 * @return kundenummer
-	 */
-	public Integer getCustomerNr() {
-		return customerNr;
-	}
+    /**
+     * @return true dersom etterlevering
+     */
+    public Boolean isPostShipment() {
+	return isPostShipment;
+    }
 
-	/**
-	 * @param customerNr
-	 */
-	public void setCustomerNr(Integer customerNr) {
-		this.customerNr = customerNr;
-	}
+    /**
+     * @param postShipment
+     */
+    public void setIsPostShipment(Boolean postShipment) {
+	this.isPostShipment = postShipment;
+    }
 
-	/**
-	 * @return adresse
-	 */
-	public String getDeliveryAddress() {
-		return deliveryAddress;
-	}
+    public Integer getProductionWeek() {
+	return productionWeek;
+    }
 
-	/**
-	 * @param deliveryAddress
-	 */
-	public void setDeliveryAddress(String deliveryAddress) {
-		this.deliveryAddress = deliveryAddress;
-	}
+    public void setProductionWeek(Integer productionWeek) {
+	this.productionWeek = productionWeek;
+    }
 
-	/**
-	 * @return ordreid
-	 */
-	public Integer getOrderId() {
-		return orderId;
-	}
-
-	/**
-	 * @param orderId
-	 */
-	public void setOrderId(Integer orderId) {
-		this.orderId = orderId;
-	}
-
-	/**
-	 * @return ordrenummer
-	 */
-	public String getOrderNr() {
-		return orderNr;
-	}
-
-	/**
-	 * @param orderNr
-	 */
-	public void setOrderNr(String orderNr) {
-		this.orderNr = orderNr;
-	}
-
-	/**
-	 * @return postnummer
-	 */
-	public String getPostalCode() {
-		return postalCode;
-	}
-
-	/**
-	 * @param postalCode
-	 */
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
-	}
-
-	/**
-	 * @return transportnavn
-	 */
-	public String getTransportName() {
-		return transportName;
-	}
-
-	/**
-	 * @param transportName
-	 */
-	public void setTransportName(String transportName) {
-		this.transportName = transportName;
-	}
-
-	/**
-	 * @param costHeadings
-	 */
-	public static void setCostHeadings(Set<String> costHeadings) {
-		ReportDataTransport.costHeadings = costHeadings;
-	}
-
-	/**
-	 * @return kundenavn
-	 */
-	public String getCustomerName() {
-		return customerName;
-	}
-
-	/**
-	 * @param customerName
-	 */
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
-	}
-
-	/**
-	 * @return true dersom etterlevering
-	 */
-	public Boolean isPostShipment() {
-		return isPostShipment;
-	}
-
-	/**
-	 * @param postShipment
-	 */
-	public void setIsPostShipment(Boolean postShipment) {
-		this.isPostShipment = postShipment;
-	}
-
-	
-
-	
 }

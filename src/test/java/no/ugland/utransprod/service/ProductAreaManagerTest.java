@@ -9,40 +9,35 @@ import no.ugland.utransprod.util.ModelUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+
 @Category(FastTests.class)
 public class ProductAreaManagerTest {
     private ProductAreaManager productAreaManager;
 
     @Before
     public void setUp() throws Exception {
-        productAreaManager = (ProductAreaManager) ModelUtil.getBean("productAreaManager");
+	productAreaManager = (ProductAreaManager) ModelUtil.getBean("productAreaManager");
     }
 
     @Test
     public void testGetGarasjeVillaFor200() {
-        ProductArea productArea = productAreaManager.getProductAreaForProductAreaNr(200,true);
-        assertNotNull(productArea);
-        assertEquals("Garasje villa", productArea.getProductArea());
+	ProductArea productArea = productAreaManager.getProductAreaForProductAreaNr(200, true);
+	assertNotNull(productArea);
+	assertEquals("Villa Element", productArea.getProductArea());
     }
 
     @Test
     public void testGetTakstolFor300() {
-        ProductArea productArea = productAreaManager.getProductAreaForProductAreaNr(300,true);
-        assertNotNull(productArea);
-        assertEquals("Takstol", productArea.getProductArea());
+	ProductArea productArea = productAreaManager.getProductAreaForProductAreaNr(300, true);
+	assertNotNull(productArea);
+	assertEquals("Service", productArea.getProductArea());
     }
 
     @Test
     public void testGetGarasjeRekkeFor100() {
-        ProductArea productArea = productAreaManager.getProductAreaForProductAreaNr(100,true);
-        assertNotNull(productArea);
-        assertEquals("Garasje rekke", productArea.getProductArea());
+	ProductArea productArea = productAreaManager.getProductAreaForProductAreaNr(100, true);
+	assertNotNull(productArea);
+	assertEquals("Rekke", productArea.getProductArea());
     }
 
-    @Test
-    public void testGetByggelementFor400() {
-        ProductArea productArea = productAreaManager.getProductAreaForProductAreaNr(400,true);
-        assertNotNull(productArea);
-        assertEquals("Byggelement", productArea.getProductArea());
-    }
 }
