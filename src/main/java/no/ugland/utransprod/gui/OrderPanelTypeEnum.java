@@ -22,7 +22,7 @@ public enum OrderPanelTypeEnum {
 	    return transportable.getOrder();
 	}
     },
-    ASSEMBLY_ORDERS(new String[] { "Type", "Pnr.", "Poststed", "Kunde", "Ordrenr", "Adresse", "Transport", "Produktområde" }, 7) {
+    ASSEMBLY_ORDERS(new String[] { "Type", "Pnr.", "Poststed", "Kunde", "Ordrenr", "Adresse", "Transport", "Produktområde", "Prod.uke" }, 7) {
 	@Override
 	public Object getKundeInfo(Transportable transportable) {
 	    return transportable.getOrder();

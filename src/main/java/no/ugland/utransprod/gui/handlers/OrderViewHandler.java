@@ -994,6 +994,8 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	tableOrders.setColumnControlVisible(true);
 	tableOrders.setColumnControl(new UBColumnControlPopup(tableOrders, this));
 	tableOrders.setSearchable(null);
+	DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
+	tableCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 
 	switch (orderPanelTypeEnum) {
 	case NEW_ORDERS:
@@ -1004,8 +1006,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 
 	    ColorHighlighter greyPattern = new ColorHighlighter(new PatternPredicate("90", 10), ColorEnum.GREY.getColor(), null);
 	    tableOrders.addHighlighter(greyPattern);
-	    DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
-	    tableCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
 	    tableOrders.getColumnExt(12).setCellRenderer(tableCellRenderer);
 
 	    break;
@@ -1014,6 +1015,8 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	    tableOrders.getColumnModel().getColumn(3).setCellRenderer(
 
 	    new TextPaneRendererCustomer());
+	    tableOrders.getColumnExt(8).setCellRenderer(tableCellRenderer);
+
 	    break;
 	}
 

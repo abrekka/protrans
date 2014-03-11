@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JTextField;
 
 import no.ugland.utransprod.gui.Closeable;
 import no.ugland.utransprod.gui.IconEnum;
@@ -17,7 +16,6 @@ import no.ugland.utransprod.service.ApplicationUserManager;
 import no.ugland.utransprod.util.Util;
 
 import com.jgoodies.binding.PresentationModel;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.adapter.ComboBoxAdapter;
 import com.jgoodies.binding.beans.Model;
 
@@ -27,28 +25,22 @@ import com.jgoodies.binding.beans.Model;
  * @author atle.brekka
  */
 public class PackInitialsViewHandler implements Closeable {
-    /**
-     * 
-     */
     private final PresentationModel presentationModel;
 
-    /**
-     * 
-     */
     private final List<String> packInitials;
 
-    /**
-     * 
-     */
     boolean canceled = false;
 
-    public PackInitialsViewHandler(String initials, Integer colliHeight, ProductAreaGroup productAreaGroup,
-	    ApplicationUserManager applicationUserManager) {
+    public PackInitialsViewHandler(String initials,
+    // Integer colliHeight,
+	    ProductAreaGroup productAreaGroup, ApplicationUserManager applicationUserManager) {
 	String[] initialsArray = null;
 	if (initials != null) {
 	    initialsArray = initials.split("/");
 	}
-	presentationModel = new PresentationModel(new Initials(initialsArray, colliHeight));
+	presentationModel = new PresentationModel(new Initials(initialsArray
+	// , colliHeight
+		));
 
 	packInitials = applicationUserManager.findAllPackers(productAreaGroup);
     }
@@ -87,11 +79,12 @@ public class PackInitialsViewHandler implements Closeable {
      * 
      * @return tekstfelt
      */
-    public JTextField getTextFieldColliHeight() {
-	JTextField textField = BasicComponentFactory.createTextField(presentationModel.getModel(Initials.PROPERTY_COLLI_HEIGHT_STRING));
-	textField.setName("TextFieldColliHeight");
-	return textField;
-    }
+    // public JTextField getTextFieldColliHeight() {
+    // JTextField textField =
+    // BasicComponentFactory.createTextField(presentationModel.getModel(Initials.PROPERTY_COLLI_HEIGHT_STRING));
+    // textField.setName("TextFieldColliHeight");
+    // return textField;
+    // }
 
     /**
      * Lager ok-knapp
@@ -144,9 +137,10 @@ public class PackInitialsViewHandler implements Closeable {
      * 
      * @return kollihøyde
      */
-    public Integer getColliHeight() {
-	return (Integer) presentationModel.getValue(Initials.PROPERTY_COLLI_HEIGHT);
-    }
+    // public Integer getColliHeight() {
+    // return (Integer)
+    // presentationModel.getValue(Initials.PROPERTY_COLLI_HEIGHT);
+    // }
 
     /**
      * Intern klasse som holder på alle initialer.
@@ -164,9 +158,10 @@ public class PackInitialsViewHandler implements Closeable {
 
 	public static final String PROPERTY_INITIAL_LIST = "initialList";
 
-	public static final String PROPERTY_COLLI_HEIGHT_STRING = "colliHeightString";
-
-	public static final String PROPERTY_COLLI_HEIGHT = "colliHeight";
+	// public static final String PROPERTY_COLLI_HEIGHT_STRING =
+	// "colliHeightString";
+	//
+	// public static final String PROPERTY_COLLI_HEIGHT = "colliHeight";
 
 	private String initials1;
 
@@ -174,10 +169,12 @@ public class PackInitialsViewHandler implements Closeable {
 
 	private String initials3;
 
-	private Integer colliHeight;
+	// private Integer colliHeight;
 
-	public Initials(String[] initials, Integer height) {
-	    colliHeight = height;
+	public Initials(String[] initials
+	// , Integer height
+	) {
+	    // colliHeight = height;
 	    if (initials != null) {
 		if (initials.length > 0) {
 		    initials1 = initials[0];
@@ -254,39 +251,40 @@ public class PackInitialsViewHandler implements Closeable {
 	/**
 	 * @return kollihøyde som streng
 	 */
-	public String getColliHeightString() {
-	    if (colliHeight != null) {
-		return String.valueOf(colliHeight);
-	    }
-	    return null;
-	}
+	// public String getColliHeightString() {
+	// if (colliHeight != null) {
+	// return String.valueOf(colliHeight);
+	// }
+	// return null;
+	// }
 
 	/**
 	 * @param colliHeight
 	 */
-	public void setColliHeightString(String colliHeight) {
-	    String oldHeight = getColliHeightString();
-	    if (colliHeight != null) {
-		this.colliHeight = Integer.valueOf(colliHeight);
-	    } else {
-		this.colliHeight = null;
-	    }
-	    firePropertyChange(PROPERTY_COLLI_HEIGHT_STRING, oldHeight, colliHeight);
-	}
+	// public void setColliHeightString(String colliHeight) {
+	// String oldHeight = getColliHeightString();
+	// if (colliHeight != null) {
+	// this.colliHeight = Integer.valueOf(colliHeight);
+	// } else {
+	// this.colliHeight = null;
+	// }
+	// firePropertyChange(PROPERTY_COLLI_HEIGHT_STRING, oldHeight,
+	// colliHeight);
+	// }
 
-	public Integer getColliHeight() {
-	    return colliHeight;
-	}
+	// public Integer getColliHeight() {
+	// return colliHeight;
+	// }
 
 	/**
 	 * @param colliHeight
 	 */
-	public void setColliHeight(Integer colliHeight) {
-	    Integer oldHeight = getColliHeight();
-	    this.colliHeight = colliHeight;
-
-	    firePropertyChange(PROPERTY_COLLI_HEIGHT, oldHeight, colliHeight);
-	}
+	// public void setColliHeight(Integer colliHeight) {
+	// Integer oldHeight = getColliHeight();
+	// this.colliHeight = colliHeight;
+	//
+	// firePropertyChange(PROPERTY_COLLI_HEIGHT, oldHeight, colliHeight);
+	// }
     }
 
     /**

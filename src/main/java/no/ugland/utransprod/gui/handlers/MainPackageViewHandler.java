@@ -1876,29 +1876,36 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	    Date orderReady = abstractOrderModel.getOrderReady();
 
 	    String packedBy = (String) presentationModelPackable.getValue(OrderModel.PROPERTY_PACKED_BY);
-	    Integer height = (Integer) presentationModelPackable.getValue(OrderModel.PROPERTY_GARAGE_COLLI_HEIGHT);
+	    // Integer height = (Integer)
+	    // presentationModelPackable.getValue(OrderModel.PROPERTY_GARAGE_COLLI_HEIGHT);
 	    boolean canceled = false;
-	    Integer colliHeight = null;
+	    // Integer colliHeight = null;
 	    if (orderReady != null) {
-		PackInitialsViewHandler packInitialsViewHandler = showPackInitialsView(packedBy, height);
+		PackInitialsViewHandler packInitialsViewHandler = showPackInitialsView(packedBy
+		// , height
+		);
 
 		if (!packInitialsViewHandler.isCanceled()) {
 		    packedBy = packInitialsViewHandler.getInitials();
-		    colliHeight = packInitialsViewHandler.getColliHeight();
+		    // colliHeight = packInitialsViewHandler.getColliHeight();
 
-		    setGarageColliHeight(colliHeight);
+		    // setGarageColliHeight(colliHeight);
 
 		} else {
 		    canceled = true;
+		    checkBoxReady.setSelected(false);
 		}
 	    }
 
-	    handlePackedByAndColliHeight(abstractOrderModel, orderReady, packedBy, canceled, colliHeight);
+	    handlePackedByAndColliHeight(abstractOrderModel, orderReady, packedBy, canceled
+	    // , colliHeight
+	    );
 	}
 
 	@SuppressWarnings("unchecked")
-	private void handlePackedByAndColliHeight(AbstractOrderModel abstractOrderModel, Date orderReady, String packedBy, boolean canceled,
-		Integer colliHeight) {
+	private void handlePackedByAndColliHeight(AbstractOrderModel abstractOrderModel, Date orderReady, String packedBy, boolean canceled
+	// , Integer colliHeight
+	) {
 	    if (!canceled) {
 		OverviewManager overviewManager = (OverviewManager) ModelUtil.getBean(abstractOrderModel.getManagerName());
 
@@ -1907,9 +1914,10 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 			{ LazyLoadEnum.ORDER_LINES, LazyLoadEnum.NONE }, { LazyLoadEnum.ORDER_COMMENTS, LazyLoadEnum.NONE } });
 		abstractOrderModel.setOrderReady(orderReady);
 		presentationModelPackable.setValue(AbstractOrderModel.PROPERTY_PACKED_BY, packedBy);
-		if (colliHeight != null) {
-		    presentationModelPackable.setValue(AbstractOrderModel.PROPERTY_GARAGE_COLLI_HEIGHT, colliHeight);
-		}
+		// if (colliHeight != null) {
+		// presentationModelPackable.setValue(AbstractOrderModel.PROPERTY_GARAGE_COLLI_HEIGHT,
+		// colliHeight);
+		// }
 		if (abstractOrderModel.isDonePackage()) {
 		    abstractOrderModel.setOrderComplete(Util.getCurrentDate());
 		}
@@ -1923,8 +1931,11 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	    }
 	}
 
-	private PackInitialsViewHandler showPackInitialsView(String packedBy, Integer height) {
-	    PackInitialsViewHandler packInitialsViewHandler = new PackInitialsViewHandler(packedBy, height,
+	private PackInitialsViewHandler showPackInitialsView(String packedBy
+	// , Integer height
+	) {
+	    PackInitialsViewHandler packInitialsViewHandler = new PackInitialsViewHandler(packedBy,
+	    // height,
 		    (ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP),
 		    managerRepository.getApplicationUserManager());
 	    EditPackInitialsView editPackInitialsView = new EditPackInitialsView(packInitialsViewHandler);

@@ -215,7 +215,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	menuItemFront = new JMenuItem("Sett front produsert...");
 	menuItemFront.setName("MenuItemFront");
 	menuItemFront.setEnabled(hasWriteAccess());
-	menuItemMap.put(ProductionColumn.FRONT.getColumnName(), menuItemFront);
+	menuItemMap.put(ProductionColumn.PAKK.getColumnName(), menuItemFront);
 
 	menuItemGavl = new JMenuItem("Sett gavl produsert...");
 	menuItemGavl.setName("MenuItemGavl");
@@ -441,7 +441,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		return true;
 	    }
 	},
-	FRONT("Front") {
+	PAKK("Pakk") {
 	    @Override
 	    public Class<?> getColumnClass() {
 		return String.class;
