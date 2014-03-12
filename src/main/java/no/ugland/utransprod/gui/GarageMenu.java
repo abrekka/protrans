@@ -8,6 +8,7 @@ import no.ugland.utransprod.gui.action.AssemblyAction;
 import no.ugland.utransprod.gui.action.CustomerAction;
 import no.ugland.utransprod.gui.action.ExternalOrderAction;
 import no.ugland.utransprod.gui.action.IncomingOrderAction;
+import no.ugland.utransprod.gui.action.InvoiceAction;
 import no.ugland.utransprod.gui.action.OrderAction;
 import no.ugland.utransprod.gui.action.PacklistAction;
 import no.ugland.utransprod.gui.action.TaksteinAction;
@@ -21,7 +22,7 @@ public class GarageMenu extends ProTransMenu {
     private OrderAction orderAction;
     private TransportAction transportAction;
     private AssemblyAction assemblyAction;
-    // private InvoiceAction invoiceAction;
+    private InvoiceAction invoiceAction;
     private IncomingOrderAction incomingOrderAction;
     private PacklistAction packlistAction;
     private ExternalOrderAction externalOrderAction;
@@ -35,8 +36,7 @@ public class GarageMenu extends ProTransMenu {
 
     @Inject
     public GarageMenu(final Login aLogin, final CustomerAction aCustomerAction, final OrderAction aOrderAction,
-	    final TransportAction aTransportAction, final AssemblyAction aAssemblyAction,
-	    // final InvoiceAction aInvoiceAction,
+	    final TransportAction aTransportAction, final AssemblyAction aAssemblyAction, final InvoiceAction aInvoiceAction,
 	    final IncomingOrderAction aIncomingOrderAction, final PacklistAction aPacklistAction, final ExternalOrderAction aExternalOrderAction,
 	    // final PaidAction aPaidAction,
 	    final TaksteinAction aTaksteinAction, final TransportCostAction aTransportCostAction) {
@@ -47,7 +47,7 @@ public class GarageMenu extends ProTransMenu {
 	externalOrderAction = aExternalOrderAction;
 	packlistAction = aPacklistAction;
 	incomingOrderAction = aIncomingOrderAction;
-	// invoiceAction = aInvoiceAction;
+	invoiceAction = aInvoiceAction;
 	assemblyAction = aAssemblyAction;
 	transportAction = aTransportAction;
 	orderAction = aOrderAction;
@@ -61,9 +61,7 @@ public class GarageMenu extends ProTransMenu {
 	addMenuItem(menuGarage, orderAction, KeyEvent.VK_O, null, null, null, "Ordre", false);
 	addMenuItem(menuGarage, transportAction, KeyEvent.VK_T, null, null, null, "Transport", false);
 	addMenuItem(menuGarage, assemblyAction, KeyEvent.VK_M, null, null, null, "Montering", false);
-	// addMenuItem(menuGarage, invoiceAction, KeyEvent.VK_F, null, null,
-	// null,
-	// "Fakturering", false);
+	addMenuItem(menuGarage, invoiceAction, KeyEvent.VK_F, null, null, null, "Fakturering", false);
 	addMenuItem(menuGarage, incomingOrderAction, KeyEvent.VK_A, null, null, null, "Ordre til avrop", false);
 	addMenuItem(menuGarage, packlistAction, KeyEvent.VK_P, null, null, null, "Pakkliste", false);
 	addMenuItem(menuGarage, externalOrderAction, KeyEvent.VK_B, null, null, null, "Bestillinger", false);
