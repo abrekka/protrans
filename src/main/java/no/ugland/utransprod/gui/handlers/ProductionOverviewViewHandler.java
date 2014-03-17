@@ -48,7 +48,6 @@ import no.ugland.utransprod.gui.model.ProcentDoneModel;
 import no.ugland.utransprod.gui.model.ProductAreaGroupModel;
 import no.ugland.utransprod.gui.model.TakstolPackageApplyList;
 import no.ugland.utransprod.gui.model.TakstolProductionApplyList;
-import no.ugland.utransprod.gui.model.TextPaneRendererCustTr;
 import no.ugland.utransprod.gui.model.TextPaneRendererProcentDone;
 import no.ugland.utransprod.gui.model.TextPaneRendererTransport;
 import no.ugland.utransprod.gui.model.Transportable;
@@ -655,25 +654,28 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		return true;
 	    }
 	},
-	REST("Rest") {
-	    @Override
-	    public Class<?> getColumnClass() {
-		return Transportable.class;
-	    }
-
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
-		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return transportable;
-	    }
-
-	    @SuppressWarnings("unchecked")
-	    @Override
-	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
-		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return true;
-	    }
-	},
+	// REST("Rest") {
+	// @Override
+	// public Class<?> getColumnClass() {
+	// return Transportable.class;
+	// }
+	//
+	// @Override
+	// public Object getValue(Transportable transportable, Map<String,
+	// String> statusMap,
+	// Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+	// return transportable;
+	// }
+	//
+	// @SuppressWarnings("unchecked")
+	// @Override
+	// public boolean setMenus(Transportable transportable, Map<String,
+	// JMenuItem> menuItemMap, WindowInterface window,
+	// Map<String, AbstractProductionPackageViewHandler>
+	// productionPackageHandlers, JPopupMenu popupMenuProduction) {
+	// return true;
+	// }
+	// },
 	PROCENT("%") {
 	    @Override
 	    public Class<?> getColumnClass() {
@@ -993,37 +995,46 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	table.getColumnExt(2).setPreferredWidth(70);
 	DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
 	tableCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-	table.getColumn(2).setCellRenderer(tableCellRenderer);
+	table.getColumnExt(2).setCellRenderer(tableCellRenderer);
 	// pakkliste
 	table.getColumnExt(3).setPreferredWidth(80);
 
 	// vegg
 	table.getColumnExt(4).setPreferredWidth(45);
-	// front
+	table.getColumnExt(4).setCellRenderer(tableCellRenderer);
+	// pakk
 	table.getColumnExt(5).setPreferredWidth(45);
+	table.getColumnExt(5).setCellRenderer(tableCellRenderer);
 	// gavl
 	table.getColumnExt(6).setPreferredWidth(45);
+	table.getColumnExt(6).setCellRenderer(tableCellRenderer);
 	// takstol
 	table.getColumnExt(7).setPreferredWidth(60);
+	table.getColumnExt(7).setCellRenderer(tableCellRenderer);
 	// //takstein
 	table.getColumnExt(8).setPreferredWidth(60);
+	table.getColumnExt(8).setCellRenderer(tableCellRenderer);
 	// gulvspon
 	table.getColumnExt(9).setPreferredWidth(70);
+	table.getColumnExt(9).setCellRenderer(tableCellRenderer);
 	// montering
-	table.getColumnExt(10).setPreferredWidth(50);
+	table.getColumnExt(12).setPreferredWidth(70);
+	table.getColumnExt(12).setCellRenderer(tableCellRenderer);
 	// rest
-	table.getColumnExt(14).setPreferredWidth(50);
+	// table.getColumnExt(14).setPreferredWidth(50);
 	// %
-	table.getColumnExt(15).setPreferredWidth(40);
+	table.getColumnExt(14).setPreferredWidth(40);
 
-	table.getColumnModel().getColumn(14).setCellRenderer(new TextPaneRendererCustTr());
-	table.getColumnModel().getColumn(15).setCellRenderer(new TextPaneRendererProcentDone());
+	// table.getColumnModel().getColumn(14).setCellRenderer(new
+	// TextPaneRendererCustTr());
+	table.getColumnModel().getColumn(14).setCellRenderer(new TextPaneRendererProcentDone());
 
-	/*
-	 * table.getColumnExt(10).setVisible(false);
-	 * table.getColumnExt(10).setVisible(false);
-	 * table.getColumnExt(11).setVisible(false);
-	 */
+	table.getColumnExt(10).setVisible(false);
+	table.getColumnExt(10).setVisible(false);
+	table.getColumnExt(11).setVisible(false);
+	// table.getColumnExt(10).setVisible(false);
+	// table.getColumnExt(11).setVisible(false);
+	//
 
 	// setupMenuListeners(window);
 

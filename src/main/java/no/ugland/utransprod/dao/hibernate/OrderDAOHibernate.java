@@ -13,6 +13,7 @@ import no.ugland.utransprod.dao.OrderDAO;
 import no.ugland.utransprod.dao.OrderLineDAO;
 import no.ugland.utransprod.dao.TransportCostDAO;
 import no.ugland.utransprod.gui.handlers.ReportConstraintViewHandler.TransportConstraintEnum;
+import no.ugland.utransprod.model.Assembly;
 import no.ugland.utransprod.model.Colli;
 import no.ugland.utransprod.model.Customer;
 import no.ugland.utransprod.model.Order;
@@ -102,6 +103,18 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 		example.excludeZeroes();
 
 		Criteria crit = session.createCriteria(Order.class).add(example);
+
+		if (order.getAssembly() != null && order.doAssembly()) {
+		    Assembly assembly = order.getAssembly();
+		    crit = crit.createCriteria("assembly").add(Restrictions.eq("assemblyYear", assembly.getAssemblyYear()));
+
+		    if (assembly.getAssemblyWeek() != null) {
+			crit = crit.add(Restrictions.eq("assemblyWeek", assembly.getAssemblyWeek()));
+		    }
+		    if (assembly.getSupplier() != null) {
+			crit = crit.add(Restrictions.eq("supplier", assembly.getSupplier()));
+		    }
+		}
 
 		if (order.getCustomer() != null) {
 		    Customer customer = order.getCustomer();
@@ -1175,9 +1188,10 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 	    for (Order order : orders) {
 		lazyLoad(order, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_COSTS });
 		String countyName = transportCostDAO.findCountyNameByPostalCode(order.getPostalCode());
-		saleReportDataList.add(new SaleReportData("Avrop", countyName, order.getSalesman(), order.getCustomer().getCustomerNr(), order
-			.getCustomer().getFullName(), order.getOrderNr(), order.getGarageValue(), order.getTransportValue(), order.getAssemblyCost(),
-			order.getJaLinjer(), order.getContributionMargin(), order.getContributionRate(), order.getOrderDate()));
+		saleReportDataList.add(new SaleReportData("Avrop", countyName, order.getSalesman(), String.valueOf(order.getCustomer()
+			.getCustomerNr()), order.getCustomer().getFullName(), order.getOrderNr(), order.getGarageValue(), order.getTransportValue(),
+			order.getAssemblyCost(), order.getJaLinjer(), order.getContributionMargin(), order.getContributionRate(), order
+				.getOrderDate()));
 	    }
 	}
 	return saleReportDataList;

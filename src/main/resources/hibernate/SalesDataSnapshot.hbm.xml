@@ -62,7 +62,7 @@
     />
 	<property
         name="customerNr"
-        type="java.lang.Integer"
+        type="java.lang.String"
         column="CUSTOMER_NR"
         length="32"
     />

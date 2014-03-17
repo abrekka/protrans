@@ -816,7 +816,9 @@ public class OrderModel extends AbstractOrderModel<Order, OrderModel> {
 	    lines.addAll(costList);
 	    object.setOrderCosts(lines);
 	}
-	if (assembly != null && !isSearching && object.doAssembly()) {
+	if (assembly != null
+	// && !isSearching
+		&& object.doAssembly()) {
 	    if (object.getAssembly() == null) {
 		assembly.setFirstPlanned(assembly.toString());
 	    }
