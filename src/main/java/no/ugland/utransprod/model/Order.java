@@ -154,6 +154,10 @@ public class Order extends AbstractTransportable implements TextRenderable, Arti
 
     private Integer productionWeek;
 
+    private BigDecimal packlistDuration;
+
+    private String packlistDoneBy;
+
     public static final Order UNKNOWN = new Order() {
 	private static final long serialVersionUID = 1L;
     };
@@ -1780,4 +1784,20 @@ public class Order extends AbstractTransportable implements TextRenderable, Arti
 	this.productionWeek = productionWeek;
     }
 
+    public void setPacklistDuration(BigDecimal packlistDuration) {
+	this.packlistDuration = packlistDuration;
+
+    }
+
+    public BigDecimal getPacklistDuration() {
+	return packlistDuration;
+    }
+
+    public void setPacklistDoneBy(String packlistDoneBy) {
+	this.packlistDoneBy = packlistDoneBy;
+    }
+
+    public String getPacklistDoneBy() {
+	return packlistDoneBy;
+    }
 }

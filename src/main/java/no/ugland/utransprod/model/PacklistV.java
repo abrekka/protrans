@@ -60,6 +60,8 @@ public class PacklistV extends BaseObject implements Comparable<PacklistV>, Text
     private String orderStatus;
 
     private Integer productionBasis;
+    private BigDecimal packlistDuration;
+    private String packlistDoneBy;
 
     public PacklistV() {
 	super();
@@ -461,4 +463,19 @@ public class PacklistV extends BaseObject implements Comparable<PacklistV>, Text
 	return null;
     }
 
+    public String getPacklistDoneBy() {
+	return packlistDoneBy;
+    }
+
+    public BigDecimal getPacklistDuration() {
+	return packlistDuration;
+    }
+
+    public void setPacklistDoneBy(String packlistDoneBy) {
+	this.packlistDoneBy = packlistDoneBy;
+    }
+
+    public void setPacklistDuration(BigDecimal packlistDuration) {
+	this.packlistDuration = packlistDuration;
+    }
 }

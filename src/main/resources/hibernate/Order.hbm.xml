@@ -18,7 +18,19 @@
 		name="changeDate"
 		unsaved-value="undefined"
 	/>
-	
+	<property
+        name="packlistDoneBy"
+        type="java.lang.String"
+        column="PACKLIST_DONE_BY"
+        length="400"
+    />
+
+<property
+        name="packlistDuration"
+        type="java.math.BigDecimal"
+        column="PACKLIST_DURATION"
+        length="32"
+    />	
 	<property
         name="productionWeek"
         type="java.lang.Integer"

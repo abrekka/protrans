@@ -29,6 +29,7 @@ import no.ugland.utransprod.gui.OverviewView;
 import no.ugland.utransprod.gui.TrossReadyView;
 import no.ugland.utransprod.gui.WindowInterface;
 import no.ugland.utransprod.gui.checker.StatusCheckerInterface;
+import no.ugland.utransprod.gui.edit.EditPacklistView;
 import no.ugland.utransprod.gui.model.ApplyListInterface;
 import no.ugland.utransprod.gui.model.BudgetType;
 import no.ugland.utransprod.gui.model.ExternalOrderModel;
@@ -241,11 +242,28 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
     protected void setApplied(PacklistV packlistV, boolean applied, WindowInterface window) {
 	Order order = managerRepository.getOrderManager().findByOrderNr(packlistV.getOrderNr());
 	if (applied) {
-	    Date packlistDate = Util.getDate(window);
-	    order.setPacklistReady(packlistDate);
-	    order.setProductionBasis(Integer.valueOf(100));
+	    EditPacklistView editPacklistView = new EditPacklistView(login);
+
+	    JDialog dialog = Util.getDialog(window, "Pakkliste klar", true);
+	    WindowInterface window1 = new JDialogAdapter(dialog);
+	    window1.add(editPacklistView.buildPanel(window1));
+	    window1.pack();
+	    Util.locateOnScreenCenter(window1);
+	    window1.setVisible(true);
+
+	    if (!editPacklistView.isCanceled()) {
+		order.setPacklistReady(editPacklistView.getPacklistDate());
+		order.setPacklistDuration(editPacklistView.getPacklistDuration());
+		order.setPacklistDoneBy(editPacklistView.getDoneBy());
+		order.setProductionBasis(Integer.valueOf(100));
+	    }
+
+	    // Date packlistDate = Util.getDate(window);
+
 	} else {
+	    order.setPacklistDoneBy(null);
 	    order.setPacklistReady(null);
+	    order.setPacklistDuration(null);
 	    order.setProductionBasis(null);
 	}
 	try {
@@ -638,6 +656,30 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    public Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
 		    WindowInterface window, ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
 		return packlistV.getProductionBasis();
+	    }
+	},
+	TIDSBRUK("Tidsbruk", 70) {
+	    @Override
+	    public Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
+		    WindowInterface window, ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
+		return packlistV.getPacklistDuration();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return BigDecimal.class;
+	    }
+	},
+	GJORT_AV("Gjort av", 120) {
+	    @Override
+	    public Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
+		    WindowInterface window, ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
+		return packlistV.getPacklistDoneBy();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
 	    }
 	};
 	private String columnName;
