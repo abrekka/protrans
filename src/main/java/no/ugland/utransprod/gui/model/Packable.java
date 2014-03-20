@@ -16,60 +16,68 @@ import no.ugland.utransprod.model.PostShipment;
  * 
  */
 public interface Packable {
-	/**
-	 * @return kollier
-	 */
-	List<Colli> getColliList();
+    /**
+     * @return kollier
+     */
+    List<Colli> getColliList();
 
-	/**
-	 * @return ordrelinjer
-	 */
-	List<OrderLine> getOrderLineList();
+    /**
+     * @return ordrelinjer
+     */
+    List<OrderLine> getOrderLineList();
 
-	/**
-	 * Legger til kolli
-	 * 
-	 * @param colli
-	 */
-	void addColli(Colli colli);
+    /**
+     * Legger til kolli
+     * 
+     * @param colli
+     */
+    void addColli(Colli colli);
 
-	/**
-	 * Setter kollier klare
-	 * 
-	 * @param colliesDone
-	 */
-	void setColliesDone(Integer colliesDone);
+    /**
+     * Setter kollier klare
+     * 
+     * @param colliesDone
+     */
+    void setColliesDone(Integer colliesDone);
 
-	/**
-	 * @return dato for klargjort
-	 */
-	Date getOrderReady();
+    /**
+     * @return dato for klargjort
+     */
+    Date getOrderReady();
 
-	/**
-	 * @return dato for komplett
-	 */
-	Date getOrderComplete();
+    Date getOrderReadyTross();
 
-	/**
-	 * Fjerner kolli
-	 * 
-	 * @param colli
-	 */
-	boolean removeColli(Colli colli);
+    Date getOrderReadyPack();
+
+    Date getOrderReadyWall();
+
+    /**
+     * @return dato for komplett
+     */
+    Date getOrderComplete();
+
+    /**
+     * Fjerner kolli
+     * 
+     * @param colli
+     */
+    boolean removeColli(Colli colli);
+
     Transportable getTransportable();
+
     List<OrderLine> getOwnOrderLines();
 
-	Integer getProbability();
+    Integer getProbability();
 
-	Order getOrder();
+    Order getOrder();
 
-	PostShipment getPostShipment();
+    PostShipment getPostShipment();
 
-	void setDefaultColliesGenerated(Integer i);
+    void setDefaultColliesGenerated(Integer i);
 
-	String getManagerName();
+    String getManagerName();
 
-	Integer getDefaultColliesGenerated();
+    Integer getDefaultColliesGenerated();
 
-	Set<Colli> getCollies();
+    Set<Colli> getCollies();
 }

@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -694,6 +695,44 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
 		popupMenuProduction.add(menuItemMap.get(getColumnName()));
 		return true;
+	    }
+	},
+	TIDSBRUK_PAKKLISTE("Tidsbruk pakkliste") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getOrder().getPacklistDuration();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return BigDecimal.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		// TODO Auto-generated method stub
+		return false;
+	    }
+	},
+	LAGET_PAKKLISTE("Laget pakkliste") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getOrder().getPacklistDoneBy();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		// TODO Auto-generated method stub
+		return false;
 	    }
 	}
 	// ,

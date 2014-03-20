@@ -11,6 +11,7 @@ import com.jgoodies.forms.builder.PanelBuilder;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
+import com.toedter.calendar.JDateChooser;
 
 /**
  * Brukes til å sette initialer for pakkere
@@ -19,34 +20,13 @@ import com.jgoodies.forms.layout.FormLayout;
  * 
  */
 public class EditPackInitialsView {
-    /**
-	 * 
-	 */
     private JComboBox comboBoxInitials1;
-
-    /**
-	 * 
-	 */
     private JComboBox comboBoxInitials2;
-
-    /**
-	 * 
-	 */
     private JComboBox comboBoxInitials3;
-
-    /**
-	 * 
-	 */
     private JButton buttonOk;
-    /**
-	 * 
-	 */
     private JButton buttonCancel;
-
-    /**
-	 * 
-	 */
     private PackInitialsViewHandler viewHandler;
+    private JDateChooser dateChooser;
 
     // private JTextField textFieldColliHeight;
 
@@ -69,6 +49,7 @@ public class EditPackInitialsView {
 	comboBoxInitials3 = viewHandler.getComboBoxInitials3();
 	buttonOk = viewHandler.getButtonOk(window);
 	buttonCancel = viewHandler.getButtonCancel(window);
+	dateChooser = viewHandler.getDateChooser();
 	// textFieldColliHeight = viewHandler.getTextFieldColliHeight();
     }
 
@@ -81,21 +62,23 @@ public class EditPackInitialsView {
     public JPanel buildPanel(WindowInterface window) {
 	window.setName("EditPackInitials");
 	initComponents(window);
-	FormLayout layout = new FormLayout("10dlu,50dlu,3dlu,50dlu,3dlu,50dlu,10dlu", "10dlu,p,3dlu,p,3dlu,p");
+	FormLayout layout = new FormLayout("10dlu,50dlu,3dlu,50dlu,3dlu,50dlu,3dlu,60dlu,10dlu", "10dlu,p,3dlu,p,3dlu,p");
 	PanelBuilder builder = new PanelBuilder(layout);
 	CellConstraints cc = new CellConstraints();
 
 	builder.addLabel("Pakker 1:", cc.xy(2, 2));
 	builder.addLabel("Pakker 2:", cc.xy(4, 2));
 	builder.addLabel("Pakker 3:", cc.xy(6, 2));
+	builder.addLabel("Dato:", cc.xy(8, 2));
 	// builder.addLabel("Høyde garasjepakke(cm):", cc.xyw(8, 2, 3));
 
 	builder.add(comboBoxInitials1, cc.xy(2, 4));
 	builder.add(comboBoxInitials2, cc.xy(4, 4));
 	builder.add(comboBoxInitials3, cc.xy(6, 4));
+	builder.add(dateChooser, cc.xy(8, 4));
 	// builder.add(textFieldColliHeight, cc.xy(8, 4));
 
-	builder.add(ButtonBarFactory.buildCenteredBar(buttonOk, buttonCancel), cc.xyw(2, 6, 5));
+	builder.add(ButtonBarFactory.buildCenteredBar(buttonOk, buttonCancel), cc.xyw(2, 6, 7));
 
 	return builder.getPanel();
     }

@@ -1088,4 +1088,51 @@ public class Deviation extends AbstractTransportable implements Articleable, IAs
 	return null;
     }
 
+    public Date getOrderReadyWall() {
+	if (postShipment != null) {
+	    return postShipment.getOrderReadyWall();
+	}
+	return null;
+    }
+
+    public void setOrderReadyWall(Date orderReady) {
+    }
+
+    public Date getOrderReadyTross() {
+	if (postShipment != null) {
+	    return postShipment.getOrderReadyTross();
+	}
+	return null;
+    }
+
+    public void setOrderReadyTross(Date orderReady) {
+    }
+
+    public String getPackedByTross() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    public void setPackedByTross(String packedBy) {
+	// TODO Auto-generated method stub
+
+    }
+
+    public Date getOrderReadyPack() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    public void setOrderReadyPack(Date orderReady) {
+    }
+
+    public String getPackedByPack() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    public void setPackedByPack(String packedBy) {
+	// TODO Auto-generated method stub
+
+    }
 }

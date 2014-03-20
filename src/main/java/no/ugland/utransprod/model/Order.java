@@ -100,6 +100,7 @@ public class Order extends AbstractTransportable implements TextRenderable, Arti
     private Set<ExternalOrder> externalOrders;
 
     private String packedBy;
+    private String packedByTross;
 
     private String salesman;
 
@@ -157,6 +158,14 @@ public class Order extends AbstractTransportable implements TextRenderable, Arti
     private BigDecimal packlistDuration;
 
     private String packlistDoneBy;
+
+    private Date orderReadyWall;
+
+    private Date orderReadyTross;
+
+    private Date orderReadyPack;
+
+    private String packedByPack;
 
     public static final Order UNKNOWN = new Order() {
 	private static final long serialVersionUID = 1L;
@@ -1799,5 +1808,46 @@ public class Order extends AbstractTransportable implements TextRenderable, Arti
 
     public String getPacklistDoneBy() {
 	return packlistDoneBy;
+    }
+
+    public Date getOrderReadyWall() {
+	return orderReadyWall;
+    }
+
+    public void setOrderReadyWall(Date orderReady) {
+	this.orderReadyWall = orderReady;
+    }
+
+    public Date getOrderReadyTross() {
+	return this.orderReadyTross;
+    }
+
+    public void setOrderReadyTross(Date orderReady) {
+	this.orderReadyTross = orderReady;
+
+    }
+
+    public String getPackedByTross() {
+	return packedByTross;
+    }
+
+    public void setPackedByTross(String packedByTross) {
+	this.packedByTross = packedByTross;
+    }
+
+    public Date getOrderReadyPack() {
+	return orderReadyPack;
+    }
+
+    public void setOrderReadyPack(Date orderReadyPack) {
+	this.orderReadyPack = orderReadyPack;
+    }
+
+    public String getPackedByPack() {
+	return packedByPack;
+    }
+
+    public void setPackedByPack(String packedBy) {
+	this.packedByPack = packedBy;
     }
 }

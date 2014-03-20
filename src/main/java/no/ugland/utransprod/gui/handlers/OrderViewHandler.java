@@ -330,6 +330,13 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	return textField;
     }
 
+    public JTextField getTextFieldPackedByTross(PresentationModel presentationModel) {
+	JTextField textField = BasicComponentFactory.createTextField(presentationModel.getBufferedModel(OrderModel.PROPERTY_PACKED_BY_TROSS));
+	textField.setName("TextFieldPackedByTROSS");
+	textField.setEnabled(false);
+	return textField;
+    }
+
     /**
      * Lager tekstfelt for når gavl er ferdig
      * 

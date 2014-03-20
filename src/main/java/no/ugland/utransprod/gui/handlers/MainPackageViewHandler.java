@@ -217,7 +217,9 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 
     private JButton buttonAddComment;
 
-    private JCheckBox checkBoxReady;
+    private JCheckBox checkBoxReadyVegg;
+    private JCheckBox checkBoxReadyTakstol;
+    private JCheckBox checkBoxReadyPakk;
 
     private JPopupMenu popupMenuOrder;
 
@@ -527,7 +529,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
      * @return størrelse
      */
     public Dimension getWindowSize() {
-	return new Dimension(1300, 680);
+	return new Dimension(1300, 700);
     }
 
     /**
@@ -1124,7 +1126,9 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	buttonAddArticle.setEnabled(false);
 	buttonAddComment.setEnabled(false);
 	buttonRemoveArticle.setEnabled(false);
-	checkBoxReady.setEnabled(false);
+	checkBoxReadyVegg.setEnabled(false);
+	checkBoxReadyTakstol.setEnabled(false);
+	checkBoxReadyPakk.setEnabled(false);
 	// selectedColliViewHandlers.clear();
 	// buttonAddColli.setEnabled(false);
 	// buttonRemoveColli.setEnabled(false);
@@ -1218,7 +1222,9 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		if (hasWriteAccess()) {
 		    buttonAddArticle.setEnabled(hasWriteAccess());
 		    buttonAddComment.setEnabled(hasWriteAccess());
-		    checkBoxReady.setEnabled(hasWriteAccess());
+		    checkBoxReadyVegg.setEnabled(hasWriteAccess());
+		    checkBoxReadyTakstol.setEnabled(hasWriteAccess());
+		    checkBoxReadyPakk.setEnabled(hasWriteAccess());
 		}
 		changeBean(window);
 	    }
@@ -1249,7 +1255,9 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		buttonAddArticle.setEnabled(false);
 		boolean writeAccess = hasWriteAccess();
 		buttonAddComment.setEnabled(writeAccess);
-		checkBoxReady.setEnabled(writeAccess);
+		checkBoxReadyVegg.setEnabled(writeAccess);
+		checkBoxReadyTakstol.setEnabled(writeAccess);
+		checkBoxReadyPakk.setEnabled(writeAccess);
 		changeBeanPostShipment(window);
 	    }
 	}
@@ -1417,13 +1425,34 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
      * @param window
      * @return sjekkboks
      */
-    public JCheckBox getCheckBoxReady(WindowInterface window) {
-	checkBoxReady = BasicComponentFactory.createCheckBox(presentationModelPackable.getModel(OrderModel.PROPERTY_ORDER_READY_BOOL), "Ordre klar");
-	checkBoxReady.addActionListener(new CheckBoxReadyActionListener(window));
+    public JCheckBox getCheckBoxReadyVegg(WindowInterface window) {
+	checkBoxReadyVegg = BasicComponentFactory.createCheckBox(presentationModelPackable.getModel(OrderModel.PROPERTY_ORDER_READY_VEGG_BOOL),
+		"Ordre klar vegg");
+	checkBoxReadyVegg.addActionListener(new CheckBoxReadyVeggActionListener(window));
 
-	checkBoxReady.setEnabled(false);
-	checkBoxReady.setName("CheckBoxReady");
-	return checkBoxReady;
+	checkBoxReadyVegg.setEnabled(false);
+	checkBoxReadyVegg.setName("CheckBoxReadyVegg");
+	return checkBoxReadyVegg;
+    }
+
+    public JCheckBox getCheckBoxReadyTakstol(WindowInterface window) {
+	checkBoxReadyTakstol = BasicComponentFactory.createCheckBox(presentationModelPackable.getModel(OrderModel.PROPERTY_ORDER_READY_TAKSTOL_BOOL),
+		"Ordre klar takstol");
+	checkBoxReadyTakstol.addActionListener(new CheckBoxReadyTakstolActionListener(window));
+
+	checkBoxReadyTakstol.setEnabled(false);
+	checkBoxReadyTakstol.setName("CheckBoxReadyTakstol");
+	return checkBoxReadyTakstol;
+    }
+
+    public JCheckBox getCheckBoxReadyPakk(WindowInterface window) {
+	checkBoxReadyPakk = BasicComponentFactory.createCheckBox(presentationModelPackable.getModel(OrderModel.PROPERTY_ORDER_READY_PAKK_BOOL),
+		"Ordre klar pakk");
+	checkBoxReadyPakk.addActionListener(new CheckBoxReadyPakkActionListener(window));
+
+	checkBoxReadyPakk.setEnabled(false);
+	checkBoxReadyPakk.setName("CheckBoxReadyPakk");
+	return checkBoxReadyPakk;
     }
 
     /**
@@ -1472,7 +1501,9 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	    buttonAddComment.setEnabled(false);
 	    buttonRemoveArticle.setEnabled(false);
 
-	    checkBoxReady.setEnabled(false);
+	    checkBoxReadyVegg.setEnabled(false);
+	    checkBoxReadyTakstol.setEnabled(false);
+	    checkBoxReadyPakk.setEnabled(false);
 	    refreshing = false;
 	}
     }
@@ -1773,6 +1804,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		OrderLine newOrderLine = addArticle(window, abstractOrderModel);
 		if (newOrderLine != null) {
 		    abstractOrderModel.setColliesDone(0);
+		    abstractOrderModel.setOrderComplete(null);
 		    newOrderLine.setAttributeInfo(newOrderLine.getAttributesAsString());
 		    try {
 			managerRepository.getOrderLineManager().saveOrderLine(newOrderLine);
@@ -1783,6 +1815,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 			Util.showErrorDialog(window, "Feil", e.getMessage());
 			e.printStackTrace();
 		    }
+		    refreshTableOrder(null, false, window, false);
 		}
 	    }
 	}
@@ -1858,13 +1891,13 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
      * 
      * @author atle.brekka
      */
-    class CheckBoxReadyActionListener implements ActionListener {
+    class CheckBoxReadyVeggActionListener implements ActionListener {
 	private WindowInterface window;
 
 	/**
 	 * @param aWindow
 	 */
-	public CheckBoxReadyActionListener(final WindowInterface aWindow) {
+	public CheckBoxReadyVeggActionListener(final WindowInterface aWindow) {
 	    window = aWindow;
 	}
 
@@ -1873,46 +1906,38 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	 */
 	public void actionPerformed(final ActionEvent arg0) {
 	    AbstractOrderModel<?, ?> abstractOrderModel = (AbstractOrderModel<?, ?>) presentationModelPackable.getBean();
-	    Date orderReady = abstractOrderModel.getOrderReady();
+	    Date orderReadyWall = abstractOrderModel.getOrderReadyWall();
 
 	    String packedBy = (String) presentationModelPackable.getValue(OrderModel.PROPERTY_PACKED_BY);
-	    // Integer height = (Integer)
-	    // presentationModelPackable.getValue(OrderModel.PROPERTY_GARAGE_COLLI_HEIGHT);
 	    boolean canceled = false;
-	    // Integer colliHeight = null;
-	    if (orderReady != null) {
-		PackInitialsViewHandler packInitialsViewHandler = showPackInitialsView(packedBy
-		// , height
-		);
+	    if (orderReadyWall != null) {
+		PackInitialsViewHandler packInitialsViewHandler = showPackInitialsView(packedBy, window);
 
 		if (!packInitialsViewHandler.isCanceled()) {
 		    packedBy = packInitialsViewHandler.getInitials();
-		    // colliHeight = packInitialsViewHandler.getColliHeight();
-
-		    // setGarageColliHeight(colliHeight);
+		    orderReadyWall = packInitialsViewHandler.getReadyDate();
 
 		} else {
 		    canceled = true;
-		    checkBoxReady.setSelected(false);
+		    checkBoxReadyVegg.setSelected(false);
 		}
+	    } else {
+		packedBy = null;
 	    }
 
-	    handlePackedByAndColliHeight(abstractOrderModel, orderReady, packedBy, canceled
-	    // , colliHeight
-	    );
+	    handlePackedByAndColliHeight(abstractOrderModel, orderReadyWall, packedBy, canceled);
 	}
 
 	@SuppressWarnings("unchecked")
-	private void handlePackedByAndColliHeight(AbstractOrderModel abstractOrderModel, Date orderReady, String packedBy, boolean canceled
-	// , Integer colliHeight
-	) {
+	private void handlePackedByAndColliHeight(AbstractOrderModel abstractOrderModel, Date orderReadyWall, String packedBy, boolean canceled) {
 	    if (!canceled) {
 		OverviewManager overviewManager = (OverviewManager) ModelUtil.getBean(abstractOrderModel.getManagerName());
 
 		overviewManager.refreshObject(abstractOrderModel.getObject());
 		overviewManager.lazyLoad(abstractOrderModel.getObject(), new LazyLoadEnum[][] { { LazyLoadEnum.COLLIES, LazyLoadEnum.NONE },
 			{ LazyLoadEnum.ORDER_LINES, LazyLoadEnum.NONE }, { LazyLoadEnum.ORDER_COMMENTS, LazyLoadEnum.NONE } });
-		abstractOrderModel.setOrderReady(orderReady);
+		abstractOrderModel.setOrderReadyVegg(orderReadyWall);
+		setOrderReady(abstractOrderModel, orderReadyWall);
 		presentationModelPackable.setValue(AbstractOrderModel.PROPERTY_PACKED_BY, packedBy);
 		// if (colliHeight != null) {
 		// presentationModelPackable.setValue(AbstractOrderModel.PROPERTY_GARAGE_COLLI_HEIGHT,
@@ -1931,23 +1956,161 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	    }
 	}
 
-	private PackInitialsViewHandler showPackInitialsView(String packedBy
-	// , Integer height
-	) {
-	    PackInitialsViewHandler packInitialsViewHandler = new PackInitialsViewHandler(packedBy,
-	    // height,
-		    (ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP),
-		    managerRepository.getApplicationUserManager());
-	    EditPackInitialsView editPackInitialsView = new EditPackInitialsView(packInitialsViewHandler);
-	    JDialog dialog = Util.getDialog(window, "Pakket av", true);
-	    WindowInterface window1 = new JDialogAdapter(dialog);
-	    window1.add(editPackInitialsView.buildPanel(window1));
-	    window1.pack();
-	    Util.locateOnScreenCenter(window1);
-	    window1.setVisible(true);
-	    return packInitialsViewHandler;
+    }
+
+    class CheckBoxReadyTakstolActionListener implements ActionListener {
+	private WindowInterface window;
+
+	/**
+	 * @param aWindow
+	 */
+	public CheckBoxReadyTakstolActionListener(final WindowInterface aWindow) {
+	    window = aWindow;
 	}
 
+	/**
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void actionPerformed(final ActionEvent arg0) {
+	    AbstractOrderModel<?, ?> abstractOrderModel = (AbstractOrderModel<?, ?>) presentationModelPackable.getBean();
+	    Date orderReadyTross = abstractOrderModel.getOrderReadyTross();
+
+	    String packedBy = (String) presentationModelPackable.getValue(OrderModel.PROPERTY_PACKED_BY_TROSS);
+	    boolean canceled = false;
+	    if (orderReadyTross != null) {
+		PackInitialsViewHandler packInitialsViewHandler = showPackInitialsView(packedBy, window);
+
+		if (!packInitialsViewHandler.isCanceled()) {
+		    packedBy = packInitialsViewHandler.getInitials();
+		    orderReadyTross = packInitialsViewHandler.getReadyDate();
+		} else {
+		    canceled = true;
+		    checkBoxReadyTakstol.setSelected(false);
+		}
+	    } else {
+		packedBy = null;
+	    }
+
+	    handlePackedByAndColliHeight(abstractOrderModel, orderReadyTross, packedBy, canceled);
+	}
+
+	@SuppressWarnings("unchecked")
+	private void handlePackedByAndColliHeight(AbstractOrderModel abstractOrderModel, Date orderReadyTross, String packedByTross, boolean canceled) {
+	    if (!canceled) {
+		OverviewManager overviewManager = (OverviewManager) ModelUtil.getBean(abstractOrderModel.getManagerName());
+
+		overviewManager.refreshObject(abstractOrderModel.getObject());
+		overviewManager.lazyLoad(abstractOrderModel.getObject(), new LazyLoadEnum[][] { { LazyLoadEnum.COLLIES, LazyLoadEnum.NONE },
+			{ LazyLoadEnum.ORDER_LINES, LazyLoadEnum.NONE }, { LazyLoadEnum.ORDER_COMMENTS, LazyLoadEnum.NONE } });
+		abstractOrderModel.setOrderReadyTakstol(orderReadyTross);
+		setOrderReady(abstractOrderModel, orderReadyTross);
+		presentationModelPackable.setValue(AbstractOrderModel.PROPERTY_PACKED_BY_TROSS, packedByTross);
+		// if (colliHeight != null) {
+		// presentationModelPackable.setValue(AbstractOrderModel.PROPERTY_GARAGE_COLLI_HEIGHT,
+		// colliHeight);
+		// }
+		if (abstractOrderModel.isDonePackage()) {
+		    abstractOrderModel.setOrderComplete(Util.getCurrentDate());
+		}
+		try {
+		    overviewManager.saveObject(abstractOrderModel.getObject());
+		} catch (ProTransException e) {
+		    Util.showErrorDialog(window, "Feil", e.getMessage());
+		    e.printStackTrace();
+		}
+		setSums();
+	    }
+	}
+
+    }
+
+    class CheckBoxReadyPakkActionListener implements ActionListener {
+	private WindowInterface window;
+
+	/**
+	 * @param aWindow
+	 */
+	public CheckBoxReadyPakkActionListener(final WindowInterface aWindow) {
+	    window = aWindow;
+	}
+
+	/**
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void actionPerformed(final ActionEvent arg0) {
+	    AbstractOrderModel<?, ?> abstractOrderModel = (AbstractOrderModel<?, ?>) presentationModelPackable.getBean();
+	    Date orderReadyPakk = abstractOrderModel.getOrderReadyPack();
+
+	    String packedByPack = (String) presentationModelPackable.getValue(OrderModel.PROPERTY_PACKED_BY_PACK);
+	    boolean canceled = false;
+	    if (orderReadyPakk != null) {
+		PackInitialsViewHandler packInitialsViewHandler = showPackInitialsView(packedByPack, window);
+
+		if (!packInitialsViewHandler.isCanceled()) {
+		    packedByPack = packInitialsViewHandler.getInitials();
+		    orderReadyPakk = packInitialsViewHandler.getReadyDate();
+		} else {
+		    canceled = true;
+		    checkBoxReadyPakk.setSelected(false);
+		}
+	    } else {
+		packedByPack = null;
+	    }
+
+	    handlePackedByAndColliHeight(abstractOrderModel, orderReadyPakk, packedByPack, canceled);
+	}
+
+	@SuppressWarnings("unchecked")
+	private void handlePackedByAndColliHeight(AbstractOrderModel abstractOrderModel, Date orderReadyPakk, String packedByPack, boolean canceled) {
+	    if (!canceled) {
+		OverviewManager overviewManager = (OverviewManager) ModelUtil.getBean(abstractOrderModel.getManagerName());
+
+		overviewManager.refreshObject(abstractOrderModel.getObject());
+		overviewManager.lazyLoad(abstractOrderModel.getObject(), new LazyLoadEnum[][] { { LazyLoadEnum.COLLIES, LazyLoadEnum.NONE },
+			{ LazyLoadEnum.ORDER_LINES, LazyLoadEnum.NONE }, { LazyLoadEnum.ORDER_COMMENTS, LazyLoadEnum.NONE } });
+		abstractOrderModel.setOrderReadyPakk(orderReadyPakk);
+		setOrderReady(abstractOrderModel, orderReadyPakk);
+
+		presentationModelPackable.setValue(AbstractOrderModel.PROPERTY_PACKED_BY_PACK, packedByPack);
+		if (abstractOrderModel.isDonePackage()) {
+		    abstractOrderModel.setOrderComplete(Util.getCurrentDate());
+		}
+		try {
+		    overviewManager.saveObject(abstractOrderModel.getObject());
+		} catch (ProTransException e) {
+		    Util.showErrorDialog(window, "Feil", e.getMessage());
+		    e.printStackTrace();
+		}
+		setSums();
+	    }
+	}
+
+    }
+
+    private void setOrderReady(AbstractOrderModel abstractOrderModel, Date orderReadyEnhet) {
+	if (orderReadyEnhet != null && abstractOrderModel.getOrderReadyTakstolBool() && abstractOrderModel.getOrderReadyVeggBool()
+		&& abstractOrderModel.getOrderReadyPakkBool()) {
+	    abstractOrderModel.setOrderReady(orderReadyEnhet);
+	} else {
+	    abstractOrderModel.setOrderReady(null);
+	}
+    }
+
+    private PackInitialsViewHandler showPackInitialsView(String packedBy, WindowInterface window
+    // , Integer height
+    ) {
+	PackInitialsViewHandler packInitialsViewHandler = new PackInitialsViewHandler(packedBy,
+	// height,
+		(ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP),
+		managerRepository.getApplicationUserManager());
+	EditPackInitialsView editPackInitialsView = new EditPackInitialsView(packInitialsViewHandler);
+	JDialog dialog = Util.getDialog(window, "Pakket av", true);
+	WindowInterface window1 = new JDialogAdapter(dialog);
+	window1.add(editPackInitialsView.buildPanel(window1));
+	window1.pack();
+	Util.locateOnScreenCenter(window1);
+	window1.setVisible(true);
+	return packInitialsViewHandler;
     }
 
     /**
@@ -2306,8 +2469,16 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
      * 
      * @return label
      */
-    public JLabel getLabelPackedBy() {
+    public JLabel getLabelPackedByWall() {
 	return BasicComponentFactory.createLabel(presentationModelPackable.getModel(OrderModel.PROPERTY_PACKED_BY));
+    }
+
+    public JLabel getLabelPackedByTross() {
+	return BasicComponentFactory.createLabel(presentationModelPackable.getModel(OrderModel.PROPERTY_PACKED_BY_TROSS));
+    }
+
+    public JLabel getLabelPackedByPakk() {
+	return BasicComponentFactory.createLabel(presentationModelPackable.getModel(OrderModel.PROPERTY_PACKED_BY_PACK));
     }
 
     /**

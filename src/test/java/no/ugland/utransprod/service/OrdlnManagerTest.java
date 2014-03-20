@@ -10,7 +10,9 @@ import no.ugland.utransprod.model.Ordln;
 import no.ugland.utransprod.test.FastTests;
 import no.ugland.utransprod.util.ModelUtil;
 
+import org.fest.assertions.Assertions;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -21,6 +23,12 @@ public class OrdlnManagerTest {
     @Before
     public void settOpp() throws Exception {
 	ordlnManager = (OrdlnManager) ModelUtil.getBean("ordlnManager");
+    }
+
+    @Test
+    public void skalHenteOrdlnForFakturagrunnlag() {
+	List<Ordln> fakturagrunnlag = ordlnManager.findForFakturagrunnlag("88833");
+	Assertions.assertThat(fakturagrunnlag).isNotEmpty();
     }
 
     @Test
@@ -45,6 +53,7 @@ public class OrdlnManagerTest {
     }
 
     @Test
+    @Ignore
     public void testGetOrderLines() {
 	List<Ordln> orderLines = ordlnManager.findByOrderNr("11");
 	assertNotNull(orderLines);

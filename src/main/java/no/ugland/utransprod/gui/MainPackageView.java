@@ -48,7 +48,9 @@ public class MainPackageView implements Viewer {
 
     private JButton buttonAddArticle;
 
-    private JCheckBox checkBoxReady;
+    private JCheckBox checkBoxReadyVegg;
+    private JCheckBox checkBoxReadyTakstol;
+    private JCheckBox checkBoxReadyPakk;
 
     private JButton buttonRemoveArticle;
 
@@ -61,6 +63,8 @@ public class MainPackageView implements Viewer {
     private WindowInterface currentWindow;
 
     private JLabel labelPackedBy;
+    private JLabel labelPackedByTross;
+    private JLabel labelPackedByPakk;
 
     private JLabel labelBudget;
 
@@ -91,7 +95,9 @@ public class MainPackageView implements Viewer {
 	buttonRefresh = viewHandler.getButtonRefresh(window);
 	checkBoxShowPackaged = viewHandler.getCheckBoxShowPackaged();
 	buttonAddArticle = viewHandler.getButtonAddArticle(window);
-	checkBoxReady = viewHandler.getCheckBoxReady(window);
+	checkBoxReadyVegg = viewHandler.getCheckBoxReadyVegg(window);
+	checkBoxReadyTakstol = viewHandler.getCheckBoxReadyTakstol(window);
+	checkBoxReadyPakk = viewHandler.getCheckBoxReadyPakk(window);
 	buttonRemoveArticle = viewHandler.getButtonRemoveArticle(window);
 
 	buttonSearchOrder = viewHandler.getButtonSearchOrder(window);
@@ -100,7 +106,9 @@ public class MainPackageView implements Viewer {
 	labelWeekValue = viewHandler.getLabelWeekValue();
 	labelBudget = viewHandler.getLabelBudget();
 
-	labelPackedBy = viewHandler.getLabelPackedBy();
+	labelPackedBy = viewHandler.getLabelPackedByWall();
+	labelPackedByTross = viewHandler.getLabelPackedByTross();
+	labelPackedByPakk = viewHandler.getLabelPackedByPakk();
 
 	viewHandler.initEventHandling(this, window);
 	listComments = viewHandler.getListComments();
@@ -164,7 +172,7 @@ public class MainPackageView implements Viewer {
     }
 
     private JPanel buildStatisticsPanel() {
-	FormLayout layout = new FormLayout("50dlu,3dlu,50dlu,3dlu,50dlu,3dlu,70dlu,3dlu,p", "p,p");
+	FormLayout layout = new FormLayout("50dlu,3dlu,50dlu,3dlu,50dlu,3dlu,70dlu,3dlu,p,3dlu,70dlu,3dlu,p,3dlu,p", "p,p,p");
 	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),
 	// layout);
 	PanelBuilder builder = new PanelBuilder(layout);
@@ -176,9 +184,17 @@ public class MainPackageView implements Viewer {
 	builder.add(labelWeekValue, cc.xy(3, 2));
 	builder.addLabel("Budsjett:", cc.xy(5, 1));
 	builder.add(labelBudget, cc.xy(5, 2));
-	builder.addLabel("Pakket av:", cc.xy(7, 1));
-	builder.add(labelPackedBy, cc.xy(7, 2));
-	builder.add(checkBoxReady, cc.xy(9, 1));
+	builder.add(checkBoxReadyVegg, cc.xy(7, 1));
+	builder.addLabel("Pakket av:", cc.xy(9, 1));
+	builder.add(labelPackedBy, cc.xy(11, 1));
+	builder.add(checkBoxReadyTakstol, cc.xy(7, 2));
+	builder.addLabel("Pakket av:", cc.xy(9, 2));
+	builder.add(labelPackedByTross, cc.xy(11, 2));
+	builder.add(checkBoxReadyPakk, cc.xy(7, 3));
+	builder.addLabel("Pakket av:", cc.xy(9, 3));
+	builder.add(labelPackedByPakk, cc.xy(11, 3));
+	builder.addLabel("Pakketype:", cc.xy(13, 1));
+	builder.add(comboBoxPakketype, cc.xy(15, 1));
 
 	return builder.getPanel();
     }
@@ -219,7 +235,7 @@ public class MainPackageView implements Viewer {
     public JPanel buildPanel(WindowInterface window) {
 	currentWindow = window;
 	initComponents(window);
-	FormLayout layout = new FormLayout("10dlu,p,3dlu,p,3dlu,fill:p:grow,10dlu", "10dlu,p,3dlu,fill:p:grow,3dlu,fill:p:grow,3dlu,p,5dlu");
+	FormLayout layout = new FormLayout("10dlu,p,3dlu,300dlu,3dlu,fill:p:grow,10dlu", "10dlu,p,3dlu,fill:p:grow,3dlu,fill:p:grow,3dlu,p,5dlu");
 	PanelBuilder builder = new PanelBuilder(layout);
 	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),
 	// layout);
@@ -228,10 +244,10 @@ public class MainPackageView implements Viewer {
 	builder.add(buildFilterPanel(), cc.xy(2, 2));
 	builder.add(buildOrderPanel(), cc.xy(2, 4));
 	builder.add(buildPostShipmentPanel(), cc.xy(2, 6));
-	builder.add(buildStatisticsPanel(), cc.xyw(4, 2, 2));
+	builder.add(buildStatisticsPanel(), cc.xyw(4, 2, 3));
 	builder.add(buildOrderLineAndCommentPanel(), cc.xywh(4, 4, 1, 3));
 
-	builder.add(buildOrderlineFilterPanel(), cc.xy(6, 2));
+	// builder.add(buildOrderlineFilterPanel(), cc.xy(6, 2));
 
 	builder.add(panelColliesMain, cc.xywh(6, 4, 1, 3));
 

@@ -23,6 +23,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import no.ugland.utransprod.ProTransException;
+import no.ugland.utransprod.gui.IconEnum;
 import no.ugland.utransprod.gui.JDialogAdapter;
 import no.ugland.utransprod.gui.Login;
 import no.ugland.utransprod.gui.OverviewView;
@@ -49,10 +50,12 @@ import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.OrderManager;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
+import no.ugland.utransprod.util.ApplicationParamUtil;
 import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.UserUtil;
 import no.ugland.utransprod.util.Util;
 import no.ugland.utransprod.util.YearWeek;
+import no.ugland.utransprod.util.excel.ExcelUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.jdesktop.swingx.JXTable;
@@ -283,7 +286,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
     protected TableModel getTableModel(WindowInterface window) {
 	table.addMouseListener(new DoubleClickHandler(window));
 
-	return new PacklistTableModel(getObjectSelectionList(), window);
+	return new PacklistTableModel(getObjectSelectionList(), window, false);
     }
 
     @Override
@@ -319,8 +322,8 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	private StatusCheckerInterface<Transportable> takstolChecker;
 	private WindowInterface window;
 
-	public PacklistTableModel(ListModel listModel, WindowInterface aWindow) {
-	    super(listModel, PacklistColumn.getColumnNames());
+	public PacklistTableModel(ListModel listModel, WindowInterface aWindow, boolean excel) {
+	    super(listModel, PacklistColumn.getColumnNames(excel));
 	    window = aWindow;
 	    takstolChecker = Util.getTakstolChecker(managerRepository);
 	}
@@ -364,7 +367,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
      */
     @Override
     public Dimension getWindowSize() {
-	return new Dimension(860, 600);
+	return new Dimension(1200, 800);
     }
 
     /**
@@ -529,7 +532,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
     }
 
     public enum PacklistColumn {
-	ORDRE("Ordre", 150) {
+	ORDRE("Ordre", 150, true) {
 	    @Override
 	    public Class<?> getColumnClass() {
 		return PacklistV.class;
@@ -542,10 +545,10 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    }
 
 	},
-	TAKSTOLER("Takstoler", 120) {
+	TAKSTOLER("Takstoler", 120, true) {
 	    @Override
 	    public Class<?> getColumnClass() {
-		return Integer.class;
+		return String.class;
 	    }
 
 	    @Override
@@ -555,7 +558,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    }
 
 	},
-	GULVSPON("Gulvspon", 70) {
+	GULVSPON("Gulvspon", 70, true) {
 	    @Override
 	    public Class<?> getColumnClass() {
 		return String.class;
@@ -571,7 +574,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    }
 
 	},
-	TRANSPORT("Transport", 100) {
+	TRANSPORT("Transport", 100, true) {
 	    @Override
 	    public Class<?> getColumnClass() {
 		return String.class;
@@ -584,7 +587,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    }
 
 	},
-	PAKKLISTE_KLAR("Pakkliste klar", 100) {
+	PAKKLISTE_KLAR("Pakkliste klar", 100, true) {
 	    @Override
 	    public Class<?> getColumnClass() {
 		return String.class;
@@ -600,7 +603,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    }
 
 	},
-	PRODUKTOMRÅDE("Produktområde", 70) {
+	PRODUKTOMRÅDE("Produktområde", 70, false) {
 	    @Override
 	    public Class<?> getColumnClass() {
 		return String.class;
@@ -616,7 +619,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    }
 
 	},
-	TAKSTOL_PROSJEKTERING("Takstol prosjektering", 120) {
+	TAKSTOL_PROSJEKTERING("Takstol prosjektering", 120, true) {
 	    @Override
 	    public Class<?> getColumnClass() {
 		return String.class;
@@ -633,7 +636,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    }
 
 	},
-	TEGNER("Tegner", 120) {
+	TEGNER("Tegner", 120, true) {
 	    @Override
 	    public Class<?> getColumnClass() {
 		return String.class;
@@ -646,7 +649,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    }
 
 	},
-	PRODUKSJONSGRUNNLAG("Produksjonsgrunnlag", 120) {
+	PRODUKSJONSGRUNNLAG("Produksjonsgrunnlag", 120, true) {
 	    @Override
 	    public Class<?> getColumnClass() {
 		return Integer.class;
@@ -658,7 +661,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 		return packlistV.getProductionBasis();
 	    }
 	},
-	TIDSBRUK("Tidsbruk", 70) {
+	TIDSBRUK("Tidsbruk", 70, true) {
 	    @Override
 	    public Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
 		    WindowInterface window, ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
@@ -670,7 +673,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 		return BigDecimal.class;
 	    }
 	},
-	GJORT_AV("Gjort av", 120) {
+	GJORT_AV("Gjort av", 120, true) {
 	    @Override
 	    public Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
 		    WindowInterface window, ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
@@ -684,10 +687,16 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	};
 	private String columnName;
 	private int columnWidth;
+	private boolean skalTilExcel;
 
-	private PacklistColumn(String aColumnName, int aColumnWidth) {
+	private PacklistColumn(String aColumnName, int aColumnWidth, boolean skalTilExcel) {
 	    columnName = aColumnName;
 	    columnWidth = aColumnWidth;
+	    this.skalTilExcel = skalTilExcel;
+	}
+
+	public boolean skalTilExcel() {
+	    return skalTilExcel;
 	}
 
 	public abstract Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
@@ -707,13 +716,23 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    return columnWidth;
 	}
 
-	public static String[] getColumnNames() {
-	    PacklistColumn[] columns = PacklistColumn.values();
-
+	public static String[] getColumnNames(boolean excel) {
 	    List<String> columnNameList = new ArrayList<String>();
-	    for (int i = 0; i < columns.length; i++) {
-		columnNameList.add(columns[i].getColumnName());
+	    for (PacklistColumn column : PacklistColumn.values()) {
+		if (excel) {
+		    if (column.skalTilExcel) {
+			columnNameList.add(column.getColumnName());
+		    }
+		} else {
+		    columnNameList.add(column.getColumnName());
+		}
 	    }
+	    // PacklistColumn[] columns = PacklistColumn.values();
+	    //
+	    // List<String> columnNameList = new ArrayList<String>();
+	    // for (int i = 0; i < columns.length; i++) {
+	    // columnNameList.add(columns[i].getColumnName());
+	    // }
 	    String[] columnNames = new String[columnNameList.size()];
 	    return columnNameList.toArray(columnNames);
 	}
@@ -888,6 +907,53 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	buttonProductionBasis.setEnabled(false);
 	emptySelectionListener.addButton(buttonProductionBasis);
 	return buttonProductionBasis;
+    }
+
+    public JButton getButtonExcel(WindowInterface window) {
+	JButton buttonExcel = new JButton(new ExcelAction(window));
+	buttonExcel.setIcon(IconEnum.ICON_EXCEL.getIcon());
+	return buttonExcel;
+    }
+
+    private class ExcelAction extends AbstractAction {
+	private static final long serialVersionUID = 1L;
+
+	private WindowInterface window;
+
+	/**
+	 * @param aWindow
+	 */
+	public ExcelAction(WindowInterface aWindow) {
+	    super("Excel");
+	    window = aWindow;
+	}
+
+	/**
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void actionPerformed(ActionEvent arg0) {
+	    Util.setWaitCursor(window.getComponent());
+	    try {
+		exportToExcel(window);
+		Util.showMsgFrame(window.getComponent(), "Excel generert", "Dersom excelfil ikke kom opp ligger den i katalog definert for excel");
+	    } catch (ProTransException e) {
+		e.printStackTrace();
+		Util.showErrorDialog(window, "Feil", e.getMessage());
+	    }
+	    Util.setDefaultCursor(window.getComponent());
+
+	}
+    }
+
+    private void exportToExcel(WindowInterface window) throws ProTransException {
+	String fileName = "Pakkliste_" + Util.getCurrentDateAsDateTimeString() + ".xls";
+	String excelDirectory = ApplicationParamUtil.findParamByName("excel_path");
+
+	JXTable tableReport = new JXTable(new PacklistTableModel(getObjectSelectionList(), window, true));
+
+	ExcelUtil.showDataInExcel(excelDirectory, fileName, null, "Pakkliste", tableReport, null, null, 16, false);
+	// ExcelUtil.showDataInExcelInThread(window, fileName, getTitle(),
+	// getExcelTable(), null, null, 16, false);
     }
 
     private class TrossReadyAction extends AbstractAction {

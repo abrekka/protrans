@@ -2,6 +2,7 @@ package no.ugland.utransprod.gui.handlers;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -18,6 +19,7 @@ import no.ugland.utransprod.util.Util;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.ComboBoxAdapter;
 import com.jgoodies.binding.beans.Model;
+import com.toedter.calendar.JDateChooser;
 
 /**
  * Håndterer setting av initialer for pakkere
@@ -30,6 +32,7 @@ public class PackInitialsViewHandler implements Closeable {
     private final List<String> packInitials;
 
     boolean canceled = false;
+    private JDateChooser dateChooser;
 
     public PackInitialsViewHandler(String initials,
     // Integer colliHeight,
@@ -324,6 +327,15 @@ public class PackInitialsViewHandler implements Closeable {
 	    return true;
 	}
 
+    }
+
+    public JDateChooser getDateChooser() {
+	dateChooser = new JDateChooser(new Date());
+	return dateChooser;
+    }
+
+    public Date getReadyDate() {
+	return dateChooser.getDate();
     }
 
 }

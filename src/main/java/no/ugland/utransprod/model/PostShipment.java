@@ -902,4 +902,53 @@ public class PostShipment extends AbstractTransportable implements TextRenderabl
 	return order.getProductionWeek();
     }
 
+    public Date getOrderReadyWall() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    public void setOrderReadyWall(Date orderReady) {
+	// TODO Auto-generated method stub
+
+    }
+
+    public Date getOrderReadyTross() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    public void setOrderReadyTross(Date orderReady) {
+	// TODO Auto-generated method stub
+
+    }
+
+    public String getPackedByTross() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    public void setPackedByTross(String packedBy) {
+	// TODO Auto-generated method stub
+
+    }
+
+    public Date getOrderReadyPack() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    public void setOrderReadyPack(Date orderReady) {
+	// TODO Auto-generated method stub
+
+    }
+
+    public String getPackedByPack() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    public void setPackedByPack(String packedBy) {
+	// TODO Auto-generated method stub
+
+    }
 }

@@ -1144,6 +1144,18 @@ public class OrderModel extends AbstractOrderModel<Order, OrderModel> {
 	return object.getOrderReady();
     }
 
+    public Date getOrderReadyWall() {
+	return object.getOrderReadyWall();
+    }
+
+    public Date getOrderReadyTross() {
+	return object.getOrderReadyTross();
+    }
+
+    public Date getOrderReadyPack() {
+	return object.getOrderReadyPack();
+    }
+
     /**
      * @return leveringsuke
      */
@@ -1407,13 +1419,17 @@ public class OrderModel extends AbstractOrderModel<Order, OrderModel> {
 	orderModel.setAssemblyWeek((Integer) presentationModel.getBufferedValue(PROPERTY_ASSEMBLY_WEEK));
 	orderModel.setAssemblyYear((Integer) presentationModel.getBufferedValue(PROPERTY_ASSEMBLY_YEAR));
 	orderModel.setOrderCompleteBool((Boolean) presentationModel.getBufferedValue(PROPERTY_ORDER_COMPLETE_BOOL));
-	orderModel.setOrderReadyBool((Boolean) presentationModel.getBufferedValue(PROPERTY_ORDER_READY_BOOL));
+	orderModel.setOrderReadyVeggBool((Boolean) presentationModel.getBufferedValue(PROPERTY_ORDER_READY_VEGG_BOOL));
+	orderModel.setOrderReadyTakstolBool((Boolean) presentationModel.getBufferedValue(PROPERTY_ORDER_READY_TAKSTOL_BOOL));
+	orderModel.setOrderReadyPakkBool((Boolean) presentationModel.getBufferedValue(PROPERTY_ORDER_READY_PAKK_BOOL));
 	orderModel.setPackageStarted((Date) presentationModel.getBufferedValue(PROPERTY_PACKAGE_STARTED));
 	orderModel.setAgreementDate((Date) presentationModel.getBufferedValue(PROPERTY_AGREEMENT_DATE));
 	orderModel.setDeliveryWeek((Integer) presentationModel.getBufferedValue(PROPERTY_DELIVERY_WEEK));
 	orderModel.setTelephoneNr((String) presentationModel.getBufferedValue(PROPERTY_TELEPHONE_NR));
 	orderModel.setPacklistReady((Date) presentationModel.getBufferedValue(PROPERTY_PACKLIST_READY));
 	orderModel.setPackedBy((String) presentationModel.getBufferedValue(PROPERTY_PACKED_BY));
+	orderModel.setPackedByTross((String) presentationModel.getBufferedValue(PROPERTY_PACKED_BY_TROSS));
+	orderModel.setPackedByPack((String) presentationModel.getBufferedValue(PROPERTY_PACKED_BY_PACK));
 	orderModel.setSalesman((String) presentationModel.getBufferedValue(PROPERTY_SALESMAN));
 	orderModel.setPaidDate((Date) presentationModel.getBufferedValue(PROPERTY_PAID_DATE));
 	orderModel.setCachedComment((String) presentationModel.getBufferedValue(PROPERTY_CACHED_COMMENT));
@@ -1458,13 +1474,17 @@ public class OrderModel extends AbstractOrderModel<Order, OrderModel> {
 	presentationModel.getBufferedModel(PROPERTY_ASSEMBLY_WEEK).addValueChangeListener(listener);
 	presentationModel.getBufferedModel(PROPERTY_ASSEMBLY_YEAR).addValueChangeListener(listener);
 	presentationModel.getBufferedModel(PROPERTY_ORDER_COMPLETE_BOOL).addValueChangeListener(listener);
-	presentationModel.getBufferedModel(PROPERTY_ORDER_READY_BOOL).addValueChangeListener(listener);
+	presentationModel.getBufferedModel(PROPERTY_ORDER_READY_VEGG_BOOL).addValueChangeListener(listener);
+	presentationModel.getBufferedModel(PROPERTY_ORDER_READY_TAKSTOL_BOOL).addValueChangeListener(listener);
+	presentationModel.getBufferedModel(PROPERTY_ORDER_READY_PAKK_BOOL).addValueChangeListener(listener);
 	presentationModel.getBufferedModel(PROPERTY_PACKAGE_STARTED).addValueChangeListener(listener);
 	presentationModel.getBufferedModel(PROPERTY_AGREEMENT_DATE).addValueChangeListener(listener);
 	presentationModel.getBufferedModel(PROPERTY_DELIVERY_WEEK).addValueChangeListener(listener);
 	presentationModel.getBufferedModel(PROPERTY_TELEPHONE_NR).addValueChangeListener(listener);
 	presentationModel.getBufferedModel(PROPERTY_PACKLIST_READY).addValueChangeListener(listener);
 	presentationModel.getBufferedModel(PROPERTY_PACKED_BY).addValueChangeListener(listener);
+	presentationModel.getBufferedModel(PROPERTY_PACKED_BY_TROSS).addValueChangeListener(listener);
+	presentationModel.getBufferedModel(PROPERTY_PACKED_BY_PACK).addValueChangeListener(listener);
 	presentationModel.getBufferedModel(PROPERTY_SALESMAN).addValueChangeListener(listener);
 	presentationModel.getBufferedModel(PROPERTY_PAID_DATE).addValueChangeListener(listener);
 	presentationModel.getBufferedModel(PROPERTY_CACHED_COMMENT).addValueChangeListener(listener);

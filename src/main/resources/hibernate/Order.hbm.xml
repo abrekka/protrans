@@ -19,6 +19,36 @@
 		unsaved-value="undefined"
 	/>
 	<property
+        name="packedByTross"
+        type="java.lang.String"
+        column="PACKED_BY_TROSS"
+        length="100"
+    />
+    <property
+        name="packedByPack"
+        type="java.lang.String"
+        column="PACKED_BY_PACK"
+        length="100"
+    />
+	<property
+        name="orderReadyWall"
+        type="java.util.Date"
+        column="ORDER_READY_WALL"
+        length="32"
+    />
+    <property
+        name="orderReadyTross"
+        type="java.util.Date"
+        column="ORDER_READY_TROSS"
+        length="32"
+    />
+    <property
+        name="orderReadyPack"
+        type="java.util.Date"
+        column="ORDER_READY_PACK"
+        length="32"
+    />
+	<property
         name="packlistDoneBy"
         type="java.lang.String"
         column="PACKLIST_DONE_BY"

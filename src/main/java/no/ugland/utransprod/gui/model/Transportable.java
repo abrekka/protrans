@@ -124,7 +124,15 @@ public interface Transportable {
 
     String getPackedBy();
 
+    String getPackedByTross();
+
+    String getPackedByPack();
+
     void setPackedBy(String packedBy);
+
+    void setPackedByTross(String packedBy);
+
+    void setPackedByPack(String packedBy);
 
     Set<OrderComment> getOrderComments();
 
@@ -391,6 +399,56 @@ public interface Transportable {
 	    return null;
 	}
 
+	public Date getOrderReadyWall() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
+	public void setOrderReadyWall(Date orderReady) {
+	    // TODO Auto-generated method stub
+
+	}
+
+	public Date getOrderReadyTross() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
+	public void setOrderReadyTross(Date orderReady) {
+	    // TODO Auto-generated method stub
+
+	}
+
+	public String getPackedByTross() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
+	public void setPackedByTross(String packedBy) {
+	    // TODO Auto-generated method stub
+
+	}
+
+	public Date getOrderReadyPack() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
+	public void setOrderReadyPack(Date orderReady) {
+	    // TODO Auto-generated method stub
+
+	}
+
+	public String getPackedByPack() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
+	public void setPackedByPack(String packedBy) {
+	    // TODO Auto-generated method stub
+
+	}
+
     };
 
     List<OrderLine> getOrderLineList(String articleTypeName);
@@ -403,4 +461,15 @@ public interface Transportable {
 
     Integer getProductionWeek();
 
+    Date getOrderReadyWall();
+
+    void setOrderReadyWall(Date orderReady);
+
+    Date getOrderReadyTross();
+
+    Date getOrderReadyPack();
+
+    void setOrderReadyTross(Date orderReady);
+
+    void setOrderReadyPack(Date orderReady);
 }

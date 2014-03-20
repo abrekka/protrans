@@ -19,9 +19,11 @@ public interface OrdlnDAO extends DAO<Ordln> {
 
     Integer isOrderLineInStorage(Integer ordNo, Integer lnNo);
 
-	Ord findOrdByOrderNr(String orderNr);
+    Ord findOrdByOrderNr(String orderNr);
 
-	Ordln findByOrdnoAndPrCatNo2(Integer ordno, Integer garageTypeLine);
+    Ordln findByOrdnoAndPrCatNo2(Integer ordno, Integer garageTypeLine);
 
-	List<Ordln> findCostLines(String orderNr);
+    List<Ordln> findCostLines(String orderNr);
+
+    List<Ordln> findForFakturagrunnlag(String orderNr);
 }

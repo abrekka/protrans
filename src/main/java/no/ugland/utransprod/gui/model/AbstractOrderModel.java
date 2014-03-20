@@ -19,11 +19,15 @@ import com.jgoodies.binding.list.ArrayListModel;
 
 public abstract class AbstractOrderModel<T extends Transportable, E> extends AbstractModel<T, E> implements Packable, ICostableModel<T, E> {
     public static final String PROPERTY_ORDER_NR = "orderNr";
-    public static final String PROPERTY_ORDER_READY_BOOL = "orderReadyBool";
+    public static final String PROPERTY_ORDER_READY_VEGG_BOOL = "orderReadyVeggBool";
+    public static final String PROPERTY_ORDER_READY_TAKSTOL_BOOL = "orderReadyTakstolBool";
+    public static final String PROPERTY_ORDER_READY_PAKK_BOOL = "orderReadyPakkBool";
     public static final String PROPERTY_ORDER_LINES = "orderLines";
     public static final String PROPERTY_ORDER_COMPLETE_BOOL = "orderCompleteBool";
     public static final String PROPERTY_COLLI_LIST = "colliList";
     public static final String PROPERTY_PACKED_BY = "packedBy";
+    public static final String PROPERTY_PACKED_BY_TROSS = "packedByTross";
+    public static final String PROPERTY_PACKED_BY_PACK = "packedByPack";
     public static final String PROPERTY_COMMENTS = "comments";
     public static final String PROPERTY_GARAGE_COLLI_HEIGHT = "garageColliHeight";
     public static final String PROPERTY_PACKAGE_STARTED = "packageStarted";
@@ -70,8 +74,22 @@ public abstract class AbstractOrderModel<T extends Transportable, E> extends Abs
 	firePropertyChange(PROPERTY_ORDER_NR, oldNr, orderNr);
     }
 
-    public Boolean getOrderReadyBool() {
-	if (object.getOrderReady() != null) {
+    public Boolean getOrderReadyVeggBool() {
+	if (object.getOrderReadyWall() != null) {
+	    return Boolean.TRUE;
+	}
+	return Boolean.FALSE;
+    }
+
+    public Boolean getOrderReadyTakstolBool() {
+	if (object.getOrderReadyTross() != null) {
+	    return Boolean.TRUE;
+	}
+	return Boolean.FALSE;
+    }
+
+    public Boolean getOrderReadyPakkBool() {
+	if (object.getOrderReadyPack() != null) {
 	    return Boolean.TRUE;
 	}
 	return Boolean.FALSE;
@@ -80,14 +98,34 @@ public abstract class AbstractOrderModel<T extends Transportable, E> extends Abs
     /**
      * @param orderReady
      */
-    public void setOrderReadyBool(Boolean orderReady) {
-	Boolean oldReady = getOrderReadyBool();
+    public void setOrderReadyVeggBool(Boolean orderReady) {
+	Boolean oldReady = getOrderReadyVeggBool();
 	if (orderReady) {
-	    object.setOrderReady(Calendar.getInstance().getTime());
+	    object.setOrderReadyWall(Calendar.getInstance().getTime());
 	} else {
-	    object.setOrderReady(null);
+	    object.setOrderReadyWall(null);
 	}
-	firePropertyChange(PROPERTY_ORDER_READY_BOOL, oldReady, orderReady);
+	firePropertyChange(PROPERTY_ORDER_READY_VEGG_BOOL, oldReady, orderReady);
+    }
+
+    public void setOrderReadyTakstolBool(Boolean orderReady) {
+	Boolean oldReady = getOrderReadyTakstolBool();
+	if (orderReady) {
+	    object.setOrderReadyTross(Calendar.getInstance().getTime());
+	} else {
+	    object.setOrderReadyTross(null);
+	}
+	firePropertyChange(PROPERTY_ORDER_READY_TAKSTOL_BOOL, oldReady, orderReady);
+    }
+
+    public void setOrderReadyPakkBool(Boolean orderReady) {
+	Boolean oldReady = getOrderReadyPakkBool();
+	if (orderReady) {
+	    object.setOrderReadyPack(Calendar.getInstance().getTime());
+	} else {
+	    object.setOrderReadyPack(null);
+	}
+	firePropertyChange(PROPERTY_ORDER_READY_PAKK_BOOL, oldReady, orderReady);
     }
 
     public List<OrderLine> getOrderLines() {
@@ -152,6 +190,14 @@ public abstract class AbstractOrderModel<T extends Transportable, E> extends Abs
 	return object.getPackedBy();
     }
 
+    public String getPackedByTross() {
+	return object.getPackedByTross();
+    }
+
+    public String getPackedByPack() {
+	return object.getPackedByPack();
+    }
+
     /**
      * @param packedBy
      */
@@ -159,6 +205,18 @@ public abstract class AbstractOrderModel<T extends Transportable, E> extends Abs
 	String oldPacked = getPackedBy();
 	object.setPackedBy(packedBy);
 	firePropertyChange(PROPERTY_PACKED_BY, oldPacked, packedBy);
+    }
+
+    public void setPackedByTross(String packedBy) {
+	String oldPacked = getPackedByTross();
+	object.setPackedByTross(packedBy);
+	firePropertyChange(PROPERTY_PACKED_BY_TROSS, oldPacked, packedBy);
+    }
+
+    public void setPackedByPack(String packedBy) {
+	String oldPacked = getPackedByPack();
+	object.setPackedByPack(packedBy);
+	firePropertyChange(PROPERTY_PACKED_BY_PACK, oldPacked, packedBy);
     }
 
     public List<OrderComment> getComments() {
@@ -226,6 +284,18 @@ public abstract class AbstractOrderModel<T extends Transportable, E> extends Abs
 	orderLines.add(orderLine);
 	object.setOrderLines(orderLines);
 	firePropertyChange(PROPERTY_ORDER_LINES, oldList, new ArrayList<OrderLine>(orderLines));
+    }
+
+    public void setOrderReadyVegg(Date date) {
+	object.setOrderReadyWall(date);
+    }
+
+    public void setOrderReadyTakstol(Date date) {
+	object.setOrderReadyTross(date);
+    }
+
+    public void setOrderReadyPakk(Date date) {
+	object.setOrderReadyPack(date);
     }
 
     public void setOrderReady(Date date) {
