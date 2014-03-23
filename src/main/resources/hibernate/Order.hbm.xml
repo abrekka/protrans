@@ -19,6 +19,24 @@
 		unsaved-value="undefined"
 	/>
 	<property
+        name="estimatedTimePack"
+        type="java.math.BigDecimal"
+        column="ESTIMATED_TIME_PACK"
+        length="32"
+    />
+    <property
+        name="estimatedTimeGavl"
+        type="java.math.BigDecimal"
+        column="ESTIMATED_TIME_GAVL"
+        length="32"
+    />
+    <property
+        name="estimatedTimeWall"
+        type="java.math.BigDecimal"
+        column="ESTIMATED_TIME_WALL"
+        length="32"
+    />		
+	<property
         name="packedByTross"
         type="java.lang.String"
         column="PACKED_BY_TROSS"

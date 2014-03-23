@@ -32,6 +32,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
 import no.ugland.utransprod.ProTransException;
+import no.ugland.utransprod.gui.IconEnum;
 import no.ugland.utransprod.gui.Login;
 import no.ugland.utransprod.gui.ProductAreaGroupProvider;
 import no.ugland.utransprod.gui.UBColumnControlPopup;
@@ -56,6 +57,7 @@ import no.ugland.utransprod.model.ArticleType;
 import no.ugland.utransprod.model.CostType;
 import no.ugland.utransprod.model.CostUnit;
 import no.ugland.utransprod.model.Order;
+import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.PostShipment;
 import no.ugland.utransprod.model.ProcentDone;
 import no.ugland.utransprod.model.Produceable;
@@ -69,11 +71,14 @@ import no.ugland.utransprod.service.ProductAreaGroupManager;
 import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.service.enums.LazyLoadPostShipmentEnum;
+import no.ugland.utransprod.util.ApplicationParamUtil;
 import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.PrefsUtil;
+import no.ugland.utransprod.util.Tidsforbruk;
 import no.ugland.utransprod.util.TransportableComparator;
 import no.ugland.utransprod.util.UserUtil;
 import no.ugland.utransprod.util.Util;
+import no.ugland.utransprod.util.excel.ExcelUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Hibernate;
@@ -134,6 +139,9 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
     JMenuItem menuItemDeviation;
 
     JMenuItem menuItemSetProcent;
+    private JMenuItem menuItemSetEstimatedTimeWall;
+    private JMenuItem menuItemSetEstimatedTimeGavl;
+    private JMenuItem menuItemSetEstimatedTimePack;
 
     private Login login;
 
@@ -257,6 +265,21 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	menuItemSetProcent.setName("MenuItemSetProcent");
 	menuItemSetProcent.setEnabled(hasWriteAccess());
 	menuItemMap.put(ProductionColumn.PROCENT.getColumnName(), menuItemSetProcent);
+
+	menuItemSetEstimatedTimeWall = new JMenuItem("Sett estimert tid vegg...");
+	menuItemSetEstimatedTimeWall.setName("MenuItemSetEstimatedTimeWall");
+	menuItemSetEstimatedTimeWall.setEnabled(hasWriteAccess());
+	menuItemMap.put(ProductionColumn.ESTIMERT_TID_VEGG.getColumnName(), menuItemSetEstimatedTimeWall);
+
+	menuItemSetEstimatedTimeGavl = new JMenuItem("Sett estimert tid gavl...");
+	menuItemSetEstimatedTimeGavl.setName("MenuItemSetEstimatedTimeGavl");
+	menuItemSetEstimatedTimeGavl.setEnabled(hasWriteAccess());
+	menuItemMap.put(ProductionColumn.ESTIMERT_TID_GAVL.getColumnName(), menuItemSetEstimatedTimeGavl);
+
+	menuItemSetEstimatedTimePack = new JMenuItem("Sett estimert tid pakk...");
+	menuItemSetEstimatedTimePack.setName("MenuItemSetEstimatedTimePack");
+	menuItemSetEstimatedTimePack.setEnabled(hasWriteAccess());
+	menuItemMap.put(ProductionColumn.ESTIMERT_TID_PAKK.getColumnName(), menuItemSetEstimatedTimePack);
 
 	menuItemProductionUnitTakstol = new JMenuItem("Sett produksjonsenhet...");
 	menuItemProductionUnitTakstol.setName("MenuItemProductionUnitTakstol");
@@ -734,6 +757,144 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		// TODO Auto-generated method stub
 		return false;
 	    }
+	},
+	ORDNR("Ordnr") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getOrderNr();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		return false;
+	    }
+	},
+	AVDELING("Avdeling") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getOrder().getProductArea().getProductArea();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		return false;
+	    }
+	},
+	TID_VEGG("Tid vegg") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		Order order = transportable.getOrder();
+
+		OrderLine vegg = order.getOrderLine("Vegg");
+		return vegg.getRealProductionHours() == null ? Tidsforbruk.beregnTidsforbruk(vegg.getActionStarted(), vegg.getProduced()) : vegg
+			.getRealProductionHours();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return BigDecimal.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		return false;
+	    }
+	},
+	TID_GAVL("Tid gavl") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		Order order = transportable.getOrder();
+
+		OrderLine gavl = order.getOrderLine("Gavl");
+		return gavl.getRealProductionHours() == null ? Tidsforbruk.beregnTidsforbruk(gavl.getActionStarted(), gavl.getProduced()) : gavl
+			.getRealProductionHours();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return BigDecimal.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		// TODO Auto-generated method stub
+		return false;
+	    }
+	},
+	ESTIMERT_TID_VEGG("Estimert tid vegg") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getOrder().getEstimatedTimeWall();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return BigDecimal.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		popupMenuProduction.add(menuItemMap.get(getColumnName()));
+		return true;
+	    }
+	},
+	ESTIMERT_TID_GAVL("Estimert tid gavl") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getOrder().getEstimatedTimeGavl();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return BigDecimal.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		popupMenuProduction.add(menuItemMap.get(getColumnName()));
+		return true;
+	    }
+	},
+	ESTIMERT_TID_PAKK("Estimert tid pakk") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getOrder().getEstimatedTimePack();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return BigDecimal.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		popupMenuProduction.add(menuItemMap.get(getColumnName()));
+		return true;
+	    }
 	}
 	// ,
 	// KALKULERT_TIDSFORBRUK("Kalkulert tidsforbruk") {
@@ -839,6 +1000,10 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	    Map<String, String> statusMap = Util.createStatusMap(transportable.getStatus());
 	    String columnName = StringUtils.upperCase(getColumnName(columnIndex)).replaceAll(" ", "_").replaceAll("\\.", "_")
 		    .replaceAll("\\%", "PROCENT");
+	    if (!Hibernate.isInitialized(transportable.getOrderLines())) {
+		((OrderManager) overviewManager).lazyLoadOrder((Order) transportable, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES,
+			LazyLoadOrderEnum.PROCENT_DONE });
+	    }
 	    return ProductionColumn.valueOf(columnName).getValue(transportable, statusMap, statusCheckers);
 
 	}
@@ -1098,6 +1263,9 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	menuItemShowContent.addActionListener(new MenuItemListenerShowContent(window));
 	menuItemDeviation.addActionListener(new MenuItemListenerDeviation(window));
 	menuItemSetProcent.addActionListener(new MenuItemListenerSetProcent(window));
+	menuItemSetEstimatedTimeWall.addActionListener(new MenuItemListenerSetEstimatedTimeWall(window));
+	menuItemSetEstimatedTimeGavl.addActionListener(new MenuItemListenerSetEstimatedTimeGavl(window));
+	menuItemSetEstimatedTimePack.addActionListener(new MenuItemListenerSetEstimatedTimePack(window));
 	menuItemProductionUnitTakstol.addActionListener(setProductionUnitActionFactory.create(articleTypeTakstol, this, window));
 
 	menuItemShowTakstolInfo = new JMenuItem(showTakstolInfoActionFactory.create(this, window));
@@ -1414,6 +1582,81 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 
     }
 
+    class MenuItemListenerSetEstimatedTimeWall implements ActionListener {
+	private WindowInterface window;
+
+	public MenuItemListenerSetEstimatedTimeWall(WindowInterface aWindow) {
+	    window = aWindow;
+
+	}
+
+	public void actionPerformed(ActionEvent actionEvent) {
+	    if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemSetEstimatedTimeWall.getText())) {
+		Transportable transportable = null;
+		if (objectSelectionList.getSelection() != null) {
+		    int index = table.convertRowIndexToModel(objectSelectionList.getSelectionIndex());
+		    transportable = (Transportable) objectSelectionList.getElementAt(index);
+		}
+
+		if (transportable != null && transportable instanceof Order) {
+		    setEstimatedTimewallForOrder((Order) transportable, window);
+		}
+
+	    }
+	}
+
+    }
+
+    class MenuItemListenerSetEstimatedTimeGavl implements ActionListener {
+	private WindowInterface window;
+
+	public MenuItemListenerSetEstimatedTimeGavl(WindowInterface aWindow) {
+	    window = aWindow;
+
+	}
+
+	public void actionPerformed(ActionEvent actionEvent) {
+	    if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemSetEstimatedTimeGavl.getText())) {
+		Transportable transportable = null;
+		if (objectSelectionList.getSelection() != null) {
+		    int index = table.convertRowIndexToModel(objectSelectionList.getSelectionIndex());
+		    transportable = (Transportable) objectSelectionList.getElementAt(index);
+		}
+
+		if (transportable != null && transportable instanceof Order) {
+		    setEstimatedTimeGavlForOrder((Order) transportable, window);
+		}
+
+	    }
+	}
+
+    }
+
+    class MenuItemListenerSetEstimatedTimePack implements ActionListener {
+	private WindowInterface window;
+
+	public MenuItemListenerSetEstimatedTimePack(WindowInterface aWindow) {
+	    window = aWindow;
+
+	}
+
+	public void actionPerformed(ActionEvent actionEvent) {
+	    if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemSetEstimatedTimePack.getText())) {
+		Transportable transportable = null;
+		if (objectSelectionList.getSelection() != null) {
+		    int index = table.convertRowIndexToModel(objectSelectionList.getSelectionIndex());
+		    transportable = (Transportable) objectSelectionList.getElementAt(index);
+		}
+
+		if (transportable != null && transportable instanceof Order) {
+		    setEstimatedTimePackForOrder((Order) transportable, window);
+		}
+
+	    }
+	}
+
+    }
+
     private void setProcentForOrder(final Order order, final WindowInterface aWindow) {
 	ProcentDoneModel procentDoneModel = new ProcentDoneModel(new ProcentDone(null, null, null, null, order, null, null, null));
 	ProcentDoneViewHandler procentDoneViewHandler = new ProcentDoneViewHandler(userType, managerRepository.getProcentDoneManager());
@@ -1423,6 +1666,57 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	if (!procentDoneView.isCanceled()) {
 	    handleProcentDone(order, aWindow, procentDoneModel);
 
+	}
+    }
+
+    private void setEstimatedTimewallForOrder(final Order order, final WindowInterface aWindow) {
+	BigDecimal estimatedProductionHours = order.getEstimatedTimeWall();
+	String estimertTidsforbrukString = Util.showInputDialogWithdefaultValue(null, "Sett estimert tidsforbruk", "Tidsforbruk:",
+		estimatedProductionHours == null ? "" : String.valueOf(estimatedProductionHours));
+
+	BigDecimal estimertTidsforbruk = StringUtils.isBlank(estimertTidsforbrukString) ? null : new BigDecimal(StringUtils.replace(
+		estimertTidsforbrukString, ",", "."));
+	order.setEstimatedTimeWall(estimertTidsforbruk);
+
+	try {
+	    ((OrderManager) overviewManager).saveOrder(order);
+	} catch (ProTransException e) {
+	    Util.showErrorDialog(window, "Feil", e.getMessage());
+	    e.printStackTrace();
+	}
+    }
+
+    private void setEstimatedTimeGavlForOrder(final Order order, final WindowInterface aWindow) {
+	BigDecimal estimatedProductionHours = order.getEstimatedTimeGavl();
+	String estimertTidsforbrukString = Util.showInputDialogWithdefaultValue(null, "Sett estimert tidsforbruk", "Tidsforbruk:",
+		estimatedProductionHours == null ? "" : String.valueOf(estimatedProductionHours));
+
+	BigDecimal estimertTidsforbruk = StringUtils.isBlank(estimertTidsforbrukString) ? null : new BigDecimal(StringUtils.replace(
+		estimertTidsforbrukString, ",", "."));
+	order.setEstimatedTimeGavl(estimertTidsforbruk);
+
+	try {
+	    ((OrderManager) overviewManager).saveOrder(order);
+	} catch (ProTransException e) {
+	    Util.showErrorDialog(window, "Feil", e.getMessage());
+	    e.printStackTrace();
+	}
+    }
+
+    private void setEstimatedTimePackForOrder(final Order order, final WindowInterface aWindow) {
+	BigDecimal estimatedProductionHours = order.getEstimatedTimePack();
+	String estimertTidsforbrukString = Util.showInputDialogWithdefaultValue(null, "Sett estimert tidsforbruk", "Tidsforbruk:",
+		estimatedProductionHours == null ? "" : String.valueOf(estimatedProductionHours));
+
+	BigDecimal estimertTidsforbruk = StringUtils.isBlank(estimertTidsforbrukString) ? null : new BigDecimal(StringUtils.replace(
+		estimertTidsforbrukString, ",", "."));
+	order.setEstimatedTimePack(estimertTidsforbruk);
+
+	try {
+	    ((OrderManager) overviewManager).saveOrder(order);
+	} catch (ProTransException e) {
+	    Util.showErrorDialog(window, "Feil", e.getMessage());
+	    e.printStackTrace();
 	}
     }
 
@@ -1615,6 +1909,46 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	    }
 	}
 	return null;
+    }
+
+    public JButton getButtonExcel(WindowInterface window) {
+	JButton buttonExcel = new JButton(new ExcelAction(window));
+	buttonExcel.setIcon(IconEnum.ICON_EXCEL.getIcon());
+	return buttonExcel;
+    }
+
+    private class ExcelAction extends AbstractAction {
+	private static final long serialVersionUID = 1L;
+
+	private WindowInterface window;
+
+	/**
+	 * @param aWindow
+	 */
+	public ExcelAction(WindowInterface aWindow) {
+	    super("Excel");
+	    window = aWindow;
+	}
+
+	/**
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void actionPerformed(ActionEvent arg0) {
+	    Util.setWaitCursor(window.getComponent());
+	    try {
+		String fileName = "Produksjonsoversikt_" + Util.getCurrentDateAsDateTimeString() + ".xls";
+		String excelDirectory = ApplicationParamUtil.findParamByName("excel_path");
+
+		JXTable tableReport = new JXTable(new ProductionOverviewTableModel(objectList));
+
+		ExcelUtil.showDataInExcel(excelDirectory, fileName, null, "Produksjonsoversikt", tableReport, null, null, 16, false);
+	    } catch (ProTransException e) {
+		e.printStackTrace();
+		Util.showErrorDialog(window, "Feil", e.getMessage());
+	    }
+	    Util.setDefaultCursor(window.getComponent());
+
+	}
     }
 
 }

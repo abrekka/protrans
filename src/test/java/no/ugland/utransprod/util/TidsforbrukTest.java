@@ -9,6 +9,13 @@ import org.junit.Test;
 
 public class TidsforbrukTest {
     @Test
+    public void skalBeregneArbeidstidSomHarOvertid() throws Exception {
+	Date starttid = new SimpleDateFormat("yyyy.MM.dd HH:mm").parse("2014.01.01 14:15");
+	Date sluttid = new SimpleDateFormat("yyyy.MM.dd HH:mm").parse("2014.01.01 15:20");
+	Assertions.assertThat(Tidsforbruk.beregnTidsforbruk(starttid, sluttid)).isEqualTo(BigDecimal.valueOf(1).setScale(2));
+    }
+
+    @Test
     public void skalBeregneArbeidstidSomGaarOverMaanedsskifteTidsberegning() throws Exception {
 	Date starttid = new SimpleDateFormat("yyyy.MM.dd HH:mm").parse("2014.01.31 07:00");
 	Date sluttid = new SimpleDateFormat("yyyy.MM.dd HH:mm").parse("2014.02.01 15:15");

@@ -167,6 +167,12 @@ public class Order extends AbstractTransportable implements TextRenderable, Arti
 
     private String packedByPack;
 
+    private BigDecimal estimatedTimeWall;
+
+    private BigDecimal estimatedTimeGavl;
+
+    private BigDecimal estimatedTimePack;
+
     public static final Order UNKNOWN = new Order() {
 	private static final long serialVersionUID = 1L;
     };
@@ -1849,5 +1855,29 @@ public class Order extends AbstractTransportable implements TextRenderable, Arti
 
     public void setPackedByPack(String packedBy) {
 	this.packedByPack = packedBy;
+    }
+
+    public BigDecimal getEstimatedTimeWall() {
+	return estimatedTimeWall;
+    }
+
+    public void setEstimatedTimeWall(BigDecimal estimatedTimeWall) {
+	this.estimatedTimeWall = estimatedTimeWall;
+    }
+
+    public BigDecimal getEstimatedTimeGavl() {
+	return estimatedTimeGavl;
+    }
+
+    public void setEstimatedTimeGavl(BigDecimal estimatedTimeGavl) {
+	this.estimatedTimeGavl = estimatedTimeGavl;
+    }
+
+    public BigDecimal getEstimatedTimePack() {
+	return estimatedTimePack;
+    }
+
+    public void setEstimatedTimePack(BigDecimal estimatedTimePack) {
+	this.estimatedTimePack = estimatedTimePack;
     }
 }

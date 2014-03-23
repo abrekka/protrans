@@ -39,6 +39,7 @@ public class ProductionOverviewView implements Viewer {
 
     private JCheckBox checkBoxFilter;
     private JButton buttonShowTakstolInfo;
+    private JButton buttonExcel;
 
     @Inject
     public ProductionOverviewView(ProductionOverviewViewHandler viewHandler) {
@@ -46,6 +47,7 @@ public class ProductionOverviewView implements Viewer {
     }
 
     private void initComponents(WindowInterface window) {
+	buttonExcel = viewHandler.getButtonExcel(window);
 	productionTable = viewHandler.getTable(window);
 	buttonClose = viewHandler.getCancelButton(window);
 	checkBoxFilter = viewHandler.getCheckBoxFilter();
@@ -75,7 +77,7 @@ public class ProductionOverviewView implements Viewer {
 	builder.add(buttonSearch, cc.xy(6, 2));
 	builder.add(checkBoxFilter, cc.xy(8, 2));
 	builder.add(scrollPane, cc.xyw(2, 4, 8));
-	builder.add(ButtonBarFactory.buildCenteredBar(buttonRefresh, buttonClose), cc.xyw(2, 6, 8));
+	builder.add(ButtonBarFactory.buildCenteredBar(buttonExcel, buttonRefresh, buttonClose), cc.xyw(2, 6, 8));
 
 	return builder.getPanel();
     }

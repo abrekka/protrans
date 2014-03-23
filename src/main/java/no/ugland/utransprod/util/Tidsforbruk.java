@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 public class Tidsforbruk {
 
     public static BigDecimal beregnTidsforbruk(Date starttid, Date slutttid) {
-	if (starttid == null || slutttid == null) {
+	if (starttid == null || slutttid == null || slutttid.before(starttid)) {
 	    return BigDecimal.ZERO;
 	}
 	Date arbeidsdagSlutt = hentArbeidsdagslutt(starttid);
