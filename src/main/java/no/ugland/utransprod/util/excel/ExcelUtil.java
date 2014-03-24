@@ -383,7 +383,7 @@ public class ExcelUtil {
 
 	// Kolonneoverskrift
 	row = sheet.createRow((short) currentRow++);
-	int columnCount = table.getColumnCount();
+	int columnCount = table.getColumnCount(false);
 	int rowCount = table.getRowCount();
 
 	// Skriver ut kolonneoverskrift
@@ -478,6 +478,68 @@ public class ExcelUtil {
 
 	// går gjennom grupperingssummer og skriver inn formler
 	setFormulas(groupResultColumn, sheet, 0, formulaCells);
+	openExcelFile(fileName, directory, wb, true);
+    }
+
+    public static void showTableDataInExcel(final String directory, final String fileName, final JLabel labelInfo, final String heading,
+	    final JXTable table, final List<Integer> numberCols, final Map<Integer, Integer> colSize, final int headFontSize, final boolean wrapText)
+	    throws ProTransException {
+	if (directory == null || directory.length() == 0) {
+	    throw new ProTransException("Katalog ikke satt");
+	}
+	String infoString = "Genererer excel-fil...rad ";
+	HSSFWorkbook wb = new HSSFWorkbook();
+	HSSFSheet sheet;
+
+	sheet = wb.createSheet("sheet");
+	int currentRow = 0;
+	HSSFRow row;
+	HSSFCell cell;
+
+	CellStyle cellStyle = new CellStyle(wb, (short) headFontSize);
+
+	// Overskrift
+	if (heading != null && heading.length() != 0) {
+	    row = sheet.createRow((short) currentRow++);
+	    createCell(row, cellStyle.getHeadingStyle(), (short) 0, heading);
+	}
+
+	// Kolonneoverskrift
+	row = sheet.createRow((short) currentRow++);
+	int columnCount = table.getColumnCount(false);
+	int rowCount = table.getRowCount();
+
+	// Skriver ut kolonneoverskrift
+	createColumnHeadings(row, cellStyle.getHeadingStyle(), table, 0, columnCount, 0);
+
+	// Data
+	int j;
+	int k;
+	int l = currentRow;
+	// Går gjennom alle rader og kolonner
+	for (j = currentRow; j < rowCount + currentRow; j++) {
+	    setLabelInfo(labelInfo, infoString, j);
+
+	    row = sheet.createRow((short) l);
+	    l++;
+
+	    // går gjennom alle kolonner for rad
+	    for (k = 0; k < columnCount; k++) {
+		if (colSize != null) {
+		    Integer columnSize = colSize.get(k);
+		    if (columnSize != null) {
+			sheet.setColumnWidth((short) k, columnSize.shortValue());
+		    }
+		}
+		cell = row.createCell((short) k);
+		// dersom celle har verdi
+		if (table.getValueAt(j - currentRow, k) != null) {
+		    setCellValue(table, numberCols, currentRow, 0, cell, j, k);
+		} else {
+		    cell.setCellValue(new HSSFRichTextString(""));
+		}
+	    }
+	}
 	openExcelFile(fileName, directory, wb, true);
     }
 
@@ -795,6 +857,19 @@ public class ExcelUtil {
 		String columnHeading = tableModel.getColumnName(i - startCell);
 		createCell(row, cellStyle, (short) (i + addColumn), columnHeading);
 	    }
+	}
+    }
+
+    private static void createColumnHeadings(final HSSFRow row, final HSSFCellStyle cellStyle, final JXTable table, final int addColumn,
+	    final int columnCount, final int startCell) {
+
+	for (int i = startCell; i < columnCount + startCell; i++) {
+	    // if (notVisibleColumns == null || !notVisibleColumns.contains(i -
+	    // startCell)) {
+	    // String columnHeading = tableModel.getColumnName(i - startCell);
+	    String columnHeading = table.getColumnName(i - startCell);
+	    createCell(row, cellStyle, (short) (i + addColumn), columnHeading);
+	    // }
 	}
     }
 

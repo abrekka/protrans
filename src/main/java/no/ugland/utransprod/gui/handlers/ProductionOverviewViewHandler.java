@@ -895,34 +895,79 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		popupMenuProduction.add(menuItemMap.get(getColumnName()));
 		return true;
 	    }
-	}
-	// ,
-	// KALKULERT_TIDSFORBRUK("Kalkulert tidsforbruk") {
-	// @Override
-	// public Class<?> getColumnClass() {
-	// return BigDecimal.class;
-	// }
-	//
-	// @Override
-	// public Object getValue(Transportable transportable, Map<String,
-	// String> statusMap,
-	// Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-	// return
-	// Tidsforbruk.beregnTidsforbruk(transportable.getActionStarted(),
-	// transportable.getProduced());
-	// }
-	//
-	// @SuppressWarnings("unchecked")
-	// @Override
-	// public boolean setMenus(Transportable transportable, Map<String,
-	// JMenuItem> menuItemMap, WindowInterface window,
-	// Map<String, AbstractProductionPackageViewHandler>
-	// productionPackageHandlers, JPopupMenu popupMenuProduction) {
-	// popupMenuProduction.add(menuItemMap.get(getColumnName()));
-	// return true;
-	// }
-	// }
-	;
+	},
+	EGENPRODUKSJON("Egenproduksjon") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getOrder().getCost("Egenproduksjon", "Kunde");
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return BigDecimal.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		return false;
+	    }
+	},
+	KOST("Kost") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getOrder().getCost("Egenproduksjon", "Intern");
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return BigDecimal.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		return false;
+	    }
+	},
+	FRAKT("Frakt") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getOrder().getCost("Frakt", "Kunde");
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return BigDecimal.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		return false;
+	    }
+	},
+	MONTERINGSUM("Monteringsum") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getOrder().getCost("Montering", "Kunde");
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return BigDecimal.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		return false;
+	    }
+	};
 
 	private String columnName;
 
@@ -1000,9 +1045,9 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	    Map<String, String> statusMap = Util.createStatusMap(transportable.getStatus());
 	    String columnName = StringUtils.upperCase(getColumnName(columnIndex)).replaceAll(" ", "_").replaceAll("\\.", "_")
 		    .replaceAll("\\%", "PROCENT");
-	    if (!Hibernate.isInitialized(transportable.getOrderLines())) {
+	    if (!Hibernate.isInitialized(transportable.getOrderLines()) || !Hibernate.isInitialized(transportable.getOrder().getOrderCosts())) {
 		((OrderManager) overviewManager).lazyLoadOrder((Order) transportable, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES,
-			LazyLoadOrderEnum.PROCENT_DONE });
+			LazyLoadOrderEnum.ORDER_COSTS, LazyLoadOrderEnum.PROCENT_DONE });
 	    }
 	    return ProductionColumn.valueOf(columnName).getValue(transportable, statusMap, statusCheckers);
 
@@ -1202,6 +1247,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	table.getColumnExt(2).setCellRenderer(tableCellRenderer);
 	// pakkliste
 	table.getColumnExt(3).setPreferredWidth(80);
+	table.getColumnExt(3).setCellRenderer(tableCellRenderer);
 
 	// vegg
 	table.getColumnExt(4).setPreferredWidth(45);
@@ -1228,6 +1274,14 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	// table.getColumnExt(14).setPreferredWidth(50);
 	// %
 	table.getColumnExt(14).setPreferredWidth(40);
+
+	table.getColumnExt(15).setCellRenderer(tableCellRenderer);
+
+	table.getColumnExt(19).setCellRenderer(tableCellRenderer);
+	table.getColumnExt(20).setCellRenderer(tableCellRenderer);
+	table.getColumnExt(21).setCellRenderer(tableCellRenderer);
+	table.getColumnExt(22).setCellRenderer(tableCellRenderer);
+	table.getColumnExt(23).setCellRenderer(tableCellRenderer);
 
 	// table.getColumnModel().getColumn(14).setCellRenderer(new
 	// TextPaneRendererCustTr());
@@ -1939,9 +1993,12 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		String fileName = "Produksjonsoversikt_" + Util.getCurrentDateAsDateTimeString() + ".xls";
 		String excelDirectory = ApplicationParamUtil.findParamByName("excel_path");
 
-		JXTable tableReport = new JXTable(new ProductionOverviewTableModel(objectList));
+		// JXTable tableReport = new JXTable(new
+		// ProductionOverviewTableModel(objectList));
 
-		ExcelUtil.showDataInExcel(excelDirectory, fileName, null, "Produksjonsoversikt", tableReport, null, null, 16, false);
+		// ExcelUtil.showDataInExcel(excelDirectory, fileName, null,
+		// "Produksjonsoversikt", table, null, null, 16, false);
+		ExcelUtil.showTableDataInExcel(excelDirectory, fileName, null, "Produksjonsoversikt", table, null, null, 16, false);
 	    } catch (ProTransException e) {
 		e.printStackTrace();
 		Util.showErrorDialog(window, "Feil", e.getMessage());
