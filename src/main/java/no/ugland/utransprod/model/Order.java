@@ -173,6 +173,8 @@ public class Order extends AbstractTransportable implements TextRenderable, Arti
 
     private BigDecimal estimatedTimePack;
 
+    private String receivedTrossDrawing;
+
     public static final Order UNKNOWN = new Order() {
 	private static final long serialVersionUID = 1L;
     };
@@ -1879,5 +1881,13 @@ public class Order extends AbstractTransportable implements TextRenderable, Arti
 
     public void setEstimatedTimePack(BigDecimal estimatedTimePack) {
 	this.estimatedTimePack = estimatedTimePack;
+    }
+
+    public String getReceivedTrossDrawing() {
+	return receivedTrossDrawing;
+    }
+
+    public void setReceivedTrossDrawing(String receivedTrossDrawing) {
+	this.receivedTrossDrawing = receivedTrossDrawing;
     }
 }

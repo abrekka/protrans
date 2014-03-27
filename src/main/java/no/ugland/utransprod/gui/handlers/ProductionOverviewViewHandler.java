@@ -91,6 +91,7 @@ import org.jdesktop.swingx.decorator.PatternFilter;
 import org.jdesktop.swingx.decorator.PatternPredicate;
 
 import com.google.inject.Inject;
+import com.google.inject.internal.Lists;
 import com.google.inject.name.Named;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
@@ -106,6 +107,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 
     private static final long serialVersionUID = 1L;
 
+    JButton buttonRefresh;
     Map<String, StatusCheckerInterface<Transportable>> statusCheckers;
 
     OrderViewHandler orderViewHandler;
@@ -139,6 +141,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
     JMenuItem menuItemDeviation;
 
     JMenuItem menuItemSetProcent;
+    private JMenuItem menuItemSetReceivedTrossDrawing;
     private JMenuItem menuItemSetEstimatedTimeWall;
     private JMenuItem menuItemSetEstimatedTimeGavl;
     private JMenuItem menuItemSetEstimatedTimePack;
@@ -266,6 +269,11 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	menuItemSetProcent.setEnabled(hasWriteAccess());
 	menuItemMap.put(ProductionColumn.PROCENT.getColumnName(), menuItemSetProcent);
 
+	menuItemSetReceivedTrossDrawing = new JMenuItem("Sett mottatt tegninger fra Jatak...");
+	menuItemSetReceivedTrossDrawing.setName("menuItemSetReceivedTrossDrawing");
+	menuItemSetReceivedTrossDrawing.setEnabled(hasWriteAccess());
+	menuItemMap.put(ProductionColumn.TEGNINGER_JATAK.getColumnName(), menuItemSetReceivedTrossDrawing);
+
 	menuItemSetEstimatedTimeWall = new JMenuItem("Sett estimert tid vegg...");
 	menuItemSetEstimatedTimeWall.setName("MenuItemSetEstimatedTimeWall");
 	menuItemSetEstimatedTimeWall.setEnabled(hasWriteAccess());
@@ -358,6 +366,68 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
     }
 
     private enum ProductionColumn {
+	PAKKLISTE("Pakkliste") {
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		if (transportable.getPacklistReady() != null) {
+		    return Util.SHORT_DATE_FORMAT.format(transportable.getPacklistReady());
+		}
+		return null;
+	    }
+
+	    @SuppressWarnings("unchecked")
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		AbstractProductionPackageViewHandler<Applyable> handler = getHandler(productionPackageHandlers, getColumnName());
+		Applyable applyable = getApplyObject(transportable, handler, window);
+		setMenuItem(transportable, menuItemMap.get(getColumnName()), "Sett pakkliste klar...", "Sett pakkliste ikke klar", handler,
+			popupMenuProduction, applyable);
+		return true;
+	    }
+	},
+	LAGET_PAKKLISTE("Laget pakkliste") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getOrder().getPacklistDoneBy();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		return false;
+	    }
+	},
+	TIDSBRUK_PAKKLISTE("Tidsbruk pakkliste") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getOrder().getPacklistDuration();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return BigDecimal.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		return false;
+	    }
+	},
 	ORDRE("Ordre") {
 	    @Override
 	    public Class<?> getColumnClass() {
@@ -368,6 +438,61 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
 		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
 		return transportable;
+	    }
+
+	    @SuppressWarnings("unchecked")
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		return true;
+	    }
+	},
+	ORDNR("Ordnr") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getOrderNr();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		return false;
+	    }
+	},
+	AVDELING("Avdeling") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getOrder().getProductArea().getProductArea();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		return false;
+	    }
+	},
+	PROD_UKE("Prod.uke") {
+	    @Override
+	    public Class<?> getColumnClass() {
+		return Integer.class;
+	    }
+
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getProductionWeek();
 	    }
 
 	    @SuppressWarnings("unchecked")
@@ -396,48 +521,105 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		return true;
 	    }
 	},
-	PROD_UKE("Prod.uke") {
-	    @Override
-	    public Class<?> getColumnClass() {
-		return Integer.class;
-	    }
-
+	ESTIMERT_TID_VEGG("Estimert tid vegg") {
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
 		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return transportable.getProductionWeek();
+		return transportable.getOrder().getEstimatedTimeWall();
 	    }
 
-	    @SuppressWarnings("unchecked")
+	    @Override
+	    public Class<?> getColumnClass() {
+		return BigDecimal.class;
+	    }
+
 	    @Override
 	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		popupMenuProduction.add(menuItemMap.get(getColumnName()));
 		return true;
 	    }
 	},
-	PAKKLISTE("Pakkliste") {
-	    @Override
-	    public Class<?> getColumnClass() {
-		return String.class;
-	    }
-
+	TID_VEGG("Tid vegg") {
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
 		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		if (transportable.getPacklistReady() != null) {
-		    return Util.SHORT_DATE_FORMAT.format(transportable.getPacklistReady());
-		}
-		return null;
+		Order order = transportable.getOrder();
+
+		OrderLine vegg = order.getOrderLine("Vegg");
+		return vegg.getRealProductionHours() == null ? Tidsforbruk.beregnTidsforbruk(vegg.getActionStarted(), vegg.getProduced()) : vegg
+			.getRealProductionHours();
 	    }
 
-	    @SuppressWarnings("unchecked")
+	    @Override
+	    public Class<?> getColumnClass() {
+		return BigDecimal.class;
+	    }
+
 	    @Override
 	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		AbstractProductionPackageViewHandler<Applyable> handler = getHandler(productionPackageHandlers, getColumnName());
-		Applyable applyable = getApplyObject(transportable, handler, window);
-		setMenuItem(transportable, menuItemMap.get(getColumnName()), "Sett pakkliste klar...", "Sett pakkliste ikke klar", handler,
-			popupMenuProduction, applyable);
+		return false;
+	    }
+	},
+	ESTIMERT_TID_GAVL("Estimert tid gavl") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getOrder().getEstimatedTimeGavl();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return BigDecimal.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		popupMenuProduction.add(menuItemMap.get(getColumnName()));
+		return true;
+	    }
+	},
+	TID_GAVL("Tid gavl") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		Order order = transportable.getOrder();
+
+		OrderLine gavl = order.getOrderLine("Gavl");
+		return gavl.getRealProductionHours() == null ? Tidsforbruk.beregnTidsforbruk(gavl.getActionStarted(), gavl.getProduced()) : gavl
+			.getRealProductionHours();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return BigDecimal.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		// TODO Auto-generated method stub
+		return false;
+	    }
+	},
+	ESTIMERT_TID_PAKK("Estimert tid pakk") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getOrder().getEstimatedTimePack();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return BigDecimal.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		popupMenuProduction.add(menuItemMap.get(getColumnName()));
 		return true;
 	    }
 	},
@@ -464,7 +646,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		return true;
 	    }
 	},
-	PAKK("Pakk") {
+	GULVSPON("Gulvspon") {
 	    @Override
 	    public Class<?> getColumnClass() {
 		return String.class;
@@ -473,7 +655,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
 		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return statusMap.get(statusCheckers.get("Front").getArticleName());
+		return statusMap.get(statusCheckers.get("Gulvspon").getArticleName());
 	    }
 
 	    @SuppressWarnings("unchecked")
@@ -482,30 +664,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
 		AbstractProductionPackageViewHandler<Applyable> handler = getHandler(productionPackageHandlers, getColumnName());
 		Applyable applyable = getApplyObject(transportable, handler, window);
-		setMenuItem(transportable, menuItemMap.get(getColumnName()), "Sett front produsert", "Sett front ikke produsert", handler,
-			popupMenuProduction, applyable);
-		return true;
-	    }
-	},
-	GAVL("Gavl") {
-	    @Override
-	    public Class<?> getColumnClass() {
-		return String.class;
-	    }
-
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
-		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return statusMap.get(statusCheckers.get("Gavl").getArticleName());
-	    }
-
-	    @SuppressWarnings("unchecked")
-	    @Override
-	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
-		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		AbstractProductionPackageViewHandler<Applyable> handler = getHandler(productionPackageHandlers, getColumnName());
-		Applyable applyable = getApplyObject(transportable, handler, window);
-		setMenuItem(transportable, menuItemMap.get(getColumnName()), "Sett gavl produsert", "Sett gavl ikke produsert", handler,
+		setMenuItem(transportable, menuItemMap.get(getColumnName()), "Sett gulvspon pakket", "Sett gulvspon ikke pakket", handler,
 			popupMenuProduction, applyable);
 		return true;
 	    }
@@ -547,6 +706,54 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		return true;
 	    }
 	},
+	GAVL("Gavl") {
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return statusMap.get(statusCheckers.get("Gavl").getArticleName());
+	    }
+
+	    @SuppressWarnings("unchecked")
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		AbstractProductionPackageViewHandler<Applyable> handler = getHandler(productionPackageHandlers, getColumnName());
+		Applyable applyable = getApplyObject(transportable, handler, window);
+		setMenuItem(transportable, menuItemMap.get(getColumnName()), "Sett gavl produsert", "Sett gavl ikke produsert", handler,
+			popupMenuProduction, applyable);
+		return true;
+	    }
+	},
+
+	PAKK("Pakk") {
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return statusMap.get(statusCheckers.get("Front").getArticleName());
+	    }
+
+	    @SuppressWarnings("unchecked")
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		AbstractProductionPackageViewHandler<Applyable> handler = getHandler(productionPackageHandlers, getColumnName());
+		Applyable applyable = getApplyObject(transportable, handler, window);
+		setMenuItem(transportable, menuItemMap.get(getColumnName()), "Sett front produsert", "Sett front ikke produsert", handler,
+			popupMenuProduction, applyable);
+		return true;
+	    }
+	},
+
 	TAKSTEIN("Takstein") {
 	    @Override
 	    public Class<?> getColumnClass() {
@@ -567,73 +774,6 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		Applyable applyable = getApplyObject(transportable, handler, window);
 		setMenuItem(transportable, menuItemMap.get(getColumnName()), "Sett takstein pakket", "Sett takstein ikke pakket", handler,
 			popupMenuProduction, applyable);
-		return true;
-	    }
-	},
-	GULVSPON("Gulvspon") {
-	    @Override
-	    public Class<?> getColumnClass() {
-		return String.class;
-	    }
-
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
-		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return statusMap.get(statusCheckers.get("Gulvspon").getArticleName());
-	    }
-
-	    @SuppressWarnings("unchecked")
-	    @Override
-	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
-		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		AbstractProductionPackageViewHandler<Applyable> handler = getHandler(productionPackageHandlers, getColumnName());
-		Applyable applyable = getApplyObject(transportable, handler, window);
-		setMenuItem(transportable, menuItemMap.get(getColumnName()), "Sett gulvspon pakket", "Sett gulvspon ikke pakket", handler,
-			popupMenuProduction, applyable);
-		return true;
-	    }
-	},
-	KOMPLETT("Komplett") {
-	    @Override
-	    public Class<?> getColumnClass() {
-		return String.class;
-	    }
-
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
-		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		if (transportable.getOrderComplete() != null) {
-		    return "Ja";
-		}
-		return "Nei";
-	    }
-
-	    @SuppressWarnings("unchecked")
-	    @Override
-	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
-		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return true;
-	    }
-	},
-	KLAR("Klar") {
-	    @Override
-	    public Class<?> getColumnClass() {
-		return String.class;
-	    }
-
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
-		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		if (transportable.getOrderReady() != null) {
-		    return "Ja";
-		}
-		return "Nei";
-	    }
-
-	    @SuppressWarnings("unchecked")
-	    @Override
-	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
-		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
 		return true;
 	    }
 	},
@@ -659,47 +799,24 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		return true;
 	    }
 	},
-	PRODUKTOMRÅDE("Produktområde") {
-	    @Override
-	    public Class<?> getColumnClass() {
-		return String.class;
-	    }
-
+	EGENPRODUKSJON("Egenproduksjon") {
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
 		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return transportable.getProductAreaGroup().getProductAreaGroupName();
+		return transportable.getOrder().getCost("Egenproduksjon", "Kunde");
 	    }
 
-	    @SuppressWarnings("unchecked")
+	    @Override
+	    public Class<?> getColumnClass() {
+		return BigDecimal.class;
+	    }
+
 	    @Override
 	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return true;
+		return false;
 	    }
 	},
-	// REST("Rest") {
-	// @Override
-	// public Class<?> getColumnClass() {
-	// return Transportable.class;
-	// }
-	//
-	// @Override
-	// public Object getValue(Transportable transportable, Map<String,
-	// String> statusMap,
-	// Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-	// return transportable;
-	// }
-	//
-	// @SuppressWarnings("unchecked")
-	// @Override
-	// public boolean setMenus(Transportable transportable, Map<String,
-	// JMenuItem> menuItemMap, WindowInterface window,
-	// Map<String, AbstractProductionPackageViewHandler>
-	// productionPackageHandlers, JPopupMenu popupMenuProduction) {
-	// return true;
-	// }
-	// },
 	PROCENT("%") {
 	    @Override
 	    public Class<?> getColumnClass() {
@@ -718,200 +835,6 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
 		popupMenuProduction.add(menuItemMap.get(getColumnName()));
 		return true;
-	    }
-	},
-	TIDSBRUK_PAKKLISTE("Tidsbruk pakkliste") {
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
-		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return transportable.getOrder().getPacklistDuration();
-	    }
-
-	    @Override
-	    public Class<?> getColumnClass() {
-		return BigDecimal.class;
-	    }
-
-	    @Override
-	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
-		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		// TODO Auto-generated method stub
-		return false;
-	    }
-	},
-	LAGET_PAKKLISTE("Laget pakkliste") {
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
-		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return transportable.getOrder().getPacklistDoneBy();
-	    }
-
-	    @Override
-	    public Class<?> getColumnClass() {
-		return String.class;
-	    }
-
-	    @Override
-	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
-		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		// TODO Auto-generated method stub
-		return false;
-	    }
-	},
-	ORDNR("Ordnr") {
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
-		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return transportable.getOrderNr();
-	    }
-
-	    @Override
-	    public Class<?> getColumnClass() {
-		return String.class;
-	    }
-
-	    @Override
-	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
-		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return false;
-	    }
-	},
-	AVDELING("Avdeling") {
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
-		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return transportable.getOrder().getProductArea().getProductArea();
-	    }
-
-	    @Override
-	    public Class<?> getColumnClass() {
-		return String.class;
-	    }
-
-	    @Override
-	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
-		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return false;
-	    }
-	},
-	TID_VEGG("Tid vegg") {
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
-		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		Order order = transportable.getOrder();
-
-		OrderLine vegg = order.getOrderLine("Vegg");
-		return vegg.getRealProductionHours() == null ? Tidsforbruk.beregnTidsforbruk(vegg.getActionStarted(), vegg.getProduced()) : vegg
-			.getRealProductionHours();
-	    }
-
-	    @Override
-	    public Class<?> getColumnClass() {
-		return BigDecimal.class;
-	    }
-
-	    @Override
-	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
-		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return false;
-	    }
-	},
-	TID_GAVL("Tid gavl") {
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
-		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		Order order = transportable.getOrder();
-
-		OrderLine gavl = order.getOrderLine("Gavl");
-		return gavl.getRealProductionHours() == null ? Tidsforbruk.beregnTidsforbruk(gavl.getActionStarted(), gavl.getProduced()) : gavl
-			.getRealProductionHours();
-	    }
-
-	    @Override
-	    public Class<?> getColumnClass() {
-		return BigDecimal.class;
-	    }
-
-	    @Override
-	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
-		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		// TODO Auto-generated method stub
-		return false;
-	    }
-	},
-	ESTIMERT_TID_VEGG("Estimert tid vegg") {
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
-		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return transportable.getOrder().getEstimatedTimeWall();
-	    }
-
-	    @Override
-	    public Class<?> getColumnClass() {
-		return BigDecimal.class;
-	    }
-
-	    @Override
-	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
-		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		popupMenuProduction.add(menuItemMap.get(getColumnName()));
-		return true;
-	    }
-	},
-	ESTIMERT_TID_GAVL("Estimert tid gavl") {
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
-		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return transportable.getOrder().getEstimatedTimeGavl();
-	    }
-
-	    @Override
-	    public Class<?> getColumnClass() {
-		return BigDecimal.class;
-	    }
-
-	    @Override
-	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
-		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		popupMenuProduction.add(menuItemMap.get(getColumnName()));
-		return true;
-	    }
-	},
-	ESTIMERT_TID_PAKK("Estimert tid pakk") {
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
-		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return transportable.getOrder().getEstimatedTimePack();
-	    }
-
-	    @Override
-	    public Class<?> getColumnClass() {
-		return BigDecimal.class;
-	    }
-
-	    @Override
-	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
-		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		popupMenuProduction.add(menuItemMap.get(getColumnName()));
-		return true;
-	    }
-	},
-	EGENPRODUKSJON("Egenproduksjon") {
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
-		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return transportable.getOrder().getCost("Egenproduksjon", "Kunde");
-	    }
-
-	    @Override
-	    public Class<?> getColumnClass() {
-		return BigDecimal.class;
-	    }
-
-	    @Override
-	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
-		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return false;
 	    }
 	},
 	KOST("Kost") {
@@ -967,7 +890,114 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
 		return false;
 	    }
-	};
+	},
+	TEGNINGER_JATAK("Tegninger Jatak") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getOrder().getReceivedTrossDrawing();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		popupMenuProduction.add(menuItemMap.get(getColumnName()));
+		return true;
+	    }
+	},
+	KOMPLETT("Komplett") {
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		if (transportable.getOrderComplete() != null) {
+		    return "Ja";
+		}
+		return "Nei";
+	    }
+
+	    @SuppressWarnings("unchecked")
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		return true;
+	    }
+	},
+	KLAR("Klar") {
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		if (transportable.getOrderReady() != null) {
+		    return "Ja";
+		}
+		return "Nei";
+	    }
+
+	    @SuppressWarnings("unchecked")
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		return true;
+	    }
+	},
+
+	PRODUKTOMRÅDE("Produktområde") {
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getProductAreaGroup().getProductAreaGroupName();
+	    }
+
+	    @SuppressWarnings("unchecked")
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		return true;
+	    }
+	},
+	// REST("Rest") {
+	// @Override
+	// public Class<?> getColumnClass() {
+	// return Transportable.class;
+	// }
+	//
+	// @Override
+	// public Object getValue(Transportable transportable, Map<String,
+	// String> statusMap,
+	// Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+	// return transportable;
+	// }
+	//
+	// @SuppressWarnings("unchecked")
+	// @Override
+	// public boolean setMenus(Transportable transportable, Map<String,
+	// JMenuItem> menuItemMap, WindowInterface window,
+	// Map<String, AbstractProductionPackageViewHandler>
+	// productionPackageHandlers, JPopupMenu popupMenuProduction) {
+	// return true;
+	// }
+	// },
+
+	;
 
 	private String columnName;
 
@@ -1185,10 +1215,12 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
     }
 
     public JButton getButtonRefresh(WindowInterface window) {
-	JButton button = new RefreshButton(this, window);
-	button.setName("ButtonRefresh");
-	setupMenuListeners(window);
-	return button;
+	if (buttonRefresh == null) {
+	    buttonRefresh = new RefreshButton(this, window);
+	    buttonRefresh.setName("ButtonRefresh");
+	    setupMenuListeners(window);
+	}
+	return buttonRefresh;
     }
 
     public JButton getButtonSearch(WindowInterface window) {
@@ -1215,8 +1247,10 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	initObjects();
 	initOrders(objectList, window);
 
-	ColorHighlighter readyHighlighter = new ColorHighlighter(new PatternPredicate("Ja", 10), ColorEnum.GREEN.getColor(), null);
-	ColorHighlighter startedPackingHighlighter = new ColorHighlighter(new PatternPredicate("Ja", 11), ColorEnum.YELLOW.getColor(), null);
+	ColorHighlighter readyHighlighter = new ColorHighlighter(new PatternPredicate("Ja", ProductionColumn.KOMPLETT.ordinal()),
+		ColorEnum.GREEN.getColor(), null);
+	ColorHighlighter startedPackingHighlighter = new ColorHighlighter(new PatternPredicate("Ja", ProductionColumn.KLAR.ordinal()),
+		ColorEnum.YELLOW.getColor(), null);
 
 	table = new JXTable();
 	productionOverviewTableModel = new ProductionOverviewTableModel(objectList);
@@ -1230,66 +1264,86 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 
 	table.setRowHeight(40);
 
-	table.getColumnModel().getColumn(0).setCellRenderer(new TextPaneRendererTransport());
-
 	table.addHighlighter(HighlighterFactory.createAlternateStriping());
 	table.addHighlighter(startedPackingHighlighter);
 	table.addHighlighter(readyHighlighter);
 
 	// ordre
-	table.getColumnExt(0).setPreferredWidth(220);
-	// transport
-	table.getColumnExt(1).setPreferredWidth(150);
-	// prod uke
-	table.getColumnExt(2).setPreferredWidth(70);
+	table.getColumnExt(ProductionColumn.ORDRE.ordinal()).setPreferredWidth(220);
+	table.getColumnModel().getColumn(ProductionColumn.ORDRE.ordinal()).setCellRenderer(new TextPaneRendererTransport());
+
 	DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
 	tableCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-	table.getColumnExt(2).setCellRenderer(tableCellRenderer);
 	// pakkliste
-	table.getColumnExt(3).setPreferredWidth(80);
-	table.getColumnExt(3).setCellRenderer(tableCellRenderer);
+	table.getColumnExt(ProductionColumn.PAKKLISTE.ordinal()).setPreferredWidth(80);
+	table.getColumnExt(ProductionColumn.PAKKLISTE.ordinal()).setCellRenderer(tableCellRenderer);
+
+	table.getColumnExt(ProductionColumn.TIDSBRUK_PAKKLISTE.ordinal()).setPreferredWidth(110);
+	table.getColumnExt(ProductionColumn.TIDSBRUK_PAKKLISTE.ordinal()).setCellRenderer(tableCellRenderer);
+
+	table.getColumnExt(ProductionColumn.LAGET_PAKKLISTE.ordinal()).setPreferredWidth(110);
+	table.getColumnExt(ProductionColumn.LAGET_PAKKLISTE.ordinal()).setCellRenderer(tableCellRenderer);
+
+	table.getColumnExt(ProductionColumn.ORDNR.ordinal()).setPreferredWidth(70);
+
+	table.getColumnExt(ProductionColumn.AVDELING.ordinal()).setPreferredWidth(100);
+
+	table.getColumnExt(ProductionColumn.PROD_UKE.ordinal()).setCellRenderer(tableCellRenderer);
+
+	// transport
+	table.getColumnExt(ProductionColumn.TRANSPORT.ordinal()).setPreferredWidth(150);
+
+	table.getColumnExt(ProductionColumn.ESTIMERT_TID_VEGG.ordinal()).setPreferredWidth(100);
+	table.getColumnExt(ProductionColumn.ESTIMERT_TID_VEGG.ordinal()).setCellRenderer(tableCellRenderer);
+
+	table.getColumnExt(ProductionColumn.TID_VEGG.ordinal()).setCellRenderer(tableCellRenderer);
+
+	table.getColumnExt(ProductionColumn.ESTIMERT_TID_GAVL.ordinal()).setPreferredWidth(100);
+	table.getColumnExt(ProductionColumn.ESTIMERT_TID_GAVL.ordinal()).setCellRenderer(tableCellRenderer);
+
+	table.getColumnExt(ProductionColumn.TID_GAVL.ordinal()).setCellRenderer(tableCellRenderer);
+
+	table.getColumnExt(ProductionColumn.ESTIMERT_TID_PAKK.ordinal()).setPreferredWidth(100);
+	table.getColumnExt(ProductionColumn.ESTIMERT_TID_PAKK.ordinal()).setCellRenderer(tableCellRenderer);
 
 	// vegg
-	table.getColumnExt(4).setPreferredWidth(45);
-	table.getColumnExt(4).setCellRenderer(tableCellRenderer);
+	table.getColumnExt(ProductionColumn.VEGG.ordinal()).setPreferredWidth(45);
+	table.getColumnExt(ProductionColumn.VEGG.ordinal()).setCellRenderer(tableCellRenderer);
 	// pakk
-	table.getColumnExt(5).setPreferredWidth(45);
-	table.getColumnExt(5).setCellRenderer(tableCellRenderer);
+	table.getColumnExt(ProductionColumn.PAKK.ordinal()).setPreferredWidth(45);
+	table.getColumnExt(ProductionColumn.PAKK.ordinal()).setCellRenderer(tableCellRenderer);
 	// gavl
-	table.getColumnExt(6).setPreferredWidth(45);
-	table.getColumnExt(6).setCellRenderer(tableCellRenderer);
+	table.getColumnExt(ProductionColumn.GAVL.ordinal()).setPreferredWidth(45);
+	table.getColumnExt(ProductionColumn.GAVL.ordinal()).setCellRenderer(tableCellRenderer);
 	// takstol
-	table.getColumnExt(7).setPreferredWidth(60);
-	table.getColumnExt(7).setCellRenderer(tableCellRenderer);
+	table.getColumnExt(ProductionColumn.TAKSTOL.ordinal()).setPreferredWidth(60);
+	table.getColumnExt(ProductionColumn.TAKSTOL.ordinal()).setCellRenderer(tableCellRenderer);
 	// //takstein
-	table.getColumnExt(8).setPreferredWidth(60);
-	table.getColumnExt(8).setCellRenderer(tableCellRenderer);
+	table.getColumnExt(ProductionColumn.TAKSTEIN.ordinal()).setPreferredWidth(60);
+	table.getColumnExt(ProductionColumn.TAKSTEIN.ordinal()).setCellRenderer(tableCellRenderer);
 	// gulvspon
-	table.getColumnExt(9).setPreferredWidth(70);
-	table.getColumnExt(9).setCellRenderer(tableCellRenderer);
+	table.getColumnExt(ProductionColumn.GULVSPON.ordinal()).setPreferredWidth(70);
+	table.getColumnExt(ProductionColumn.GULVSPON.ordinal()).setCellRenderer(tableCellRenderer);
 	// montering
-	table.getColumnExt(12).setPreferredWidth(70);
-	table.getColumnExt(12).setCellRenderer(tableCellRenderer);
+	table.getColumnExt(ProductionColumn.MONTERING.ordinal()).setPreferredWidth(70);
+	table.getColumnExt(ProductionColumn.MONTERING.ordinal()).setCellRenderer(tableCellRenderer);
 	// rest
 	// table.getColumnExt(14).setPreferredWidth(50);
 	// %
-	table.getColumnExt(14).setPreferredWidth(40);
+	table.getColumnExt(ProductionColumn.PROCENT.ordinal()).setPreferredWidth(40);
+	table.getColumnModel().getColumn(ProductionColumn.PROCENT.ordinal()).setCellRenderer(new TextPaneRendererProcentDone());
 
-	table.getColumnExt(15).setCellRenderer(tableCellRenderer);
-
-	table.getColumnExt(19).setCellRenderer(tableCellRenderer);
-	table.getColumnExt(20).setCellRenderer(tableCellRenderer);
-	table.getColumnExt(21).setCellRenderer(tableCellRenderer);
-	table.getColumnExt(22).setCellRenderer(tableCellRenderer);
-	table.getColumnExt(23).setCellRenderer(tableCellRenderer);
+	table.getColumnExt(ProductionColumn.TEGNINGER_JATAK.ordinal()).setPreferredWidth(100);
 
 	// table.getColumnModel().getColumn(14).setCellRenderer(new
 	// TextPaneRendererCustTr());
-	table.getColumnModel().getColumn(14).setCellRenderer(new TextPaneRendererProcentDone());
 
-	table.getColumnExt(10).setVisible(false);
-	table.getColumnExt(10).setVisible(false);
-	table.getColumnExt(11).setVisible(false);
+	// table.getColumnExt(ProductionColumn.KOMPLETT.ordinal()).setVisible(false);
+	table.getColumnExt(ProductionColumn.PRODUKTOMRÅDE.ordinal()).setVisible(false);
+	table.getColumnExt(ProductionColumn.KLAR.ordinal()).setVisible(false);
+	table.getColumnExt(ProductionColumn.KOMPLETT.ordinal()).setVisible(false);
+	// table.getColumnExt(10).setVisible(false);
+	// table.getColumnExt(11).setVisible(false);
 	// table.getColumnExt(10).setVisible(false);
 	// table.getColumnExt(11).setVisible(false);
 	//
@@ -1317,6 +1371,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	menuItemShowContent.addActionListener(new MenuItemListenerShowContent(window));
 	menuItemDeviation.addActionListener(new MenuItemListenerDeviation(window));
 	menuItemSetProcent.addActionListener(new MenuItemListenerSetProcent(window));
+	menuItemSetReceivedTrossDrawing.addActionListener(new MenuItemListenerSetReceivedTrossDrawing(window));
 	menuItemSetEstimatedTimeWall.addActionListener(new MenuItemListenerSetEstimatedTimeWall(window));
 	menuItemSetEstimatedTimeGavl.addActionListener(new MenuItemListenerSetEstimatedTimeGavl(window));
 	menuItemSetEstimatedTimePack.addActionListener(new MenuItemListenerSetEstimatedTimePack(window));
@@ -1622,6 +1677,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	public void actionPerformed(ActionEvent actionEvent) {
 	    if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemSetProcent.getText())) {
 		Transportable transportable = null;
+
 		if (objectSelectionList.getSelection() != null) {
 		    int index = table.convertRowIndexToModel(objectSelectionList.getSelectionIndex());
 		    transportable = (Transportable) objectSelectionList.getElementAt(index);
@@ -1629,6 +1685,41 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 
 		if (transportable != null && transportable instanceof Order) {
 		    setProcentForOrder((Order) transportable, window);
+		}
+
+	    }
+	}
+
+    }
+
+    class MenuItemListenerSetReceivedTrossDrawing implements ActionListener {
+	private WindowInterface window;
+
+	public MenuItemListenerSetReceivedTrossDrawing(WindowInterface aWindow) {
+	    window = aWindow;
+
+	}
+
+	public void actionPerformed(ActionEvent actionEvent) {
+	    if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemSetReceivedTrossDrawing.getText())) {
+		Transportable transportable = null;
+
+		if (objectSelectionList.getSelection() != null) {
+		    int index = table.convertRowIndexToModel(objectSelectionList.getSelectionIndex());
+		    transportable = (Transportable) objectSelectionList.getElementAt(index);
+		}
+
+		if (transportable != null && transportable instanceof Order) {
+		    Order order = (Order) transportable;
+		    String jaNei = (String) Util.showOptionsDialogCombo(window, Lists.newArrayList("Ja", "Nei"), "Mottatt", true, "Ja");
+		    order.setReceivedTrossDrawing(jaNei);
+		    try {
+			((OrderManager) overviewManager).saveOrder(order);
+		    } catch (ProTransException e) {
+			Util.showErrorDialog(window, "Feil", e.getMessage());
+			e.printStackTrace();
+		    }
+		    // setProcentForOrder((Order) transportable, window);
 		}
 
 	    }
@@ -1911,14 +2002,15 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	List<Filter> filterList = new ArrayList<Filter>();
 
 	if (!checkBoxFilter.isSelected()) {
-	    PatternFilter filterDone = new PatternFilter("Nei", Pattern.CASE_INSENSITIVE, 10);
+	    PatternFilter filterDone = new PatternFilter("Nei", Pattern.CASE_INSENSITIVE, ProductionColumn.KOMPLETT.ordinal());
 	    filterList.add(filterDone);
 	}
 	if (group != ProductAreaGroup.UNKNOWN) {
 	    if (!group.getProductAreaGroupName().equalsIgnoreCase("Takstol")) {
-		filterList.add(new PatternFilter(group.getProductAreaGroupName(), Pattern.CASE_INSENSITIVE, 13));
+		filterList
+			.add(new PatternFilter(group.getProductAreaGroupName(), Pattern.CASE_INSENSITIVE, ProductionColumn.PRODUKTOMRÅDE.ordinal()));
 	    } else {
-		filterList.add(new PatternFilter(".*e.*", Pattern.CASE_INSENSITIVE, 7));
+		filterList.add(new PatternFilter(".*e.*", Pattern.CASE_INSENSITIVE, ProductionColumn.TAKSTOL.ordinal()));
 	    }
 
 	}

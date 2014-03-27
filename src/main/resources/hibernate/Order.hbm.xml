@@ -19,6 +19,12 @@
 		unsaved-value="undefined"
 	/>
 	<property
+        name="receivedTrossDrawing"
+        type="java.lang.String"
+        column="RECEIVED_TROSS_DRAWING"
+        length="3"
+    />
+	<property
         name="estimatedTimePack"
         type="java.math.BigDecimal"
         column="ESTIMATED_TIME_PACK"
