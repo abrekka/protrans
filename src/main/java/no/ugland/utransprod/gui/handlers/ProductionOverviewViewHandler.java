@@ -544,11 +544,14 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
 		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		Order order = transportable.getOrder();
+		if (Order.class.isInstance(transportable)) {
+		    Order order = transportable.getOrder();
 
-		OrderLine vegg = order.getOrderLine("Vegg");
-		return vegg.getRealProductionHours() == null ? Tidsforbruk.beregnTidsforbruk(vegg.getActionStarted(), vegg.getProduced()) : vegg
-			.getRealProductionHours();
+		    OrderLine vegg = order.getOrderLine("Vegg");
+		    return vegg.getRealProductionHours() == null ? Tidsforbruk.beregnTidsforbruk(vegg.getActionStarted(), vegg.getProduced()) : vegg
+			    .getRealProductionHours();
+		}
+		return null;
 	    }
 
 	    @Override
@@ -585,11 +588,14 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
 		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		Order order = transportable.getOrder();
+		if (Order.class.isInstance(transportable)) {
+		    Order order = transportable.getOrder();
 
-		OrderLine gavl = order.getOrderLine("Gavl");
-		return gavl.getRealProductionHours() == null ? Tidsforbruk.beregnTidsforbruk(gavl.getActionStarted(), gavl.getProduced()) : gavl
-			.getRealProductionHours();
+		    OrderLine gavl = order.getOrderLine("Gavl");
+		    return gavl.getRealProductionHours() == null ? Tidsforbruk.beregnTidsforbruk(gavl.getActionStarted(), gavl.getProduced()) : gavl
+			    .getRealProductionHours();
+		}
+		return null;
 	    }
 
 	    @Override
@@ -803,7 +809,10 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
 		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return transportable.getOrder().getCost("Egenproduksjon", "Kunde");
+		if (Order.class.isInstance(transportable)) {
+		    return transportable.getOrder().getCost("Egenproduksjon", "Kunde");
+		}
+		return null;
 	    }
 
 	    @Override
@@ -841,7 +850,10 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
 		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return transportable.getOrder().getCost("Egenproduksjon", "Intern");
+		if (Order.class.isInstance(transportable)) {
+		    return transportable.getOrder().getCost("Egenproduksjon", "Intern");
+		}
+		return null;
 	    }
 
 	    @Override
@@ -859,7 +871,10 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
 		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return transportable.getOrder().getCost("Frakt", "Kunde");
+		if (Order.class.isInstance(transportable)) {
+		    return transportable.getOrder().getCost("Frakt", "Kunde");
+		}
+		return null;
 	    }
 
 	    @Override
@@ -877,7 +892,10 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
 		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return transportable.getOrder().getCost("Montering", "Kunde");
+		if (Order.class.isInstance(transportable)) {
+		    return transportable.getOrder().getCost("Montering", "Kunde");
+		}
+		return null;
 	    }
 
 	    @Override
@@ -1076,8 +1094,14 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	    String columnName = StringUtils.upperCase(getColumnName(columnIndex)).replaceAll(" ", "_").replaceAll("\\.", "_")
 		    .replaceAll("\\%", "PROCENT");
 	    if (!Hibernate.isInitialized(transportable.getOrderLines()) || !Hibernate.isInitialized(transportable.getOrder().getOrderCosts())) {
-		((OrderManager) overviewManager).lazyLoadOrder((Order) transportable, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES,
-			LazyLoadOrderEnum.ORDER_COSTS, LazyLoadOrderEnum.PROCENT_DONE });
+		if (Order.class.isInstance(transportable)) {
+		    ((OrderManager) overviewManager).lazyLoadOrder((Order) transportable, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES,
+			    LazyLoadOrderEnum.ORDER_COSTS, LazyLoadOrderEnum.PROCENT_DONE });
+		} else {
+		    PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil.getBean("postShipmentManager");
+		    postShipmentManager.lazyLoad((PostShipment) transportable,
+			    new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_LINES });
+		}
 	    }
 	    return ProductionColumn.valueOf(columnName).getValue(transportable, statusMap, statusCheckers);
 
