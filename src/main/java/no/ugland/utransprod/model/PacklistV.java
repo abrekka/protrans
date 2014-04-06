@@ -63,6 +63,8 @@ public class PacklistV extends BaseObject implements Comparable<PacklistV>, Text
     private BigDecimal packlistDuration;
     private String packlistDoneBy;
 
+    private Integer productionWeek;
+
     public PacklistV() {
 	super();
     }
@@ -477,5 +479,18 @@ public class PacklistV extends BaseObject implements Comparable<PacklistV>, Text
 
     public void setPacklistDuration(BigDecimal packlistDuration) {
 	this.packlistDuration = packlistDuration;
+    }
+
+    public Integer getProductionWeek() {
+	return productionWeek;
+    }
+
+    public void setProductionWeek(Integer productionWeek) {
+	this.productionWeek = productionWeek;
+    }
+
+    public Date getActionStarted() {
+	// TODO Auto-generated method stub
+	return null;
     }
 }

@@ -58,4 +58,8 @@ public class OrdlnManagerImpl implements OrdlnManager {
 	return dao.findByOrdNoAndLnNo(ordNo, lnNo);
     }
 
+    public Ord findByOrdNo(Integer ordNo) {
+	return dao.findByOrdNo(ordNo);
+    }
+
 }

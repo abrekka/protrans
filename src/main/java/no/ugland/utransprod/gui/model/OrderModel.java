@@ -151,6 +151,7 @@ public class OrderModel extends AbstractOrderModel<Order, OrderModel> {
      * 
      */
     public static final String PROPERTY_DELIVERY_WEEK = "deliveryWeek";
+    public static final String PROPERTY_PRODUCTION_WEEK = "productionWeek";
 
     public static final String PROPERTY_PACKLIST_READY = "packlistReady";
 
@@ -1172,6 +1173,19 @@ public class OrderModel extends AbstractOrderModel<Order, OrderModel> {
 	firePropertyChange(PROPERTY_DELIVERY_WEEK, oldWeek, deliveryWeek);
     }
 
+    public Integer getProductionWeek() {
+	return object.getProductionWeek();
+    }
+
+    /**
+     * @param deliveryWeek
+     */
+    public void setProductionWeek(Integer productionWeek) {
+	Integer oldWeek = getProductionWeek();
+	object.setProductionWeek(productionWeek);
+	firePropertyChange(PROPERTY_PRODUCTION_WEEK, oldWeek, productionWeek);
+    }
+
     /**
      * @return telefonnummer
      */
@@ -1425,6 +1439,7 @@ public class OrderModel extends AbstractOrderModel<Order, OrderModel> {
 	orderModel.setPackageStarted((Date) presentationModel.getBufferedValue(PROPERTY_PACKAGE_STARTED));
 	orderModel.setAgreementDate((Date) presentationModel.getBufferedValue(PROPERTY_AGREEMENT_DATE));
 	orderModel.setDeliveryWeek((Integer) presentationModel.getBufferedValue(PROPERTY_DELIVERY_WEEK));
+	orderModel.setProductionWeek((Integer) presentationModel.getBufferedValue(PROPERTY_PRODUCTION_WEEK));
 	orderModel.setTelephoneNr((String) presentationModel.getBufferedValue(PROPERTY_TELEPHONE_NR));
 	orderModel.setPacklistReady((Date) presentationModel.getBufferedValue(PROPERTY_PACKLIST_READY));
 	orderModel.setPackedBy((String) presentationModel.getBufferedValue(PROPERTY_PACKED_BY));
@@ -1480,6 +1495,7 @@ public class OrderModel extends AbstractOrderModel<Order, OrderModel> {
 	presentationModel.getBufferedModel(PROPERTY_PACKAGE_STARTED).addValueChangeListener(listener);
 	presentationModel.getBufferedModel(PROPERTY_AGREEMENT_DATE).addValueChangeListener(listener);
 	presentationModel.getBufferedModel(PROPERTY_DELIVERY_WEEK).addValueChangeListener(listener);
+	presentationModel.getBufferedModel(PROPERTY_PRODUCTION_WEEK).addValueChangeListener(listener);
 	presentationModel.getBufferedModel(PROPERTY_TELEPHONE_NR).addValueChangeListener(listener);
 	presentationModel.getBufferedModel(PROPERTY_PACKLIST_READY).addValueChangeListener(listener);
 	presentationModel.getBufferedModel(PROPERTY_PACKED_BY).addValueChangeListener(listener);

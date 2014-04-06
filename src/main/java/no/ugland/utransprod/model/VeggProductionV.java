@@ -21,6 +21,7 @@ public class VeggProductionV extends Production implements TextRenderable, Produ
     private BigDecimal realProductionHours;
 
     private Integer productionWeek;
+    private String doneBy;
 
     public VeggProductionV() {
 	super();
@@ -99,5 +100,13 @@ public class VeggProductionV extends Production implements TextRenderable, Produ
 
     public void setProductionWeek(Integer productionWeek) {
 	this.productionWeek = productionWeek;
+    }
+
+    public String getDoneBy() {
+	return doneBy;
+    }
+
+    public void setDoneBy(String doneBy) {
+	this.doneBy = doneBy;
     }
 }

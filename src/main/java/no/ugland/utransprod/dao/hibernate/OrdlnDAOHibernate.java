@@ -236,4 +236,16 @@ public class OrdlnDAOHibernate extends BaseDAOHibernate<Ordln> implements OrdlnD
 	});
     }
 
+    public Ord findByOrdNo(final Integer ordNo) {
+	return (Ord) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    @SuppressWarnings("unchecked")
+	    public Object doInHibernate(Session session) {
+		List<Ord> list = session.createCriteria(Ord.class).add(Restrictions.eq("ordno", ordNo)).list();
+
+		return list.size() == 1 ? list.get(0) : null;
+	    }
+	});
+    }
+
 }

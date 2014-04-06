@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 
 import no.ugland.utransprod.gui.handlers.MainPackageViewHandler;
 import no.ugland.utransprod.util.InternalFrameBuilder;
@@ -17,6 +18,7 @@ import no.ugland.utransprod.util.InternalFrameBuilder;
 import org.jdesktop.swingx.JXTable;
 
 import com.jgoodies.forms.builder.PanelBuilder;
+import com.jgoodies.forms.debug.FormDebugPanel;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -147,7 +149,7 @@ public class MainPackageView implements Viewer {
     }
 
     private JPanel buildOrderPanel() {
-	FormLayout layout = new FormLayout("200dlu", "p,3dlu,150dlu:grow");
+	FormLayout layout = new FormLayout("fill:200dlu:grow", "p,3dlu,150dlu:grow");
 	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),
 	// layout);
 	PanelBuilder builder = new PanelBuilder(layout);
@@ -159,7 +161,7 @@ public class MainPackageView implements Viewer {
     }
 
     private JPanel buildPostShipmentPanel() {
-	FormLayout layout = new FormLayout("200dlu", "p,3dlu,150dlu:grow");
+	FormLayout layout = new FormLayout("fill:200dlu:grow", "p,3dlu,150dlu:grow");
 	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),
 	// layout);
 	PanelBuilder builder = new PanelBuilder(layout);
@@ -200,7 +202,7 @@ public class MainPackageView implements Viewer {
     }
 
     private JPanel buildOrderLinePanel() {
-	FormLayout layout = new FormLayout("p", "p,3dlu,fill:200dlu:grow");
+	FormLayout layout = new FormLayout("fill:p:grow", "p,3dlu,fill:200dlu:grow");
 	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),
 	// layout);
 	PanelBuilder builder = new PanelBuilder(layout);
@@ -213,7 +215,7 @@ public class MainPackageView implements Viewer {
     }
 
     private JPanel buildOrderLineAndCommentPanel() {
-	FormLayout layout = new FormLayout("p", "fill:p:grow,3dlu,p");
+	FormLayout layout = new FormLayout("fill:250dlu:grow", "fill:p:grow,3dlu,p");
 	// FormLayout layout = new FormLayout("fill:p", "fill:p,3dlu,p");
 	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),
 	// layout);
@@ -226,19 +228,52 @@ public class MainPackageView implements Viewer {
 	return builder.getPanel();
     }
 
-    /**
-     * Bygger vinduspanel
-     * 
-     * @param window
-     * @return panel
-     */
-    public JPanel buildPanel(WindowInterface window) {
+    private JPanel buildLeftPane(WindowInterface window) {
+	FormLayout layout = new FormLayout("fill:300dlu:grow", "fill:p:grow");
+	PanelBuilder builder = new PanelBuilder(layout);
+	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
+	CellConstraints cc = new CellConstraints();
+
+	JPanel leftPane = buildOrderAndPostShipmentPanel(window);
+	JPanel rightPane = buildOrderLineAndCommentPanel();
+
+	JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPane, rightPane);
+	splitPane.setOneTouchExpandable(true);
+	splitPane.setResizeWeight(0.5);
+
+	builder.add(splitPane, cc.xy(1, 1));
+
+	return builder.getPanel();
+    }
+
+    private JPanel buildOrderAndPostShipmentPanel(WindowInterface window) {
+	FormLayout layout = new FormLayout("fill:p:grow", "fill:p:grow,3dlu,fill:p:grow");
+	PanelBuilder builder = new PanelBuilder(layout);
+	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
+	CellConstraints cc = new CellConstraints();
+
+	builder.add(buildOrderPanel(), cc.xy(1, 1));
+	builder.add(buildPostShipmentPanel(), cc.xy(1, 3));
+
+	return builder.getPanel();
+    }
+
+    private JPanel buildRightPane(WindowInterface window) {
+	FormLayout layout = new FormLayout("fill:p:grow", "fill:p:grow");
+	PanelBuilder builder = new PanelBuilder(layout);
+	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
+	CellConstraints cc = new CellConstraints();
+
+	builder.add(panelColliesMain, cc.xy(1, 1));
+	return builder.getPanel();
+    }
+
+    public JPanel buildPanelold(WindowInterface window) {
 	currentWindow = window;
 	initComponents(window);
 	FormLayout layout = new FormLayout("10dlu,p,3dlu,300dlu,3dlu,fill:p:grow,10dlu", "10dlu,p,3dlu,fill:p:grow,3dlu,fill:p:grow,3dlu,p,5dlu");
-	PanelBuilder builder = new PanelBuilder(layout);
-	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),
-	// layout);
+	// PanelBuilder builder = new PanelBuilder(layout);
+	PanelBuilder builder = new PanelBuilder(new FormDebugPanel(), layout);
 	CellConstraints cc = new CellConstraints();
 
 	builder.add(buildFilterPanel(), cc.xy(2, 2));
@@ -247,11 +282,51 @@ public class MainPackageView implements Viewer {
 	builder.add(buildStatisticsPanel(), cc.xyw(4, 2, 3));
 	builder.add(buildOrderLineAndCommentPanel(), cc.xywh(4, 4, 1, 3));
 
+	// JPanel leftPane = buildLeftPane(window);
+	// JPanel rightPane = buildRightPane(window);
+	// //
+	// JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+	// leftPane, rightPane);
+	// splitPane.setOneTouchExpandable(true);
+	// splitPane.setResizeWeight(0.5);
+	//
+	// builder.add(splitPane, cc.xyw(2, 4, 5));
 	// builder.add(buildOrderlineFilterPanel(), cc.xy(6, 2));
 
 	builder.add(panelColliesMain, cc.xywh(6, 4, 1, 3));
 
 	builder.add(ButtonBarFactory.buildCenteredBar(buttonRefresh, buttonCancel), cc.xyw(2, 8, 5));
+	return builder.getPanel();
+    }
+
+    public JPanel buildPanel(WindowInterface window) {
+	currentWindow = window;
+	initComponents(window);
+	FormLayout layout = new FormLayout("10dlu,p,3dlu,fill:p:grow,10dlu", "10dlu,p,3dlu,fill:p:grow,3dlu,p,5dlu");
+	PanelBuilder builder = new PanelBuilder(layout);
+	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),
+	// layout);
+	CellConstraints cc = new CellConstraints();
+
+	builder.add(buildFilterPanel(), cc.xy(2, 2));
+	// builder.add(buildOrderPanel(), cc.xy(2, 4));
+	// builder.add(buildPostShipmentPanel(), cc.xy(2, 6));
+	builder.add(buildStatisticsPanel(), cc.xyw(4, 2, 1));
+	// builder.add(buildOrderLineAndCommentPanel(), cc.xywh(4, 4, 1, 3));
+
+	JPanel leftPane = buildLeftPane(window);
+	JPanel rightPane = buildRightPane(window);
+	//
+	JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPane, rightPane);
+	splitPane.setOneTouchExpandable(true);
+	splitPane.setResizeWeight(0.5);
+
+	builder.add(splitPane, cc.xyw(2, 4, 3));
+	// builder.add(buildOrderlineFilterPanel(), cc.xy(6, 2));
+
+	// builder.add(panelColliesMain, cc.xywh(6, 4, 1, 3));
+
+	builder.add(ButtonBarFactory.buildCenteredBar(buttonRefresh, buttonCancel), cc.xyw(2, 6, 3));
 	return builder.getPanel();
     }
 
@@ -276,7 +351,7 @@ public class MainPackageView implements Viewer {
     private JPanel buildCommentsPanel() {
 	// FormLayout layout = new FormLayout("fill:p:grow",
 	// "p,3dlu,85dlu,3dlu,p");
-	FormLayout layout = new FormLayout("280dlu", "p,3dlu,85dlu,3dlu,p");
+	FormLayout layout = new FormLayout("fill:250dlu:grow", "p,3dlu,85dlu,3dlu,p");
 	PanelBuilder builder = new PanelBuilder(layout);
 	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),
 	// layout);

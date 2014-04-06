@@ -69,6 +69,8 @@ public class GavlProductionV extends BaseObject implements TextRenderable, Produ
 
     private Integer productionWeek;
 
+    private String doneBy;
+
     public GavlProductionV() {
 	super();
     }
@@ -518,5 +520,13 @@ public class GavlProductionV extends BaseObject implements TextRenderable, Produ
 
     public void setProductionWeek(Integer productionWeek) {
 	this.productionWeek = productionWeek;
+    }
+
+    public String getDoneBy() {
+	return doneBy;
+    }
+
+    public void setDoneBy(String doneBy) {
+	this.doneBy = doneBy;
     }
 }

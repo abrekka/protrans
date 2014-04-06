@@ -12,6 +12,12 @@
 <id name="orderId" type="java.lang.Integer" column="ORDER_ID">
         <generator class="assigned"/>
         </id>
+        <property
+        name="productionWeek"
+        type="java.lang.Integer"
+        column="PRODUCTION_WEEK"
+        length="32"
+    />
 	<property
         name="customerNr"
         type="java.lang.Integer"

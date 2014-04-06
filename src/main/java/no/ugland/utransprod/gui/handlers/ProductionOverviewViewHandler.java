@@ -56,8 +56,10 @@ import no.ugland.utransprod.gui.model.Transportable;
 import no.ugland.utransprod.model.ArticleType;
 import no.ugland.utransprod.model.CostType;
 import no.ugland.utransprod.model.CostUnit;
+import no.ugland.utransprod.model.Ord;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
+import no.ugland.utransprod.model.Ordln;
 import no.ugland.utransprod.model.PostShipment;
 import no.ugland.utransprod.model.ProcentDone;
 import no.ugland.utransprod.model.Produceable;
@@ -66,6 +68,7 @@ import no.ugland.utransprod.model.Transport;
 import no.ugland.utransprod.service.CustTrManager;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.OrderManager;
+import no.ugland.utransprod.service.OrdlnManager;
 import no.ugland.utransprod.service.PostShipmentManager;
 import no.ugland.utransprod.service.ProductAreaGroupManager;
 import no.ugland.utransprod.service.VismaFileCreator;
@@ -928,6 +931,34 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		return true;
 	    }
 	},
+	ØNSKET_LEVERING("Ønsket levering") {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+
+		if (transportable.getTakstolKjopOrd() != null) {
+		    Integer forventetLevering = transportable.getTakstolKjopOrd().getDeldt() == null ? 0 : transportable.getTakstolKjopOrd()
+			    .getDeldt();
+		    Integer bekreftetLevering = transportable.getTakstolKjopOrd().getCfdeldt() == null ? 0 : transportable.getTakstolKjopOrd()
+			    .getCfdeldt();
+
+		    return bekreftetLevering == 0 ? forventetLevering : bekreftetLevering + "(B)";
+
+		}
+		return null;
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		return false;
+	    }
+	},
 	KOMPLETT("Komplett") {
 	    @Override
 	    public Class<?> getColumnClass() {
@@ -1138,8 +1169,9 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
     }
 
     void initTransportable(Transportable transportable, WindowInterface window) {
-	PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil.getBean("postShipmentManager");
-	CustTrManager custTrManager = (CustTrManager) ModelUtil.getBean("custTrManager");
+	PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil.getBean(PostShipmentManager.MANAGER_NAME);
+	CustTrManager custTrManager = (CustTrManager) ModelUtil.getBean(CustTrManager.MANAGER_NAME);
+	OrdlnManager ordlnManager = (OrdlnManager) ModelUtil.getBean(OrdlnManager.MANAGER_NAME);
 	Set<String> checkers = statusCheckers.keySet();
 	Map<String, String> statusMap;
 
@@ -1174,6 +1206,22 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	    statusMap.put(checker.getArticleName(), status);
 
 	}
+	if (!Hibernate.isInitialized(transportable.getOrderLines())) {
+	    ((OrderManager) overviewManager).lazyLoadOrder((Order) transportable, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES,
+		    LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES, LazyLoadOrderEnum.COMMENTS,
+		    LazyLoadOrderEnum.PROCENT_DONE });
+	}
+	OrderLine takstol = transportable.getOrderLine("Takstoler");
+	if (takstol != null) {
+	    Ordln ordln = ordlnManager.findByOrdNoAndLnNo(takstol.getOrdNo(), takstol.getLnNo());
+	    if (ordln != null && ordln.getPurcno() != null) {
+		Ord ord = ordlnManager.findByOrdNo(ordln.getPurcno());
+		if (ord != null) {
+		    transportable.setTakstolKjopOrd(ord);
+		}
+	    }
+	}
+
 	transportable.setStatus(Util.statusMapToString(statusMap));
 
 	if (transportable.getComment() == null) {

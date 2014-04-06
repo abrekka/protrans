@@ -262,6 +262,19 @@ public class GavlProductionViewHandler extends ProductionViewHandler {
 	    public Class getColumnClass() {
 		return BigDecimal.class;
 	    }
+	},
+	GJORT_AV("Gjort av") {
+	    @Override
+	    public Object getValue(GavlProductionV gavlProductionV, StatusCheckerInterface<Transportable> takstolChecker,
+		    Map<String, String> statusMap, WindowInterface window, ManagerRepository managerRepository,
+		    ApplyListInterface<Produceable> applyListInterface) {
+		return gavlProductionV.getDoneBy();
+	    }
+
+	    @Override
+	    public Class getColumnClass() {
+		return String.class;
+	    }
 	};
 
 	private String columnName;

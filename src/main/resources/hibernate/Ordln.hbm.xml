@@ -28,7 +28,12 @@
         />
     </composite-id>   
 
-
+ <property
+        name="purcno"
+        type="java.lang.Integer"
+        column="PURCNO"
+        length="32"
+    />
 	 <!-- property
         name="productnr"
         type="java.lang.String"

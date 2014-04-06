@@ -192,7 +192,7 @@ public class ProductionApplyList extends AbstractApplyList<Produceable> {
 	}
     }
 
-    private void setProducableUnapplied(final OrderLine orderLine) throws ProTransException {
+    protected void setProducableUnapplied(final OrderLine orderLine) throws ProTransException {
 	orderLine.setProduced(null);
 	// orderLine.setProductionUnit(null);
 
@@ -202,7 +202,7 @@ public class ProductionApplyList extends AbstractApplyList<Produceable> {
 	}
     }
 
-    private void setProducableApplied(final OrderLine orderLine, final String aColliName) throws ProTransException {
+    protected void setProducableApplied(final OrderLine orderLine, final String aColliName) throws ProTransException {
 	// orderLine.setProduced(Util.getCurrentDate());
 	String currentColliName = aColliName != null ? aColliName : colliName;
 	if (currentColliName != null) {

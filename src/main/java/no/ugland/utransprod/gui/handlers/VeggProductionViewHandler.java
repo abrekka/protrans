@@ -115,7 +115,7 @@ public class VeggProductionViewHandler extends ProductionViewHandler {
 
 	public VeggProductionTableModel(ListModel listModel, WindowInterface aWindow) {
 	    super(listModel, new String[] { "Transport", "Ordre", "Prod. uke", "Antall", "Spesifikasjon", "Front", "Opplasting", "Produsert",
-		    "Produktområde", "Prod.enhet", "Startet", "Reell tidsforbruk" });
+		    "Produktområde", "Prod.enhet", "Startet", "Reell tidsforbruk", "Gjort av" });
 	    frontChecker = Util.getFrontChecker();
 	    window = aWindow;
 	    initStatus(listModel);
@@ -210,6 +210,8 @@ public class VeggProductionViewHandler extends ProductionViewHandler {
 	    case 11:
 		return veggProductionV.getRealProductionHours() == null ? Tidsforbruk.beregnTidsforbruk(veggProductionV.getActionStarted(),
 			veggProductionV.getProduced()) : veggProductionV.getRealProductionHours();
+	    case 12:
+		return veggProductionV.getDoneBy();
 	    default:
 		throw new IllegalStateException("Unknown column");
 	    }
@@ -233,6 +235,7 @@ public class VeggProductionViewHandler extends ProductionViewHandler {
 	    case 8:
 	    case 9:
 	    case 10:
+	    case 12:
 		return String.class;
 	    case 2:
 		return Integer.class;

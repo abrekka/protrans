@@ -96,6 +96,8 @@ public class OrderLine extends BaseObject implements Comparable<OrderLine>, IArt
 
     private BigDecimal realProductionHours;
 
+    private String doneBy;
+
     public OrderLine() {
 	super();
     }
@@ -1477,5 +1479,13 @@ public class OrderLine extends BaseObject implements Comparable<OrderLine>, IArt
     public Integer getRest() {
 	// TODO Auto-generated method stub
 	return null;
+    }
+
+    public void setDoneBy(String doneBy) {
+	this.doneBy = doneBy;
+    }
+
+    public String getDoneBy() {
+	return doneBy;
     }
 }

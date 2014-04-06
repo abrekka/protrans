@@ -17,9 +17,8 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 /**
- * View for pkklister
+ * View for pakklister
  * 
- * @author atle.brekka
  * 
  */
 public class PacklistView extends ApplyListView<PacklistV> {
@@ -40,9 +39,6 @@ public class PacklistView extends ApplyListView<PacklistV> {
 	super(aViewHandler, false);
     }
 
-    /**
-     * @see no.ugland.utransprod.gui.ApplyListView#initComponents(no.ugland.utransprod.gui.WindowInterface)
-     */
     @Override
     protected void initComponents(WindowInterface window) {
 	super.initComponents(window);
@@ -57,9 +53,6 @@ public class PacklistView extends ApplyListView<PacklistV> {
 	comboBoxProductAreaGroup = viewHandler.getComboBoxProductAreaGroup();
     }
 
-    /**
-     * @see no.ugland.utransprod.gui.ApplyListView#buildPanel(no.ugland.utransprod.gui.WindowInterface)
-     */
     @Override
     public JComponent buildPanel(WindowInterface window) {
 	initComponents(window);
@@ -85,9 +78,6 @@ public class PacklistView extends ApplyListView<PacklistV> {
 	return builder.getPanel();
     }
 
-    /**
-     * @see no.ugland.utransprod.gui.ApplyListView#buildButtons()
-     */
     @Override
     protected JPanel buildButtons() {
 	ButtonStackBuilder builder = new ButtonStackBuilder();

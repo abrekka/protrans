@@ -17,6 +17,18 @@
         <generator class="assigned"/>
         </id>
 
+<property
+        name="deldt"
+        type="java.lang.Integer"
+        column="DELDT"
+        length="10"
+    />
+    <property
+        name="cfdeldt"
+        type="java.lang.Integer"
+        column="CFDELDT"
+        length="10"
+    />
 	 <property
         name="inf6"
         type="java.lang.String"

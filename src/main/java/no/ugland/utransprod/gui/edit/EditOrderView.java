@@ -47,9 +47,8 @@ import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JYearChooser;
 
 /**
- * Klassesom håndterer editeringsvindu for ordre
+ * Klasse som håndterer editeringsvindu for ordre
  * 
- * @author atle.brekka
  */
 public class EditOrderView extends AbstractEditView<OrderModel, Order> {
     private JTextField textFieldCustomerNr;
@@ -97,6 +96,7 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
     private JTextField textFieldTelephoneNr;
 
     private JComboBox comboBoxDeliveryWeek;
+    private JComboBox comboBoxProductionWeek;
 
     private JDateChooser dateChooserPacklist;
 
@@ -115,8 +115,6 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
     private JTextField textFieldPackedBy;
 
     private JTextField textFieldGavlDone;
-
-    // private JTextField textFieldTakstolDone;
 
     private JTextField textFieldFrontDone;
 
@@ -242,6 +240,11 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 		presentationModel.getBufferedModel(OrderModel.PROPERTY_DELIVERY_WEEK)));
 	comboBoxDeliveryWeek.setName("DeliveryWeek");
 	orderViewHandler.addEditComponent(comboBoxDeliveryWeek);
+
+	comboBoxProductionWeek = new JComboBox(new ComboBoxAdapter(Util.getWeeks(),
+		presentationModel.getBufferedModel(OrderModel.PROPERTY_PRODUCTION_WEEK)));
+	comboBoxProductionWeek.setName("ProductionWeek");
+	orderViewHandler.addEditComponent(comboBoxProductionWeek);
 
 	bufferedValueModel.addValueChangeListener(new CustomerSelectionHandler());
 
@@ -396,7 +399,7 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 	    tabbedPaneSize = "p";
 	    commentPaneSize = "p";
 	}
-	layout = new FormLayout("10dlu,145dlu,3dlu,150dlu,3dlu," + tabbedPaneSize + ",10dlu", "10dlu,p,3dlu,fill:200dlu:grow,3dlu,15dlu,3dlu,"
+	layout = new FormLayout("10dlu,145dlu,3dlu,150dlu,3dlu," + tabbedPaneSize + ",10dlu", "10dlu,p,3dlu,fill:220dlu:grow,3dlu,15dlu,3dlu,"
 		+ commentPaneSize + ",5dlu:grow,p:grow,5dlu");
 	PanelBuilder builder = new PanelBuilder(layout);
 	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
@@ -507,7 +510,7 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 
     private JPanel buildCustomerOrderPanel() {
 	FormLayout layout = new FormLayout("p,3dlu,80dlu,3dlu,p,3dlu,90dlu",
-		"p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p");
+		"p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p");
 
 	PanelBuilder builder = new PanelBuilder(layout);
 	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
@@ -555,18 +558,20 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 	builder.add(dateChooserPaid, cc.xy(7, 15));
 	builder.addLabel("Produksjonsdato:", cc.xy(5, 17));
 	builder.add(productionDateChooser, cc.xy(7, 17));
+	builder.addLabel("Produksjonsuke:", cc.xy(5, 19));
+	builder.add(comboBoxProductionWeek, cc.xy(7, 19));
 	if (!search) {
-	    builder.addLabel("Registrert:", cc.xy(5, 19));
-	    builder.add(textFieldRegistered, cc.xy(7, 19));
-	    builder.addLabel("Makshøyde takstol:", cc.xy(5, 21));
-	    builder.add(textFieldMaxTrossHeight, cc.xy(7, 21));
-	    builder.addLabel("Prosjektnr:", cc.xy(1, 23));
-	    builder.add(textFieldProjectNr, cc.xy(3, 23));
-	    builder.addLabel("Prosjektnavn:", cc.xy(5, 23));
-	    builder.add(textFieldProjectName, cc.xy(7, 23));
+	    builder.addLabel("Registrert:", cc.xy(5, 21));
+	    builder.add(textFieldRegistered, cc.xy(7, 21));
+	    builder.addLabel("Makshøyde takstol:", cc.xy(5, 23));
+	    builder.add(textFieldMaxTrossHeight, cc.xy(7, 23));
+	    builder.addLabel("Prosjektnr:", cc.xy(1, 25));
+	    builder.add(textFieldProjectNr, cc.xy(3, 25));
+	    builder.addLabel("Prosjektnavn:", cc.xy(5, 25));
+	    builder.add(textFieldProjectName, cc.xy(7, 25));
 	}
-	builder.add(checkBoxAssembly, cc.xy(1, 25));
-	builder.add(panelAssembly, cc.xyw(3, 25, 5));
+	builder.add(checkBoxAssembly, cc.xy(1, 27));
+	builder.add(panelAssembly, cc.xyw(3, 27, 5));
 
 	return builder.getPanel();
     }

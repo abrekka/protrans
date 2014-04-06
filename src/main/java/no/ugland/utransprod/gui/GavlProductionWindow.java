@@ -4,7 +4,7 @@ import no.ugland.utransprod.gui.action.SetProductionUnitActionFactory;
 import no.ugland.utransprod.gui.handlers.AbstractProductionPackageViewHandler;
 import no.ugland.utransprod.gui.handlers.DeviationViewHandlerFactory;
 import no.ugland.utransprod.gui.handlers.GavlProductionViewHandler;
-import no.ugland.utransprod.gui.model.ProductionApplyList;
+import no.ugland.utransprod.gui.model.GavlProductionApplyList;
 import no.ugland.utransprod.model.ArticleType;
 import no.ugland.utransprod.model.Produceable;
 import no.ugland.utransprod.service.ArticleTypeManager;
@@ -60,7 +60,7 @@ public class GavlProductionWindow extends AbstractProductionPackageWindow<Produc
 	GavlProductionVManager gavlProductionVManager = (GavlProductionVManager) ModelUtil.getBean("gavlProductionVManager");
 	ArticleTypeManager articleTypeManager = (ArticleTypeManager) ModelUtil.getBean("articleTypeManager");
 	ArticleType articleType = articleTypeManager.findByName(ApplicationParamUtil.findParamByName(getParamArticleName()));
-	return new GavlProductionViewHandler(new ProductionApplyList(login, gavlProductionVManager, "Takstol", "Gavl", null, managerRepository),
+	return new GavlProductionViewHandler(new GavlProductionApplyList(login, gavlProductionVManager, "Takstol", "Gavl", null, managerRepository),
 		"Gavlproduksjon", login, articleType, managerRepository, deviationViewHandlerFactory, setProductionUnitActionFactory);
     }
 

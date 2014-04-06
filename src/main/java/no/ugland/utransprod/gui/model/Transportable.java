@@ -12,6 +12,7 @@ import no.ugland.utransprod.model.ConstructionType;
 import no.ugland.utransprod.model.CustTr;
 import no.ugland.utransprod.model.Customer;
 import no.ugland.utransprod.model.Deviation;
+import no.ugland.utransprod.model.Ord;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderComment;
 import no.ugland.utransprod.model.OrderLine;
@@ -449,6 +450,16 @@ public interface Transportable {
 
 	}
 
+	public void setTakstolKjopOrd(Ord ord) {
+	    // TODO Auto-generated method stub
+
+	}
+
+	public Ord getTakstolKjopOrd() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
     };
 
     List<OrderLine> getOrderLineList(String articleTypeName);
@@ -472,4 +483,8 @@ public interface Transportable {
     void setOrderReadyTross(Date orderReady);
 
     void setOrderReadyPack(Date orderReady);
+
+    void setTakstolKjopOrd(Ord ord);
+
+    Ord getTakstolKjopOrd();
 }

@@ -68,6 +68,7 @@ public class FrontProductionV extends BaseObject implements TextRenderable, Prod
     private BigDecimal realProductionHours;
 
     private Integer productionWeek;
+    private String doneBy;
 
     public FrontProductionV() {
 	super();
@@ -518,5 +519,13 @@ public class FrontProductionV extends BaseObject implements TextRenderable, Prod
 
     public void setProductionWeek(Integer productionWeek) {
 	this.productionWeek = productionWeek;
+    }
+
+    public String getDoneBy() {
+	return doneBy;
+    }
+
+    public void setDoneBy(String doneBy) {
+	this.doneBy = doneBy;
     }
 }

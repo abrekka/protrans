@@ -245,7 +245,8 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
     protected void setApplied(PacklistV packlistV, boolean applied, WindowInterface window) {
 	Order order = managerRepository.getOrderManager().findByOrderNr(packlistV.getOrderNr());
 	if (applied) {
-	    EditPacklistView editPacklistView = new EditPacklistView(login);
+
+	    EditPacklistView editPacklistView = new EditPacklistView(login, true, order.getPacklistDuration());
 
 	    JDialog dialog = Util.getDialog(window, "Pakkliste klar", true);
 	    WindowInterface window1 = new JDialogAdapter(dialog);
@@ -301,13 +302,15 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
     final void initColumnWidth() {
 	List<TableColumn> columns = table.getColumns();
 	for (TableColumn col : columns) {
-	    String columnHeader = StringUtils.replace(StringUtils.upperCase(String.valueOf(col.getHeaderValue())), " ", "_");
-	    PacklistColumn packColumn = PacklistColumn.valueOf(columnHeader);
+
+	    PacklistColumn packColumn = PacklistColumn.hentKolonne((String) col.getHeaderValue());
 	    table.getColumnExt(packColumn.getColumnName()).setPreferredWidth(packColumn.getColumnWidth());
 	}
 	table.getColumnModel().getColumn(PacklistColumn.TAKSTOLER.ordinal())
 		.setCellRenderer(new HorizontalAlignmentCellRenderer(SwingConstants.LEFT));
 	table.getColumnModel().getColumn(PacklistColumn.GULVSPON.ordinal())
+		.setCellRenderer(new HorizontalAlignmentCellRenderer(SwingConstants.CENTER));
+	table.getColumnModel().getColumn(PacklistColumn.PROD_UKE.ordinal())
 		.setCellRenderer(new HorizontalAlignmentCellRenderer(SwingConstants.CENTER));
     }
 
@@ -339,8 +342,8 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    decimalFormat.setParseIntegerOnly(true);
 	    Map<String, String> statusMap = Util.createStatusMap(packlistV.getOrderStatus());
 
-	    String columnName = StringUtils.upperCase(getColumnName(columnIndex)).replaceAll(" ", "_");
-	    return PacklistColumn.valueOf(columnName).getValue(packlistV, takstolChecker, statusMap, window, managerRepository, applyListInterface);
+	    return PacklistColumn.hentKolonne(getColumnName(columnIndex)).getValue(packlistV, takstolChecker, statusMap, window, managerRepository,
+		    applyListInterface);
 	}
 
 	/**
@@ -348,8 +351,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	 */
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-	    String columnName = StringUtils.upperCase(getColumnName(columnIndex)).replaceAll(" ", "_");
-	    return PacklistColumn.valueOf(columnName).getColumnClass();
+	    return PacklistColumn.hentKolonne(getColumnName(columnIndex)).getColumnClass();
 	}
 
     }
@@ -359,7 +361,8 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
      */
     @Override
     protected Integer getApplyColumn() {
-	return 4;
+	return PacklistColumn.PAKKLISTE_KLAR.ordinal();
+	// return 4;
     }
 
     /**
@@ -603,22 +606,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    }
 
 	},
-	PRODUKTOMRÅDE("Produktområde", 70, false) {
-	    @Override
-	    public Class<?> getColumnClass() {
-		return String.class;
-	    }
 
-	    @Override
-	    public Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
-		    WindowInterface window, ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
-		if (packlistV.getProductAreaGroupName() != null) {
-		    return packlistV.getProductAreaGroupName();
-		}
-		return "";
-	    }
-
-	},
 	TAKSTOL_PROSJEKTERING("Takstol prosjektering", 120, true) {
 	    @Override
 	    public Class<?> getColumnClass() {
@@ -684,6 +672,34 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    public Class<?> getColumnClass() {
 		return String.class;
 	    }
+	},
+	PROD_UKE("Prod.uke", 70, true) {
+	    @Override
+	    public Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
+		    WindowInterface window, ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
+		return packlistV.getProductionWeek();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return Integer.class;
+	    }
+	},
+	PRODUKTOMRÅDE("Produktområde", 70, false) {
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
+		    WindowInterface window, ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
+		if (packlistV.getProductAreaGroupName() != null) {
+		    return packlistV.getProductAreaGroupName();
+		}
+		return "";
+	    }
+
 	};
 	private String columnName;
 	private int columnWidth;
@@ -693,6 +709,11 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    columnName = aColumnName;
 	    columnWidth = aColumnWidth;
 	    this.skalTilExcel = skalTilExcel;
+	}
+
+	public static PacklistColumn hentKolonne(String kolonneoverskrift) {
+	    return PacklistColumn.valueOf(StringUtils.replace(StringUtils.upperCase(String.valueOf(kolonneoverskrift)), " ", "_").replaceAll("\\.",
+		    "_"));
 	}
 
 	public boolean skalTilExcel() {
@@ -888,7 +909,8 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
      */
     @Override
     protected int getProductAreaColumn() {
-	return 5;
+	return PacklistColumn.PRODUKTOMRÅDE.ordinal();
+	// return 5;
     }
 
     @Override
@@ -949,9 +971,12 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	String fileName = "Pakkliste_" + Util.getCurrentDateAsDateTimeString() + ".xls";
 	String excelDirectory = ApplicationParamUtil.findParamByName("excel_path");
 
-	JXTable tableReport = new JXTable(new PacklistTableModel(getObjectSelectionList(), window, true));
+	// JXTable tableReport = new JXTable(new
+	// PacklistTableModel(getObjectSelectionList(), window, true));
 
-	ExcelUtil.showDataInExcel(excelDirectory, fileName, null, "Pakkliste", tableReport, null, null, 16, false);
+	// ExcelUtil.showDataInExcel(excelDirectory, fileName, null,
+	// "Pakkliste", tableReport, null, null, 16, false);
+	ExcelUtil.showTableDataInExcel(excelDirectory, fileName, null, "Produksjonsoversikt", table, null, null, 16, false);
 	// ExcelUtil.showDataInExcelInThread(window, fileName, getTitle(),
 	// getExcelTable(), null, null, 16, false);
     }

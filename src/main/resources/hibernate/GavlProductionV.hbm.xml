@@ -12,6 +12,12 @@
 <id name="orderLineId" type="java.lang.Integer" column="ORDER_LINE_ID">
         <generator class="assigned"/>
         </id>
+         <property
+        name="doneBy"
+        type="java.lang.String"
+        column="DONE_BY"
+        length="500"
+    />
 <property
         name="realProductionHours"
         type="java.math.BigDecimal"

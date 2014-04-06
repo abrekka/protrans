@@ -440,4 +440,9 @@ public class FaktureringV extends BaseObject implements TextRenderable, Applyabl
 	return null;
     }
 
+    public Date getActionStarted() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
 }

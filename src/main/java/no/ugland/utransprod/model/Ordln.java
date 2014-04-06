@@ -45,6 +45,7 @@ public class Ordln extends BaseObject {
 
     private BigDecimal am;
     private Integer prodTp;
+    private Integer purcno;
 
     public static final Ordln UNKNOWN = new Ordln() {
     };
@@ -319,4 +320,11 @@ public class Ordln extends BaseObject {
 	public abstract OrderCost addCost(CostTypeManager costTypeManager, CostUnitManager costUnitManager, Order order, BigDecimal costAmount);
     }
 
+    public Integer getPurcno() {
+	return purcno;
+    }
+
+    public void setPurcno(Integer purcno) {
+	this.purcno = purcno;
+    }
 }

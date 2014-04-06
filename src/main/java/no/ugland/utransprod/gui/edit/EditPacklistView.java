@@ -30,9 +30,13 @@ public class EditPacklistView implements Closeable {
     private JTextField textfieldTime;
     private JTextField textfieldDoneBy;
     private Login login;
+    private boolean skalKunneSettedato;
+    private String tidsbruk;
 
-    public EditPacklistView(Login login) {
+    public EditPacklistView(Login login, boolean skalKunneSettedato, BigDecimal tidsbruk) {
 	this.login = login;
+	this.skalKunneSettedato = skalKunneSettedato;
+	this.tidsbruk = tidsbruk == null ? null : String.valueOf(tidsbruk);
     }
 
     public JPanel buildPanel(WindowInterface window) {
@@ -42,8 +46,10 @@ public class EditPacklistView implements Closeable {
 	PanelBuilder builder = new PanelBuilder(layout);
 	CellConstraints cc = new CellConstraints();
 
-	builder.addLabel("Dato:", cc.xy(2, 2));
-	builder.add(dateChooser, cc.xy(4, 2));
+	if (skalKunneSettedato) {
+	    builder.addLabel("Dato:", cc.xy(2, 2));
+	    builder.add(dateChooser, cc.xy(4, 2));
+	}
 	builder.addLabel("Tidsbruk:", cc.xy(2, 4));
 	builder.add(textfieldTime, cc.xy(4, 4));
 	builder.addLabel("Gjort av:", cc.xy(2, 6));
@@ -56,7 +62,7 @@ public class EditPacklistView implements Closeable {
 
     private void initComponents(WindowInterface window) {
 	textfieldDoneBy = new JTextField(login.getApplicationUser().getFullName());
-	textfieldTime = new JTextField();
+	textfieldTime = new JTextField(tidsbruk == null ? "" : tidsbruk);
 	dateChooser = new JDateChooser(Calendar.getInstance().getTime());
 	buttonOk = getButtonOk(window);
 	buttonCancel = getButtonCancel(window);

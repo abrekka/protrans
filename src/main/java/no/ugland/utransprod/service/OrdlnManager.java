@@ -28,4 +28,6 @@ public interface OrdlnManager {
     List<Ordln> findCostLines(String string);
 
     List<Ordln> findForFakturagrunnlag(String orderNr);
+
+    Ord findByOrdNo(Integer purcno);
 }

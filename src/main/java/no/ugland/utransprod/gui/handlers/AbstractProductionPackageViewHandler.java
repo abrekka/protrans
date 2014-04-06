@@ -65,6 +65,7 @@ import no.ugland.utransprod.util.CommentTypeUtil;
 import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.PrefsUtil;
 import no.ugland.utransprod.util.Threadable;
+import no.ugland.utransprod.util.Tidsforbruk;
 import no.ugland.utransprod.util.Util;
 import no.ugland.utransprod.util.report.ReportViewer;
 
@@ -525,7 +526,13 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable> 
 
     final void setRealProductionHours() {
 	T object = getSelectedObject();
+
 	BigDecimal realProductionHours = object.getRealProductionHours();
+
+	if (realProductionHours == null) {
+	    realProductionHours = Tidsforbruk.beregnTidsforbruk(object.getActionStarted(), object.getProduced());
+	}
+
 	String overstyrtTidsforbrukString = Util.showInputDialogWithdefaultValue(null, "Sett reell tidsforbruk", "Tidsforbruk:",
 		realProductionHours == null ? "" : String.valueOf(realProductionHours));
 
