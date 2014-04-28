@@ -8,7 +8,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 
-import no.ugland.utransprod.gui.handlers.ProductionOverviewViewHandler;
+import no.ugland.utransprod.gui.handlers.ProductionOverviewViewHandler2;
 import no.ugland.utransprod.util.InternalFrameBuilder;
 
 import org.jdesktop.swingx.JXTable;
@@ -24,8 +24,8 @@ import com.jgoodies.forms.layout.FormLayout;
  * 
  * @author atle.brekka
  */
-public class ProductionOverviewView implements Viewer {
-    private ProductionOverviewViewHandler viewHandler;
+public class ProductionOverviewView2 implements Viewer {
+    private ProductionOverviewViewHandler2 viewHandler;
 
     private JXTable productionTable;
 
@@ -42,7 +42,7 @@ public class ProductionOverviewView implements Viewer {
     private JButton buttonExcel;
 
     @Inject
-    public ProductionOverviewView(ProductionOverviewViewHandler viewHandler) {
+    public ProductionOverviewView2(ProductionOverviewViewHandler2 viewHandler) {
 	this.viewHandler = viewHandler;
     }
 

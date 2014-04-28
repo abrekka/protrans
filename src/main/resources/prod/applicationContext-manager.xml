@@ -749,4 +749,12 @@
             </bean>
         </property>
 		</bean>
+		
+<!-- 		<bean id="productionOverviewVManager" parent="txProxyTemplate"> -->
+<!--         <property name="target"> -->
+<!--             <bean class="no.ugland.utransprod.service.ProductionOverviewVManager"> -->
+<!--                 <property name="productionOverviewVDAO" ref="productionOverviewVDAO"/> -->
+<!--             </bean> -->
+<!--         </property> -->
+<!-- 		</bean> -->
 </beans>

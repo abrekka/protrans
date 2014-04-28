@@ -28,6 +28,14 @@
         length="255"
     />
     
+    	<property
+        name="supplierNr"
+        type="java.lang.String"
+        column="SUPPLIER_NR"
+        length="255"
+    />
+    
+    
     <property
         name="supplierDescription"
         type="java.lang.String"

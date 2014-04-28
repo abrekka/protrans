@@ -673,4 +673,10 @@
 		</property>
 	</bean>
 
+<!-- <bean id="productionOverviewVDAO" parent="txProxyTemplate"> -->
+<!-- 		<property name="target"> -->
+<!-- 			<bean class="no.ugland.utransprod.dao.hibernate.ProductionOverviewVDAOHibernate" -->
+<!-- 				autowire="byName" /> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
 </beans>

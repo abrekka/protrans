@@ -32,20 +32,21 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
 import no.ugland.utransprod.ProTransException;
+import no.ugland.utransprod.gui.Closeable;
 import no.ugland.utransprod.gui.IconEnum;
 import no.ugland.utransprod.gui.Login;
 import no.ugland.utransprod.gui.ProductAreaGroupProvider;
 import no.ugland.utransprod.gui.UBColumnControlPopup;
+import no.ugland.utransprod.gui.Updateable;
 import no.ugland.utransprod.gui.WindowInterface;
 import no.ugland.utransprod.gui.action.ProduceableProvider;
 import no.ugland.utransprod.gui.action.SetProductionUnitActionFactory;
+import no.ugland.utransprod.gui.buttons.CancelButton;
 import no.ugland.utransprod.gui.buttons.RefreshButton;
 import no.ugland.utransprod.gui.checker.StatusCheckerInterface;
-import no.ugland.utransprod.gui.edit.AbstractEditView;
 import no.ugland.utransprod.gui.edit.EditProcentDoneView;
 import no.ugland.utransprod.gui.model.Applyable;
 import no.ugland.utransprod.gui.model.ColorEnum;
-import no.ugland.utransprod.gui.model.OrderModel;
 import no.ugland.utransprod.gui.model.ProcentDoneModel;
 import no.ugland.utransprod.gui.model.ProductAreaGroupModel;
 import no.ugland.utransprod.gui.model.TakstolPackageApplyList;
@@ -56,19 +57,24 @@ import no.ugland.utransprod.gui.model.Transportable;
 import no.ugland.utransprod.model.ArticleType;
 import no.ugland.utransprod.model.CostType;
 import no.ugland.utransprod.model.CostUnit;
+import no.ugland.utransprod.model.Ord;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
+import no.ugland.utransprod.model.Ordln;
 import no.ugland.utransprod.model.PostShipment;
 import no.ugland.utransprod.model.ProcentDone;
 import no.ugland.utransprod.model.Produceable;
 import no.ugland.utransprod.model.ProductAreaGroup;
+import no.ugland.utransprod.model.ProductionOverviewV;
 import no.ugland.utransprod.model.Transport;
+import no.ugland.utransprod.model.UserType;
 import no.ugland.utransprod.service.CustTrManager;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.OrderManager;
 import no.ugland.utransprod.service.OrdlnManager;
 import no.ugland.utransprod.service.PostShipmentManager;
 import no.ugland.utransprod.service.ProductAreaGroupManager;
+import no.ugland.utransprod.service.ProductionOverviewVManager;
 import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.service.enums.LazyLoadPostShipmentEnum;
@@ -97,16 +103,29 @@ import com.google.inject.name.Named;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 import com.jgoodies.binding.adapter.SingleListSelectionAdapter;
+import com.jgoodies.binding.list.ArrayListModel;
+import com.jgoodies.binding.list.SelectionInList;
 
 /**
  * Hjelpeklasse for produksjonsoversikt
  * 
  * @author atle.brekka
  */
-public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Order, OrderModel> implements ProductAreaGroupProvider,
-	OrderNrProvider, ProduceableProvider {
+public class ProductionOverviewViewHandler2 // extends
+					    // DefaultAbstractViewHandler<Order,
+					    // OrderModel>
+	implements ProductAreaGroupProvider, OrderNrProvider, ProduceableProvider, Updateable, Closeable {
 
     private static final long serialVersionUID = 1L;
+    private ProductionOverviewVManager overviewManager;
+    private final ArrayListModel objectList;
+    private JXTable table;
+    private boolean loaded = false;
+    private int noOfObjects;
+    private UserType userType;
+    private SelectionInList objectSelectionList;
+    private WindowInterface window;
+    private JButton buttonCancel;
 
     JButton buttonRefresh;
     Map<String, StatusCheckerInterface<Transportable>> statusCheckers;
@@ -175,13 +194,19 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
     private ArticleType articleTypeTakstol;
 
     @Inject
-    public ProductionOverviewViewHandler(final VismaFileCreator aVismaFileCreator, final OrderViewHandlerFactory orderViewHandlerFactory,
+    public ProductionOverviewViewHandler2(final VismaFileCreator aVismaFileCreator, final OrderViewHandlerFactory orderViewHandlerFactory,
 	    final Login aLogin, ManagerRepository aManagerRepository, DeviationViewHandlerFactory aDeviationViewHandlerFactory,
 	    final ShowTakstolInfoActionFactory aShowTakstolInfoActionFactory, final @Named("takstolArticle") ArticleType aArticleTypeTakstol,
 	    final TakstolPackageApplyList takstolPackageApplyList, final TakstolProductionApplyList takstolProductionApplyList,
 	    SetProductionUnitActionFactory aSetProductionUnitActionFactory, @Named("kostnadTypeTakstoler") CostType aCostTypeTross,
 	    @Named("kostnadEnhetTakstoler") CostUnit aCostUnitTross) {
-	super("Produksjonsoversikt", aManagerRepository.getOrderManager(), aLogin.getUserType(), true);
+	// super("Produksjonsoversikt", aManagerRepository.getOrderManager(),
+	// aLogin.getUserType(), true);
+	userType = aLogin.getUserType();
+	overviewManager = (ProductionOverviewVManager) ModelUtil.getBean(ProductionOverviewVManager.MANAGER_NAME);
+	objectList = new ArrayListModel();
+
+	objectSelectionList = new SelectionInList((ListModel) objectList);
 	articleTypeTakstol = aArticleTypeTakstol;
 	setProductionUnitActionFactory = aSetProductionUnitActionFactory;
 	showTakstolInfoActionFactory = aShowTakstolInfoActionFactory;
@@ -307,64 +332,67 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	}
     }
 
-    @Override
-    public CheckObject checkDeleteObject(Order object) {
-	return null;
-    }
+    // @Override
+    // public CheckObject checkDeleteObject(Order object) {
+    // return null;
+    // }
+    //
+    // @Override
+    // public CheckObject checkSaveObject(OrderModel object, PresentationModel
+    // presentationModel, WindowInterface window) {
+    // return null;
+    // }
+    //
+    // @Override
+    // public String getAddRemoveString() {
+    // return null;
+    // }
+    //
+    // @Override
+    // public String getClassName() {
+    // return null;
+    // }
 
-    @Override
-    public CheckObject checkSaveObject(OrderModel object, PresentationModel presentationModel, WindowInterface window) {
-	return null;
-    }
+    // @Override
+    // protected AbstractEditView<OrderModel, Order>
+    // getEditView(AbstractViewHandler<Order, OrderModel> handler, Order object,
+    // boolean searching) {
+    // return null;
+    // }
+    //
+    // @Override
+    // public Order getNewObject() {
+    // return null;
+    // }
 
-    @Override
-    public String getAddRemoveString() {
-	return null;
-    }
-
-    @Override
-    public String getClassName() {
-	return null;
-    }
-
-    @Override
-    protected AbstractEditView<OrderModel, Order> getEditView(AbstractViewHandler<Order, OrderModel> handler, Order object, boolean searching) {
-	return null;
-    }
-
-    @Override
-    public Order getNewObject() {
-	return null;
-    }
-
-    @Override
+    // @Override
     public TableModel getTableModel(WindowInterface window) {
 	return productionOverviewTableModel;
     }
 
-    @Override
-    public String getTableWidth() {
-	return null;
-    }
+    // @Override
+    // public String getTableWidth() {
+    // return null;
+    // }
 
-    @Override
+    // @Override
     public String getTitle() {
 	return "Produksjonsoversikt";
     }
 
-    @Override
+    // @Override
     public Dimension getWindowSize() {
 	return new Dimension(930, 600);
     }
 
-    @Override
+    // @Override
     public Boolean hasWriteAccess() {
 	return UserUtil.hasWriteAccess(userType, "Produksjonsoversikt");
     }
 
-    @Override
-    public void setColumnWidth(JXTable table) {
-    }
+    // @Override
+    // public void setColumnWidth(JXTable table) {
+    // }
 
     private enum ProductionColumn {
 	PAKKLISTE("Pakkliste") {
@@ -1209,17 +1237,16 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		    LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES, LazyLoadOrderEnum.COMMENTS,
 		    LazyLoadOrderEnum.PROCENT_DONE });
 	}
-	// OrderLine takstol = transportable.getOrderLine("Takstoler");
-	// if (takstol != null) {
-	// Ordln ordln = ordlnManager.findByOrdNoAndLnNo(takstol.getOrdNo(),
-	// takstol.getLnNo());
-	// if (ordln != null && ordln.getPurcno() != null) {
-	// Ord ord = ordlnManager.findByOrdNo(ordln.getPurcno());
-	// if (ord != null) {
-	// transportable.setTakstolKjopOrd(ord);
-	// }
-	// }
-	// }
+	OrderLine takstol = transportable.getOrderLine("Takstoler");
+	if (takstol != null) {
+	    Ordln ordln = ordlnManager.findByOrdNoAndLnNo(takstol.getOrdNo(), takstol.getLnNo());
+	    if (ordln != null && ordln.getPurcno() != null) {
+		Ord ord = ordlnManager.findByOrdNo(ordln.getPurcno());
+		if (ord != null) {
+		    transportable.setTakstolKjopOrd(ord);
+		}
+	    }
+	}
 
 	transportable.setStatus(Util.statusMapToString(statusMap));
 
@@ -1257,7 +1284,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    // @Override
     protected void initObjects() {
 	if (!loaded) {
 
@@ -1267,15 +1294,19 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	    objectList.clear();
 	    objectSelectionList.clearSelection();
 
-	    List<Order> allOrders = ((OrderManager) overviewManager).findAllNotSent();
+	    // List<Order> allOrders = ((OrderManager)
+	    // overviewManager).findAllNotSent();
+	    List<ProductionOverviewV> allOrders = overviewManager.findAll();
 	    if (allOrders != null) {
 		objectList.addAll(allOrders);
 	    }
-	    PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil.getBean("postShipmentManager");
-	    List<PostShipment> allPostShipments = postShipmentManager.findAllNotSent();
-	    if (allPostShipments != null) {
-		objectList.addAll(allPostShipments);
-	    }
+	    // PostShipmentManager postShipmentManager = (PostShipmentManager)
+	    // ModelUtil.getBean("postShipmentManager");
+	    // List<PostShipment> allPostShipments =
+	    // postShipmentManager.findAllNotSent();
+	    // if (allPostShipments != null) {
+	    // objectList.addAll(allPostShipments);
+	    // }
 	    Collections.sort(objectList, new TransportableComparator());
 	    noOfObjects = objectList.getSize();
 	    if (table != null) {
@@ -1313,7 +1344,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    // @Override
     public JXTable getTable(WindowInterface window) {
 	initObjects();
 	initOrders(objectList, window);
@@ -1998,7 +2029,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    // @Override
     public void doRefresh(WindowInterface window) {
 	initObjects();
 	initOrders(objectList, window);
@@ -2099,7 +2130,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	return ((ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP)).getProductAreaGroupName();
     }
 
-    @Override
+    // @Override
     public void beforeClose() {
 	PrefsUtil
 		.putUserInvisibleColumns(table, (ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP));
@@ -2169,6 +2200,31 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	    Util.setDefaultCursor(window.getComponent());
 
 	}
+    }
+
+    public void doSave(WindowInterface window) {
+	// TODO Auto-generated method stub
+
+    }
+
+    public boolean doDelete(WindowInterface window) {
+	// TODO Auto-generated method stub
+	return false;
+    }
+
+    public void doNew(WindowInterface window) {
+	// TODO Auto-generated method stub
+
+    }
+
+    public JButton getCancelButton(WindowInterface window) {
+	buttonCancel = new CancelButton(window, this, true);
+	buttonCancel.setName("ButtonCancel");
+	return buttonCancel;
+    }
+
+    public boolean canClose(String actionString, WindowInterface window) {
+	return true;
     }
 
 }

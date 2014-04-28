@@ -57,7 +57,7 @@ public class DeviationOverviewView extends OverviewView<Deviation, DeviationMode
      */
     @Override
     public JComponent buildPanel(WindowInterface window) {
-	FormLayout layout = new FormLayout("15dlu," + viewHandler.getTableWidth() + ":grow,15dlu", "10dlu,top:300dlu:grow,3dlu:grow,p");
+	FormLayout layout = new FormLayout("15dlu," + viewHandler.getTableWidth() + ":grow,15dlu", "10dlu,fill:300dlu:grow,3dlu,p");
 	PanelBuilder builder = new PanelBuilder(layout);
 	// PanelBuilder builder = new PanelBuilder(layout, new
 	// FormDebugPanel());
@@ -106,7 +106,7 @@ public class DeviationOverviewView extends OverviewView<Deviation, DeviationMode
 	// FormLayout layout = new FormLayout(viewHandler.getTableWidth() +
 	// ":grow,3dlu,p,3dlu,p", "p,3dlu," + viewHandler.getTableHeight()
 	// + ":grow,5dlu,p");
-	FormLayout layout = new FormLayout(viewHandler.getTableWidth() + ":grow,3dlu,p,3dlu,p", "p:grow,3dlu:grow,top:p:grow,5dlu,p:grow");
+	FormLayout layout = new FormLayout(viewHandler.getTableWidth() + ":grow,3dlu,p,3dlu,p", "p,3dlu,fill:p:grow,5dlu,p");
 	// PanelBuilder builder = new PanelBuilder(layout, new
 	// FormDebugPanel());
 	PanelBuilder builder = new PanelBuilder(layout);

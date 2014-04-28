@@ -19,6 +19,8 @@ public class ProductionMenu extends ProTransMenu {
     private ProductionBudgetAction productionBudgetAction;
     private ProductionOverviewAction productionOverviewAction;
 
+    // private ProductionOverviewAction2 productionOverviewAction2;
+
     public ProductionMenu(Login aLogin) {
 	super(aLogin);
     }
@@ -28,9 +30,12 @@ public class ProductionMenu extends ProTransMenu {
 	    // TakstolProductionAction aTakstolProductionAction,
 
 	    VeggProductionAction aVeggProductionAction, FrontProductionAction aFrontProductionAction, ProductionBudgetAction aProductionBudgetAction,
-	    ProductionOverviewAction aProductionOverviewAction) {
+	    ProductionOverviewAction aProductionOverviewAction
+    // , ProductionOverviewAction2 aProductionOverviewAction2
+    ) {
 	super(aLogin);
 	productionOverviewAction = aProductionOverviewAction;
+	// productionOverviewAction2 = aProductionOverviewAction2;
 	productionBudgetAction = aProductionBudgetAction;
 	frontProductionAction = aFrontProductionAction;
 	veggProductionAction = aVeggProductionAction;
@@ -48,6 +53,8 @@ public class ProductionMenu extends ProTransMenu {
 	addMenuItem(menuProduction, frontProductionAction, KeyEvent.VK_F, null, null, null, "Front", false);
 	addMenuItem(menuProduction, productionBudgetAction, KeyEvent.VK_B, null, null, null, "Budsjett", false);
 	addMenuItem(menuProduction, productionOverviewAction, KeyEvent.VK_O, null, null, null, "Produksjonsoversikt", false);
+	// addMenuItem(menuProduction, productionOverviewAction2, KeyEvent.VK_O,
+	// null, null, null, "Produksjonsoversikt2", false);
 	return menuProduction;
     }
 

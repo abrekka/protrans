@@ -26,7 +26,7 @@ public class PreventiveActionOverviewView extends OverviewView<PreventiveAction,
 
     public JPanel buildPreventiveActionPanel(WindowInterface window) {
 	initComponents(window);
-	FormLayout layout = new FormLayout(viewHandler.getTableWidth() + ":grow,3dlu,p,3dlu,p", "p,3dlu,p:grow,5dlu,p:grow");
+	FormLayout layout = new FormLayout(viewHandler.getTableWidth() + ":grow,3dlu,p,3dlu,p", "p,3dlu,fill:p:grow,5dlu,p");
 	// PanelBuilder builder = new PanelBuilder(layout,new FormDebugPanel());
 	PanelBuilder builder = new PanelBuilder(layout);
 	JScrollPane scrollPaneTable = new JScrollPane(table);
