@@ -56,8 +56,10 @@ import no.ugland.utransprod.gui.model.Transportable;
 import no.ugland.utransprod.model.ArticleType;
 import no.ugland.utransprod.model.CostType;
 import no.ugland.utransprod.model.CostUnit;
+import no.ugland.utransprod.model.Ord;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
+import no.ugland.utransprod.model.Ordln;
 import no.ugland.utransprod.model.PostShipment;
 import no.ugland.utransprod.model.ProcentDone;
 import no.ugland.utransprod.model.Produceable;
@@ -1209,17 +1211,16 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		    LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES, LazyLoadOrderEnum.COMMENTS,
 		    LazyLoadOrderEnum.PROCENT_DONE });
 	}
-	// OrderLine takstol = transportable.getOrderLine("Takstoler");
-	// if (takstol != null) {
-	// Ordln ordln = ordlnManager.findByOrdNoAndLnNo(takstol.getOrdNo(),
-	// takstol.getLnNo());
-	// if (ordln != null && ordln.getPurcno() != null) {
-	// Ord ord = ordlnManager.findByOrdNo(ordln.getPurcno());
-	// if (ord != null) {
-	// transportable.setTakstolKjopOrd(ord);
-	// }
-	// }
-	// }
+	OrderLine takstol = transportable.getOrderLine("Takstoler");
+	if (takstol != null) {
+	    Ordln ordln = ordlnManager.findByOrdNoAndLnNo(takstol.getOrdNo(), takstol.getLnNo());
+	    if (ordln != null && ordln.getPurcno() != null) {
+		Ord ord = ordlnManager.findByOrdNo(ordln.getPurcno());
+		if (ord != null) {
+		    transportable.setTakstolKjopOrd(ord);
+		}
+	    }
+	}
 
 	transportable.setStatus(Util.statusMapToString(statusMap));
 

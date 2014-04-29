@@ -38,7 +38,6 @@ import no.ugland.utransprod.gui.model.FlushListener;
 import no.ugland.utransprod.model.UserType;
 import no.ugland.utransprod.service.OverviewManager;
 import no.ugland.utransprod.util.ApplicationParamUtil;
-import no.ugland.utransprod.util.Threadable;
 import no.ugland.utransprod.util.Util;
 import no.ugland.utransprod.util.excel.ExcelUtil;
 
@@ -1003,7 +1002,9 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
 	String fileName = getClassName() + "_" + Util.getCurrentDateAsDateTimeString() + ".xls";
 	String excelDirectory = ApplicationParamUtil.findParamByName("excel_path");
 
-	ExcelUtil.showDataInExcel(excelDirectory, fileName, null, getTitle(), getExcelTable(), null, null, 16, false);
+	// ExcelUtil.showDataInExcel(excelDirectory, fileName, null, getTitle(),
+	// getExcelTable(), null, null, 16, false);
+	ExcelUtil.showTableDataInExcel(excelDirectory, fileName, null, getTitle(), table, null, null, 16, false);
 	// ExcelUtil.showDataInExcelInThread(window, fileName, getTitle(),
 	// getExcelTable(), null, null, 16, false);
     }
@@ -1024,34 +1025,35 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-	    Util.runInThreadWheel(window.getRootPane(), new Threadable() {
-
-		public void enableComponents(boolean enable) {
-
-		}
-
-		public Object doWork(Object[] params, JLabel labelInfo) {
-		    labelInfo.setText("Genererer excel...");
-		    String errorMsg = null;
-		    try {
-			exportToExcel(window);
-		    } catch (ProTransException e) {
-			errorMsg = e.getMessage();
-		    }
-		    return errorMsg;
-		}
-
-		public void doWhenFinished(Object object) {
-		    if (object != null) {
-			Util.showErrorDialog(window, "Feil", object.toString());
-		    } else {
-			Util.showMsgFrame(window.getComponent(), "Excel generert",
-				"Dersom excelfil ikke kom opp ligger den i katalog definert for excel");
-		    }
-
-		}
-
-	    }, null);
+	    exportToExcel(window);
+	    // Util.runInThreadWheel(window.getRootPane(), new Threadable() {
+	    //
+	    // public void enableComponents(boolean enable) {
+	    //
+	    // }
+	    //
+	    // public Object doWork(Object[] params, JLabel labelInfo) {
+	    // labelInfo.setText("Genererer excel...");
+	    // String errorMsg = null;
+	    // try {
+	    // exportToExcel(window);
+	    // } catch (ProTransException e) {
+	    // errorMsg = e.getMessage();
+	    // }
+	    // return errorMsg;
+	    // }
+	    //
+	    // public void doWhenFinished(Object object) {
+	    // if (object != null) {
+	    // Util.showErrorDialog(window, "Feil", object.toString());
+	    // } else {
+	    // Util.showMsgFrame(window.getComponent(), "Excel generert",
+	    // "Dersom excelfil ikke kom opp ligger den i katalog definert for excel");
+	    // }
+	    //
+	    // }
+	    //
+	    // }, null);
 
 	}
     }

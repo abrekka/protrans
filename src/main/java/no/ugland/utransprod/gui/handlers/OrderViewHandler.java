@@ -1458,7 +1458,8 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	    Util.setWaitCursor(window.getComponent());
 	    try {
 		exportToExcel(window);
-		Util.showMsgFrame(window.getComponent(), "Excel generert", "Dersom excelfil ikke kom opp ligger den i katalog definert for excel");
+		// Util.showMsgFrame(window.getComponent(), "Excel generert",
+		// "Dersom excelfil ikke kom opp ligger den i katalog definert for excel");
 	    } catch (ProTransException e) {
 		e.printStackTrace();
 		Util.showErrorDialog(window, "Feil", e.getMessage());
