@@ -70,9 +70,11 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 
     private String createHeadAndLines(List<OrderLine> orderLines) throws ProTransException {
 	if (orderLines != null && orderLines.size() != 0) {
+	    String transportDate = getTransportDate(orderLines.get(0).getOrder());
 	    OrdchgrHeadV head = ordchgrManager.getHead(orderLines.get(0).getOrdNo());
 	    List<OrdchgrLineV> lines = head != null ? ordchgrManager.getLines(orderLines.get(0).getOrdNo(), getLnNos(orderLines)) : null;
-	    return head != null ? createFile(head, lines, orderLines.get(0).getOrderNr(), ApplicationParamUtil.findParamByName(VISMA_OUT_DIR)) : null;
+	    return head != null ? createFile(head, lines, orderLines.get(0).getOrderNr(), ApplicationParamUtil.findParamByName(VISMA_OUT_DIR),
+		    transportDate) : null;
 	}
 	return null;
     }
@@ -85,10 +87,11 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 	return list;
     }
 
-    public String createFile(OrdchgrHeadV head, List<OrdchgrLineV> fileLines, final String orderNr, String outdir) throws ProTransException {
+    public String createFile(OrdchgrHeadV head, List<OrdchgrLineV> fileLines, final String orderNr, String outdir, String transportDate)
+	    throws ProTransException {
 	try {
 	    List<String> lines = new ArrayList<String>();
-	    lines.add(head.getHeadLine(null));
+	    lines.add(head.getHeadLine(transportDate));
 	    for (OrdchgrLineV ordchgrLineV : fileLines) {
 		lines.add(ordchgrLineV.getLineLine());
 	    }
@@ -121,14 +124,19 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 	if (order == null || head == null) {
 	    return null;
 	}
+	String transportDate = getTransportDate(order);
+
+	return writeFile(order.getOrderNr(), outdir, Lists.newArrayList(head.getHeadLine(transportDate)));
+    }
+
+    private String getTransportDate(Order order) {
 	String transportDate = null;
 	if (order.getTransport() != null) {
 	    Transport transport = order.getTransport();
 	    transportDate = transport.getLoadingDate() != null ? Util.DATE_FORMAT_YYYYMMDD.format(transport.getLoadingDate()) : Util
 		    .getLastFridayAsString(transport.getTransportYear(), transport.getTransportWeek());
 	}
-
-	return writeFile(order.getOrderNr(), outdir, Lists.newArrayList(head.getHeadLine(transportDate)));
+	return transportDate;
     }
 
 }
