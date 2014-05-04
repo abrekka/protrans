@@ -42,6 +42,7 @@ import no.ugland.utransprod.gui.model.ReportEnum;
 import no.ugland.utransprod.gui.model.TextPaneRendererTransport;
 import no.ugland.utransprod.model.Assembly;
 import no.ugland.utransprod.model.Deviation;
+import no.ugland.utransprod.model.FakturagrunnlagV;
 import no.ugland.utransprod.model.IAssembly;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderComment;
@@ -50,6 +51,7 @@ import no.ugland.utransprod.model.Ordln;
 import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.Supplier;
 import no.ugland.utransprod.service.AssemblyManager;
+import no.ugland.utransprod.service.CraningCostManager;
 import no.ugland.utransprod.service.DeviationManager;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.enums.LazyLoadDeviationEnum;
@@ -63,6 +65,7 @@ import no.ugland.utransprod.util.Util;
 import no.ugland.utransprod.util.YearWeek;
 import no.ugland.utransprod.util.report.AssemblyReport;
 import no.ugland.utransprod.util.report.AssemblyReportFactory;
+import no.ugland.utransprod.util.report.AssemblyReportNy;
 import no.ugland.utransprod.util.report.MailConfig;
 import no.ugland.utransprod.util.report.ReportViewer;
 
@@ -76,6 +79,7 @@ import org.jdesktop.swingx.decorator.PatternPredicate;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import com.google.inject.internal.Lists;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.adapter.ComboBoxAdapter;
@@ -734,7 +738,8 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 		    labelInfo.setText("Genererer fakturagrunnlag...");
 		    String errorMsg = null;
 		    try {
-			generateAssemblyReport();
+			// generateAssemblyReport();
+			generateAssemblyReportNy();
 		    } catch (ProTransException e) {
 			errorMsg = e.getMessage();
 			e.printStackTrace();
@@ -770,6 +775,33 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 	    List<AssemblyReport> assemblyReportList = new ArrayList<AssemblyReport>();
 	    assemblyReportList.add(assemblyReport);
 	    reportViewer.generateProtransReportFromBeanAndShow(assemblyReportList, "Montering", ReportEnum.ASSEMBLY, null, null, window, true);
+
+	}
+    }
+
+    void generateAssemblyReportNy() throws ProTransException {
+	Assembly assembly = (Assembly) assemblySelectionList.getElementAt(tableOrders.convertRowIndexToModel(assemblySelectionList
+		.getSelectionIndex()));
+	if (assembly != null) {
+	    managerRepository.getOrderManager().lazyLoadOrder(assembly.getOrder(),
+		    new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_COSTS, LazyLoadOrderEnum.COMMENTS });
+
+	    // List<Ordln> vismaOrderLines =
+	    // managerRepository.getOrdlnManager().findForFakturagrunnlag(assembly.getOrder().getOrderNr());
+	    List<FakturagrunnlagV> fakturagrunnlag = managerRepository.getFakturagrunnlagVManager().findFakturagrunnlag(
+		    assembly.getOrder().getOrderId());
+	    // AssemblyReport assemblyReport =
+	    // assemblyReportFactory.create(assembly.getOrder(),
+	    // vismaOrderLines);
+	    final CraningCostManager craningCostManager = (CraningCostManager) ModelUtil.getBean(CraningCostManager.MANAGER_NAME);
+	    AssemblyReportNy assemblyReport = new AssemblyReportNy(craningCostManager, assembly.getOrder(), fakturagrunnlag);
+
+	    mailConfig.addToHeading(" for ordrenummer " + assembly.getOrder().getOrderNr());
+
+	    ReportViewer reportViewer = new ReportViewer("Montering", mailConfig);
+	    List<AssemblyReportNy> assemblyReportList = Lists.newArrayList();
+	    assemblyReportList.add(assemblyReport);
+	    reportViewer.generateProtransReportFromBeanAndShow(assemblyReportList, "Montering", ReportEnum.ASSEMBLY_NY, null, null, window, true);
 
 	}
     }

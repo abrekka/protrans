@@ -679,4 +679,11 @@
 <!-- 				autowire="byName" /> -->
 <!-- 		</property> -->
 <!-- 	</bean> -->
+<bean id="fakturagrunnlagVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.FakturagrunnlagVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
 </beans>

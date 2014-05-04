@@ -56,6 +56,7 @@ import no.ugland.utransprod.service.EmployeeManager;
 import no.ugland.utransprod.service.EmployeeTypeManager;
 import no.ugland.utransprod.service.ExternalOrderLineManager;
 import no.ugland.utransprod.service.ExternalOrderManager;
+import no.ugland.utransprod.service.FakturagrunnlagVManager;
 import no.ugland.utransprod.service.FaktureringVManager;
 import no.ugland.utransprod.service.FrontProductionVManager;
 import no.ugland.utransprod.service.FunctionCategoryManager;
@@ -223,6 +224,7 @@ public class ProtransModule extends AbstractModule {
 	bind(ProductAreaGroupManager.class).toInstance((ProductAreaGroupManager) ModelUtil.getBean(ProductAreaGroupManager.MANAGER_NAME));
 	bind(AssemblyOverdueVManager.class).toInstance((AssemblyOverdueVManager) ModelUtil.getBean(AssemblyOverdueVManager.MANAGER_NAME));
 	bind(FrontProductionVManager.class).toInstance((FrontProductionVManager) ModelUtil.getBean(FrontProductionVManager.MANAGER_NAME));
+	bind(FakturagrunnlagVManager.class).toInstance((FakturagrunnlagVManager) ModelUtil.getBean(FakturagrunnlagVManager.MANAGER_NAME));
 
     }
 

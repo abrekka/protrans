@@ -757,4 +757,13 @@
 <!--             </bean> -->
 <!--         </property> -->
 <!-- 		</bean> -->
+
+<bean id="fakturagrunnlagVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.FakturagrunnlagVManagerImpl">
+                <property name="fakturagrunnlagVDAO" ref="fakturagrunnlagVDAO"/>
+<!--                 <property name="orderLineDAO" ref="orderLineDAO"/> -->
+            </bean>
+        </property>
+		</bean>
 </beans>
