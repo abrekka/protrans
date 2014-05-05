@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class 
+    name="no.ugland.utransprod.model.FakturagrunnlagV" 
+    table="FAKTURAGRUNNLAG_V"
+>
+
+<composite-id name="fakturagrunnlagVPK" class="no.ugland.utransprod.model.FakturagrunnlagVPK">
+        <key-property 
+            name="lnno" 
+            column="LNNO" 
+            type="java.lang.Integer"
+            length="32"
+        />
+        <key-property 
+            name="orderId" 
+            column="ORDER_ID" 
+            type="java.lang.Integer"
+            length="32"
+        />
+    </composite-id>   
+    
+
+	<property
+        name="orderNr"
+        type="java.lang.String"
+        column="ORDER_NR"
+        length="32"
+    />
+    <property
+        name="prodno"
+        type="java.lang.String"
+        column="PRODNO"
+        length="32"
+    />
+    <property
+        name="descr"
+        type="java.lang.String"
+        column="DESCR"
+        length="255"
+    />
+    <property
+        name="free2"
+        type="java.math.BigDecimal"
+        column="FREE2"
+        length="32"
+    />
+    <property
+        name="noof"
+        type="java.math.BigDecimal"
+        column="NOOF"
+        length="32"
+    />
+    <property
+        name="priceMont"
+        type="java.math.BigDecimal"
+        column="PRICE_MONT"
+        length="32"
+    />
+    <property
+        name="price"
+        type="java.math.BigDecimal"
+        column="PRICE"
+        length="32"
+    />
+    <property
+        name="sumLine"
+        type="java.math.BigDecimal"
+        column="SUM_LINE"
+        length="32"
+    />
+     <property
+        name="purcno"
+        type="java.lang.Integer"
+        column="PURCNO"
+        length="32"
+    />
+</class>
+</hibernate-mapping>
