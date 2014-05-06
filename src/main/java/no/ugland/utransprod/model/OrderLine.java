@@ -1488,4 +1488,16 @@ public class OrderLine extends BaseObject implements Comparable<OrderLine>, IArt
     public String getDoneBy() {
 	return doneBy;
     }
+
+    public Integer getLenght() {
+	return null;
+    }
+
+    public Integer getWidht() {
+	return null;
+    }
+
+    public Integer getHeight() {
+	return null;
+    }
 }

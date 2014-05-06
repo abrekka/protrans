@@ -32,15 +32,15 @@
 			<staticText>
 				<reportElement x="12" y="489" width="533" height="31"/>
 				<textElement>
-					<font fontName="Arial" size="12" isBold="true" isItalic="false"/>
+					<font fontName="Arial" size="10" isBold="true" isItalic="false"/>
 				</textElement>
-				<text><![CDATA[De tillegg som det vil bli betalt for,  - er de tillegg som er avtalt med Igland industrier, og akseptert av kunden. Dette skal følge i signert utgave sammen med fakturaen!		
+				<text><![CDATA[De tillegg som det vil bli betalt for,  - er de tillegg som er avtalt med Grimstad Industrier, og akseptert av kunden. Dette skal følge i signert utgave sammen med fakturaen!		
 ]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="24" y="440" width="328" height="14"/>
 				<textElement>
-					<font fontName="Arial" size="12" isPdfEmbedded="false"/>
+					<font fontName="Arial" size="10" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Dette er avtalt og akseptert av "+ $P{customer.firstName}+" "+$P{customer.lastName}]]></textFieldExpression>
 			</textField>
@@ -50,14 +50,14 @@
 			<staticText>
 				<reportElement x="352" y="455" width="31" height="14"/>
 				<textElement>
-					<font fontName="Arial" size="12"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<text><![CDATA[Dato]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="442" y="455" width="115" height="14"/>
 				<textElement>
-					<font fontName="Arial" size="12"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<text><![CDATA[Kundens signatur]]></text>
 			</staticText>
@@ -71,24 +71,24 @@
 			<staticText>
 				<reportElement x="12" y="32" width="533" height="50"/>
 				<textElement>
-					<font fontName="Arial" size="12" isBold="true" isItalic="true"/>
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Eventuellt ekstra arbeide som følge av feil med kundens mur, eller andre omstendigheter kunden har skyld i, skal avtales med Igland Industrier, samt aksepteres skriftlig av kunden, før arbeide påbegynnes		
+				<text><![CDATA[Eventuellt ekstra arbeide som følge av feil med kundens mur, eller andre omstendigheter kunden har skyld i, skal avtales med Grimstad Industrier, samt aksepteres skriftlig av kunden, før arbeide påbegynnes		
 ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="12" y="86" width="533" height="14"/>
 				<textElement>
-					<font fontName="Arial" size="12" isBold="false"/>
+					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Ekstra arbeide fakureres med kr. 400,- pr time eks. mva
+				<text><![CDATA[Ekstra arbeide fakureres med kr. 460,- pr time eks. mva
 
 ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="12" y="119" width="191" height="14"/>
 				<textElement>
-					<font fontName="Arial" size="12" isBold="true" isItalic="true"/>
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Følgende arbeide er avtalt utført:
 
@@ -98,7 +98,7 @@
 			<staticText>
 				<reportElement x="233" y="119" width="72" height="14"/>
 				<textElement>
-					<font fontName="Arial" size="12" isBold="true" isItalic="true"/>
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Antall timer
 
@@ -108,7 +108,7 @@
 			<staticText>
 				<reportElement x="340" y="119" width="205" height="14"/>
 				<textElement>
-					<font fontName="Arial" size="12" isBold="true" isItalic="true"/>
+					<font fontName="Arial" size="10" isBold="false" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Ekstra materiell i kr. Inkl mva
 

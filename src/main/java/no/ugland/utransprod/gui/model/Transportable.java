@@ -487,4 +487,5 @@ public interface Transportable {
     void setTakstolKjopOrd(Ord ord);
 
     Ord getTakstolKjopOrd();
+
 }

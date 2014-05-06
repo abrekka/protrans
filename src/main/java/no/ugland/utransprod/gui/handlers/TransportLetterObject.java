@@ -10,47 +10,53 @@ import no.ugland.utransprod.model.PostShipment;
  * 
  */
 public interface TransportLetterObject {
-	/**
-	 * Henter ordre
-	 * 
-	 * @return ordre
-	 */
-	Order getLetterOrder();
+    /**
+     * Henter ordre
+     * 
+     * @return ordre
+     */
+    Order getLetterOrder();
 
-	/**
-	 * Henter navn på objekt
-	 * 
-	 * @return navn
-	 */
-	String getName();
+    /**
+     * Henter navn på objekt
+     * 
+     * @return navn
+     */
+    String getName();
 
-	/**
-	 * Henter detaljer
-	 * 
-	 * @return detaljer
-	 */
-	String getDetails();
+    /**
+     * Henter detaljer
+     * 
+     * @return detaljer
+     */
+    String getDetails();
 
-	/**
-	 * Henter typenavn
-	 * 
-	 * @return typenavn
-	 */
-	String getTypeName();
+    /**
+     * Henter typenavn
+     * 
+     * @return typenavn
+     */
+    String getTypeName();
 
-	/**
-	 * Sjekker om objekt er etterlevering
-	 * 
-	 * @return true derosm etterlevering
-	 */
-	Boolean isNotPostShipment();
+    /**
+     * Sjekker om objekt er etterlevering
+     * 
+     * @return true derosm etterlevering
+     */
+    Boolean isNotPostShipment();
 
-	/**
-	 * Henter etterlevering
-	 * 
-	 * @return etterlevering
-	 */
-	PostShipment getPostShipment();
+    /**
+     * Henter etterlevering
+     * 
+     * @return etterlevering
+     */
+    PostShipment getPostShipment();
 
-	Integer getNumberOf();
+    Integer getNumberOf();
+
+    Integer getLenght();
+
+    Integer getWidht();
+
+    Integer getHeight();
 }

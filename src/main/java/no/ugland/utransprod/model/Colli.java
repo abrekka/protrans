@@ -382,7 +382,7 @@ public class Colli extends BaseObject implements Comparable<Colli>, TransportLet
     }
 
     public Integer getNumberOf() {
-	return numberOfCollies;
+	return numberOfCollies == null ? 1 : numberOfCollies;
     }
 
     public void removeOrderLine(OrderLine orderLine) {

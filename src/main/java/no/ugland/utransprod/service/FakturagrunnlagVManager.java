@@ -10,4 +10,6 @@ public interface FakturagrunnlagVManager {
 
     List<FakturagrunnlagV> findFakturagrunnlag(Integer orderId);
 
+    Integer finnBestillingsnrFrakt(Integer orderId);
+
 }

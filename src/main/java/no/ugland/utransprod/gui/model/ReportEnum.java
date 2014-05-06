@@ -39,7 +39,7 @@ public enum ReportEnum {
     /**
 	 * 
 	 */
-    FAX("Order_fax.jasper", IconEnum.ICON_UGLAND_GRIMSTAD_GARASJENE, "Fax"),
+    FAX("Order_fax.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Fax"),
     /**
 	 * 
 	 */
@@ -47,14 +47,14 @@ public enum ReportEnum {
     /**
 	 * 
 	 */
-    TRANSPORT_LETTER("Fraktbrev.jasper", IconEnum.ICON_UGLAND_GRIMSTAD_GARASJENE, "Fraktbrev"),
+    TRANSPORT_LETTER("Fraktbrev.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Fraktbrev"),
     /**
 	 * 
 	 */
-    PACKLIST("Pakkliste.jasper", IconEnum.ICON_UGLAND_GRIMSTAD_GARASJENE, "Pakkliste"), TRANSPORT_COST("Transport_cost.jasper",
-	    IconEnum.ICON_UGLAND_GRIMSTAD_GARASJENE, "Transportkostnad"), ASSEMBLY("Assembly.jasper", IconEnum.ICON_UGLAND_GRIMSTAD_GARASJENE,
-	    "Montering"), ASSEMBLY_NY("assembly_ny.jasper", IconEnum.ICON_UGLAND_GRIMSTAD_GARASJENE, "Montering"), ACCIDENT("Accident.jasper",
-	    IconEnum.ICON_UGLAND_GRIMSTAD_GARASJENE, "Hendelse/ulykke"), TAKSTOL_INFO("Takstolinfo.jasper", IconEnum.ICON_JATAK, "Takstolinfo");
+    PACKLIST("Pakkliste.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Pakkliste"), TRANSPORT_COST("Transport_cost.jasper",
+	    IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Transportkostnad"), ASSEMBLY("Assembly.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Montering"), ASSEMBLY_NY(
+	    "assembly_ny.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Montering"), ACCIDENT("Accident.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER,
+	    "Hendelse/ulykke"), TAKSTOL_INFO("Takstolinfo.jasper", IconEnum.ICON_JATAK, "Takstolinfo");
     /**
 	 * 
 	 */

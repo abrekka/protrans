@@ -27,6 +27,11 @@
 	<field name="driver_comment" class="java.lang.String"/>
 	<field name="telephone_nr_site" class="java.lang.String"/>
 	<field name="customer_ref" class="java.lang.String"/>
+	<field name="bestilling_nr_frakt" class="java.lang.Integer"/>
+	<field name="number_of" class="java.lang.Integer"/>
+	<field name="lenght" class="java.lang.Integer"/>
+	<field name="width" class="java.lang.Integer"/>
+	<field name="height" class="java.lang.Integer"/>
 	<group name="plassering" isStartNewPage="true">
 		<groupExpression><![CDATA[]]></groupExpression>
 		<groupHeader>
@@ -39,7 +44,7 @@
 	<group name="report_number" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{report_number}]]></groupExpression>
 		<groupHeader>
-			<band height="246" splitType="Stretch">
+			<band height="257" splitType="Stretch">
 				<image scaleImage="FillFrame" isUsingCache="true">
 					<reportElement key="image-1" mode="Transparent" x="11" y="7" width="217" height="62"/>
 					<box>
@@ -181,7 +186,7 @@
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{address}]]></textFieldExpression>
 				</textField>
 				<textField pattern="" isBlankWhenNull="false">
-					<reportElement key="textField" x="17" y="140" width="57" height="18"/>
+					<reportElement key="textField" x="17" y="139" width="57" height="18"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -194,7 +199,7 @@
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{postal_code}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField" x="74" y="140" width="105" height="18"/>
+					<reportElement key="textField" x="74" y="139" width="105" height="18"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -233,7 +238,7 @@
 					<textFieldExpression class="java.lang.Integer"><![CDATA[$F{customer_nr}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement key="staticText-12" x="17" y="160" width="22" height="18"/>
+					<reportElement key="staticText-12" x="17" y="156" width="22" height="18"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -246,7 +251,7 @@
 					<text><![CDATA[Tlf:]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField" positionType="Float" stretchType="RelativeToBandHeight" x="39" y="160" width="156" height="18"/>
+					<reportElement key="textField" positionType="Float" stretchType="RelativeToBandHeight" x="39" y="156" width="156" height="18"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -258,21 +263,7 @@
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{phone_nr}]]></textFieldExpression>
 				</textField>
-				<elementGroup>
-					<textField isStretchWithOverflow="true" evaluationTime="Report" isBlankWhenNull="false">
-						<reportElement key="textField" positionType="Float" x="316" y="180" width="122" height="18" isPrintWhenDetailOverflows="true"/>
-						<box>
-							<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-							<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-							<bottomPen lineWidth="0.0" lineColor="#000000"/>
-							<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						</box>
-						<textElement>
-							<font fontName="Arial" size="12"/>
-						</textElement>
-						<textFieldExpression class="java.lang.String"><![CDATA["Antall kolli:"+$F{number_of_colli}]]></textFieldExpression>
-					</textField>
-				</elementGroup>
+				<elementGroup/>
 				<staticText>
 					<reportElement key="staticText-10" x="316" y="105" width="118" height="18"/>
 					<box>
@@ -300,7 +291,7 @@
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{order_nr}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField" positionType="Float" stretchType="RelativeToBandHeight" x="195" y="160" width="338" height="18" isPrintWhenDetailOverflows="true"/>
+					<reportElement key="textField" positionType="Float" stretchType="RelativeToBandHeight" x="195" y="156" width="338" height="18" isPrintWhenDetailOverflows="true"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -314,7 +305,7 @@
 				</textField>
 				<elementGroup>
 					<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-						<reportElement key="textField" positionType="Float" x="17" y="202" width="516" height="21" isPrintWhenDetailOverflows="true"/>
+						<reportElement key="textField" positionType="Float" stretchType="RelativeToTallestObject" x="17" y="209" width="516" height="21" isPrintWhenDetailOverflows="true"/>
 						<textElement>
 							<font fontName="Arial" size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
 						</textElement>
@@ -323,7 +314,7 @@
 				</elementGroup>
 				<elementGroup>
 					<staticText>
-						<reportElement key="staticText-20" positionType="Float" x="17" y="180" width="96" height="18" isPrintWhenDetailOverflows="true">
+						<reportElement key="staticText-20" positionType="Float" x="17" y="171" width="96" height="18" isPrintWhenDetailOverflows="true">
 							<printWhenExpression><![CDATA[$P{is_tross}]]></printWhenExpression>
 						</reportElement>
 						<box>
@@ -338,7 +329,7 @@
 						<text><![CDATA[Tlf byggeplass:]]></text>
 					</staticText>
 					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-						<reportElement key="textField-1" positionType="Float" stretchType="RelativeToBandHeight" x="113" y="180" width="156" height="18" isPrintWhenDetailOverflows="true">
+						<reportElement key="textField-1" positionType="Float" stretchType="RelativeToBandHeight" x="108" y="171" width="156" height="18" isPrintWhenDetailOverflows="true">
 							<printWhenExpression><![CDATA[$P{is_tross}]]></printWhenExpression>
 						</reportElement>
 						<box>
@@ -383,16 +374,42 @@
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{customer_ref}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement key="staticText-20" positionType="Float" x="17" y="191" width="292" height="14"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<text><![CDATA[Vennligst merk hver faktura med vårt bestillingsnr:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField-7" positionType="Float" x="310" y="191" width="27" height="14"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="Arial" size="12" isItalic="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$F{bestilling_nr_frakt}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="1" splitType="Stretch"/>
+			<band splitType="Stretch"/>
 		</groupFooter>
 	</group>
 	<group name="info">
 		<groupExpression><![CDATA[]]></groupExpression>
 		<groupHeader>
-			<band height="1" splitType="Stretch"/>
+			<band splitType="Stretch"/>
 		</groupHeader>
 		<groupFooter>
 			<band height="98" splitType="Stretch"/>
@@ -403,7 +420,7 @@
 		<groupHeader>
 			<band height="21" splitType="Stretch">
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField" positionType="Float" x="36" y="2" width="100" height="18" isPrintWhenDetailOverflows="true"/>
+					<reportElement key="textField" positionType="Float" x="17" y="2" width="57" height="18" isPrintWhenDetailOverflows="true"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -415,6 +432,51 @@
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{element_name}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement x="118" y="1" width="35" height="20">
+						<printWhenExpression><![CDATA[new Boolean($F{element_name}.equalsIgnoreCase("Kolli"))]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="Arial" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Antall]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="163" y="0" width="46" height="20">
+						<printWhenExpression><![CDATA[new Boolean($F{element_name}.equalsIgnoreCase("Kolli"))]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="Arial" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Lengde]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="216" y="0" width="46" height="20">
+						<printWhenExpression><![CDATA[new Boolean($F{element_name}.equalsIgnoreCase("Kolli"))]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="Arial" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Bredde]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="271" y="0" width="46" height="20">
+						<printWhenExpression><![CDATA[new Boolean($F{element_name}.equalsIgnoreCase("Kolli"))]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="Arial" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Høyde]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="322" y="0" width="46" height="20">
+						<printWhenExpression><![CDATA[new Boolean($F{element_name}.equalsIgnoreCase("Kolli"))]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="Arial" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Info]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -436,7 +498,7 @@
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField" positionType="Float" x="45" y="2" width="129" height="18" isPrintWhenDetailOverflows="true"/>
+				<reportElement key="textField" positionType="Float" x="20" y="2" width="91" height="18" isPrintWhenDetailOverflows="true"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -449,7 +511,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{colli_name}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField" positionType="Float" x="179" y="2" width="354" height="18" isPrintWhenDetailOverflows="true"/>
+				<reportElement key="textField" positionType="Float" x="322" y="2" width="208" height="18" isPrintWhenDetailOverflows="true"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -460,6 +522,58 @@
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{colli_details}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" positionType="Float" x="118" y="2" width="35" height="18" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{number_of}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" positionType="Float" x="163" y="2" width="39" height="18" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{lenght}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" positionType="Float" x="216" y="2" width="39" height="18" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{width}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" positionType="Float" x="271" y="2" width="39" height="18" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{height}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
