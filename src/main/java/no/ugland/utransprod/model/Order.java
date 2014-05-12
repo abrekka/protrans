@@ -698,10 +698,7 @@ public class Order extends AbstractTransportable implements TextRenderable, Arti
      * @see no.ugland.utransprod.gui.model.Transportable#getSentBool()
      */
     public Boolean getSentBool() {
-	if (sent != null) {
-	    return Boolean.TRUE;
-	}
-	return Boolean.FALSE;
+	return sent != null;
     }
 
     /**

@@ -11,7 +11,6 @@ import com.google.common.collect.Iterables;
 
 public class FakturagrunnlagVManagerImpl implements FakturagrunnlagVManager {
     private FakturagrunnlagVDAO dao;
-    private static final String FRAKT = "FRAKT";
 
     public final void setFakturagrunnlagVDAO(final FakturagrunnlagVDAO aDao) {
 	this.dao = aDao;
@@ -31,7 +30,7 @@ public class FakturagrunnlagVManagerImpl implements FakturagrunnlagVManager {
 	return new Predicate<FakturagrunnlagV>() {
 
 	    public boolean apply(FakturagrunnlagV grunnlag) {
-		return FRAKT.equalsIgnoreCase(grunnlag.getProdno());
+		return grunnlag.erFrakt();
 	    }
 	};
     }

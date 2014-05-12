@@ -120,7 +120,7 @@ public class ArticlePackerTest {
     public void testPackAndSendFileToVisma() throws Exception {
 	Multimap<String, String> colliSetup = ArrayListMultimap.create();
 	colliSetup.put("Port", "Port");
-	VismaFileCreator vismaFileCreator = new VismaFileCreatorImpl(ordchgrHeadVManager, false);
+	VismaFileCreator vismaFileCreator = new VismaFileCreatorImpl(ordchgrHeadVManager, false, null);
 	ArticlePacker articlePacker = new ArticlePacker(colliViewHandlerProvider, colliSetup, vismaFileCreator);
 
 	UserUtil.setUserTypeManagerForTest(userTypeManager);

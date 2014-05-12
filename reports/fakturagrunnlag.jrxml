@@ -4,8 +4,8 @@
 	<property name="ireport.encoding" value="UTF-8"/>
 	<field name="descr" class="java.lang.String"/>
 	<field name="noof" class="java.math.BigDecimal"/>
-	<field name="priceMont" class="java.math.BigDecimal"/>
-	<field name="sumLine" class="java.math.BigDecimal"/>
+	<field name="priceMontMedVerdi" class="java.math.BigDecimal"/>
+	<field name="sumLineMedVerdi" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -100,9 +100,7 @@
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{noof}]]></textFieldExpression>
 			</textField>
 			<textField pattern="##0.00" isBlankWhenNull="true">
-				<reportElement key="textField-1" x="360" y="0" width="87" height="12">
-					<printWhenExpression><![CDATA[new Boolean($F{priceMont}.intValue()>0)]]></printWhenExpression>
-				</reportElement>
+				<reportElement key="textField-1" x="360" y="0" width="87" height="12"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -112,12 +110,10 @@
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{priceMont}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{priceMontMedVerdi}]]></textFieldExpression>
 			</textField>
 			<textField pattern="##0.00" isBlankWhenNull="true">
-				<reportElement key="textField-1" x="466" y="1" width="64" height="12">
-					<printWhenExpression><![CDATA[new Boolean($F{sumLine}.intValue()>0)]]></printWhenExpression>
-				</reportElement>
+				<reportElement key="textField-1" x="466" y="1" width="64" height="12"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -127,7 +123,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{sumLine}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{sumLineMedVerdi}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

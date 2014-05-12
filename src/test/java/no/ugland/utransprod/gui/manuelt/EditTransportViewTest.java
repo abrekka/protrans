@@ -108,7 +108,7 @@ public class EditTransportViewTest {
 	    protected JDialog executeInEDT() {
 		Transport transport = new Transport();
 		TransportViewHandler transportViewHandler = new TransportViewHandler(orderViewHandlerFactory, login, managerRepository,
-			deviationViewHandlerFactory, showTakstolInfoActionFactory, new VismaFileCreatorImpl(null, true));
+			deviationViewHandlerFactory, showTakstolInfoActionFactory, new VismaFileCreatorImpl(null, true, null));
 
 		final EditTransportView editTransportView = new EditTransportView(transportViewHandler, transport, false);
 

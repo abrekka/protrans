@@ -43,7 +43,7 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
     private static final String DIALOG_HEADING = "Fraktbrev";
 
-    private static final int PAGES = 3;
+    private static final int PAGES = 1;
 
     private static final String ORDER_TYPE_TEXT_PARAMETER = "order_type_text";
 

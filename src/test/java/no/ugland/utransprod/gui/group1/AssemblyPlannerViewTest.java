@@ -162,7 +162,7 @@ public class AssemblyPlannerViewTest {
 	    }
 	};
 	final SupplierOrderViewHandler supplierOrderViewHandler = new SupplierOrderViewHandler(login, managerRepository, assemblyReportFactory,
-		deviationViewHandlerFactory, orderViewHandlerFactory, supplier, yearWeek);
+		deviationViewHandlerFactory, orderViewHandlerFactory, supplier, yearWeek, null);
 
 	Set<UserTypeAccess> userTypeAccesses = new HashSet<UserTypeAccess>();
 	UserTypeAccess userTypeAccess = new UserTypeAccess();
@@ -180,7 +180,7 @@ public class AssemblyPlannerViewTest {
 
 	    public SupplierOrderViewHandler create(Supplier aSupplier, YearWeek aYearWeek) {
 		return new SupplierOrderViewHandler(login, managerRepository, assemblyReportFactory, deviationViewHandlerFactory,
-			orderViewHandlerFactory, supplier, yearWeek);
+			orderViewHandlerFactory, supplier, yearWeek, null);
 	    }
 	};
 	final AssemblyPlannerView view = new AssemblyPlannerView(new AssemblyPlannerViewHandler(orderViewHandler, login,

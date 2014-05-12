@@ -896,6 +896,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		transportPresentationModel.triggerCommit();
 		((TransportModel) transportPresentationModel.getBean()).getObject().setSent(sentDate);
 		saveObject((TransportModel) transportPresentationModel.getBean(), window);
+
 		updateTransportableList();
 	    } else {
 
@@ -1141,6 +1142,11 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	    if (sentDate != null) {
 		fireSentChange();
 	    }
+
+	    for (TransportListable transportListable : listTransportable) {
+		vismaFileCreator.createVismaFileForDelivery(transportListable.getOrder());
+	    }
+
 	    Util.setDefaultCursor(window.getComponent());
 	    if (sentDate != null) {
 		return false;

@@ -66,7 +66,7 @@
 					<textElement>
 						<font fontName="Arial" size="12"/>
 					</textElement>
-					<text><![CDATA[Ugland Industrier AS]]></text>
+					<text><![CDATA[Grimstad Industrier AS]]></text>
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-3" x="250" y="25" width="104" height="17"/>
@@ -95,7 +95,7 @@
 					<text><![CDATA[N-4886 Grimstad]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-5" x="375" y="8" width="146" height="17"/>
+					<reportElement key="staticText-5" x="375" y="8" width="164" height="17"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -105,7 +105,7 @@
 					<textElement>
 						<font fontName="Arial" size="12"/>
 					</textElement>
-					<text><![CDATA[Org. Nr: NO 929 685 164 MVA]]></text>
+					<text><![CDATA[Org. Nr: NO 970 953 302]]></text>
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-6" x="375" y="25" width="146" height="17"/>
@@ -118,7 +118,7 @@
 					<textElement>
 						<font fontName="Arial" size="12"/>
 					</textElement>
-					<text><![CDATA[Tlf: (+47) 37 25 75 00]]></text>
+					<text><![CDATA[Tlf: (+47) 37 25 70 70]]></text>
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-7" x="375" y="42" width="146" height="17"/>
@@ -131,7 +131,7 @@
 					<textElement>
 						<font fontName="Arial" size="12"/>
 					</textElement>
-					<text><![CDATA[Fax: (+47) 37 25 75 71]]></text>
+					<text><![CDATA[Fax: (+47) 37 25 70 71]]></text>
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-8" x="231" y="74" width="77" height="23"/>

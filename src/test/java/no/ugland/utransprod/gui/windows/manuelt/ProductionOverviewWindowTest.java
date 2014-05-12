@@ -20,6 +20,7 @@ import no.ugland.utransprod.gui.handlers.ShowTakstolInfoAction;
 import no.ugland.utransprod.gui.handlers.ShowTakstolInfoActionFactory;
 import no.ugland.utransprod.model.ArticleType;
 import no.ugland.utransprod.service.BudgetManager;
+import no.ugland.utransprod.service.FakturagrunnlagVManager;
 import no.ugland.utransprod.service.OrdchgrHeadVManager;
 import no.ugland.utransprod.service.OrderManager;
 import no.ugland.utransprod.service.ProductionUnitManager;
@@ -41,104 +42,91 @@ import com.birosoft.liquid.LiquidLookAndFeel;
  * 
  */
 public class ProductionOverviewWindowTest extends WindowTest {
-	static {
-		try {
+    static {
+	try {
 
-			UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
-			JFrame.setDefaultLookAndFeelDecorated(true);
-			LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+	    LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
+    }
 
-	private FrameFixture frameFixture;
+    private FrameFixture frameFixture;
 
-	@Before
-	protected void setUp() throws Exception {
-		super.setUp();
-		BudgetManager budgetManager = (BudgetManager) ModelUtil
-				.getBean(BudgetManager.MANAGER_NAME);
-		when(managerRepository.getBudgetManager()).thenReturn(budgetManager);
-		ProductionUnitManager productionUnitManager = (ProductionUnitManager) ModelUtil
-				.getBean(ProductionUnitManager.MANAGER_NAME);
-		when(managerRepository.getProductionUnitManager()).thenReturn(
-				productionUnitManager);
-		OrdchgrHeadVManager ordchgrHeadVManager = (OrdchgrHeadVManager) ModelUtil
-				.getBean(OrdchgrHeadVManager.MANAGER_NAME);
-		VismaFileCreator vismaFileCreator = new VismaFileCreatorImpl(
-				ordchgrHeadVManager, false);
-		final OrderViewHandler orderViewHandler = new OrderViewHandler(login,
-				managerRepository, deviationOverviewViewFactory,
-				deviationViewHandlerFactory, true);
-		final OrderViewHandlerFactory orderViewHandlerFactory = new OrderViewHandlerFactory() {
+    @Before
+    protected void setUp() throws Exception {
+	super.setUp();
+	BudgetManager budgetManager = (BudgetManager) ModelUtil.getBean(BudgetManager.MANAGER_NAME);
+	when(managerRepository.getBudgetManager()).thenReturn(budgetManager);
+	ProductionUnitManager productionUnitManager = (ProductionUnitManager) ModelUtil.getBean(ProductionUnitManager.MANAGER_NAME);
+	when(managerRepository.getProductionUnitManager()).thenReturn(productionUnitManager);
+	OrdchgrHeadVManager ordchgrHeadVManager = (OrdchgrHeadVManager) ModelUtil.getBean(OrdchgrHeadVManager.MANAGER_NAME);
+	FakturagrunnlagVManager fakturagrunnlagVManager = (FakturagrunnlagVManager) ModelUtil.getBean(FakturagrunnlagVManager.MANAGER_NAME);
+	;
+	VismaFileCreator vismaFileCreator = new VismaFileCreatorImpl(ordchgrHeadVManager, false, fakturagrunnlagVManager);
+	final OrderViewHandler orderViewHandler = new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory,
+		deviationViewHandlerFactory, true);
+	final OrderViewHandlerFactory orderViewHandlerFactory = new OrderViewHandlerFactory() {
 
-			public OrderViewHandler create(boolean notInitData) {
-				return orderViewHandler;
-			}
-		};
+	    public OrderViewHandler create(boolean notInitData) {
+		return orderViewHandler;
+	    }
+	};
 
-		final OrderManager orderManager = (OrderManager) ModelUtil
-				.getBean(OrderManager.MANAGER_NAME);
+	final OrderManager orderManager = (OrderManager) ModelUtil.getBean(OrderManager.MANAGER_NAME);
 
-		final ShowTakstolInfoActionFactory showTakstolInfoActionFactory = new ShowTakstolInfoActionFactory() {
+	final ShowTakstolInfoActionFactory showTakstolInfoActionFactory = new ShowTakstolInfoActionFactory() {
 
-			public ShowTakstolInfoAction create(
-					OrderNrProvider aProduceableProvider, WindowInterface window) {
-				return null;
-			}
-		};
+	    public ShowTakstolInfoAction create(OrderNrProvider aProduceableProvider, WindowInterface window) {
+		return null;
+	    }
+	};
 
-		SetProductionUnitActionFactory setProductionUnitFactory = new SetProductionUnitActionFactory() {
+	SetProductionUnitActionFactory setProductionUnitFactory = new SetProductionUnitActionFactory() {
 
-			public SetProductionUnitAction create(ArticleType aArticleType,
-					ProduceableProvider aProduceableProvider,
-					WindowInterface aWindow) {
-				return new SetProductionUnitAction(managerRepository,
-						aArticleType, aProduceableProvider, aWindow);
-			}
-		};
-		ProductionOverviewViewHandler productionOverviewViewHandler = new ProductionOverviewViewHandler(
-				vismaFileCreator, orderViewHandlerFactory, login,
-				managerRepository, deviationViewHandlerFactory,
-				showTakstolInfoActionFactory, null, null, null,
-				setProductionUnitFactory, null, null);
-		final ProductionOverviewWindow productionOverviewWindow = new ProductionOverviewWindow(
-				productionOverviewViewHandler);
+	    public SetProductionUnitAction create(ArticleType aArticleType, ProduceableProvider aProduceableProvider, WindowInterface aWindow) {
+		return new SetProductionUnitAction(managerRepository, aArticleType, aProduceableProvider, aWindow);
+	    }
+	};
+	ProductionOverviewViewHandler productionOverviewViewHandler = new ProductionOverviewViewHandler(vismaFileCreator, orderViewHandlerFactory,
+		login, managerRepository, deviationViewHandlerFactory, showTakstolInfoActionFactory, null, null, null, setProductionUnitFactory,
+		null, null);
+	final ProductionOverviewWindow productionOverviewWindow = new ProductionOverviewWindow(productionOverviewViewHandler);
 
-		productionOverviewWindow.setLogin(login);
+	productionOverviewWindow.setLogin(login);
 
-		JFrame frame = GuiActionRunner.execute(new GuiQuery<JFrame>() {
-			protected JFrame executeInEDT() {
-				return (JFrame) productionOverviewWindow.buildMainWindow(
-						new SystemReadyListener() {
+	JFrame frame = GuiActionRunner.execute(new GuiQuery<JFrame>() {
+	    protected JFrame executeInEDT() {
+		return (JFrame) productionOverviewWindow.buildMainWindow(new SystemReadyListener() {
 
-							public void systemReady() {
+		    public void systemReady() {
 
-							}
+		    }
 
-						}, managerRepository);
+		}, managerRepository);
 
-			}
-		});
+	    }
+	});
 
-		frameFixture = new FrameFixture(frame);
-		frameFixture.show();
+	frameFixture = new FrameFixture(frame);
+	frameFixture.show();
 
-	}
+    }
 
-	@After
-	protected void tearDown() throws Exception {
-		frameFixture.cleanUp();
-		super.tearDown();
-	}
+    @After
+    protected void tearDown() throws Exception {
+	frameFixture.cleanUp();
+	super.tearDown();
+    }
 
-	@Test
-	public void testShowProductionWindow() throws Exception {
-		frameFixture.requireVisible();
-		assertEquals("Produksjonsoversikt", frameFixture.target.getTitle());
+    @Test
+    public void testShowProductionWindow() throws Exception {
+	frameFixture.requireVisible();
+	assertEquals("Produksjonsoversikt", frameFixture.target.getTitle());
 
-	}
+    }
 
 }

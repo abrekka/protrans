@@ -15,27 +15,27 @@ public enum ReportEnum {
     /**
 	 * 
 	 */
-    GULVSPON("Gulvspon.jasper", IconEnum.ICON_UGLAND_BIG, "Gulvspon"),
+    GULVSPON("Gulvspon.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Gulvspon"),
     /**
 	 * 
 	 */
-    TAKSTOL("Takstol.jasper", IconEnum.ICON_UGLAND_BIG, "Takstol"),
+    TAKSTOL("Takstol.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Takstol"),
     /**
 	 * 
 	 */
-    MONTERING("Montering_bean.jasper", IconEnum.ICON_UGLAND_BIG, "Montering"),
+    MONTERING("Montering_bean.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Montering"),
     /**
 	 * 
 	 */
-    NOKKEl("Nokkeltall_bean.jasper", IconEnum.ICON_UGLAND_BIG, "Nøkkeltall - Salg/Drift/Transport"),
+    NOKKEl("Nokkeltall_bean.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Nøkkeltall - Salg/Drift/Transport"),
     /**
 	 * 
 	 */
-    NOKKEl_PRODUCTION("Nokkeltall_produksjon_alt_bean.jasper", IconEnum.ICON_UGLAND_BIG, "Nøkkeltall - Produksjon"),
+    NOKKEl_PRODUCTION("Nokkeltall_produksjon_alt_bean.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Nøkkeltall - Produksjon"),
     /**
 	 * 
 	 */
-    NOKKEl_ASSEMBLY("Nokkeltall_mont_ok_bean.jasper", IconEnum.ICON_UGLAND_BIG, "Nøkkeltall - Montering/Økonomi"),
+    NOKKEl_ASSEMBLY("Nokkeltall_mont_ok_bean.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Nøkkeltall - Montering/Økonomi"),
     /**
 	 * 
 	 */
@@ -43,7 +43,7 @@ public enum ReportEnum {
     /**
 	 * 
 	 */
-    DEVIATION("Deviation_report.jasper", IconEnum.ICON_UGLAND_BIG, "Avvik"),
+    DEVIATION("Deviation_report.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Avvik"),
     /**
 	 * 
 	 */

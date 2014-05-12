@@ -80,5 +80,17 @@
         column="PURCNO"
         length="32"
     />
+    <property
+        name="lnPurcno"
+        type="java.lang.Integer"
+        column="LNPURCNO"
+        length="32"
+    />
+    <property
+        name="alloc"
+        type="java.lang.Integer"
+        column="ALLOC"
+        length="32"
+    />
 </class>
 </hibernate-mapping>

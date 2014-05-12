@@ -31,73 +31,69 @@ import org.mockito.MockitoAnnotations;
  */
 @Category(FastTests.class)
 public class AssemblyTeamOrderViewHandlerTest {
-	private SupplierOrderViewHandler viewHandler;
+    private SupplierOrderViewHandler viewHandler;
 
-	@Mock
-	private OrderManager orderManager;
+    @Mock
+    private OrderManager orderManager;
 
-	@Mock
-	private AssemblyManager assemblyManager;
+    @Mock
+    private AssemblyManager assemblyManager;
 
-	@Mock
-	private Login login;
-	@Mock
-	private DeviationOverviewViewFactory deviationOverviewViewFactory;
-	@Mock
-	private ManagerRepository managerRepository;
-	@Mock
-	private DeviationViewHandlerFactory deviationViewHandlerFactory;
-	@Mock
-	private AssemblyReportFactory assemblyReportFactory;
-	@Mock
-	private OrderViewHandlerFactory orderViewHandlerFactory;
-	@Mock
-	private ProductAreaManager productAreaManager;
+    @Mock
+    private Login login;
+    @Mock
+    private DeviationOverviewViewFactory deviationOverviewViewFactory;
+    @Mock
+    private ManagerRepository managerRepository;
+    @Mock
+    private DeviationViewHandlerFactory deviationViewHandlerFactory;
+    @Mock
+    private AssemblyReportFactory assemblyReportFactory;
+    @Mock
+    private OrderViewHandlerFactory orderViewHandlerFactory;
+    @Mock
+    private ProductAreaManager productAreaManager;
 
-	@Before
-	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-		when(managerRepository.getProductAreaManager()).thenReturn(
-				productAreaManager);
-		when(managerRepository.getAssemblyManager())
-				.thenReturn(assemblyManager);
-		when(managerRepository.getOrderManager()).thenReturn(orderManager);
-		final OrderViewHandler orderViewHandler = new OrderViewHandler(login,
-				managerRepository, deviationOverviewViewFactory,
-				deviationViewHandlerFactory, true);
-		when(orderViewHandlerFactory.create(true)).thenReturn(orderViewHandler);
-		UserType userType = new UserType();
-		userType.setIsAdmin(1);
-		when(login.getUserType()).thenReturn(userType);
-		YearWeek yearWeek = new YearWeek();
+    @Before
+    public void setUp() throws Exception {
+	MockitoAnnotations.initMocks(this);
+	when(managerRepository.getProductAreaManager()).thenReturn(productAreaManager);
+	when(managerRepository.getAssemblyManager()).thenReturn(assemblyManager);
+	when(managerRepository.getOrderManager()).thenReturn(orderManager);
+	final OrderViewHandler orderViewHandler = new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory,
+		deviationViewHandlerFactory, true);
+	when(orderViewHandlerFactory.create(true)).thenReturn(orderViewHandler);
+	UserType userType = new UserType();
+	userType.setIsAdmin(1);
+	when(login.getUserType()).thenReturn(userType);
+	YearWeek yearWeek = new YearWeek();
 
-		viewHandler = new SupplierOrderViewHandler(login, managerRepository,
-				assemblyReportFactory, deviationViewHandlerFactory,
-				orderViewHandlerFactory, null, yearWeek);
+	viewHandler = new SupplierOrderViewHandler(login, managerRepository, assemblyReportFactory, deviationViewHandlerFactory,
+		orderViewHandlerFactory, null, yearWeek, null);
 
-	}
+    }
 
-	@Test
-	public void testGetOrderListAtStart() {
-		assertEquals(0, viewHandler.getObjectSelectionListSize());
-	}
+    @Test
+    public void testGetOrderListAtStart() {
+	assertEquals(0, viewHandler.getObjectSelectionListSize());
+    }
 
-	@Test
-	public void testGetAddRemoveString() {
-		assertNotNull(viewHandler.getAddRemoveString());
-		assertEquals("montering", viewHandler.getAddRemoveString());
-	}
+    @Test
+    public void testGetAddRemoveString() {
+	assertNotNull(viewHandler.getAddRemoveString());
+	assertEquals("montering", viewHandler.getAddRemoveString());
+    }
 
-	@Test
-	public void testGetNewObject() {
-		assertNotNull(viewHandler.getNewObject());
-		assertEquals(Assembly.class, viewHandler.getNewObject().getClass());
-	}
+    @Test
+    public void testGetNewObject() {
+	assertNotNull(viewHandler.getNewObject());
+	assertEquals(Assembly.class, viewHandler.getNewObject().getClass());
+    }
 
-	@Test
-	public void testGetTableModel() {
-		assertNotNull(viewHandler.getTableModel(null));
+    @Test
+    public void testGetTableModel() {
+	assertNotNull(viewHandler.getTableModel(null));
 
-	}
+    }
 
 }

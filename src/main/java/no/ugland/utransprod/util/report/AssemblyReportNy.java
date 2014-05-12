@@ -17,12 +17,6 @@ import com.google.common.collect.Iterables;
 import com.google.inject.internal.Lists;
 
 public class AssemblyReportNy {
-    private static final String FRAKT = "FRAKT";
-
-    private static final String GARFRAKT = "GARFRAKT";
-
-    private static final String KRANBIL = "KRANBIL";
-    private static final String MONTERING_VILLA = "MONTERING VILLA";
 
     private Order order;
 
@@ -59,7 +53,7 @@ public class AssemblyReportNy {
 	if (craningCost == null) {
 	    if (fakturagrunnlag != null) {
 		for (FakturagrunnlagV linje : fakturagrunnlag) {
-		    if (linje.getProdno() != null && linje.getProdno().equalsIgnoreCase(KRANBIL)) {
+		    if (linje.erKranbil()) {
 			return linje.getPrice();
 		    }
 		}
@@ -73,7 +67,7 @@ public class AssemblyReportNy {
     public Integer getBestillingsnrMontering() {
 	if (fakturagrunnlag != null) {
 	    for (FakturagrunnlagV linje : fakturagrunnlag) {
-		if (linje.getProdno() != null && linje.getProdno().equalsIgnoreCase(MONTERING_VILLA)) {
+		if (linje.erMontering()) {
 		    return linje.getPurcno();
 		}
 	    }
@@ -89,7 +83,7 @@ public class AssemblyReportNy {
     public BigDecimal getDrivingAddition() {
 	if (fakturagrunnlag != null) {
 	    for (FakturagrunnlagV linje : fakturagrunnlag) {
-		if (linje.getProdno() != null && (linje.getProdno().equalsIgnoreCase(FRAKT) || linje.getProdno().equalsIgnoreCase(GARFRAKT))) {
+		if (linje.erFrakt()) {
 		    return linje.getPrice();
 		}
 	    }
@@ -119,7 +113,7 @@ public class AssemblyReportNy {
 	return new Predicate<FakturagrunnlagV>() {
 
 	    public boolean apply(FakturagrunnlagV fakturagrunnlagV) {
-		return !MONTERING_VILLA.equalsIgnoreCase(fakturagrunnlagV.getProdno());
+		return !fakturagrunnlagV.erMontering();
 	    }
 	};
     }

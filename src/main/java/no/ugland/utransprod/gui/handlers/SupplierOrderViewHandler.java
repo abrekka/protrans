@@ -54,6 +54,7 @@ import no.ugland.utransprod.service.AssemblyManager;
 import no.ugland.utransprod.service.CraningCostManager;
 import no.ugland.utransprod.service.DeviationManager;
 import no.ugland.utransprod.service.ManagerRepository;
+import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.service.enums.LazyLoadDeviationEnum;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.util.CommentTypeUtil;
@@ -141,6 +142,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
     private ManagerRepository managerRepository;
 
     private ProductAreaGroup currentProductAreaGroup;
+    private VismaFileCreator vismaFileCreator;
 
     /**
      * @param aHeading
@@ -153,8 +155,9 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
     @Inject
     public SupplierOrderViewHandler(Login aLogin, ManagerRepository aManagerRepository, final AssemblyReportFactory aAssemblyReportFactory,
 	    DeviationViewHandlerFactory aDeviationViewHandlerFactory, OrderViewHandlerFactory orderViewHandlerFactory,
-	    @Assisted final Supplier aSupplier, @Assisted final YearWeek aYearWeek) {
+	    @Assisted final Supplier aSupplier, @Assisted final YearWeek aYearWeek, VismaFileCreator aVismaFileCreator) {
 	super("Montering", aManagerRepository.getAssemblyManager(), aLogin.getUserType(), true);
+	this.vismaFileCreator = aVismaFileCreator;
 	login = aLogin;
 	managerRepository = aManagerRepository;
 	deviationViewHandlerFactory = aDeviationViewHandlerFactory;
@@ -856,6 +859,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 		order.cacheComments();
 		orderViewHandler.getOrderManager().saveOrder(order);
 	    }
+	    vismaFileCreator.createVismaFileForAssembly(order, assembly.getAssembliedBool());
 	} catch (ProTransException e) {
 	    Util.showErrorDialog(window, "Feil", e.getMessage());
 	    e.printStackTrace();

@@ -3,6 +3,12 @@ package no.ugland.utransprod.model;
 import java.math.BigDecimal;
 
 public class FakturagrunnlagV {
+    private static final String FRAKT = "FRAKT";
+    private static final String GARFRAKT = "GARFRAKT";
+    private static final String MONTERING_VILLA = "MONTERING VILLA";
+    private static final String KRANBIL = "KRANBIL";
+    private static final String AVFALLSFJERNING = "AVFALLSFJERNING MONTASJE";
+    private static final String MONTERINGSSPIKER = "MONTSPIKER";
     private FakturagrunnlagVPK fakturagrunnlagVPK;
     private String prodno;
     private BigDecimal price;
@@ -13,6 +19,8 @@ public class FakturagrunnlagV {
     private BigDecimal priceMont;
     private BigDecimal sumLine;
     private Integer purcno;
+    private Integer lnPurcno;
+    private Integer alloc;
 
     public FakturagrunnlagVPK getFakturagrunnlagVPK() {
 	return fakturagrunnlagVPK;
@@ -24,6 +32,10 @@ public class FakturagrunnlagV {
 
     public BigDecimal getSumLine() {
 	return sumLine;
+    }
+
+    public BigDecimal getSumLineMedVerdi() {
+	return sumLine.intValue() == 0 ? null : sumLine;
     }
 
     public void setSumLine(BigDecimal sumLine) {
@@ -40,6 +52,10 @@ public class FakturagrunnlagV {
 
     public BigDecimal getPriceMont() {
 	return priceMont;
+    }
+
+    public BigDecimal getPriceMontMedVerdi() {
+	return priceMont.intValue() == 0 ? null : priceMont;
     }
 
     public void setPriceMont(BigDecimal priceMont) {
@@ -92,5 +108,65 @@ public class FakturagrunnlagV {
 
     public void setPurcno(Integer purcno) {
 	this.purcno = purcno;
+    }
+
+    public Integer getLnPurcno() {
+	return lnPurcno;
+    }
+
+    public void setLnPurcno(Integer lnPurcno) {
+	this.lnPurcno = lnPurcno;
+    }
+
+    public Integer getAlloc() {
+	return alloc;
+    }
+
+    public void setAlloc(Integer alloc) {
+	this.alloc = alloc;
+    }
+
+    public FakturagrunnlagV medPurcno(Integer purcno) {
+	this.purcno = purcno;
+	return this;
+    }
+
+    public FakturagrunnlagV medLnPurcno(Integer lnPurcno) {
+	this.lnPurcno = lnPurcno;
+	return this;
+    }
+
+    public FakturagrunnlagV medAlloc(Integer alloc) {
+	this.alloc = alloc;
+	return this;
+    }
+
+    public boolean erFrakt() {
+	return FRAKT.equalsIgnoreCase(getProdno()) || GARFRAKT.equalsIgnoreCase(getProdno());
+    }
+
+    public boolean erMontering() {
+	return MONTERING_VILLA.equalsIgnoreCase(getProdno());
+    }
+
+    public boolean erKranbil() {
+	return KRANBIL.equalsIgnoreCase(getProdno());
+    }
+
+    public boolean erAvfallsfjerning() {
+	return AVFALLSFJERNING.equalsIgnoreCase(getProdno());
+    }
+
+    public boolean erMonteringsspiker() {
+	return MONTERINGSSPIKER.equalsIgnoreCase(getProdno());
+    }
+
+    public boolean harBestillingsnr() {
+	return getPurcno() != null && getPurcno() != 0;
+    }
+
+    public FakturagrunnlagV medProdno(String prodno) {
+	this.prodno = prodno;
+	return this;
     }
 }

@@ -795,10 +795,13 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap,
 		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		String returnString = "";
 		if (transportable.getDoAssembly() != null && transportable.getDoAssembly() == 1) {
-		    return "X";
+		    returnString = "M"
+			    + (transportable.getAssembly() == null ? "" : transportable.getAssembly().getAssemblyWeek() == null ? "" : transportable
+				    .getAssembly().getAssemblyWeek());
 		}
-		return "";
+		return returnString;
 	    }
 
 	    @SuppressWarnings("unchecked")
