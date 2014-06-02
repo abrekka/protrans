@@ -6,6 +6,8 @@
 	<field name="noof" class="java.math.BigDecimal"/>
 	<field name="priceMontMedVerdi" class="java.math.BigDecimal"/>
 	<field name="sumLineMedVerdi" class="java.math.BigDecimal"/>
+	<field name="prodno" class="java.lang.String"/>
+	<field name="orgPriceMont" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -84,7 +86,7 @@
 				<textElement>
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{descr}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{prodno}.equalsIgnoreCase("FRAKT")&&$F{orgPriceMont}!=null&&$F{orgPriceMont}.intValue()!=0?"Distriktstillegg montasje":$F{descr}]]></textFieldExpression>
 			</textField>
 			<textField pattern="##0.00" isBlankWhenNull="true">
 				<reportElement key="textField" x="296" y="0" width="41" height="12"/>

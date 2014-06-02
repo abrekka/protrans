@@ -51,6 +51,12 @@
         column="MAX_ADDITION"
         length="32"
     />
+   <property
+        name="zoneAdditionAssembly"
+        type="java.lang.Integer"
+        column="ZONE_ADDITION_ASSEMBLY"
+        length="32"
+    />
     <many-to-one
         name="area"
         class="no.ugland.utransprod.model.Area"

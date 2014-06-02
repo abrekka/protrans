@@ -62,6 +62,12 @@
         column="PRICE_MONT"
         length="32"
     />
+     <property
+        name="orgPriceMont"
+        type="java.math.BigDecimal"
+        column="ORG_PRICE_MONT"
+        length="32"
+    />
     <property
         name="price"
         type="java.math.BigDecimal"

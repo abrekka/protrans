@@ -27,6 +27,12 @@
         column="ASSEMBLY_YEAR"
         length="32"
     />
+    <property
+        name="sentBase"
+        type="java.lang.String"
+        column="SENT_BASE"
+        length="2"
+    />
     
     <property
         name="assemblyWeek"

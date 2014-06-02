@@ -130,7 +130,11 @@ public class ExcelUtil {
 
 	String value = readCell(row, col, "%1$.0f");
 	if (value != null) {
-	    return Integer.valueOf(value);
+	    try {
+		return Integer.valueOf(value);
+	    } catch (NumberFormatException e) {
+		return null;
+	    }
 	}
 	return null;
 

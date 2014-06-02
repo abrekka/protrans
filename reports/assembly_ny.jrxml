@@ -433,7 +433,7 @@
 	<detail>
 		<band height="110" splitType="Stretch">
 			<subreport isUsingCache="true" runToBottom="false">
-				<reportElement key="subreport-1" stretchType="RelativeToBandHeight" x="1" y="10" width="512" height="16" isPrintWhenDetailOverflows="true"/>
+				<reportElement key="subreport-1" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="1" y="10" width="512" height="16"/>
 				<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{fakturagrunnlag})]]></dataSourceExpression>
 				<subreportExpression class="java.lang.String"><![CDATA["reports/fakturagrunnlag.jasper"]]></subreportExpression>
 			</subreport>

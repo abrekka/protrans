@@ -384,8 +384,8 @@
 	</columnHeader>
 	<detail>
 		<band height="228" splitType="Stretch">
-			<subreport isUsingCache="true">
-				<reportElement key="subreport-1" stretchType="RelativeToBandHeight" x="17" y="5" width="512" height="16" isPrintWhenDetailOverflows="true"/>
+			<subreport isUsingCache="false" runToBottom="true">
+				<reportElement key="subreport-1" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="17" y="5" width="512" height="16"/>
 				<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{fakturagrunnlag})]]></dataSourceExpression>
 				<subreportExpression class="java.lang.String"><![CDATA["reports/fakturagrunnlag.jasper"]]></subreportExpression>
 			</subreport>

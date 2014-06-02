@@ -939,7 +939,7 @@ public class Order extends AbstractTransportable implements TextRenderable, Arti
 	    }
 	    return tmpNr;
 	}
-	return telephoneNr;
+	return "";
     }
 
     /**
@@ -1088,7 +1088,7 @@ public class Order extends AbstractTransportable implements TextRenderable, Arti
 		}
 	    }
 	}
-	return null;
+	return BigDecimal.ZERO;
     }
 
     public final BigDecimal getAssemblyCost() {

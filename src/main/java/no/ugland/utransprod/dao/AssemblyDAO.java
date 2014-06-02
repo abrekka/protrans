@@ -8,28 +8,33 @@ import no.ugland.utransprod.model.Supplier;
 
 /**
  * Interface for DAO mot tabell ASSEMBLY
+ * 
  * @author atle.brekka
  */
 public interface AssemblyDAO extends DAO<Assembly> {
     /**
      * Sletter
+     * 
      * @param assemblies
      */
     void deleteAssemblies(Set<Assembly> assemblies);
 
     /**
      * Oppdaterer objekt
+     * 
      * @param assembly
      */
     void refreshObject(Assembly assembly);
 
     /**
      * Finner montering basert på team,år og uke
+     * 
      * @param supplier
      * @param year
      * @param week
      * @return monteringer
      */
-    List<Assembly> findBySupplierYearWeek(Supplier supplier, Integer year,
-            Integer week);
+    List<Assembly> findBySupplierYearWeek(Supplier supplier, Integer year, Integer week);
+
+    List<Assembly> findByYear(Integer year);
 }

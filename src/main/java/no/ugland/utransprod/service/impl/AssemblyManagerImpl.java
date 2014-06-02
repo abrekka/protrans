@@ -88,4 +88,8 @@ public class AssemblyManagerImpl extends ManagerImpl<Assembly> implements Assemb
 	return dao.merge(object);
     }
 
+    public List<Assembly> findByYear(Integer year) {
+	return ((AssemblyDAO) dao).findByYear(year);
+    }
+
 }

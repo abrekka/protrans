@@ -39,6 +39,7 @@ import no.ugland.utransprod.gui.action.ImportProductionBudgetAction;
 import no.ugland.utransprod.gui.action.ImportSaleBudgetAction;
 import no.ugland.utransprod.gui.action.ImportSalesmanBudgetAction;
 import no.ugland.utransprod.gui.action.ImportSnowloadAction;
+import no.ugland.utransprod.gui.action.ImportZoneAdditionAssemblyAction;
 import no.ugland.utransprod.gui.action.JobFunctionAction;
 import no.ugland.utransprod.gui.action.RegisterAccidentAction;
 import no.ugland.utransprod.gui.action.RegisterDeviationAction;
@@ -134,6 +135,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
     // private OrdrereserveTakstolReportAction ordrereserveTakstolReportAction;
 
     private ImportPostalCodesAction importPostalCodesAction;
+    private ImportZoneAdditionAssemblyAction importZoneadditionAssemblyAction;
 
     private ImportCountiesAction importCountiesAction;
 
@@ -165,7 +167,8 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	    JobFunctionAction aJobFunctionAction, FunctionCategoryAction aFunctionCategoryAction, DeviationStatusAction aDeviationStatusAction,
 	    AdminAccidentAction aAdminAccidentAction,
 
-	    ConfirmReportAction aConfirmReportAction, AdminMenu aAdminMenu, GarageMenu aGarageMenu, PackMenu aPackMenu,
+	    ConfirmReportAction aConfirmReportAction, AdminMenu aAdminMenu, GarageMenu aGarageMenu,
+	    PackMenu aPackMenu,
 	    Login aLogin,
 	    ProductionMenu aProductionMenu,
 	    TakstolProductionUnitReportAction aTakstolProductionUnitReportAction,
@@ -173,7 +176,8 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	    ImportPostalCodesAction aImportPostalCodesAction, ImportCountiesAction aImportCountiesAction, ImportAreasAction aImportAreasAction,
 	    UpdateTransportPricesAction aUpdateTransportPricesAction, ImportSnowloadAction aImportSnowloadAction,
 	    ImportProductionBudgetAction aImportBudgetAction, ImportSaleBudgetAction aImportSaleBudgetAction,
-	    SalesGoalReportAction aSalesGoalReportAction, ImportSalesmanBudgetAction aImportSalesmanBudgetAction)
+	    SalesGoalReportAction aSalesGoalReportAction, ImportSalesmanBudgetAction aImportSalesmanBudgetAction,
+	    ImportZoneAdditionAssemblyAction aImportZoneAdditionAssemblyAction)
     // TrossDrawReportAction aTrossDrawReportAction)
     {
 	// trossDrawReportAction = aTrossDrawReportAction;
@@ -186,6 +190,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	importAreasAction = aImportAreasAction;
 	importCountiesAction = aImportCountiesAction;
 	importPostalCodesAction = aImportPostalCodesAction;
+	importZoneadditionAssemblyAction = aImportZoneAdditionAssemblyAction;
 	// ordrereserveTakstolReportAction = aOrdrereserveTakstolReportAction;
 	takstolProductionUnitReportAction = aTakstolProductionUnitReportAction;
 	productionMenu = aProductionMenu;
@@ -262,6 +267,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	addMenuItem(menuBasis, importSnowloadAction, KeyEvent.VK_S, null, null, null, "Importer snølast", false);
 	addMenuItem(menuBasis, importSaleBudgetAction, KeyEvent.VK_B, null, null, null, "Importer budsjettall", false);
 	addMenuItem(menuBasis, importSalesmanBudgetAction, KeyEvent.VK_B, null, null, null, "Importer budsjettall selger", false);
+	addMenuItem(menuBasis, importZoneadditionAssemblyAction, KeyEvent.VK_S, null, null, null, "Importer sonetillegg montering", false);
 	return menuBasis;
     }
 
