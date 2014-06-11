@@ -121,6 +121,7 @@
 				<value>hibernate/SaleStatusOrderReserveV.hbm.xml</value>
 				<value>hibernate/SupplierProductAreaGroup.hbm.xml</value>
 				<value>hibernate/FakturagrunnlagV.hbm.xml</value>
+				<value>hibernate/ProductionoverviewV.hbm.xml</value>
 			</list>
 		</property>
 	</bean>

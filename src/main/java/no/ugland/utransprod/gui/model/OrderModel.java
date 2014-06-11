@@ -164,6 +164,9 @@ public class OrderModel extends AbstractOrderModel<Order, OrderModel> {
     public static final String PROPERTY_PRODUCT_AREA = "productArea";
 
     public static final String PROPERTY_ORDER_READY_STRING = "orderReadyString";
+    public static final String PROPERTY_ORDER_READY_WALL_STRING = "orderReadyWallString";
+    public static final String PROPERTY_ORDER_READY_TROSS_STRING = "orderReadyTrossString";
+    public static final String PROPERTY_ORDER_READY_PACK_STRING = "orderReadyPackString";
 
     public static final String PROPERTY_GAVL_DONE = "gavlDone";
 
@@ -1323,6 +1326,27 @@ public class OrderModel extends AbstractOrderModel<Order, OrderModel> {
     public String getOrderReadyString() {
 	if (object.getOrderReady() != null) {
 	    return Util.SHORT_DATE_FORMAT.format(object.getOrderReady());
+	}
+	return null;
+    }
+
+    public String getOrderReadyWallString() {
+	if (object.getOrderReadyWall() != null) {
+	    return Util.SHORT_DATE_FORMAT.format(object.getOrderReadyWall());
+	}
+	return null;
+    }
+
+    public String getOrderReadyTrossString() {
+	if (object.getOrderReadyTross() != null) {
+	    return Util.SHORT_DATE_FORMAT.format(object.getOrderReadyTross());
+	}
+	return null;
+    }
+
+    public String getOrderReadyPackString() {
+	if (object.getOrderReadyPack() != null) {
+	    return Util.SHORT_DATE_FORMAT.format(object.getOrderReadyPack());
 	}
 	return null;
     }

@@ -6,7 +6,7 @@ import javax.swing.JMenu;
 
 import no.ugland.utransprod.gui.action.FrontProductionAction;
 import no.ugland.utransprod.gui.action.GavlProductionAction;
-import no.ugland.utransprod.gui.action.ProductionOverviewAction;
+import no.ugland.utransprod.gui.action.ProductionOverviewAction2;
 import no.ugland.utransprod.gui.action.VeggProductionAction;
 
 import com.google.inject.Inject;
@@ -17,9 +17,9 @@ public class ProductionMenu extends ProTransMenu {
     private VeggProductionAction veggProductionAction;
     private FrontProductionAction frontProductionAction;
     private ProductionBudgetAction productionBudgetAction;
-    private ProductionOverviewAction productionOverviewAction;
+    // private ProductionOverviewAction productionOverviewAction;
 
-    // private ProductionOverviewAction2 productionOverviewAction2;
+    private ProductionOverviewAction2 productionOverviewAction2;
 
     public ProductionMenu(Login aLogin) {
 	super(aLogin);
@@ -27,15 +27,14 @@ public class ProductionMenu extends ProTransMenu {
 
     @Inject
     public ProductionMenu(Login aLogin, GavlProductionAction aGavlProductionAction,
-	    // TakstolProductionAction aTakstolProductionAction,
+    // TakstolProductionAction aTakstolProductionAction,
 
 	    VeggProductionAction aVeggProductionAction, FrontProductionAction aFrontProductionAction, ProductionBudgetAction aProductionBudgetAction,
-	    ProductionOverviewAction aProductionOverviewAction
-    // , ProductionOverviewAction2 aProductionOverviewAction2
-    ) {
+	    // ProductionOverviewAction aProductionOverviewAction,
+	    ProductionOverviewAction2 aProductionOverviewAction2) {
 	super(aLogin);
-	productionOverviewAction = aProductionOverviewAction;
-	// productionOverviewAction2 = aProductionOverviewAction2;
+	// productionOverviewAction = aProductionOverviewAction;
+	productionOverviewAction2 = aProductionOverviewAction2;
 	productionBudgetAction = aProductionBudgetAction;
 	frontProductionAction = aFrontProductionAction;
 	veggProductionAction = aVeggProductionAction;
@@ -52,9 +51,9 @@ public class ProductionMenu extends ProTransMenu {
 	addMenuItem(menuProduction, veggProductionAction, KeyEvent.VK_T, null, null, null, "Vegg", false);
 	addMenuItem(menuProduction, frontProductionAction, KeyEvent.VK_F, null, null, null, "Front", false);
 	addMenuItem(menuProduction, productionBudgetAction, KeyEvent.VK_B, null, null, null, "Budsjett", false);
-	addMenuItem(menuProduction, productionOverviewAction, KeyEvent.VK_O, null, null, null, "Produksjonsoversikt", false);
-	// addMenuItem(menuProduction, productionOverviewAction2, KeyEvent.VK_O,
-	// null, null, null, "Produksjonsoversikt2", false);
+	// addMenuItem(menuProduction, productionOverviewAction, KeyEvent.VK_O,
+	// null, null, null, "Produksjonsoversikt", false);
+	addMenuItem(menuProduction, productionOverviewAction2, KeyEvent.VK_O, null, null, null, "Produksjonsoversikt2", false);
 	return menuProduction;
     }
 

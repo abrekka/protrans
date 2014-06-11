@@ -25,7 +25,7 @@ public class ProductionOverviewAction2 extends AbstractAction {
 
     @Inject
     public ProductionOverviewAction2(final MenuBarBuilderInterface aMenuBarBuilderInterface, final ProductionOverviewView2 aProductionOverviewView) {
-	super("Produksjonsoversikt2...");
+	super("Produksjonsoversikt...");
 	productionOverviewView = aProductionOverviewView;
 	this.menuBarBuilder = aMenuBarBuilderInterface;
 

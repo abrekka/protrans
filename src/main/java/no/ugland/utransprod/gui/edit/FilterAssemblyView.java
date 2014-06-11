@@ -52,18 +52,6 @@ public class FilterAssemblyView implements Closeable {
 
 	builder.add(buildFilterPanel(), cc.xywh(2, 4, 1, 7));
 
-	// builder.addLabel("Sendt", cc.xy(2, 4));
-	// builder.add(checkBoxSent, cc.xy(4, 4));
-	// builder.addLabel("Montert", cc.xy(2, 6));
-	// builder.add(checkBoxAssemblied, cc.xy(4, 6));
-	// builder.addLabel("Uke", cc.xy(2, 8));
-	// builder.add(textFieldWeek, cc.xy(4, 8));
-	// builder.addLabel("Montør", cc.xy(2, 10));
-	// builder.add(textFieldAssemblyteam, cc.xy(4, 10));
-	// builder.addLabel("Planlagt", cc.xy(2, 12));
-	// builder.add(textFieldPlanned, cc.xy(4, 12));
-	// builder.addLabel("Pakkliste klar", cc.xy(2, 14));
-	// builder.add(textFieldPacklist, cc.xy(4, 14));
 	builder.add(labelSort, cc.xyw(4, 2, 3));
 	builder.addLabel("1.", cc.xy(4, 4));
 	builder.add(comboBoxSort1, cc.xy(6, 4));
@@ -92,13 +80,6 @@ public class FilterAssemblyView implements Closeable {
 		builder.nextRow();
 	    }
 	}
-
-	// builder.nextRow();
-
-	// builder.append(checkBoxSent);
-	// builder.appendRow(new RowSpec("fill:p"));
-	// builder.append("Montert");
-	// builder.append(checkBoxAssemblied);
 	return builder.getPanel();
     }
 

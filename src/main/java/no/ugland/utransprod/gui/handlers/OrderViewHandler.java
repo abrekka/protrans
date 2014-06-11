@@ -310,9 +310,24 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
      * @param presentationModel
      * @return tekstfelt
      */
-    public JTextField getTextFieldPackageDate(PresentationModel presentationModel) {
-	JTextField textField = BasicComponentFactory.createTextField(presentationModel.getBufferedModel(OrderModel.PROPERTY_ORDER_READY_STRING));
-	textField.setName("TextFieldPackageDate");
+    public JTextField getTextFieldWallPackageDate(PresentationModel presentationModel) {
+	JTextField textField = BasicComponentFactory.createTextField(presentationModel.getBufferedModel(OrderModel.PROPERTY_ORDER_READY_WALL_STRING));
+	textField.setName("TextFieldWallPackageDate");
+	textField.setEnabled(false);
+	return textField;
+    }
+
+    public JTextField getTextFieldTrossPackageDate(PresentationModel presentationModel) {
+	JTextField textField = BasicComponentFactory
+		.createTextField(presentationModel.getBufferedModel(OrderModel.PROPERTY_ORDER_READY_TROSS_STRING));
+	textField.setName("TextFieldTrossPackageDate");
+	textField.setEnabled(false);
+	return textField;
+    }
+
+    public JTextField getTextFieldPackPackageDate(PresentationModel presentationModel) {
+	JTextField textField = BasicComponentFactory.createTextField(presentationModel.getBufferedModel(OrderModel.PROPERTY_ORDER_READY_PACK_STRING));
+	textField.setName("TextFieldPackPackageDate");
 	textField.setEnabled(false);
 	return textField;
     }
@@ -323,7 +338,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
      * @param presentationModel
      * @return tekstfelt
      */
-    public JTextField getTextFieldPackedBy(PresentationModel presentationModel) {
+    public JTextField getTextFieldWallPackedBy(PresentationModel presentationModel) {
 	JTextField textField = BasicComponentFactory.createTextField(presentationModel.getBufferedModel(OrderModel.PROPERTY_PACKED_BY));
 	textField.setName("TextFieldPackedBy");
 	textField.setEnabled(false);
@@ -333,6 +348,13 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
     public JTextField getTextFieldPackedByTross(PresentationModel presentationModel) {
 	JTextField textField = BasicComponentFactory.createTextField(presentationModel.getBufferedModel(OrderModel.PROPERTY_PACKED_BY_TROSS));
 	textField.setName("TextFieldPackedByTROSS");
+	textField.setEnabled(false);
+	return textField;
+    }
+
+    public JTextField getTextFieldPackedByPack(PresentationModel presentationModel) {
+	JTextField textField = BasicComponentFactory.createTextField(presentationModel.getBufferedModel(OrderModel.PROPERTY_PACKED_BY_PACK));
+	textField.setName("TextFieldPackedByPack");
 	textField.setEnabled(false);
 	return textField;
     }

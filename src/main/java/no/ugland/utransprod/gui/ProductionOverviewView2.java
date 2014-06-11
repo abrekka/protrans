@@ -36,9 +36,10 @@ public class ProductionOverviewView2 implements Viewer {
     private JButton buttonRefresh;
 
     private JButton buttonSearch;
+    private JButton buttonFilter;
 
     private JCheckBox checkBoxFilter;
-    private JButton buttonShowTakstolInfo;
+    // private JButton buttonShowTakstolInfo;
     private JButton buttonExcel;
 
     @Inject
@@ -54,8 +55,9 @@ public class ProductionOverviewView2 implements Viewer {
 
 	buttonRefresh = viewHandler.getButtonRefresh(window);
 	buttonSearch = viewHandler.getButtonSearch(window);
+	buttonFilter = viewHandler.getButtonFilter(window);
 	comboBoxProductAreaGroup = viewHandler.getComboBoxProductAreaGroup();
-	buttonShowTakstolInfo = viewHandler.getButtonShowTakstolInfo(window);
+	// buttonShowTakstolInfo = viewHandler.getButtonShowTakstolInfo(window);
     }
 
     /**
@@ -66,7 +68,7 @@ public class ProductionOverviewView2 implements Viewer {
      */
     public Component buildPanel(WindowInterface window) {
 	initComponents(window);
-	FormLayout layout = new FormLayout("10dlu,p,3dlu,p,3dlu,p,3dlu,p,280dlu:grow,10dlu", "10dlu,p,3dlu,fill:300dlu:grow,3dlu,p");
+	FormLayout layout = new FormLayout("10dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,p:grow,10dlu", "10dlu,p,3dlu,fill:300dlu:grow,3dlu,p");
 	PanelBuilder builder = new PanelBuilder(layout);
 	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),
 	// layout);
@@ -77,8 +79,9 @@ public class ProductionOverviewView2 implements Viewer {
 	builder.add(comboBoxProductAreaGroup, cc.xy(4, 2));
 	builder.add(buttonSearch, cc.xy(6, 2));
 	builder.add(checkBoxFilter, cc.xy(8, 2));
-	builder.add(scrollPane, cc.xyw(2, 4, 8));
-	builder.add(ButtonBarFactory.buildCenteredBar(buttonExcel, buttonRefresh, buttonClose), cc.xyw(2, 6, 8));
+	builder.add(buttonFilter, cc.xy(10, 2));
+	builder.add(scrollPane, cc.xyw(2, 4, 10));
+	builder.add(ButtonBarFactory.buildCenteredBar(buttonExcel, buttonRefresh, buttonClose), cc.xyw(2, 6, 10));
 
 	return builder.getPanel();
     }

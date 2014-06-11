@@ -110,9 +110,13 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 
     private JButton buttonAddComment;
 
-    private JTextField textFieldPackageDate;
+    private JTextField textFieldWallPackageDate;
+    private JTextField textFieldTrossPackageDate;
+    private JTextField textFieldPackPackageDate;
 
-    private JTextField textFieldPackedBy;
+    private JTextField textFieldWallPackedBy;
+    private JTextField textFieldTrossPackedBy;
+    private JTextField textFieldPackPackedBy;
 
     private JTextField textFieldGavlDone;
 
@@ -349,8 +353,15 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
     }
 
     private void createStatusFields() {
-	textFieldPackageDate = orderViewHandler.getTextFieldPackageDate(presentationModel);
-	textFieldPackedBy = orderViewHandler.getTextFieldPackedBy(presentationModel);
+	textFieldWallPackageDate = orderViewHandler.getTextFieldWallPackageDate(presentationModel);
+	textFieldWallPackedBy = orderViewHandler.getTextFieldWallPackedBy(presentationModel);
+
+	textFieldTrossPackageDate = orderViewHandler.getTextFieldTrossPackageDate(presentationModel);
+	textFieldTrossPackedBy = orderViewHandler.getTextFieldPackedByTross(presentationModel);
+
+	textFieldPackPackageDate = orderViewHandler.getTextFieldPackPackageDate(presentationModel);
+	textFieldPackPackedBy = orderViewHandler.getTextFieldPackedByPack(presentationModel);
+
 	textFieldGavlDone = orderViewHandler.getTextFieldGavlDone(presentationModel);
 	// textFieldTakstolDone = orderViewHandler
 	// .getTextFieldTakstolDone(presentationModel);
@@ -600,7 +611,8 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
      * @return panel
      */
     private JPanel buildProductionPanel() {
-	FormLayout layout = new FormLayout("p,3dlu,50dlu,3dlu,p,3dlu,80dlu", "10dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p");
+	FormLayout layout = new FormLayout("p,3dlu,50dlu,3dlu,p,3dlu,80dlu",
+		"10dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p");
 	PanelBuilder builder = new PanelBuilder(layout);
 	// PanelBuilder builder = new PanelBuilder(layout,new FormDebugPanel());
 	CellConstraints cc = new CellConstraints();
@@ -615,20 +627,31 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 	builder.add(textFieldFrontDone, cc.xy(3, 6));
 	builder.addLabel("Vegg ferdig:", cc.xy(1, 8));
 	builder.add(textFieldVeggDone, cc.xy(3, 8));
-	builder.addLabel("Pakket:", cc.xy(1, 10));
-	builder.add(textFieldPackageDate, cc.xy(3, 10));
+	builder.addLabel("Pakket vegg:", cc.xy(1, 10));
+	builder.add(textFieldWallPackageDate, cc.xy(3, 10));
 	builder.addLabel("av", cc.xy(5, 10));
-	builder.add(textFieldPackedBy, cc.xy(7, 10));
-	builder.addLabel("Opplastdato:", cc.xy(1, 12));
-	builder.add(textFieldLoadingDate, cc.xy(3, 12));
-	builder.addLabel("Kappfil:", cc.xy(1, 14));
-	builder.add(textFieldCuttingFile, cc.xy(3, 14));
+	builder.add(textFieldWallPackedBy, cc.xy(7, 10));
+
+	builder.addLabel("Pakket takstol:", cc.xy(1, 12));
+	builder.add(textFieldTrossPackageDate, cc.xy(3, 12));
+	builder.addLabel("av", cc.xy(5, 12));
+	builder.add(textFieldTrossPackedBy, cc.xy(7, 12));
+
+	builder.addLabel("Pakket pakk:", cc.xy(1, 14));
+	builder.add(textFieldPackPackageDate, cc.xy(3, 14));
+	builder.addLabel("av", cc.xy(5, 14));
+	builder.add(textFieldPackPackedBy, cc.xy(7, 14));
+
+	builder.addLabel("Opplastdato:", cc.xy(1, 16));
+	builder.add(textFieldLoadingDate, cc.xy(3, 16));
+	builder.addLabel("Kappfil:", cc.xy(1, 18));
+	builder.add(textFieldCuttingFile, cc.xy(3, 18));
 
 	if ((Boolean) presentationModel.getBufferedValue(OrderModel.PROPERTY_DO_ASSEMBLY)) {
-	    builder.addLabel("Montert:", cc.xy(1, 16));
-	    builder.add(textFieldAssemblyDone, cc.xy(3, 16));
+	    builder.addLabel("Montert:", cc.xy(1, 20));
+	    builder.add(textFieldAssemblyDone, cc.xy(3, 20));
 	}
-	builder.add(ButtonBarFactory.buildCenteredBar(buttonImportCuttingFile, buttonOpenCuttingFile), cc.xyw(1, 18, 7));
+	builder.add(ButtonBarFactory.buildCenteredBar(buttonImportCuttingFile, buttonOpenCuttingFile), cc.xyw(1, 22, 7));
 
 	return builder.getPanel();
     }

@@ -13,10 +13,9 @@ public class ProductionOverviewVManager {
 	return productionOverviewVDAO.findAll();
     }
 
-    // public void setProductionOverviewVDAO(ProductionOverviewVDAOHibernate
-    // productionOverviewVDao) {
-    // this.productionOverviewVDAO = productionOverviewVDao;
-    // }
+    public void setProductionOverviewVDAO(ProductionOverviewVDAO productionOverviewVDao) {
+	this.productionOverviewVDAO = productionOverviewVDao;
+    }
     //
     // public ProductionOverviewVDAO getProductionOverviewVDAOHibernate() {
     // return productionOverviewVDAO;
