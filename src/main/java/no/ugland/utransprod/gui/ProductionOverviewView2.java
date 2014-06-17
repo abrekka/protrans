@@ -35,7 +35,7 @@ public class ProductionOverviewView2 implements Viewer {
 
     private JButton buttonRefresh;
 
-    private JButton buttonSearch;
+    // private JButton buttonSearch;
     private JButton buttonFilter;
 
     private JCheckBox checkBoxFilter;
@@ -54,7 +54,7 @@ public class ProductionOverviewView2 implements Viewer {
 	checkBoxFilter = viewHandler.getCheckBoxFilter();
 
 	buttonRefresh = viewHandler.getButtonRefresh(window);
-	buttonSearch = viewHandler.getButtonSearch(window);
+	// buttonSearch = viewHandler.getButtonSearch(window);
 	buttonFilter = viewHandler.getButtonFilter(window);
 	comboBoxProductAreaGroup = viewHandler.getComboBoxProductAreaGroup();
 	// buttonShowTakstolInfo = viewHandler.getButtonShowTakstolInfo(window);
@@ -77,7 +77,7 @@ public class ProductionOverviewView2 implements Viewer {
 	scrollPane.setName("ScrollPaneTable");
 	builder.addLabel("Produktområde:", cc.xy(2, 2));
 	builder.add(comboBoxProductAreaGroup, cc.xy(4, 2));
-	builder.add(buttonSearch, cc.xy(6, 2));
+	// builder.add(buttonSearch, cc.xy(6, 2));
 	builder.add(checkBoxFilter, cc.xy(8, 2));
 	builder.add(buttonFilter, cc.xy(10, 2));
 	builder.add(scrollPane, cc.xyw(2, 4, 10));

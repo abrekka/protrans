@@ -651,23 +651,29 @@ public class ExcelUtil {
     }
 
     private String getCellValue(final HSSFRow excelRow, final int column, final String stringFormat) {
-	HSSFCell cell = excelRow.getCell((short) column);
-	String value = null;
-	if (cell != null) {
-	    if (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
-		if (stringFormat != null) {
-		    value = String.format(stringFormat, cell.getNumericCellValue());
+	try {
+	    HSSFCell cell = excelRow.getCell((short) column);
+	    String value = null;
+	    if (cell != null) {
+		if (cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
+		    if (stringFormat != null) {
+			value = String.format(stringFormat, cell.getNumericCellValue());
+		    } else {
+			value = String.valueOf(cell.getNumericCellValue());
+		    }
 		} else {
-		    value = String.valueOf(cell.getNumericCellValue());
+		    value = cell.getRichStringCellValue().getString();
 		}
-	    } else {
-		value = cell.getRichStringCellValue().getString();
 	    }
+	    if (value != null && value.length() == 0) {
+		value = null;
+	    }
+	    return value;
+	} catch (Exception e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
 	}
-	if (value != null && value.length() == 0) {
-	    value = null;
-	}
-	return value;
+	return null;
 
     }
 

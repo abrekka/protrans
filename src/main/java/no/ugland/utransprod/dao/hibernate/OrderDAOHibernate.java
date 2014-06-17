@@ -1020,7 +1020,7 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
     public final List<SaleReportSum> groupSumCountyByProductAreaConfirmPeriode(final ProductArea productArea, final Periode periode) {
 
 	List<Order> confirmedOrders = findByConfirmWeekProductArea(periode.getYear(), periode.getWeek(), periode.getToWeek(),
-		productArea.getProductArea());
+		productArea == null ? null : productArea.getProductArea());
 
 	Map<String, List<Order>> orderByCountyMap = arrangeOrdersByCounty(confirmedOrders);
 
@@ -1042,7 +1042,7 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
     public final List<SaleReportSum> groupSumSalesmanByProductAreaConfirmPeriode(final ProductArea productArea, final Periode periode) {
 
 	List<Order> confirmedOrders = findByConfirmWeekProductArea(periode.getYear(), periode.getWeek(), periode.getToWeek(),
-		productArea.getProductArea());
+		productArea == null ? null : productArea.getProductArea());
 
 	Map<String, List<Order>> orderByCountyMap = arrangeOrdersBySalesman(confirmedOrders);
 
@@ -1167,7 +1167,7 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 
     public final Integer countByProductAreaPeriode(final ProductArea productArea, final Periode periode) {
 	List<Order> confirmedOrders = findByConfirmWeekProductArea(periode.getYear(), periode.getWeek(), periode.getToWeek(),
-		productArea.getProductArea());
+		productArea == null ? null : productArea.getProductArea());
 
 	if (confirmedOrders != null) {
 	    return confirmedOrders.size();
@@ -1177,7 +1177,7 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 
     public final List<SaleReportData> getSaleReportByProductAreaPeriode(final ProductArea productArea, final Periode periode) {
 	List<Order> confirmedOrders = findByConfirmWeekProductArea(periode.getYear(), periode.getWeek(), periode.getToWeek(),
-		productArea.getProductArea());
+		productArea == null ? null : productArea.getProductArea());
 
 	return createSaleReportList(confirmedOrders);
     }
@@ -1191,7 +1191,7 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 		saleReportDataList.add(new SaleReportData("Avrop", countyName, order.getSalesman(), String.valueOf(order.getCustomer()
 			.getCustomerNr()), order.getCustomer().getFullName(), order.getOrderNr(), order.getGarageValue(), order.getTransportValue(),
 			order.getAssemblyCost(), order.getJaLinjer(), order.getContributionMargin(), order.getContributionRate(), order
-				.getOrderDate()));
+				.getOrderDate(), order.getProductArea().getProductArea()));
 	    }
 	}
 	return saleReportDataList;

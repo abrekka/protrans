@@ -711,7 +711,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	 */
 	public void actionPerformed(final ActionEvent arg0) {
 	    ExcelReportViewHandlerSales excelReportViewHandler = new ExcelReportViewHandlerSales(ExcelReportEnum.SALES_REPORT);
-	    openFrame(new ExcelReportView(excelReportViewHandler, false));
+	    openFrame(new ExcelReportView(excelReportViewHandler, true));
 
 	}
     }

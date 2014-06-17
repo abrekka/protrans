@@ -53,7 +53,7 @@ public class ProductionMenu extends ProTransMenu {
 	addMenuItem(menuProduction, productionBudgetAction, KeyEvent.VK_B, null, null, null, "Budsjett", false);
 	// addMenuItem(menuProduction, productionOverviewAction, KeyEvent.VK_O,
 	// null, null, null, "Produksjonsoversikt", false);
-	addMenuItem(menuProduction, productionOverviewAction2, KeyEvent.VK_O, null, null, null, "Produksjonsoversikt2", false);
+	addMenuItem(menuProduction, productionOverviewAction2, KeyEvent.VK_O, null, null, null, "Produksjonsoversikt", false);
 	return menuProduction;
     }
 

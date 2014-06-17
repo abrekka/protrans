@@ -34,6 +34,8 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.gui.Closeable;
@@ -190,6 +192,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
     private SetProductionUnitActionFactory setProductionUnitActionFactory;
     private ArticleType articleTypeTakstol;
     private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    ProductionoverviewFilter currentProductionoverviewFilter;
 
     @Inject
     public ProductionOverviewViewHandler2(final VismaFileCreator aVismaFileCreator, final OrderViewHandlerFactory orderViewHandlerFactory,
@@ -415,7 +418,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return false;
+		return true;
 	    }
 
 	    @Override
@@ -457,7 +460,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return false;
+		return true;
 	    }
 
 	    @Override
@@ -561,7 +564,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return false;
+		return true;
 	    }
 
 	    @Override
@@ -603,7 +606,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return false;
+		return true;
 	    }
 
 	    @Override
@@ -645,7 +648,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return false;
+		return true;
 	    }
 
 	    @Override
@@ -687,7 +690,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return false;
+		return true;
 	    }
 
 	    @Override
@@ -729,7 +732,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return false;
+		return true;
 	    }
 
 	    @Override
@@ -771,7 +774,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return false;
+		return true;
 	    }
 
 	    @Override
@@ -813,7 +816,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return false;
+		return true;
 	    }
 
 	    @Override
@@ -993,7 +996,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return false;
+		return true;
 	    }
 
 	    @Override
@@ -1085,7 +1088,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	    }
 
 	    @Override
@@ -1153,6 +1156,99 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 		return productionOverviewV1.getEstimatedTimePack() == null && productionOverviewV2.getEstimatedTimePack() == null ? 0
 			: productionOverviewV1.getEstimatedTimePack() == null ? -1 : productionOverviewV2.getEstimatedTimePack() == null ? 1
 				: productionOverviewV1.getEstimatedTimePack().compareTo(productionOverviewV2.getEstimatedTimePack());
+	    }
+	},
+	TEGNINGER_JATAK("Tegninger Jatak", true, 90, true) {
+	    @Override
+	    public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return transportable.getReceivedTrossDrawing();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		popupMenuProduction.add(menuItemMap.get(getColumnName()));
+		return true;
+	    }
+
+	    @Override
+	    public Component getFilterComponent(PresentationModel presentationModel) {
+		return BasicComponentFactory.createTextField(presentationModel.getModel(ProductionoverviewFilter.TEGNINGER_JATAK), false);
+	    }
+
+	    @Override
+	    public boolean filter(ProductionOverviewV productionOverviewV, ProductionoverviewFilter productionoverviewFilter,
+		    Map<String, String> statusMap, Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		if (StringUtils.isNotBlank(productionoverviewFilter.getTegningerJatak())) {
+		    return productionOverviewV.getReceivedTrossDrawing() != null
+			    && productionOverviewV.getReceivedTrossDrawing().toLowerCase()
+				    .matches(productionoverviewFilter.getTegningerJatak().toLowerCase().replaceAll("%", ".*") + ".*");
+		}
+		return true;
+	    }
+
+	    @Override
+	    public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2, Map<String, String> statusMap1,
+		    Map<String, String> statusMap2, Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return productionOverviewV1.getReceivedTrossDrawing() == null && productionOverviewV2.getReceivedTrossDrawing() == null ? 0
+			: productionOverviewV1.getReceivedTrossDrawing() == null ? -1 : productionOverviewV2.getReceivedTrossDrawing() == null ? 1
+				: productionOverviewV1.getReceivedTrossDrawing().compareTo(productionOverviewV2.getReceivedTrossDrawing());
+	    }
+	},
+	ØNSKET_LEVERING("Ønsket levering", true, 90, true) {
+	    @Override
+	    public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
+		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+
+		return hentOnsketLevering(transportable);
+	    }
+
+	    private String hentOnsketLevering(ProductionOverviewV transportable) {
+		Integer forventetLevering = transportable.getTrossDeldt() == null ? 0 : transportable.getTrossDeldt();
+		Integer bekreftetLevering = transportable.getTrossCfdeldt() == null ? 0 : transportable.getTrossCfdeldt();
+
+		return bekreftetLevering == 0 ? "" + forventetLevering : bekreftetLevering + "(B)";
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
+		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
+		return true;
+	    }
+
+	    @Override
+	    public Component getFilterComponent(PresentationModel presentationModel) {
+		return BasicComponentFactory.createTextField(presentationModel.getModel(ProductionoverviewFilter.ONSKET_LEVERING), false);
+	    }
+
+	    @Override
+	    public boolean filter(ProductionOverviewV productionOverviewV, ProductionoverviewFilter productionoverviewFilter,
+		    Map<String, String> statusMap, Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		if (StringUtils.isNotBlank(productionoverviewFilter.getOnsketLevering())) {
+		    return hentOnsketLevering(productionOverviewV) != null
+			    && hentOnsketLevering(productionOverviewV).toLowerCase().matches(
+				    productionoverviewFilter.getOnsketLevering().toLowerCase().replaceAll("%", ".*") + ".*");
+		}
+		return true;
+	    }
+
+	    @Override
+	    public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2, Map<String, String> statusMap1,
+		    Map<String, String> statusMap2, Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		return hentOnsketLevering(productionOverviewV1) == null && hentOnsketLevering(productionOverviewV2) == null ? 0
+			: hentOnsketLevering(productionOverviewV1) == null ? -1 : hentOnsketLevering(productionOverviewV2) == null ? 1
+				: hentOnsketLevering(productionOverviewV1).compareTo(hentOnsketLevering(productionOverviewV2));
 	    }
 	},
 	VEGG("Vegg", true, 50, true) {
@@ -1543,7 +1639,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return false;
+		return true;
 	    }
 
 	    @Override
@@ -1609,7 +1705,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return false;
+		return true;
 	    }
 
 	    @Override
@@ -1651,7 +1747,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return false;
+		return true;
 	    }
 
 	    @Override
@@ -1693,7 +1789,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
 		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return false;
+		return true;
 	    }
 
 	    @Override
@@ -1720,99 +1816,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 			.compareTo(productionOverviewV2.getAssemblyCost());
 	    }
 	},
-	TEGNINGER_JATAK("Tegninger Jatak", true, 90, true) {
-	    @Override
-	    public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
-		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return transportable.getReceivedTrossDrawing();
-	    }
 
-	    @Override
-	    public Class<?> getColumnClass() {
-		return String.class;
-	    }
-
-	    @Override
-	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
-		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		popupMenuProduction.add(menuItemMap.get(getColumnName()));
-		return true;
-	    }
-
-	    @Override
-	    public Component getFilterComponent(PresentationModel presentationModel) {
-		return BasicComponentFactory.createTextField(presentationModel.getModel(ProductionoverviewFilter.TEGNINGER_JATAK), false);
-	    }
-
-	    @Override
-	    public boolean filter(ProductionOverviewV productionOverviewV, ProductionoverviewFilter productionoverviewFilter,
-		    Map<String, String> statusMap, Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		if (StringUtils.isNotBlank(productionoverviewFilter.getTegningerJatak())) {
-		    return productionOverviewV.getReceivedTrossDrawing() != null
-			    && productionOverviewV.getReceivedTrossDrawing().toLowerCase()
-				    .matches(productionoverviewFilter.getTegningerJatak().toLowerCase().replaceAll("%", ".*") + ".*");
-		}
-		return true;
-	    }
-
-	    @Override
-	    public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2, Map<String, String> statusMap1,
-		    Map<String, String> statusMap2, Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return productionOverviewV1.getReceivedTrossDrawing() == null && productionOverviewV2.getReceivedTrossDrawing() == null ? 0
-			: productionOverviewV1.getReceivedTrossDrawing() == null ? -1 : productionOverviewV2.getReceivedTrossDrawing() == null ? 1
-				: productionOverviewV1.getReceivedTrossDrawing().compareTo(productionOverviewV2.getReceivedTrossDrawing());
-	    }
-	},
-	ØNSKET_LEVERING("Ønsket levering", true, 90, true) {
-	    @Override
-	    public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
-		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-
-		return hentOnsketLevering(transportable);
-	    }
-
-	    private String hentOnsketLevering(ProductionOverviewV transportable) {
-		Integer forventetLevering = transportable.getTrossDeldt() == null ? 0 : transportable.getTrossDeldt();
-		Integer bekreftetLevering = transportable.getTrossCfdeldt() == null ? 0 : transportable.getTrossCfdeldt();
-
-		return bekreftetLevering == 0 ? "" + forventetLevering : bekreftetLevering + "(B)";
-	    }
-
-	    @Override
-	    public Class<?> getColumnClass() {
-		return String.class;
-	    }
-
-	    @Override
-	    public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap, WindowInterface window,
-		    Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers, JPopupMenu popupMenuProduction) {
-		return false;
-	    }
-
-	    @Override
-	    public Component getFilterComponent(PresentationModel presentationModel) {
-		return BasicComponentFactory.createTextField(presentationModel.getModel(ProductionoverviewFilter.ONSKET_LEVERING), false);
-	    }
-
-	    @Override
-	    public boolean filter(ProductionOverviewV productionOverviewV, ProductionoverviewFilter productionoverviewFilter,
-		    Map<String, String> statusMap, Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		if (StringUtils.isNotBlank(productionoverviewFilter.getOnsketLevering())) {
-		    return hentOnsketLevering(productionOverviewV) != null
-			    && hentOnsketLevering(productionOverviewV).toLowerCase().matches(
-				    productionoverviewFilter.getOnsketLevering().toLowerCase().replaceAll("%", ".*") + ".*");
-		}
-		return true;
-	    }
-
-	    @Override
-	    public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2, Map<String, String> statusMap1,
-		    Map<String, String> statusMap2, Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return hentOnsketLevering(productionOverviewV1) == null && hentOnsketLevering(productionOverviewV2) == null ? 0
-			: hentOnsketLevering(productionOverviewV1) == null ? -1 : hentOnsketLevering(productionOverviewV2) == null ? 1
-				: hentOnsketLevering(productionOverviewV1).compareTo(hentOnsketLevering(productionOverviewV2));
-	    }
-	},
 	KOMPLETT("Komplett", true, 80, false) {
 	    @Override
 	    public Class<?> getColumnClass() {
@@ -2449,7 +2453,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
      * @return tittel
      */
     public String getWindowTitle() {
-	return "Produksjonsoversikt2";
+	return "Produksjonsoversikt";
     }
 
     /**
@@ -2535,8 +2539,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
     private Transportable getSelectedTransportable() {
 	Transportable transportable = null;
 	if (objectSelectionList.getSelection() != null) {
-	    int index = table.convertRowIndexToModel(objectSelectionList.getSelectionIndex());
-	    ProductionOverviewV productionOverviewV = (ProductionOverviewV) objectSelectionList.getElementAt(index);
+	    ProductionOverviewV productionOverviewV = getSelectedProductionOverviewV();
 
 	    if (productionOverviewV.isPostShipment()) {
 		transportable = managerRepository.getPostShipmentManager().loadById(productionOverviewV.getPostshipmentId());
@@ -2545,6 +2548,12 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    }
 	}
 	return transportable;
+    }
+
+    private ProductionOverviewV getSelectedProductionOverviewV() {
+	int index = table.convertRowIndexToModel(objectSelectionList.getSelectionIndex());
+	ProductionOverviewV productionOverviewV = (ProductionOverviewV) objectSelectionList.getElementAt(index);
+	return productionOverviewV;
     }
 
     /**
@@ -2636,9 +2645,11 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 			order.getProductionWeek() == null ? "" : String.valueOf(order.getProductionWeek()));
 		if (newProductionWeek != null) {
 
-		    order.setProductionWeek(Integer.valueOf(newProductionWeek));
+		    order.setProductionWeek(StringUtils.isNotBlank(newProductionWeek) ? Integer.valueOf(newProductionWeek) : null);
 		    managerRepository.getOrderManager().saveOrder(order);
-		    doRefresh(window);
+		    ProductionOverviewV productionOverviewV = getSelectedProductionOverviewV();
+		    productionOverviewV.setProductionWeek(order.getProductionWeek());
+		    // doRefresh(window);
 		}
 	    }
 	}
@@ -2767,7 +2778,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 
 		if (transportable != null && transportable instanceof Order) {
 		    setProcentForOrder((Order) transportable, window);
-		    doRefresh(window);
+		    // doRefresh(window);
 		}
 
 	    }
@@ -2800,7 +2811,9 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 		    order.setReceivedTrossDrawing(jaNei);
 		    try {
 			managerRepository.getOrderManager().saveOrder(order);
-			doRefresh(window);
+			ProductionOverviewV productionOverviewV = getSelectedProductionOverviewV();
+			productionOverviewV.setReceivedTrossDrawing(order.getReceivedTrossDrawing());
+			// doRefresh(window);
 		    } catch (ProTransException e) {
 			Util.showErrorDialog(window, "Feil", e.getMessage());
 			e.printStackTrace();
@@ -2833,7 +2846,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 
 		if (transportable != null && transportable instanceof Order) {
 		    setEstimatedTimewallForOrder((Order) transportable, window);
-		    doRefresh(window);
+		    // doRefresh(window);
 		}
 
 	    }
@@ -2861,7 +2874,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 
 		if (transportable != null && transportable instanceof Order) {
 		    setEstimatedTimeGavlForOrder((Order) transportable, window);
-		    doRefresh(window);
+		    // doRefresh(window);
 		}
 
 	    }
@@ -2889,7 +2902,8 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 
 		if (transportable != null && transportable instanceof Order) {
 		    setEstimatedTimePackForOrder((Order) transportable, window);
-		    doRefresh(window);
+		    // doRefresh(window);
+
 		}
 
 	    }
@@ -2920,6 +2934,8 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 
 	try {
 	    managerRepository.getOrderManager().saveOrder(order);
+	    ProductionOverviewV productionOverviewV = getSelectedProductionOverviewV();
+	    productionOverviewV.setEstimatedTimeWall(order.getEstimatedTimeWall());
 	} catch (ProTransException e) {
 	    Util.showErrorDialog(window, "Feil", e.getMessage());
 	    e.printStackTrace();
@@ -2937,6 +2953,8 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 
 	try {
 	    managerRepository.getOrderManager().saveOrder(order);
+	    ProductionOverviewV productionOverviewV = getSelectedProductionOverviewV();
+	    productionOverviewV.setEstimatedTimeGavl(order.getEstimatedTimeGavl());
 	} catch (ProTransException e) {
 	    Util.showErrorDialog(window, "Feil", e.getMessage());
 	    e.printStackTrace();
@@ -2954,6 +2972,8 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 
 	try {
 	    managerRepository.getOrderManager().saveOrder(order);
+	    ProductionOverviewV productionOverviewV = getSelectedProductionOverviewV();
+	    productionOverviewV.setEstimatedTimePack(order.getEstimatedTimePack());
 	} catch (ProTransException e) {
 	    Util.showErrorDialog(window, "Feil", e.getMessage());
 	    e.printStackTrace();
@@ -3026,6 +3046,9 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
     public void doRefresh(WindowInterface window) {
 	initObjects();
 	// initOrders(objectList, window);
+	if (currentProductionoverviewFilter != null) {
+	    doFilter(currentProductionoverviewFilter);
+	}
     }
 
     /**
@@ -3245,6 +3268,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	private static final long serialVersionUID = 1L;
 
 	private String getWarning(final ProductionOverviewV transportable) {
+
 	    return StringUtils.isNotBlank(transportable.getSpecialConcern()) ? transportable.getSpecialConcern() : "";
 	}
 
@@ -3283,7 +3307,10 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 
 	@Override
 	protected void setCenteredAlignment() {
-
+	    SimpleAttributeSet set = new SimpleAttributeSet();
+	    StyleConstants.setAlignment(set, StyleConstants.ALIGN_CENTER);
+	    setParagraphAttributes(set, false);
+	    repaint();
 	}
 
     }
@@ -3312,7 +3339,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 
 	    window.add(filterProductionoverviewView.buildPanel(window, productionoverviewFilterListener));
 	    window.pack();
-	    window.setSize(new Dimension(450, 700));
+	    window.setSize(new Dimension(450, 950));
 
 	    Util.locateOnScreenCenter(window);
 	    window.setVisible(true);
@@ -3322,6 +3349,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 
     public void doFilter(ProductionoverviewFilter productionoverviewFilter) {
 	objectList.clear();
+	currentProductionoverviewFilter = productionoverviewFilter;
 
 	List<ProductionOverviewV> filtered = Lists.newArrayList(Iterables.filter(productionoverviewList, filtrer(productionoverviewFilter)));
 	Collections.sort(filtered, sorter(productionoverviewFilter));

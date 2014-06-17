@@ -2,6 +2,8 @@ package no.ugland.utransprod.gui.edit;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -34,6 +36,7 @@ public class FilterProductionoverviewView implements Closeable {
     private JComboBox comboBoxSort1;
     private JComboBox comboBoxSort2;
     private JComboBox comboBoxSort3;
+    private ProductionoverviewFilterListener productionoverviewFilterListener;
 
     public interface ProductionoverviewFilterListener {
 	void doFilter(ProductionoverviewFilter assemblyFilter);
@@ -71,6 +74,7 @@ public class FilterProductionoverviewView implements Closeable {
 	DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 	for (ProductionColumn column : ProductionColumn.getVisibleColumns()) {
 	    Component component = column.getFilterComponent(presentationModel);
+	    component.addKeyListener(new FieldKeyListener());
 	    if (component != null) {
 		builder.appendRow(new RowSpec("fill:p"));
 		builder.append(column.getColumnName());
@@ -83,6 +87,7 @@ public class FilterProductionoverviewView implements Closeable {
     }
 
     private void initComponents(WindowInterface window, ProductionoverviewFilterListener productionoverviewFilterListener) {
+	this.productionoverviewFilterListener = productionoverviewFilterListener;
 	labelFilter = new JLabel("Filter (% er wildcard)", SwingConstants.CENTER);
 	labelFilter.setFont(labelFilter.getFont().deriveFont(labelFilter.getFont().getStyle() | Font.BOLD));
 	labelSort = new JLabel("Sortering", SwingConstants.CENTER);
@@ -114,6 +119,27 @@ public class FilterProductionoverviewView implements Closeable {
 
 	public void actionPerformed(ActionEvent arg0) {
 	    productionoverviewFilterListener.doFilter(productionoverviewFilter);
+	}
+
+    }
+
+    public class FieldKeyListener implements KeyListener {
+
+	public void keyPressed(KeyEvent arg0) {
+	    // TODO Auto-generated method stub
+
+	}
+
+	public void keyReleased(KeyEvent keyEvent) {
+	    if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
+		productionoverviewFilterListener.doFilter(productionoverviewFilter);
+	    }
+
+	}
+
+	public void keyTyped(KeyEvent arg0) {
+	    // TODO Auto-generated method stub
+
 	}
 
     }

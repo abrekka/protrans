@@ -41,6 +41,7 @@ public class SaleReportData implements Comparable<SaleReportData> {
     private ProbabilityEnum probabilityEnum;
 
     private BigDecimal contributionMargin;
+    private Integer productAreaNr;
 
     public SaleReportData() {
 	super();
@@ -48,7 +49,7 @@ public class SaleReportData implements Comparable<SaleReportData> {
 
     public SaleReportData(int probability, String countyName, String salesman, String customerNr, String customerName, String orderNr,
 	    BigDecimal ownProductionCost, BigDecimal transportCost, BigDecimal assemblyCost, BigDecimal yesLines, BigDecimal db, Date aSalesDate,
-	    Date aRegsiteredDate, Integer aOrderDate, BigDecimal aContributionMargin) {
+	    Date aRegsiteredDate, Integer aOrderDate, BigDecimal aContributionMargin, Integer productAreaNr) {
 	super();
 	this.contributionMargin = aContributionMargin;
 	// this.type = type;
@@ -63,6 +64,7 @@ public class SaleReportData implements Comparable<SaleReportData> {
 	this.assemblyCost = assemblyCost;
 	this.yesLines = yesLines;
 	this.db = db;
+	this.productAreaNr = productAreaNr;
 	if (ownProductionCost != null && ownProductionCost.intValue() != 0) {
 	    this.dg = db.divide(ownProductionCost, 2, RoundingMode.HALF_EVEN);
 	}
@@ -81,7 +83,7 @@ public class SaleReportData implements Comparable<SaleReportData> {
 
     public SaleReportData(String type, String countyName, String salesman, String customerNr, String customerName, String orderNr,
 	    BigDecimal ownProductionCost, BigDecimal transportCost, BigDecimal assemblyCost, BigDecimal yesLines, BigDecimal db, BigDecimal dg,
-	    Date aSalesDate) {
+	    Date aSalesDate, String productArea) {
 	super();
 	this.type = type;
 	this.countyName = countyName;
@@ -96,6 +98,15 @@ public class SaleReportData implements Comparable<SaleReportData> {
 	this.db = db;
 	this.dg = dg;
 	this.salesDate = aSalesDate;
+	this.productAreaNr = productAreaNr;
+    }
+
+    public Integer getProductAreaNr() {
+	return productAreaNr;
+    }
+
+    public void setProductArea(Integer productArea) {
+	this.productAreaNr = productAreaNr;
     }
 
     public BigDecimal getAssemblyCost() {

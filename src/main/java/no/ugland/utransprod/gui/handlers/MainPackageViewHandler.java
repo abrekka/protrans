@@ -323,7 +323,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	orderModel = new OrderModel(new Order(), false, false, true, null, null);
 	presentationModelPackable = new PresentationModel(orderModel);
 	// colliListViewHandler.setPresentationModel(presentationModelPackable);
-	orderLineSelectionList.addPropertyChangeListener(SelectionInList.PROPERTYNAME_SELECTION_INDEX, new OrderLineSelectionListener());
+	orderLineSelectionList.addPropertyChangeListener(new OrderLineSelectionListener());
 
 	SumOrderReadyV sum = managerRepository.getSumOrderReadyVManager().findByDate(Calendar.getInstance().getTime());
 	if (sum == null) {
@@ -1845,9 +1845,9 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	@SuppressWarnings("unchecked")
 	public void actionPerformed(ActionEvent arg0) {
 	    if (JOptionPane.showConfirmDialog(window.getComponent(), "Vil du virkelig slette artikkel?", "Slette", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
-		OrderLine orderLine = (OrderLine) orderLineSelectionList.getElementAt(tableOrderLines.convertRowIndexToModel(orderLineSelectionList
-			.getSelectionIndex()));
-		if (orderLine != null) {
+		List<OrderLine> selectedOrderLines = getSelectedOrderLines();
+		if (selectedOrderLines.size() == 1) {
+		    OrderLine orderLine = selectedOrderLines.get(0);
 		    AbstractOrderModel abstractOrderModel = (AbstractOrderModel) presentationModelPackable.getBean();
 		    OverviewManager overviewManager = (OverviewManager) ModelUtil.getBean(abstractOrderModel.getManagerName());
 		    ownOrderLineList.remove(orderLine);
@@ -1862,7 +1862,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		    }
 		    orderLineSelectionList.clearSelection();
 		    tableModelOrderLines.fireTableDataChanged();
-
+		    buttonRemoveArticle.setEnabled(false);
 		}
 	    }
 
@@ -2309,6 +2309,10 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		List<String> articleNames = Lists.newArrayList(Iterables.transform(orderLines, tilArticleName()));
 		if (!orderLines.isEmpty() && articlePacker.canPack(articleNames)) {
 		    popupMenuOrderLine.show((JXTable) mouseEvent.getSource(), mouseEvent.getX(), mouseEvent.getY());
+		}
+	    } else if (SwingUtilities.isLeftMouseButton(mouseEvent) && mouseEvent.getClickCount() == 1) {
+		if (orderLines.size() == 1 && orderLines.get(0).getArticleType() != null && orderLines.get(0).getArticleType().isExtra()) {
+		    buttonRemoveArticle.setEnabled(true);
 		}
 	    }
 	}

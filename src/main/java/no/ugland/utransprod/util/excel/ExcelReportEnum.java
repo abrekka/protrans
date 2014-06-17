@@ -149,10 +149,11 @@ public enum ExcelReportEnum {
      * Salgsrapport grunnlag.
      */
     SALES_REPORT_BASIS("Salgsrapport - grunnlag", "Salgsrapport", "salesVManager", new String[] { "Type", "Fylke", "Selger", "Salgsdato", "Salgsuke",
-	    "Kundenr", "Navn", "Ordrenr", "Egenproduksjon", "Frakt", "Montering", "Jalinjer", "DB", "DG" }, new Integer[] { 4, 8, 9, 10, 11, 12 },
-	    new String[] { "Type", "CountyName", "Salesman", "SalesDateString", "SalesWeek", "CustomerNr", "CustomerName", "OrderNr",
-		    "OwnProductionCost", "TransportCost", "AssemblyCost", "YesLines", "Db", "Dg" }, null, 10, null, null, null, null, null, false,
-	    true, 0, null, true, false, new ExcelSumFormula(new Integer[] { 8, 9, 10, 11, 12 }, "Sum:", "M$ROW/I$ROW", 13, 7), null, true, true, true),
+	    "Kundenr", "Navn", "Ordrenr", "Egenproduksjon", "Frakt", "Montering", "Jalinjer", "DB", "DG", "Avdeling" }, new Integer[] { 4, 8, 9, 10,
+	    11, 12, 13 }, new String[] { "Type", "CountyName", "Salesman", "SalesDateString", "SalesWeek", "CustomerNr", "CustomerName", "OrderNr",
+	    "OwnProductionCost", "TransportCost", "AssemblyCost", "YesLines", "Db", "Dg", "ProductAreaNr" }, null, 10, null, null, null, null, null,
+	    false, true, 0, null, true, false, new ExcelSumFormula(new Integer[] { 8, 9, 10, 11, 12 }, "Sum:", "M$ROW/I$ROW", 13, 7), null, true,
+	    true, true),
     /**
      * Salgsrapport grunnlag r selger.
      */
