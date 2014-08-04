@@ -19,6 +19,12 @@
         column="REGISTRATION_DATE"
         length="32"
     />
+    <property
+        name="orderReady"
+        type="java.util.Date"
+        column="ORDER_READY"
+        length="32"
+    />
 
 	<property
         name="userName"

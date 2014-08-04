@@ -55,12 +55,12 @@
         length="32"
     />
 	
-    <!-- property
-        name="numberOf"
+    <property
+        name="noinvoab"
         type="java.math.BigDecimal"
         column="NOINVOAB"
         length="32"
-    /-->
+    />
 	<property
         name="discount"
         type="java.math.BigDecimal"

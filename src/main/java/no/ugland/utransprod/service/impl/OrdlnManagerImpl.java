@@ -62,4 +62,8 @@ public class OrdlnManagerImpl implements OrdlnManager {
 	return dao.findByOrdNo(ordNo);
     }
 
+    public List<Ordln> findTaksteinInfo(String orderNr) {
+	return dao.findTaksteinInfo(orderNr);
+    }
+
 }

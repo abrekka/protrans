@@ -1313,9 +1313,6 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
     private void setBean(MainPackageV mainPackageV) {
 
 	Order order = managerRepository.getOrderManager().lazyLoadOrderLineAndCollies(mainPackageV.getOrderId());
-	if (!Hibernate.isInitialized(((Order) order).getCollies())) {
-	    System.out.println("test");
-	}
 	if (order != null) {
 	    OrderModel orderModel = new OrderModel(order, false, false, true, null, null);
 	    colliListViewHandler.setPackable(order, null);
@@ -1326,9 +1323,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 
 	    orderComments.addAll((List<OrderComment>) presentationModelPackable.getBufferedValue(OrderModel.PROPERTY_COMMENTS));
 	}
-	if (!Hibernate.isInitialized(((Order) order).getCollies())) {
-	    System.out.println("test");
-	}
+
     }
 
     private void checkBuffering(WindowInterface window) {

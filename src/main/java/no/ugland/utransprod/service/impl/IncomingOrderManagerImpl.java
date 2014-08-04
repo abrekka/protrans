@@ -464,6 +464,10 @@ public class IncomingOrderManagerImpl extends ManagerImpl<Order> implements Inco
 	    incomingOrder.setOrderLines(orderLines);
 	    setGavlVinkelOgBredde(incomingOrder);
 	}
+
+	for (OrderLine orderLine : incomingOrder.getOrderLines()) {
+	    orderLine.calculateAttributes();
+	}
     }
 
     private void setGavlVinkelOgBredde(Order incomingOrder) {

@@ -216,7 +216,7 @@ public class PackageViewHandler extends AbstractProductionPackageViewHandler<Pac
 	 */
 	public Object getValueAt(int rowIndex, int columnIndex) {
 	    PackableListItem packable = (PackableListItem) getRow(rowIndex);
-	    String columnName = StringUtils.upperCase(getColumnName(columnIndex)).replaceAll(" ", "_");
+	    String columnName = StringUtils.upperCase(getColumnName(columnIndex)).replaceAll(" ", "_").replaceAll("\\.", "_");
 	    return PackageColumn.valueOf(columnName).getValue(packable);
 	}
 
@@ -225,13 +225,13 @@ public class PackageViewHandler extends AbstractProductionPackageViewHandler<Pac
 	 */
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-	    String columnName = StringUtils.upperCase(getColumnName(columnIndex)).replaceAll(" ", "_");
+	    String columnName = StringUtils.upperCase(getColumnName(columnIndex)).replaceAll(" ", "_").replaceAll("\\.", "_");
 	    return PackageColumn.valueOf(columnName).getColumnClass();
 	}
 
     }
 
-    private enum PackageColumn {
+    public enum PackageColumn {
 	TRANSPORT("Transport") {
 	    @Override
 	    public Object getValue(PackableListItem packable) {
@@ -348,6 +348,28 @@ public class PackageViewHandler extends AbstractProductionPackageViewHandler<Pac
 	    @Override
 	    public Object getValue(PackableListItem packable) {
 		return packable.getArticleName();
+	    }
+	},
+	PROD_UKE("Prod.uke") {
+	    @Override
+	    public Object getValue(PackableListItem packable) {
+		return packable.getProductionWeek();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return Integer.class;
+	    }
+	},
+	PAKKLISTE_KLAR("Pakkliste klar") {
+	    @Override
+	    public Object getValue(PackableListItem packable) {
+		return packable.getPacklistReady();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return Date.class;
 	    }
 	};
 	private String columnName;

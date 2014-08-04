@@ -194,9 +194,6 @@ public class TakstolPackageViewHandler extends PackageViewHandler {
 
 	    @Override
 	    public Object getValue(PackableListItem packable) {
-		if (packable.getOrderNr().equalsIgnoreCase("52755")) {
-		    System.out.println();
-		}
 		if (packable.getColli() != null) {
 		    return packable.getColli().toString();
 		}

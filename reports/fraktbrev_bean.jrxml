@@ -32,14 +32,13 @@
 	<field name="lenght" class="java.lang.Integer"/>
 	<field name="width" class="java.lang.Integer"/>
 	<field name="height" class="java.lang.Integer"/>
-	<field name="taksteinkolliinfo" class="java.util.List"/>
 	<group name="plassering" isStartNewPage="true">
 		<groupExpression><![CDATA[]]></groupExpression>
 		<groupHeader>
 			<band splitType="Stretch"/>
 		</groupHeader>
 		<groupFooter>
-			<band height="2" splitType="Stretch"/>
+			<band height="29" splitType="Stretch"/>
 		</groupFooter>
 	</group>
 	<group name="report_number" isStartNewPage="true">
@@ -413,13 +412,7 @@
 			<band splitType="Stretch"/>
 		</groupHeader>
 		<groupFooter>
-			<band height="25" splitType="Stretch">
-				<subreport>
-					<reportElement x="0" y="5" width="539" height="11"/>
-					<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{taksteinkolliinfo})]]></dataSourceExpression>
-					<subreportExpression class="java.lang.String"><![CDATA["reports/takstein_kolli_info.jasper"]]></subreportExpression>
-				</subreport>
-			</band>
+			<band height="98" splitType="Stretch"/>
 		</groupFooter>
 	</group>
 	<group name="missing">
@@ -585,7 +578,7 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="1" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band splitType="Stretch"/>

@@ -8,6 +8,7 @@ import no.ugland.utransprod.service.FakturagrunnlagVManager;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
+import com.google.inject.internal.Lists;
 
 public class FakturagrunnlagVManagerImpl implements FakturagrunnlagVManager {
     private FakturagrunnlagVDAO dao;
@@ -22,8 +23,8 @@ public class FakturagrunnlagVManagerImpl implements FakturagrunnlagVManager {
 
     public Integer finnBestillingsnrFrakt(Integer orderId) {
 	List<FakturagrunnlagV> fakturagrunnlag = dao.finnFakturagrunnlag(orderId);
-	FakturagrunnlagV fakturagrunnlagFrakt = Iterables.find(fakturagrunnlag, fraktlinje());
-	return fakturagrunnlagFrakt == null ? null : fakturagrunnlagFrakt.getPurcno();
+	List<FakturagrunnlagV> fakturagrunnlagFrakt = Lists.newArrayList(Iterables.filter(fakturagrunnlag, fraktlinje()));
+	return fakturagrunnlagFrakt == null || fakturagrunnlagFrakt.isEmpty() ? null : fakturagrunnlagFrakt.get(0).getPurcno();
     }
 
     private Predicate<FakturagrunnlagV> fraktlinje() {

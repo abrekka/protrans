@@ -8,218 +8,217 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class DeviationV extends BaseObject {
-	private Integer deviationId;
-	private Date registrationDate;
-	private String userName;
-	private Integer customerNr;
-	private String customerName;
-	private String orderNr;
-	private String productArea;
-	private String responsible;
-	private String ownFunction;
-	private String deviationFunction;
-	private String functionCategoryName;
-	private String deviationStatusName;
-	private Integer registrationWeek;
-	private Integer registrationYear;
-	private BigDecimal internalCost;
-	private BigDecimal externalCost;
-	private String initiatedBy;
+    private Integer deviationId;
+    private Date registrationDate;
+    private String userName;
+    private Integer customerNr;
+    private String customerName;
+    private String orderNr;
+    private String productArea;
+    private String responsible;
+    private String ownFunction;
+    private String deviationFunction;
+    private String functionCategoryName;
+    private String deviationStatusName;
+    private Integer registrationWeek;
+    private Integer registrationYear;
+    private BigDecimal internalCost;
+    private BigDecimal externalCost;
+    private String initiatedBy;
+    private Date orderReady;
 
-	public DeviationV() {
-		super();
-	}
+    public DeviationV() {
+	super();
+    }
 
-	public DeviationV(Integer deviationId, Date registrationDate,
-			String userName, Integer customerNr, String customerName,
-			String orderNr, String productArea, String responsible,
-			String ownFunction, String deviationFunction,
-			String functionCategoryName, String deviationStatusName,
-			Integer registrationWeek, Integer registrationYear,
-			BigDecimal internalCost, BigDecimal externalCost) {
-		super();
-		this.deviationId = deviationId;
-		this.registrationDate = registrationDate;
-		this.userName = userName;
-		this.customerNr = customerNr;
-		this.customerName = customerName;
-		this.orderNr = orderNr;
-		this.productArea = productArea;
-		this.responsible = responsible;
-		this.ownFunction = ownFunction;
-		this.deviationFunction = deviationFunction;
-		this.functionCategoryName = functionCategoryName;
-		this.deviationStatusName = deviationStatusName;
-		this.registrationWeek = registrationWeek;
-		this.registrationYear = registrationYear;
-		this.internalCost = internalCost;
-		this.externalCost = externalCost;
-	}
+    public DeviationV(Integer deviationId, Date registrationDate, String userName, Integer customerNr, String customerName, String orderNr,
+	    String productArea, String responsible, String ownFunction, String deviationFunction, String functionCategoryName,
+	    String deviationStatusName, Integer registrationWeek, Integer registrationYear, BigDecimal internalCost, BigDecimal externalCost,
+	    Date orderReady) {
+	super();
+	this.orderReady = orderReady;
+	this.deviationId = deviationId;
+	this.registrationDate = registrationDate;
+	this.userName = userName;
+	this.customerNr = customerNr;
+	this.customerName = customerName;
+	this.orderNr = orderNr;
+	this.productArea = productArea;
+	this.responsible = responsible;
+	this.ownFunction = ownFunction;
+	this.deviationFunction = deviationFunction;
+	this.functionCategoryName = functionCategoryName;
+	this.deviationStatusName = deviationStatusName;
+	this.registrationWeek = registrationWeek;
+	this.registrationYear = registrationYear;
+	this.internalCost = internalCost;
+	this.externalCost = externalCost;
+    }
 
-	public Integer getDeviationId() {
-		return deviationId;
-	}
+    public Date getOrderReady() {
+	return orderReady;
+    }
 
-	public void setDeviationId(Integer deviationId) {
-		this.deviationId = deviationId;
-	}
+    public void setOrderReady(Date orderReady) {
+	this.orderReady = orderReady;
+    }
 
-	public Date getRegistrationDate() {
-		return registrationDate;
-	}
+    public Integer getDeviationId() {
+	return deviationId;
+    }
 
-	public void setRegistrationDate(Date registrationDate) {
-		this.registrationDate = registrationDate;
-	}
+    public void setDeviationId(Integer deviationId) {
+	this.deviationId = deviationId;
+    }
 
-	public String getUserName() {
-		return userName;
-	}
+    public Date getRegistrationDate() {
+	return registrationDate;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public void setRegistrationDate(Date registrationDate) {
+	this.registrationDate = registrationDate;
+    }
 
-	public Integer getCustomerNr() {
-		return customerNr;
-	}
+    public String getUserName() {
+	return userName;
+    }
 
-	public void setCustomerNr(Integer customerNr) {
-		this.customerNr = customerNr;
-	}
+    public void setUserName(String userName) {
+	this.userName = userName;
+    }
 
-	public String getCustomerName() {
-		return customerName;
-	}
+    public Integer getCustomerNr() {
+	return customerNr;
+    }
 
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
-	}
+    public void setCustomerNr(Integer customerNr) {
+	this.customerNr = customerNr;
+    }
 
-	public String getOrderNr() {
-		return orderNr;
-	}
+    public String getCustomerName() {
+	return customerName;
+    }
 
-	public void setOrderNr(String orderNr) {
-		this.orderNr = orderNr;
-	}
+    public void setCustomerName(String customerName) {
+	this.customerName = customerName;
+    }
 
-	public String getProductArea() {
-		return productArea;
-	}
+    public String getOrderNr() {
+	return orderNr;
+    }
 
-	public void setProductArea(String productArea) {
-		this.productArea = productArea;
-	}
+    public void setOrderNr(String orderNr) {
+	this.orderNr = orderNr;
+    }
 
-	public String getResponsible() {
-		return responsible;
-	}
+    public String getProductArea() {
+	return productArea;
+    }
 
-	public void setResponsible(String responsible) {
-		this.responsible = responsible;
-	}
+    public void setProductArea(String productArea) {
+	this.productArea = productArea;
+    }
 
-	public String getOwnFunction() {
-		return ownFunction;
-	}
+    public String getResponsible() {
+	return responsible;
+    }
 
-	public void setOwnFunction(String ownFunction) {
-		this.ownFunction = ownFunction;
-	}
+    public void setResponsible(String responsible) {
+	this.responsible = responsible;
+    }
 
-	public String getDeviationFunction() {
-		return deviationFunction;
-	}
+    public String getOwnFunction() {
+	return ownFunction;
+    }
 
-	public void setDeviationFunction(String deviationFunction) {
-		this.deviationFunction = deviationFunction;
-	}
+    public void setOwnFunction(String ownFunction) {
+	this.ownFunction = ownFunction;
+    }
 
-	public String getFunctionCategoryName() {
-		return functionCategoryName;
-	}
+    public String getDeviationFunction() {
+	return deviationFunction;
+    }
 
-	public void setFunctionCategoryName(String functionCategoryName) {
-		this.functionCategoryName = functionCategoryName;
-	}
+    public void setDeviationFunction(String deviationFunction) {
+	this.deviationFunction = deviationFunction;
+    }
 
-	public String getDeviationStatusName() {
-		return deviationStatusName;
-	}
+    public String getFunctionCategoryName() {
+	return functionCategoryName;
+    }
 
-	public void setDeviationStatusName(String deviationStatusName) {
-		this.deviationStatusName = deviationStatusName;
-	}
+    public void setFunctionCategoryName(String functionCategoryName) {
+	this.functionCategoryName = functionCategoryName;
+    }
 
-	public Integer getRegistrationWeek() {
-		return registrationWeek;
-	}
+    public String getDeviationStatusName() {
+	return deviationStatusName;
+    }
 
-	public void setRegistrationWeek(Integer registrationWeek) {
-		this.registrationWeek = registrationWeek;
-	}
+    public void setDeviationStatusName(String deviationStatusName) {
+	this.deviationStatusName = deviationStatusName;
+    }
 
-	public Integer getRegistrationYear() {
-		return registrationYear;
-	}
+    public Integer getRegistrationWeek() {
+	return registrationWeek;
+    }
 
-	public void setRegistrationYear(Integer registrationYear) {
-		this.registrationYear = registrationYear;
-	}
+    public void setRegistrationWeek(Integer registrationWeek) {
+	this.registrationWeek = registrationWeek;
+    }
 
-	public BigDecimal getInternalCost() {
-		return internalCost;
-	}
+    public Integer getRegistrationYear() {
+	return registrationYear;
+    }
 
-	public void setInternalCost(BigDecimal internalCost) {
-		this.internalCost = internalCost;
-	}
+    public void setRegistrationYear(Integer registrationYear) {
+	this.registrationYear = registrationYear;
+    }
 
-	public BigDecimal getExternalCost() {
-		return externalCost;
-	}
+    public BigDecimal getInternalCost() {
+	return internalCost;
+    }
 
-	public void setExternalCost(BigDecimal externalCost) {
-		this.externalCost = externalCost;
-	}
+    public void setInternalCost(BigDecimal internalCost) {
+	this.internalCost = internalCost;
+    }
 
-	@Override
-	public boolean equals(final Object other) {
-		if (!(other instanceof DeviationV))
-			return false;
-		DeviationV castOther = (DeviationV) other;
-		return new EqualsBuilder().append(deviationId, castOther.deviationId)
-				.isEquals();
-	}
+    public BigDecimal getExternalCost() {
+	return externalCost;
+    }
 
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder().append(deviationId).toHashCode();
-	}
+    public void setExternalCost(BigDecimal externalCost) {
+	this.externalCost = externalCost;
+    }
 
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this).append("deviationId", deviationId)
-				.append("registrationDate", registrationDate).append(
-						"userName", userName).append("customerNr", customerNr)
-				.append("customerName", customerName)
-				.append("orderNr", orderNr).append("productArea", productArea)
-				.append("responsible", responsible).append("ownFunction",
-						ownFunction).append("deviationFunction",
-						deviationFunction).append("functionCategoryName",
-						functionCategoryName).append("deviationStatusName",
-						deviationStatusName).append("registrationWeek",
-						registrationWeek).append("registrationYear",
-						registrationYear).append("internalCost", internalCost)
-				.append("externalCost", externalCost).toString();
-	}
+    @Override
+    public boolean equals(final Object other) {
+	if (!(other instanceof DeviationV))
+	    return false;
+	DeviationV castOther = (DeviationV) other;
+	return new EqualsBuilder().append(deviationId, castOther.deviationId).isEquals();
+    }
 
-	public String getInitiatedBy() {
-		return initiatedBy;
-	}
+    @Override
+    public int hashCode() {
+	return new HashCodeBuilder().append(deviationId).toHashCode();
+    }
 
-	public void setInitiatedBy(String initiatedBy) {
-		this.initiatedBy = initiatedBy;
-	}
+    @Override
+    public String toString() {
+	return new ToStringBuilder(this).append("deviationId", deviationId).append("registrationDate", registrationDate).append("userName", userName)
+		.append("customerNr", customerNr).append("customerName", customerName).append("orderNr", orderNr).append("productArea", productArea)
+		.append("responsible", responsible).append("ownFunction", ownFunction).append("deviationFunction", deviationFunction)
+		.append("functionCategoryName", functionCategoryName).append("deviationStatusName", deviationStatusName)
+		.append("registrationWeek", registrationWeek).append("registrationYear", registrationYear).append("internalCost", internalCost)
+		.append("externalCost", externalCost).toString();
+    }
+
+    public String getInitiatedBy() {
+	return initiatedBy;
+    }
+
+    public void setInitiatedBy(String initiatedBy) {
+	this.initiatedBy = initiatedBy;
+    }
 }

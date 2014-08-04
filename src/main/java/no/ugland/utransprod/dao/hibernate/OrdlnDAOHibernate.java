@@ -12,6 +12,8 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
+import com.google.inject.internal.Lists;
+
 public class OrdlnDAOHibernate extends BaseDAOHibernate<Ordln> implements OrdlnDAO {
 
     // private static final String[] costProdnoArray = new
@@ -245,6 +247,21 @@ public class OrdlnDAOHibernate extends BaseDAOHibernate<Ordln> implements OrdlnD
 
 		return list.size() == 1 ? list.get(0) : null;
 	    }
+	});
+    }
+
+    public List<Ordln> findTaksteinInfo(final String orderNr) {
+	return (List<Ordln>) getHibernateTemplate().execute(new HibernateCallback() {
+
+	    public Object doInHibernate(final Session session) {
+		String sql = "select ordln from Ordln ordln,Ord ord " + "       where ordln.ordlnPK.ordno=ord.ordno and "
+			+ "             ord.inf6=:orderNr and "
+			+ "             ordln.prod.prCatNo in (:prCatNoList) and ordln.prod.inf like('skarpnes%') and ordln.prod.prCatNo2<>9"
+			+ "       order by ordln.prod.prCatNo3";
+		return session.createQuery(sql).setParameterList("prCatNoList", Lists.newArrayList(1020410, 1020430))
+			.setParameter("orderNr", orderNr).list();
+	    }
+
 	});
     }
 

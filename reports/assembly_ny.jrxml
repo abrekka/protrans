@@ -467,7 +467,7 @@
 				<reportElement positionType="Float" x="3" y="31" width="550" height="1"/>
 			</line>
 			<staticText>
-				<reportElement key="staticText-23" positionType="Float" x="24" y="92" width="147" height="12"/>
+				<reportElement key="staticText-23" positionType="Float" x="24" y="92" width="162" height="12"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -477,7 +477,7 @@
 				<textElement verticalAlignment="Top">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<text><![CDATA[Totalsum inkl. tillegg:]]></text>
+				<text><![CDATA[Totalsum inkl. tillegg (eks. mva.):]]></text>
 			</staticText>
 			<staticText>
 				<reportElement key="staticText-21" positionType="Float" x="24" y="50" width="498" height="12"/>

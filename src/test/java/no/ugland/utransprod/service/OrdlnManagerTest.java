@@ -26,6 +26,12 @@ public class OrdlnManagerTest {
     }
 
     @Test
+    public void skalHenteTaksteinInfo() {
+	List<Ordln> taksteinInfo = ordlnManager.findTaksteinInfo("84892");
+	Assertions.assertThat(taksteinInfo).hasSize(4);
+    }
+
+    @Test
     public void skalHenteOrdlnForFakturagrunnlag() {
 	List<Ordln> fakturagrunnlag = ordlnManager.findForFakturagrunnlag("88833");
 	Assertions.assertThat(fakturagrunnlag).isNotEmpty();

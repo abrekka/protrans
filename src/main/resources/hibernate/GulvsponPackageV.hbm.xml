@@ -21,8 +21,21 @@
         column="CUSTOMER_DETAILS"
         length="255"
     />
+    
+    <property
+        name="packlistReady"
+        type="java.util.Date"
+        column="PACKLIST_READY"
+        length="32"
+    />
 
-	
+
+<property
+        name="productionWeek"
+        type="java.lang.Integer"
+        column="PRODUCTION_WEEK"
+        length="32"
+    />	
     
     <property
         name="orderNr"

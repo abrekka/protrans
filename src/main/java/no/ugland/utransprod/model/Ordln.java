@@ -47,6 +47,8 @@ public class Ordln extends BaseObject {
     private Integer prodTp;
     private Integer purcno;
 
+    private BigDecimal noinvoab;
+
     public static final Ordln UNKNOWN = new Ordln() {
     };
 
@@ -326,5 +328,13 @@ public class Ordln extends BaseObject {
 
     public void setPurcno(Integer purcno) {
 	this.purcno = purcno;
+    }
+
+    public BigDecimal getNoinvoab() {
+	return noinvoab;
+    }
+
+    public void setNoinvoab(BigDecimal noinvoab) {
+	this.noinvoab = noinvoab;
     }
 }

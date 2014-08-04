@@ -33,6 +33,7 @@ import no.ugland.utransprod.util.Util;
 import org.apache.commons.lang.StringUtils;
 
 import com.google.inject.Inject;
+import com.google.inject.internal.Lists;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 import com.jgoodies.binding.list.ArrayListModel;
 
@@ -122,28 +123,52 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 	Integer bestillingsnrFrakt = managerRepository.getFakturagrunnlagVManager().finnBestillingsnrFrakt(transportable.getOrder().getOrderId());
 	String customerRef = ord != null ? ord.getYrRef() : null;
 
-	list.addAll(prepareCollies(transportable.getCollies(), i, transportable, customerRef, bestillingsnrFrakt));
+	List<Taksteinkolli> taksteinkolliInfo = genererTaksteinInfo(transportable);
+
+	list.addAll(prepareCollies(transportable.getCollies(), i, transportable, customerRef, bestillingsnrFrakt, taksteinkolliInfo));
 	if (i == 1) {
 	    colliCount = list.size();
 	}
-	list.addAll(prepareOrderLines(missing, i, transportable, customerRef, bestillingsnrFrakt));
+	list.addAll(prepareOrderLines(missing, i, transportable, customerRef, bestillingsnrFrakt, taksteinkolliInfo));
 	return colliCount;
     }
 
+    private List<Taksteinkolli> genererTaksteinInfo(Transportable transportable) {
+	List<Taksteinkolli> taksteinkolliList = Lists.newArrayList();
+	if (Order.class.isInstance(transportable)) {
+	    Order order = (Order) transportable;
+	    OrderLine takstein = order.getOrderLine("Takstein");
+	    if (takstein != null) {
+		Ordln ordlnTakstein = managerRepository.getOrdlnManager().findByOrdNoAndLnNo(takstein.getOrdNo(), takstein.getLnNo());
+		if (ordlnTakstein != null) {
+		    takstein.setOrdln(ordlnTakstein);
+		}
+		List<Ordln> taksteinInfo = managerRepository.getOrdlnManager().findTaksteinInfo(transportable.getOrderNr());
+		String leveresFraLager = takstein.getAttributeValue("Sendes fra GG");
+		for (Ordln ordln : taksteinInfo) {
+		    taksteinkolliList.add(new Taksteinkolli().medLeveresFraLager(leveresFraLager)
+			    .medOverordnetBeskrivelse(takstein.getDetailsWithoutNoAttributes()).medBeskrivelse(ordln.getDescription())
+			    .medAntall(ordln.getNoinvoab()));
+		}
+	    }
+	}
+	return taksteinkolliList;
+    }
+
     private List<ReportObject> prepareOrderLines(Collection<OrderLine> orderLineList, Integer pageNumber, Transportable transportable,
-	    String customerRef, Integer bestilingsnrFrakt) {
+	    String customerRef, Integer bestilingsnrFrakt, List<Taksteinkolli> taksteinkolliInfo) {
 	ArrayList<ReportObject> orderLines = new ArrayList<ReportObject>();
 
 	if (orderLineList != null) {
 	    for (OrderLine orderLine : orderLineList) {
-		addOrderLine(pageNumber, transportable, orderLines, orderLine, customerRef, bestilingsnrFrakt);
+		addOrderLine(pageNumber, transportable, orderLines, orderLine, customerRef, bestilingsnrFrakt, taksteinkolliInfo);
 	    }
 	}
 	return orderLines;
     }
 
     private void addOrderLine(Integer pageNumber, Transportable transportable, ArrayList<ReportObject> orderLines, OrderLine orderLine,
-	    String customerRef, Integer bestilingsnrFrakt) {
+	    String customerRef, Integer bestilingsnrFrakt, List<Taksteinkolli> taksteinkolliInfo) {
 	if (isStone(orderLine)) {
 	    Ordln ordln = this.managerRepository.getOrdlnManager().findByOrdNoAndLnNo(orderLine.getOrdNo(), orderLine.getLnNo());
 	    if (ordln != null) {
@@ -151,7 +176,7 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 	    }
 	    lazyLoadAttributes(orderLine);
 	}
-	orderLines.add(new ReportObject(pageNumber, orderLine, transportable, customerRef, bestilingsnrFrakt));
+	orderLines.add(new ReportObject(pageNumber, orderLine, transportable, customerRef, bestilingsnrFrakt, taksteinkolliInfo));
     }
 
     private boolean isStone(OrderLine orderLine) {
@@ -163,22 +188,24 @@ public abstract class AbstractTransportLetter implements TransportLetter {
     }
 
     private List<ReportObject> prepareCollies(Collection<Colli> colliList, Integer pageNumber, Transportable transportable, String customerRef,
-	    Integer bestillingsnrFrakt) {
+	    Integer bestillingsnrFrakt, List<Taksteinkolli> taksteinkolliInfo) {
 	ArrayList<ReportObject> collies = new ArrayList<ReportObject>();
 	if (colliList != null) {
 	    for (Colli colli : colliList) {
-		addColli(pageNumber, transportable, collies, colli, customerRef, bestillingsnrFrakt);
+		if (!"Takstein".equalsIgnoreCase(colli.getColliName())) {
+		    addColli(pageNumber, transportable, collies, colli, customerRef, bestillingsnrFrakt, taksteinkolliInfo);
+		}
 	    }
 	}
 	return collies;
     }
 
     private void addColli(Integer pageNumber, Transportable transportable, ArrayList<ReportObject> collies, Colli colli, String customerRef,
-	    Integer bestillingsnrFrakt) {
+	    Integer bestillingsnrFrakt, List<Taksteinkolli> taksteinkolliInfo) {
 	if (checkAndLazyLoadColli(colli)) {
 	    lazyLoadCollies(colli);
 
-	    collies.add(new ReportObject(pageNumber, colli, transportable, customerRef, bestillingsnrFrakt));
+	    collies.add(new ReportObject(pageNumber, colli, transportable, customerRef, bestillingsnrFrakt, taksteinkolliInfo));
 	}
     }
 
@@ -304,6 +331,7 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 	private String customerRef;
 
 	private Integer bestillingsnrFrakt;
+	private List<Taksteinkolli> taksteinkolliInfo;
 
 	/**
 	 * @param aPageNumber
@@ -311,7 +339,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 	 * @param aTransportable
 	 */
 	public ReportObject(Integer aPageNumber, TransportLetterObject transportLetterObject, Transportable aTransportable, String aCustomerRef,
-		Integer bestillingsnrFrakt) {
+		Integer bestillingsnrFrakt, List<Taksteinkolli> taksteinkolliInfo) {
+	    this.taksteinkolliInfo = taksteinkolliInfo;
 	    customerRef = aCustomerRef;
 	    pageNumber = aPageNumber;
 	    letterObject = transportLetterObject;
@@ -319,6 +348,10 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 	    transportable = aTransportable;
 	    this.bestillingsnrFrakt = bestillingsnrFrakt;
 
+	}
+
+	public List<Taksteinkolli> getTaksteinkolliInfo() {
+	    return taksteinkolliInfo;
 	}
 
 	public String getCustomerRef() {
@@ -395,6 +428,17 @@ public abstract class AbstractTransportLetter implements TransportLetter {
     }
 
     private enum TransportLetterColumn {
+	TAKSTEINKOLLIINFO("taksteinkolliinfo") {
+	    @Override
+	    public Class<?> getColumnClass() {
+		return List.class;
+	    }
+
+	    @Override
+	    public Object getValue(ReportObject reportObject, Integer colliCount) {
+		return reportObject.getTaksteinkolliInfo();
+	    }
+	},
 	ADDRESS("address") {
 	    @Override
 	    public Class<?> getColumnClass() {

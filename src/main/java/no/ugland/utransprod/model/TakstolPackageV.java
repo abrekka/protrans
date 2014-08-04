@@ -151,4 +151,14 @@ public class TakstolPackageV extends PackageProduction implements TextRenderable
     public void setRest(Integer rest) {
 	this.rest = rest;
     }
+
+    public Integer getProductionWeek() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    public Date getPacklistReady() {
+	// TODO Auto-generated method stub
+	return null;
+    }
 }

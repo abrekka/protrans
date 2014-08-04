@@ -64,6 +64,10 @@ public class GulvsponPackageV extends BaseObject implements TextRenderable, Pack
      */
     private Ordln ordln;
 
+    private Integer productionWeek;
+
+    private Date packlistReady;
+
     public GulvsponPackageV() {
 	super();
 
@@ -479,6 +483,22 @@ public class GulvsponPackageV extends BaseObject implements TextRenderable, Pack
     public Integer getRest() {
 	// TODO Auto-generated method stub
 	return null;
+    }
+
+    public Integer getProductionWeek() {
+	return productionWeek;
+    }
+
+    public void setProductionWeek(Integer productionWeek) {
+	this.productionWeek = productionWeek;
+    }
+
+    public Date getPacklistReady() {
+	return packlistReady;
+    }
+
+    public void setPacklistReady(Date packlistReady) {
+	this.packlistReady = packlistReady;
     }
 
 }

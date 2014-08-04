@@ -18,6 +18,7 @@ import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.swing.AbstractAction;
@@ -34,8 +35,6 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
 
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.gui.Closeable;
@@ -2250,7 +2249,11 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    // List<Order> allOrders = ((OrderManager)
 	    // overviewManager).findAllNotSent();
 	    productionoverviewList = overviewManager.findAll();
+
 	    if (productionoverviewList != null) {
+		if (initOrders(productionoverviewList)) {
+		    productionoverviewList = overviewManager.findAll();
+		}
 		objectList.addAll(productionoverviewList);
 	    }
 	    // PostShipmentManager postShipmentManager = (PostShipmentManager)
@@ -2267,6 +2270,41 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    }
 
 	}
+    }
+
+    private boolean initOrders(List<ProductionOverviewV> productionoverviewList) {
+	boolean ordreOppdatert = false;
+	for (ProductionOverviewV productionOverviewV : productionoverviewList) {
+	    Map<String, String> statusMap = Util.createStatusMap(productionOverviewV.getStatus());
+	    Set<String> checkers = statusCheckers.keySet();
+	    OrderManager orderManager = (OrderManager) ModelUtil.getBean(OrderManager.MANAGER_NAME);
+	    boolean needToSave = false;
+	    Order order = null;
+	    for (String checkerName : checkers) {
+		StatusCheckerInterface<Transportable> checker = statusCheckers.get(checkerName);
+		String status = statusMap.get(checker.getArticleName());
+
+		if (status == null) {
+		    needToSave = true;
+		    ordreOppdatert = true;
+		    if (!productionOverviewV.isPostShipment()) {
+			order = orderManager.findByOrderNr(productionOverviewV.getOrderNr());
+			orderManager.lazyLoadOrder(order, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.ORDER_LINES,
+				LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES, LazyLoadOrderEnum.COMMENTS, LazyLoadOrderEnum.PROCENT_DONE });
+			status = checker.getArticleStatus(order);
+			statusMap.put(checker.getArticleName(), status);
+			order.setStatus(Util.statusMapToString(statusMap));
+		    }
+
+		}
+
+	    }
+	    if (needToSave && order != null) {
+		orderManager.saveObject(order);
+	    }
+
+	}
+	return ordreOppdatert;
     }
 
     public JButton getButtonRefresh(WindowInterface window) {
@@ -3307,10 +3345,10 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 
 	@Override
 	protected void setCenteredAlignment() {
-	    SimpleAttributeSet set = new SimpleAttributeSet();
-	    StyleConstants.setAlignment(set, StyleConstants.ALIGN_CENTER);
-	    setParagraphAttributes(set, false);
-	    repaint();
+	    // SimpleAttributeSet set = new SimpleAttributeSet();
+	    // StyleConstants.setAlignment(set, StyleConstants.ALIGN_CENTER);
+	    // setParagraphAttributes(set, false);
+	    // repaint();
 	}
 
     }

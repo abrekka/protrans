@@ -30,4 +30,6 @@ public interface OrdlnManager {
     List<Ordln> findForFakturagrunnlag(String orderNr);
 
     Ord findByOrdNo(Integer purcno);
+
+    List<Ordln> findTaksteinInfo(String orderNr);
 }

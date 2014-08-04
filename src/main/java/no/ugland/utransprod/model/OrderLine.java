@@ -1500,4 +1500,12 @@ public class OrderLine extends BaseObject implements Comparable<OrderLine>, IArt
     public Integer getHeight() {
 	return null;
     }
+
+    public Integer getProductionWeek() {
+	return order.getProductionWeek();
+    }
+
+    public Date getPacklistReady() {
+	return order.getPacklistReady();
+    }
 }

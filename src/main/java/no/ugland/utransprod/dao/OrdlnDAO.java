@@ -28,4 +28,6 @@ public interface OrdlnDAO extends DAO<Ordln> {
     List<Ordln> findForFakturagrunnlag(String orderNr);
 
     Ord findByOrdNo(Integer ordNo);
+
+    List<Ordln> findTaksteinInfo(String orderNr);
 }

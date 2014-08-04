@@ -83,7 +83,7 @@ public class SaleReportData implements Comparable<SaleReportData> {
 
     public SaleReportData(String type, String countyName, String salesman, String customerNr, String customerName, String orderNr,
 	    BigDecimal ownProductionCost, BigDecimal transportCost, BigDecimal assemblyCost, BigDecimal yesLines, BigDecimal db, BigDecimal dg,
-	    Date aSalesDate, String productArea) {
+	    Date aSalesDate, Integer productAreaNr) {
 	super();
 	this.type = type;
 	this.countyName = countyName;
@@ -105,7 +105,7 @@ public class SaleReportData implements Comparable<SaleReportData> {
 	return productAreaNr;
     }
 
-    public void setProductArea(Integer productArea) {
+    public void setProductArea(Integer productAreaNr) {
 	this.productAreaNr = productAreaNr;
     }
 
@@ -273,6 +273,7 @@ public class SaleReportData implements Comparable<SaleReportData> {
 	tmp.setTransportCost(this.getTransportCost());
 	tmp.setType(this.getType());
 	tmp.setYesLines(this.getYesLines());
+	tmp.setProductArea(this.getProductAreaNr());
 
 	return tmp;
     }

@@ -32,6 +32,12 @@
         column="PRCATNO2"
         length="32"
     />
+    <property
+        name="prCatNo3"
+        type="java.lang.Integer"
+        column="PRCATNO3"
+        length="32"
+    />
 	 <property
         name="inf"
         type="java.lang.String"

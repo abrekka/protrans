@@ -417,4 +417,8 @@ public class ProductionOverviewV {
 	return productionOverviewVPK.getPostShipmentId();
     }
 
+    @Override
+    public String toString() {
+	return orderNr;
+    }
 }

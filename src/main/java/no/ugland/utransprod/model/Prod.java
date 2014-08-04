@@ -9,17 +9,27 @@ public class Prod extends BaseObject {
     private String prodNo;
     private Integer prCatNo;
     private Integer prCatNo2;
+    private Integer prCatNo3;
     private String inf;
 
     public Prod() {
 	super();
     }
 
-    public Prod(final String aProdNo, final Integer aPrCatNo, final Integer aPrCatNo2) {
+    public Prod(final String aProdNo, final Integer aPrCatNo, final Integer aPrCatNo2, final Integer aPrCatNo3) {
 	super();
 	this.prodNo = aProdNo;
 	this.prCatNo = aPrCatNo;
 	this.prCatNo2 = aPrCatNo2;
+	this.prCatNo3 = aPrCatNo3;
+    }
+
+    public Integer getPrCatNo3() {
+	return prCatNo3;
+    }
+
+    public void setPrCatNo3(Integer prCatNo3) {
+	this.prCatNo3 = prCatNo3;
     }
 
     public final String getProdNo() {

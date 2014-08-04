@@ -78,10 +78,11 @@ public enum ExcelReportEnum {
     /**
      * Telleliste for alle ordre som er pakket men ikke sendt.
      */
-    READY_COUNT("Telleliste", "Telleliste", "orderManager", new String[] { "Ordre", "Transport", "Kolli", "Mangler", "Garasjeverdi", "Fraktverdi",
-	    "Monteringsverdi" }, new Integer[] { 1, 4, 5, 6 }, new String[] { "OrderString", "Transport", "Colli", "Missing", "GarageValue",
-	    "TransportValue", "AssemblyValue" }, new Integer[][] { { 0, 15000 }, { 1, 3000 }, { 2, 3500 }, { 3, 3000 }, { 4, 3500 }, { 5, 4000 },
-	    { 6, 3000 } }, 12, null, new Integer[] {}, null, null, null, false, true, 0, null, true, false, null, false, false),
+    READY_COUNT("Telleliste", "Telleliste", "orderManager", new String[] { "Ordre", "Ordrenr", "Transport", "Kolli", "Mangler", "Garasjeverdi",
+	    "Fraktverdi", "Monteringsverdi" }, new Integer[] { 1, 5, 6, 7 }, new String[] { "OrderString", "OrderNr", "Transport", "Colli",
+	    "Missing", "GarageValue", "TransportValue", "AssemblyValue" }, new Integer[][] { { 0, 15000 }, { 2, 3000 }, { 3, 3500 }, { 4, 3000 },
+	    { 5, 3500 }, { 6, 4000 }, { 7, 3000 } }, 13, null, new Integer[] {}, null, null, null, false, true, 0, null, true, false, null, false,
+	    false),
     /**
      * Tranportert i periode.
      */
@@ -92,13 +93,13 @@ public enum ExcelReportEnum {
     /**
      * Salgsrapport grunnlag.
      */
-    DEVIATION_BASIS("Avvik - grunnlag", "Avvik", "deviationVManager", new String[] { "Id", "Opprettet", "Navn", "Kundenr", "Kundenavn", "Ordrenr",
-	    "Produktområde", "Behandlingsansvarlig", "Egen funksjon", "Avviksfunksjon", "Kategori", "Status", "Initiert av", "Intern kostnad",
-	    "Ekstern kostnad" }, new Integer[] { 13, 14 }, new String[] { "DeviationId", "RegistrationDate", "UserName", "CustomerNr",
-	    "CustomerName", "OrderNr", "ProductArea", "Responsible", "OwnFunction", "DeviationFunction", "FunctionCategoryName",
-	    "DeviationStatusName", "InitiatedBy", "InternalCost", "ExternalCost" }, new Integer[][] { { 7, 4500 }, { 8, 4500 }, { 9, 4500 },
-	    { 10, 4500 }, { 11, 3500 }, { 12, 4500 }, { 13, 4500 }, { 14, 4500 } }, 12, null, null, null, null, null, false, true, 0, null, true,
-	    false, new ExcelSumFormula(new Integer[] { 13, 14 }, "Sum:", null, null, 0), null, true, true, true),
+    DEVIATION_BASIS("Avvik - grunnlag", "Avvik", "deviationVManager", new String[] { "Id", "Ordre klar", "Opprettet", "Navn", "Kundenr", "Kundenavn",
+	    "Ordrenr", "Produktområde", "Behandlingsansvarlig", "Egen funksjon", "Avviksfunksjon", "Kategori", "Status", "Initiert av",
+	    "Intern kostnad", "Ekstern kostnad" }, new Integer[] { 14, 15 }, new String[] { "DeviationId", "OrderReady", "RegistrationDate",
+	    "UserName", "CustomerNr", "CustomerName", "OrderNr", "ProductArea", "Responsible", "OwnFunction", "DeviationFunction",
+	    "FunctionCategoryName", "DeviationStatusName", "InitiatedBy", "InternalCost", "ExternalCost" }, new Integer[][] { { 7, 4500 },
+	    { 9, 4500 }, { 10, 4500 }, { 11, 4500 }, { 12, 3500 }, { 13, 4500 }, { 14, 4500 }, { 15, 4500 } }, 13, null, null, null, null, null,
+	    false, true, 0, null, true, false, new ExcelSumFormula(new Integer[] { 14, 15 }, "Sum:", null, null, 0), null, true, true, true),
     /**
      * Avvik.
      */
