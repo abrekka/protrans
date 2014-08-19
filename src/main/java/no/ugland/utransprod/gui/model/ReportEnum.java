@@ -54,7 +54,8 @@ public enum ReportEnum {
     PACKLIST("Pakkliste.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Pakkliste"), TRANSPORT_COST("Transport_cost.jasper",
 	    IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Transportkostnad"), ASSEMBLY("Assembly.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Montering"), ASSEMBLY_NY(
 	    "assembly_ny.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Montering"), ACCIDENT("Accident.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER,
-	    "Hendelse/ulykke"), TAKSTOL_INFO("Takstolinfo.jasper", IconEnum.ICON_JATAK, "Takstolinfo");
+	    "Hendelse/ulykke"), TAKSTOL_INFO("Takstolinfo.jasper", IconEnum.ICON_JATAK, "Takstolinfo"), KORRIGERENDE_TILTAK(
+	    "Korrigerende_tiltak.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Korrigerende tiltak");
     /**
 	 * 
 	 */
