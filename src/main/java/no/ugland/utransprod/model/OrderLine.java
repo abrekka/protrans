@@ -1508,4 +1508,12 @@ public class OrderLine extends BaseObject implements Comparable<OrderLine>, IArt
     public Date getPacklistReady() {
 	return order.getPacklistReady();
     }
+
+    public Integer getDoAssembly() {
+	return order.getDoAssembly();
+    }
+
+    public Integer getAssemblyWeek() {
+	return order.getAssembly() == null ? null : order.getAssembly().getAssemblyWeek();
+    }
 }

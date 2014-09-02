@@ -69,4 +69,8 @@ public interface PackableListItem extends TextRenderable, Applyable {
 
     Date getPacklistReady();
 
+    Integer getDoAssembly();
+
+    Integer getAssemblyWeek();
+
 }

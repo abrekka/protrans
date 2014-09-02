@@ -67,6 +67,8 @@ public class GulvsponPackageV extends BaseObject implements TextRenderable, Pack
     private Integer productionWeek;
 
     private Date packlistReady;
+    private Integer doAssembly;
+    private Integer assemblyWeek;
 
     public GulvsponPackageV() {
 	super();
@@ -501,4 +503,19 @@ public class GulvsponPackageV extends BaseObject implements TextRenderable, Pack
 	this.packlistReady = packlistReady;
     }
 
+    public Integer getDoAssembly() {
+	return doAssembly;
+    }
+
+    public void setDoAssembly(Integer doAssembly) {
+	this.doAssembly = doAssembly;
+    }
+
+    public Integer getAssemblyWeek() {
+	return assemblyWeek;
+    }
+
+    public void setAssemblyWeek(Integer assemblyWeek) {
+	this.assemblyWeek = assemblyWeek;
+    }
 }

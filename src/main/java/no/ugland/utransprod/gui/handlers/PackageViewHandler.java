@@ -371,6 +371,20 @@ public class PackageViewHandler extends AbstractProductionPackageViewHandler<Pac
 	    public Class<?> getColumnClass() {
 		return Date.class;
 	    }
+	},
+	MONT("Mont") {
+	    @Override
+	    public Object getValue(PackableListItem packable) {
+		if (packable.getDoAssembly() != null && packable.getDoAssembly() == 1) {
+		    return packable.getAssemblyWeek() == null ? "M" : "M" + packable.getAssemblyWeek();
+		}
+		return "";
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
 	};
 	private String columnName;
 

@@ -161,4 +161,14 @@ public class TakstolPackageV extends PackageProduction implements TextRenderable
 	// TODO Auto-generated method stub
 	return null;
     }
+
+    public Integer getDoAssembly() {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    public Integer getAssemblyWeek() {
+	// TODO Auto-generated method stub
+	return null;
+    }
 }
