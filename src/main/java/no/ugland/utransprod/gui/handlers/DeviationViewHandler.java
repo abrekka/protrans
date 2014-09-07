@@ -422,6 +422,30 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	return textField;
     }
 
+    public JTextField getTextFieldOrderComplete(PresentationModel presentationModel, boolean search) {
+	Order order = ((DeviationModel) presentationModel.getBean()).getOrder();
+
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+	String ordreKomplett = order == null || order.getOrderComplete() == null ? "" : simpleDateFormat.format(order.getOrderComplete());
+	JTextField textField = new JTextField(ordreKomplett);
+	textField.setEnabled(false);
+	textField.setEnabled(false);
+	textField.setName("TextFieldOrderComplete");
+	return textField;
+    }
+
+    public JTextField getTextFieldTransportDate(PresentationModel presentationModel, boolean search) {
+	Order order = ((DeviationModel) presentationModel.getBean()).getOrder();
+
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+	String ordreKomplett = order == null || order.getSent() == null ? "" : simpleDateFormat.format(order.getSent());
+	JTextField textField = new JTextField(ordreKomplett);
+	textField.setEnabled(false);
+	textField.setEnabled(false);
+	textField.setName("TextFieldTransportDate");
+	return textField;
+    }
+
     /**
      * Lager ok-knapp for registreringsvindu
      * 
