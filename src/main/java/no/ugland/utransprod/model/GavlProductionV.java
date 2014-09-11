@@ -268,7 +268,9 @@ public class GavlProductionV extends BaseObject implements TextRenderable, Produ
 	if (!(other instanceof GavlProductionV))
 	    return false;
 	GavlProductionV castOther = (GavlProductionV) other;
-	return new EqualsBuilder().append(orderLineId, castOther.orderLineId).isEquals();
+	// return new EqualsBuilder().append(orderLineId,
+	// castOther.orderLineId).isEquals();
+	return new EqualsBuilder().append(orderNr, castOther.orderNr).isEquals();
     }
 
     /**
@@ -276,7 +278,8 @@ public class GavlProductionV extends BaseObject implements TextRenderable, Produ
      */
     @Override
     public int hashCode() {
-	return new HashCodeBuilder().append(orderLineId).toHashCode();
+	// return new HashCodeBuilder().append(orderLineId).toHashCode();
+	return new HashCodeBuilder().append(orderNr).toHashCode();
     }
 
     /**

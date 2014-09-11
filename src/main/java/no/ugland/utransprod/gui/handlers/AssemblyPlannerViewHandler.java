@@ -251,6 +251,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 
     public void initAssemblyList() {
 	assemblyArrayListModel.clear();
+	assemblies.clear();
 	AssemblyManager assemblyManager = (AssemblyManager) ModelUtil.getBean(AssemblyManager.MANAGER_NAME);
 	assemblies = assemblyManager.findByYear(yearWeek.getYear());
 	if (assemblies != null) {

@@ -535,6 +535,30 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
     }
 
     public enum PacklistColumn {
+	PROD_UKE("Prod.uke", 70, true) {
+	    @Override
+	    public Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
+		    WindowInterface window, ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
+		return packlistV.getProductionWeek();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return Integer.class;
+	    }
+	},
+	ORDRE_NR("Ordre nr", 50, true) {
+	    @Override
+	    public Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
+		    WindowInterface window, ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
+		return packlistV.getOrderNr();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+	},
 	ORDRE("Ordre", 150, true) {
 	    @Override
 	    public Class<?> getColumnClass() {
@@ -545,35 +569,6 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    public Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
 		    WindowInterface window, ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
 		return packlistV;
-	    }
-
-	},
-	TAKSTOLER("Takstoler", 120, true) {
-	    @Override
-	    public Class<?> getColumnClass() {
-		return String.class;
-	    }
-
-	    @Override
-	    public Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
-		    WindowInterface window, ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
-		return getStatus(takstolChecker, statusMap, packlistV, window, managerRepository, applyListInterface);
-	    }
-
-	},
-	GULVSPON("Gulvspon", 70, true) {
-	    @Override
-	    public Class<?> getColumnClass() {
-		return String.class;
-	    }
-
-	    @Override
-	    public Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
-		    WindowInterface window, ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
-		if (packlistV.getHasGulvspon() != null && packlistV.getHasGulvspon() == 1) {
-		    return "V " + Util.nullIntegerToString(packlistV.getNumberOfGulvspon());
-		}
-		return null;
 	    }
 
 	},
@@ -606,8 +601,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    }
 
 	},
-
-	TAKSTOL_PROSJEKTERING("Takstol prosjektering", 120, true) {
+	GULVSPON("Gulvspon", 70, true) {
 	    @Override
 	    public Class<?> getColumnClass() {
 		return String.class;
@@ -616,15 +610,14 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    @Override
 	    public Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
 		    WindowInterface window, ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
-		if (packlistV.getTrossReady() != null) {
-		    return Util.SHORT_DATE_FORMAT.format(packlistV.getTrossReady());
-
+		if (packlistV.getHasGulvspon() != null && packlistV.getHasGulvspon() == 1) {
+		    return "V " + Util.nullIntegerToString(packlistV.getNumberOfGulvspon());
 		}
-		return "---";
+		return null;
 	    }
 
 	},
-	TEGNER("Tegner", 120, true) {
+	TAKSTOLER("Takstoler", 120, true) {
 	    @Override
 	    public Class<?> getColumnClass() {
 		return String.class;
@@ -633,21 +626,9 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    @Override
 	    public Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
 		    WindowInterface window, ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
-		return packlistV.getTrossDrawer();
+		return getStatus(takstolChecker, statusMap, packlistV, window, managerRepository, applyListInterface);
 	    }
 
-	},
-	PRODUKSJONSGRUNNLAG("Produksjonsgrunnlag", 120, true) {
-	    @Override
-	    public Class<?> getColumnClass() {
-		return Integer.class;
-	    }
-
-	    @Override
-	    public Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
-		    WindowInterface window, ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
-		return packlistV.getProductionBasis();
-	    }
 	},
 	TIDSBRUK("Tidsbruk", 70, true) {
 	    @Override
@@ -673,18 +654,59 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 		return String.class;
 	    }
 	},
-	PROD_UKE("Prod.uke", 70, true) {
-	    @Override
-	    public Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
-		    WindowInterface window, ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
-		return packlistV.getProductionWeek();
-	    }
 
-	    @Override
-	    public Class<?> getColumnClass() {
-		return Integer.class;
-	    }
-	},
+	// TAKSTOL_PROSJEKTERING("Takstol prosjektering", 120, false) {
+	// @Override
+	// public Class<?> getColumnClass() {
+	// return String.class;
+	// }
+	//
+	// @Override
+	// public Object getValue(PacklistV packlistV,
+	// StatusCheckerInterface<Transportable> takstolChecker, Map<String,
+	// String> statusMap,
+	// WindowInterface window, ManagerRepository managerRepository,
+	// ApplyListInterface<PacklistV> applyListInterface) {
+	// if (packlistV.getTrossReady() != null) {
+	// return Util.SHORT_DATE_FORMAT.format(packlistV.getTrossReady());
+	//
+	// }
+	// return "---";
+	// }
+	//
+	// },
+	// TEGNER("Tegner", 120, false) {
+	// @Override
+	// public Class<?> getColumnClass() {
+	// return String.class;
+	// }
+	//
+	// @Override
+	// public Object getValue(PacklistV packlistV,
+	// StatusCheckerInterface<Transportable> takstolChecker, Map<String,
+	// String> statusMap,
+	// WindowInterface window, ManagerRepository managerRepository,
+	// ApplyListInterface<PacklistV> applyListInterface) {
+	// return packlistV.getTrossDrawer();
+	// }
+	//
+	// },
+	// PRODUKSJONSGRUNNLAG("Produksjonsgrunnlag", 120, false) {
+	// @Override
+	// public Class<?> getColumnClass() {
+	// return Integer.class;
+	// }
+	//
+	// @Override
+	// public Object getValue(PacklistV packlistV,
+	// StatusCheckerInterface<Transportable> takstolChecker, Map<String,
+	// String> statusMap,
+	// WindowInterface window, ManagerRepository managerRepository,
+	// ApplyListInterface<PacklistV> applyListInterface) {
+	// return packlistV.getProductionBasis();
+	// }
+	// },
+
 	PRODUKTOMRÅDE("Produktområde", 70, false) {
 	    @Override
 	    public Class<?> getColumnClass() {

@@ -350,8 +350,11 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable> 
     protected final SelectionInList getObjectSelectionList() {
 	objectList.clear();
 	Collection<T> objectLines = applyListInterface.getObjectLines();
+	// Set<T> distinkteLinjer = Sets.newHashSet();
+	// distinkteLinjer.addAll(objectLines);
 	if (objectLines != null) {
 	    objectList.addAll(objectLines);
+	    // objectList.addAll(distinkteLinjer);
 	}
 	if (table != null) {
 	    table.scrollRowToVisible(0);
