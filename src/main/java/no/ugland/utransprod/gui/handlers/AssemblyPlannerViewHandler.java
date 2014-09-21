@@ -63,6 +63,7 @@ import no.ugland.utransprod.gui.model.ReportEnum;
 import no.ugland.utransprod.gui.model.Transportable;
 import no.ugland.utransprod.model.Assembly;
 import no.ugland.utransprod.model.AssemblyOverdueV;
+import no.ugland.utransprod.model.AssemblyV;
 import no.ugland.utransprod.model.Customer;
 import no.ugland.utransprod.model.Deviation;
 import no.ugland.utransprod.model.IAssembly;
@@ -72,6 +73,7 @@ import no.ugland.utransprod.model.ProductArea;
 import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.Supplier;
 import no.ugland.utransprod.service.AssemblyManager;
+import no.ugland.utransprod.service.AssemblyVManager;
 import no.ugland.utransprod.service.DeviationManager;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.SupplierManager;
@@ -165,7 +167,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 
     private final ArrayListModel deviationList;
     private ArrayListModel assemblyArrayListModel;
-    private List<Assembly> assemblies = Lists.newArrayList();
+    private List<AssemblyV> assemblies = Lists.newArrayList();
 
     final SelectionInList deviationSelectionList;
     final SelectionInList assemblySelectionList;
@@ -252,7 +254,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
     public void initAssemblyList() {
 	assemblyArrayListModel.clear();
 	assemblies.clear();
-	AssemblyManager assemblyManager = (AssemblyManager) ModelUtil.getBean(AssemblyManager.MANAGER_NAME);
+	AssemblyVManager assemblyManager = (AssemblyVManager) ModelUtil.getBean(AssemblyVManager.MANAGER_NAME);
 	assemblies = assemblyManager.findByYear(yearWeek.getYear());
 	if (assemblies != null) {
 	    assemblyArrayListModel.addAll(assemblies);
@@ -950,12 +952,13 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 
 	public void actionPerformed(ActionEvent actionEvent) {
 	    if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemSetSentBase.getText())) {
-		Assembly assembly = getSelectedAssembly();
+		AssemblyManager assemblyManager = ((AssemblyManager) ModelUtil.getBean(AssemblyManager.MANAGER_NAME));
+		AssemblyV assemblyV = getSelectedAssembly();
+		Assembly assembly = assemblyManager.get(assemblyV.getAssemblyId());
 		String value = Util.showInputDialogWithdefaultValue(window, "Sendt underlag", "Sendt uderlag", assembly.getSentBase() == null ? ""
 			: assembly.getSentBase());
 		assembly.setSentBase(value);
-		((AssemblyManager) ModelUtil.getBean(AssemblyManager.MANAGER_NAME)).saveAssembly(assembly);
-		;
+		assemblyManager.saveAssembly(assembly);
 
 	    }
 	}
@@ -1052,8 +1055,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	return deviation;
     }
 
-    private Assembly getSelectedAssembly() {
-	return (Assembly) assemblySelectionList.getElementAt(tableAssembly.convertRowIndexToModel(assemblySelectionList.getSelectionIndex()));
+    private AssemblyV getSelectedAssembly() {
+	return (AssemblyV) assemblySelectionList.getElementAt(tableAssembly.convertRowIndexToModel(assemblySelectionList.getSelectionIndex()));
     }
 
     private void setAssemblyForOrder(WindowInterface window, Supplier team) {
@@ -1429,7 +1432,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	 * @see javax.swing.table.TableModel#getValueAt(int, int)
 	 */
 	public Object getValueAt(int row, int column) {
-	    Assembly assembly = (Assembly) getRow(row);
+	    AssemblyV assembly = (AssemblyV) getRow(row);
 	    String columnName = StringUtils.upperCase(getColumnName(column)).replaceAll(" ", "_");
 	    return AssemblyColumn.valueOf(columnName).getValue(assembly);
 	}
@@ -1479,8 +1482,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
     public enum AssemblyColumn {
 	SENDT("Sendt", VISIBLE, NOT_CENTER, 50) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
-		return assembly.getOrder().getSentBool();
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getSentBool();
 	    }
 
 	    @Override
@@ -1489,8 +1492,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
-		return assembly1.getOrder().getSentBool().compareTo(assembly2.getOrder().getSentBool());
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getSentBool().compareTo(assembly2.getSentBool());
 	    }
 
 	    @Override
@@ -1499,16 +1502,18 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (assemblyFilter.getSent() != null) {
-		    return assembly.getOrder().getSentBool().equals(assemblyFilter.getSent());
+		    // return
+		    // assembly.getOrder().getSentBool().equals(assemblyFilter.getSent());
+		    return assembly.getSentBool().equals(assemblyFilter.getSent());
 		}
 		return true;
 	    }
 	},
 	MONTERT("Montert", VISIBLE, NOT_CENTER, 50) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
+	    public Object getValue(AssemblyV assembly) {
 		return assembly.getAssembliedBool() ? "Ja" : "Nei";
 	    }
 
@@ -1518,7 +1523,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
 		return assembly1.getAssembliedBool().compareTo(assembly2.getAssembliedBool());
 	    }
 
@@ -1528,7 +1533,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (assemblyFilter.getAssemblied() != null) {
 		    return assembly.getAssembliedBool().equals(assemblyFilter.getAssemblied());
 		}
@@ -1537,7 +1542,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	},
 	UKE("Uke", VISIBLE, CENTER, 50) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
+	    public Object getValue(AssemblyV assembly) {
 		return assembly.getAssemblyWeek();
 	    }
 
@@ -1547,7 +1552,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
 		return assembly1.getAssemblyWeek().compareTo(assembly2.getAssemblyWeek());
 	    }
 
@@ -1557,7 +1562,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (StringUtils.isNotBlank(assemblyFilter.getAssemblyWeek())) {
 		    return assembly.getAssemblyWeek() != null
 			    && String.valueOf(assembly.getAssemblyWeek()).matches(
@@ -1568,8 +1573,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	},
 	MONTØR("Montør", VISIBLE, NOT_CENTER, 100) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
-		return assembly.getSupplier() == null ? null : assembly.getSupplier().getSupplierName();
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getSupplierName();
 	    }
 
 	    @Override
@@ -1578,7 +1583,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
 		return assembly1.getAssemblyteamName().compareTo(assembly2.getAssemblyteamName());
 	    }
 
@@ -1588,7 +1593,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (StringUtils.isNotBlank(assemblyFilter.getAssemblyteam())) {
 		    return assembly.getAssemblyteamName().toLowerCase()
 			    .matches(assemblyFilter.getAssemblyteam().toLowerCase().replaceAll("%", ".*") + ".*");
@@ -1598,7 +1603,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	},
 	PLANLAGT("Planlagt", VISIBLE, NOT_CENTER, 60) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
+	    public Object getValue(AssemblyV assembly) {
 		return hentPlanlagt(assembly);
 	    }
 
@@ -1608,11 +1613,11 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
 		return hentPlanlagt(assembly1).compareTo(hentPlanlagt(assembly2));
 	    }
 
-	    private String hentPlanlagt(Assembly assembly) {
+	    private String hentPlanlagt(AssemblyV assembly) {
 		return assembly.getPlanned() == null ? "" : assembly.getPlanned();
 	    }
 
@@ -1622,7 +1627,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (StringUtils.isNotBlank(assemblyFilter.getPlanned())) {
 		    return assembly.getPlanned() != null
 			    && assembly.getPlanned().toLowerCase().matches(assemblyFilter.getPlanned().toLowerCase().replaceAll("%", ".*") + ".*");
@@ -1632,9 +1637,9 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	},
 	PAKKLISTE_KLAR("Pakkliste klar", VISIBLE, NOT_CENTER, 80) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
+	    public Object getValue(AssemblyV assembly) {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-		return assembly.getOrder().getPacklistReady() == null ? null : simpleDateFormat.format(assembly.getOrder().getPacklistReady());
+		return assembly.getPacklistReady() == null ? null : simpleDateFormat.format(assembly.getPacklistReady());
 	    }
 
 	    @Override
@@ -1643,10 +1648,9 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
-		return assembly1.getOrder().getPacklistReady() == null && assembly2.getOrder().getPacklistReady() == null ? 0 : assembly1.getOrder()
-			.getPacklistReady() == null ? -1 : assembly2.getOrder().getPacklistReady() == null ? 1 : assembly1.getOrder()
-			.getPacklistReady().compareTo(assembly2.getOrder().getPacklistReady());
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getPacklistReady() == null && assembly2.getPacklistReady() == null ? 0 : assembly1.getPacklistReady() == null ? -1
+			: assembly2.getPacklistReady() == null ? 1 : assembly1.getPacklistReady().compareTo(assembly2.getPacklistReady());
 	    }
 
 	    @Override
@@ -1655,10 +1659,10 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (StringUtils.isNotBlank(assemblyFilter.getPacklist())) {
-		    return assembly.getOrder().getPacklistReady() != null
-			    && simpleDateFormat.format(assembly.getOrder().getPacklistReady()).matches(
+		    return assembly.getPacklistReady() != null
+			    && simpleDateFormat.format(assembly.getPacklistReady()).matches(
 				    assemblyFilter.getPacklist().toLowerCase().replaceAll("%", ".*") + ".*");
 		}
 		return true;
@@ -1666,7 +1670,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	},
 	SENDT_UNDERLAG("Sendt underlag", VISIBLE, CENTER, 80) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
+	    public Object getValue(AssemblyV assembly) {
 		return assembly.getSentBase();
 	    }
 
@@ -1676,7 +1680,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
 		return assembly1.getSentBase() == null && assembly2.getSentBase() == null ? 0 : assembly1.getSentBase() == null ? -1 : assembly2
 			.getSentBase() == null ? 1 : assembly1.getSentBase().compareTo(assembly2.getSentBase());
 	    }
@@ -1687,7 +1691,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (StringUtils.isNotBlank(assemblyFilter.getSentBase())) {
 		    return assembly.getSentBase() != null
 			    && assembly.getSentBase().toLowerCase().matches(assemblyFilter.getSentBase().toLowerCase().replaceAll("%", ".*") + ".*");
@@ -1702,13 +1706,13 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public Object getValue(Assembly assembly) {
-		return assembly.getOrder().getOrderNr();
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getOrderNr();
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
-		return assembly1.getOrder().getOrderNr().compareTo(assembly2.getOrder().getOrderNr());
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getOrderNr().compareTo(assembly2.getOrderNr());
 	    }
 
 	    @Override
@@ -1717,10 +1721,9 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (StringUtils.isNotBlank(assemblyFilter.getOrderNr())) {
-		    return assembly.getOrder().getOrderNr().toLowerCase()
-			    .matches(assemblyFilter.getOrderNr().toLowerCase().replaceAll("%", ".*") + ".*");
+		    return assembly.getOrderNr().toLowerCase().matches(assemblyFilter.getOrderNr().toLowerCase().replaceAll("%", ".*") + ".*");
 		}
 		return true;
 	    }
@@ -1733,13 +1736,13 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public Object getValue(Assembly assembly) {
-		return assembly != null && assembly.getOrder() != null ? assembly.getOrder().getCustomer().getFirstName() : null;
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getFirstName();
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
-		return assembly1.getOrder().getCustomer().getFirstName().compareTo(assembly2.getOrder().getCustomer().getFirstName());
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getFirstName().compareTo(assembly2.getFirstName());
 	    }
 
 	    @Override
@@ -1748,10 +1751,9 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (StringUtils.isNotBlank(assemblyFilter.getFirstname())) {
-		    return assembly.getOrder().getCustomer().getFirstName().toLowerCase()
-			    .matches(assemblyFilter.getFirstname().toLowerCase().replaceAll("%", ".*") + ".*");
+		    return assembly.getFirstName().toLowerCase().matches(assemblyFilter.getFirstname().toLowerCase().replaceAll("%", ".*") + ".*");
 		}
 		return true;
 	    }
@@ -1763,13 +1765,13 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public Object getValue(Assembly assembly) {
-		return assembly != null && assembly.getOrder() != null ? assembly.getOrder().getCustomer().getLastName() : null;
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getLastName();
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
-		return assembly1.getOrder().getCustomer().getLastName().compareTo(assembly2.getOrder().getCustomer().getLastName());
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getLastName().compareTo(assembly2.getLastName());
 	    }
 
 	    @Override
@@ -1778,18 +1780,17 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (StringUtils.isNotBlank(assemblyFilter.getLastname())) {
-		    return assembly.getOrder().getCustomer().getLastName().toLowerCase()
-			    .matches(assemblyFilter.getLastname().toLowerCase().replaceAll("%", ".*") + ".*");
+		    return assembly.getLastName().toLowerCase().matches(assemblyFilter.getLastname().toLowerCase().replaceAll("%", ".*") + ".*");
 		}
 		return true;
 	    }
 	},
 	POSTNR("Postnr", VISIBLE, CENTER, 50) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
-		return assembly.getOrder().getPostalCode();
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getPostalCode();
 	    }
 
 	    @Override
@@ -1798,8 +1799,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
-		return assembly1.getOrder().getPostalCode().compareTo(assembly2.getOrder().getPostalCode());
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getPostalCode().compareTo(assembly2.getPostalCode());
 	    }
 
 	    @Override
@@ -1808,18 +1809,17 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (StringUtils.isNotBlank(assemblyFilter.getPostalCode())) {
-		    return assembly.getOrder().getPostalCode().toLowerCase()
-			    .matches(assemblyFilter.getPostalCode().toLowerCase().replaceAll("%", ".*") + ".*");
+		    return assembly.getPostalCode().toLowerCase().matches(assemblyFilter.getPostalCode().toLowerCase().replaceAll("%", ".*") + ".*");
 		}
 		return true;
 	    }
 	},
 	STED("Sted", VISIBLE, NOT_CENTER, 90) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
-		return assembly.getOrder().getPostOffice();
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getPostOffice();
 	    }
 
 	    @Override
@@ -1828,8 +1828,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
-		return assembly1.getOrder().getPostOffice().compareTo(assembly2.getOrder().getPostOffice());
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getPostOffice().compareTo(assembly2.getPostOffice());
 	    }
 
 	    @Override
@@ -1838,18 +1838,17 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (StringUtils.isNotBlank(assemblyFilter.getPostOffice())) {
-		    return assembly.getOrder().getPostOffice().toLowerCase()
-			    .matches(assemblyFilter.getPostOffice().toLowerCase().replaceAll("%", ".*") + ".*");
+		    return assembly.getPostOffice().toLowerCase().matches(assemblyFilter.getPostOffice().toLowerCase().replaceAll("%", ".*") + ".*");
 		}
 		return true;
 	    }
 	},
 	TELEFON("Telefon", VISIBLE, NOT_CENTER, 70) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
-		return assembly.getOrder().getTelephoneNrFormatted();
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getTelephoneNrFormatted();
 	    }
 
 	    @Override
@@ -1858,8 +1857,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
-		return assembly1.getOrder().getTelephoneNrFormatted().compareTo(assembly2.getOrder().getTelephoneNrFormatted());
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getTelephoneNrFormatted().compareTo(assembly2.getTelephoneNrFormatted());
 	    }
 
 	    @Override
@@ -1868,10 +1867,10 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (StringUtils.isNotBlank(assemblyFilter.getTelephone())) {
-		    return assembly.getOrder().getTelephoneNrFormatted() != null
-			    && assembly.getOrder().getTelephoneNrFormatted().toLowerCase()
+		    return assembly.getTelephoneNrFormatted() != null
+			    && assembly.getTelephoneNrFormatted().toLowerCase()
 				    .matches(assemblyFilter.getTelephone().toLowerCase().replaceAll("%", ".*") + ".*");
 		}
 		return true;
@@ -1879,7 +1878,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	},
 	KOMMENTAR("Kommentar", VISIBLE, NOT_CENTER, 100) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
+	    public Object getValue(AssemblyV assembly) {
 		return null;
 	    }
 
@@ -1889,7 +1888,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
 		throw new NotImplementedException();
 		// return 0;
 	    }
@@ -1900,14 +1899,14 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		return true;
 	    }
 	},
 	AVDELING("Avdeling", VISIBLE, CENTER, 80) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
-		return assembly.getOrder().getProductArea();
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getProductArea();
 	    }
 
 	    @Override
@@ -1916,8 +1915,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
-		return assembly1.getOrder().getProductArea().getProductArea().compareTo(assembly2.getOrder().getProductArea().getProductArea());
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getProductArea().compareTo(assembly2.getProductArea());
 	    }
 
 	    @Override
@@ -1926,10 +1925,10 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (StringUtils.isNotBlank(assemblyFilter.getProductArea())) {
-		    return assembly.getOrder().getProductArea().getProductArea() != null
-			    && assembly.getOrder().getProductArea().getProductArea().toLowerCase()
+		    return assembly.getProductArea() != null
+			    && assembly.getProductArea().toLowerCase()
 				    .matches(assemblyFilter.getProductArea().toLowerCase().replaceAll("%", ".*") + ".*");
 		}
 		return true;
@@ -1937,8 +1936,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	},
 	PROD_UKE("Prod uke", VISIBLE, CENTER, 60) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
-		return assembly.getOrder().getProductionWeek();
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getProductionWeek();
 	    }
 
 	    @Override
@@ -1947,10 +1946,10 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
-		return assembly1.getOrder().getProductionWeek() == null && assembly2.getOrder().getProductionWeek() == null ? 0 : assembly1
-			.getOrder().getProductionWeek() == null ? -1 : assembly2.getOrder().getProductionWeek() == null ? 1 : assembly1.getOrder()
-			.getProductionWeek().compareTo(assembly2.getOrder().getProductionWeek());
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getProductionWeek() == null && assembly2.getProductionWeek() == null ? 0
+			: assembly1.getProductionWeek() == null ? -1 : assembly2.getProductionWeek() == null ? 1 : assembly1.getProductionWeek()
+				.compareTo(assembly2.getProductionWeek());
 	    }
 
 	    @Override
@@ -1959,10 +1958,10 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (StringUtils.isNotBlank(assemblyFilter.getProductionWeek())) {
-		    return assembly.getOrder().getProductionWeek() != null
-			    && String.valueOf(assembly.getOrder().getProductionWeek()).toLowerCase()
+		    return assembly.getProductionWeek() != null
+			    && String.valueOf(assembly.getProductionWeek()).toLowerCase()
 				    .matches(assemblyFilter.getProductionWeek().toLowerCase().replaceAll("%", ".*"));
 		}
 		return true;
@@ -1970,8 +1969,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	},
 	TRANSPORT("Transport", VISIBLE, NOT_CENTER, 110) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
-		return assembly.getOrder().getTransportDetails();
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getTransportDetails();
 	    }
 
 	    @Override
@@ -1980,8 +1979,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
-		return assembly1.getOrder().getTransportDetails().compareTo(assembly2.getOrder().getTransportDetails());
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getTransportDetails().compareTo(assembly2.getTransportDetails());
 	    }
 
 	    @Override
@@ -1990,10 +1989,10 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (StringUtils.isNotBlank(assemblyFilter.getTransport())) {
-		    return assembly.getOrder().getTransportDetails() != null
-			    && assembly.getOrder().getTransportDetails().toLowerCase()
+		    return assembly.getTransportDetails() != null
+			    && assembly.getTransportDetails().toLowerCase()
 				    .matches(assemblyFilter.getTransport().toLowerCase().replaceAll("%", ".*") + ".*");
 		}
 		return true;
@@ -2001,13 +2000,14 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	},
 	TAKSTEIN("Takstein", VISIBLE, NOT_CENTER, 100) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
+	    public Object getValue(AssemblyV assembly) {
 		return hentTaksteininfo(assembly);
 	    }
 
-	    private String hentTaksteininfo(Assembly assembly) {
-		OrderLine takstein = assembly.getOrder().getOrderLine("Takstein");
-		return takstein == null ? "" : takstein.getAttributeInfoWithoutNo();
+	    private String hentTaksteininfo(AssemblyV assembly) {
+		// OrderLine takstein =
+		// assembly.getOrder().getOrderLine("Takstein");
+		return assembly.getTaksteinInfo();
 	    }
 
 	    @Override
@@ -2016,7 +2016,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
 		return hentTaksteininfo(assembly1).compareTo(hentTaksteininfo(assembly2));
 	    }
 
@@ -2026,7 +2026,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (StringUtils.isNotBlank(assemblyFilter.getTakstein())) {
 		    return hentTaksteininfo(assembly).toLowerCase().matches(assemblyFilter.getTakstein().toLowerCase().replaceAll("%", ".*") + ".*");
 		}
@@ -2035,8 +2035,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	},
 	MONTERINGSUM("Monteringsum", VISIBLE, CENTER, 70) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
-		return assembly.getOrder().getCost("Montering", "Kunde");
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getAssemblyCost();
 	    }
 
 	    @Override
@@ -2045,8 +2045,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
-		return assembly1.getOrder().getCost("Montering", "Kunde").compareTo(assembly2.getOrder().getCost("Montering", "Kunde"));
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getAssemblyCost().compareTo(assembly2.getAssemblyCost());
 	    }
 
 	    @Override
@@ -2055,10 +2055,10 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (StringUtils.isNotBlank(assemblyFilter.getAssemblyCost())) {
-		    return assembly.getOrder().getCost("Montering", "Kunde") != null
-			    && String.valueOf(assembly.getOrder().getCost("Montering", "Kunde")).toLowerCase()
+		    return assembly.getAssemblyCost() != null
+			    && String.valueOf(assembly.getAssemblyCost()).toLowerCase()
 				    .matches(assemblyFilter.getAssemblyCost().toLowerCase().replaceAll("%", ".*") + ".*");
 		}
 		return true;
@@ -2067,7 +2067,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 
 	OPPRINNELIG("Opprinnelig", VISIBLE, CENTER, 60) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
+	    public Object getValue(AssemblyV assembly) {
 		return assembly.getFirstPlanned();
 	    }
 
@@ -2077,7 +2077,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
 		return assembly1.getFirstPlanned().compareTo(assembly2.getFirstPlanned());
 	    }
 
@@ -2087,7 +2087,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (StringUtils.isNotBlank(assemblyFilter.getFirstPlanned())) {
 		    return assembly.getFirstPlanned() != null
 			    && assembly.getFirstPlanned().toLowerCase()
@@ -2098,8 +2098,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	},
 	KRANING("Kraning", VISIBLE, CENTER, 60) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
-		return assembly.getOrder().getCraningCost();
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getKraningCost();
 	    }
 
 	    @Override
@@ -2108,8 +2108,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
-		return assembly1.getOrder().getCraningCost().compareTo(assembly2.getOrder().getCraningCost());
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getKraningCost().compareTo(assembly2.getKraningCost());
 	    }
 
 	    @Override
@@ -2118,10 +2118,10 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		if (StringUtils.isNotBlank(assemblyFilter.getCraningCost())) {
-		    return assembly.getOrder().getCraningCost() != null
-			    && String.valueOf(assembly.getOrder().getCraningCost()).toLowerCase()
+		    return assembly.getKraningCost() != null
+			    && String.valueOf(assembly.getKraningCost()).toLowerCase()
 				    .matches(assemblyFilter.getCraningCost().toLowerCase().replaceAll("%", ".*") + ".*");
 		}
 		return true;
@@ -2129,7 +2129,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	},
 	OVERTID("Overtid", INVISIBLE, CENTER, 50) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
+	    public Object getValue(AssemblyV assembly) {
 		if (assembly.getAssembliedDate() == null) {
 		    Integer yearWeek = Integer.valueOf(String.valueOf(Util.getCurrentYear()) + String.format("%02d", Util.getCurrentWeek()));
 		    Integer assemblyYearWeek = Integer.valueOf(String.valueOf(assembly.getAssemblyYear())
@@ -2148,7 +2148,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
 		return 0;
 	    }
 
@@ -2158,18 +2158,14 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		return true;
 	    }
 	},
 	SENDT_MANGLER("Sendt mangler", INVISIBLE, CENTER, 50) {
 	    @Override
-	    public Object getValue(Assembly assembly) {
-		Order order = assembly.getOrder();
-		if (order != null && order.getSent() != null) {
-		    return order.getHasMissingCollies();
-		}
-		return 0;
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getHasMissingCollies();
 	    }
 
 	    @Override
@@ -2178,7 +2174,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public int sort(Assembly assembly1, Assembly assembly2) {
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
 		return 0;
 	    }
 
@@ -2188,7 +2184,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    }
 
 	    @Override
-	    public boolean filter(Assembly assembly, AssemblyFilter assemblyFilter) {
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
 		return true;
 	    }
 	};
@@ -2242,7 +2238,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    return visible;
 	}
 
-	public abstract Object getValue(Assembly assembly);
+	public abstract Object getValue(AssemblyV assembly);
 
 	public abstract Class<?> getColumnClass();
 
@@ -2251,11 +2247,11 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    return columnName;
 	}
 
-	public abstract int sort(Assembly assembly1, Assembly assembly2);
+	public abstract int sort(AssemblyV assembly1, AssemblyV assembly2);
 
 	public abstract Component getFilterComponent(PresentationModel presentationModel);
 
-	public abstract boolean filter(Assembly assembly, AssemblyFilter assemblyFilter);
+	public abstract boolean filter(AssemblyV assemblyV, AssemblyFilter assemblyFilter);
     }
 
     private class SupplierComparator implements Comparator<Supplier> {
@@ -2331,25 +2327,25 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 
     public void doFilter(AssemblyFilter assemblyFilter) {
 	assemblyArrayListModel.clear();
-	List<Assembly> filteredAssemblies = Lists.newArrayList(Iterables.filter(assemblies, filtrer(assemblyFilter)));
+	List<AssemblyV> filteredAssemblies = Lists.newArrayList(Iterables.filter(assemblies, filtrer(assemblyFilter)));
 	Collections.sort(filteredAssemblies, sorter(assemblyFilter));
 	assemblyArrayListModel.addAll(filteredAssemblies);
 
     }
 
-    private Comparator<Assembly> sorter(final AssemblyFilter assemblyFilter) {
-	return new Comparator<Assembly>() {
+    private Comparator<AssemblyV> sorter(final AssemblyFilter assemblyFilter) {
+	return new Comparator<AssemblyV>() {
 
-	    public int compare(Assembly assembly1, Assembly assembly2) {
+	    public int compare(AssemblyV assembly1, AssemblyV assembly2) {
 		return assemblyFilter.sort(assembly1, assembly2);
 	    }
 	};
     }
 
-    private Predicate<Assembly> filtrer(final AssemblyFilter assemblyFilter) {
-	return new Predicate<Assembly>() {
+    private Predicate<AssemblyV> filtrer(final AssemblyFilter assemblyFilter) {
+	return new Predicate<AssemblyV>() {
 
-	    public boolean apply(Assembly assembly) {
+	    public boolean apply(AssemblyV assembly) {
 
 		return assemblyFilter.filter(assembly);
 	    }

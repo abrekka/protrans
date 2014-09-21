@@ -14,7 +14,7 @@ import no.ugland.utransprod.gui.Closeable;
 import no.ugland.utransprod.gui.WindowInterface;
 import no.ugland.utransprod.gui.buttons.CancelButton;
 import no.ugland.utransprod.gui.handlers.AssemblyPlannerViewHandler.AssemblyColumn;
-import no.ugland.utransprod.model.Assembly;
+import no.ugland.utransprod.model.AssemblyV;
 
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
@@ -223,7 +223,7 @@ public class FilterAssemblyView implements Closeable {
 	    this.assemblyteam = assemblyteam;
 	}
 
-	public boolean filter(Assembly assembly) {
+	public boolean filter(AssemblyV assembly) {
 	    boolean filter = true;
 	    for (AssemblyColumn column : AssemblyColumn.getVisibleColumns()) {
 		filter = filter && column.filter(assembly, this);
@@ -231,7 +231,7 @@ public class FilterAssemblyView implements Closeable {
 	    return filter;
 	}
 
-	public int sort(Assembly assembly1, Assembly assembly2) {
+	public int sort(AssemblyV assembly1, AssemblyV assembly2) {
 	    AssemblyColumn sortColumn1 = (AssemblyColumn) sort1SelectionList.getSelection();
 	    AssemblyColumn sortColumn2 = (AssemblyColumn) sort2SelectionList.getSelection();
 	    AssemblyColumn sortColumn3 = (AssemblyColumn) sort3SelectionList.getSelection();

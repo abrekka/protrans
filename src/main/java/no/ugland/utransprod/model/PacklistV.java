@@ -65,6 +65,10 @@ public class PacklistV extends BaseObject implements Comparable<PacklistV>, Text
 
     private Integer productionWeek;
 
+    private Integer doAssembly;
+
+    private Integer assemblyWeek;
+
     public PacklistV() {
 	super();
     }
@@ -492,5 +496,21 @@ public class PacklistV extends BaseObject implements Comparable<PacklistV>, Text
     public Date getActionStarted() {
 	// TODO Auto-generated method stub
 	return null;
+    }
+
+    public Integer getDoAssembly() {
+	return doAssembly;
+    }
+
+    public void setDoAssembly(Integer doAssembly) {
+	this.doAssembly = doAssembly;
+    }
+
+    public Integer getAssemblyWeek() {
+	return assemblyWeek;
+    }
+
+    public void setAssemblyWeek(Integer assemblyWeek) {
+	this.assemblyWeek = assemblyWeek;
     }
 }

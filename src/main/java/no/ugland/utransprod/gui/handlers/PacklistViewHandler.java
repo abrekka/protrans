@@ -2,6 +2,8 @@ package no.ugland.utransprod.gui.handlers;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
@@ -15,6 +17,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -84,6 +87,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 
     private CostType costTypeTross;
     private CostUnit costUnitTross;
+    private JTextField textFieldWeekFrom;
 
     @Inject
     public PacklistViewHandler(Login login, ManagerRepository aManagerRepository, DeviationViewHandlerFactory deviationViewHandlerFactory,
@@ -312,6 +316,8 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 		.setCellRenderer(new HorizontalAlignmentCellRenderer(SwingConstants.CENTER));
 	table.getColumnModel().getColumn(PacklistColumn.PROD_UKE.ordinal())
 		.setCellRenderer(new HorizontalAlignmentCellRenderer(SwingConstants.CENTER));
+	table.getColumnModel().getColumn(PacklistColumn.MONTERING.ordinal())
+		.setCellRenderer(new HorizontalAlignmentCellRenderer(SwingConstants.CENTER));
     }
 
     /**
@@ -396,6 +402,8 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 		table.getSelectionModel()
 			.setSelectionInterval(table.convertRowIndexToView(selectedIndex), table.convertRowIndexToView(selectedIndex));
 
+		table.scrollRowToVisible(table.getSelectedRow());
+
 	    }
 	} catch (ProTransException e) {
 	    Util.showErrorDialog(window, "Feil", e.getMessage());
@@ -416,7 +424,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
      */
     @Override
     protected int getOrderInfoCell() {
-	return 0;
+	return 2;
     }
 
     /**
@@ -559,7 +567,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 		return String.class;
 	    }
 	},
-	ORDRE("Ordre", 150, true) {
+	ORDRE("Ordre", 200, true) {
 	    @Override
 	    public Class<?> getColumnClass() {
 		return PacklistV.class;
@@ -647,6 +655,22 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    public Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
 		    WindowInterface window, ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
 		return packlistV.getPacklistDoneBy();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+	},
+	MONTERING("Montering", 100, true) {
+	    @Override
+	    public Object getValue(PacklistV packlistV, StatusCheckerInterface<Transportable> takstolChecker, Map<String, String> statusMap,
+		    WindowInterface window, ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
+		String returnString = "";
+		if (packlistV.getDoAssembly() != null && packlistV.getDoAssembly() == 1) {
+		    returnString = "M" + (packlistV.getAssemblyWeek() == null ? "" : packlistV.getAssemblyWeek());
+		}
+		return returnString;
 	    }
 
 	    @Override
@@ -1088,6 +1112,26 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
     @Override
     protected void setRealProductionHours(PacklistV object, BigDecimal overstyrtTidsforbruk) {
 	// TODO Auto-generated method stub
+
+    }
+
+    public JTextField getTextFieldWeekFrom() {
+	textFieldWeekFrom = new JTextField();
+	textFieldWeekFrom.addFocusListener(new TextFieldFocusListener());
+	return textFieldWeekFrom;
+    }
+
+    private class TextFieldFocusListener implements FocusListener {
+
+	public void focusGained(FocusEvent arg0) {
+	    // TODO Auto-generated method stub
+
+	}
+
+	public void focusLost(FocusEvent arg0) {
+	    // TODO Auto-generated method stub
+
+	}
 
     }
 }

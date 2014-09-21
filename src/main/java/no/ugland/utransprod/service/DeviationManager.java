@@ -7,16 +7,18 @@ import no.ugland.utransprod.model.Deviation;
 import no.ugland.utransprod.model.JobFunction;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.service.enums.LazyLoadDeviationEnum;
-import no.ugland.utransprod.util.excel.ExcelManager;
 
 /**
  * Interface for manager mor tabell DEVIATION
+ * 
  * @author atle.brekka
  */
 public interface DeviationManager extends OverviewManager<Deviation> {
-    public static final String MANAGER_NAME="deviationManager";
+    public static final String MANAGER_NAME = "deviationManager";
+
     /**
      * Finner alle avvik for en gitt funksjon
+     * 
      * @param jobFunction
      * @return avvik
      */
@@ -24,6 +26,7 @@ public interface DeviationManager extends OverviewManager<Deviation> {
 
     /**
      * Lazy laster avvik
+     * 
      * @param deviation
      * @param enums
      */
@@ -31,6 +34,7 @@ public interface DeviationManager extends OverviewManager<Deviation> {
 
     /**
      * Finner alle avvik for en gitt leder
+     * 
      * @param applicationUser
      * @return avvik
      */
@@ -38,6 +42,7 @@ public interface DeviationManager extends OverviewManager<Deviation> {
 
     /**
      * Finner avvik for gitt ordre
+     * 
      * @param order
      * @return avvik
      */
@@ -45,13 +50,17 @@ public interface DeviationManager extends OverviewManager<Deviation> {
 
     /**
      * Finner alle avvik med montering
+     * 
      * @return avvik
      */
     List<Deviation> findAllAssembly();
 
     /**
      * Lagrer avvik
+     * 
      * @param deviation
      */
     void saveDeviation(Deviation deviation);
+
+    List<Deviation> findByResponsible(ApplicationUser applicationUser);
 }

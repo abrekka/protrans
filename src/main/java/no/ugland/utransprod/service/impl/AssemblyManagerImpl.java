@@ -92,4 +92,8 @@ public class AssemblyManagerImpl extends ManagerImpl<Assembly> implements Assemb
 	return ((AssemblyDAO) dao).findByYear(year);
     }
 
+    public Assembly get(Integer assemblyId) {
+	return ((AssemblyDAO) dao).getObject(assemblyId);
+    }
+
 }

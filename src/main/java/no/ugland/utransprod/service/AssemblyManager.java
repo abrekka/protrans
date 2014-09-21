@@ -31,4 +31,6 @@ public interface AssemblyManager extends OverviewManager<Assembly> {
     void saveAssembly(Assembly assembly);
 
     List<Assembly> findByYear(Integer year);
+
+    Assembly get(Integer assemblyId);
 }

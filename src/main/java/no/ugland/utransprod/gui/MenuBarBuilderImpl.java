@@ -1,9 +1,12 @@
 package no.ugland.utransprod.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.help.CSH;
@@ -60,15 +63,21 @@ import no.ugland.utransprod.gui.handlers.TransportOverviewReportHandler;
 import no.ugland.utransprod.gui.model.Transportable;
 import no.ugland.utransprod.gui.model.WindowEnum;
 import no.ugland.utransprod.model.ApplicationUser;
+import no.ugland.utransprod.model.Deviation;
 import no.ugland.utransprod.model.UserType;
+import no.ugland.utransprod.service.DeviationManager;
+import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.UserUtil;
 import no.ugland.utransprod.util.Util;
 import no.ugland.utransprod.util.excel.ExcelReportEnum;
 
 import org.jdesktop.jdic.desktop.Desktop;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.google.inject.internal.Lists;
 
 /**
  * Klasse som bygger menulinje for applikasjon
@@ -337,6 +346,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	menuReport.add(menuAdm);
 
 	JMenu menuDeviation = addMenu("Avvik", KeyEvent.VK_V);
+
 	addMenuItem(menuDeviation, new DeviationReportAction(), KeyEvent.VK_V, null, null, null, "Avvik", false);
 	addMenuItem(menuDeviation, new SummaryReportDeviationAction(), KeyEvent.VK_J, null, null, null, "Avvik - Skjema gjennomgåelse", false);
 	addMenuItem(menuDeviation, new DeviationFunctionReportAction(), KeyEvent.VK_V, null, null, null, "Avvik pr aviksfunksjon", false);
@@ -351,13 +361,38 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
      * @return meny
      */
     private JMenu buildDeviationMenu() {
-	JMenu menuDeviation = addMenu("Avvik", KeyEvent.VK_V);
+	DeviationManager deviationManager = (DeviationManager) ModelUtil.getBean(DeviationManager.MANAGER_NAME);
+	List<Deviation> deviations = deviationManager.findByResponsible(login.getApplicationUser());
+	String avvikTekst = "Avvik";
+	boolean harAvvik = false;
+	if (deviations != null && !deviations.isEmpty()) {
+	    ArrayList<Deviation> deviationsNotClosed = Lists.newArrayList(Iterables.filter(deviations, ikkeLukket()));
+	    if (!deviationsNotClosed.isEmpty()) {
+		avvikTekst = avvikTekst + "(" + deviationsNotClosed.size() + ")";
+		harAvvik = true;
+	    }
+
+	}
+	JMenu menuDeviation = addMenu(avvikTekst, KeyEvent.VK_V);
+	if (harAvvik) {
+	    menuDeviation.setOpaque(true);
+	    menuDeviation.setForeground(Color.RED);
+	}
 	addMenuItem(menuDeviation, registerDeviationAction, KeyEvent.VK_R, null, null, null, null, true);
 	addMenuItem(menuDeviation, adminDeviationAction, KeyEvent.VK_A, null, null, null, "Avvik", false);
 	addMenuItem(menuDeviation, registerAccidentAction, KeyEvent.VK_U, null, null, null, null, true);
 	addMenuItem(menuDeviation, adminAccidentAction, KeyEvent.VK_A, null, null, null, "Ulykke", false);
 
 	return menuDeviation;
+    }
+
+    private Predicate<Deviation> ikkeLukket() {
+	return new Predicate<Deviation>() {
+
+	    public boolean apply(Deviation deviation) {
+		return deviation.getDateClosed() == null;
+	    }
+	};
     }
 
     /**

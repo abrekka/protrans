@@ -243,7 +243,9 @@ public class Colli extends BaseObject implements Comparable<Colli>, TransportLet
      */
     public String getColliDetails() {
 	StringBuilder builder = new StringBuilder();
-	if (orderLines != null) {
+	if (orderLines == null || orderLines.isEmpty()) {
+	    builder.append("Tom - sjekk denne.");
+	} else {
 
 	    for (OrderLine orderLine : orderLines) {
 		orderLine.generateDetails(builder);
@@ -279,7 +281,7 @@ public class Colli extends BaseObject implements Comparable<Colli>, TransportLet
 	// if(colliName.equalsIgnoreCase("Garasjepakke")&&height!=null&&height.intValue()!=0){
 	// details=details+" Pakkehøyde:"+height;
 	// }
-	return details;
+	return orderLines == null || orderLines.isEmpty() ? "Tom - sjekk denne." : details;
     }
 
     /**

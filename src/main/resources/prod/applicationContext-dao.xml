@@ -686,4 +686,11 @@
 				autowire="byName" />
 		</property>
 	</bean>
+	<bean id="assemblyVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.AssemblyVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
 </beans>

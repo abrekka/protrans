@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.AssemblyV" 
+    table="ASSEMBLY_V"
+>
+<id name="assemblyId" type="java.lang.Integer" column="ASSEMBLY_ID">
+        <generator class="identity"/>
+        </id>
+
+    <property
+        name="orderId"
+        type="java.lang.Integer"
+        column="ORDER_ID"
+        length="32"
+    />
+    
+    <property
+        name="sent"
+        type="java.util.Date"
+        column="SENT"
+        length="32"
+    />
+    
+    <property
+        name="assembliedDate"
+        type="java.util.Date"
+        column="ASSEMBLIED_DATE"
+        length="32"
+    />
+
+	<property
+        name="assemblyYear"
+        type="java.lang.Integer"
+        column="ASSEMBLY_YEAR"
+        length="32"
+    />
+    
+    <property
+        name="assemblyWeek"
+        type="java.lang.Integer"
+        column="ASSEMBLY_WEEK"
+        length="32"
+    />
+    
+    <property
+        name="supplierName"
+        type="java.lang.String"
+        column="SUPPLIER_NAME"
+        length="2"
+    />
+    
+    <property
+        name="planned"
+        type="java.lang.String"
+        column="PLANNED"
+        length="255"
+    />
+    
+    <property
+        name="packlistReady"
+        type="java.util.Date"
+        column="PACKLIST_READY"
+        length="32"
+    />
+    
+    
+    
+    <property
+        name="sentBase"
+        type="java.lang.String"
+        column="SENT_BASE"
+        length="2"
+    />
+    
+    <property
+        name="orderNr"
+        type="java.lang.String"
+        column="ORDER_NR"
+        length="32"
+    />
+    
+    <property
+        name="firstName"
+        type="java.lang.String"
+        column="FIRST_NAME"
+        length="2"
+    />
+    
+    <property
+        name="lastName"
+        type="java.lang.String"
+        column="LAST_NAME"
+        length="2"
+    />
+    
+    <property
+        name="postalCode"
+        type="java.lang.String"
+        column="POSTAL_CODE"
+        length="2"
+    />
+    
+    <property
+        name="postOffice"
+        type="java.lang.String"
+        column="POST_OFFICE"
+        length="2"
+    />
+    
+    <property
+        name="telephoneNr"
+        type="java.lang.String"
+        column="TELEPHONE_NR"
+        length="2"
+    />
+    
+    <property
+        name="productArea"
+        type="java.lang.String"
+        column="PRODUCT_AREA"
+        length="2"
+    />
+    
+    <property
+        name="productionWeek"
+        type="java.lang.Integer"
+        column="PRODUCTION_WEEK"
+        length="2"
+    />
+    
+    <property
+        name="transportYear"
+        type="java.lang.Integer"
+        column="TRANSPORT_YEAR"
+        length="2"
+    />
+    <property
+        name="transportWeek"
+        type="java.lang.Integer"
+        column="TRANSPORT_WEEK"
+        length="2"
+    />
+    
+    <property
+        name="transportName"
+        type="java.lang.String"
+        column="TRANSPORT_NAME"
+        length="32"
+    />
+    <property
+        name="taksteinInfo"
+        type="java.lang.String"
+        column="TAKSTEIN_INFO"
+        length="2"
+    />
+    <property
+        name="assemblyCost"
+        type="java.math.BigDecimal"
+        column="ASSEMBLY_COST"
+        length="2"
+    />
+    <property
+        name="firstPlanned"
+        type="java.lang.String"
+        column="FIRST_PLANNED"
+        length="255"
+    />
+    <property
+        name="kraningCost"
+        type="java.math.BigDecimal"
+        column="KRANING_COST"
+        length="2"
+    />
+    <property
+        name="hasMissingCollies"
+        type="java.lang.Integer"
+        column="HAS_MISSING_COLLIES"
+        length="2"
+    />
+    
+
+
+</class>
+</hibernate-mapping>

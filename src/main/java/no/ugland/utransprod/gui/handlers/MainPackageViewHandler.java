@@ -2737,7 +2737,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	    ArticlePacker articlePacker = new ArticlePacker(colliViewHandlerProvider, colliSetup, vismaFileCreator);
 	    List<OrderLine> orderLines = getSelectedOrderLines();
 	    Packable packable = (Packable) presentationModelPackable.getBean();
-	    packOrderLines(orderLines, packable, window, articlePacker, false);
+	    packOrderLines(orderLines, packable, window, articlePacker, true);
 	}
 
     }

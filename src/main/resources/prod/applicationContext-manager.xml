@@ -765,4 +765,12 @@
             </bean>
         </property>
 		</bean>
+		
+		<bean id="assemblyVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.AssemblyVManagerImpl">
+                <property name="assemblyVDAO" ref="assemblyVDAO"/>
+            </bean>
+        </property>
+		</bean>
 </beans>

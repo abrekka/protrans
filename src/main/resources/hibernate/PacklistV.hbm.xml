@@ -165,6 +165,18 @@
         column="PRODUCTION_BASIS"
         length="32"
     />
+    <property
+        name="doAssembly"
+        type="java.lang.Integer"
+        column="DO_ASSEMBLY"
+        length="32"
+    />
+    <property
+        name="assemblyWeek"
+        type="java.lang.Integer"
+        column="ASSEMBLY_Week"
+        length="32"
+    />
 
 
     <!-- Associations -->
