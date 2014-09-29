@@ -1,0 +1,1 @@
+update [Protrans2].[dbo].[application_param] set param_value='Gulvspon' where param_name='not_package'

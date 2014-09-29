@@ -54,7 +54,7 @@ public class ArticlePacker {
 
     public boolean canPack(List<String> articleNames) {
 	for (String articleName : articleNames) {
-	    if (ApplicationParamUtil.getNotPackageList().indexOf(articleName) > 0) {
+	    if (ApplicationParamUtil.getNotPackageList().indexOf(articleName) >= 0) {
 		return false;
 	    }
 	}

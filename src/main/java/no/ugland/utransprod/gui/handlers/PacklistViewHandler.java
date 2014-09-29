@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +64,10 @@ import no.ugland.utransprod.util.excel.ExcelUtil;
 import org.apache.commons.lang.StringUtils;
 import org.jdesktop.swingx.JXTable;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
+import com.google.inject.internal.Lists;
 import com.google.inject.name.Named;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
@@ -88,6 +92,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
     private CostType costTypeTross;
     private CostUnit costUnitTross;
     private JTextField textFieldWeekFrom;
+    private JTextField textFieldWeekTo;
 
     @Inject
     public PacklistViewHandler(Login login, ManagerRepository aManagerRepository, DeviationViewHandlerFactory deviationViewHandlerFactory,
@@ -1117,8 +1122,14 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 
     public JTextField getTextFieldWeekFrom() {
 	textFieldWeekFrom = new JTextField();
-	textFieldWeekFrom.addFocusListener(new TextFieldFocusListener());
+	// textFieldWeekFrom.addFocusListener(new TextFieldFocusListener());
 	return textFieldWeekFrom;
+    }
+
+    public JTextField getTextFieldWeekTo() {
+	textFieldWeekTo = new JTextField();
+	// textFieldWeekTo.addFocusListener(new TextFieldFocusListener());
+	return textFieldWeekTo;
     }
 
     private class TextFieldFocusListener implements FocusListener {
@@ -1129,8 +1140,52 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	}
 
 	public void focusLost(FocusEvent arg0) {
-	    // TODO Auto-generated method stub
+	    objectList.clear();
+	    Collection<PacklistV> objectLines = applyListInterface.getObjectLines();
+	    // Set<T> distinkteLinjer = Sets.newHashSet();
+	    // distinkteLinjer.addAll(objectLines);
+	    if (objectLines != null) {
+		objectList.addAll(objectLines);
+		// objectList.addAll(distinkteLinjer);
+	    }
 
+	}
+
+    }
+
+    public JButton getButtonFilter() {
+	JButton button = new JButton(new FilterAction());
+	return button;
+    }
+
+    public class FilterAction extends AbstractAction {
+
+	public FilterAction() {
+	    super("Filtrer");
+	}
+
+	public void actionPerformed(ActionEvent arg0) {
+	    objectList.clear();
+	    Collection<PacklistV> objectLines = applyListInterface.getObjectLines();
+	    Integer fraUke = StringUtils.isBlank(textFieldWeekFrom.getText()) ? 1 : Integer.valueOf(textFieldWeekFrom.getText());
+	    Integer tilUke = StringUtils.isBlank(textFieldWeekTo.getText()) ? 53 : Integer.valueOf(textFieldWeekTo.getText());
+	    List<PacklistV> filter = Lists.newArrayList(Iterables.filter(objectLines, ukeFraTil(fraUke, tilUke)));
+	    // Set<T> distinkteLinjer = Sets.newHashSet();
+	    // distinkteLinjer.addAll(objectLines);
+	    if (filter != null) {
+		objectList.addAll(filter);
+		// objectList.addAll(distinkteLinjer);
+	    }
+
+	}
+
+	private Predicate<PacklistV> ukeFraTil(final Integer fraUke, final Integer tilUke) {
+	    return new Predicate<PacklistV>() {
+
+		public boolean apply(PacklistV packlistV) {
+		    return packlistV.getProductionWeek() >= fraUke && packlistV.getProductionWeek() <= tilUke;
+		}
+	    };
 	}
 
     }

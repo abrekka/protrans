@@ -1,8 +1,11 @@
 package no.ugland.utransprod.util.report;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class Taksteinkolli {
+    public static final String SKARPNES_DOBBEL_EDEL_SORT = "SKARPNES DOBBEL EDEL SORT";
     private String beskrivelse;
     private BigDecimal antall;
     private String overordnetBeskrivelse;
@@ -26,6 +29,11 @@ public class Taksteinkolli {
 	return antall;
     }
 
+    public String getAntallstreng() {
+	String string = new DecimalFormat("###0").format(antall);
+	return antall == null ? "" : string;
+    }
+
     public Taksteinkolli medOverordnetBeskrivelse(String overordnetBeskrivelse) {
 	this.overordnetBeskrivelse = overordnetBeskrivelse;
 	return this;
@@ -42,5 +50,22 @@ public class Taksteinkolli {
 
     public String getLeveresFraLager() {
 	return leveresFraLager;
+    }
+
+    public String getPalleinfo() {
+	if (SKARPNES_DOBBEL_EDEL_SORT.equalsIgnoreCase(beskrivelse)) {
+	    return antall == null ? "" : "(" + beregnAntallPaller() + "/" + beregnAntallPakker() + ")";
+	}
+	return "";
+    }
+
+    protected String beregnAntallPakker() {
+	return antall == null ? null : String.valueOf(antall.remainder(BigDecimal.valueOf(180))
+		.divide(BigDecimal.valueOf(6), 0, RoundingMode.CEILING));
+    }
+
+    protected String beregnAntallPaller() {
+	String valueOf = String.valueOf(antall.divide(BigDecimal.valueOf(180), 0, RoundingMode.FLOOR));
+	return antall == null ? null : valueOf;
     }
 }
