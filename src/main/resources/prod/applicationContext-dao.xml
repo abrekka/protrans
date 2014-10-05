@@ -662,6 +662,16 @@
 			</bean>
 		</property>
 	</bean>
+	<bean id="delAltDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.DelAltDAOHibernate"
+				autowire="byName">
+				<property name="sessionFactory">
+					<ref bean="sessionFactoryVisma" />
+				</property>
+			</bean>
+		</property>
+	</bean>
 	<bean id="custTrDAO" parent="txProxyTemplate">
 		<property name="target">
 			<bean class="no.ugland.utransprod.dao.hibernate.CustTrDAOHibernate"

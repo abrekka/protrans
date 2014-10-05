@@ -71,7 +71,7 @@ public class OrderViewHandlerTest {
 	userTypeAccesses.add(userTypeAccess);
 	userType.setUserTypeAccesses(userTypeAccesses);
 
-	viewHandler = new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory, deviationViewHandlerFactory, false);
+	viewHandler = new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory, deviationViewHandlerFactory, false, null);
     }
 
     @After

@@ -18,11 +18,13 @@ import no.ugland.utransprod.gui.handlers.TransportLetterObject;
 import no.ugland.utransprod.gui.model.ReportEnum;
 import no.ugland.utransprod.gui.model.Transportable;
 import no.ugland.utransprod.model.Colli;
+import no.ugland.utransprod.model.DelAlt;
 import no.ugland.utransprod.model.Ord;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.Ordln;
 import no.ugland.utransprod.model.PostShipment;
+import no.ugland.utransprod.service.DelAltManager;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.PostShipmentManager;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
@@ -148,11 +150,34 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 		for (Ordln ordln : taksteinInfo) {
 		    taksteinkolliList.add(new Taksteinkolli().medLeveresFraLager(leveresFraLager)
 			    .medOverordnetBeskrivelse(takstein.getDetailsWithoutNoAttributes()).medBeskrivelse(ordln.getDescription())
-			    .medAntall(ordln.getNoinvoab()));
+			    .medAntall(ordln.getNoinvoab()).antallPrPall(hentAntallPrPall(ordln)).antallPrPakke(hentAntallPrPakke(ordln))
+			    .erTakstein(ordln.getProd() != null && ordln.getProd().getPrCatNo3() == 1));
 		}
 	    }
 	}
 	return taksteinkolliList;
+    }
+
+    private int hentAntallPrPakke(Ordln ordln) {
+	if (ordln.getProd() != null) {
+	    DelAltManager delAltManager = (DelAltManager) ModelUtil.getBean(DelAltManager.MANAGER_NAME);
+	    List<DelAlt> delaltlist = delAltManager.finnForProdno(ordln.getProd().getProdNo());
+	    if (delaltlist.size() == 1) {
+		return delaltlist.get(0).getFree2();
+	    }
+	}
+	return 6;
+    }
+
+    private int hentAntallPrPall(Ordln ordln) {
+	if (ordln.getProd() != null) {
+	    DelAltManager delAltManager = (DelAltManager) ModelUtil.getBean(DelAltManager.MANAGER_NAME);
+	    List<DelAlt> delaltlist = delAltManager.finnForProdno(ordln.getProd().getProdNo());
+	    if (delaltlist.size() == 1) {
+		return delaltlist.get(0).getFree1();
+	    }
+	}
+	return 180;
     }
 
     private List<ReportObject> prepareOrderLines(Collection<OrderLine> orderLineList, Integer pageNumber, Transportable transportable,

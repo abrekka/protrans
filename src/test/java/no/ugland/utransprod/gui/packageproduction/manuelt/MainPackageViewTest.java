@@ -141,7 +141,7 @@ public class MainPackageViewTest {
 	final AttributeManager attributeManager = (AttributeManager) ModelUtil.getBean(AttributeManager.MANAGER_NAME);
 
 	final OrderViewHandler orderViewHandler = new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory,
-		deviationViewHandlerFactory, false);
+		deviationViewHandlerFactory, false, null);
 	Multimap<String, String> colliSetup = ApplicationParamUtil.getColliSetup();
 
 	Map<String, StatusCheckerInterface<OrderLine>> statusChekers = new Hashtable<String, StatusCheckerInterface<OrderLine>>();

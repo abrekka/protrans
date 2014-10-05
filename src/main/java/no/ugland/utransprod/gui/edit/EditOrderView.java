@@ -27,6 +27,7 @@ import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.Project;
 import no.ugland.utransprod.model.validators.OrderValidator;
+import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.util.IconFeedbackPanel;
 import no.ugland.utransprod.util.Util;
 
@@ -147,10 +148,12 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
     private JTextField textFieldTelephoneNrSite;
 
     private JTextField textFieldMaxTrossHeight;
+    private VismaFileCreator vismaFileCreator;
 
-    public EditOrderView(final OrderViewHandler handler, final Order order, final boolean searchDialog, final Project project) {
+    public EditOrderView(final OrderViewHandler handler, final Order order, final boolean searchDialog, final Project project,
+	    VismaFileCreator vismaFileCreator) {
 	super(searchDialog, new OrderModel(order, searchDialog, true, true, project.getProjectNumber(), project.getProjectName()), handler);
-
+	this.vismaFileCreator = vismaFileCreator;
 	orderViewHandler = handler;
     }
 
@@ -248,6 +251,7 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 	comboBoxProductionWeek = new JComboBox(new ComboBoxAdapter(Util.getWeeks(),
 		presentationModel.getBufferedModel(OrderModel.PROPERTY_PRODUCTION_WEEK)));
 	comboBoxProductionWeek.setName("ProductionWeek");
+
 	orderViewHandler.addEditComponent(comboBoxProductionWeek);
 
 	bufferedValueModel.addValueChangeListener(new CustomerSelectionHandler());
@@ -766,4 +770,5 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
     public final String getHeading() {
 	return "Ordre";
     }
+
 }

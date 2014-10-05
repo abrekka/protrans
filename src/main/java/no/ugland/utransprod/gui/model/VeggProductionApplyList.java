@@ -42,7 +42,7 @@ public class VeggProductionApplyList extends ProductionApplyList {
 			tidsbruk = Tidsforbruk.beregnTidsforbruk(orderLine.getActionStarted(), orderLine.getProduced());
 		    }
 
-		    EditPacklistView editPacklistView = new EditPacklistView(login, false, tidsbruk);
+		    EditPacklistView editPacklistView = new EditPacklistView(login, false, tidsbruk, orderLine.getDoneBy());
 
 		    JDialog dialog = Util.getDialog(window, "Vegg produsert", true);
 		    WindowInterface window1 = new JDialogAdapter(dialog);

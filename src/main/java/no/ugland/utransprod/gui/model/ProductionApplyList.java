@@ -274,8 +274,11 @@ public class ProductionApplyList extends AbstractApplyList<Produceable> {
 	    if (orderLine != null) {
 		if (started) {
 		    orderLine.setActionStarted(Util.getCurrentDate());
+		    String gjortAv = Util.showInputDialogWithdefaultValue(null, "Gjøres av", "Gjøres av", login.getApplicationUser().getFullName());
+		    orderLine.setDoneBy(gjortAv);
 		} else {
 		    orderLine.setActionStarted(null);
+		    orderLine.setDoneBy(null);
 		}
 		managerRepository.getOrderLineManager().saveOrderLine(orderLine);
 

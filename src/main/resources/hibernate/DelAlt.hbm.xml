@@ -11,7 +11,7 @@
     http://www.hibernate.org/
 -->
 
-<class name="no.ugland.utransprod.model.Prod" table="dbo.PROD">
+<class name="no.ugland.utransprod.model.DelAlt" table="dbo.DELALT">
 	<id name="prodNo" type="java.lang.String" column="PRODNO">
         <generator class="identity"/>
         </id>
@@ -19,31 +19,19 @@
 
 
 	 <property
-        name="prCatNo"
+        name="free1"
         type="java.lang.Integer"
-        column="PRCATNO"
+        column="FREE1"
         length="32"
     />
     
 
     <property
-        name="prCatNo2"
+        name="free2"
         type="java.lang.Integer"
-        column="PRCATNO2"
+        column="FREE2"
         length="32"
     />
-    <property
-        name="prCatNo3"
-        type="java.lang.Integer"
-        column="PRCATNO3"
-        length="32"
-    />
-	 <property
-        name="inf"
-        type="java.lang.String"
-        column="INF"
-        length="255"
-    />
-
+    
 </class>
 </hibernate-mapping>

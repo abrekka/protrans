@@ -32,8 +32,10 @@ public class EditPacklistView implements Closeable {
     private Login login;
     private boolean skalKunneSettedato;
     private String tidsbruk;
+    private String defaultValue;
 
-    public EditPacklistView(Login login, boolean skalKunneSettedato, BigDecimal tidsbruk) {
+    public EditPacklistView(Login login, boolean skalKunneSettedato, BigDecimal tidsbruk, String defaultValue) {
+	this.defaultValue = defaultValue;
 	this.login = login;
 	this.skalKunneSettedato = skalKunneSettedato;
 	this.tidsbruk = tidsbruk == null ? null : String.valueOf(tidsbruk);
@@ -61,7 +63,7 @@ public class EditPacklistView implements Closeable {
     }
 
     private void initComponents(WindowInterface window) {
-	textfieldDoneBy = new JTextField(login.getApplicationUser().getFullName());
+	textfieldDoneBy = new JTextField(defaultValue == null ? login.getApplicationUser().getFullName() : defaultValue);
 	textfieldTime = new JTextField(tidsbruk == null ? "" : tidsbruk);
 	dateChooser = new JDateChooser(Calendar.getInstance().getTime());
 	buttonOk = getButtonOk(window);

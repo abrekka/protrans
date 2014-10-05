@@ -89,6 +89,7 @@ import no.ugland.utransprod.util.Util;
 import no.ugland.utransprod.util.excel.ExcelUtil;
 
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.Hibernate;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.ColorHighlighter;
 import org.jdesktop.swingx.decorator.Filter;
@@ -2687,6 +2688,11 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 		    managerRepository.getOrderManager().saveOrder(order);
 		    ProductionOverviewV productionOverviewV = getSelectedProductionOverviewV();
 		    productionOverviewV.setProductionWeek(order.getProductionWeek());
+		    if (!Hibernate.isInitialized(order.getOrderLines())) {
+			managerRepository.getOrderManager().lazyLoadOrder(order, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES });
+
+		    }
+		    vismaFileCreator.createVismaFileForProductionWeek(order);
 		    // doRefresh(window);
 		}
 	    }

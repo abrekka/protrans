@@ -6,6 +6,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class OrdchgrHeadV extends BaseObject {
     public static final String HEAD_LINE_TMP = "H;;%s;;;;;;;;;;;;;;;;;;;;;;%s;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;4";
+    public static final String HEAD_LINE_PRODUCTION_WEEK_TMP = "H;;%s;;;;;;;;;;;;;;;;;;;;;;;;;;;;%s;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;4";
     public static final String HEAD_LINE_WITH_SUPPLIER_TMP = "H;;%s;;;%s;;;;;;;;;;;;;;;;;;;%s;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;4";
     // ord levnr trdato tur sjåfør
     public static final String HEAD_LINE_DELIVERY_TMP = "H;;%s;;;%s;;;;;;;;;;;;;;;;;;;%s;;;;;%s;%s;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;4";
@@ -25,12 +26,10 @@ public class OrdchgrHeadV extends BaseObject {
 
     public String getHeadLine(String transportDate) {
 	return String.format(HEAD_LINE_TMP, ordNo != null ? ordNo.toString() : "", transportDate != null ? transportDate : "0");
-	// StringBuilder stringBuilder = new StringBuilder();
-	// return
-	// StringUtils.replaceOnce(stringBuilder.append(HEAD_START).append(
-	// StringUtils.leftPad("", NUMBER_OF_SEMICOLON, ";")).append(
-	// HEAD_END).toString(), ORD_NO_STRING, ordNo != null ? ordNo
-	// .toString() : "");
+    }
+
+    public String getHeadLineForProductionWeek(Integer productionWeek) {
+	return String.format(HEAD_LINE_PRODUCTION_WEEK_TMP, ordNo != null ? ordNo.toString() : "", productionWeek != null ? productionWeek : "");
     }
 
     @Override

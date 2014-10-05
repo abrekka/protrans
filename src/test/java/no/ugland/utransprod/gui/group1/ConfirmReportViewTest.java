@@ -97,7 +97,7 @@ public class ConfirmReportViewTest {
 	when(orderManager.findByConfirmWeekProductAreaGroup(anyInt(), anyInt(), anyInt(), (ProductAreaGroup) anyObject())).thenReturn(orderList);
 
 	OrderViewHandler orderViewHandler = new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory, deviationViewHandlerFactory,
-		true);
+		true, null);
 
 	viewHandler = new ConfirmReportViewHandler(orderViewHandler, managerRepository);
 	final ConfirmReportView view = new ConfirmReportView(viewHandler);

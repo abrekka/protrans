@@ -211,7 +211,7 @@ public class RouteViewTest {
 	OrderViewHandlerFactory orderViewHandlerFactory = new OrderViewHandlerFactory() {
 
 	    public OrderViewHandler create(boolean notInitData) {
-		return new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory, deviationViewHandlerFactory, notInitData);
+		return new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory, deviationViewHandlerFactory, notInitData, null);
 	    }
 	};
 	routeViewHandler = new RouteViewHandler(orderViewHandlerFactory, login, managerRepository, deviationViewHandlerFactory,

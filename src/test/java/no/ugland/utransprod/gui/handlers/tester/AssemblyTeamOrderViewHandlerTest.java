@@ -61,7 +61,7 @@ public class AssemblyTeamOrderViewHandlerTest {
 	when(managerRepository.getAssemblyManager()).thenReturn(assemblyManager);
 	when(managerRepository.getOrderManager()).thenReturn(orderManager);
 	final OrderViewHandler orderViewHandler = new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory,
-		deviationViewHandlerFactory, true);
+		deviationViewHandlerFactory, true, null);
 	when(orderViewHandlerFactory.create(true)).thenReturn(orderViewHandler);
 	UserType userType = new UserType();
 	userType.setIsAdmin(1);

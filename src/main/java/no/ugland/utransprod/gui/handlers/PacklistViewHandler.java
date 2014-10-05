@@ -255,7 +255,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	Order order = managerRepository.getOrderManager().findByOrderNr(packlistV.getOrderNr());
 	if (applied) {
 
-	    EditPacklistView editPacklistView = new EditPacklistView(login, true, order.getPacklistDuration());
+	    EditPacklistView editPacklistView = new EditPacklistView(login, true, order.getPacklistDuration(), order.getPacklistDoneBy());
 
 	    JDialog dialog = Util.getDialog(window, "Pakkliste klar", true);
 	    WindowInterface window1 = new JDialogAdapter(dialog);

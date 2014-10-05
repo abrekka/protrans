@@ -158,7 +158,7 @@ public class AssemblyPlannerViewTest {
 
 	    public OrderViewHandler create(boolean notInitData) {
 
-		return new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory, deviationViewHandlerFactory, notInitData);
+		return new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory, deviationViewHandlerFactory, notInitData, null);
 	    }
 	};
 	final SupplierOrderViewHandler supplierOrderViewHandler = new SupplierOrderViewHandler(login, managerRepository, assemblyReportFactory,
@@ -174,7 +174,7 @@ public class AssemblyPlannerViewTest {
 	supplierList.add(supplier);
 
 	final OrderViewHandler orderViewHandler = new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory,
-		deviationViewHandlerFactory, true);
+		deviationViewHandlerFactory, true, null);
 
 	SupplierOrderViewHandlerFactory supplierOrderViewHandlerFactory = new SupplierOrderViewHandlerFactory() {
 

@@ -862,6 +862,10 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	    Util.setWaitCursor(window.getComponent());
 	    if (orderLineSelectionList.getSize() != 0) {
 		OrderLine orderLine = (OrderLine) getRow(rowIndex);
+		if (orderLine.getArticlePath().contains("Vindu")) {
+		    System.out.println();
+
+		}
 
 		if (orderLine.getHasArticle() == null || orderLine.getAttributeInfo() == null || orderLine.getIsDefault() == null) {
 		    orderLineManager1.lazyLoadTree(orderLine);

@@ -68,7 +68,7 @@ public class ProductionOverviewWindowTest extends WindowTest {
 	;
 	VismaFileCreator vismaFileCreator = new VismaFileCreatorImpl(ordchgrHeadVManager, false, fakturagrunnlagVManager);
 	final OrderViewHandler orderViewHandler = new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory,
-		deviationViewHandlerFactory, true);
+		deviationViewHandlerFactory, true, null);
 	final OrderViewHandlerFactory orderViewHandlerFactory = new OrderViewHandlerFactory() {
 
 	    public OrderViewHandler create(boolean notInitData) {

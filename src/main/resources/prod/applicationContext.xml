@@ -162,6 +162,7 @@
 				<value>hibernate/Prod.hbm.xml</value>
 				<value>hibernate/PrDcMat.hbm.xml</value>
 				<value>hibernate/StcBal.hbm.xml</value>
+				<value>hibernate/DelAlt.hbm.xml</value>
 			</list>
 		</property>
 	</bean>

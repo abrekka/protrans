@@ -36,6 +36,21 @@ public class VismaFileCreatorTest {
     private VismaFileCreator vismaFileCreator = new VismaFileCreatorImpl(null, false, null);
 
     @Test
+    public void skalLageVismaFilForProduksjonsuke() throws IOException, ParseException {
+	Order ordre = new Order();
+	ordre.setProductionWeek(40);
+	OrdchgrHeadV head = new OrdchgrHeadV();
+	head.setOrdNo(1000);
+	String fileName = ((VismaFileCreatorImpl) vismaFileCreator).createProductionWeekFile(ordre, head, "visma");
+	assertNotNull(fileName);
+	File file = new File("visma/" + fileName);
+	assertEquals(true, file.exists());
+	List<String> stringLines = FileUtils.readLines(file);
+	assertEquals(1, stringLines.size());
+	assertEquals("H;;1000;;;;;;;;;;;;;;;;;;;;;;;;;;;;40;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;4", stringLines.get(0));
+    }
+
+    @Test
     public void skalLageVismafilForTilbakemeldingForTransportUtenPurcno() throws Exception {
 	List<FakturagrunnlagV> fakturagrunnlag = Lists
 		.newArrayList(new FakturagrunnlagV().medProdno("FRAKT").medPurcno(0).medLnPurcno(0).medAlloc(0));

@@ -570,6 +570,13 @@
             </bean>
         </property>
 		</bean>
+		<bean id="delAltManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.DelAltManagerImpl">
+                <property name="delAltDAO" ref="delAltDAO"/>
+            </bean>
+        </property>
+		</bean>
 	<bean id="craningCostManager" parent="txProxyTemplate">
         <property name="target">
             <bean class="no.ugland.utransprod.service.impl.CraningCostManagerImpl">

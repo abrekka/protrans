@@ -10,6 +10,9 @@ public class Taksteinkolli {
     private BigDecimal antall;
     private String overordnetBeskrivelse;
     private String leveresFraLager;
+    private boolean erTakstein;
+    private Integer antallPrPall;
+    private Integer antallPrPakke;
 
     public Taksteinkolli medBeskrivelse(String description) {
 	this.beskrivelse = description;
@@ -53,19 +56,34 @@ public class Taksteinkolli {
     }
 
     public String getPalleinfo() {
-	if (SKARPNES_DOBBEL_EDEL_SORT.equalsIgnoreCase(beskrivelse)) {
+	if (erTakstein) {
 	    return antall == null ? "" : "(" + beregnAntallPaller() + "/" + beregnAntallPakker() + ")";
 	}
 	return "";
     }
 
     protected String beregnAntallPakker() {
-	return antall == null ? null : String.valueOf(antall.remainder(BigDecimal.valueOf(180))
-		.divide(BigDecimal.valueOf(6), 0, RoundingMode.CEILING));
+	return antall == null ? null : String.valueOf(antall.remainder(BigDecimal.valueOf(antallPrPall)).divide(BigDecimal.valueOf(antallPrPakke), 0,
+		RoundingMode.CEILING));
     }
 
     protected String beregnAntallPaller() {
-	String valueOf = String.valueOf(antall.divide(BigDecimal.valueOf(180), 0, RoundingMode.FLOOR));
+	String valueOf = String.valueOf(antall.divide(BigDecimal.valueOf(antallPrPall), 0, RoundingMode.FLOOR));
 	return antall == null ? null : valueOf;
+    }
+
+    public Taksteinkolli erTakstein(boolean erTakstein) {
+	this.erTakstein = erTakstein;
+	return this;
+    }
+
+    public Taksteinkolli antallPrPall(int antallPrPall) {
+	this.antallPrPall = antallPrPall;
+	return this;
+    }
+
+    public Taksteinkolli antallPrPakke(int antallPrPakke) {
+	this.antallPrPakke = antallPrPakke;
+	return this;
     }
 }

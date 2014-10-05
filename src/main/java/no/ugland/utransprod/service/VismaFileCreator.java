@@ -19,4 +19,6 @@ public interface VismaFileCreator {
 
     void createVismaFileForDelivery(Order order);
 
+    String createVismaFileForProductionWeek(Order order);
+
 }

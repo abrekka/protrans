@@ -185,7 +185,7 @@ public class ProductionOverviewViewTest {
 	when(login.getUserType()).thenReturn(userType);
 
 	OrderViewHandler orderViewHandler = new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory, deviationViewHandlerFactory,
-		true);
+		true, null);
 	when(orderViewHandlerFactory.create(true)).thenReturn(orderViewHandler);
 
 	final ShowTakstolInfoActionFactory showTakstolInfoActionFactory = new ShowTakstolInfoActionFactory() {

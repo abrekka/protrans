@@ -144,7 +144,7 @@ public class AssemblyReportNy {
 	BigDecimal totalSum = BigDecimal.ZERO;
 
 	for (FakturagrunnlagV linje : getFakturagrunnlag()) {
-	    totalSum = totalSum.add(linje.getSumLine());
+	    totalSum = totalSum.add(linje.getSumLineMedVerdi() == null ? BigDecimal.ZERO : linje.getSumLineMedVerdi());
 	}
 	return totalSum;
     }

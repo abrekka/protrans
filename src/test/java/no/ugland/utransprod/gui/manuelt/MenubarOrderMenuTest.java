@@ -105,7 +105,7 @@ public class MenubarOrderMenuTest {
 	when(login.getUserType()).thenReturn(userType);
 
 	OrderViewHandler orderViewHandler = new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory, deviationViewHandlerFactory,
-		true);
+		true, null);
 	when(orderViewHandlerFactory.create(anyBoolean())).thenReturn(orderViewHandler);
 
 	final MenuBarBuilderInterface menuBarBuilder = new MenuBarBuilderImpl(login);

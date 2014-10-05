@@ -27,65 +27,60 @@ import org.mockito.MockitoAnnotations;
  */
 @Category(FastTests.class)
 public class AssemblyPlannerViewHandlerTest {
-	private AssemblyPlannerViewHandler viewHandler;
-	@Mock
-	private Login login;
-	@Mock
-	private DeviationOverviewViewFactory deviationOverviewViewFactory;
-	@Mock
-	private ManagerRepository managerRepository;
-	@Mock
-	private DeviationViewHandlerFactory deviationViewHandlerFactory;
-	@Mock
-	private SupplierOrderViewHandlerFactory supplierOrderViewHandlerFactory;
-	@Mock
-	private ProductAreaManager productAreaManager;
-	@Mock
-	private SupplierManager supplierManager;
-	@Mock
-	private AssemblyOverdueVManager assemblyOverdueVManager;
+    private AssemblyPlannerViewHandler viewHandler;
+    @Mock
+    private Login login;
+    @Mock
+    private DeviationOverviewViewFactory deviationOverviewViewFactory;
+    @Mock
+    private ManagerRepository managerRepository;
+    @Mock
+    private DeviationViewHandlerFactory deviationViewHandlerFactory;
+    @Mock
+    private SupplierOrderViewHandlerFactory supplierOrderViewHandlerFactory;
+    @Mock
+    private ProductAreaManager productAreaManager;
+    @Mock
+    private SupplierManager supplierManager;
+    @Mock
+    private AssemblyOverdueVManager assemblyOverdueVManager;
 
-	@Before
-	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-		when(managerRepository.getProductAreaManager()).thenReturn(
-				productAreaManager);
-		when(managerRepository.getSupplierManager())
-				.thenReturn(supplierManager);
-		when(managerRepository.getAssemblyOverdueVManager()).thenReturn(
-				assemblyOverdueVManager);
+    @Before
+    public void setUp() throws Exception {
+	MockitoAnnotations.initMocks(this);
+	when(managerRepository.getProductAreaManager()).thenReturn(productAreaManager);
+	when(managerRepository.getSupplierManager()).thenReturn(supplierManager);
+	when(managerRepository.getAssemblyOverdueVManager()).thenReturn(assemblyOverdueVManager);
 
-		OrderViewHandler orderViewHandler = new OrderViewHandler(login,
-				managerRepository, deviationOverviewViewFactory,
-				deviationViewHandlerFactory, true);
-		viewHandler = new AssemblyPlannerViewHandler(orderViewHandler, login,
-				supplierOrderViewHandlerFactory, managerRepository);
-	}
+	OrderViewHandler orderViewHandler = new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory, deviationViewHandlerFactory,
+		true, null);
+	viewHandler = new AssemblyPlannerViewHandler(orderViewHandler, login, supplierOrderViewHandlerFactory, managerRepository);
+    }
 
-	@Test
-	public void testGetAssemblyTeams() {
-		assertNotNull(viewHandler.getSuppliers(new YearWeek(), null));
-	}
+    @Test
+    public void testGetAssemblyTeams() {
+	assertNotNull(viewHandler.getSuppliers(new YearWeek(), null));
+    }
 
-	@Test
-	public void testGetButtonSearchOrder() {
-		assertNotNull(viewHandler.getButtonSearchOrder(null, null));
-	}
+    @Test
+    public void testGetButtonSearchOrder() {
+	assertNotNull(viewHandler.getButtonSearchOrder(null, null));
+    }
 
-	@Test
-	public void testGetLabelSearchResult() {
-		assertNotNull(viewHandler.getLabelSearchResult());
+    @Test
+    public void testGetLabelSearchResult() {
+	assertNotNull(viewHandler.getLabelSearchResult());
 
-	}
+    }
 
-	@Test
-	public void testGetLabelWarning() throws Exception {
-		assertNotNull(viewHandler.getLabelWarning());
-	}
+    @Test
+    public void testGetLabelWarning() throws Exception {
+	assertNotNull(viewHandler.getLabelWarning());
+    }
 
-	@Test
-	public void testGetCancelButton() throws Exception {
-		assertNotNull(viewHandler.getCancelButton(null));
-	}
+    @Test
+    public void testGetCancelButton() throws Exception {
+	assertNotNull(viewHandler.getCancelButton(null));
+    }
 
 }

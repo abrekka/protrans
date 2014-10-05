@@ -66,6 +66,7 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
     }
 
     private Integer hentOrdNo(Order order) {
+
 	OrderLine orderLineMedOrdNo = Iterables.find(order.getOrderLines(), medOrdNo());
 	return orderLineMedOrdNo == null ? null : orderLineMedOrdNo.getOrdNo();
     }
@@ -141,6 +142,14 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 	String transportDate = getTransportDate(order.getTransport());
 
 	return writeFile(order.getOrderNr(), outdir, Lists.newArrayList(head.getHeadLine(transportDate)));
+    }
+
+    public String createProductionWeekFile(Order order, OrdchgrHeadV head, String outdir) throws IOException {
+	if (order == null || head == null) {
+	    return null;
+	}
+
+	return writeFile(order.getOrderNr(), outdir, Lists.newArrayList(head.getHeadLineForProductionWeek(order.getProductionWeek())));
     }
 
     private String getTransportDate(Transport transport) {
@@ -248,6 +257,19 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 	    VismaFile vismaFile = createDeliveryFile(order.getTransport(), fakturagrunnlagVManager.findFakturagrunnlag(order.getOrderId()),
 		    order.getSentBool());
 	    writeFile(order.getOrderNr(), ApplicationParamUtil.findParamByName(VISMA_OUT_DIR), vismaFile.getLinjer());
+	} catch (IOException e) {
+	    e.printStackTrace();
+	    throw new ProTransException(e.getMessage());
+	}
+
+    }
+
+    public String createVismaFileForProductionWeek(Order order) {
+	try {
+
+	    Integer ordNo = hentOrdNo(order);
+	    OrdchgrHeadV head = ordchgrManager.getHead(ordNo);
+	    return createProductionWeekFile(order, head, ApplicationParamUtil.findParamByName(VISMA_OUT_DIR));
 	} catch (IOException e) {
 	    e.printStackTrace();
 	    throw new ProTransException(e.getMessage());

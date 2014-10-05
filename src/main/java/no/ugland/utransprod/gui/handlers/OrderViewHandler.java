@@ -88,6 +88,7 @@ import no.ugland.utransprod.service.OrderManager;
 import no.ugland.utransprod.service.OrdlnManager;
 import no.ugland.utransprod.service.ProjectManager;
 import no.ugland.utransprod.service.TransportManager;
+import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.service.enums.LazyLoadEnum;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.util.CommentTypeUtil;
@@ -178,6 +179,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
     private ManagerRepository managerRepository;
     private DeviationOverviewViewFactory deviationOverviewViewFactory;
     private DeviationViewHandlerFactory deviationViewHandlerFactory;
+    private VismaFileCreator vismaFileCreator;
 
     /**
      * @param notInitData
@@ -187,8 +189,9 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
      */
     @Inject
     public OrderViewHandler(Login aLogin, ManagerRepository aManagerRepository, DeviationOverviewViewFactory aDeviationOverviewViewFactory,
-	    DeviationViewHandlerFactory aDeviationViewHandlerFactory, @Assisted boolean notInitData) {
+	    DeviationViewHandlerFactory aDeviationViewHandlerFactory, @Assisted boolean notInitData, VismaFileCreator vismaFileCreator) {
 	super("Ordre", aManagerRepository.getOrderManager(), notInitData, aLogin.getUserType(), false);
+	this.vismaFileCreator = vismaFileCreator;
 	deviationViewHandlerFactory = aDeviationViewHandlerFactory;
 	deviationOverviewViewFactory = aDeviationOverviewViewFactory;
 	managerRepository = aManagerRepository;
@@ -530,7 +533,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	    }
 	}
 
-	EditOrderView editOrderView = new EditOrderView(this, order, searching, project);
+	EditOrderView editOrderView = new EditOrderView(this, order, searching, project, vismaFileCreator);
 
 	WindowInterface dialog = new JDialogAdapter(Util.getDialog(window, "Ordre", true));
 
@@ -622,6 +625,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 
 	    try {
 		((OrderManager) overviewManager).saveOrder(order);
+		vismaFileCreator.createVismaFileForProductionWeek(order);
 	    } catch (ProTransException e) {
 		Util.showErrorDialog(window, "Feil", e.getMessage());
 		e.printStackTrace();

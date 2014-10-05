@@ -36,7 +36,7 @@ public class FakturagrunnlagV {
     }
 
     public BigDecimal getSumLineMedVerdi() {
-	return sumLine.intValue() == 0 ? null : sumLine;
+	return orgPriceMont.compareTo(BigDecimal.valueOf(0.01)) == 0 ? null : sumLine;
     }
 
     public void setSumLine(BigDecimal sumLine) {
@@ -56,7 +56,7 @@ public class FakturagrunnlagV {
     }
 
     public BigDecimal getPriceMontMedVerdi() {
-	return priceMont.intValue() == 0 ? null : priceMont;
+	return orgPriceMont.compareTo(BigDecimal.valueOf(0.01)) == 0 ? null : priceMont;
     }
 
     public void setPriceMont(BigDecimal priceMont) {
