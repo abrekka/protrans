@@ -92,9 +92,9 @@
         length="32"
     />
     <property
-        name="noOrg"
+        name="noInvo"
         type="java.math.BigDecimal"
-        column="NOORG"
+        column="NOINVO"
         length="32"
     />
     <property

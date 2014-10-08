@@ -27,7 +27,7 @@ public class Ordln extends BaseObject {
     private BigDecimal price;
 
     private BigDecimal free1;
-    private BigDecimal noOrg;
+    private BigDecimal noInvo;
     private Prod prod;
     private BigDecimal lgtU;
     private BigDecimal hgtU;
@@ -66,7 +66,7 @@ public class Ordln extends BaseObject {
 	this.costPrice = aCostPrice;
 	this.price = aPrice;
 	this.free1 = aFree1;
-	this.noOrg = aNoOrg;
+	this.noInvo = aNoOrg;
 	this.prod = aProd;
 	this.lgtU = aLgtU;
 	this.hgtU = aHgtU;
@@ -171,12 +171,12 @@ public class Ordln extends BaseObject {
 	this.free1 = aFree1;
     }
 
-    public BigDecimal getNoOrg() {
-	return noOrg;
+    public BigDecimal getNoInvo() {
+	return noInvo;
     }
 
-    public void setNoOrg(BigDecimal noOrg) {
-	this.noOrg = noOrg;
+    public void setNoInvo(BigDecimal noInvo) {
+	this.noInvo = noInvo;
     }
 
     public Prod getProd() {

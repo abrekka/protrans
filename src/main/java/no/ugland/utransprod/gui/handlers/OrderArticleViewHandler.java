@@ -1018,6 +1018,11 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+	    Order order = ((OrderModel) presentationModel.getBean()).getObject();
+	    if (order.getPacklistReady() != null) {
+		Util.showErrorDialog(window, "Pakkliste er ferdig", "Kan ikke importere artikler fordi pakkliste er ferdig!");
+		return;
+	    }
 	    try {
 		if (Util.showConfirmDialog(window, "Importere artikler på nytt?",
 			"Dette vil slette alle artikler og importere dem på nytt, vil du fortsette?")) {

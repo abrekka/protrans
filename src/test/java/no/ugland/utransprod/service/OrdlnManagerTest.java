@@ -71,7 +71,7 @@ public class OrdlnManagerTest {
 		assertEquals(Integer.valueOf(1), ln.getLnno());
 		assertEquals("MONTERING VILLA", ln.getProd().getProdNo());
 		assertEquals("test1", ln.getDescription());
-		assertEquals(BigDecimal.valueOf(1).setScale(2), ln.getNoOrg().setScale(2));
+		assertEquals(BigDecimal.valueOf(1).setScale(2), ln.getNoInvo().setScale(2));
 		assertEquals(BigDecimal.valueOf(0).setScale(2), ln.getDiscount().setScale(2));
 		assertEquals(BigDecimal.valueOf(100).setScale(2), ln.getFree1().setScale(2));
 		assertEquals(BigDecimal.valueOf(100).setScale(2), ln.getCostPrice().setScale(2));
@@ -80,7 +80,7 @@ public class OrdlnManagerTest {
 		assertEquals(Integer.valueOf(2), ln.getLnno());
 		assertEquals("TAKSTOLER", ln.getProd().getProdNo());
 		assertEquals("test2", ln.getDescription());
-		assertEquals(BigDecimal.valueOf(2).setScale(2), ln.getNoOrg().setScale(2));
+		assertEquals(BigDecimal.valueOf(2).setScale(2), ln.getNoInvo().setScale(2));
 		assertEquals(BigDecimal.valueOf(10).setScale(2), ln.getDiscount().setScale(2));
 		assertEquals(BigDecimal.valueOf(0).setScale(2), ln.getFree1().setScale(2));
 		assertEquals(BigDecimal.valueOf(200).setScale(2), ln.getCostPrice().setScale(2));
