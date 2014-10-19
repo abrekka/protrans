@@ -108,8 +108,8 @@ public class OrdlnViewHandler {
 	    case 2:
 		return ordln.getDescription();
 	    case 3:
-		if (ordln.getNoInvo() != null) {
-		    return ordln.getNoInvo().setScale(2, RoundingMode.CEILING);
+		if (ordln.getNoinvoab() != null) {
+		    return ordln.getNoinvoab().setScale(2, RoundingMode.CEILING);
 		}
 		return null;
 	    case 4:

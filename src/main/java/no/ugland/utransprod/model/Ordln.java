@@ -27,7 +27,6 @@ public class Ordln extends BaseObject {
     private BigDecimal price;
 
     private BigDecimal free1;
-    private BigDecimal noInvo;
     private Prod prod;
     private BigDecimal lgtU;
     private BigDecimal hgtU;
@@ -49,6 +48,10 @@ public class Ordln extends BaseObject {
 
     private BigDecimal noinvoab;
 
+    private Integer prodTp2;
+
+    private String trInf3;
+
     public static final Ordln UNKNOWN = new Ordln() {
     };
 
@@ -57,8 +60,7 @@ public class Ordln extends BaseObject {
     }
 
     public Ordln(final OrdlnPK aOrdlnPK, final String aDescription, final BigDecimal aDiscount, final BigDecimal aCostPrice, final BigDecimal aPrice,
-	    final BigDecimal aFree1, final BigDecimal aNoOrg, final Prod aProd, final BigDecimal aLgtU, final BigDecimal aHgtU,
-	    final BigDecimal aFree4) {
+	    final BigDecimal aFree1, final Prod aProd, final BigDecimal aLgtU, final BigDecimal aHgtU, final BigDecimal aFree4) {
 	super();
 	this.ordlnPK = aOrdlnPK;
 	this.description = aDescription;
@@ -66,7 +68,6 @@ public class Ordln extends BaseObject {
 	this.costPrice = aCostPrice;
 	this.price = aPrice;
 	this.free1 = aFree1;
-	this.noInvo = aNoOrg;
 	this.prod = aProd;
 	this.lgtU = aLgtU;
 	this.hgtU = aHgtU;
@@ -169,14 +170,6 @@ public class Ordln extends BaseObject {
 
     public final void setFree1(final BigDecimal aFree1) {
 	this.free1 = aFree1;
-    }
-
-    public BigDecimal getNoInvo() {
-	return noInvo;
-    }
-
-    public void setNoInvo(BigDecimal noInvo) {
-	this.noInvo = noInvo;
     }
 
     public Prod getProd() {
@@ -336,5 +329,21 @@ public class Ordln extends BaseObject {
 
     public void setNoinvoab(BigDecimal noinvoab) {
 	this.noinvoab = noinvoab;
+    }
+
+    public Integer getProdTp2() {
+	return prodTp2;
+    }
+
+    public void setProdTp2(Integer prodTp2) {
+	this.prodTp2 = prodTp2;
+    }
+
+    public String getTrInf3() {
+	return trInf3;
+    }
+
+    public void setTrInf3(String trInf3) {
+	this.trInf3 = trInf3;
     }
 }

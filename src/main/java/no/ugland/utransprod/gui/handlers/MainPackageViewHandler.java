@@ -825,7 +825,26 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		}
 	    }
 	}
+	Collections.sort(orderLines, etterProdtp2OgTrlnf3());
 	return orderLines;
+    }
+
+    private Comparator<OrderLine> etterProdtp2OgTrlnf3() {
+	return new Comparator<OrderLine>() {
+
+	    public int compare(OrderLine o1, OrderLine o2) {
+		int compint = hentProdTp2(o1).compareTo(hentProdTp2(o2));
+		return compint == 0 ? hentTrInf3(o1).compareTo(hentTrInf3(o2)) : compint;
+	    }
+
+	    private String hentTrInf3(OrderLine o1) {
+		return o1 == null || o1.getOrdln() == null || o1.getOrdln().getTrInf3() == null ? "" : o1.getOrdln().getTrInf3();
+	    }
+
+	    private Integer hentProdTp2(OrderLine o1) {
+		return o1 == null || o1.getOrdln() == null || o1.getOrdln().getProdTp2() == null ? 0 : o1.getOrdln().getProdTp2();
+	    }
+	};
     }
 
     /**
@@ -917,6 +936,15 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		    if (orderLine.getOrdln() != null) {
 			return orderLine.getOrdln().getProdTp();
 		    } else {
+			if ("Vegg".equalsIgnoreCase(orderLine.getArticlePath())) {
+			    return Packagetype.VEGG.getVerdi();
+			}
+			if ("Takstoler".equalsIgnoreCase(orderLine.getArticlePath()) || "Gavl".equalsIgnoreCase(orderLine.getArticlePath())) {
+			    return Packagetype.TAKSTOL_GAVL.getVerdi();
+			}
+			if ("Front".equalsIgnoreCase(orderLine.getArticlePath())) {
+			    return Packagetype.PAKK.getVerdi();
+			}
 			return 0;
 		    }
 		default:

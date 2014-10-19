@@ -1143,7 +1143,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
     @Override
     public Dimension getWindowSize() {
 
-	return new Dimension(850, 710);
+	return new Dimension(850, 810);
 
     }
 
@@ -1154,7 +1154,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
      */
 
     public Dimension getRegisterWindowSize() {
-	return new Dimension(710, 710);
+	return new Dimension(710, 810);
     }
 
     public boolean saveObjectExt(AbstractModel<Deviation, DeviationModel> object, WindowInterface currentWindow) {

@@ -67,7 +67,7 @@ public class DefaultConverter implements ArticleTypeToOrderLineConverter {
     }
 
     private void setNumberOfItems(final Ordln ordln, OrderLine orderLine) {
-	orderLine.setNumberOfItems(Util.convertBigDecimalToInteger(ordln != null ? ordln.getNoInvo() : BigDecimal.ZERO));
+	orderLine.setNumberOfItems(Util.convertBigDecimalToInteger(ordln != null ? ordln.getNoinvoab() : BigDecimal.ZERO));
     }
 
     public static void setAttributes(final OrderLine orderLine, OrdlnManager ordlnManager) {

@@ -91,12 +91,7 @@
         column="PRICE"
         length="32"
     />
-    <property
-        name="noInvo"
-        type="java.math.BigDecimal"
-        column="NOINVO"
-        length="32"
-    />
+    
     <property
         name="lgtU"
         type="java.math.BigDecimal"
@@ -127,7 +122,18 @@
         column="AM"
         length="32"
     />
-   
+   <property
+        name="prodTp2"
+        type="java.lang.Integer"
+        column="PRODTP2"
+        length="32"
+    />
+    <property
+        name="trInf3"
+        type="java.lang.String"
+        column="TRINF3"
+        length="255"
+    />
     <many-to-one
         name="prod"
         class="no.ugland.utransprod.model.Prod"
