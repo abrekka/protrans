@@ -25,14 +25,17 @@ import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.Ordln;
 import no.ugland.utransprod.model.PostShipment;
 import no.ugland.utransprod.service.DelAltManager;
+import no.ugland.utransprod.service.DeviationManager;
 import no.ugland.utransprod.service.ManagerRepository;
-import no.ugland.utransprod.service.PostShipmentManager;
+import no.ugland.utransprod.service.enums.LazyLoadDeviationEnum;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.service.enums.LazyLoadOrderLineEnum;
+import no.ugland.utransprod.service.enums.LazyLoadPostShipmentEnum;
 import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.Util;
 
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.Hibernate;
 
 import com.google.inject.Inject;
 import com.google.inject.internal.Lists;
@@ -127,6 +130,14 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 	List<Taksteinkolli> taksteinkolliInfo = genererTaksteinInfo(transportable);
 
+	if (!Hibernate.isInitialized(transportable.getCollies()) && Order.class.isInstance(transportable)) {
+	    managerRepository.getOrderManager().lazyLoadOrder((Order) transportable,
+		    new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.COMMENTS });
+	} else if (!Hibernate.isInitialized(transportable.getCollies()) && PostShipment.class.isInstance(transportable)) {
+	    managerRepository.getPostShipmentManager().lazyLoad((PostShipment) transportable,
+		    new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.COLLIES, LazyLoadPostShipmentEnum.ORDER_COMMENTS });
+	}
+
 	list.addAll(prepareCollies(transportable.getCollies(), i, transportable, customerRef, bestillingsnrFrakt, taksteinkolliInfo));
 	if (i == 1) {
 	    colliCount = list.size();
@@ -141,6 +152,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 	    Order order = (Order) transportable;
 	    OrderLine takstein = order.getOrderLine("Takstein");
 	    if (takstein != null) {
+		managerRepository.getOrderLineManager()
+			.lazyLoad(takstein, new LazyLoadOrderLineEnum[] { LazyLoadOrderLineEnum.ORDER_LINE_ATTRIBUTE });
 		Ordln ordlnTakstein = managerRepository.getOrdlnManager().findByOrdNoAndLnNo(takstein.getOrdNo(), takstein.getLnNo());
 		if (ordlnTakstein != null) {
 		    takstein.setOrdln(ordlnTakstein);
@@ -326,7 +339,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 	StringBuilder heading = addOrderInfoToHeading(transportable);
 
 	if (transportable instanceof Order) {
-	    managerRepository.getOrderManager().lazyLoadTree((Order) transportable);
+	    // managerRepository.getOrderManager().lazyLoadTree((Order)
+	    // transportable);
 	    addAssemblyInfoToHeading(transportable, heading);
 
 	} else {
@@ -336,8 +350,9 @@ public abstract class AbstractTransportLetter implements TransportLetter {
     }
 
     private void addPostShipmentInfoToHeading(Transportable transportable, StringBuilder heading) {
-	PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil.getBean("postShipmentManager");
-	postShipmentManager.lazyLoadTree((PostShipment) transportable);
+	// PostShipmentManager postShipmentManager = (PostShipmentManager)
+	// ModelUtil.getBean("postShipmentManager");
+	// postShipmentManager.lazyLoadTree((PostShipment) transportable);
 
 	heading.append(POST_SHIPMNET_TEXT);
     }
@@ -693,6 +708,29 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 	    @Override
 	    public Object getValue(ReportObject reportObject, Integer colliCount) {
 		Transportable transportable = reportObject.getTransportable();
+		// if
+		// (!Hibernate.isInitialized(transportable.getTransportComments()))
+		// {
+		// if (transportable instanceof PostShipment) {
+		// PostShipmentManager postShipmentManager =
+		// (PostShipmentManager)
+		// ModelUtil.getBean("postShipmentManager");
+		// postShipmentManager.lazyLoad((PostShipment) transportable,
+		// new LazyLoadPostShipmentEnum[] {
+		// LazyLoadPostShipmentEnum.ORDER_COMMENTS });
+		// } else {
+		// OrderManager orderManager = (OrderManager)
+		// ModelUtil.getBean("orderManager");
+		//
+		// orderManager.lazyLoadOrder((Order) transportable, new
+		// LazyLoadOrderEnum[] { LazyLoadOrderEnum.COMMENTS });
+		//
+		// }
+		// }
+		if (transportable.getDeviation() != null && !Hibernate.isInitialized(transportable.getDeviation().getOrderComments())) {
+		    DeviationManager deviationManager = (DeviationManager) ModelUtil.getBean(DeviationManager.MANAGER_NAME);
+		    deviationManager.lazyLoad(transportable.getDeviation(), new LazyLoadDeviationEnum[] { LazyLoadDeviationEnum.COMMENTS });
+		}
 		return transportable.getTransportComments();
 	    }
 	},

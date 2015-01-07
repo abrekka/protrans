@@ -123,6 +123,12 @@
         column="PROCEDURE_CHECK"
         length="32"
     />
+    <property
+        name="csId"
+        type="java.lang.String"
+        column="CS_ID"
+        length="255"
+    />
 
     
     <!-- Associations -->

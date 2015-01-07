@@ -117,6 +117,7 @@ public class EditDeviationView extends AbstractEditView<DeviationModel, Deviatio
 
     private JTextField textFieldProjectNr;
     private JTextField textFieldDateClosed;
+    private JTextField textFieldCsId;
 
     /**
      * @param searchDialog
@@ -188,6 +189,8 @@ public class EditDeviationView extends AbstractEditView<DeviationModel, Deviatio
 	builder.add(dateChooserProcedureCheck, cc.xy(8, 13));
 	builder.addLabel("Lukket:", cc.xy(6, 15));
 	builder.add(textFieldDateClosed, cc.xy(8, 15));
+	builder.addLabel("CS-ID:", cc.xy(6, 17));
+	builder.add(textFieldCsId, cc.xy(8, 17));
 
 	return builder.getPanel();
     }
@@ -503,6 +506,8 @@ public class EditDeviationView extends AbstractEditView<DeviationModel, Deviatio
 	buttonEditComment = ((DeviationViewHandler) viewHandler).getButtonEditComment(window1, presentationModel);
 
 	textFieldDateClosed = ((DeviationViewHandler) viewHandler).getTextFieldDateClosed(presentationModel);
+
+	textFieldCsId = ((DeviationViewHandler) viewHandler).getTextFieldCsId(presentationModel);
     }
 
     /**

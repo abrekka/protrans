@@ -12,6 +12,7 @@ import no.ugland.utransprod.gui.model.TextPaneRendererCustTr;
 import no.ugland.utransprod.gui.model.TextPaneRendererTransport;
 import no.ugland.utransprod.gui.model.TextPaneRendererTransportSent;
 import no.ugland.utransprod.gui.model.Transportable;
+import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.Transport;
 import no.ugland.utransprod.service.OverviewManager;
 import no.ugland.utransprod.service.enums.LazyLoadEnum;
@@ -295,7 +296,16 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
 		    StatusCheckerInterface<Transportable> takstolChecker, StatusCheckerInterface<Transportable> steinChecker,
 		    StatusCheckerInterface<Transportable> gulvsponChecker) {
-		return transportable.getOrderComplete() != null ? "Ja" : "Nei";
+		try {
+		    List<OrderLine> missing = transportable.getMissingCollies();
+		    return missing != null && !missing.isEmpty() ? "Nei" : "Ja;";
+		} catch (Exception e) {
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
+		}
+		return null;
+		// return transportable.getOrderComplete() != null ? "Ja" :
+		// "Nei";
 	    }
 
 	    @Override
@@ -626,6 +636,31 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 	    public void setPrefferedWidth(JXTable table) {
 
 	    }
+	},
+	SENDT_FILTER("sendt filter", ForExcel.TABLE) {
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
+		    StatusCheckerInterface<Transportable> takstolChecker, StatusCheckerInterface<Transportable> steinChecker,
+		    StatusCheckerInterface<Transportable> gulvsponChecker) {
+		return transportable.getSentBool() ? "Ja" : "Nei";
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public void setCellRenderer(JXTable table) {
+		// TODO Auto-generated method stub
+
+	    }
+
+	    @Override
+	    public void setPrefferedWidth(JXTable table) {
+		// TODO Auto-generated method stub
+
+	    }
 	};
 	private String columnName;
 	private ForExcel isForExcel;
@@ -695,6 +730,26 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
      */
     public Object getValueAt(int rowIndex, int columnIndex) {
 	Transportable transportable = (Transportable) getRow(rowIndex);
+
+	// if (!Hibernate.isInitialized(transportable.getOrderLines())) {
+	// if (transportable instanceof PostShipment) {
+	// PostShipmentManager postShipmentManager = (PostShipmentManager)
+	// ModelUtil.getBean("postShipmentManager");
+	// postShipmentManager.lazyLoad((PostShipment) transportable, new
+	// LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_LINES,
+	// LazyLoadPostShipmentEnum.COLLIES,
+	// LazyLoadPostShipmentEnum.ORDER_COMMENTS });
+	// } else {
+	// OrderManager orderManager = (OrderManager)
+	// ModelUtil.getBean("orderManager");
+	//
+	// orderManager.lazyLoadOrder((Order) transportable, new
+	// LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES,
+	// LazyLoadOrderEnum.ORDER_LINE_ATTRIBUTES, LazyLoadOrderEnum.COLLIES,
+	// LazyLoadOrderEnum.COMMENTS });
+	//
+	// }
+	// }
 
 	Map<String, String> statusMap = Util.createStatusMap(transportable.getStatus());
 

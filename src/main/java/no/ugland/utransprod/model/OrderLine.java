@@ -21,6 +21,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.hibernate.Hibernate;
 
 import com.google.inject.internal.Sets;
 
@@ -455,7 +456,7 @@ public class OrderLine extends BaseObject implements Comparable<OrderLine>, IArt
 	    String attributeName = "Har " + articleName;
 	    returnValue = true;
 	    hasArticle = 1;
-	    if (orderLineAttributes != null) {
+	    if (orderLineAttributes != null && Hibernate.isInitialized(orderLineAttributes)) {
 		for (OrderLineAttribute orderLineAttribute : orderLineAttributes) {
 		    if (orderLineAttribute.getOrderLineAttributeName().equalsIgnoreCase(attributeName)) {
 			if (orderLineAttribute.getOrderLineAttributeValue().equalsIgnoreCase("Nei")) {

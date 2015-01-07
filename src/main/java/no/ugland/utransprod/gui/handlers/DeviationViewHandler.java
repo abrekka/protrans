@@ -344,6 +344,13 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	return textField;
     }
 
+    public JTextField getTextFieldCsId(PresentationModel presentationModel) {
+	JTextField textField = BasicComponentFactory.createTextField(presentationModel.getBufferedModel(DeviationModel.PROPERTY_CS_ID));
+	textField.setName("TextFieldCsId");
+	textField.setEnabled(true);
+	return textField;
+    }
+
     /**
      * Lager tekstfelt for id
      * 

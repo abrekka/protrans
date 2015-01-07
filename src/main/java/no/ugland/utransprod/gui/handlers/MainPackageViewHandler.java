@@ -2557,8 +2557,9 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 
 	    GulvsponPackageVManager gulvsponPackageVManager = (GulvsponPackageVManager) ModelUtil.getBean("gulvsponPackageVManager");
 	    AbstractProductionPackageViewHandler<no.ugland.utransprod.model.PackableListItem> packageViewHandler = new PackageViewHandler(login,
-		    managerRepository, deviationViewHandlerFactory, new GulvsponPackageApplyList(login, gulvsponPackageVManager, managerRepository),
-		    "Pakking av gulvspon", TableEnum.TABLEPACKAGEGULVSPON, ApplicationParamUtil.findParamByName("gulvspon_attributt"));
+		    managerRepository, deviationViewHandlerFactory, new GulvsponPackageApplyList(login, gulvsponPackageVManager, managerRepository,
+			    vismaFileCreator), "Pakking av gulvspon", TableEnum.TABLEPACKAGEGULVSPON,
+		    ApplicationParamUtil.findParamByName("gulvspon_attributt"));
 
 	    ApplyListView<no.ugland.utransprod.model.PackableListItem> applyListView = new ApplyListView<no.ugland.utransprod.model.PackableListItem>(
 		    packageViewHandler, true);

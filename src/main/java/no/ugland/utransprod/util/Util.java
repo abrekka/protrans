@@ -1081,17 +1081,18 @@ public final class Util {
 
 	addOrderLine(login, managerRepository, deviationViewHandlerFactory, map);
 
-	addGulvsponPackage(login, managerRepository, deviationViewHandlerFactory, map);
+	addGulvsponPackage(login, managerRepository, deviationViewHandlerFactory, map, vismaFileCreator);
 	return map;
     }
 
     @SuppressWarnings("unchecked")
     private static void addGulvsponPackage(final Login login, final ManagerRepository managerRepository,
-	    final DeviationViewHandlerFactory deviationViewHandlerFactory, final Map<String, AbstractProductionPackageViewHandler> map) {
+	    final DeviationViewHandlerFactory deviationViewHandlerFactory, final Map<String, AbstractProductionPackageViewHandler> map,
+	    VismaFileCreator vismaFileCreator) {
 	GulvsponPackageVManager gulvsponPackageVManager = (GulvsponPackageVManager) ModelUtil.getBean("gulvsponPackageVManager");
 
 	map.put("Gulvspon", (AbstractProductionPackageViewHandler) new PackageViewHandler(login, managerRepository, deviationViewHandlerFactory,
-		new GulvsponPackageApplyList(login, gulvsponPackageVManager, managerRepository), "Pakking av gulvspon",
+		new GulvsponPackageApplyList(login, gulvsponPackageVManager, managerRepository, vismaFileCreator), "Pakking av gulvspon",
 		TableEnum.TABLEPACKAGEGULVSPON, ApplicationParamUtil.findParamByName("gulvspon_attributt")));
     }
 

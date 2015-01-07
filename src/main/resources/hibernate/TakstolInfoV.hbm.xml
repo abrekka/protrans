@@ -262,6 +262,12 @@
         column="MAKS_HOYDE"
         length="32"
     />
+    <property
+        name="productionWeek"
+        type="java.lang.Integer"
+        column="PRODUCTION_WEEK"
+        length="50"
+    />
 
 </class>
 </hibernate-mapping>

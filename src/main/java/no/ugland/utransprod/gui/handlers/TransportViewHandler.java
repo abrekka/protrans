@@ -61,7 +61,6 @@ import no.ugland.utransprod.model.Supplier;
 import no.ugland.utransprod.model.Transport;
 import no.ugland.utransprod.service.CustTrManager;
 import no.ugland.utransprod.service.ManagerRepository;
-import no.ugland.utransprod.service.OrderManager;
 import no.ugland.utransprod.service.OverviewManager;
 import no.ugland.utransprod.service.PostShipmentManager;
 import no.ugland.utransprod.service.SupplierManager;
@@ -82,6 +81,7 @@ import no.ugland.utransprod.util.report.TransportLetterSelector;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.ColorHighlighter;
 import org.jdesktop.swingx.decorator.Filter;
@@ -438,13 +438,22 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		    if (status == null) {
 			needToSave = true;
 			if (!orderLoaded && transportable instanceof Order) {
-			    orderViewHandler.lazyLoadOrder((Order) transportable, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES,
-				    LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES, LazyLoadOrderEnum.COMMENTS });
+			    orderViewHandler.lazyLoadOrder((Order) transportable, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINE_ATTRIBUTES,
+				    LazyLoadOrderEnum.ORDER_LINES
+			    // LazyLoadOrderEnum.COLLIES,
+			    // LazyLoadOrderEnum.ORDER_LINES,
+			    // LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES,
+			    // LazyLoadOrderEnum.COMMENTS
+				    });
 			    orderLoaded = true;
 			} else if (!orderLoaded && transportable instanceof PostShipment) {
-			    postShipmentManager.lazyLoad((PostShipment) transportable, new LazyLoadPostShipmentEnum[] {
-				    LazyLoadPostShipmentEnum.COLLIES, LazyLoadPostShipmentEnum.ORDER_LINES,
-				    LazyLoadPostShipmentEnum.ORDER_LINE_ORDER_LINES, LazyLoadPostShipmentEnum.ORDER_COMMENTS });
+			    postShipmentManager.lazyLoad((PostShipment) transportable,
+				    new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_LINE_ORDER_LINES,
+				    // LazyLoadPostShipmentEnum.COLLIES,
+				    // LazyLoadPostShipmentEnum.ORDER_LINES,
+				    // LazyLoadPostShipmentEnum.ORDER_LINE_ORDER_LINES,
+				    // LazyLoadPostShipmentEnum.ORDER_COMMENTS
+				    });
 			    orderLoaded = true;
 			}
 			status = checker.getArticleStatus(transportable);
@@ -488,9 +497,12 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
     }
 
     @SuppressWarnings("unchecked")
-    private void updateTransportableList() {
-	lazyLoadTransport(((TransportModel) transportPresentationModel.getBean()).getObject(), new LazyLoadTransportEnum[] {
-		LazyLoadTransportEnum.ORDER, LazyLoadTransportEnum.POST_SHIPMENTS, });
+    private void updateTransportableList(boolean lazyload) {
+	if (lazyload) {
+
+	}
+	((TransportManager) overviewManager).lazyLoadTransport(((TransportModel) transportPresentationModel.getBean()).getObject(),
+		new LazyLoadTransportEnum[] { LazyLoadTransportEnum.ORDER, LazyLoadTransportEnum.POST_SHIPMENTS });
 	Set<Transportable> transportables = (Set<Transportable>) transportPresentationModel.getBufferedValue(TransportModel.PROPERTY_TRANSPORTABLES);
 	transportableList.clear();
 
@@ -526,7 +538,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
     @SuppressWarnings("unchecked")
     public JXTable getTableOrders(WindowInterface window, int numberOf, final ProductAreaGroup productAreaGroup) {
 	currentProductAreaGroup = productAreaGroup;
-	updateTransportableList();
+	updateTransportableList(false);
 
 	initOrders(transportableList, window);
 
@@ -578,6 +590,8 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	    tableOrders.setName(TableEnum.TABLETRANSPORTORDERS.getTableName());
 	}
 	PrefsUtil.setInvisibleColumns(currentProductAreaGroup.getProductAreaGroupName(), TableEnum.TABLETRANSPORTORDERS.getTableName(), tableOrders);
+	// tableOrders.getColumnExt(13).setVisible(false);
+
 	return tableOrders;
 
     }
@@ -612,9 +626,9 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	if (status != null || (handlingOrders && !ignoreHandlingOrders)) {
 	    return status;
 	}
-	if (!isLoaded) {
-	    loadTransportable(transportable);
-	}
+	// if (!isLoaded) {
+	// loadTransportable(transportable);
+	// }
 
 	status = checker.getArticleStatus(transportable);
 	statusMap.put(checker.getArticleName(), status);
@@ -638,17 +652,23 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
      * 
      * @param transportable
      */
-    private void loadTransportable(Transportable transportable) {
-
-	if (transportable instanceof Order) {
-	    orderViewHandler.lazyLoadOrder((Order) transportable, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.ORDER_COSTS,
-		    LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES });
-	} else {
-	    PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil.getBean("postShipmentManager");
-	    postShipmentManager.lazyLoad((PostShipment) transportable, new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.COLLIES,
-		    LazyLoadPostShipmentEnum.ORDER_LINES, LazyLoadPostShipmentEnum.ORDER_LINE_ORDER_LINES });
-	}
-    }
+    // private void loadTransportable(Transportable transportable) {
+    //
+    // if (transportable instanceof Order) {
+    // orderViewHandler.lazyLoadOrder((Order) transportable, new
+    // LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES,
+    // LazyLoadOrderEnum.ORDER_COSTS,
+    // LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES
+    // });
+    // } else {
+    // PostShipmentManager postShipmentManager = (PostShipmentManager)
+    // ModelUtil.getBean("postShipmentManager");
+    // postShipmentManager.lazyLoad((PostShipment) transportable, new
+    // LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.COLLIES,
+    // LazyLoadPostShipmentEnum.ORDER_LINES,
+    // LazyLoadPostShipmentEnum.ORDER_LINE_ORDER_LINES });
+    // }
+    // }
 
     /**
      * Cacher kommentarer
@@ -897,7 +917,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		((TransportModel) transportPresentationModel.getBean()).getObject().setSent(sentDate);
 		saveObject((TransportModel) transportPresentationModel.getBean(), window);
 
-		updateTransportableList();
+		updateTransportableList(true);
 	    } else {
 
 		Util.showErrorDialog((Component) null, "Feil", errorString);
@@ -1018,9 +1038,10 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
      * @param transport
      * @param enums
      */
-    public void lazyLoadTransport(Transport transport, LazyLoadTransportEnum[] enums) {
-	((TransportManager) overviewManager).lazyLoadTransport(transport, enums);
-    }
+    // public void lazyLoadTransport(Transport transport,
+    // LazyLoadTransportEnum[] enums) {
+    // ((TransportManager) overviewManager).lazyLoadTransport(transport, enums);
+    // }
 
     /**
      * Setter selektert order
@@ -1177,7 +1198,14 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	Set<Colli> collies;
 
 	for (TransportListable transportable : listTransportListable) {
-	    lazyLoadTransportable(postShipmentManager, transportable);
+	    // lazyLoadTransportable(postShipmentManager, transportable);
+	    if (!Hibernate.isInitialized(transportable.getCollies())) {
+		if (transportable instanceof Order) {
+		    orderViewHandler.lazyLoadOrder((Order) transportable, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES });
+		} else {
+		    postShipmentManager.lazyLoad((PostShipment) transportable, new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.COLLIES });
+		}
+	    }
 	    collies = transportable.getCollies();
 	    removeSentFromCollies(collies);
 
@@ -1221,17 +1249,24 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	}
     }
 
-    private void lazyLoadTransportable(PostShipmentManager postShipmentManager, TransportListable transportable) {
-	if (transportable instanceof Order) {
-	    orderViewHandler.lazyLoadOrder((Order) transportable, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.ORDER_LINES,
-		    LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES, LazyLoadOrderEnum.ORDER_COSTS, LazyLoadOrderEnum.POST_SHIPMENTS,
-		    LazyLoadOrderEnum.COMMENTS });
-	} else {
-	    postShipmentManager.lazyLoad((PostShipment) transportable, new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.COLLIES,
-		    LazyLoadPostShipmentEnum.ORDER_LINES, LazyLoadPostShipmentEnum.ORDER_LINE_ORDER_LINES,
-		    LazyLoadPostShipmentEnum.POST_SHIPMENT_REFS, LazyLoadPostShipmentEnum.ORDER_COMMENTS });
-	}
-    }
+    // private void lazyLoadTransportable(PostShipmentManager
+    // postShipmentManager, TransportListable transportable) {
+    // if (transportable instanceof Order) {
+    // orderViewHandler.lazyLoadOrder((Order) transportable, new
+    // LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES,
+    // LazyLoadOrderEnum.ORDER_LINES,
+    // LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES, LazyLoadOrderEnum.ORDER_COSTS,
+    // LazyLoadOrderEnum.POST_SHIPMENTS,
+    // LazyLoadOrderEnum.COMMENTS });
+    // } else {
+    // postShipmentManager.lazyLoad((PostShipment) transportable, new
+    // LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.COLLIES,
+    // LazyLoadPostShipmentEnum.ORDER_LINES,
+    // LazyLoadPostShipmentEnum.ORDER_LINE_ORDER_LINES,
+    // LazyLoadPostShipmentEnum.POST_SHIPMENT_REFS,
+    // LazyLoadPostShipmentEnum.ORDER_COMMENTS });
+    // }
+    // }
 
     private Date handleTransportSending(final WindowInterface window1, final List<TransportListable> listTransportable, final boolean sentTransport)
 	    throws ProTransException {
@@ -1307,17 +1342,21 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	int index = tableOrders.convertRowIndexToModel(transportableSelectionList.getSelectionIndex());
 	if (index != -1) {
 	    Transportable transportable = (Transportable) transportableSelectionList.getElementAt(index);
-	    if (transportable instanceof Order) {
-		Order order = (Order) transportable;
-
-		orderViewHandler.lazyLoadOrder(order, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.POST_SHIPMENTS, LazyLoadOrderEnum.COMMENTS,
-			LazyLoadOrderEnum.COLLIES });
-	    } else {
-		PostShipment postShipment = (PostShipment) transportable;
-
-		postShipmentManager.lazyLoad(postShipment, new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.POST_SHIPMENT_REFS,
-			LazyLoadPostShipmentEnum.ORDER_COMMENTS, LazyLoadPostShipmentEnum.COLLIES });
-	    }
+	    // if (transportable instanceof Order) {
+	    // Order order = (Order) transportable;
+	    //
+	    // orderViewHandler.lazyLoadOrder(order, new LazyLoadOrderEnum[] {
+	    // LazyLoadOrderEnum.POST_SHIPMENTS, LazyLoadOrderEnum.COMMENTS,
+	    // LazyLoadOrderEnum.COLLIES });
+	    // } else {
+	    // PostShipment postShipment = (PostShipment) transportable;
+	    //
+	    // postShipmentManager.lazyLoad(postShipment, new
+	    // LazyLoadPostShipmentEnum[] {
+	    // LazyLoadPostShipmentEnum.POST_SHIPMENT_REFS,
+	    // LazyLoadPostShipmentEnum.ORDER_COMMENTS,
+	    // LazyLoadPostShipmentEnum.COLLIES });
+	    // }
 	    if (transportable.getPostShipments() != null && transportable.getPostShipments().size() != 0) {
 		Util.showErrorDialog(window1, "Ordre har etterleveringer", "Kan ikke fjerne ordre som har etterleveringer.");
 		return;
@@ -1328,8 +1367,9 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	    if (transportable instanceof Order) {
 		Order order = (Order) transportable;
 
-		orderViewHandler.lazyLoadOrder(order, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.ORDER_LINES,
-			LazyLoadOrderEnum.ORDER_COSTS });
+		// orderViewHandler.lazyLoadOrder(order, new LazyLoadOrderEnum[]
+		// { LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.ORDER_LINES,
+		// LazyLoadOrderEnum.ORDER_COSTS });
 		Set<Colli> collies = order.getCollies();
 		removeSentFromCollies(collies);
 
@@ -1518,8 +1558,10 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		    splitOrderLine((OrderLine) object, postShipment);
 		}
 	    }
-	    postShipmentManager.lazyLoad(postShipment, new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_LINES,
-		    LazyLoadPostShipmentEnum.ORDER_LINE_ORDER_LINES });
+	    // postShipmentManager.lazyLoad(postShipment, new
+	    // LazyLoadPostShipmentEnum[] {
+	    // LazyLoadPostShipmentEnum.ORDER_LINES,
+	    // LazyLoadPostShipmentEnum.ORDER_LINE_ORDER_LINES });
 	    if (postShipment.isDonePackage()) {
 		postShipment.setPostShipmentReady(Util.getCurrentDate());
 	    }
@@ -1661,17 +1703,25 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
      */
     public static void showMissingColliesForTransportable(final Transportable transportable, final WindowInterface window) {
 	if (transportable != null) {
-	    if (transportable instanceof PostShipment) {
-		PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil.getBean("postShipmentManager");
-		postShipmentManager.lazyLoad((PostShipment) transportable, new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_LINES,
-			LazyLoadPostShipmentEnum.ORDER_LINE_ORDER_LINES, LazyLoadPostShipmentEnum.ORDER_COMMENTS, LazyLoadPostShipmentEnum.COLLIES });
-	    } else {
-		OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
-		orderManager.lazyLoadOrder((Order) transportable, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES,
-			LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES, LazyLoadOrderEnum.COMMENTS, LazyLoadOrderEnum.COLLIES,
-			LazyLoadOrderEnum.PROCENT_DONE });
-
-	    }
+	    // if (transportable instanceof PostShipment) {
+	    // PostShipmentManager postShipmentManager = (PostShipmentManager)
+	    // ModelUtil.getBean("postShipmentManager");
+	    // postShipmentManager.lazyLoad((PostShipment) transportable, new
+	    // LazyLoadPostShipmentEnum[] {
+	    // LazyLoadPostShipmentEnum.ORDER_LINES,
+	    // LazyLoadPostShipmentEnum.ORDER_LINE_ORDER_LINES,
+	    // LazyLoadPostShipmentEnum.ORDER_COMMENTS,
+	    // LazyLoadPostShipmentEnum.COLLIES });
+	    // } else {
+	    // OrderManager orderManager = (OrderManager)
+	    // ModelUtil.getBean("orderManager");
+	    // orderManager.lazyLoadOrder((Order) transportable, new
+	    // LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES,
+	    // LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES,
+	    // LazyLoadOrderEnum.COMMENTS, LazyLoadOrderEnum.COLLIES,
+	    // LazyLoadOrderEnum.PROCENT_DONE });
+	    //
+	    // }
 	    List<OrderLine> missing = transportable.getMissingCollies();
 	    if (missing != null) {
 		List<OrderLineWrapper> missingList = Util.getOrderLineWrapperList(missing);
@@ -1764,6 +1814,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	    Transportable transportable = getSelectedTransport(selectedIndex);
 
 	    if (transportable != null) {
+
 		TransportLetter transportLetter = TransportLetterSelector.valueOf(
 			StringUtils.upperCase(transportable.getProductAreaGroup().getProductAreaGroupName())).getTransportLetter(managerRepository);
 		transportLetter.generateTransportLetter(transportable, owner);
@@ -1824,8 +1875,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	if (tableOrders != null) {
 	    List<Filter> filters = new ArrayList<Filter>();
 	    if (sentFilter) {
-		Filter filter = new PatternFilter("Nei", Pattern.CASE_INSENSITIVE, tableOrders.getColumnExt(
-			TransportOrderTableModel.TransportColumn.SENDT.getColumnName()).getModelIndex());
+		Filter filter = new PatternFilter("Nei", Pattern.CASE_INSENSITIVE, 19);
 		filters.add(filter);
 	    }
 	    if (productAreaGroup != null) {

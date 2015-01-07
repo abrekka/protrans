@@ -39,110 +39,103 @@ import com.birosoft.liquid.LiquidLookAndFeel;
  */
 @Category(ManuellTest.class)
 public class GulvsponPackageApplyListTest extends PackageProductionTest {
-	static {
-		try {
+    static {
+	try {
 
-			UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
-			JFrame.setDefaultLookAndFeelDecorated(true);
-			LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+	    LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
+    }
 
-	private DialogFixture dialogFixture;
+    private DialogFixture dialogFixture;
 
-	@Before
-	public void setUp() throws Exception {
-		super.setUp();
+    @Before
+    public void setUp() throws Exception {
+	super.setUp();
 
-		GulvsponPackageVManager gulvsponPackageVManager = (GulvsponPackageVManager) ModelUtil
-				.getBean("gulvsponPackageVManager");
-		AbstractProductionPackageViewHandler<PackableListItem> packageViewHandler = new PackageViewHandler(
-				login, managerRepository, deviationViewHandlerFactory,
-				new GulvsponPackageApplyList(login, gulvsponPackageVManager,
-						managerRepository), "Pakking av gulvspon",
-				TableEnum.TABLEPACKAGEGULVSPON, "Gulvspon");
+	GulvsponPackageVManager gulvsponPackageVManager = (GulvsponPackageVManager) ModelUtil.getBean("gulvsponPackageVManager");
+	AbstractProductionPackageViewHandler<PackableListItem> packageViewHandler = new PackageViewHandler(login, managerRepository,
+		deviationViewHandlerFactory, new GulvsponPackageApplyList(login, gulvsponPackageVManager, managerRepository, null),
+		"Pakking av gulvspon", TableEnum.TABLEPACKAGEGULVSPON, "Gulvspon");
 
-		final ApplyListView<PackableListItem> applyListView = new ApplyListView<PackableListItem>(
-				packageViewHandler, true);
+	final ApplyListView<PackableListItem> applyListView = new ApplyListView<PackableListItem>(packageViewHandler, true);
 
-		JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
-			protected JDialog executeInEDT() {
-				JDialog dialog = new JDialog();
-				WindowInterface window = new JDialogAdapter(dialog);
-				dialog.add(applyListView.buildPanel(window));
-				dialog.pack();
-				return dialog;
-			}
-		});
-		dialogFixture = new DialogFixture(dialog);
-		dialogFixture.show();
+	JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
+	    protected JDialog executeInEDT() {
+		JDialog dialog = new JDialog();
+		WindowInterface window = new JDialogAdapter(dialog);
+		dialog.add(applyListView.buildPanel(window));
+		dialog.pack();
+		return dialog;
+	    }
+	});
+	dialogFixture = new DialogFixture(dialog);
+	dialogFixture.show();
 
+    }
+
+    @After
+    public void tearDown() throws Exception {
+	dialogFixture.cleanUp();
+    }
+
+    @Test
+    public void testSetApplied() {
+	dialogFixture.checkBox("CheckBoxFilter").uncheck();
+
+	JTableFixture tableFixture = dialogFixture.table(TableEnum.TABLEPACKAGEGULVSPON.getTableName());
+
+	tableFixture.cell(row(0).column(1)).click();
+
+	dialogFixture.button("ButtonApply").requireEnabled();
+	dialogFixture.button("ButtonUnapply").requireDisabled();
+
+	dialogFixture.button("ButtonApply").click();
+
+	tableFixture.cell(row(0).column(1)).click();
+
+	dialogFixture.button("ButtonApply").requireDisabled();
+	dialogFixture.button("ButtonUnapply").requireEnabled();
+    }
+
+    @Test
+    public void testSetStartPackage() {
+	dialogFixture.show(new Dimension(1000, 500));
+	dialogFixture.checkBox("CheckBoxFilter").uncheck();
+	dialogFixture.button("ButtonStart").requireDisabled();
+	dialogFixture.button("ButtonStart").requireText("Startet pakking");
+
+	dialogFixture.button("ButtonNotStart").requireDisabled();
+	dialogFixture.button("ButtonNotStart").requireText("Ikke startet pakking");
+
+	JTableFixture tableFixture = dialogFixture.table(TableEnum.TABLEPACKAGEGULVSPON.getTableName());
+
+	assertEquals("Startet", tableFixture.target.getColumnName(6));
+
+	tableFixture.cell(row(0).column(1)).click();
+
+	String content = tableFixture.cell(row(0).column(5)).value();
+
+	if (content.equalsIgnoreCase("---")) {
+	    dialogFixture.button("ButtonStart").requireEnabled();
+	    dialogFixture.button("ButtonStart").click();
+
+	    tableFixture.cell(row(0).column(1)).click();
+	    dialogFixture.button("ButtonStart").requireDisabled();
+	    dialogFixture.button("ButtonNotStart").requireEnabled();
+
+	} else {
+	    dialogFixture.button("ButtonNotStart").requireEnabled();
+	    dialogFixture.button("ButtonNotStart").click();
+	    dialogFixture.button("ButtonNotStart").requireDisabled();
+
+	    tableFixture.cell(row(0).column(1)).click();
+	    dialogFixture.button("ButtonNotStart").requireDisabled();
+	    dialogFixture.button("ButtonStart").requireEnabled();
 	}
-
-	@After
-	public void tearDown() throws Exception {
-		dialogFixture.cleanUp();
-	}
-
-	@Test
-	public void testSetApplied() {
-		dialogFixture.checkBox("CheckBoxFilter").uncheck();
-
-		JTableFixture tableFixture = dialogFixture
-				.table(TableEnum.TABLEPACKAGEGULVSPON.getTableName());
-
-		tableFixture.cell(row(0).column(1)).click();
-
-		dialogFixture.button("ButtonApply").requireEnabled();
-		dialogFixture.button("ButtonUnapply").requireDisabled();
-
-		dialogFixture.button("ButtonApply").click();
-
-		tableFixture.cell(row(0).column(1)).click();
-
-		dialogFixture.button("ButtonApply").requireDisabled();
-		dialogFixture.button("ButtonUnapply").requireEnabled();
-	}
-
-	@Test
-	public void testSetStartPackage() {
-		dialogFixture.show(new Dimension(1000, 500));
-		dialogFixture.checkBox("CheckBoxFilter").uncheck();
-		dialogFixture.button("ButtonStart").requireDisabled();
-		dialogFixture.button("ButtonStart").requireText("Startet pakking");
-
-		dialogFixture.button("ButtonNotStart").requireDisabled();
-		dialogFixture.button("ButtonNotStart").requireText(
-				"Ikke startet pakking");
-
-		JTableFixture tableFixture = dialogFixture
-				.table(TableEnum.TABLEPACKAGEGULVSPON.getTableName());
-
-		assertEquals("Startet", tableFixture.target.getColumnName(6));
-
-		tableFixture.cell(row(0).column(1)).click();
-
-		String content = tableFixture.cell(row(0).column(5)).value();
-
-		if (content.equalsIgnoreCase("---")) {
-			dialogFixture.button("ButtonStart").requireEnabled();
-			dialogFixture.button("ButtonStart").click();
-
-			tableFixture.cell(row(0).column(1)).click();
-			dialogFixture.button("ButtonStart").requireDisabled();
-			dialogFixture.button("ButtonNotStart").requireEnabled();
-
-		} else {
-			dialogFixture.button("ButtonNotStart").requireEnabled();
-			dialogFixture.button("ButtonNotStart").click();
-			dialogFixture.button("ButtonNotStart").requireDisabled();
-
-			tableFixture.cell(row(0).column(1)).click();
-			dialogFixture.button("ButtonNotStart").requireDisabled();
-			dialogFixture.button("ButtonStart").requireEnabled();
-		}
-	}
+    }
 }

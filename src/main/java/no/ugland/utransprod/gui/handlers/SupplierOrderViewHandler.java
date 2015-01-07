@@ -78,6 +78,8 @@ import org.jdesktop.swingx.decorator.HighlighterFactory;
 import org.jdesktop.swingx.decorator.PatternFilter;
 import org.jdesktop.swingx.decorator.PatternPredicate;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.internal.Lists;
@@ -793,11 +795,12 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 	    // managerRepository.getOrdlnManager().findForFakturagrunnlag(assembly.getOrder().getOrderNr());
 	    List<FakturagrunnlagV> fakturagrunnlag = managerRepository.getFakturagrunnlagVManager().findFakturagrunnlag(
 		    assembly.getOrder().getOrderId());
+	    List<FakturagrunnlagV> filtrertFakturagrunnlag = Lists.newArrayList(Iterables.filter(fakturagrunnlag, ikkeFraktMed001()));
 	    // AssemblyReport assemblyReport =
 	    // assemblyReportFactory.create(assembly.getOrder(),
 	    // vismaOrderLines);
 	    final CraningCostManager craningCostManager = (CraningCostManager) ModelUtil.getBean(CraningCostManager.MANAGER_NAME);
-	    AssemblyReportNy assemblyReport = new AssemblyReportNy(craningCostManager, assembly.getOrder(), fakturagrunnlag);
+	    AssemblyReportNy assemblyReport = new AssemblyReportNy(craningCostManager, assembly.getOrder(), filtrertFakturagrunnlag);
 
 	    mailConfig.addToHeading(" for ordrenummer " + assembly.getOrder().getOrderNr());
 
@@ -807,6 +810,16 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 	    reportViewer.generateProtransReportFromBeanAndShow(assemblyReportList, "Montering", ReportEnum.ASSEMBLY_NY, null, null, window, true);
 
 	}
+    }
+
+    private Predicate<FakturagrunnlagV> ikkeFraktMed001() {
+	return new Predicate<FakturagrunnlagV>() {
+
+	    public boolean apply(FakturagrunnlagV fakturagrunnlagV) {
+		return !(fakturagrunnlagV.getOrgPriceMont() != null && "FRAKT".equalsIgnoreCase(fakturagrunnlagV.getProdno()) && fakturagrunnlagV
+			.getOrgPriceMont().doubleValue() == 0.01);
+	    }
+	};
     }
 
     private class AddCommentAction extends AbstractAction {

@@ -98,6 +98,7 @@ public class DeviationModel extends AbstractModel<Deviation, DeviationModel> imp
     public static final String PROPERTY_PROCEDURE_CHECK = "procedureCheck";
     public static final String PROPERTY_DATE_CLOSED_STRING = "dateClosedString";
     public static final String PROPERTY_PROBABILITY = "probability";
+    public static final String PROPERTY_CS_ID = "csId";
 
     private final List<OrderComment> commentList;
 
@@ -689,6 +690,19 @@ public class DeviationModel extends AbstractModel<Deviation, DeviationModel> imp
 	String oldInitiated = getInitiatedBy();
 	object.setInitiatedBy(initiatedBy);
 	firePropertyChange(PROPERTY_INITIATED_BY, oldInitiated, initiatedBy);
+    }
+
+    public String getCsId() {
+	return object.getCsId();
+    }
+
+    /**
+     * @param initiatedBy
+     */
+    public void setCsId(String csId) {
+	String oldCsId = getCsId();
+	object.setCsId(csId);
+	firePropertyChange(PROPERTY_CS_ID, oldCsId, csId);
     }
 
     public String getProjectNr() {

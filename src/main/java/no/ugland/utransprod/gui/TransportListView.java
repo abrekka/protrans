@@ -13,27 +13,30 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 public class TransportListView {
-    
+
     private TransportWeekViewHandler transportWeekViewHandler;
     private JXTable tableTransportOrders;
-    public TransportListView(TransportWeekViewHandler viewHandler){
-        transportWeekViewHandler=viewHandler;
+    private WindowInterface window;
+
+    public TransportListView(TransportWeekViewHandler viewHandler, WindowInterface window) {
+	transportWeekViewHandler = viewHandler;
+	this.window = window;
     }
-    
-    public JPanel buildPanel(ProductAreaGroup productAreaGroup){
-        initComponents(productAreaGroup);
-        int tableSize = transportWeekViewHandler.getNumberOfOrders() * 35;
-        tableSize = tableSize<300?300:tableSize;
-        FormLayout layout = new FormLayout("max(310dlu;p)", "fill:" + tableSize + "dlu:grow");
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
-        
-        builder.add(new JScrollPane(tableTransportOrders),cc.xy(1, 1));
-        
-        return builder.getPanel();
+
+    public JPanel buildPanel(ProductAreaGroup productAreaGroup) {
+	initComponents(productAreaGroup);
+	int tableSize = transportWeekViewHandler.getNumberOfOrders() * 35;
+	tableSize = tableSize < 300 ? 300 : tableSize;
+	FormLayout layout = new FormLayout("max(310dlu;p)", "fill:p:grow");
+	PanelBuilder builder = new PanelBuilder(layout);
+	CellConstraints cc = new CellConstraints();
+
+	builder.add(new JScrollPane(tableTransportOrders), cc.xy(1, 1));
+
+	return builder.getPanel();
     }
-    
-    private void initComponents(ProductAreaGroup productAreaGroup){
-        tableTransportOrders = transportWeekViewHandler.getTableOrders(productAreaGroup);
+
+    private void initComponents(ProductAreaGroup productAreaGroup) {
+	tableTransportOrders = transportWeekViewHandler.getTableOrders(productAreaGroup, window);
     }
 }

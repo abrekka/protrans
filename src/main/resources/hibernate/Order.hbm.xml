@@ -350,7 +350,7 @@
 
     <set
         name="orderLines"
-        lazy="true"
+        lazy="false"
         inverse="true"
 		cascade="all-delete-orphan"
     >

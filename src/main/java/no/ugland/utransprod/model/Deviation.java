@@ -92,6 +92,8 @@ public class Deviation extends AbstractTransportable implements Articleable, IAs
     private String cachedComment;
     private Date procedureCheck;
 
+    private String csId;
+
     public static final Deviation UNKNOWN = new Deviation() {
 	private static final long serialVersionUID = 1L;
     };
@@ -1134,5 +1136,13 @@ public class Deviation extends AbstractTransportable implements Articleable, IAs
     public void setPackedByPack(String packedBy) {
 	// TODO Auto-generated method stub
 
+    }
+
+    public String getCsId() {
+	return csId;
+    }
+
+    public void setCsId(String csId) {
+	this.csId = csId;
     }
 }
