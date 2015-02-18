@@ -37,6 +37,10 @@ import no.ugland.utransprod.util.Util;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Hibernate;
 
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import com.google.inject.internal.Lists;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
@@ -101,7 +105,9 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 	    List<OrderLine> missing = transportable.getMissingCollies();
 	    ArrayListModel list = new ArrayListModel();
 
-	    Integer colliCount = prepareOrderLinesAndColliesAndGetNumberOfCollies(transportable, missing, list);
+	    String tilleggsordreOgEttersendinger = sjekkOmKundeHartilleggsordreEllerEttersendinger(transportable);
+
+	    Integer colliCount = prepareOrderLinesAndColliesAndGetNumberOfCollies(transportable, missing, list, tilleggsordreOgEttersendinger);
 
 	    reportViewer.generateProtransReport(new TransportLetterTableModel(list, colliCount), DIALOG_HEADING, ReportEnum.TRANSPORT_LETTER,
 		    parameters);
@@ -115,15 +121,79 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 	}
     }
 
-    private int prepareOrderLinesAndColliesAndGetNumberOfCollies(Transportable transportable, List<OrderLine> missing, ArrayListModel list) {
+    private String sjekkOmKundeHartilleggsordreEllerEttersendinger(Transportable transportable) {
+	List<Order> ikkeSendtForKunde = managerRepository.getOrderManager().findNotSentByCustomerNr(transportable.getCustomer().getCustomerNr());
+	ikkeSendtForKunde = Lists.newArrayList(Iterables.filter(ikkeSendtForKunde, utenGjeldendeOrdre(transportable.getOrderNr())));
+	String ordreNr = "";
+	if (!ikkeSendtForKunde.isEmpty()) {
+	    ordreNr = Joiner.on(",").join(Iterables.transform(ikkeSendtForKunde, tilOrdreNr()));
+	}
+
+	List<PostShipment> ettersendingerForKunde = managerRepository.getPostShipmentManager().findByCustomerNr(
+		transportable.getCustomer().getCustomerNr());
+
+	ettersendingerForKunde = Lists
+		.newArrayList(Iterables.filter(ettersendingerForKunde, ikkeSendtUtenGjeldende(transportable.getPostShipment())));
+	if (!ettersendingerForKunde.isEmpty()) {
+	    if (!ordreNr.isEmpty()) {
+		ordreNr = ordreNr + ",";
+	    }
+	    ordreNr = ordreNr + Joiner.on(",").join(Iterables.transform(ettersendingerForKunde, tilOrdreNrFraEttersending()));
+	}
+	if (!ordreNr.isEmpty()) {
+	    ordreNr = "Kunde har tillegsordre eller ettersendinger: " + ordreNr;
+	}
+	return ordreNr;
+    }
+
+    private Function<PostShipment, String> tilOrdreNrFraEttersending() {
+	return new Function<PostShipment, String>() {
+
+	    public String apply(PostShipment ettersending) {
+		return ettersending.getOrderNr() + "(ettersending)";
+	    }
+	};
+    }
+
+    private Predicate<PostShipment> ikkeSendtUtenGjeldende(final PostShipment postShipment) {
+	return new Predicate<PostShipment>() {
+
+	    public boolean apply(PostShipment ettersending) {
+		return postShipment != null ? !postShipment.getPostShipmentId().equals(ettersending.getPostShipmentId())
+			&& !ettersending.getSentBool() : !ettersending.getSentBool();
+	    }
+	};
+    }
+
+    private Function<Order, String> tilOrdreNr() {
+	return new Function<Order, String>() {
+
+	    public String apply(Order ordre) {
+		return ordre.getOrderNr();
+	    }
+	};
+    }
+
+    private Predicate<Order> utenGjeldendeOrdre(final String ordrenr) {
+	return new Predicate<Order>() {
+
+	    public boolean apply(Order order) {
+		return !ordrenr.equals(order.getOrderNr());
+	    }
+	};
+    }
+
+    private int prepareOrderLinesAndColliesAndGetNumberOfCollies(Transportable transportable, List<OrderLine> missing, ArrayListModel list,
+	    String tilleggsordre) {
 	int colliCount = 0;
 	for (int i = 1; i <= PAGES; i++) {
-	    colliCount = prepareOrdersAndCollies(transportable, missing, list, colliCount, i);
+	    colliCount = prepareOrdersAndCollies(transportable, missing, list, colliCount, i, tilleggsordre);
 	}
 	return colliCount;
     }
 
-    private int prepareOrdersAndCollies(Transportable transportable, List<OrderLine> missing, ArrayListModel list, int colliCount, int i) {
+    private int prepareOrdersAndCollies(Transportable transportable, List<OrderLine> missing, ArrayListModel list, int colliCount, int i,
+	    String tilleggsordre) {
 	Ord ord = managerRepository.getOrdlnManager().findOrdByOrderNr(transportable.getOrderNr());
 	Integer bestillingsnrFrakt = managerRepository.getFakturagrunnlagVManager().finnBestillingsnrFrakt(transportable.getOrder().getOrderId());
 	String customerRef = ord != null ? ord.getYrRef() : null;
@@ -132,17 +202,19 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 	if (!Hibernate.isInitialized(transportable.getCollies()) && Order.class.isInstance(transportable)) {
 	    managerRepository.getOrderManager().lazyLoadOrder((Order) transportable,
-		    new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.COMMENTS });
+		    new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.COMMENTS });
 	} else if (!Hibernate.isInitialized(transportable.getCollies()) && PostShipment.class.isInstance(transportable)) {
-	    managerRepository.getPostShipmentManager().lazyLoad((PostShipment) transportable,
-		    new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.COLLIES, LazyLoadPostShipmentEnum.ORDER_COMMENTS });
+	    managerRepository.getPostShipmentManager().lazyLoad(
+		    (PostShipment) transportable,
+		    new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_LINES, LazyLoadPostShipmentEnum.COLLIES,
+			    LazyLoadPostShipmentEnum.ORDER_COMMENTS });
 	}
 
-	list.addAll(prepareCollies(transportable.getCollies(), i, transportable, customerRef, bestillingsnrFrakt, taksteinkolliInfo));
+	list.addAll(prepareCollies(transportable.getCollies(), i, transportable, customerRef, bestillingsnrFrakt, taksteinkolliInfo, tilleggsordre));
 	if (i == 1) {
 	    colliCount = list.size();
 	}
-	list.addAll(prepareOrderLines(missing, i, transportable, customerRef, bestillingsnrFrakt, taksteinkolliInfo));
+	list.addAll(prepareOrderLines(missing, i, transportable, customerRef, bestillingsnrFrakt, taksteinkolliInfo, tilleggsordre));
 	return colliCount;
     }
 
@@ -194,19 +266,19 @@ public abstract class AbstractTransportLetter implements TransportLetter {
     }
 
     private List<ReportObject> prepareOrderLines(Collection<OrderLine> orderLineList, Integer pageNumber, Transportable transportable,
-	    String customerRef, Integer bestilingsnrFrakt, List<Taksteinkolli> taksteinkolliInfo) {
+	    String customerRef, Integer bestilingsnrFrakt, List<Taksteinkolli> taksteinkolliInfo, String tilleggsordre) {
 	ArrayList<ReportObject> orderLines = new ArrayList<ReportObject>();
 
 	if (orderLineList != null) {
 	    for (OrderLine orderLine : orderLineList) {
-		addOrderLine(pageNumber, transportable, orderLines, orderLine, customerRef, bestilingsnrFrakt, taksteinkolliInfo);
+		addOrderLine(pageNumber, transportable, orderLines, orderLine, customerRef, bestilingsnrFrakt, taksteinkolliInfo, tilleggsordre);
 	    }
 	}
 	return orderLines;
     }
 
     private void addOrderLine(Integer pageNumber, Transportable transportable, ArrayList<ReportObject> orderLines, OrderLine orderLine,
-	    String customerRef, Integer bestilingsnrFrakt, List<Taksteinkolli> taksteinkolliInfo) {
+	    String customerRef, Integer bestilingsnrFrakt, List<Taksteinkolli> taksteinkolliInfo, String tilleggsordre) {
 	if (isStone(orderLine)) {
 	    Ordln ordln = this.managerRepository.getOrdlnManager().findByOrdNoAndLnNo(orderLine.getOrdNo(), orderLine.getLnNo());
 	    if (ordln != null) {
@@ -214,7 +286,7 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 	    }
 	    lazyLoadAttributes(orderLine);
 	}
-	orderLines.add(new ReportObject(pageNumber, orderLine, transportable, customerRef, bestilingsnrFrakt, taksteinkolliInfo));
+	orderLines.add(new ReportObject(pageNumber, orderLine, transportable, customerRef, bestilingsnrFrakt, taksteinkolliInfo, tilleggsordre));
     }
 
     private boolean isStone(OrderLine orderLine) {
@@ -226,12 +298,12 @@ public abstract class AbstractTransportLetter implements TransportLetter {
     }
 
     private List<ReportObject> prepareCollies(Collection<Colli> colliList, Integer pageNumber, Transportable transportable, String customerRef,
-	    Integer bestillingsnrFrakt, List<Taksteinkolli> taksteinkolliInfo) {
+	    Integer bestillingsnrFrakt, List<Taksteinkolli> taksteinkolliInfo, String tilleggsordre) {
 	ArrayList<ReportObject> collies = new ArrayList<ReportObject>();
 	if (colliList != null) {
 	    for (Colli colli : colliList) {
 		if (!"Takstein".equalsIgnoreCase(colli.getColliName())) {
-		    addColli(pageNumber, transportable, collies, colli, customerRef, bestillingsnrFrakt, taksteinkolliInfo);
+		    addColli(pageNumber, transportable, collies, colli, customerRef, bestillingsnrFrakt, taksteinkolliInfo, tilleggsordre);
 		}
 	    }
 	}
@@ -239,11 +311,11 @@ public abstract class AbstractTransportLetter implements TransportLetter {
     }
 
     private void addColli(Integer pageNumber, Transportable transportable, ArrayList<ReportObject> collies, Colli colli, String customerRef,
-	    Integer bestillingsnrFrakt, List<Taksteinkolli> taksteinkolliInfo) {
+	    Integer bestillingsnrFrakt, List<Taksteinkolli> taksteinkolliInfo, String tilleggsordre) {
 	if (checkAndLazyLoadColli(colli)) {
 	    lazyLoadCollies(colli);
 
-	    collies.add(new ReportObject(pageNumber, colli, transportable, customerRef, bestillingsnrFrakt, taksteinkolliInfo));
+	    collies.add(new ReportObject(pageNumber, colli, transportable, customerRef, bestillingsnrFrakt, taksteinkolliInfo, tilleggsordre));
 	}
     }
 
@@ -372,6 +444,7 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 	private Integer bestillingsnrFrakt;
 	private List<Taksteinkolli> taksteinkolliInfo;
+	private String tilleggsordre;
 
 	/**
 	 * @param aPageNumber
@@ -379,7 +452,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 	 * @param aTransportable
 	 */
 	public ReportObject(Integer aPageNumber, TransportLetterObject transportLetterObject, Transportable aTransportable, String aCustomerRef,
-		Integer bestillingsnrFrakt, List<Taksteinkolli> taksteinkolliInfo) {
+		Integer bestillingsnrFrakt, List<Taksteinkolli> taksteinkolliInfo, String tilleggsordre) {
+	    this.tilleggsordre = tilleggsordre;
 	    this.taksteinkolliInfo = taksteinkolliInfo;
 	    customerRef = aCustomerRef;
 	    pageNumber = aPageNumber;
@@ -428,6 +502,10 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 	public Integer getBestillingsnrFrakt() {
 	    return bestillingsnrFrakt;
+	}
+
+	public String getTilleggsordre() {
+	    return tilleggsordre;
 	}
     }
 
@@ -731,7 +809,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 		    DeviationManager deviationManager = (DeviationManager) ModelUtil.getBean(DeviationManager.MANAGER_NAME);
 		    deviationManager.lazyLoad(transportable.getDeviation(), new LazyLoadDeviationEnum[] { LazyLoadDeviationEnum.COMMENTS });
 		}
-		return transportable.getTransportComments();
+		String comments = transportable.getTransportComments();
+		return comments == null ? reportObject.getTilleggsordre() : comments + " " + reportObject.getTilleggsordre();
 	    }
 	},
 	TELEPHONE_NR_SITE("telephone_nr_site") {

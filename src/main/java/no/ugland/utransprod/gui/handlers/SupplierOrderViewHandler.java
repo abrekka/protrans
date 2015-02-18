@@ -70,6 +70,7 @@ import no.ugland.utransprod.util.report.AssemblyReportNy;
 import no.ugland.utransprod.util.report.MailConfig;
 import no.ugland.utransprod.util.report.ReportViewer;
 
+import org.hibernate.Hibernate;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.ColorHighlighter;
 import org.jdesktop.swingx.decorator.Filter;
@@ -337,7 +338,9 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 		Util.setWaitCursor(window.getComponent());
 		if (assemblySelectionList.getSelection() != null) {
 		    int index = tableOrders.convertRowIndexToModel(assemblySelectionList.getSelectionIndex());
-		    openOrderView(((Assembly) assemblySelectionList.getElementAt(index)).getOrder(), window);
+		    Assembly assembly = (Assembly) assemblySelectionList.getElementAt(index);
+		    Order order = assembly.getOrder() == null ? assembly.getDeviation().getOrder() : assembly.getOrder();
+		    openOrderView(order, window);
 		}
 		Util.setDefaultCursor(window.getComponent());
 	    } else if (SwingUtilities.isRightMouseButton(e) && assemblySelectionList.getSelectionIndex() != -1) {
@@ -467,7 +470,9 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 	    }
 	} else {
 	    DeviationManager deviationManager = (DeviationManager) ModelUtil.getBean("deviationManager");
+	    deviation.setAssembly(null);
 	    deviationManager.saveDeviation(deviation);
+	    managerRepository.getAssemblyManager().removeObject(assembly);
 	    fireAsesemblyChanged();
 	}
 
@@ -788,21 +793,24 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 	Assembly assembly = (Assembly) assemblySelectionList.getElementAt(tableOrders.convertRowIndexToModel(assemblySelectionList
 		.getSelectionIndex()));
 	if (assembly != null) {
-	    managerRepository.getOrderManager().lazyLoadOrder(assembly.getOrder(),
+	    Order order = assembly.getOrder() == null ? assembly.getDeviation().getOrder() : assembly.getOrder();
+	    managerRepository.getOrderManager().lazyLoadOrder(order,
 		    new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_COSTS, LazyLoadOrderEnum.COMMENTS });
 
 	    // List<Ordln> vismaOrderLines =
 	    // managerRepository.getOrdlnManager().findForFakturagrunnlag(assembly.getOrder().getOrderNr());
-	    List<FakturagrunnlagV> fakturagrunnlag = managerRepository.getFakturagrunnlagVManager().findFakturagrunnlag(
-		    assembly.getOrder().getOrderId());
+
+	    Integer orderId = order == null ? assembly.getDeviation().getOrder().getOrderId() : order.getOrderId();
+	    List<FakturagrunnlagV> fakturagrunnlag = managerRepository.getFakturagrunnlagVManager().findFakturagrunnlag(orderId);
 	    List<FakturagrunnlagV> filtrertFakturagrunnlag = Lists.newArrayList(Iterables.filter(fakturagrunnlag, ikkeFraktMed001()));
 	    // AssemblyReport assemblyReport =
 	    // assemblyReportFactory.create(assembly.getOrder(),
 	    // vismaOrderLines);
 	    final CraningCostManager craningCostManager = (CraningCostManager) ModelUtil.getBean(CraningCostManager.MANAGER_NAME);
-	    AssemblyReportNy assemblyReport = new AssemblyReportNy(craningCostManager, assembly.getOrder(), filtrertFakturagrunnlag);
+	    AssemblyReportNy assemblyReport = new AssemblyReportNy(craningCostManager, order, filtrertFakturagrunnlag);
 
-	    mailConfig.addToHeading(" for ordrenummer " + assembly.getOrder().getOrderNr());
+	    String orderNr = order == null ? assembly.getDeviation().getOrderNr() : order.getOrderNr();
+	    mailConfig.addToHeading(" for ordrenummer " + orderNr);
 
 	    ReportViewer reportViewer = new ReportViewer("Montering", mailConfig);
 	    List<AssemblyReportNy> assemblyReportList = Lists.newArrayList();
@@ -868,7 +876,13 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
     void afterSaveObject(Assembly assembly, WindowInterface window) {
 	try {
 	    Order order = assembly.getOrder();
+	    if (order == null && assembly.getDeviation() != null) {
+		order = assembly.getDeviation().getOrder();
+	    }
 	    if (order != null) {
+		if (!Hibernate.isInitialized(order.getOrderComments())) {
+		    managerRepository.getOrderManager().lazyLoadOrder(order, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COMMENTS });
+		}
 		order.cacheComments();
 		orderViewHandler.getOrderManager().saveOrder(order);
 	    }

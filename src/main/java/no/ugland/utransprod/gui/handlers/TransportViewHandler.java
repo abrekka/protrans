@@ -447,12 +447,12 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 				    });
 			    orderLoaded = true;
 			} else if (!orderLoaded && transportable instanceof PostShipment) {
-			    postShipmentManager.lazyLoad((PostShipment) transportable,
-				    new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_LINE_ORDER_LINES,
-				    // LazyLoadPostShipmentEnum.COLLIES,
-				    // LazyLoadPostShipmentEnum.ORDER_LINES,
-				    // LazyLoadPostShipmentEnum.ORDER_LINE_ORDER_LINES,
-				    // LazyLoadPostShipmentEnum.ORDER_COMMENTS
+			    postShipmentManager.lazyLoad((PostShipment) transportable, new LazyLoadPostShipmentEnum[] {
+				    LazyLoadPostShipmentEnum.ORDER_LINES, LazyLoadPostShipmentEnum.ORDER_LINE_ORDER_LINES,
+			    // LazyLoadPostShipmentEnum.COLLIES,
+			    // LazyLoadPostShipmentEnum.ORDER_LINES,
+			    // LazyLoadPostShipmentEnum.ORDER_LINE_ORDER_LINES,
+			    // LazyLoadPostShipmentEnum.ORDER_COMMENTS
 				    });
 			    orderLoaded = true;
 			}
@@ -501,8 +501,11 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	if (lazyload) {
 
 	}
-	((TransportManager) overviewManager).lazyLoadTransport(((TransportModel) transportPresentationModel.getBean()).getObject(),
-		new LazyLoadTransportEnum[] { LazyLoadTransportEnum.ORDER, LazyLoadTransportEnum.POST_SHIPMENTS });
+	// ((TransportManager)
+	// overviewManager).lazyLoadTransport(((TransportModel)
+	// transportPresentationModel.getBean()).getObject(),
+	// new LazyLoadTransportEnum[] { LazyLoadTransportEnum.ORDER,
+	// LazyLoadTransportEnum.POST_SHIPMENTS });
 	Set<Transportable> transportables = (Set<Transportable>) transportPresentationModel.getBufferedValue(TransportModel.PROPERTY_TRANSPORTABLES);
 	transportableList.clear();
 
@@ -707,7 +710,8 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
     void cacheGarageColliHeight(Transportable transportable, WindowInterface window, boolean load) {
 	if (load) {
 	    OverviewManager<Object> manager = (OverviewManager<Object>) ModelUtil.getBean(transportable.getManagerName());
-	    manager.lazyLoad(transportable, new LazyLoadEnum[][] { { LazyLoadEnum.COLLIES, LazyLoadEnum.NONE } });
+	    manager.lazyLoad(transportable, new LazyLoadEnum[][] { { LazyLoadEnum.ORDER_LINES, LazyLoadEnum.NONE },
+		    { LazyLoadEnum.COLLIES, LazyLoadEnum.NONE } });
 	    transportable.cacheGarageColliHeight();
 	}
     }

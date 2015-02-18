@@ -57,7 +57,6 @@ import no.ugland.utransprod.service.PostShipmentManager;
 import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.service.enums.LazyLoadPostShipmentEnum;
-import no.ugland.utransprod.service.enums.LazyLoadTransportEnum;
 import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.OrderLineWrapper;
 import no.ugland.utransprod.util.PrefsUtil;
@@ -693,8 +692,9 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 	if (oldHandler != null) {
 	    oldHandler.removeTransportSelectionListener(this);
 	}
-	managerRepository.getTransportManager().lazyLoadTransport(transport,
-		new LazyLoadTransportEnum[] { LazyLoadTransportEnum.ORDER, LazyLoadTransportEnum.POST_SHIPMENTS });
+	// managerRepository.getTransportManager().lazyLoadTransport(transport,
+	// new LazyLoadTransportEnum[] { LazyLoadTransportEnum.ORDER,
+	// LazyLoadTransportEnum.POST_SHIPMENTS });
 	transportViewHandlers.put(transport, transportViewHandlerTmp);
 	transportViewHandlerTmp.addTransportSelectionListener(this);
 	TransportView transportView = new TransportView(transportViewHandlerTmp, transport);

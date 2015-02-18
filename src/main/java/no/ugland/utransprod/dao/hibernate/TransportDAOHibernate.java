@@ -16,10 +16,14 @@ import no.ugland.utransprod.util.Periode;
 import no.ugland.utransprod.util.Util;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateCallback;
+
+import com.google.inject.internal.Lists;
 
 /**
  * Implemntasjon av DAO for view TRANSPORT for hibernate.
@@ -193,7 +197,8 @@ public class TransportDAOHibernate extends BaseDAOHibernate<Transport> implement
 	    public Object doInHibernate(final Session session) {
 
 		return session.createCriteria(Transport.class).add(Restrictions.eq("transportYear", year))
-			.add(Restrictions.eq("transportWeek", week)).addOrder(org.hibernate.criterion.Order.asc("loadingDate"))
+			.add(Restrictions.eq("transportWeek", week)).setFetchMode("order.orderLines", FetchMode.JOIN)
+			.setFetchMode("postShipment.orderLines", FetchMode.JOIN).addOrder(org.hibernate.criterion.Order.asc("loadingDate"))
 			.addOrder(org.hibernate.criterion.Order.asc("loadTime")).list();
 	    }
 
@@ -255,7 +260,9 @@ public class TransportDAOHibernate extends BaseDAOHibernate<Transport> implement
 
     @SuppressWarnings("unchecked")
     final List<Transport> getTransportList(final Integer year, final Integer week, final ProductAreaGroup productAreaGroup, final Session session) {
-	String sql = "select transport from Transport transport " + "          where transport.transportYear=:year and "
+	String sql = "select transport from Transport transport " + " left outer join fetch transport.orders transportOrder "
+		+ "left outer join fetch transportOrder.orderLines " + " left outer join fetch transport.postShipments transportPostShipment "
+		+ "left outer join fetch transportPostShipment.orderLines " + "          where transport.transportYear=:year and "
 		+ "                  transport.transportWeek=:week and "
 		+ "       (exists(select 1 from Order customerOrder,ProductArea productArea "
 		+ "                             where customerOrder.transport=transport and "
@@ -267,9 +274,10 @@ public class TransportDAOHibernate extends BaseDAOHibernate<Transport> implement
 		+ "                               customerOrder.productArea=productArea and "
 		+ "                         productArea.productAreaGroup=:productAreaGroup))";
 
-	List<Transport> transportList = session.createQuery(sql).setParameter("productAreaGroup", productAreaGroup).setParameter("year", year)
-		.setParameter("week", week).list();
-	return transportList;
+	Query query = session.createQuery(sql).setParameter("productAreaGroup", productAreaGroup).setParameter("year", year)
+		.setParameter("week", week);
+	Set<Transport> transportList = com.google.common.collect.Sets.newHashSet(query.list());
+	return Lists.newArrayList(transportList);
     }
 
     @SuppressWarnings("unchecked")
@@ -277,7 +285,9 @@ public class TransportDAOHibernate extends BaseDAOHibernate<Transport> implement
 	return getHibernateTemplate().executeFind(new HibernateCallback() {
 
 	    public Object doInHibernate(final Session session) {
-		String sql = "select transport from Transport transport " + "       where transport.transportYear=:year and "
+		String sql = "select transport from Transport transport " + " left outer join fetch transport.orders transportOrder "
+			+ "left outer join fetch transportOrder.orderLines" + " left outer join fetch transport.postShipments transportPostShipment "
+			+ "left outer join fetch transportPostShipment.orderLines " + "       where transport.transportYear=:year and "
 			+ "               transport.transportWeek=:week and " + "               not exists(select 1 from Order customerOrder"
 			+ "                           where customerOrder.transport=transport) and "
 			+ "               not exists(select 1 from PostShipment postShipment "

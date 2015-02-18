@@ -137,6 +137,9 @@ public class SalesVManagerImpl implements SalesVManager {
 
 	for (SaleReportData sale : salesDataList) {
 	    // LOGGER.debug("getSalesMap - "+sale.getProbabilityEnum());
+	    if (sale.getOrderNr().equalsIgnoreCase("99695")) {
+		System.out.println("test");
+	    }
 	    sale.getProbabilityEnum().addToSalesReportMap(reportMap, sale, periode);
 	}
 	return reportMap;

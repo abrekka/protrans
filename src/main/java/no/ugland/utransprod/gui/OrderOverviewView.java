@@ -87,7 +87,7 @@ public class OrderOverviewView extends OverviewView<Order, OrderModel> {
      */
     @Override
     public final JComponent buildPanel(final WindowInterface window) {
-	initComponents(window);
+	// initComponents(window);
 	super.buildPanel(window);
 
 	FormLayout layout = new FormLayout("15dlu,50dlu,p,3dlu,70dlu," + viewHandler.getTableWidth() + ":grow,3dlu,p,15dlu",
