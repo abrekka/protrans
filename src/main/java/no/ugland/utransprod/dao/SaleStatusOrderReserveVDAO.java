@@ -5,6 +5,6 @@ import no.ugland.utransprod.model.SaleStatusOrderReserveV;
 
 public interface SaleStatusOrderReserveVDAO {
 
-	SaleStatusOrderReserveV findByProductArea(ProductArea productArea);
+    SaleStatusOrderReserveV findByProductArea(ProductArea productArea);
 
 }

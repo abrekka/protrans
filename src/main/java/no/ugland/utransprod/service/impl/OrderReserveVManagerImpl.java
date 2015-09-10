@@ -8,6 +8,7 @@ import no.ugland.utransprod.service.OrderReserveVManager;
 
 /**
  * Implementasjon av serviceklasse for view ORDER_RESERVE_V.
+ * 
  * @author atle.brekka
  */
 public class OrderReserveVManagerImpl implements OrderReserveVManager {
@@ -17,14 +18,14 @@ public class OrderReserveVManagerImpl implements OrderReserveVManager {
      * @param aDao
      */
     public final void setOrderReserveVDAO(final OrderReserveVDAO aDao) {
-        this.dao = aDao;
+	this.dao = aDao;
     }
 
     /**
      * @see no.ugland.utransprod.service.OrderReserveVManager#findByProductArea(java.lang.String)
      */
     public final List<OrderReserveV> findByProductArea(final String productArea) {
-        return dao.findByProductArea(productArea);
+	return dao.findByProductArea(productArea);
     }
 
 }

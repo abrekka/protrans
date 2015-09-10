@@ -19,112 +19,92 @@ import org.springframework.orm.hibernate3.HibernateCallback;
  * @author atle.brekka
  * 
  */
-public class VeggProductionVDAOHibernate extends
-		BaseDAOHibernate<VeggProductionV> implements VeggProductionVDAO {
+public class VeggProductionVDAOHibernate extends BaseDAOHibernate<VeggProductionV> implements VeggProductionVDAO {
 
-	/**
-	 * Konstruktør
-	 */
-	public VeggProductionVDAOHibernate() {
-		super(VeggProductionV.class);
-	}
+    /**
+     * Konstruktør
+     */
+    public VeggProductionVDAOHibernate() {
+	super(VeggProductionV.class);
+    }
 
-	/**
-	 * @see no.ugland.utransprod.dao.VeggProductionVDAO#findAll()
-	 */
-	@SuppressWarnings("unchecked")
-	public List<Produceable> findAll() {
-		return getHibernateTemplate()
-				.find(
-						"from VeggProductionV order by transportYear,transportWeek,loadingDate,transportDetails,loadTime");
-	}
+    /**
+     * @see no.ugland.utransprod.dao.VeggProductionVDAO#findAll()
+     */
+    @SuppressWarnings("unchecked")
+    public List<Produceable> findAll() {
+	return getHibernateTemplate().find("from VeggProductionV order by transportYear,transportWeek,loadingDate,transportDetails,loadTime");
+    }
 
-	/**
-	 * @see no.ugland.utransprod.dao.VeggProductionVDAO#findByOrderNr(java.lang.String)
-	 */
-	@SuppressWarnings("unchecked")
-	public List<Produceable> findByOrderNr(final String orderNr) {
-		return (List<Produceable>) getHibernateTemplate().execute(
-				new HibernateCallback() {
+    /**
+     * @see no.ugland.utransprod.dao.VeggProductionVDAO#findByOrderNr(java.lang.String)
+     */
+    @SuppressWarnings("unchecked")
+    public List<Produceable> findByOrderNr(final String orderNr) {
+	return (List<Produceable>) getHibernateTemplate().execute(new HibernateCallback() {
 
-					@SuppressWarnings("unchecked")
-					public Object doInHibernate(Session session)
-							throws HibernateException {
-						return session.createCriteria(VeggProductionV.class)
-								.add(Restrictions.eq("orderNr", orderNr))
-								.list();
-					}
+	    @SuppressWarnings("unchecked")
+	    public Object doInHibernate(Session session) throws HibernateException {
+		return session.createCriteria(VeggProductionV.class).add(Restrictions.eq("orderNr", orderNr)).list();
+	    }
 
-				});
-	}
+	});
+    }
 
-	/**
-	 * @see no.ugland.utransprod.dao.VeggProductionVDAO#refresh(no.ugland.utransprod.model.VeggProductionV)
-	 */
-	public void refresh(Produceable veggProductionV) {
-		getHibernateTemplate().flush();
-		getHibernateTemplate().load(veggProductionV,
-				veggProductionV.getOrderLineId());
+    /**
+     * @see no.ugland.utransprod.dao.VeggProductionVDAO#refresh(no.ugland.utransprod.model.VeggProductionV)
+     */
+    public void refresh(Produceable veggProductionV) {
+	getHibernateTemplate().flush();
+	getHibernateTemplate().load(veggProductionV, veggProductionV.getOrderNr());
 
-	}
+    }
 
-	/**
-	 * @see no.ugland.utransprod.dao.VeggProductionVDAO#findByCustomerNr(java.lang.Integer)
-	 */
-	@SuppressWarnings("unchecked")
-	public List<Produceable> findByCustomerNr(final Integer customerNr) {
-		return (List<Produceable>) getHibernateTemplate().execute(
-				new HibernateCallback() {
+    /**
+     * @see no.ugland.utransprod.dao.VeggProductionVDAO#findByCustomerNr(java.lang.Integer)
+     */
+    @SuppressWarnings("unchecked")
+    public List<Produceable> findByCustomerNr(final Integer customerNr) {
+	return (List<Produceable>) getHibernateTemplate().execute(new HibernateCallback() {
 
-					@SuppressWarnings("unchecked")
-					public Object doInHibernate(Session session)
-							throws HibernateException {
-						return session.createCriteria(VeggProductionV.class)
-								.add(Restrictions.eq("customerNr", customerNr))
-								.list();
-					}
+	    @SuppressWarnings("unchecked")
+	    public Object doInHibernate(Session session) throws HibernateException {
+		return session.createCriteria(VeggProductionV.class).add(Restrictions.eq("customerNr", customerNr)).list();
+	    }
 
-				});
-	}
+	});
+    }
 
-	public List<Produceable> findByCustomerNrAndProductAreaGroup(
-			final Integer customerNr, final ProductAreaGroup productAreaGroup) {
-		return (List<Produceable>) getHibernateTemplate().execute(
-				new HibernateCallback() {
+    public List<Produceable> findByCustomerNrAndProductAreaGroup(final Integer customerNr, final ProductAreaGroup productAreaGroup) {
+	return (List<Produceable>) getHibernateTemplate().execute(new HibernateCallback() {
 
-					@SuppressWarnings("unchecked")
-					public Object doInHibernate(Session session)
-							throws HibernateException {
-						Criteria criteria= session.createCriteria(VeggProductionV.class)
-								.add(Restrictions.eq("customerNr", customerNr));
-						
-						if(productAreaGroup!=null&&!productAreaGroup.getProductAreaGroupName().equalsIgnoreCase("Alle")){
-							criteria.add(Restrictions.eq("productAreaGroupName", productAreaGroup.getProductAreaGroupName()));
-						}
-						return criteria.list();
-					}
+	    @SuppressWarnings("unchecked")
+	    public Object doInHibernate(Session session) throws HibernateException {
+		Criteria criteria = session.createCriteria(VeggProductionV.class).add(Restrictions.eq("customerNr", customerNr));
 
-				});
-	}
+		if (productAreaGroup != null && !productAreaGroup.getProductAreaGroupName().equalsIgnoreCase("Alle")) {
+		    criteria.add(Restrictions.eq("productAreaGroupName", productAreaGroup.getProductAreaGroupName()));
+		}
+		return criteria.list();
+	    }
 
-	public List<Produceable> findByOrderNrAndProductAreaGroup(final String orderNr,
-			final ProductAreaGroup productAreaGroup) {
-		return (List<Produceable>) getHibernateTemplate().execute(
-				new HibernateCallback() {
+	});
+    }
 
-					@SuppressWarnings("unchecked")
-					public Object doInHibernate(Session session)
-							throws HibernateException {
-						Criteria criteria= session.createCriteria(VeggProductionV.class)
-								.add(Restrictions.eq("orderNr", orderNr));
-						
-						if(productAreaGroup!=null&&!productAreaGroup.getProductAreaGroupName().equalsIgnoreCase("Alle")){
-							criteria.add(Restrictions.eq("productAreaGroupName", productAreaGroup.getProductAreaGroupName()));
-						}
-						return criteria.list();
-					}
+    public List<Produceable> findByOrderNrAndProductAreaGroup(final String orderNr, final ProductAreaGroup productAreaGroup) {
+	return (List<Produceable>) getHibernateTemplate().execute(new HibernateCallback() {
 
-				});
-	}
+	    @SuppressWarnings("unchecked")
+	    public Object doInHibernate(Session session) throws HibernateException {
+		Criteria criteria = session.createCriteria(VeggProductionV.class).add(Restrictions.eq("orderNr", orderNr));
+
+		if (productAreaGroup != null && !productAreaGroup.getProductAreaGroupName().equalsIgnoreCase("Alle")) {
+		    criteria.add(Restrictions.eq("productAreaGroupName", productAreaGroup.getProductAreaGroupName()));
+		}
+		return criteria.list();
+	    }
+
+	});
+    }
 
 }

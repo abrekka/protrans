@@ -15,13 +15,11 @@ import no.ugland.utransprod.gui.Login;
 import no.ugland.utransprod.gui.WindowInterface;
 import no.ugland.utransprod.gui.model.ApplyListInterface;
 import no.ugland.utransprod.gui.model.Packable;
-import no.ugland.utransprod.gui.model.ProductAreaGroupModel;
 import no.ugland.utransprod.gui.model.ReportEnum;
 import no.ugland.utransprod.gui.model.TextPaneRendererOrder;
 import no.ugland.utransprod.gui.model.TextPaneStringRenderer;
 import no.ugland.utransprod.gui.model.Transportable;
 import no.ugland.utransprod.model.PackableListItem;
-import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.util.Util;
 
@@ -134,8 +132,7 @@ public class PackageViewHandler extends AbstractProductionPackageViewHandler<Pac
     @Override
     protected void searchOrder(String orderNr, String customerNr, WindowInterface window) {
 	try {
-	    List<PackableListItem> packables = applyListInterface.doSearch(orderNr, customerNr,
-		    (ProductAreaGroup) productAreaGroupModel.getValue((ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP)));
+	    List<PackableListItem> packables = applyListInterface.doSearch(orderNr, customerNr, null);
 	    objectSelectionList.clearSelection();
 	    PackableListItem packable = getSearchObject(window, packables);
 

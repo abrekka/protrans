@@ -171,7 +171,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
     private ArrayListModel constructionTypeList;
 
     private final PresentationModel presentationModelProductAreaGroup;
-    private ProductAreaGroup currentProductAreaGroup;
+    // private ProductAreaGroup currentProductAreaGroup;
 
     private AttachmentViewHandler attachmentViewHandler;
     private Login login;
@@ -663,7 +663,8 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	    setOrderLineDefault(order);
 	}
 	if (object.canChangeStatus()) {
-	    order.setStatus(null);
+	    setOrderstatus(order);
+	    // order.setStatus(null);
 
 	}
 
@@ -674,6 +675,107 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	    order.setRegistrationDate(Util.getCurrentDate());
 	}
 	order.cacheComments();
+    }
+
+    private void setOrderstatus(Order order) {
+	// PostShipmentManager postShipmentManager = (PostShipmentManager)
+	// ModelUtil.getBean(PostShipmentManager.MANAGER_NAME);
+	// CustTrManager custTrManager = (CustTrManager)
+	// ModelUtil.getBean(CustTrManager.MANAGER_NAME);
+	// OrdlnManager ordlnManager = (OrdlnManager)
+	// ModelUtil.getBean(OrdlnManager.MANAGER_NAME);
+	Map<String, StatusCheckerInterface<Transportable>> statusCheckers = Util.getStatusCheckersTransport(managerRepository);
+	Map<String, String> statusMap;
+	//
+	String status;
+	StatusCheckerInterface<Transportable> checker;
+	// boolean orderLoaded = false;
+	// boolean needToSave = false;
+	//
+	// transportable.setCustTrs(custTrManager.findByOrderNr(transportable.getOrder().getOrderNr()));
+	//
+	statusMap = Util.createStatusMap(order.getStatus());
+	for (String checkerName : statusCheckers.keySet()) {
+	    checker = statusCheckers.get(checkerName);
+	    // status = statusMap.get(checker.getArticleName());
+	    //
+	    // if (status == null) {
+	    // needToSave = true;
+	    // if (!orderLoaded && transportable instanceof Order) {
+	    // managerRepository.getOrderManager().lazyLoadOrder(order, new
+	    // LazyLoadOrderEnum[] {
+	    // LazyLoadOrderEnum.COLLIES,
+	    // LazyLoadOrderEnum.ORDER_LINES,
+	    // LazyLoadOrderEnum.ORDER_LINE_ATTRIBUTES,
+	    // LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES,
+	    // LazyLoadOrderEnum.COMMENTS,
+	    // LazyLoadOrderEnum.PROCENT_DONE
+	    // });
+	    // orderLoaded = true;
+	    // } else if (!orderLoaded && transportable instanceof PostShipment)
+	    // {
+	    // postShipmentManager.lazyLoad((PostShipment) transportable, new
+	    // LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.COLLIES,
+	    // LazyLoadPostShipmentEnum.ORDER_LINES,
+	    // LazyLoadPostShipmentEnum.ORDER_LINE_ORDER_LINES,
+	    // LazyLoadPostShipmentEnum.ORDER_COMMENTS });
+	    // orderLoaded = true;
+	    // }
+	    status = checker.getArticleStatus(order);
+	    //
+	    // }
+	    statusMap.put(checker.getArticleName(), status);
+	    //
+	    // }
+	    // if (!Hibernate.isInitialized(transportable.getOrderLines())) {
+	    // ((OrderManager) overviewManager).lazyLoadOrder((Order)
+	    // transportable, new
+	    // LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES,
+	    // LazyLoadOrderEnum.ORDER_LINES,
+	    // LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES,
+	    // LazyLoadOrderEnum.COMMENTS,
+	    // LazyLoadOrderEnum.PROCENT_DONE });
+	    // }
+	    // OrderLine takstol = transportable.getOrderLine("Takstoler");
+	    // if (takstol != null) {
+	    // Ordln ordln = ordlnManager.findByOrdNoAndLnNo(takstol.getOrdNo(),
+	    // takstol.getLnNo());
+	    // if (ordln != null && ordln.getPurcno() != null) {
+	    // Ord ord = ordlnManager.findByOrdNo(ordln.getPurcno());
+	    // if (ord != null) {
+	    // transportable.setTakstolKjopOrd(ord);
+	    // }
+	    // }
+	}
+	//
+	order.setStatus(Util.statusMapToString(statusMap));
+	//
+	// if (transportable.getComment() == null) {
+	// needToSave = true;
+	// cacheComment(transportable, window, !orderLoaded);
+	// orderLoaded = true;
+	// }
+	//
+	// if (needToSave) {
+	// if (transportable instanceof Order) {
+	// try {
+	// ((OrderManager) overviewManager).saveOrder((Order) transportable);
+	// } catch (ProTransException e) {
+	// Util.showErrorDialog(window, "Feil", e.getMessage());
+	// e.printStackTrace();
+	// }
+	// } else {
+	// postShipmentManager.savePostShipment((PostShipment) transportable);
+	// }
+	// }
+	// if (transportable instanceof Order &&
+	// !Hibernate.isInitialized(((Order)
+	// transportable).getProcentDones())) {
+	// ((OrderManager) overviewManager).lazyLoadOrder(((Order)
+	// transportable),
+	// new LazyLoadOrderEnum[] { LazyLoadOrderEnum.PROCENT_DONE });
+	// }
+
     }
 
     private void handleCustomer(final OrderModel object, final Order order) {
@@ -1621,8 +1723,8 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
      * 
      * @return liste
      */
-    public List<Supplier> getSupplierList(ProductAreaGroup productAreaGroup) {
-	return managerRepository.getSupplierManager().findActiveByTypeName("Montering", "postalCode", productAreaGroup);
+    public List<Supplier> getSupplierList() {
+	return managerRepository.getSupplierManager().findActiveByTypeName("Montering", "postalCode");
     }
 
     /**
@@ -2017,20 +2119,24 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
      * 
      * @param productAreaGroup
      */
-    public void handleFilter(ProductAreaGroup productAreaGroup, OrderPanelTypeEnum orderPanelType) {
+    public void handleFilter(OrderPanelTypeEnum orderPanelType) {
 	if (tableOrders != null) {
-	    currentProductAreaGroup = productAreaGroup;
-	    PrefsUtil.setInvisibleColumns(productAreaGroup.getProductAreaGroupName(), tableOrders.getName(), tableOrders);
-	    if (productAreaGroup != null && !productAreaGroup.getProductAreaGroupName().equalsIgnoreCase("Alle")) {
-
-		Filter[] filters = new Filter[] { new PatternFilter(productAreaGroup.getProductAreaGroupName(), Pattern.CASE_INSENSITIVE,
-			orderPanelType.getProductAreaGroupColumn()) };
-		FilterPipeline filterPipeline = new FilterPipeline(filters);
-		tableOrders.setFilters(filterPipeline);
-
-	    } else {
-		tableOrders.setFilters(null);
-	    }
+	    // currentProductAreaGroup = productAreaGroup;
+	    PrefsUtil.setInvisibleColumns(ProductAreaGroup.UNKNOWN.getProductAreaGroupName(), tableOrders.getName(), tableOrders);
+	    // if (productAreaGroup != null &&
+	    // !productAreaGroup.getProductAreaGroupName().equalsIgnoreCase("Alle"))
+	    // {
+	    //
+	    // Filter[] filters = new Filter[] { new
+	    // PatternFilter(productAreaGroup.getProductAreaGroupName(),
+	    // Pattern.CASE_INSENSITIVE,
+	    // orderPanelType.getProductAreaGroupColumn()) };
+	    // FilterPipeline filterPipeline = new FilterPipeline(filters);
+	    // tableOrders.setFilters(filterPipeline);
+	    //
+	    // } else {
+	    tableOrders.setFilters(null);
+	    // }
 
 	    tableOrders.repaint();
 	}
@@ -2059,10 +2165,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
     }
 
     public String getProductAreaGroupName() {
-	if (currentProductAreaGroup != null) {
-	    return currentProductAreaGroup.getProductAreaGroupName();
-	}
-	return null;
+	return ProductAreaGroup.UNKNOWN.getProductAreaGroupName();
     }
 
     public JTextField getTextFieldCuttingFile(PresentationModel presentationModel) {

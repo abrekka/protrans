@@ -13,39 +13,37 @@ import no.ugland.utransprod.model.TaksteinSkarpnesV;
  * 
  */
 public interface TaksteinSkarpnesVDAO extends DAO<TaksteinSkarpnesV> {
-	/**
-	 * Finner alle
-	 * 
-	 * @return takstein
-	 */
-	List<Produceable> findAll();
+    /**
+     * Finner alle
+     * 
+     * @return takstein
+     */
+    List<Produceable> findAll();
 
-	/**
-	 * Finner takstein som skal bestilles basert op ordrenummer
-	 * 
-	 * @param orderNr
-	 * @return vegg
-	 */
-	List<Produceable> findByOrderNr(String orderNr);
+    /**
+     * Finner takstein som skal bestilles basert op ordrenummer
+     * 
+     * @param orderNr
+     * @return vegg
+     */
+    List<Produceable> findByOrderNr(String orderNr);
 
-	/**
-	 * Oppdater objekt
-	 * 
-	 * @param taksteinSkarpnesV
-	 */
-	void refresh(Produceable taksteinSkarpnesV);
+    /**
+     * Oppdater objekt
+     * 
+     * @param taksteinSkarpnesV
+     */
+    void refresh(Produceable taksteinSkarpnesV);
 
-	/**
-	 * Finn basert på kundenummer
-	 * 
-	 * @param customerNr
-	 * @return taktol
-	 */
-	List<Produceable> findByCustomerNr(Integer customerNr);
+    /**
+     * Finn basert på kundenummer
+     * 
+     * @param customerNr
+     * @return taktol
+     */
+    List<Produceable> findByCustomerNr(Integer customerNr);
 
-	List<Produceable> findByCustomerNrAndProductAreaGroup(Integer customerNr,
-			ProductAreaGroup productAreaGroup);
+    List<Produceable> findByCustomerNrAndProductAreaGroup(Integer customerNr, ProductAreaGroup productAreaGroup);
 
-	List<Produceable> findByOrderNrAndProductAreaGroup(String orderNr,
-			ProductAreaGroup productAreaGroup);
+    List<Produceable> findByOrderNrAndProductAreaGroup(String orderNr, ProductAreaGroup productAreaGroup);
 }

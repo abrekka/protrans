@@ -12,41 +12,39 @@ import no.ugland.utransprod.model.ProductAreaGroup;
  * 
  */
 public interface PacklistVDAO extends DAO<PacklistV> {
-	String DAO_NAME = "packlistVDAO";
+    String DAO_NAME = "packlistVDAO";
 
-	/**
-	 * Finner alle
-	 * 
-	 * @return vegger
-	 */
-	List<PacklistV> findAll();
+    /**
+     * Finner alle
+     * 
+     * @return vegger
+     */
+    List<PacklistV> findAll();
 
-	/**
-	 * Finner basert på ordrenummer
-	 * 
-	 * @param orderNr
-	 * @return ordre
-	 */
-	List<PacklistV> findByOrderNr(String orderNr);
+    /**
+     * Finner basert på ordrenummer
+     * 
+     * @param orderNr
+     * @return ordre
+     */
+    List<PacklistV> findByOrderNr(String orderNr);
 
-	/**
-	 * Oppdater objekt
-	 * 
-	 * @param productionV
-	 */
-	void refresh(PacklistV productionV);
+    /**
+     * Oppdater objekt
+     * 
+     * @param productionV
+     */
+    void refresh(PacklistV productionV);
 
-	/**
-	 * Finner basert på kundenummer
-	 * 
-	 * @param customerNr
-	 * @return ordre
-	 */
-	List<PacklistV> findByCustomerNr(Integer customerNr);
+    /**
+     * Finner basert på kundenummer
+     * 
+     * @param customerNr
+     * @return ordre
+     */
+    List<PacklistV> findByCustomerNr(Integer customerNr);
 
-	List<PacklistV> findByCustomerNrAndProductAreaGroup(Integer customerNr,
-			ProductAreaGroup productAreaGroup);
+    List<PacklistV> findByCustomerNrAndProductAreaGroup(Integer customerNr, ProductAreaGroup productAreaGroup);
 
-	List<PacklistV> findByOrderNrAndProductAreaGroup(String orderNr,
-			ProductAreaGroup productAreaGroup);
+    List<PacklistV> findByOrderNrAndProductAreaGroup(String orderNr, ProductAreaGroup productAreaGroup);
 }

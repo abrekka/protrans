@@ -108,7 +108,7 @@ public class FrontProductionViewHandler extends ProductionViewHandler {
 		    "Prod.enhet", "Startet", "Reell tidsforbruk", "Gjort av" });
 	    window = aWindow;
 	    veggChecker = Util.getVeggChecker();
-	    initStatus(listModel);
+	    // initStatus(listModel);
 
 	}
 
@@ -168,7 +168,8 @@ public class FrontProductionViewHandler extends ProductionViewHandler {
 		return "";
 
 	    case 4:
-		return statusMap.get(veggChecker.getArticleName());
+		String veggstatus = statusMap.get(veggChecker.getArticleName());
+		return veggstatus == null ? "MANGLER" : veggstatus;
 	    case 5:
 
 		Date loadingDate = frontProductionV.getLoadingDate();

@@ -25,6 +25,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -41,6 +42,7 @@ import no.ugland.utransprod.gui.Login;
 import no.ugland.utransprod.gui.ProductAreaGroupProvider;
 import no.ugland.utransprod.gui.SentTransportView;
 import no.ugland.utransprod.gui.SplitOrderView;
+import no.ugland.utransprod.gui.TransportWeekView;
 import no.ugland.utransprod.gui.UBColumnControlPopup;
 import no.ugland.utransprod.gui.WindowInterface;
 import no.ugland.utransprod.gui.checker.StatusCheckerInterface;
@@ -51,7 +53,6 @@ import no.ugland.utransprod.gui.model.TransportModel;
 import no.ugland.utransprod.gui.model.TransportSelectionListener;
 import no.ugland.utransprod.gui.model.Transportable;
 import no.ugland.utransprod.model.Colli;
-import no.ugland.utransprod.model.CustTr;
 import no.ugland.utransprod.model.Deviation;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
@@ -59,8 +60,8 @@ import no.ugland.utransprod.model.PostShipment;
 import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.Supplier;
 import no.ugland.utransprod.model.Transport;
-import no.ugland.utransprod.service.CustTrManager;
 import no.ugland.utransprod.service.ManagerRepository;
+import no.ugland.utransprod.service.OrderManager;
 import no.ugland.utransprod.service.OverviewManager;
 import no.ugland.utransprod.service.PostShipmentManager;
 import no.ugland.utransprod.service.SupplierManager;
@@ -76,6 +77,7 @@ import no.ugland.utransprod.util.PrefsUtil;
 import no.ugland.utransprod.util.Threadable;
 import no.ugland.utransprod.util.UserUtil;
 import no.ugland.utransprod.util.Util;
+import no.ugland.utransprod.util.YearWeek;
 import no.ugland.utransprod.util.report.TransportLetter;
 import no.ugland.utransprod.util.report.TransportLetterSelector;
 
@@ -137,6 +139,8 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
     private JMenuItem menuItemRemoveTransport;
 
     private JMenuItem menuItemSetSent;
+    private JMenuItem menuItemSetTransportOrder;
+    private JMenuItem menuItemUpdateStatus;
 
     private JMenuItem menuItemMissing;
 
@@ -156,7 +160,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 
     private ArrayListModel transportEmployeeList;
 
-    private ProductAreaGroup currentProductAreaGroup;
+    // private ProductAreaGroup currentProductAreaGroup;
 
     private static boolean isTest = false;
 
@@ -196,7 +200,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
     private void setupTransportSupplierList() {
 	if (transportSupplierList == null) {
 
-	    transportSupplierList = new ArrayListModel(managerRepository.getSupplierManager().findActiveByTypeName("Transport", "supplierName", null));
+	    transportSupplierList = new ArrayListModel(managerRepository.getSupplierManager().findActiveByTypeName("Transport", "supplierName"));
 	}
     }
 
@@ -207,6 +211,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	menuItemRemoveTransport.setName("MenuItemRemoveTransport");
 	menuItemRemoveTransport.setEnabled(hasWriteAccess());
 	menuItemSetSent = new JMenuItem("Sett sent");
+	menuItemUpdateStatus = new JMenuItem("Oppdater status");
 	menuItemSetSent.setEnabled(hasWriteAccess());
 	menuItemSetSent.setName("MenuItemSetSent");
 	menuItemMissing = new JMenuItem("Se mangler...");
@@ -222,12 +227,16 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	menuItemShowTakstolInfo = new JMenuItem("Takstolinfo...");
 	menuItemShowTakstolInfo.setName("MenuItemShowTakstolInfo");
 
+	menuItemSetTransportOrder = new JMenuItem("Endre transport...");
+
 	popupMenuTransport.add(menuItemRemoveTransport);
 	popupMenuTransport.add(menuItemSetSent);
 	popupMenuTransport.add(menuItemMissing);
 	popupMenuTransport.add(menuItemReport);
 	popupMenuTransport.add(menuItemSplitOrder);
 	popupMenuTransport.add(menuItemShowTakstolInfo);
+	popupMenuTransport.add(menuItemUpdateStatus);
+	popupMenuTransport.add(menuItemSetTransportOrder);
 
 	menuItemRemoveTransport.setEnabled(hasWriteAccess());
     }
@@ -415,7 +424,8 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
     private void initOrders(List<Transportable> transportables, WindowInterface window) {
 	if (transportables != null) {
 	    PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil.getBean("postShipmentManager");
-	    CustTrManager custTrManager = (CustTrManager) ModelUtil.getBean("custTrManager");
+	    // CustTrManager custTrManager = (CustTrManager)
+	    // ModelUtil.getBean("custTrManager");
 	    Set<String> checkers = statusCheckers.keySet();
 	    Map<String, String> statusMap;
 
@@ -425,9 +435,10 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	    boolean needToSave = false;
 
 	    for (Transportable transportable : transportables) {
-		List<CustTr> custTrs = custTrManager.findByOrderNr(transportable.getOrder().getOrderNr());
+		// List<CustTr> custTrs =
+		// custTrManager.findByOrderNr(transportable.getOrder().getOrderNr());
 
-		transportable.setCustTrs(custTrs);
+		// transportable.setCustTrs(custTrs);
 		orderLoaded = false;
 		needToSave = false;
 		statusMap = Util.createStatusMap(transportable.getStatus());
@@ -469,16 +480,16 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		    cacheComment(transportable, window, !orderLoaded);
 		    orderLoaded = true;
 		}
-		if (transportable.getGarageColliHeight() == null) {
-		    needToSave = true;
-		    cacheGarageColliHeight(transportable, window, !orderLoaded);
-		    orderLoaded = true;
-		}
-		if (transportable.getTakstolHeight() == null) {
-		    needToSave = true;
-		    cacheTakstolHeight(transportable, window, !orderLoaded);
-		    orderLoaded = true;
-		}
+		// if (transportable.getGarageColliHeight() == null) {
+		// needToSave = true;
+		// cacheGarageColliHeight(transportable, window, !orderLoaded);
+		// orderLoaded = true;
+		// }
+		// if (transportable.getTakstolHeight() == null) {
+		// needToSave = true;
+		// cacheTakstolHeight(transportable, window, !orderLoaded);
+		// orderLoaded = true;
+		// }
 
 		if (needToSave) {
 		    if (transportable instanceof Order) {
@@ -499,13 +510,11 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
     @SuppressWarnings("unchecked")
     private void updateTransportableList(boolean lazyload) {
 	if (lazyload) {
-
+	    ((TransportManager) overviewManager).lazyLoadTransport(((TransportModel) transportPresentationModel.getBean()).getObject(),
+		    new LazyLoadTransportEnum[] { LazyLoadTransportEnum.ORDER, LazyLoadTransportEnum.POST_SHIPMENTS,
+			    LazyLoadTransportEnum.ORDER_LINES });
 	}
-	// ((TransportManager)
-	// overviewManager).lazyLoadTransport(((TransportModel)
-	// transportPresentationModel.getBean()).getObject(),
-	// new LazyLoadTransportEnum[] { LazyLoadTransportEnum.ORDER,
-	// LazyLoadTransportEnum.POST_SHIPMENTS });
+
 	Set<Transportable> transportables = (Set<Transportable>) transportPresentationModel.getBufferedValue(TransportModel.PROPERTY_TRANSPORTABLES);
 	transportableList.clear();
 
@@ -539,11 +548,17 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
      * @return tabell
      */
     @SuppressWarnings("unchecked")
-    public JXTable getTableOrders(WindowInterface window, int numberOf, final ProductAreaGroup productAreaGroup) {
-	currentProductAreaGroup = productAreaGroup;
+    public JXTable getTableOrders(WindowInterface window, int numberOf, TransportWeekViewHandler transportWeekViewHandler,
+	    TransportWeekView transportWeekView) {// ,
+	// final
+	// ProductAreaGroup
+	// productAreaGroup)
+	// {
+	// currentProductAreaGroup = productAreaGroup;
 	updateTransportableList(false);
 
-	initOrders(transportableList, window);
+	/************************** prøver å fjerne denne ***********************/
+	// initOrders(transportableList, window);
 
 	tableOrders = new JXTable();
 	transportOrderTableModel = new TransportOrderTableModel(transportableSelectionList, transportableList, getGavlChecker(), getTakstolChecker(),
@@ -585,21 +600,21 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	tableOrders.getColumnModel().getColumn(2).setCellRenderer(renderer);
 	tableOrders.setDefaultRenderer(String.class, renderer);
 
-	addMenuListeners(window);
+	addMenuListeners(window, transportWeekViewHandler, transportWeekView);
 
 	if (isTest) {
 	    tableOrders.setName(TableEnum.TABLETRANSPORTORDERS.getTableName() + numberOf);
 	} else {
 	    tableOrders.setName(TableEnum.TABLETRANSPORTORDERS.getTableName());
 	}
-	PrefsUtil.setInvisibleColumns(currentProductAreaGroup.getProductAreaGroupName(), TableEnum.TABLETRANSPORTORDERS.getTableName(), tableOrders);
+	PrefsUtil.setInvisibleColumns(ProductAreaGroup.UNKNOWN.getProductAreaGroupName(), TableEnum.TABLETRANSPORTORDERS.getTableName(), tableOrders);
 	// tableOrders.getColumnExt(13).setVisible(false);
 
 	return tableOrders;
 
     }
 
-    private void addMenuListeners(WindowInterface window1) {
+    private void addMenuListeners(WindowInterface window1, TransportWeekViewHandler transportWeekViewHandler, TransportWeekView transportWeekView) {
 	menuItemMissing.addActionListener(new MenuItemListenerMissing(window1));
 	menuItemReport.addActionListener(new MenuItemListenerReport(window1));
 	menuItemPacklist.addActionListener(new MenuItemListenerPacklist(window1));
@@ -609,6 +624,113 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	menuItemSplitOrder.addActionListener(new MenuItemListenerSplitOrder(window1));
 	menuItemShowDeviation.addActionListener(new MenuItemListenerShowDeviation(window1));
 	menuItemShowTakstolInfo.addActionListener(showTakstolInfoActionFactory.create(this, window1));
+
+	menuItemUpdateStatus.addActionListener(new MenuItemListenerUpdateStatus(window1));
+	menuItemSetTransportOrder.addActionListener(new MenuItemListenerOrder(window, transportWeekViewHandler, transportWeekView));
+    }
+
+    private class MenuItemListenerOrder implements ActionListener {
+	/**
+            *
+            */
+	private WindowInterface window;
+	private TransportWeekViewHandler transportWeekViewHandler;
+	private TransportWeekView transportWeekView;
+
+	/**
+	 * @param aWindow
+	 */
+	public MenuItemListenerOrder(WindowInterface aWindow, TransportWeekViewHandler transportWeekViewHandler, TransportWeekView transportWeekView) {
+	    window = aWindow;
+	    this.transportWeekViewHandler = transportWeekViewHandler;
+	    this.transportWeekView = transportWeekView;
+	}
+
+	/**
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void actionPerformed(ActionEvent actionEvent) {
+	    if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemSetTransportOrder.getText())) {
+		Util.setWaitCursor(window);
+		setTransport(false, window, transportWeekViewHandler);
+		transportWeekView.changeWeek(null);
+		Util.setDefaultCursor(window);
+	    }
+
+	}
+
+    }
+
+    void setTransport(final boolean setPostShipment, final WindowInterface window, TransportWeekViewHandler transportWeekViewHandler) {
+	int index = tableOrders.convertRowIndexToModel(transportableSelectionList.getSelectionIndex());
+	if (index != -1) {
+	    Transport transport = getTransport(window, transportWeekViewHandler);
+	    Transportable transportable = (Transportable) transportableSelectionList.getElementAt(index);
+
+	    if (transport != Transport.UNKNOWN && !transportIsSent(transport, window) && isWeekValid(transport, window)
+		    && isAssemblyValid(transportable, transport, window)) {
+		setTransportForTransportable(transportable, transport, window,
+		// getTransportableList(setPostShipment),
+		// getSelectionIndex(setPostShipment),
+			transportWeekViewHandler);
+	    }
+	}
+
+    }
+
+    private void setTransportForTransportable(final Transportable transportable, final Transport transport, final WindowInterface window,
+    // final List<Transportable> transportableList,
+    // final int index,
+	    TransportWeekViewHandler transportWeekViewHandler) {
+	try {
+	    OverviewManager<Object> manager = (OverviewManager<Object>) ModelUtil.getBean(transportable.getManagerName());
+	    manager.refreshObject(transportable);
+	    transportable.setTransport(transport);
+	    manager.saveObject(transportable);
+	    manager.lazyLoad(transportable, new LazyLoadEnum[][] { { LazyLoadEnum.ORDER_COMMENTS, LazyLoadEnum.NONE },
+		    { LazyLoadEnum.COLLIES, LazyLoadEnum.NONE } });
+
+	    TransportViewHandler transportViewHandler = transportWeekViewHandler.getTransportViewHandler(transport);
+	    ((TransportOrderTableModel) transportViewHandler.getTableModel(window)).insertRow(0, transportable);
+	    // transportableList.remove(index);
+	    Order order = transportable.getOrder();
+	    managerRepository.getOrderManager().lazyLoad(order, new LazyLoadEnum[][] { { LazyLoadEnum.ORDER_LINES, LazyLoadEnum.NONE } });
+	    vismaFileCreator.createVismaFileForTransport(order);
+	} catch (ProTransException e) {
+	    throw new ProTransRuntimeException(e.getMessage());
+	}
+    }
+
+    private boolean isAssemblyValid(final Transportable transportable, final Transport transport, final WindowInterface window) {
+	boolean assemblyValid = transportable.getAssembly() == null ? true : !transport.isAfter(new YearWeek(transportable.getAssembly()
+		.getAssemblyYear(), transportable.getAssembly().getAssemblyWeek()));
+	if (!assemblyValid) {
+	    Util.showErrorDialog(window, "Feil", "Kan ikke sette transport etter montering");
+	}
+	return assemblyValid;
+    }
+
+    private boolean isWeekValid(final Transport transport, final WindowInterface window) {
+	boolean weekValid = !Util.isAfter(new YearWeek(Util.getCurrentYear(), Util.getCurrentWeek()), new YearWeek(transport.getTransportYear(),
+		transport.getTransportWeek()));
+	weekValid = !weekValid ? Util.showConfirmDialog(window.getComponent(), "Gammel uke",
+		"Du prøver å sette transport til en gammel uke, ønsker du å gjøre dette?") : true;
+	return weekValid;
+    }
+
+    private boolean transportIsSent(final Transport transport, final WindowInterface window) {
+	boolean isSent = transport.getSent() != null;
+	if (isSent) {
+	    Util.showErrorDialog(window, "Feil", "Kan ikke tilordre en transport som allerede er sendt!");
+	}
+	return isSent;
+    }
+
+    private Transport getTransport(final WindowInterface window, TransportWeekViewHandler transportWeekViewHandler) {
+	List<Transport> transportList = transportWeekViewHandler.getTransportList();
+	Transport transport = (Transport) JOptionPane.showInputDialog(window.getComponent(), "Velg transport", "Transport",
+		JOptionPane.OK_CANCEL_OPTION, null, transportList.toArray(), null);
+	return transport == null ? Transport.UNKNOWN : transport;
     }
 
     /**
@@ -1346,21 +1468,17 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	int index = tableOrders.convertRowIndexToModel(transportableSelectionList.getSelectionIndex());
 	if (index != -1) {
 	    Transportable transportable = (Transportable) transportableSelectionList.getElementAt(index);
-	    // if (transportable instanceof Order) {
-	    // Order order = (Order) transportable;
-	    //
-	    // orderViewHandler.lazyLoadOrder(order, new LazyLoadOrderEnum[] {
-	    // LazyLoadOrderEnum.POST_SHIPMENTS, LazyLoadOrderEnum.COMMENTS,
-	    // LazyLoadOrderEnum.COLLIES });
-	    // } else {
-	    // PostShipment postShipment = (PostShipment) transportable;
-	    //
-	    // postShipmentManager.lazyLoad(postShipment, new
-	    // LazyLoadPostShipmentEnum[] {
-	    // LazyLoadPostShipmentEnum.POST_SHIPMENT_REFS,
-	    // LazyLoadPostShipmentEnum.ORDER_COMMENTS,
-	    // LazyLoadPostShipmentEnum.COLLIES });
-	    // }
+	    if (transportable instanceof Order) {
+		Order order = (Order) transportable;
+
+		orderViewHandler.lazyLoadOrder(order, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.POST_SHIPMENTS, LazyLoadOrderEnum.COMMENTS,
+			LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.ORDER_LINES });
+	    } else {
+		PostShipment postShipment = (PostShipment) transportable;
+
+		postShipmentManager.lazyLoad(postShipment, new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.POST_SHIPMENT_REFS,
+			LazyLoadPostShipmentEnum.ORDER_COMMENTS, LazyLoadPostShipmentEnum.COLLIES, LazyLoadPostShipmentEnum.ORDER_LINES });
+	    }
 	    if (transportable.getPostShipments() != null && transportable.getPostShipments().size() != 0) {
 		Util.showErrorDialog(window1, "Ordre har etterleveringer", "Kan ikke fjerne ordre som har etterleveringer.");
 		return;
@@ -1524,6 +1642,70 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	    Util.setDefaultCursor(window1);
 	}
 
+    }
+
+    class MenuItemListenerUpdateStatus implements ActionListener {
+	private WindowInterface window1;
+
+	/**
+	 * @param aWindow
+	 */
+	public MenuItemListenerUpdateStatus(WindowInterface aWindow) {
+	    window1 = aWindow;
+	}
+
+	/**
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void actionPerformed(ActionEvent actionEvent) {
+	    Util.setWaitCursor(window1);
+	    Transportable transportable = (Transportable) transportableSelectionList.getElementAt(tableOrders
+		    .convertRowIndexToModel(transportableSelectionList.getSelectionIndex()));
+	    Order order = transportable.getOrder();
+	    updateOrderStatus(order);
+	    Util.setDefaultCursor(window1);
+	}
+
+    }
+
+    private void updateOrderStatus(Order order) {
+	Map<String, String> statusMap = Util.createStatusMap(order.getStatus());
+	StatusCheckerInterface<Transportable> steinChecker = Util.getSteinChecker();
+	StatusCheckerInterface<Transportable> gulvsponChecker = Util.getGulvsponChecker();
+
+	String status = statusMap.get(steinChecker.getArticleName());
+	boolean needToSave = false;
+	if (status == null) {
+	    needToSave = true;
+	    // managerRepository.getOrderManager().lazyLoadTree(order);
+	    managerRepository.getOrderManager().lazyLoadOrder(order,
+		    new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ATTRIBUTES });
+	    status = steinChecker.getArticleStatus(order);
+	    statusMap.put(steinChecker.getArticleName(), status);
+	}
+
+	status = statusMap.get(gulvsponChecker.getArticleName());
+
+	if (status == null) {
+	    if (!needToSave) {
+		needToSave = true;
+		// managerRepository.getOrderManager().lazyLoadTree(order);
+		managerRepository.getOrderManager().lazyLoadOrder(order,
+			new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ATTRIBUTES });
+	    }
+	    status = gulvsponChecker.getArticleStatus(order);
+	    statusMap.put(gulvsponChecker.getArticleName(), status);
+	}
+
+	if (needToSave) {
+	    order.setStatus(Util.statusMapToString(statusMap));
+	    try {
+		managerRepository.getOrderManager().saveOrder(order);
+	    } catch (ProTransException e) {
+		Util.showErrorDialog(window, "Feil", e.getMessage());
+		e.printStackTrace();
+	    }
+	}
     }
 
     private void splitOrder(WindowInterface aWindow) {
@@ -1707,25 +1889,17 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
      */
     public static void showMissingColliesForTransportable(final Transportable transportable, final WindowInterface window) {
 	if (transportable != null) {
-	    // if (transportable instanceof PostShipment) {
-	    // PostShipmentManager postShipmentManager = (PostShipmentManager)
-	    // ModelUtil.getBean("postShipmentManager");
-	    // postShipmentManager.lazyLoad((PostShipment) transportable, new
-	    // LazyLoadPostShipmentEnum[] {
-	    // LazyLoadPostShipmentEnum.ORDER_LINES,
-	    // LazyLoadPostShipmentEnum.ORDER_LINE_ORDER_LINES,
-	    // LazyLoadPostShipmentEnum.ORDER_COMMENTS,
-	    // LazyLoadPostShipmentEnum.COLLIES });
-	    // } else {
-	    // OrderManager orderManager = (OrderManager)
-	    // ModelUtil.getBean("orderManager");
-	    // orderManager.lazyLoadOrder((Order) transportable, new
-	    // LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES,
-	    // LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES,
-	    // LazyLoadOrderEnum.COMMENTS, LazyLoadOrderEnum.COLLIES,
-	    // LazyLoadOrderEnum.PROCENT_DONE });
-	    //
-	    // }
+	    if (transportable instanceof PostShipment) {
+		PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil.getBean("postShipmentManager");
+		postShipmentManager.lazyLoad((PostShipment) transportable, new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_LINES,
+			LazyLoadPostShipmentEnum.ORDER_LINE_ORDER_LINES, LazyLoadPostShipmentEnum.ORDER_COMMENTS, LazyLoadPostShipmentEnum.COLLIES });
+	    } else {
+		OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
+		orderManager.lazyLoadOrder((Order) transportable, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES,
+			LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES, LazyLoadOrderEnum.COMMENTS, LazyLoadOrderEnum.COLLIES,
+			LazyLoadOrderEnum.PROCENT_DONE });
+
+	    }
 	    List<OrderLine> missing = transportable.getMissingCollies();
 	    if (missing != null) {
 		List<OrderLineWrapper> missingList = Util.getOrderLineWrapperList(missing);
@@ -1818,7 +1992,15 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	    Transportable transportable = getSelectedTransport(selectedIndex);
 
 	    if (transportable != null) {
-
+		if (!Hibernate.isInitialized(transportable.getOrderLines())) {
+		    if (Order.class.isInstance(transportable)) {
+			managerRepository.getOrderManager().lazyLoadOrder((Order) transportable,
+				new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES });
+		    } else {
+			managerRepository.getPostShipmentManager().lazyLoad((PostShipment) transportable,
+				new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_LINES });
+		    }
+		}
 		TransportLetter transportLetter = TransportLetterSelector.valueOf(
 			StringUtils.upperCase(transportable.getProductAreaGroup().getProductAreaGroupName())).getTransportLetter(managerRepository);
 		transportLetter.generateTransportLetter(transportable, owner);
@@ -1874,17 +2056,19 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
      * @param sentFilter
      * @param productAreaGroup
      */
-    public void handleFilter(boolean sentFilter, ProductAreaGroup productAreaGroup) {
-	currentProductAreaGroup = productAreaGroup;
+    public void handleFilter(boolean sentFilter) {// ), ProductAreaGroup
+						  // productAreaGroup) {
+	// currentProductAreaGroup = productAreaGroup;
 	if (tableOrders != null) {
 	    List<Filter> filters = new ArrayList<Filter>();
 	    if (sentFilter) {
 		Filter filter = new PatternFilter("Nei", Pattern.CASE_INSENSITIVE, 19);
 		filters.add(filter);
 	    }
-	    if (productAreaGroup != null) {
-		PrefsUtil.setInvisibleColumns(productAreaGroup.getProductAreaGroupName(), TableEnum.TABLETRANSPORTORDERS.getTableName(), tableOrders);
-	    }
+	    // if (productAreaGroup != null) {
+	    PrefsUtil.setInvisibleColumns(ProductAreaGroup.UNKNOWN.getProductAreaGroupName(), TableEnum.TABLETRANSPORTORDERS.getTableName(),
+		    tableOrders);
+	    // }
 	    if (filters.size() != 0) {
 		Filter[] filterArray = new Filter[filters.size()];
 		FilterPipeline filterPipeline = new FilterPipeline(filters.toArray(filterArray));
@@ -1901,7 +2085,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
     }
 
     public String getProductAreaGroupName() {
-	return currentProductAreaGroup != null ? currentProductAreaGroup.getProductAreaGroupName() : null;
+	return ProductAreaGroup.UNKNOWN.getProductAreaGroupName();
     }
 
     public static void setTesting(boolean testing) {

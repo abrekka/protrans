@@ -21,12 +21,10 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -54,11 +52,12 @@ import no.ugland.utransprod.gui.Updateable;
 import no.ugland.utransprod.gui.WindowInterface;
 import no.ugland.utransprod.gui.buttons.CancelButton;
 import no.ugland.utransprod.gui.buttons.RefreshButton;
+import no.ugland.utransprod.gui.edit.EditAssemblyView;
 import no.ugland.utransprod.gui.edit.FilterAssemblyView;
 import no.ugland.utransprod.gui.edit.FilterAssemblyView.AssemblyFilter;
 import no.ugland.utransprod.gui.edit.FilterAssemblyView.AssemblyfilterListener;
+import no.ugland.utransprod.gui.model.AssemblyModel;
 import no.ugland.utransprod.gui.model.ColorEnum;
-import no.ugland.utransprod.gui.model.ProductAreaGroupModel;
 import no.ugland.utransprod.gui.model.ReportEnum;
 import no.ugland.utransprod.gui.model.Transportable;
 import no.ugland.utransprod.model.Assembly;
@@ -66,6 +65,7 @@ import no.ugland.utransprod.model.AssemblyOverdueV;
 import no.ugland.utransprod.model.AssemblyV;
 import no.ugland.utransprod.model.Customer;
 import no.ugland.utransprod.model.Deviation;
+import no.ugland.utransprod.model.FakturagrunnlagV;
 import no.ugland.utransprod.model.IAssembly;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
@@ -74,6 +74,7 @@ import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.Supplier;
 import no.ugland.utransprod.service.AssemblyManager;
 import no.ugland.utransprod.service.AssemblyVManager;
+import no.ugland.utransprod.service.CraningCostManager;
 import no.ugland.utransprod.service.DeviationManager;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.SupplierManager;
@@ -88,18 +89,16 @@ import no.ugland.utransprod.util.UserUtil;
 import no.ugland.utransprod.util.Util;
 import no.ugland.utransprod.util.YearWeek;
 import no.ugland.utransprod.util.excel.ExcelUtil;
+import no.ugland.utransprod.util.report.AssemblyReportNy;
 import no.ugland.utransprod.util.report.AssemblyWeekReport;
+import no.ugland.utransprod.util.report.MailConfig;
 import no.ugland.utransprod.util.report.ReportViewer;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.ColorHighlighter;
-import org.jdesktop.swingx.decorator.Filter;
-import org.jdesktop.swingx.decorator.FilterPipeline;
-import org.jdesktop.swingx.decorator.PatternFilter;
 import org.jdesktop.swingx.decorator.PatternPredicate;
 
 import com.google.common.base.Predicate;
@@ -129,6 +128,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
     public static final boolean NOT_CENTER = false;
     public static final boolean CENTER = true;
 
+    // private JComboBox comboBoxProductAreaGroup;
+
     private JLabel labelSearchResult;
 
     private OrderViewHandler orderViewHandler;
@@ -153,6 +154,11 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 
     JMenuItem menuItemShowContent;
     JMenuItem menuItemSetSentBase;
+    JMenuItem menuItemEdit;
+    JMenuItem menuItemRemoveAssembly;
+    JMenuItem menuItemShowMissing;
+    JMenuItem menuItemAssemblyReport;
+    JMenuItem menuItemDeviation;
 
     private WindowInterface currentWindow;
 
@@ -175,10 +181,11 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
     private Login login;
     private SupplierOrderViewHandlerFactory supplierOrderViewHandlerFactory;
     private ManagerRepository managerRepository;
-    PresentationModel productAreaGroupModel;
+    // PresentationModel productAreaGroupModel;
 
     private JCheckBox checkBoxListView;
     private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    private DeviationViewHandlerFactory deviationViewHandlerFactory;
 
     /**
      * @param orderViewHandler
@@ -186,7 +193,9 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
      * @param aApplicationUser
      */
     public AssemblyPlannerViewHandler(OrderViewHandler orderViewHandler, Login aLogin,
-	    SupplierOrderViewHandlerFactory aSupplierOrderViewHandlerFactory, ManagerRepository aManagerRepository) {
+	    SupplierOrderViewHandlerFactory aSupplierOrderViewHandlerFactory, ManagerRepository aManagerRepository,
+	    DeviationViewHandlerFactory aDeviationViewHandlerFactory) {
+	deviationViewHandlerFactory = aDeviationViewHandlerFactory;
 	managerRepository = aManagerRepository;
 	supplierOrderViewHandlerFactory = aSupplierOrderViewHandlerFactory;
 	login = aLogin;
@@ -209,21 +218,23 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	weekSelectionList = new SelectionInList(Util.getWeeks());
 
 	initOverdue();
-	initProductAreaGroup();
+	// initProductAreaGroup();
     }
 
-    private void initProductAreaGroup() {
-	productAreaGroupModel = new PresentationModel(new ProductAreaGroupModel(ProductAreaGroup.UNKNOWN));
-	productAreaGroupModel.addBeanPropertyChangeListener(new ProductAreaChangeListener());
-	// ProductAreaGroupManager productAreaGroupManager =
-	// (ProductAreaGroupManager) ModelUtil
-	// .getBean("productAreaGroupManager");
-	/*
-	 * productAreaGroupList = new ArrayList<ProductAreaGroup>();
-	 * List<ProductAreaGroup> groups = productAreaGroupManager.findAll(); if
-	 * (groups != null) { productAreaGroupList.addAll(groups); }
-	 */
-    }
+    // private void initProductAreaGroup() {
+    // productAreaGroupModel = new PresentationModel(new
+    // ProductAreaGroupModel(ProductAreaGroup.UNKNOWN));
+    // productAreaGroupModel.addBeanPropertyChangeListener(new
+    // ProductAreaChangeListener());
+    // ProductAreaGroupManager productAreaGroupManager =
+    // (ProductAreaGroupManager) ModelUtil
+    // .getBean("productAreaGroupManager");
+    /*
+     * productAreaGroupList = new ArrayList<ProductAreaGroup>();
+     * List<ProductAreaGroup> groups = productAreaGroupManager.findAll(); if
+     * (groups != null) { productAreaGroupList.addAll(groups); }
+     */
+    // }
 
     /**
      * Initerere info om order som er på overtid når det gjelder montering
@@ -285,9 +296,111 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	popupMenuSetAssemblyDeviation.add(menuItemSetAssembly);
 	popupMenuSetAssemblyDeviation.add(menuItemShowContent);
 
+	menuItemEdit = new JMenuItem("Editer...");
+	menuItemEdit.addActionListener(menuItemListenerAssembly);
+
+	menuItemRemoveAssembly = new JMenuItem("Fjern montering...");
+	menuItemRemoveAssembly.addActionListener(menuItemListenerAssembly);
+
+	menuItemShowMissing = new JMenuItem("Se mangler...");
+	menuItemShowMissing.addActionListener(menuItemListenerAssembly);
+
 	menuItemSetSentBase = new JMenuItem("Sendt underlag...");
 	menuItemSetSentBase.addActionListener(menuItemListenerAssembly);
+
+	menuItemAssemblyReport = new JMenuItem("Fakturagrunnlag...");
+	menuItemAssemblyReport.addActionListener(new AssemblyReportListener(window));
+
+	menuItemDeviation = new JMenuItem("Registrere avvik...");
+	menuItemDeviation.addActionListener(menuItemListenerAssembly);
+
+	popupMenuAssembly.add(menuItemEdit);
+	popupMenuAssembly.add(menuItemRemoveAssembly);
+	popupMenuAssembly.add(menuItemShowMissing);
+	popupMenuAssembly.add(menuItemAssemblyReport);
+	popupMenuAssembly.add(menuItemDeviation);
 	popupMenuAssembly.add(menuItemSetSentBase);
+    }
+
+    private class AssemblyReportListener implements ActionListener {
+	private WindowInterface window;
+
+	public AssemblyReportListener(WindowInterface window) {
+	    this.window = window;
+	}
+
+	public void actionPerformed(ActionEvent event) {
+
+	    Util.runInThreadWheel(window.getRootPane(), new Threadable() {
+
+		public void enableComponents(boolean enable) {
+		}
+
+		public Object doWork(Object[] params, JLabel labelInfo) {
+		    labelInfo.setText("Genererer fakturagrunnlag...");
+		    String errorMsg = null;
+		    try {
+			// generateAssemblyReport();
+			generateAssemblyReportNy(window);
+		    } catch (ProTransException e) {
+			errorMsg = e.getMessage();
+			e.printStackTrace();
+		    }
+		    return errorMsg;
+		}
+
+		public void doWhenFinished(Object object) {
+		    if (object != null) {
+			Util.showErrorDialog(window, "Feil", object.toString());
+		    }
+		}
+
+	    }, null);
+
+	}
+
+    }
+
+    void generateAssemblyReportNy(WindowInterface window) throws ProTransException {
+	AssemblyV assemblyV = (AssemblyV) assemblySelectionList.getSelection();
+	Assembly assembly = managerRepository.getAssemblyManager().get(assemblyV.getAssemblyId());
+	if (assembly != null) {
+	    Order order = assembly.getOrder() == null ? assembly.getDeviation().getOrder() : assembly.getOrder();
+	    managerRepository.getOrderManager().lazyLoadOrder(order,
+		    new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_COSTS, LazyLoadOrderEnum.COMMENTS });
+
+	    // List<Ordln> vismaOrderLines =
+	    // managerRepository.getOrdlnManager().findForFakturagrunnlag(assembly.getOrder().getOrderNr());
+
+	    Integer orderId = order == null ? assembly.getDeviation().getOrder().getOrderId() : order.getOrderId();
+	    List<FakturagrunnlagV> fakturagrunnlag = managerRepository.getFakturagrunnlagVManager().findFakturagrunnlag(orderId);
+	    List<FakturagrunnlagV> filtrertFakturagrunnlag = Lists.newArrayList(Iterables.filter(fakturagrunnlag, ikkeFraktMed001()));
+	    // AssemblyReport assemblyReport =
+	    // assemblyReportFactory.create(assembly.getOrder(),
+	    // vismaOrderLines);
+	    final CraningCostManager craningCostManager = (CraningCostManager) ModelUtil.getBean(CraningCostManager.MANAGER_NAME);
+	    AssemblyReportNy assemblyReport = new AssemblyReportNy(craningCostManager, order, filtrertFakturagrunnlag);
+
+	    String orderNr = order == null ? assembly.getDeviation().getOrderNr() : order.getOrderNr();
+	    MailConfig mailConfig = new MailConfig("Fakturagrunnlag", "Fakturagrunnlag", "", "");
+	    mailConfig.addToHeading(" for ordrenummer " + orderNr);
+
+	    ReportViewer reportViewer = new ReportViewer("Montering", mailConfig);
+	    List<AssemblyReportNy> assemblyReportList = Lists.newArrayList();
+	    assemblyReportList.add(assemblyReport);
+	    reportViewer.generateProtransReportFromBeanAndShow(assemblyReportList, "Montering", ReportEnum.ASSEMBLY_NY, null, null, window, true);
+
+	}
+    }
+
+    private Predicate<FakturagrunnlagV> ikkeFraktMed001() {
+	return new Predicate<FakturagrunnlagV>() {
+
+	    public boolean apply(FakturagrunnlagV fakturagrunnlagV) {
+		return !(fakturagrunnlagV.getOrgPriceMont() != null && "FRAKT".equalsIgnoreCase(fakturagrunnlagV.getProdno()) && fakturagrunnlagV
+			.getOrgPriceMont().doubleValue() == 0.01);
+	    }
+	};
     }
 
     /**
@@ -312,7 +425,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	return tableDeviation;
     }
 
-    public JXTable getTableAssembly() {
+    public JXTable getTableAssembly(WindowInterface window) {
 	tableAssembly = new JXTable();
 
 	ColorHighlighter assembliedHighlighter = new ColorHighlighter(new PatternPredicate("Ja", AssemblyColumn.MONTERT.ordinal()),
@@ -328,7 +441,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	tableAssembly.setSelectionModel(new SingleListSelectionAdapter(assemblySelectionList.getSelectionIndexHolder()));
 	tableAssembly.setColumnControlVisible(true);
 
-	tableAssembly.addMouseListener(new AssemblyRightClickListener());
+	tableAssembly.addMouseListener(new AssemblyRightClickListener(window));
 
 	tableAssembly.addHighlighter(assembliedHighlighter);
 	tableAssembly.addHighlighter(missingHighlighter);
@@ -367,16 +480,18 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
      * @return monteringslag
      */
     @SuppressWarnings("unchecked")
-    public List<Supplier> getSuppliers(YearWeek yearWeek, ProductAreaGroup productAreaGroup) {
-	List<Supplier> suppliers = (List<Supplier>) supplierMap.get(productAreaGroup);
+    public List<Supplier> getSuppliers(YearWeek yearWeek) {// , ProductAreaGroup
+							   // productAreaGroup)
+							   // {
+	List<Supplier> suppliers = (List<Supplier>) supplierMap.get(ProductAreaGroup.UNKNOWN);
 	if (suppliers == null || suppliers.size() == 0) {
 	    List<Supplier> suppliersHavingAssembly = new ArrayListModel(managerRepository.getSupplierManager().findHavingAssembly(yearWeek.getYear(),
-		    yearWeek.getWeek() - 1, yearWeek.getWeek() + 1, productAreaGroup));
-	    List<Supplier> activeSuppliers = new ArrayListModel(managerRepository.getSupplierManager().findActiveByTypeName("Montering",
-		    "postalCode", productAreaGroup));
+		    yearWeek.getWeek() - 1, yearWeek.getWeek() + 1));
+	    List<Supplier> activeSuppliers = new ArrayListModel(managerRepository.getSupplierManager()
+		    .findActiveByTypeName("Montering", "postalCode"));
 	    suppliers = new ArrayListModel(CollectionUtils.union(suppliersHavingAssembly, activeSuppliers));
 	    Collections.sort(suppliers, new SupplierComparator());
-	    supplierMap.putAll(productAreaGroup, suppliers);
+	    supplierMap.putAll(ProductAreaGroup.UNKNOWN, suppliers);
 	}
 	return suppliers;
     }
@@ -719,7 +834,9 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	 * @see java.awt.event.AdjustmentListener#adjustmentValueChanged(java.awt.event.AdjustmentEvent)
 	 */
 	public void adjustmentValueChanged(AdjustmentEvent e) {
-	    verticalScrollBar.setValue(e.getValue());
+	    if (verticalScrollBar != null) {
+		verticalScrollBar.setValue(e.getValue());
+	    }
 
 	}
 
@@ -806,8 +923,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
      * @param productAreaGroup
      * @return handler
      */
-    public SupplierOrderViewHandler getSupplierOrderViewHandler(Supplier supplier, YearWeek currentYearWeek, int weekCounter, boolean starting,
-	    ProductAreaGroup productAreaGroup) {
+    public SupplierOrderViewHandler getSupplierOrderViewHandler(Supplier supplier, YearWeek currentYearWeek, int weekCounter, boolean starting) {
 	Map<Integer, SupplierOrderViewHandler> tmpViewHandlers = assemblyViewHandlers.get(supplier);
 
 	if (tmpViewHandlers == null) {
@@ -826,7 +942,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	} else if (!starting) {
 	    supplierOrderViewHandler.refresh(currentYearWeek);
 	}
-	supplierOrderViewHandler.setProductAreaGroup(productAreaGroup);
+	// supplierOrderViewHandler.setProductAreaGroup(productAreaGroup);
 	return supplierOrderViewHandler;
     }
 
@@ -840,10 +956,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
      * @param productAreaGroup
      * @return view
      */
-    public SupplierOrderView getAssemblyTeamOrderView(Supplier supplier, YearWeek currentYearWeek, int weekCounter, boolean starting,
-	    ProductAreaGroup productAreaGroup) {
-	SupplierOrderViewHandler supplierOrderViewHandler = getSupplierOrderViewHandler(supplier, currentYearWeek, weekCounter, starting,
-		productAreaGroup);
+    public SupplierOrderView getAssemblyTeamOrderView(Supplier supplier, YearWeek currentYearWeek, int weekCounter, boolean starting) {
+	SupplierOrderViewHandler supplierOrderViewHandler = getSupplierOrderViewHandler(supplier, currentYearWeek, weekCounter, starting);
 	return new SupplierOrderView(supplierOrderViewHandler);
     }
 
@@ -951,7 +1065,28 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	}
 
 	public void actionPerformed(ActionEvent actionEvent) {
-	    if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemSetSentBase.getText())) {
+	    if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemEdit.getText())) {
+
+		editAssembly(window);
+
+	    } else if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemRemoveAssembly.getText())) {
+		if (Util.showConfirmDialog(window.getComponent(), "Fjerne?", "Vil du virkelig fjerne montering?")) {
+		    removeAssembly(window);
+		}
+	    } else if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemShowMissing.getText())) {
+
+		showMissingCollies(window);
+	    } else if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemDeviation.getText())) {
+
+		AssemblyV assemblyV = (AssemblyV) assemblySelectionList.getSelection();
+		Assembly assembly = managerRepository.getAssemblyManager().get(assemblyV.getAssemblyId());
+		Order order = assembly.getOrder();
+		if (order != null) {
+
+		    DeviationViewHandler deviationViewHandler = deviationViewHandlerFactory.create(order, true, false, true, null, true);
+		    deviationViewHandler.registerDeviation(order, window);
+		}
+	    } else if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemSetSentBase.getText())) {
 		AssemblyManager assemblyManager = ((AssemblyManager) ModelUtil.getBean(AssemblyManager.MANAGER_NAME));
 		AssemblyV assemblyV = getSelectedAssembly();
 		Assembly assembly = assemblyManager.get(assemblyV.getAssemblyId());
@@ -962,6 +1097,97 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 
 	    }
 	}
+    }
+
+    void showMissingCollies(WindowInterface window) {
+	AssemblyV assemblyV = (AssemblyV) assemblySelectionList.getSelection();
+	Assembly assembly = managerRepository.getAssemblyManager().get(assemblyV.getAssemblyId());
+	if (assembly != null) {
+	    Order order = assembly.getOrder();
+	    Deviation deviation = assembly.getDeviation();
+	    List<OrderLine> missing = null;
+	    if (order != null) {
+		orderViewHandler.lazyLoadOrder(order, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.COMMENTS,
+			LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES });
+		missing = order.getMissingCollies();
+	    } else {
+		DeviationManager deviationManager = (DeviationManager) ModelUtil.getBean("deviationManager");
+		deviationManager.lazyLoad(deviation, new LazyLoadDeviationEnum[] { LazyLoadDeviationEnum.ORDER_LINES, LazyLoadDeviationEnum.COMMENTS,
+			LazyLoadDeviationEnum.ORDER_LINE_ORDER_LINES });
+		missing = deviation.getMissingCollies();
+	    }
+
+	    if (missing != null) {
+		Util.showOptionsDialog(window, missing, "Mangler", false, false);
+	    }
+	}
+    }
+
+    void removeAssembly(WindowInterface window) {
+	AssemblyV assemblyV = (AssemblyV) assemblySelectionList.getSelection();
+	Assembly assembly = managerRepository.getAssemblyManager().get(assemblyV.getAssemblyId());
+
+	Order order = assembly.getOrder();
+	Deviation deviation = assembly.getDeviation();
+
+	orderViewHandler.setAssemblyInactive(assembly);
+	if (order != null) {
+
+	    try {
+		orderViewHandler.getOrderManager().saveOrder(order);
+		orderViewHandler.initAndGetOrderPanelSelectionList(OrderPanelTypeEnum.ASSEMBLY_ORDERS);
+	    } catch (ProTransException e) {
+		Util.showErrorDialog(window, "Feil", e.getMessage());
+		e.printStackTrace();
+	    }
+	} else {
+	    DeviationManager deviationManager = (DeviationManager) ModelUtil.getBean("deviationManager");
+	    deviation.setAssembly(null);
+	    deviationManager.saveDeviation(deviation);
+	    managerRepository.getAssemblyManager().removeObject(assembly);
+	    // fireAsesemblyChanged();
+	}
+
+	doRefresh(window);
+    }
+
+    void editAssembly(WindowInterface window) {
+	AssemblyV assemblyV = (AssemblyV) assemblySelectionList.getSelection();
+	Assembly assembly = managerRepository.getAssemblyManager().get(assemblyV.getAssemblyId());
+	managerRepository.getOrderManager().lazyLoadOrder(assembly.getOrder(), new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COMMENTS });
+	if (assembly != null) {
+	    openEditView(assembly, false, window);
+	}
+	// fireAsesemblyChanged();
+    }
+
+    protected final boolean openEditView(final Assembly assembly, final boolean searching, final WindowInterface parentWindow) {
+	boolean hasOpenViewExt = false;
+
+	if (!hasOpenViewExt) {
+	    SupplierOrderViewHandler supplierOrderViewHandler = getSupplierOrderViewHandler(assembly.getSupplier(),
+		    new YearWeek(assembly.getAssemblyYear(), assembly.getAssemblyWeek()), 0, false);
+
+	    EditAssemblyView view = new EditAssemblyView(false, new AssemblyModel(assembly, login.getApplicationUser().getUserName()),
+		    supplierOrderViewHandler);
+	    // AbstractEditView<E, T> view = getEditView(this, object,
+	    // searching);
+	    // if (view != null) {
+	    WindowInterface dialog = new JDialogAdapter(Util.getDialog(parentWindow, "Montering", true));
+	    dialog.setName("EditAssemblyView");
+	    dialog.add(view.buildPanel(dialog));
+	    dialog.pack();
+	    Util.locateOnScreenCenter(dialog);
+	    dialog.setVisible(true);
+
+	    // if (!view.isCanceled()) {
+	    doRefresh(parentWindow);
+	    // updateViewList(assembly, parentWindow);
+	    // }
+	    // }
+	    return !view.isCanceled();
+	}
+	return true;
     }
 
     /**
@@ -1088,8 +1314,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 
     private Supplier getSupplierTeam() {
 	Supplier team = (Supplier) JOptionPane.showInputDialog(currentWindow.getComponent(), "Velg team", "Monteringsteam",
-		JOptionPane.OK_CANCEL_OPTION, null,
-		getSuppliers(yearWeek, ((ProductAreaGroupModel) productAreaGroupModel.getBean()).getProductAreaGroup()).toArray(), null);
+		JOptionPane.OK_CANCEL_OPTION, null, getSuppliers(yearWeek).toArray(), null);
 	return team;
     }
 
@@ -1131,8 +1356,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	 */
 	@SuppressWarnings("unchecked")
 	public void actionPerformed(ActionEvent arg0) {
-	    Collection<Supplier> selectedTeams = (Collection<Supplier>) Util.showOptionsDialog(window,
-		    getSuppliers(yearWeek, ((ProductAreaGroupModel) productAreaGroupModel.getBean()).getObject()), "Monteringslag", true, true);
+	    Collection<Supplier> selectedTeams = (Collection<Supplier>) Util.showOptionsDialog(window, getSuppliers(yearWeek), "Monteringslag", true,
+		    true);
 	    if (selectedTeams != null && selectedTeams.size() != 0) {
 		Util.runInThreadWheel(window.getRootPane(), new Printer(window, new ArrayListModel(selectedTeams)), null);
 	    }
@@ -1236,7 +1461,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
      * @param productAreaGroup
      * @return maks antall ordre
      */
-    public int getMaxNumbersOfOrders(Supplier supplier, YearWeek yearWeek1, boolean starting, ProductAreaGroup productAreaGroup) {
+    public int getMaxNumbersOfOrders(Supplier supplier, YearWeek yearWeek1, boolean starting) {
 	int weekStart = yearWeek1.getWeek() - 1;
 	int weekStop = yearWeek1.getWeek() + 1;
 	YearWeek currentYearWeek = new YearWeek(yearWeek1.getYear(), weekStart);
@@ -1247,7 +1472,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	for (int i = weekStart; i <= weekStop; i++) {
 	    weekCounter++;
 	    currentYearWeek.setWeek(i);
-	    supplierOrderViewHandler = getSupplierOrderViewHandler(supplier, currentYearWeek, weekCounter, starting, productAreaGroup);
+	    supplierOrderViewHandler = getSupplierOrderViewHandler(supplier, currentYearWeek, weekCounter, starting);
 	    numberOfOrders = supplierOrderViewHandler.getNumberOfOrders();
 	    if (numberOfOrders > maxSize) {
 		maxSize = numberOfOrders;
@@ -1467,6 +1692,12 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
     }
 
     final class AssemblyRightClickListener extends MouseAdapter {
+	private WindowInterface window;
+
+	public AssemblyRightClickListener(WindowInterface aWindow) {
+	    window = aWindow;
+	}
+
 	/**
 	 * @see java.awt.event.MouseAdapter#mouseClicked(java.awt.event.MouseEvent)
 	 */
@@ -1474,7 +1705,17 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	public void mouseClicked(MouseEvent e) {
 
 	    if (SwingUtilities.isRightMouseButton(e)) {
+
 		popupMenuAssembly.show((JXTable) e.getSource(), e.getX(), e.getY());
+	    } else if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2) {
+		Util.setWaitCursor(window.getComponent());
+		if (assemblySelectionList.getSelection() != null) {
+		    int index = tableAssembly.convertRowIndexToModel(assemblySelectionList.getSelectionIndex());
+		    AssemblyV assembly = (AssemblyV) assemblySelectionList.getElementAt(index);
+		    Order order = orderViewHandler.getOrderManager().findByOrderNr(assembly.getOrderNr());
+		    orderViewHandler.openOrderView(order, false, window);
+		}
+		Util.setDefaultCursor(window.getComponent());
 	    }
 	}
     }
@@ -1597,6 +1838,37 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		if (StringUtils.isNotBlank(assemblyFilter.getAssemblyteam())) {
 		    return assembly.getAssemblyteamName().toLowerCase()
 			    .matches(assemblyFilter.getAssemblyteam().toLowerCase().replaceAll("%", ".*") + ".*");
+		}
+		return true;
+	    }
+	},
+	GARASJETYPE("Garasjetype", VISIBLE, NOT_CENTER, 80) {
+	    @Override
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getConstructionTypeName();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getConstructionTypeName().compareTo(assembly2.getConstructionTypeName());
+	    }
+
+	    @Override
+	    public Component getFilterComponent(PresentationModel presentationModel) {
+		return BasicComponentFactory.createTextField(presentationModel.getModel("constructionTypeName"), false);
+	    }
+
+	    @Override
+	    public boolean filter(AssemblyV assemblyV, AssemblyFilter assemblyFilter) {
+		if (StringUtils.isNotBlank(assemblyFilter.getConstructionTypeName())) {
+		    return assemblyV.getConstructionTypeName() != null
+			    && assemblyV.getConstructionTypeName().toLowerCase()
+				    .matches(assemblyFilter.getConstructionTypeName().toLowerCase().replaceAll("%", ".*") + ".*");
 		}
 		return true;
 	    }
@@ -1876,33 +2148,37 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		return true;
 	    }
 	},
-	KOMMENTAR("Kommentar", VISIBLE, NOT_CENTER, 100) {
-	    @Override
-	    public Object getValue(AssemblyV assembly) {
-		return null;
-	    }
-
-	    @Override
-	    public Class<?> getColumnClass() {
-		return null;
-	    }
-
-	    @Override
-	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
-		throw new NotImplementedException();
-		// return 0;
-	    }
-
-	    @Override
-	    public Component getFilterComponent(PresentationModel presentationModel) {
-		return BasicComponentFactory.createTextField(presentationModel.getModel("comment"), false);
-	    }
-
-	    @Override
-	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
-		return true;
-	    }
-	},
+	// KOMMENTAR("Kommentar", VISIBLE, NOT_CENTER, 100) {
+	// @Override
+	// public Object getValue(AssemblyV assembly) {
+	// return null;
+	// }
+	//
+	// @Override
+	// public Class<?> getColumnClass() {
+	// return null;
+	// }
+	//
+	// @Override
+	// public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+	// throw new NotImplementedException();
+	// // return 0;
+	// }
+	//
+	// @Override
+	// public Component getFilterComponent(PresentationModel
+	// presentationModel) {
+	// return
+	// BasicComponentFactory.createTextField(presentationModel.getModel("comment"),
+	// false);
+	// }
+	//
+	// @Override
+	// public boolean filter(AssemblyV assembly, AssemblyFilter
+	// assemblyFilter) {
+	// return true;
+	// }
+	// },
 	AVDELING("Avdeling", VISIBLE, CENTER, 80) {
 	    @Override
 	    public Object getValue(AssemblyV assembly) {
@@ -2262,44 +2538,55 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 
     }
 
-    public JComboBox getComboBoxProductAreaGroup() {
-	return Util.getComboBoxProductAreaGroup(login.getApplicationUser(), login.getUserType(), productAreaGroupModel);
-    }
+    // public JComboBox getComboBoxProductAreaGroup() {
+    // if (comboBoxProductAreaGroup == null) {
+    // comboBoxProductAreaGroup =
+    // Util.getComboBoxProductAreaGroup(login.getApplicationUser(),
+    // login.getUserType(), productAreaGroupModel);
+    // }
+    // return comboBoxProductAreaGroup;
+    // }
 
-    private class ProductAreaChangeListener implements PropertyChangeListener {
+    // private class ProductAreaChangeListener implements PropertyChangeListener
+    // {
+    //
+    // public void propertyChange(PropertyChangeEvent evt) {
+    // changeProductAreaGroup();
+    // handleFilter();
+    //
+    // }
+    //
+    // }
 
-	public void propertyChange(PropertyChangeEvent evt) {
-	    changeProductAreaGroup();
-	    handleFilter();
-
-	}
-
-    }
-
-    private final void changeProductAreaGroup() {
-	if (view != null) {
-	    view.setProductAreaGroup((ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP));
-	    view.changeWeek(null);
-	}
-    }
+    // private final void changeProductAreaGroup() {
+    // if (view != null) {
+    // view.setProductAreaGroup((ProductAreaGroup)
+    // productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP));
+    // view.changeWeek(null);
+    // }
+    // }
 
     public void handleFilter() {
 	// gi beskjed til alle transportlister at de skal filtrere
 	// if (viewHandler != null) {
-	ProductAreaGroup group = (ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP);
+	// ProductAreaGroup group = (ProductAreaGroup)
+	// productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP);
 	// PrefsUtil.setInvisibleColumns(group.getProductAreaGroupName(),tableDeviation.getName(),
 	// tableDeviation);
 	// transportWeekViewHandler.setFilterSent(!checkBoxFilter.isSelected(),
 	// group);
-	orderViewHandler.handleFilter(group, OrderPanelTypeEnum.ASSEMBLY_ORDERS);
+	orderViewHandler.handleFilter(OrderPanelTypeEnum.ASSEMBLY_ORDERS);
 
-	if (group != null && !group.getProductAreaGroupName().equalsIgnoreCase("Alle")) {
-	    Filter[] filters = new Filter[] { new PatternFilter(group.getProductAreaGroupName(), Pattern.CASE_INSENSITIVE, 5) };
-	    FilterPipeline filterPipeline = new FilterPipeline(filters);
-	    tableDeviation.setFilters(filterPipeline);
-	} else {
-	    tableDeviation.setFilters(null);
-	}
+	// if (group != null &&
+	// !group.getProductAreaGroupName().equalsIgnoreCase("Alle")) {
+	// Filter[] filters = new Filter[] { new
+	// PatternFilter(group.getProductAreaGroupName(),
+	// Pattern.CASE_INSENSITIVE, 5) };
+	// FilterPipeline filterPipeline = new FilterPipeline(filters);
+	// tableDeviation.setFilters(filterPipeline);
+	// } else {
+	tableDeviation.setFilters(null);
+	// }
 	tableDeviation.repaint();
 	// setTransportSum();
 	// }
@@ -2309,6 +2596,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
     public JCheckBox getCheckBoxListView(WindowInterface window) {
 	checkBoxListView = new JCheckBox(new ListAction(window));
 	checkBoxListView.setName("CheckBoxListView");
+	checkBoxListView.setSelected(true);
 	return checkBoxListView;
     }
 

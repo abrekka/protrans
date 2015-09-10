@@ -1191,7 +1191,7 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 		saleReportDataList.add(new SaleReportData("Avrop", countyName, order.getSalesman(), String.valueOf(order.getCustomer()
 			.getCustomerNr()), order.getCustomer().getFullName(), order.getOrderNr(), order.getGarageValue(), order.getTransportValue(),
 			order.getAssemblyCost(), order.getJaLinjer(), order.getContributionMargin(), order.getContributionRate(), order
-				.getOrderDate(), Integer.valueOf(order.getProductArea().getProductAreaNr())));
+				.getOrderDate(), Integer.valueOf(order.getProductArea().getProductAreaNr()), null));
 	    }
 	}
 	return saleReportDataList;

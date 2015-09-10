@@ -15,16 +15,16 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 
 /**
  * Implemntasjon av DAO mot view FAKTURERING_V
+ * 
  * @author atle.brekka
  */
-public class FaktureringVDAOHibernate extends BaseDAOHibernate<FaktureringV>
-        implements FaktureringVDAO {
+public class FaktureringVDAOHibernate extends BaseDAOHibernate<FaktureringV> implements FaktureringVDAO {
 
     /**
      * Konstruktør
      */
     public FaktureringVDAOHibernate() {
-        super(FaktureringV.class);
+	super(FaktureringV.class);
     }
 
     /**
@@ -32,7 +32,7 @@ public class FaktureringVDAOHibernate extends BaseDAOHibernate<FaktureringV>
      */
     @SuppressWarnings("unchecked")
     public final List<FaktureringV> findAll() {
-        return getHibernateTemplate().find("from FaktureringV order by sent");
+	return getHibernateTemplate().find("from FaktureringV order by sent");
     }
 
     /**
@@ -40,16 +40,13 @@ public class FaktureringVDAOHibernate extends BaseDAOHibernate<FaktureringV>
      */
     @SuppressWarnings("unchecked")
     public final List<FaktureringV> findByCustomerNr(final Integer customerNr) {
-        return (List<FaktureringV>) getHibernateTemplate().execute(
-                new HibernateCallback() {
+	return (List<FaktureringV>) getHibernateTemplate().execute(new HibernateCallback() {
 
-                    public Object doInHibernate(final Session session) {
-                        return session.createCriteria(FaktureringV.class).add(
-                                Restrictions.eq("customerNr", customerNr))
-                                .list();
-                    }
+	    public Object doInHibernate(final Session session) {
+		return session.createCriteria(FaktureringV.class).add(Restrictions.eq("customerNr", customerNr)).list();
+	    }
 
-                });
+	});
     }
 
     /**
@@ -57,24 +54,21 @@ public class FaktureringVDAOHibernate extends BaseDAOHibernate<FaktureringV>
      */
     @SuppressWarnings("unchecked")
     public List<FaktureringV> findByOrderNr(final String orderNr) {
-        return (List<FaktureringV>) getHibernateTemplate().execute(
-                new HibernateCallback() {
+	return (List<FaktureringV>) getHibernateTemplate().execute(new HibernateCallback() {
 
-                    public Object doInHibernate(Session session)
-                            throws HibernateException {
-                        return session.createCriteria(FaktureringV.class).add(
-                                Restrictions.eq("orderNr", orderNr)).list();
-                    }
+	    public Object doInHibernate(Session session) throws HibernateException {
+		return session.createCriteria(FaktureringV.class).add(Restrictions.eq("orderNr", orderNr)).list();
+	    }
 
-                });
+	});
     }
 
     /**
      * @see no.ugland.utransprod.dao.FaktureringVDAO#refresh(no.ugland.utransprod.model.FaktureringV)
      */
     public void refresh(FaktureringV faktureringV) {
-        getHibernateTemplate().flush();
-        getHibernateTemplate().load(faktureringV, faktureringV.getOrderId());
+	getHibernateTemplate().flush();
+	getHibernateTemplate().load(faktureringV, faktureringV.getOrderId());
 
     }
 
@@ -83,56 +77,46 @@ public class FaktureringVDAOHibernate extends BaseDAOHibernate<FaktureringV>
      */
     @SuppressWarnings("unchecked")
     public List<FaktureringV> findByParams(final ExcelReportSetting params) {
-        return (List) getHibernateTemplate().execute(new HibernateCallback() {
+	return (List) getHibernateTemplate().execute(new HibernateCallback() {
 
-            public Object doInHibernate(Session session)
-                    throws HibernateException {
+	    public Object doInHibernate(Session session) throws HibernateException {
 
-                return session.createCriteria(FaktureringV.class).add(
-                        Restrictions.isNotNull("sent")).add(
-                        Restrictions.isNull("invoiceDate")).list();
-            }
+		return session.createCriteria(FaktureringV.class).add(Restrictions.isNotNull("sent")).add(Restrictions.isNull("invoiceDate")).list();
+	    }
 
-        });
+	});
     }
 
-	@SuppressWarnings("unchecked")
-	public List<FaktureringV> findByCustomerNrAndProductAreaGroup(
-			final Integer customerNr, final ProductAreaGroup productAreaGroup) {
-		return (List<FaktureringV>) getHibernateTemplate().execute(
-                new HibernateCallback() {
+    @SuppressWarnings("unchecked")
+    public List<FaktureringV> findByCustomerNrAndProductAreaGroup(final Integer customerNr, final ProductAreaGroup productAreaGroup) {
+	return (List<FaktureringV>) getHibernateTemplate().execute(new HibernateCallback() {
 
-                    public Object doInHibernate(final Session session) {
-                        Criteria criteria= session.createCriteria(FaktureringV.class).add(
-                                Restrictions.eq("customerNr", customerNr));
-                        
-                        if(productAreaGroup!=null&&!productAreaGroup.getProductAreaGroupName().equalsIgnoreCase("Alle")){
-                        	criteria.add(Restrictions.eq("productAreaGroupName", productAreaGroup.getProductAreaGroupName()));
-                        }
-                         return criteria.list();
-                    }
+	    public Object doInHibernate(final Session session) {
+		Criteria criteria = session.createCriteria(FaktureringV.class).add(Restrictions.eq("customerNr", customerNr));
 
-                });
-	}
+		if (productAreaGroup != null && !productAreaGroup.getProductAreaGroupName().equalsIgnoreCase("Alle")) {
+		    criteria.add(Restrictions.eq("productAreaGroupName", productAreaGroup.getProductAreaGroupName()));
+		}
+		return criteria.list();
+	    }
 
-	@SuppressWarnings("unchecked")
-	public List<FaktureringV> findByOrderNrAndProductAreaGroup(final String orderNr,
-			final ProductAreaGroup productAreaGroup) {
-		 return (List<FaktureringV>) getHibernateTemplate().execute(
-	                new HibernateCallback() {
+	});
+    }
 
-	                    public Object doInHibernate(Session session)
-	                            throws HibernateException {
-	                    	Criteria criteria= session.createCriteria(FaktureringV.class).add(
-	                                Restrictions.eq("orderNr", orderNr));
-	                    	
-	                    	 if(productAreaGroup!=null&&!productAreaGroup.getProductAreaGroupName().equalsIgnoreCase("Alle")){
-	                         	criteria.add(Restrictions.eq("productAreaGroupName", productAreaGroup.getProductAreaGroupName()));
-	                         }
-	                          return criteria.list();
-	                    }
+    @SuppressWarnings("unchecked")
+    public List<FaktureringV> findByOrderNrAndProductAreaGroup(final String orderNr, final ProductAreaGroup productAreaGroup) {
+	return (List<FaktureringV>) getHibernateTemplate().execute(new HibernateCallback() {
 
-	                });
-	}
+	    public Object doInHibernate(Session session) throws HibernateException {
+		Criteria criteria = session.createCriteria(FaktureringV.class).add(Restrictions.eq("orderNr", orderNr));
+
+		if (productAreaGroup != null && !productAreaGroup.getProductAreaGroupName().equalsIgnoreCase("Alle")) {
+		    criteria.add(Restrictions.eq("productAreaGroupName", productAreaGroup.getProductAreaGroupName()));
+		}
+		return criteria.list();
+	    }
+
+	});
+    }
 
 }

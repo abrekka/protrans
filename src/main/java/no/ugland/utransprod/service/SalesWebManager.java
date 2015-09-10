@@ -7,9 +7,8 @@ import no.ugland.utransprod.model.SalesStatistic;
 
 public interface SalesWebManager {
 
-	SalesStatistic generateSalesStatistics(Integer year, Integer week,
-			String productAreaName)throws ProTransException;
+    SalesStatistic generateSalesStatistics(Integer year, Integer week, String productAreaName) throws ProTransException;
 
-	List<String> getProductAreaNames();
+    List<String> getProductAreaNames();
 
 }

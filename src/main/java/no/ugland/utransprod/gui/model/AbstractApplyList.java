@@ -50,11 +50,11 @@ public abstract class AbstractApplyList<T extends Applyable> implements ApplyLis
     public Collection<T> getObjectLines() {
 	List<T> lines = applyListManager.findAllApplyable();
 
-	if (lines != null) {
-	    for (T obj : lines) {
-		obj.setOrdln(applyListManager.findOrdlnByOrderLine(obj.getOrderLineId()));
-	    }
-	}
+	// if (lines != null) {
+	// for (T obj : lines) {
+	// obj.setOrdln(applyListManager.findOrdlnByOrderLine(obj.getOrderLineId()));
+	// }
+	// }
 	sortObjectLines(lines);
 	return lines;
     }
@@ -65,10 +65,10 @@ public abstract class AbstractApplyList<T extends Applyable> implements ApplyLis
      */
     public List<T> doSearch(String orderNr, String customerNr, ProductAreaGroup productAreaGroup) throws ProTransException {
 	if (orderNr != null) {
-	    return applyListManager.findApplyableByOrderNrAndProductAreaGroup(orderNr, productAreaGroup);
+	    return applyListManager.findApplyableByOrderNrAndProductAreaGroup(orderNr, null);
 	} else if (customerNr != null) {
 	    try {
-		return applyListManager.findApplyableByCustomerNrAndProductAreaGroup(Integer.valueOf(customerNr), productAreaGroup);
+		return applyListManager.findApplyableByCustomerNrAndProductAreaGroup(Integer.valueOf(customerNr), null);
 	    } catch (NumberFormatException e) {
 		e.printStackTrace();
 		throw new ProTransException("Kundenr må være tall");

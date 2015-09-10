@@ -189,7 +189,24 @@
         column="HAS_MISSING_COLLIES"
         length="2"
     />
-    
+    <property
+        name="constructionTypeName"
+        type="java.lang.String"
+        column="construction_type_name"
+        length="255"
+    />
+    <property
+        name="info"
+        type="java.lang.String"
+        column="INFO"
+        length="255"
+    />
+    <property
+        name="specialConcern"
+        type="java.lang.String"
+        column="SPECIAL_CONCERN"
+        length="255"
+    />
 
 
 </class>

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -48,7 +47,6 @@ import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderComment;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.Ordln;
-import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.Supplier;
 import no.ugland.utransprod.service.AssemblyManager;
 import no.ugland.utransprod.service.CraningCostManager;
@@ -73,10 +71,7 @@ import no.ugland.utransprod.util.report.ReportViewer;
 import org.hibernate.Hibernate;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.ColorHighlighter;
-import org.jdesktop.swingx.decorator.Filter;
-import org.jdesktop.swingx.decorator.FilterPipeline;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
-import org.jdesktop.swingx.decorator.PatternFilter;
 import org.jdesktop.swingx.decorator.PatternPredicate;
 
 import com.google.common.base.Predicate;
@@ -144,7 +139,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
     private Login login;
     private ManagerRepository managerRepository;
 
-    private ProductAreaGroup currentProductAreaGroup;
+    // private ProductAreaGroup currentProductAreaGroup;
     private VismaFileCreator vismaFileCreator;
 
     /**
@@ -280,13 +275,17 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
     }
 
     private void handleFilter() {
-	if (currentProductAreaGroup != null && !currentProductAreaGroup.getProductAreaGroupName().equalsIgnoreCase("Alle")) {
-	    Filter[] filters = new Filter[] { new PatternFilter(currentProductAreaGroup.getProductAreaGroupName(), Pattern.CASE_INSENSITIVE, 8) };
-	    FilterPipeline filterPipeline = new FilterPipeline(filters);
-	    tableOrders.setFilters(filterPipeline);
-	} else {
-	    tableOrders.setFilters(null);
-	}
+	// if (currentProductAreaGroup != null &&
+	// !currentProductAreaGroup.getProductAreaGroupName().equalsIgnoreCase("Alle"))
+	// {
+	// Filter[] filters = new Filter[] { new
+	// PatternFilter(currentProductAreaGroup.getProductAreaGroupName(),
+	// Pattern.CASE_INSENSITIVE, 8) };
+	// FilterPipeline filterPipeline = new FilterPipeline(filters);
+	// tableOrders.setFilters(filterPipeline);
+	// } else {
+	tableOrders.setFilters(null);
+	// }
     }
 
     private void initMenuItems(WindowInterface aWindow) {
@@ -642,8 +641,8 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
      * 
      * @return monteringslag
      */
-    public List<Supplier> getSupplierList(ProductAreaGroup productAreaGroup) {
-	return managerRepository.getSupplierManager().findActiveByTypeName("Montering", "postalCode", productAreaGroup);
+    public List<Supplier> getSupplierList() {
+	return managerRepository.getSupplierManager().findActiveByTypeName("Montering", "postalCode");
     }
 
     /**
@@ -899,9 +898,9 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 	return null;
     }
 
-    public void setProductAreaGroup(ProductAreaGroup productAreaGroup) {
-	currentProductAreaGroup = productAreaGroup;
-
-    }
+    // public void setProductAreaGroup(ProductAreaGroup productAreaGroup) {
+    // currentProductAreaGroup = productAreaGroup;
+    //
+    // }
 
 }

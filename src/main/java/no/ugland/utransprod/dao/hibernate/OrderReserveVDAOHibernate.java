@@ -16,32 +16,27 @@ import org.springframework.orm.hibernate3.HibernateCallback;
  * @author atle.brekka
  * 
  */
-public class OrderReserveVDAOHibernate extends BaseDAOHibernate<OrderReserveV>
-		implements OrderReserveVDAO {
-	/**
-	 * Konstruktør
-	 */
-	public OrderReserveVDAOHibernate() {
-		super(OrderReserveV.class);
-	}
+public class OrderReserveVDAOHibernate extends BaseDAOHibernate<OrderReserveV> implements OrderReserveVDAO {
+    /**
+     * Konstruktør
+     */
+    public OrderReserveVDAOHibernate() {
+	super(OrderReserveV.class);
+    }
 
-	/**
-	 * @see no.ugland.utransprod.dao.OrderReserveVDAO#findByProductArea(java.lang.String)
-	 */
-	@SuppressWarnings("unchecked")
-	public List<OrderReserveV> findByProductArea(final String productArea) {
-		return (List<OrderReserveV>) getHibernateTemplate().execute(
-				new HibernateCallback() {
+    /**
+     * @see no.ugland.utransprod.dao.OrderReserveVDAO#findByProductArea(java.lang.String)
+     */
+    @SuppressWarnings("unchecked")
+    public List<OrderReserveV> findByProductArea(final String productArea) {
+	return (List<OrderReserveV>) getHibernateTemplate().execute(new HibernateCallback() {
 
-					public Object doInHibernate(Session session)
-							throws HibernateException {
+	    public Object doInHibernate(Session session) throws HibernateException {
 
-						return session.createCriteria(OrderReserveV.class).add(
-								Restrictions.eq("orderReserveVPK.productArea",
-										productArea)).list();
-					}
+		return session.createCriteria(OrderReserveV.class).add(Restrictions.eq("orderReserveVPK.productArea", productArea)).list();
+	    }
 
-				});
-	}
+	});
+    }
 
 }

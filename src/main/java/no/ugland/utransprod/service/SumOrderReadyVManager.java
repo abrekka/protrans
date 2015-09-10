@@ -6,13 +6,15 @@ import no.ugland.utransprod.model.SumOrderReadyV;
 
 /**
  * Interface for serviceklasse mot view SUM_ORDER_REDY_V
+ * 
  * @author atle.brekka
  */
 public interface SumOrderReadyVManager {
     String MANAGER_NAME = "sumOrderReadyVManager";
 
-	/**
+    /**
      * Finner for gitt dato
+     * 
      * @param date
      * @return ordre klare
      */
@@ -20,6 +22,7 @@ public interface SumOrderReadyVManager {
 
     /**
      * Finner sum for gitt uke
+     * 
      * @param year
      * @param week
      * @return sum ordre klare
@@ -28,20 +31,20 @@ public interface SumOrderReadyVManager {
 
     /**
      * Finner for gitt dato og produktområdegruppe
+     * 
      * @param date
      * @param productAreaGroupName
      * @return sum
      */
-    SumOrderReadyV findByDateAndProductAreaGroupName(Date date,
-            String productAreaGroupName);
+    SumOrderReadyV findByDateAndProductAreaGroupName(Date date, String productAreaGroupName);
 
     /**
      * Finner for gitt uke og produktområdegruppe
+     * 
      * @param year
      * @param week
      * @param productAreaGroupName
      * @return sum
      */
-    SumOrderReadyV findSumByWeekAndProductAreaGroupName(Integer year,
-            Integer week, String productAreaGroupName);
+    SumOrderReadyV findSumByWeekAndProductAreaGroupName(Integer year, Integer week, String productAreaGroupName);
 }

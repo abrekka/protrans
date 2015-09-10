@@ -9,7 +9,6 @@ import no.ugland.utransprod.dao.TransportDAO;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.PostShipment;
-import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.Transport;
 import no.ugland.utransprod.service.enums.LazyLoadTransportEnum;
 import no.ugland.utransprod.util.Periode;
@@ -23,7 +22,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
-import com.google.inject.internal.Lists;
+import com.google.common.collect.Lists;
 
 /**
  * Implemntasjon av DAO for view TRANSPORT for hibernate.
@@ -244,51 +243,103 @@ public class TransportDAOHibernate extends BaseDAOHibernate<Transport> implement
     }
 
     @SuppressWarnings("unchecked")
-    public final List<Transport> findByYearAndWeekAndProductAreaGroup(final Integer year, final Integer week, final ProductAreaGroup productAreaGroup) {
+    public final List<Transport> findByYearAndWeekAndProductAreaGroup(final Integer year, final Integer week) {
 	return (List<Transport>) getHibernateTemplate().execute(new HibernateCallback() {
 
 	    public Object doInHibernate(final Session session) {
 
-		List<Transport> transportList = getTransportList(year, week, productAreaGroup, session);
-		List<Transport> emptyTransportList = findEmptyTransportsByYearAndWeek(year, week);
-		transportList.addAll(emptyTransportList);
-		return transportList;
+		return getTransportList(year, week, session);
+		// List<Transport> emptyTransportList =
+		// findEmptyTransportsByYearAndWeek(year, week);
+		// transportList.addAll(emptyTransportList);
+		// return transportList;
 	    }
 
 	});
     }
 
-    @SuppressWarnings("unchecked")
-    final List<Transport> getTransportList(final Integer year, final Integer week, final ProductAreaGroup productAreaGroup, final Session session) {
+    final List<Transport> getTransportList(final Integer year, final Integer week, final Session session) {
 	String sql = "select transport from Transport transport " + " left outer join fetch transport.orders transportOrder "
-		+ "left outer join fetch transportOrder.orderLines " + " left outer join fetch transport.postShipments transportPostShipment "
-		+ "left outer join fetch transportPostShipment.orderLines " + "          where transport.transportYear=:year and "
-		+ "                  transport.transportWeek=:week and "
-		+ "       (exists(select 1 from Order customerOrder,ProductArea productArea "
-		+ "                             where customerOrder.transport=transport and "
-		+ "                               customerOrder.productArea=productArea and "
-		+ "                      productArea.productAreaGroup=:productAreaGroup) or " + " exists(select 1 from PostShipment postShipment,"
-		+ "               Order customerOrder,ProductArea productArea "
-		+ "                              where postShipment.transport=transport and "
-		+ "                                    postShipment.order=customerOrder and "
-		+ "                               customerOrder.productArea=productArea and "
-		+ "                         productArea.productAreaGroup=:productAreaGroup))";
+	// + "left outer join fetch transportOrder.orderLines "
+		+ " left outer join fetch transport.postShipments transportPostShipment "
+		// + "left outer join fetch transportPostShipment.orderLines "
+		+ "          where transport.transportYear=:year and " + "                  transport.transportWeek=:week ";
+	// + "and "
+	// +
+	// "       (exists(select 1 from Order customerOrder,ProductArea productArea "
+	// +
+	// "                             where customerOrder.transport=transport and "
+	// +
+	// "                               customerOrder.productArea=productArea and "
+	// +
+	// "                      productArea.productAreaGroup=:productAreaGroup) or "
+	// + " exists(select 1 from PostShipment postShipment,"
+	// + "               Order customerOrder,ProductArea productArea "
+	// +
+	// "                              where postShipment.transport=transport and "
+	// +
+	// "                                    postShipment.order=customerOrder and "
+	// +
+	// "                               customerOrder.productArea=productArea and "
+	// +
+	// "                         productArea.productAreaGroup=:productAreaGroup))";
 
-	Query query = session.createQuery(sql).setParameter("productAreaGroup", productAreaGroup).setParameter("year", year)
-		.setParameter("week", week);
+	Query query = session.createQuery(sql)// .setParameter("productAreaGroup",
+					      // productAreaGroup)
+		.setParameter("year", year).setParameter("week", week);
 	Set<Transport> transportList = com.google.common.collect.Sets.newHashSet(query.list());
 	return Lists.newArrayList(transportList);
     }
+
+    // final List<Transport> getTransportList(final Integer year, final Integer
+    // week, final ProductAreaGroup productAreaGroup, final Session session) {
+    // String sql = "select transport from Transport transport " +
+    // " left outer join fetch transport.orders transportOrder "
+    // + "left outer join fetch transportOrder.orderLines " +
+    // " left outer join fetch transport.postShipments transportPostShipment "
+    // + "left outer join fetch transportPostShipment.orderLines " +
+    // "          where transport.transportYear=:year and "
+    // + "                  transport.transportWeek=:week and "
+    // +
+    // "       (exists(select 1 from Order customerOrder,ProductArea productArea "
+    // +
+    // "                             where customerOrder.transport=transport and "
+    // +
+    // "                               customerOrder.productArea=productArea and "
+    // +
+    // "                      productArea.productAreaGroup=:productAreaGroup) or "
+    // + " exists(select 1 from PostShipment postShipment,"
+    // + "               Order customerOrder,ProductArea productArea "
+    // +
+    // "                              where postShipment.transport=transport and "
+    // +
+    // "                                    postShipment.order=customerOrder and "
+    // +
+    // "                               customerOrder.productArea=productArea and "
+    // +
+    // "                         productArea.productAreaGroup=:productAreaGroup))";
+    //
+    // Query query = session.createQuery(sql).setParameter("productAreaGroup",
+    // productAreaGroup).setParameter("year", year)
+    // .setParameter("week", week);
+    // Set<Transport> transportList =
+    // com.google.common.collect.Sets.newHashSet(query.list());
+    // return Lists.newArrayList(transportList);
+    // }
 
     @SuppressWarnings("unchecked")
     final List<Transport> findEmptyTransportsByYearAndWeek(final Integer year, final Integer week) {
 	return getHibernateTemplate().executeFind(new HibernateCallback() {
 
 	    public Object doInHibernate(final Session session) {
-		String sql = "select transport from Transport transport " + " left outer join fetch transport.orders transportOrder "
-			+ "left outer join fetch transportOrder.orderLines" + " left outer join fetch transport.postShipments transportPostShipment "
-			+ "left outer join fetch transportPostShipment.orderLines " + "       where transport.transportYear=:year and "
-			+ "               transport.transportWeek=:week and " + "               not exists(select 1 from Order customerOrder"
+		String sql = "select transport from Transport transport "
+			+ " left outer join fetch transport.orders transportOrder "
+			// + "left outer join fetch transportOrder.orderLines"
+			+ " left outer join fetch transport.postShipments transportPostShipment "
+			// +
+			// "left outer join fetch transportPostShipment.orderLines "
+			+ "       where transport.transportYear=:year and " + "               transport.transportWeek=:week and "
+			+ "               not exists(select 1 from Order customerOrder"
 			+ "                           where customerOrder.transport=transport) and "
 			+ "               not exists(select 1 from PostShipment postShipment "
 			+ "                           where postShipment.transport=transport)";

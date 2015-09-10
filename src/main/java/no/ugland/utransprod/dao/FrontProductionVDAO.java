@@ -8,39 +8,42 @@ import no.ugland.utransprod.model.ProductAreaGroup;
 
 /**
  * Interface for DAO mot view FRONT_PRODUCTION_V
+ * 
  * @author atle.brekka
- *
+ * 
  */
 public interface FrontProductionVDAO extends DAO<FrontProductionV> {
-	/**
-	 * Finner alle fronter til produksjon
-	 * @return fronter
-	 */
-	List<Produceable> findAll();
+    /**
+     * Finner alle fronter til produksjon
+     * 
+     * @return fronter
+     */
+    List<Produceable> findAll();
 
-	/**
-	 * Finner front som skal produseres basert på ordrenummer
-	 * 
-	 * @param orderNr
-	 * @return front
-	 */
-	List<Produceable> findByOrderNr(String orderNr);
+    /**
+     * Finner front som skal produseres basert på ordrenummer
+     * 
+     * @param orderNr
+     * @return front
+     */
+    List<Produceable> findByOrderNr(String orderNr);
 
-	/**
-	 * Oppdaterer
-	 * @param frontProductionV
-	 */
-	void refresh(Produceable frontProductionV);
-	/**
-	 * Finner basert på kunde
-	 * @param customerNr
-	 * @return frontproduksjon
-	 */
-	List<Produceable> findByCustomerNr(Integer customerNr);
+    /**
+     * Oppdaterer
+     * 
+     * @param frontProductionV
+     */
+    void refresh(Produceable frontProductionV);
 
-	List<Produceable> findByCustomerNrProductAreaGroup(Integer customerNr,
-			ProductAreaGroup productAreaGroup);
+    /**
+     * Finner basert på kunde
+     * 
+     * @param customerNr
+     * @return frontproduksjon
+     */
+    List<Produceable> findByCustomerNr(Integer customerNr);
 
-	List<Produceable> findByOrderNrAndProductAreaGroup(String orderNr,
-			ProductAreaGroup productAreaGroup);
+    List<Produceable> findByCustomerNrProductAreaGroup(Integer customerNr, ProductAreaGroup productAreaGroup);
+
+    List<Produceable> findByOrderNrAndProductAreaGroup(String orderNr, ProductAreaGroup productAreaGroup);
 }

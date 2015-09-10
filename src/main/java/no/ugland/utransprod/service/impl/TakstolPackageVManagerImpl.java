@@ -70,7 +70,7 @@ public class TakstolPackageVManagerImpl extends AbstractApplyListManager<Packabl
 			    relatedArticles.add(item);
 			} else {// dersom gjeldende takstol ikke kan ha
 				// relaterte
-			    // legges den under default takstol
+				// legges den under default takstol
 			    addArticleToDefaultTakstol(item, defaultTakstolMap);
 			}
 		    }

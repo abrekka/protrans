@@ -27,6 +27,8 @@ import no.ugland.utransprod.model.PostShipment;
 import no.ugland.utransprod.service.DelAltManager;
 import no.ugland.utransprod.service.DeviationManager;
 import no.ugland.utransprod.service.ManagerRepository;
+import no.ugland.utransprod.service.OrderManager;
+import no.ugland.utransprod.service.PostShipmentManager;
 import no.ugland.utransprod.service.enums.LazyLoadDeviationEnum;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.service.enums.LazyLoadOrderLineEnum;
@@ -786,29 +788,23 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 	    @Override
 	    public Object getValue(ReportObject reportObject, Integer colliCount) {
 		Transportable transportable = reportObject.getTransportable();
-		// if
-		// (!Hibernate.isInitialized(transportable.getTransportComments()))
-		// {
-		// if (transportable instanceof PostShipment) {
-		// PostShipmentManager postShipmentManager =
-		// (PostShipmentManager)
-		// ModelUtil.getBean("postShipmentManager");
-		// postShipmentManager.lazyLoad((PostShipment) transportable,
-		// new LazyLoadPostShipmentEnum[] {
-		// LazyLoadPostShipmentEnum.ORDER_COMMENTS });
-		// } else {
-		// OrderManager orderManager = (OrderManager)
-		// ModelUtil.getBean("orderManager");
-		//
-		// orderManager.lazyLoadOrder((Order) transportable, new
-		// LazyLoadOrderEnum[] { LazyLoadOrderEnum.COMMENTS });
-		//
-		// }
-		// }
 		if (transportable.getDeviation() != null && !Hibernate.isInitialized(transportable.getDeviation().getOrderComments())) {
 		    DeviationManager deviationManager = (DeviationManager) ModelUtil.getBean(DeviationManager.MANAGER_NAME);
 		    deviationManager.lazyLoad(transportable.getDeviation(), new LazyLoadDeviationEnum[] { LazyLoadDeviationEnum.COMMENTS });
 		}
+		if (!Hibernate.isInitialized(transportable.getTransportComments())) {
+		    if (transportable instanceof PostShipment) {
+			PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil.getBean("postShipmentManager");
+			postShipmentManager.lazyLoad((PostShipment) transportable,
+				new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_COMMENTS });
+		    } else {
+			OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
+
+			orderManager.lazyLoadOrder((Order) transportable, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COMMENTS });
+
+		    }
+		}
+
 		String comments = transportable.getTransportComments();
 		return comments == null ? reportObject.getTilleggsordre() : comments + " " + reportObject.getTilleggsordre();
 	    }

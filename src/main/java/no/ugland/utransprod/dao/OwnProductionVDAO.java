@@ -12,15 +12,15 @@ import no.ugland.utransprod.util.excel.ExcelReportSetting;
  * 
  */
 public interface OwnProductionVDAO extends DAO<OwnProductionV> {
-	/**
-	 * Finner egenproduksjon basert på parametre
-	 * 
-	 * @param params
-	 * @return info om egenproduksjon
-	 */
-	List<OwnProductionV> findByParams(ExcelReportSetting params);
+    /**
+     * Finner egenproduksjon basert på parametre
+     * 
+     * @param params
+     * @return info om egenproduksjon
+     */
+    List<OwnProductionV> findByParams(ExcelReportSetting params);
 
-	List<OwnProductionV> findPacklistReady(String productAreaGroupName);
+    List<OwnProductionV> findPacklistReady(String productAreaGroupName);
 
-	List<OwnProductionV> findPacklistNotReady(String productAreaName,String productAreaGroupName);
+    List<OwnProductionV> findPacklistNotReady(String productAreaName, String productAreaGroupName);
 }

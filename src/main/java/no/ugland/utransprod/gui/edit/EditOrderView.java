@@ -24,7 +24,6 @@ import no.ugland.utransprod.gui.handlers.OrderViewHandler;
 import no.ugland.utransprod.gui.model.OrderModel;
 import no.ugland.utransprod.model.Customer;
 import no.ugland.utransprod.model.Order;
-import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.Project;
 import no.ugland.utransprod.model.validators.OrderValidator;
 import no.ugland.utransprod.service.VismaFileCreator;
@@ -160,8 +159,8 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
     @Override
     protected final void initEditComponents(final WindowInterface window1) {
 	orderViewHandler.checkAddresses(presentationModel, window1);
-	comboBoxAssemblyTeam = new JComboBox(new ComboBoxAdapter(orderViewHandler.getSupplierList((ProductAreaGroup) presentationModel
-		.getBufferedValue(OrderModel.PROPERTY_PRODUCT_AREA_GROUP)), presentationModel.getBufferedModel(OrderModel.PROPERTY_SUPPLIER)));
+	comboBoxAssemblyTeam = new JComboBox(new ComboBoxAdapter(orderViewHandler.getSupplierList(),
+		presentationModel.getBufferedModel(OrderModel.PROPERTY_SUPPLIER)));
 	comboBoxAssemblyTeam.setName("ComboBoxAssemblyTeam");
 	orderViewHandler.addEditComponent(comboBoxAssemblyTeam);
 

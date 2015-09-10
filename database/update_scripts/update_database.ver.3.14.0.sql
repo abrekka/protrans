@@ -1,0 +1,1 @@
+update [Protrans2].[dbo].[product_area] set product_area='Proff' where product_area='Villa spesial'

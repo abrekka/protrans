@@ -17,31 +17,31 @@ public class SaleStatusVManagerImpl implements SaleStatusVManager {
      * @param aDao
      */
     public final void setSaleStatusVDAO(final SaleStatusVDAO aDao) {
-        this.dao = aDao;
+	this.dao = aDao;
     }
 
     public CheckObject checkExcel(ExcelReportSetting params) {
-        // TODO Auto-generated method stub
-        return null;
+	// TODO Auto-generated method stub
+	return null;
     }
 
     public List<?> findByParams(ExcelReportSetting params) throws ProTransException {
-        return dao.findByProbabilitesAndProductArea(((ExcelReportSettingSaleStatus) params)
-                .getProbabilities(), ((ExcelReportSettingSaleStatus) params).getProductArea());
+	return dao.findByProbabilitesAndProductArea(((ExcelReportSettingSaleStatus) params).getProbabilities(),
+		((ExcelReportSettingSaleStatus) params).getProductArea());
     }
 
     public String getInfoButtom(ExcelReportSetting params) throws ProTransException {
-        // TODO Auto-generated method stub
-        return null;
+	// TODO Auto-generated method stub
+	return null;
     }
 
     public String getInfoTop(ExcelReportSetting params) {
-        // TODO Auto-generated method stub
-        return null;
+	// TODO Auto-generated method stub
+	return null;
     }
 
     public Map<Object, Object> getReportDataMap(ExcelReportSetting params) {
-        // TODO Auto-generated method stub
-        return null;
+	// TODO Auto-generated method stub
+	return null;
     }
 }

@@ -11,11 +11,11 @@ import no.ugland.utransprod.model.OrderReserveV;
  * 
  */
 public interface OrderReserveVDAO extends DAO<OrderReserveV> {
-	/**
-	 * Finner ordrereserve for gitt produktområde
-	 * 
-	 * @param productArea
-	 * @return ordrereserve
-	 */
-	List<OrderReserveV> findByProductArea(String productArea);
+    /**
+     * Finner ordrereserve for gitt produktområde
+     * 
+     * @param productArea
+     * @return ordrereserve
+     */
+    List<OrderReserveV> findByProductArea(String productArea);
 }

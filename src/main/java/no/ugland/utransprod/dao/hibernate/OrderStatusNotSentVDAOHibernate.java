@@ -19,111 +19,105 @@ import org.springframework.orm.hibernate3.HibernateCallback;
  * @author atle.brekka
  * 
  */
-public class OrderStatusNotSentVDAOHibernate extends
-		BaseDAOHibernate<OrderStatusNotSentV> implements OrderStatusNotSentVDAO {
-	/**
-	 * Konstruktør
-	 */
-	public OrderStatusNotSentVDAOHibernate() {
-		super(OrderStatusNotSentV.class);
-	}
+public class OrderStatusNotSentVDAOHibernate extends BaseDAOHibernate<OrderStatusNotSentV> implements OrderStatusNotSentVDAO {
+    /**
+     * Konstruktør
+     */
+    public OrderStatusNotSentVDAOHibernate() {
+	super(OrderStatusNotSentV.class);
+    }
 
-	/**
-	 * @see no.ugland.utransprod.dao.OrderStatusNotSentVDAO#findByParams(no.ugland.utransprod.util.excel.ExcelReportSetting)
-	 */
-	@SuppressWarnings("unchecked")
-	public List<StatusOrdersNotSent> findByParams(final ExcelReportSetting params) {
-		return (List) getHibernateTemplate().execute(new HibernateCallback() {
+    /**
+     * @see no.ugland.utransprod.dao.OrderStatusNotSentVDAO#findByParams(no.ugland.utransprod.util.excel.ExcelReportSetting)
+     */
+    @SuppressWarnings("unchecked")
+    public List<StatusOrdersNotSent> findByParams(final ExcelReportSetting params) {
+	return (List) getHibernateTemplate().execute(new HibernateCallback() {
 
-			public Object doInHibernate(Session session)
-					throws HibernateException {
-				List<Object[]> list = getSumPacklistNotReady(params, session);
-				
-				if (list.size() > 1) {
-					return null;
-				}
-				
-				List returnList = new ArrayList<Object>();
-				
-				StatusOrdersNotSent statusOrdersNotSent = createStatusOrderNotSentAndSetCountNoPacklist(list);
+	    public Object doInHibernate(Session session) throws HibernateException {
+		List<Object[]> list = getSumPacklistNotReady(params, session);
 
-				list = getSumOrderNotReady(params, session);
-				if (list.size() > 1) {
-					return null;
-				}
+		if (list.size() > 1) {
+		    return null;
+		}
 
-				
-				setCountNotReady(list, statusOrdersNotSent);
+		List returnList = new ArrayList<Object>();
 
-				list = getSumOrderReady(params, session);
-				if (list.size() > 1) {
-					return null;
-				}
+		StatusOrdersNotSent statusOrdersNotSent = createStatusOrderNotSentAndSetCountNoPacklist(list);
 
-				setCountNotSent(list, statusOrdersNotSent);
+		list = getSumOrderNotReady(params, session);
+		if (list.size() > 1) {
+		    return null;
+		}
 
-				returnList.add(statusOrdersNotSent);
+		setCountNotReady(list, statusOrdersNotSent);
 
-				return returnList;
-			}
-		});
-	}
-	void setCountNotSent(List<Object[]> list, StatusOrdersNotSent statusOrdersNotSent) {
-		Object[] object = list.get(0);
+		list = getSumOrderReady(params, session);
+		if (list.size() > 1) {
+		    return null;
+		}
 
-		statusOrdersNotSent.setCountNotSent((Integer) object[0]);
-		statusOrdersNotSent
-				.setGarageValueNotSent((BigDecimal) object[1]);
-	}
-	@SuppressWarnings("unchecked") List<Object[]> getSumOrderReady(final ExcelReportSetting params, Session session) {
-		List<Object[]> list;
-		list = session
-				.createQuery(
-						"select count(orderStatusNotSentV.orderId),"
-								+ "sum(orderStatusNotSentV.garageValue) "
-								+ "from OrderStatusNotSentV orderStatusNotSentV "
-								+ "where orderStatusNotSentV.orderReady is not null and "
-								+ "		orderStatusNotSentV.productArea=:productArea").setParameter("productArea", params.getProductAreaName())
-				.list();
-		return list;
-	}
-	void setCountNotReady(List<Object[]> list, StatusOrdersNotSent statusOrdersNotSent) {
-		Object[] object = list.get(0);
+		setCountNotSent(list, statusOrdersNotSent);
 
-		statusOrdersNotSent.setCountNotReady((Integer) object[0]);
-		statusOrdersNotSent
-				.setGarageValueNotReady((BigDecimal) object[1]);
-	}
-	@SuppressWarnings("unchecked") List<Object[]> getSumPacklistNotReady(final ExcelReportSetting params, Session session) {
-		List<Object[]> list = session
-				.createQuery(
-						"select count(orderStatusNotSentV.orderId),"
-								+ "sum(orderStatusNotSentV.garageValue) "
-								+ "from OrderStatusNotSentV orderStatusNotSentV "
-								+ "where orderStatusNotSentV.packlistReady is null and " 
-								+ "		orderStatusNotSentV.productArea=:productArea").setParameter("productArea", params.getProductAreaName())
-				.list();
-		return list;
-	}
-	StatusOrdersNotSent createStatusOrderNotSentAndSetCountNoPacklist(List<Object[]> list) {
-		StatusOrdersNotSent statusOrdersNotSent = new StatusOrdersNotSent();
-		Object[] object = list.get(0);
-		statusOrdersNotSent.setCountNoPacklist((Integer) object[0]);
-		statusOrdersNotSent
-				.setGarageValueNoPacklist((BigDecimal) object[1]);
-		return statusOrdersNotSent;
-	}
-	@SuppressWarnings("unchecked") List<Object[]> getSumOrderNotReady(final ExcelReportSetting params, Session session) {
-		List<Object[]> list;
-		list = session
-				.createQuery(
-						"select count(orderStatusNotSentV.orderId),"
-								+ "sum(orderStatusNotSentV.garageValue) "
-								+ "from OrderStatusNotSentV orderStatusNotSentV "
-								+ "where orderStatusNotSentV.orderReady is null and "
-								+ "		orderStatusNotSentV.productArea=:productArea").setParameter("productArea", params.getProductAreaName())
-				.list();
-		return list;
-	}
+		returnList.add(statusOrdersNotSent);
+
+		return returnList;
+	    }
+	});
+    }
+
+    void setCountNotSent(List<Object[]> list, StatusOrdersNotSent statusOrdersNotSent) {
+	Object[] object = list.get(0);
+
+	statusOrdersNotSent.setCountNotSent((Integer) object[0]);
+	statusOrdersNotSent.setGarageValueNotSent((BigDecimal) object[1]);
+    }
+
+    @SuppressWarnings("unchecked")
+    List<Object[]> getSumOrderReady(final ExcelReportSetting params, Session session) {
+	List<Object[]> list;
+	list = session
+		.createQuery(
+			"select count(orderStatusNotSentV.orderId)," + "sum(orderStatusNotSentV.garageValue) "
+				+ "from OrderStatusNotSentV orderStatusNotSentV " + "where orderStatusNotSentV.orderReady is not null and "
+				+ "		orderStatusNotSentV.productArea=:productArea").setParameter("productArea", params.getProductAreaName()).list();
+	return list;
+    }
+
+    void setCountNotReady(List<Object[]> list, StatusOrdersNotSent statusOrdersNotSent) {
+	Object[] object = list.get(0);
+
+	statusOrdersNotSent.setCountNotReady((Integer) object[0]);
+	statusOrdersNotSent.setGarageValueNotReady((BigDecimal) object[1]);
+    }
+
+    @SuppressWarnings("unchecked")
+    List<Object[]> getSumPacklistNotReady(final ExcelReportSetting params, Session session) {
+	List<Object[]> list = session
+		.createQuery(
+			"select count(orderStatusNotSentV.orderId)," + "sum(orderStatusNotSentV.garageValue) "
+				+ "from OrderStatusNotSentV orderStatusNotSentV " + "where orderStatusNotSentV.packlistReady is null and "
+				+ "		orderStatusNotSentV.productArea=:productArea").setParameter("productArea", params.getProductAreaName()).list();
+	return list;
+    }
+
+    StatusOrdersNotSent createStatusOrderNotSentAndSetCountNoPacklist(List<Object[]> list) {
+	StatusOrdersNotSent statusOrdersNotSent = new StatusOrdersNotSent();
+	Object[] object = list.get(0);
+	statusOrdersNotSent.setCountNoPacklist((Integer) object[0]);
+	statusOrdersNotSent.setGarageValueNoPacklist((BigDecimal) object[1]);
+	return statusOrdersNotSent;
+    }
+
+    @SuppressWarnings("unchecked")
+    List<Object[]> getSumOrderNotReady(final ExcelReportSetting params, Session session) {
+	List<Object[]> list;
+	list = session
+		.createQuery(
+			"select count(orderStatusNotSentV.orderId)," + "sum(orderStatusNotSentV.garageValue) "
+				+ "from OrderStatusNotSentV orderStatusNotSentV " + "where orderStatusNotSentV.orderReady is null and "
+				+ "		orderStatusNotSentV.productArea=:productArea").setParameter("productArea", params.getProductAreaName()).list();
+	return list;
+    }
 
 }

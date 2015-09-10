@@ -1,6 +1,5 @@
 package no.ugland.utransprod.gui.handlers;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,11 +7,9 @@ import java.util.Map;
 import javax.swing.ListModel;
 
 import no.ugland.utransprod.gui.checker.StatusCheckerInterface;
-import no.ugland.utransprod.gui.model.TextPaneRendererCustTr;
 import no.ugland.utransprod.gui.model.TextPaneRendererTransport;
 import no.ugland.utransprod.gui.model.TextPaneRendererTransportSent;
 import no.ugland.utransprod.gui.model.Transportable;
-import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.Transport;
 import no.ugland.utransprod.service.OverviewManager;
 import no.ugland.utransprod.service.enums.LazyLoadEnum;
@@ -100,6 +97,27 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 	    public void setPrefferedWidth(JXTable table) {
 	    }
 	},
+	LEVERINGSADRESSE("Leveringsadresse", ForExcel.EXCEL) {
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
+		    StatusCheckerInterface<Transportable> takstolChecker, StatusCheckerInterface<Transportable> steinChecker,
+		    StatusCheckerInterface<Transportable> gulvsponChecker) {
+		return transportable.getOrder().getDeliveryAddress();
+	    }
+
+	    @Override
+	    public void setCellRenderer(JXTable table) {
+	    }
+
+	    @Override
+	    public void setPrefferedWidth(JXTable table) {
+	    }
+	},
 	TRANSPORT("Transport", ForExcel.TABLE) {
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
@@ -149,29 +167,31 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 
 	    }
 	},
-	GAVL("Gavl", ForExcel.BOTH) {
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
-		    StatusCheckerInterface<Transportable> takstolChecker, StatusCheckerInterface<Transportable> steinChecker,
-		    StatusCheckerInterface<Transportable> gulvsponChecker) {
-		return statusMap.get(gavlChecker.getArticleName());
-	    }
-
-	    @Override
-	    public Class<?> getColumnClass() {
-		return String.class;
-	    }
-
-	    @Override
-	    public void setCellRenderer(JXTable table) {
-	    }
-
-	    @Override
-	    public void setPrefferedWidth(JXTable table) {
-		table.getColumnExt(table.getColumnExt(getColumnName()).getModelIndex()).setPreferredWidth(40);
-
-	    }
-	},
+	// GAVL("Gavl", ForExcel.TABLE) {
+	// @Override
+	// public Object getValue(Transportable transportable, Map<String,
+	// String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
+	// StatusCheckerInterface<Transportable> takstolChecker,
+	// StatusCheckerInterface<Transportable> steinChecker,
+	// StatusCheckerInterface<Transportable> gulvsponChecker) {
+	// return statusMap.get(gavlChecker.getArticleName());
+	// }
+	//
+	// @Override
+	// public Class<?> getColumnClass() {
+	// return String.class;
+	// }
+	//
+	// @Override
+	// public void setCellRenderer(JXTable table) {
+	// }
+	//
+	// @Override
+	// public void setPrefferedWidth(JXTable table) {
+	// table.getColumnExt(table.getColumnExt(getColumnName()).getModelIndex()).setPreferredWidth(40);
+	//
+	// }
+	// },
 	MONT("Mont", ForExcel.BOTH) {
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
@@ -198,35 +218,38 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 
 	    }
 	},
-	TAKSTOL("Takstol", ForExcel.BOTH) {
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
-		    StatusCheckerInterface<Transportable> takstolChecker, StatusCheckerInterface<Transportable> steinChecker,
-		    StatusCheckerInterface<Transportable> gulvsponChecker) {
-		return statusMap.get(takstolChecker.getArticleName());
-	    }
-
-	    @Override
-	    public Class<?> getColumnClass() {
-		return String.class;
-	    }
-
-	    @Override
-	    public void setCellRenderer(JXTable table) {
-	    }
-
-	    @Override
-	    public void setPrefferedWidth(JXTable table) {
-		table.getColumnExt(table.getColumnExt(getColumnName()).getModelIndex()).setPreferredWidth(50);
-
-	    }
-	},
+	// TAKSTOL("Takstol", ForExcel.TABLE) {
+	// @Override
+	// public Object getValue(Transportable transportable, Map<String,
+	// String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
+	// StatusCheckerInterface<Transportable> takstolChecker,
+	// StatusCheckerInterface<Transportable> steinChecker,
+	// StatusCheckerInterface<Transportable> gulvsponChecker) {
+	// return statusMap.get(takstolChecker.getArticleName());
+	// }
+	//
+	// @Override
+	// public Class<?> getColumnClass() {
+	// return String.class;
+	// }
+	//
+	// @Override
+	// public void setCellRenderer(JXTable table) {
+	// }
+	//
+	// @Override
+	// public void setPrefferedWidth(JXTable table) {
+	// table.getColumnExt(table.getColumnExt(getColumnName()).getModelIndex()).setPreferredWidth(50);
+	//
+	// }
+	// },
 	STEIN("Stein", ForExcel.BOTH) {
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
 		    StatusCheckerInterface<Transportable> takstolChecker, StatusCheckerInterface<Transportable> steinChecker,
 		    StatusCheckerInterface<Transportable> gulvsponChecker) {
-		return statusMap.get(steinChecker.getArticleName());
+		String steinStatus = statusMap.get(steinChecker.getArticleName());
+		return steinStatus == null ? "MANGLER" : steinStatus;
 	    }
 
 	    @Override
@@ -249,7 +272,8 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
 		    StatusCheckerInterface<Transportable> takstolChecker, StatusCheckerInterface<Transportable> steinChecker,
 		    StatusCheckerInterface<Transportable> gulvsponChecker) {
-		return statusMap.get(gulvsponChecker.getArticleName());
+		String gulvsponStatus = statusMap.get(gulvsponChecker.getArticleName());
+		return gulvsponStatus == null ? "MANGLER" : gulvsponStatus;
 	    }
 
 	    @Override
@@ -291,14 +315,17 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 
 	    }
 	},
-	KOMPLETT("Komplett", ForExcel.BOTH) {
+	KOMPLETT("Komplett", ForExcel.TABLE) {
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
 		    StatusCheckerInterface<Transportable> takstolChecker, StatusCheckerInterface<Transportable> steinChecker,
 		    StatusCheckerInterface<Transportable> gulvsponChecker) {
 		try {
-		    List<OrderLine> missing = transportable.getMissingCollies();
-		    return missing != null && !missing.isEmpty() ? "Nei" : "Ja;";
+		    return transportable.getOrderComplete() != null ? "Ja" : "Nei";
+		    // List<OrderLine> missing =
+		    // transportable.getMissingCollies();
+		    // return missing != null && !missing.isEmpty() ? "Nei" :
+		    // "Ja;";
 		} catch (Exception e) {
 		    // TODO Auto-generated catch block
 		    e.printStackTrace();
@@ -323,7 +350,7 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 
 	    }
 	},
-	KLAR("Klar", ForExcel.BOTH) {
+	KLAR("Klar", ForExcel.TABLE) {
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
 		    StatusCheckerInterface<Transportable> takstolChecker, StatusCheckerInterface<Transportable> steinChecker,
@@ -354,7 +381,7 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 		    StatusCheckerInterface<Transportable> gulvsponChecker) {
 		OverviewManager<Object> manager = (OverviewManager<Object>) ModelUtil.getBean(transportable.getManagerName());
 		manager.lazyLoad(transportable, new LazyLoadEnum[][] { { LazyLoadEnum.COLLIES, LazyLoadEnum.NONE },
-			{ LazyLoadEnum.ORDER_COMMENTS, LazyLoadEnum.NONE } });
+			{ LazyLoadEnum.ORDER_LINES, LazyLoadEnum.NONE }, { LazyLoadEnum.ORDER_COMMENTS, LazyLoadEnum.NONE } });
 		return transportable.getCollies() != null ? transportable.getCollies().size() : null;
 	    }
 
@@ -429,54 +456,59 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 
 	    }
 	},
-	REST("Rest", ForExcel.TABLE) {
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
-		    StatusCheckerInterface<Transportable> takstolChecker, StatusCheckerInterface<Transportable> steinChecker,
-		    StatusCheckerInterface<Transportable> gulvsponChecker) {
-		return transportable;
-	    }
-
-	    @Override
-	    public Class<?> getColumnClass() {
-		return Transportable.class;
-	    }
-
-	    @Override
-	    public void setCellRenderer(JXTable table) {
-		table.getColumnModel().getColumn(table.getColumnExt(getColumnName()).getModelIndex()).setCellRenderer(new TextPaneRendererCustTr());
-
-	    }
-
-	    @Override
-	    public void setPrefferedWidth(JXTable table) {
-		table.getColumnExt(table.getColumnExt(getColumnName()).getModelIndex()).setPreferredWidth(50);
-
-	    }
-	},
-	GHØYDE("GHøyde", ForExcel.BOTH) {
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
-		    StatusCheckerInterface<Transportable> takstolChecker, StatusCheckerInterface<Transportable> steinChecker,
-		    StatusCheckerInterface<Transportable> gulvsponChecker) {
-		return transportable.getGarageColliHeight();
-	    }
-
-	    @Override
-	    public Class<?> getColumnClass() {
-		return BigDecimal.class;
-	    }
-
-	    @Override
-	    public void setCellRenderer(JXTable table) {
-	    }
-
-	    @Override
-	    public void setPrefferedWidth(JXTable table) {
-		table.getColumnExt(table.getColumnExt(getColumnName()).getModelIndex()).setPreferredWidth(55);
-
-	    }
-	},
+	// REST("Rest", ForExcel.TABLE) {
+	// @Override
+	// public Object getValue(Transportable transportable, Map<String,
+	// String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
+	// StatusCheckerInterface<Transportable> takstolChecker,
+	// StatusCheckerInterface<Transportable> steinChecker,
+	// StatusCheckerInterface<Transportable> gulvsponChecker) {
+	// return transportable;
+	// }
+	//
+	// @Override
+	// public Class<?> getColumnClass() {
+	// return Transportable.class;
+	// }
+	//
+	// @Override
+	// public void setCellRenderer(JXTable table) {
+	// table.getColumnModel().getColumn(table.getColumnExt(getColumnName()).getModelIndex()).setCellRenderer(new
+	// TextPaneRendererCustTr());
+	//
+	// }
+	//
+	// @Override
+	// public void setPrefferedWidth(JXTable table) {
+	// table.getColumnExt(table.getColumnExt(getColumnName()).getModelIndex()).setPreferredWidth(50);
+	//
+	// }
+	// },
+	// GHØYDE("GHøyde", ForExcel.TABLE) {
+	// @Override
+	// public Object getValue(Transportable transportable, Map<String,
+	// String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
+	// StatusCheckerInterface<Transportable> takstolChecker,
+	// StatusCheckerInterface<Transportable> steinChecker,
+	// StatusCheckerInterface<Transportable> gulvsponChecker) {
+	// return transportable.getGarageColliHeight();
+	// }
+	//
+	// @Override
+	// public Class<?> getColumnClass() {
+	// return BigDecimal.class;
+	// }
+	//
+	// @Override
+	// public void setCellRenderer(JXTable table) {
+	// }
+	//
+	// @Override
+	// public void setPrefferedWidth(JXTable table) {
+	// table.getColumnExt(table.getColumnExt(getColumnName()).getModelIndex()).setPreferredWidth(55);
+	//
+	// }
+	// },
 	PRODUKTOMRÅDE("Produktområde", ForExcel.TABLE) {
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
@@ -500,29 +532,31 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 
 	    }
 	},
-	THØYDE("THøyde", ForExcel.TABLE) {
-	    @Override
-	    public Class<?> getColumnClass() {
-		return Integer.class;
-	    }
-
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
-		    StatusCheckerInterface<Transportable> takstolChecker, StatusCheckerInterface<Transportable> steinChecker,
-		    StatusCheckerInterface<Transportable> gulvsponChecker) {
-		return transportable.getMaxTrossHeight();
-	    }
-
-	    @Override
-	    public void setCellRenderer(JXTable table) {
-	    }
-
-	    @Override
-	    public void setPrefferedWidth(JXTable table) {
-		table.getColumnExt(table.getColumnExt(getColumnName()).getModelIndex()).setPreferredWidth(55);
-
-	    }
-	},
+	// THØYDE("THøyde", ForExcel.TABLE) {
+	// @Override
+	// public Class<?> getColumnClass() {
+	// return Integer.class;
+	// }
+	//
+	// @Override
+	// public Object getValue(Transportable transportable, Map<String,
+	// String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
+	// StatusCheckerInterface<Transportable> takstolChecker,
+	// StatusCheckerInterface<Transportable> steinChecker,
+	// StatusCheckerInterface<Transportable> gulvsponChecker) {
+	// return transportable.getMaxTrossHeight();
+	// }
+	//
+	// @Override
+	// public void setCellRenderer(JXTable table) {
+	// }
+	//
+	// @Override
+	// public void setPrefferedWidth(JXTable table) {
+	// table.getColumnExt(table.getColumnExt(getColumnName()).getModelIndex()).setPreferredWidth(55);
+	//
+	// }
+	// },
 	KOMMENTAR("Kommentar", ForExcel.EXCEL) {
 	    @Override
 	    public Class<?> getColumnClass() {
@@ -568,29 +602,31 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 	    public void setPrefferedWidth(JXTable table) {
 	    }
 	},
-	TAKSTOLTEGNER("Takstoltegner", ForExcel.BOTH) {
-	    @Override
-	    public Class<?> getColumnClass() {
-		return String.class;
-	    }
-
-	    @Override
-	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
-		    StatusCheckerInterface<Transportable> takstolChecker, StatusCheckerInterface<Transportable> steinChecker,
-		    StatusCheckerInterface<Transportable> gulvsponChecker) {
-
-		return transportable.getTrossDrawer();
-	    }
-
-	    @Override
-	    public void setCellRenderer(JXTable table) {
-	    }
-
-	    @Override
-	    public void setPrefferedWidth(JXTable table) {
-		table.getColumnExt(table.getColumnExt(getColumnName()).getModelIndex()).setPreferredWidth(100);
-	    }
-	},
+	// TAKSTOLTEGNER("Takstoltegner", ForExcel.TABLE) {
+	// @Override
+	// public Class<?> getColumnClass() {
+	// return String.class;
+	// }
+	//
+	// @Override
+	// public Object getValue(Transportable transportable, Map<String,
+	// String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
+	// StatusCheckerInterface<Transportable> takstolChecker,
+	// StatusCheckerInterface<Transportable> steinChecker,
+	// StatusCheckerInterface<Transportable> gulvsponChecker) {
+	//
+	// return transportable.getTrossDrawer();
+	// }
+	//
+	// @Override
+	// public void setCellRenderer(JXTable table) {
+	// }
+	//
+	// @Override
+	// public void setPrefferedWidth(JXTable table) {
+	// table.getColumnExt(table.getColumnExt(getColumnName()).getModelIndex()).setPreferredWidth(100);
+	// }
+	// },
 	TLF("Tlf", ForExcel.BOTH) {
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
@@ -736,7 +772,8 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 	// PostShipmentManager postShipmentManager = (PostShipmentManager)
 	// ModelUtil.getBean("postShipmentManager");
 	// postShipmentManager.lazyLoad((PostShipment) transportable, new
-	// LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_LINES,
+	// LazyLoadPostShipmentEnum[] {
+	// LazyLoadPostShipmentEnum.ORDER_LINES,
 	// LazyLoadPostShipmentEnum.COLLIES,
 	// LazyLoadPostShipmentEnum.ORDER_COMMENTS });
 	// } else {
@@ -748,7 +785,6 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 	// LazyLoadOrderEnum.ORDER_LINE_ATTRIBUTES, LazyLoadOrderEnum.COLLIES,
 	// LazyLoadOrderEnum.COMMENTS });
 	//
-	// }
 	// }
 
 	Map<String, String> statusMap = Util.createStatusMap(transportable.getStatus());

@@ -124,7 +124,8 @@ public enum OrderPanelTypeEnum {
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> steinChecker,
 		    OrderPanelTypeEnum orderPanelTypeEnum) {
-		return statusMap.get(steinChecker.getArticleName());
+		String steinStatus = statusMap.get(steinChecker.getArticleName());
+		return steinStatus == null ? "MANGLER" : steinStatus;
 	    }
 	},
 	KUNDE {

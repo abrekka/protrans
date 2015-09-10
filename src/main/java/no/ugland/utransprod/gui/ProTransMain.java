@@ -153,10 +153,13 @@ public class ProTransMain extends JFrame implements MainWindow {
 	Util.setWaitCursor(getRootPane());
 
 	String title = viewer.getTitle();
+	int index = -1;
+	if (title != null) {
 
-	viewers.put(title, viewer);
+	    viewers.put(title, viewer);
 
-	int index = windowMenuTexts.indexOf(title);
+	    index = windowMenuTexts.indexOf(title);
+	}
 
 	if (index != -1) {
 	    handleDefaultMenuAction(title);

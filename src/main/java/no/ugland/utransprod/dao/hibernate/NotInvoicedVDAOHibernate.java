@@ -17,28 +17,26 @@ import org.springframework.orm.hibernate3.HibernateCallback;
  * @author atle.brekka
  * 
  */
-public class NotInvoicedVDAOHibernate extends BaseDAOHibernate<NotInvoicedV>
-		implements NotInvoicedVDAO {
-	/**
-	 * Konstruktør
-	 */
-	public NotInvoicedVDAOHibernate() {
-		super(NotInvoicedV.class);
-	}
+public class NotInvoicedVDAOHibernate extends BaseDAOHibernate<NotInvoicedV> implements NotInvoicedVDAO {
+    /**
+     * Konstruktør
+     */
+    public NotInvoicedVDAOHibernate() {
+	super(NotInvoicedV.class);
+    }
 
-	/**
-	 * @see no.ugland.utransprod.dao.NotInvoicedVDAO#findByParams(no.ugland.utransprod.util.excel.ExcelReportSetting)
-	 */
-	@SuppressWarnings("unchecked")
-	public List<NotInvoicedV> findByParams(final ExcelReportSetting params) {
-		return (List) getHibernateTemplate().execute(new HibernateCallback() {
+    /**
+     * @see no.ugland.utransprod.dao.NotInvoicedVDAO#findByParams(no.ugland.utransprod.util.excel.ExcelReportSetting)
+     */
+    @SuppressWarnings("unchecked")
+    public List<NotInvoicedV> findByParams(final ExcelReportSetting params) {
+	return (List) getHibernateTemplate().execute(new HibernateCallback() {
 
-			public Object doInHibernate(Session session)
-					throws HibernateException {
-				return session.createCriteria(NotInvoicedV.class).add(Restrictions.eq("productArea", params.getProductAreaName())).list();
-			}
+	    public Object doInHibernate(Session session) throws HibernateException {
+		return session.createCriteria(NotInvoicedV.class).add(Restrictions.eq("productArea", params.getProductAreaName())).list();
+	    }
 
-		});
-	}
+	});
+    }
 
 }

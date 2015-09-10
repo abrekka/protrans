@@ -44,8 +44,8 @@ public class GavlProductionView extends ApplyListView<Produceable> {
 	builder.add(checkBoxFilter, cc.xy(13, 2));
 	builder.add(checkBoxFilterStandard, cc.xy(13, 4));
 	builder.add(checkBoxFilterOwn, cc.xy(13, 6));
-	builder.addLabel("Produktområde:", cc.xy(2, 2));
-	builder.add(comboBoxProductAreaGroup, cc.xy(4, 2));
+	// builder.addLabel("Produktområde:", cc.xy(2, 2));
+	// builder.add(comboBoxProductAreaGroup, cc.xy(4, 2));
 	builder.add(textFieldGreen, cc.xy(6, 2));
 	builder.add(textFieldYellow, cc.xy(8, 2));
 	builder.add(textFieldOwn, cc.xy(10, 2));
@@ -72,7 +72,7 @@ public class GavlProductionView extends ApplyListView<Produceable> {
 	buttonSearch = viewHandler.getButtonSearch(window);
 	buttonPrint = viewHandler.getButtonPrint(window);
 	buttonDeviation = viewHandler.getButtonDeviation(window);
-	comboBoxProductAreaGroup = viewHandler.getComboBoxProductAreaGroup();
+	// comboBoxProductAreaGroup = viewHandler.getComboBoxProductAreaGroup();
 	buttonStart = viewHandler.getButtonStart();
 	buttonNotStart = viewHandler.getButtonNotStart();
 	buttonRealProductionHours = viewHandler.getButtonRealProductionHours();

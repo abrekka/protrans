@@ -4,7 +4,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import no.ugland.utransprod.gui.handlers.TransportWeekViewHandler;
-import no.ugland.utransprod.model.ProductAreaGroup;
 
 import org.jdesktop.swingx.JXTable;
 
@@ -23,8 +22,8 @@ public class TransportListView {
 	this.window = window;
     }
 
-    public JPanel buildPanel(ProductAreaGroup productAreaGroup) {
-	initComponents(productAreaGroup);
+    public JPanel buildPanel() {
+	initComponents();
 	int tableSize = transportWeekViewHandler.getNumberOfOrders() * 35;
 	tableSize = tableSize < 300 ? 300 : tableSize;
 	FormLayout layout = new FormLayout("max(310dlu;p)", "fill:p:grow");
@@ -36,7 +35,7 @@ public class TransportListView {
 	return builder.getPanel();
     }
 
-    private void initComponents(ProductAreaGroup productAreaGroup) {
-	tableTransportOrders = transportWeekViewHandler.getTableOrders(productAreaGroup, window);
+    private void initComponents() {
+	tableTransportOrders = transportWeekViewHandler.getTableOrders(window);
     }
 }

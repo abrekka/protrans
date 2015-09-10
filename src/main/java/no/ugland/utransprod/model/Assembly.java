@@ -38,7 +38,7 @@ public class Assembly extends BaseObject implements Comparable<Assembly> {
 
     private Integer inactive;
 
-    private String sentBase;
+    private String sentBase = "0";
 
     public static final Assembly UNKNOWN = new Assembly() {
 

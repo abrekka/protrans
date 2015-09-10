@@ -933,7 +933,9 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		    }
 		    return "---";
 		case 8:
-		    if (orderLine.getOrdln() != null) {
+		    if (orderLine.getOrdln() != null && orderLine.getOrdln().getProdTp() == 35) {
+			return Packagetype.PAKK.getVerdi();
+		    } else if (orderLine.getOrdln() != null) {
 			return orderLine.getOrdln().getProdTp();
 		    } else {
 			if ("Vegg".equalsIgnoreCase(orderLine.getArticlePath())) {

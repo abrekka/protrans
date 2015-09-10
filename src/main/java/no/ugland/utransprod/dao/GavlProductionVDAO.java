@@ -8,41 +8,42 @@ import no.ugland.utransprod.model.ProductAreaGroup;
 
 /**
  * Interface for DAO mot view GAVL_PRODUCTION_V
+ * 
  * @author atle.brekka
- *
+ * 
  */
 public interface GavlProductionVDAO extends DAO<GavlProductionV> {
-	/**
-	 * Finner alle vegger som skal produseres
-	 * 
-	 * @return vegger
-	 */
-	List<Produceable> findAll();
+    /**
+     * Finner alle vegger som skal produseres
+     * 
+     * @return vegger
+     */
+    List<Produceable> findAll();
 
-	/**
-	 * Finner vegg som skal produseres basert op ordrenummer
-	 * 
-	 * @param orderNr
-	 * @return vegg
-	 */
-	List<Produceable> findByOrderNr(String orderNr);
+    /**
+     * Finner vegg som skal produseres basert op ordrenummer
+     * 
+     * @param orderNr
+     * @return vegg
+     */
+    List<Produceable> findByOrderNr(String orderNr);
 
-	/**
-	 * Oppdater objekt
-	 * @param productionV 
-	 */
-	void refresh(Produceable productionV);
+    /**
+     * Oppdater objekt
+     * 
+     * @param productionV
+     */
+    void refresh(Produceable productionV);
 
-	/**
-	 * Finn basert på kundenummer
-	 * @param customerNr
-	 * @return gavlproduksjon
-	 */
-	List<Produceable> findByCustomerNr(Integer customerNr);
+    /**
+     * Finn basert på kundenummer
+     * 
+     * @param customerNr
+     * @return gavlproduksjon
+     */
+    List<Produceable> findByCustomerNr(Integer customerNr);
 
-	List<Produceable> findByCustomerNrAndProductAreaGroup(Integer customerNr,
-			ProductAreaGroup productAreaGroup);
+    List<Produceable> findByCustomerNrAndProductAreaGroup(Integer customerNr, ProductAreaGroup productAreaGroup);
 
-	List<Produceable> findByOrderNrAndProductAreaGroup(String orderNr,
-			ProductAreaGroup productAreaGroup);
+    List<Produceable> findByOrderNrAndProductAreaGroup(String orderNr, ProductAreaGroup productAreaGroup);
 }

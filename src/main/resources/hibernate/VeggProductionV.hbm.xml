@@ -9,7 +9,7 @@
     name="no.ugland.utransprod.model.VeggProductionV" 
     table="VEGG_PRODUCTION_V"
 >
-<id name="orderLineId" type="java.lang.Integer" column="ORDER_LINE_ID">
+<id name="orderNr" type="java.lang.String" column="ORDER_NR">
         <generator class="assigned"/>
         </id>
         <property
@@ -41,12 +41,12 @@
 
 	
     
-    <property
-        name="orderNr"
-        type="java.lang.String"
-        column="ORDER_NR"
-        length="32"
-    />
+<!--     <property -->
+<!--         name="orderNr" -->
+<!--         type="java.lang.String" -->
+<!--         column="ORDER_NR" -->
+<!--         length="32" -->
+<!--     /> -->
     
 	
 	
@@ -76,18 +76,18 @@
         column="ARTICLE_NAME"
         length="255"
     />
-	<property
-        name="attributeInfo"
-        type="java.lang.String"
-        column="ATTRIBUTE_INFO"
-        length="255"
-    />
-	<property
-        name="numberOfItems"
-        type="java.lang.Integer"
-        column="NUMBER_OF_ITEMS"
-        length="32"
-    />
+<!-- 	<property -->
+<!--         name="attributeInfo" -->
+<!--         type="java.lang.String" -->
+<!--         column="ATTRIBUTE_INFO" -->
+<!--         length="255" -->
+<!--     /> -->
+<!-- 	<property -->
+<!--         name="numberOfItems" -->
+<!--         type="java.lang.Integer" -->
+<!--         column="NUMBER_OF_ITEMS" -->
+<!--         length="32" -->
+<!--     /> -->
 	<property
         name="loadingDate"
         type="java.util.Date"

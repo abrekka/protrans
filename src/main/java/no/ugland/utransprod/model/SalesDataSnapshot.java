@@ -49,6 +49,7 @@ public class SalesDataSnapshot extends BaseObject {
     private String salesman;
 
     private Integer orderDate;
+    private String segmentno;
 
     public SalesDataSnapshot() {
 	super();
@@ -61,7 +62,7 @@ public class SalesDataSnapshot extends BaseObject {
 	    final Integer aProductAreaNr, final Date aSaledate, final Date isRegistered, final String aCustomerNr, final String aCustomerName,
 	    final String aDeliveryAddress, final String aPostalCode, final String aPostOffice, final BigDecimal aOwnProductionCost,
 	    final BigDecimal aTransportCost, final BigDecimal aAssemblyCost, final BigDecimal sumYesLines, final BigDecimal aContributionMargin,
-	    final String aCountyName, final String aSalesman, final Integer aOrderDate) {
+	    final String aCountyName, final String aSalesman, final Integer aOrderDate, final String segmentno) {
 	super();
 	this.snapshotId = aSnapshotId;
 	this.saleId = aSaleId;
@@ -84,6 +85,7 @@ public class SalesDataSnapshot extends BaseObject {
 	this.countyName = aCountyName;
 	this.salesman = aSalesman;
 	this.orderDate = aOrderDate;
+	this.segmentno = segmentno;
     }
 
     public final BigDecimal getAssemblyCost() {
@@ -275,5 +277,13 @@ public class SalesDataSnapshot extends BaseObject {
 
     public final void setOrderDate(final Integer aOrderDate) {
 	this.orderDate = aOrderDate;
+    }
+
+    public String getSegmentno() {
+	return segmentno;
+    }
+
+    public void setSegmentno(String segmentno) {
+	this.segmentno = segmentno;
     }
 }

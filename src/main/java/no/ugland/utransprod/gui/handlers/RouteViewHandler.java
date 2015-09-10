@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -53,11 +52,11 @@ import no.ugland.utransprod.gui.WindowInterface;
 import no.ugland.utransprod.gui.buttons.CancelButton;
 import no.ugland.utransprod.gui.buttons.RefreshButton;
 import no.ugland.utransprod.gui.buttons.SaveButton;
+import no.ugland.utransprod.gui.checker.StatusCheckerInterface;
 import no.ugland.utransprod.gui.edit.EditDeviationView;
 import no.ugland.utransprod.gui.model.BudgetType;
 import no.ugland.utransprod.gui.model.ColorEnum;
 import no.ugland.utransprod.gui.model.DeviationModel;
-import no.ugland.utransprod.gui.model.ProductAreaGroupModel;
 import no.ugland.utransprod.gui.model.ProductionBudgetModel;
 import no.ugland.utransprod.gui.model.TextPaneRendererCustomer;
 import no.ugland.utransprod.gui.model.TransportSumVModel;
@@ -77,7 +76,6 @@ import no.ugland.utransprod.service.ColliManager;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.OverviewManager;
 import no.ugland.utransprod.service.PostShipmentManager;
-import no.ugland.utransprod.service.ProductAreaGroupManager;
 import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.service.enums.LazyLoadEnum;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
@@ -96,9 +94,6 @@ import no.ugland.utransprod.util.excel.ExcelUtil;
 import org.hibernate.Hibernate;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.ColorHighlighter;
-import org.jdesktop.swingx.decorator.Filter;
-import org.jdesktop.swingx.decorator.FilterPipeline;
-import org.jdesktop.swingx.decorator.PatternFilter;
 import org.jdesktop.swingx.decorator.PatternPredicate;
 
 import com.google.inject.Inject;
@@ -118,6 +113,7 @@ import com.toedter.calendar.JYearChooser;
  * @author atle.brekka
  */
 public class RouteViewHandler implements Closeable, Updateable, ListDataListener, ProductAreaGroupProvider, OrderNrProvider {
+    private JComboBox comboBoxWeeks;
     TransportWeekView transportWeekView;
 
     JButton buttonSave;
@@ -140,6 +136,7 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
 
     JMenuItem menuItemSetTransportOrder;
     JMenuItem menuItemShowTakstolinfo;
+    JMenuItem menuItemUpdateStatus;
 
     JPopupMenu popupMenuPostShipment;
 
@@ -156,6 +153,7 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
     JXTable tablePostShipment;
 
     JButton buttonDeletePostShipment;
+    private JButton buttonUpdateStatus;
 
     private List<CloseListener> closeListeners = new ArrayList<CloseListener>();
 
@@ -171,9 +169,9 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
 
     JCheckBox checkBoxFilter;
 
-    private List<ProductAreaGroup> productAreaGroupList;
+    // private List<ProductAreaGroup> productAreaGroupList;
 
-    PresentationModel productAreaGroupModel;
+    // PresentationModel productAreaGroupModel;
 
     SelectionEmpyHandler selectionEmpyHandler;
 
@@ -218,7 +216,7 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
 
 	presentationModelBudget = new PresentationModel(new ProductionBudgetModel(new Budget(null, null, null, BigDecimal.valueOf(0), null, null)));
 
-	initProductAreaGroup();
+	// initProductAreaGroup();
 	setTransportSum();
 
     }
@@ -232,8 +230,11 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
 	menuItemShowTakstolinfo = new JMenuItem("Takstolinfo...");
 	menuItemShowTakstolinfo.setName("MenuItemShowTakstolinfo");
 
+	menuItemUpdateStatus = new JMenuItem("Oppdater status...");
+
 	popupMenuSetTransportOrder.add(menuItemSetTransportOrder);
 	popupMenuSetTransportOrder.add(menuItemShowTakstolinfo);
+	popupMenuSetTransportOrder.add(menuItemUpdateStatus);
 
 	popupMenuPostShipment = new JPopupMenu("Sett transport...");
 	popupMenuPostShipment.setName("PopupMenuPostShipment");
@@ -258,33 +259,38 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
     /**
      * Initierer liste med produktområdegrupper
      */
-    private void initProductAreaGroup() {
-	productAreaGroupModel = new PresentationModel(new ProductAreaGroupModel(ProductAreaGroup.UNKNOWN));
-	productAreaGroupModel.addBeanPropertyChangeListener(new ProductAreaChangeListener());
-	ProductAreaGroupManager productAreaGroupManager = (ProductAreaGroupManager) ModelUtil.getBean("productAreaGroupManager");
-	productAreaGroupList = new ArrayList<ProductAreaGroup>();
-	List<ProductAreaGroup> groups = productAreaGroupManager.findAll();
-	if (groups != null) {
-	    productAreaGroupList.addAll(groups);
-	}
-    }
+    // private void initProductAreaGroup() {
+    // productAreaGroupModel = new PresentationModel(new
+    // ProductAreaGroupModel(ProductAreaGroup.UNKNOWN));
+    // productAreaGroupModel.addBeanPropertyChangeListener(new
+    // ProductAreaChangeListener());
+    // ProductAreaGroupManager productAreaGroupManager =
+    // (ProductAreaGroupManager) ModelUtil.getBean("productAreaGroupManager");
+    // productAreaGroupList = new ArrayList<ProductAreaGroup>();
+    // List<ProductAreaGroup> groups = productAreaGroupManager.findAll();
+    // if (groups != null) {
+    // productAreaGroupList.addAll(groups);
+    // }
+    // }
 
     /**
      * Setter antall garsjer og garasjeverdi for gjeldende uke
      */
     void setTransportSum() {
-	ProductAreaGroup group = (ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP);
+	// ProductAreaGroup group = (ProductAreaGroup)
+	// productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP);
 
-	group = group.getProductAreaGroupName().equalsIgnoreCase("Alle") ? ProductAreaGroup.UNKNOWN : group;
+	// group = group.getProductAreaGroupName().equalsIgnoreCase("Alle") ?
+	// ProductAreaGroup.UNKNOWN : group;
 
 	TransportSumV sum = managerRepository.getTransportSumVManager().findYearAndWeekByProductAreaGroup(yearWeek.getYear(), yearWeek.getWeek(),
-		group);
+		ProductAreaGroup.UNKNOWN);
 
 	presentationModelTransportSum.setBean(new TransportSumVModel(sum));
 
 	YearWeek yearWeekMinusOne = Util.addWeek(yearWeek, -1);
 	Budget productionBudget = managerRepository.getBudgetManager().findByYearAndWeekPrProductAreaGroup(yearWeekMinusOne.getYear(),
-		yearWeekMinusOne.getWeek(), group, BudgetType.PRODUCTION);
+		yearWeekMinusOne.getWeek(), ProductAreaGroup.UNKNOWN, BudgetType.PRODUCTION);
 
 	presentationModelBudget.setBean(new ProductionBudgetModel(productionBudget));
     }
@@ -328,12 +334,15 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
      * @return comboboks
      */
     public JComboBox getComboBoxWeeks(WindowInterface window) {
-	JComboBox comboBoxWeeks = BasicComponentFactory.createComboBox(weekSelectionList);
+	if (comboBoxWeeks == null) {
+	    comboBoxWeeks = BasicComponentFactory.createComboBox(weekSelectionList);
+
+	    BeanAdapter routeDateAdapter = new BeanAdapter(yearWeek, true);
+	    weekSelectionList.setSelectionHolder(routeDateAdapter.getValueModel(YearWeek.PROPERTY_WEEK));
+	    weekSelectionList.addValueChangeListener(new WeekChangeListener(window));
+	    comboBoxWeeks.setName("ComboBoxWeeks");
+	}
 	comboBoxWeeks.setSelectedItem(Util.getCurrentWeek());
-	BeanAdapter routeDateAdapter = new BeanAdapter(yearWeek, true);
-	weekSelectionList.setSelectionHolder(routeDateAdapter.getValueModel(YearWeek.PROPERTY_WEEK));
-	weekSelectionList.addValueChangeListener(new WeekChangeListener(window));
-	comboBoxWeeks.setName("ComboBoxWeeks");
 	return comboBoxWeeks;
     }
 
@@ -408,9 +417,10 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
      * 
      * @return komboboks
      */
-    public JComboBox getComboBoxProductAreaGroup() {
-	return Util.getComboBoxProductAreaGroup(login.getApplicationUser(), login.getUserType(), productAreaGroupModel);
-    }
+    // public JComboBox getComboBoxProductAreaGroup() {
+    // return Util.getComboBoxProductAreaGroup(login.getApplicationUser(),
+    // login.getUserType(), productAreaGroupModel);
+    // }
 
     /**
      * Lager sjekkboks for filtrering av sendte transporter
@@ -521,14 +531,11 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
     }
 
     private void updateInvisibleColumns() {
-	PrefsUtil.putUserInvisibleColumns(tablePostShipment,
-		(ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP));
+	PrefsUtil.putUserInvisibleColumns(tablePostShipment, ProductAreaGroup.UNKNOWN);
 
-	PrefsUtil.putUserInvisibleColumns(orderViewHandler.getPanelTableOrders(OrderPanelTypeEnum.NEW_ORDERS, null),
-		(ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP));
+	PrefsUtil.putUserInvisibleColumns(orderViewHandler.getPanelTableOrders(OrderPanelTypeEnum.NEW_ORDERS, null), ProductAreaGroup.UNKNOWN);
 
-	transportWeekViewHandler.saveUserInvisibleColumns((ProductAreaGroup) productAreaGroupModel
-		.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP));
+	transportWeekViewHandler.saveUserInvisibleColumns(ProductAreaGroup.UNKNOWN);
     }
 
     /**
@@ -555,8 +562,7 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
 			deviationViewHandlerFactory, showTakstolInfoActionFactory, yearWeek, vismaFileCreator);
 		transportWeekViewHandler.addTransportChangeListener(transportChangeListener);
 	    }
-	    transportWeekView = new TransportWeekView(yearWeek, transportWeekViewHandler,
-		    (ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP));
+	    transportWeekView = new TransportWeekView(yearWeek, transportWeekViewHandler);
 	}
 
 	return transportWeekView;
@@ -769,6 +775,7 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
 	menuItemShowContent.addActionListener(new ShowContentAction(window));
 	menuItemPacklist.addActionListener(new GeneratePacklistAction(window));
 	menuItemSetTransportOrder.addActionListener(new MenuItemListenerOrder(window));
+	menuItemUpdateStatus.addActionListener(new MenuItemListenerOrder(window));
 	menuItemShowTakstolinfo.addActionListener(showTakstolInfoActionFactory.create(this, window));
 	menuItemSetTransportPostShimpment.addActionListener(new MenuItemListenerPostShipment(window));
 	menuItemShowDeviation.addActionListener(new MenuItemListenerShowDeviation(window));
@@ -1125,6 +1132,27 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
 
 		setTransport(false, window);
 
+	    } else if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemUpdateStatus.getText())) {
+		Util.setWaitCursor(window);
+		Transportable transportable = getTransportable(false);
+		Order order = transportable.getOrder();
+		Map<String, String> statusMap = Util.createStatusMap(order.getStatus());
+		StatusCheckerInterface<Transportable> steinChecker = Util.getSteinChecker();
+
+		String status = statusMap.get(steinChecker.getArticleName());
+
+		if (status == null) {
+		    managerRepository.getOrderManager().lazyLoadTree(order);
+		    status = steinChecker.getArticleStatus(order);
+		    order.setStatus("$Takstein;" + status);
+		    try {
+			managerRepository.getOrderManager().saveOrder(order);
+		    } catch (ProTransException e) {
+			Util.showErrorDialog(window, "Feil", e.getMessage());
+			e.printStackTrace();
+		    }
+		}
+		Util.setDefaultCursor(window);
 	    }
 	}
 
@@ -1800,21 +1828,25 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
     public void handleFilter() {
 	// gi beskjed til alle transportlister at de skal filtrere
 	if (transportWeekViewHandler != null) {
-	    ProductAreaGroup group = (ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP);
-	    PrefsUtil.setInvisibleColumns(group.getProductAreaGroupName(), tablePostShipment.getName(), tablePostShipment);
+	    // ProductAreaGroup group = (ProductAreaGroup)
+	    // productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP);
+	    PrefsUtil.setInvisibleColumns(ProductAreaGroup.UNKNOWN.getProductAreaGroupName(), tablePostShipment.getName(), tablePostShipment);
 	    /*
 	     * if (group != null) { group = group.getProductAreaGroup(); }
 	     */
-	    transportWeekViewHandler.setFilterSent(!checkBoxFilter.isSelected(), group);
-	    orderViewHandler.handleFilter(group, OrderPanelTypeEnum.NEW_ORDERS);
+	    transportWeekViewHandler.setFilterSent(!checkBoxFilter.isSelected());
+	    orderViewHandler.handleFilter(OrderPanelTypeEnum.NEW_ORDERS);
 
-	    if (group != null && !group.getProductAreaGroupName().equalsIgnoreCase("Alle")) {
-		Filter[] filters = new Filter[] { new PatternFilter(group.getProductAreaGroupName(), Pattern.CASE_INSENSITIVE, 7) };
-		FilterPipeline filterPipeline = new FilterPipeline(filters);
-		tablePostShipment.setFilters(filterPipeline);
-	    } else {
-		tablePostShipment.setFilters(null);
-	    }
+	    // if (group != null &&
+	    // !group.getProductAreaGroupName().equalsIgnoreCase("Alle")) {
+	    // Filter[] filters = new Filter[] { new
+	    // PatternFilter(group.getProductAreaGroupName(),
+	    // Pattern.CASE_INSENSITIVE, 7) };
+	    // FilterPipeline filterPipeline = new FilterPipeline(filters);
+	    // tablePostShipment.setFilters(filterPipeline);
+	    // } else {
+	    tablePostShipment.setFilters(null);
+	    // }
 	    tablePostShipment.repaint();
 	    setTransportSum();
 	}
@@ -1859,26 +1891,28 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
 
     }
 
-    private class ProductAreaChangeListener implements PropertyChangeListener {
+    // private class ProductAreaChangeListener implements PropertyChangeListener
+    // {
+    //
+    // public void propertyChange(PropertyChangeEvent evt) {
+    // changeProductAreaGroup();
+    // handleFilter();
+    //
+    // }
+    //
+    // }
 
-	public void propertyChange(PropertyChangeEvent evt) {
-	    changeProductAreaGroup();
-	    handleFilter();
-
-	}
-
-    }
-
-    private final void changeProductAreaGroup() {
-	if (transportWeekView != null) {
-	    transportWeekView.setProductAreaGroup((ProductAreaGroup) productAreaGroupModel
-		    .getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP));
-	    transportWeekView.changeWeek(null);
-	}
-    }
+    // private final void changeProductAreaGroup() {
+    // if (transportWeekView != null) {
+    // transportWeekView.setProductAreaGroup((ProductAreaGroup)
+    // productAreaGroupModel
+    // .getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP));
+    // transportWeekView.changeWeek(null);
+    // }
+    // }
 
     public String getProductAreaGroupName() {
-	return ((ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP)).getProductAreaGroupName();
+	return ProductAreaGroup.UNKNOWN.getProductAreaGroupName();
     }
 
     class MenuItemListenerShowDeviation implements ActionListener {
@@ -1931,5 +1965,75 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
 	Transportable transportable = getTransportable(false);
 
 	return transportable != null ? transportable.getOrderNr() : "";
+    }
+
+    public JButton getUpdateStatusButton(WindowInterface window) {
+	if (buttonUpdateStatus == null) {
+	    buttonUpdateStatus = new JButton(new UpdateStatusAction(window));
+	}
+	return buttonUpdateStatus;
+    }
+
+    private class UpdateStatusAction extends AbstractAction {
+	private WindowInterface window;
+
+	public UpdateStatusAction(WindowInterface window) {
+	    super("Oppdater status");
+	    this.window = window;
+	}
+
+	public void actionPerformed(ActionEvent arg0) {
+	    Util.setWaitCursor(window);
+	    List<Transport> transportList = getTransportWeekView().getTransportList();
+
+	    for (Transport transport : transportList) {
+		for (Order order : transport.getOrders()) {
+		    updateOrderStatus(order);
+
+		}
+	    }
+	    Util.setDefaultCursor(window);
+	}
+
+	private void updateOrderStatus(Order order) {
+	    Map<String, String> statusMap = Util.createStatusMap(order.getStatus());
+	    StatusCheckerInterface<Transportable> steinChecker = Util.getSteinChecker();
+	    StatusCheckerInterface<Transportable> gulvsponChecker = Util.getGulvsponChecker();
+
+	    String status = statusMap.get(steinChecker.getArticleName());
+	    boolean needToSave = false;
+	    if (status == null) {
+		needToSave = true;
+		// managerRepository.getOrderManager().lazyLoadTree(order);
+		managerRepository.getOrderManager().lazyLoadOrder(order,
+			new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ATTRIBUTES });
+		status = steinChecker.getArticleStatus(order);
+		statusMap.put(steinChecker.getArticleName(), status);
+	    }
+
+	    status = statusMap.get(gulvsponChecker.getArticleName());
+
+	    if (status == null) {
+		if (!needToSave) {
+		    needToSave = true;
+		    // managerRepository.getOrderManager().lazyLoadTree(order);
+		    managerRepository.getOrderManager().lazyLoadOrder(order,
+			    new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ATTRIBUTES });
+		}
+		status = gulvsponChecker.getArticleStatus(order);
+		statusMap.put(gulvsponChecker.getArticleName(), status);
+	    }
+
+	    if (needToSave) {
+		order.setStatus(Util.statusMapToString(statusMap));
+		try {
+		    managerRepository.getOrderManager().saveOrder(order);
+		} catch (ProTransException e) {
+		    Util.showErrorDialog(window, "Feil", e.getMessage());
+		    e.printStackTrace();
+		}
+	    }
+	}
+
     }
 }

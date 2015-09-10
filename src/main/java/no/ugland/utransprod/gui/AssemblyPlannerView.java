@@ -20,7 +20,6 @@ import javax.swing.ScrollPaneConstants;
 
 import no.ugland.utransprod.gui.handlers.AssemblyPlannerViewHandler;
 import no.ugland.utransprod.gui.model.ColorEnum;
-import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.Supplier;
 import no.ugland.utransprod.util.InternalFrameBuilder;
 import no.ugland.utransprod.util.Util;
@@ -85,9 +84,9 @@ public class AssemblyPlannerView implements Viewer {
 
     private JXTable tableDeviation;
 
-    private JComboBox comboBoxProductAreaGroup;
+    // private JComboBox comboBoxProductAreaGroup;
 
-    private ProductAreaGroup productAreaGroup;
+    // private ProductAreaGroup productAreaGroup;
 
     private Component orderPanelView;
     private JTextField textFieldGreen;
@@ -152,12 +151,13 @@ public class AssemblyPlannerView implements Viewer {
 
 	labelWarning = viewHandler.getLabelWarning();
 	tableDeviation = viewHandler.getTableDeviation(window);
-	comboBoxProductAreaGroup = viewHandler.getComboBoxProductAreaGroup();
-	productAreaGroup = (ProductAreaGroup) comboBoxProductAreaGroup.getSelectedItem();
+	// comboBoxProductAreaGroup = viewHandler.getComboBoxProductAreaGroup();
+	// productAreaGroup = (ProductAreaGroup)
+	// comboBoxProductAreaGroup.getSelectedItem();
 	viewHandler.setAssemblyPlannerView(this);
 
 	checkBoxListView = viewHandler.getCheckBoxListView(window);
-	tableAssembly = viewHandler.getTableAssembly();
+	tableAssembly = viewHandler.getTableAssembly(window);
 
     }
 
@@ -246,7 +246,6 @@ public class AssemblyPlannerView implements Viewer {
 	CellConstraints cc = new CellConstraints();
 
 	builder.add(buildColorInfoPanel(), cc.xy(1, 1));
-
 	if (checkBoxListView.isSelected()) {
 	    panelRight = buildAssemblyTablePanel();
 	    panelRightMain.add(panelRight, BorderLayout.CENTER);
@@ -289,7 +288,7 @@ public class AssemblyPlannerView implements Viewer {
 	// layout);
 	CellConstraints cc = new CellConstraints();
 	builder.addLabel("Lag:", cc.xy(1, 2));
-	panelTeams = buildAssemblyTeamPanel(true, yearWeek);
+	panelTeams = buildAssemblyTeamPanel(false, yearWeek);
 	panelTeamsMain.add(panelTeams, BorderLayout.CENTER);
 	JScrollPane scrollPaneTeam = new JScrollPane(panelTeamsMain);
 	scrollPaneTeam.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -339,8 +338,8 @@ public class AssemblyPlannerView implements Viewer {
 	builder.add(yearChooser, cc.xy(3, 1));
 	builder.addLabel("Uke:", cc.xy(5, 1));
 	builder.add(comboBoxWeeks, cc.xy(7, 1));
-	builder.addLabel("Produktområde:", cc.xy(10, 1));
-	builder.add(comboBoxProductAreaGroup, cc.xy(10, 3));
+	// builder.addLabel("Produktområde:", cc.xy(10, 1));
+	// builder.add(comboBoxProductAreaGroup, cc.xy(10, 3));
 	builder.add(buttonSearchOrder, cc.xyw(1, 3, 5));
 	builder.add(labelWarning, cc.xyw(7, 3, 3));
 	builder.add(labelSearchResult, cc.xyw(1, 5, 10));
@@ -433,7 +432,7 @@ public class AssemblyPlannerView implements Viewer {
 	builder.nextRow();
 
 	int weekCounter = 0;
-	List<Supplier> suppliers = viewHandler.getSuppliers(yearWeek, productAreaGroup);
+	List<Supplier> suppliers = viewHandler.getSuppliers(yearWeek);
 	for (Supplier supplier : suppliers) {
 	    weekCounter = 0;
 	    for (int i = weekStart; i <= weekStop; i++) {
@@ -441,8 +440,8 @@ public class AssemblyPlannerView implements Viewer {
 		currentYearWeek.setWeek(i);
 
 		builder.appendRow(new RowSpec("fill:p"));
-		builder.append(viewHandler.getAssemblyTeamOrderView(supplier, currentYearWeek, weekCounter, starting, productAreaGroup).buildPanel(
-			window, supplierRowSizes.get(supplier)));
+		builder.append(viewHandler.getAssemblyTeamOrderView(supplier, currentYearWeek, weekCounter, starting).buildPanel(window,
+			supplierRowSizes.get(supplier)));
 	    }
 	}
 
@@ -481,10 +480,10 @@ public class AssemblyPlannerView implements Viewer {
 	DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 	int counter = 0;
 
-	List<Supplier> suppliers = viewHandler.getSuppliers(yearWeek1, productAreaGroup);
+	List<Supplier> suppliers = viewHandler.getSuppliers(yearWeek1);
 	for (Supplier supplier : suppliers) {
 	    counter++;
-	    int maxOrderSize = viewHandler.getMaxNumbersOfOrders(supplier, yearWeek1, starting, productAreaGroup);
+	    int maxOrderSize = viewHandler.getMaxNumbersOfOrders(supplier, yearWeek1, starting);
 	    if (maxOrderSize == 0) {
 		maxOrderSize = 1;
 	    }
@@ -541,25 +540,32 @@ public class AssemblyPlannerView implements Viewer {
 	    panelRight = buildAssemblyTablePanel();
 	    panelRightMain.add(panelRight, BorderLayout.CENTER);
 	} else {
-	    panelTeamsMain.remove(panelTeams);
-	    panelTeams = buildAssemblyTeamPanel(false, yearWeek);
-	    panelTeamsMain.add(panelTeams);
-
+	    if (panelTeams != null) {
+		panelTeamsMain.remove(panelTeams);
+	    }
+	    // panelTeams = buildAssemblyTeamPanel(false, yearWeek);
+	    // panelTeamsMain.add(panelTeams);
+	    //
 	    panelTeamsMain.repaint();
 	    panelTeamsMain.validate();
+	    if (panelTeamsMain.getParent() != null) {
+		panelTeamsMain.getParent().repaint();
+		panelTeamsMain.getParent().validate();
+	    }
 
-	    panelTeamsMain.getParent().repaint();
-	    panelTeamsMain.getParent().validate();
-
-	    panelAssembliesMain.remove(panelAssemblies);
-	    panelAssemblies = buildAssembliesWeekPanel(currentWindow, false);
-	    panelAssembliesMain.add(panelAssemblies);
-
-	    panelAssembliesMain.repaint();
-	    panelAssembliesMain.validate();
-
-	    panelAssembliesMain.getParent().repaint();
-	    panelAssembliesMain.getParent().validate();
+	    if (panelAssemblies != null) {
+		panelAssembliesMain.remove(panelAssemblies);
+	    }
+	    // panelAssemblies = buildAssembliesWeekPanel(currentWindow, false);
+	    // panelAssembliesMain.add(panelAssemblies);
+	    //
+	    // panelAssembliesMain.repaint();
+	    // panelAssembliesMain.validate();
+	    //
+	    // if (panelAssembliesMain.getParent() != null) {
+	    // panelAssembliesMain.getParent().repaint();
+	    // panelAssembliesMain.getParent().validate();
+	    // }
 	    panelRight = buildAssemblyPlanPanel(currentWindow);
 	    panelRightMain.add(panelRight, BorderLayout.CENTER);
 	}
@@ -598,8 +604,8 @@ public class AssemblyPlannerView implements Viewer {
 	return viewHandler.getDisposeOnClose();
     }
 
-    public void setProductAreaGroup(ProductAreaGroup group) {
-	productAreaGroup = group;
-
-    }
+    // public void setProductAreaGroup(ProductAreaGroup group) {
+    // productAreaGroup = group;
+    //
+    // }
 }

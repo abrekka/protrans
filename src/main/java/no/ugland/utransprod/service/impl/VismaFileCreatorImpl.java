@@ -115,15 +115,20 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
     }
 
     private String writeFile(final String orderNr, String outdir, List<String> lines) throws IOException {
-	if (lines == null || lines.isEmpty()) {
-	    return null;
+	try {
+	    if (lines == null || lines.isEmpty()) {
+		return null;
+	    }
+	    String fileName = orderNr + "_";
+	    fileName += uniqueFileName ? Util.getCurrentDateAsDateTimeStringWithSeconds() : "";
+	    fileName += ".edi";
+	    File file = new File(outdir + "/" + fileName);
+	    FileUtils.writeLines(file, lines);
+	    return fileName;
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
-	String fileName = orderNr + "_";
-	fileName += uniqueFileName ? Util.getCurrentDateAsDateTimeStringWithSeconds() : "";
-	fileName += ".edi";
-	File file = new File(outdir + "/" + fileName);
-	FileUtils.writeLines(file, lines);
-	return fileName;
+	return null;
     }
 
     public boolean ignoreVismaFile(OrderLine orderLine, WindowInterface window) {

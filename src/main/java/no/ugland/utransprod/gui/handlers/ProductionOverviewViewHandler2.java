@@ -126,7 +126,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
     private boolean loaded = false;
     private UserType userType;
     private SelectionInList objectSelectionList;
-    private WindowInterface window;
+    // private WindowInterface window;
     private JButton buttonCancel;
 
     JButton buttonRefresh;
@@ -188,6 +188,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
     private ShowTakstolInfoActionFactory showTakstolInfoActionFactory;
 
     private JMenuItem menuItemShowTakstolInfo;
+    private JMenuItem menuItemUpdate;
 
     private SetProductionUnitActionFactory setProductionUnitActionFactory;
     private ArticleType articleTypeTakstol;
@@ -319,6 +320,9 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	menuItemProductionUnitTakstol.setName("MenuItemProductionUnitTakstol");
 	menuItemProductionUnitTakstol.setEnabled(hasWriteAccess());
 	menuItemMap.put(ProductionColumn.TAKSTOL.getColumnName() + "ProduksjonEnhet", menuItemProductionUnitTakstol);
+
+	menuItemUpdate = new JMenuItem("Oppdater linje");
+	popupMenuProduction.add(menuItemUpdate);
     }
 
     private void initProductAreaGroup() {
@@ -1260,11 +1264,16 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
 		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		if (transportable.isPostShipment()) {
+		    return "";
+		}
 		return hentVeggstatus(statusMap, statusCheckers);
 	    }
 
 	    private String hentVeggstatus(Map<String, String> statusMap, Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return statusMap == null ? null : statusMap.get(statusCheckers.get("Vegg").getArticleName());
+
+		String veggStatus = statusMap.get(statusCheckers.get("Vegg").getArticleName());
+		return veggStatus == null ? "MANGLER" : veggStatus;
 	    }
 
 	    @SuppressWarnings("unchecked")
@@ -1311,11 +1320,15 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
 		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		if (transportable.isPostShipment()) {
+		    return "";
+		}
 		return hentGulvsponstatus(statusMap, statusCheckers);
 	    }
 
 	    private String hentGulvsponstatus(Map<String, String> statusMap, Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return statusMap == null ? null : statusMap.get(statusCheckers.get("Gulvspon").getArticleName());
+		String gulvsponStatus = statusMap.get(statusCheckers.get("Gulvspon").getArticleName());
+		return gulvsponStatus == null ? "MANGLER" : gulvsponStatus;
 	    }
 
 	    @SuppressWarnings("unchecked")
@@ -1362,11 +1375,15 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
 		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		if (transportable.isPostShipment()) {
+		    return "";
+		}
 		return hentTakstolstatus(statusMap, statusCheckers);
 	    }
 
 	    private String hentTakstolstatus(Map<String, String> statusMap, Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return statusMap == null ? null : statusMap.get(statusCheckers.get("Takstol").getArticleName());
+		String takstolStatus = statusMap.get(statusCheckers.get("Takstol").getArticleName());
+		return takstolStatus == null ? "MANGLER" : takstolStatus;
 	    }
 
 	    @SuppressWarnings("unchecked")
@@ -1427,11 +1444,15 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
 		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		if (transportable.isPostShipment()) {
+		    return "";
+		}
 		return hentGavlstatus(statusMap, statusCheckers);
 	    }
 
 	    private String hentGavlstatus(Map<String, String> statusMap, Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return statusMap == null ? null : statusMap.get(statusCheckers.get("Gavl").getArticleName());
+		String gavlstatus = statusMap.get(statusCheckers.get("Gavl").getArticleName());
+		return gavlstatus == null ? "MANGLER" : gavlstatus;
 	    }
 
 	    @SuppressWarnings("unchecked")
@@ -1479,11 +1500,15 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
 		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		if (transportable.isPostShipment()) {
+		    return "";
+		}
 		return hentPakkstatus(statusMap, statusCheckers);
 	    }
 
 	    private String hentPakkstatus(Map<String, String> statusMap, Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return statusMap == null ? null : statusMap.get(statusCheckers.get("Front").getArticleName());
+		String pakkstatus = statusMap.get(statusCheckers.get("Front").getArticleName());
+		return pakkstatus == null ? "MANGLER" : pakkstatus;
 	    }
 
 	    @SuppressWarnings("unchecked")
@@ -1531,11 +1556,15 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    @Override
 	    public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
 		    Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+		if (transportable.isPostShipment()) {
+		    return "";
+		}
 		return hentTaksteinstatus(statusMap, statusCheckers);
 	    }
 
 	    private String hentTaksteinstatus(Map<String, String> statusMap, Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-		return statusMap == null ? null : statusMap.get(statusCheckers.get("Stein").getArticleName());
+		String taksteinstatus = statusMap.get(statusCheckers.get("Stein").getArticleName());
+		return taksteinstatus == null ? "MANGLER" : taksteinstatus;
 	    }
 
 	    @SuppressWarnings("unchecked")
@@ -2252,9 +2281,9 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    productionoverviewList = overviewManager.findAll();
 
 	    if (productionoverviewList != null) {
-		if (initOrders(productionoverviewList)) {
-		    productionoverviewList = overviewManager.findAll();
-		}
+		// if (initOrders(productionoverviewList)) {
+		// productionoverviewList = overviewManager.findAll();
+		// }
 		objectList.addAll(productionoverviewList);
 	    }
 	    // PostShipmentManager postShipmentManager = (PostShipmentManager)
@@ -2484,6 +2513,8 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	menuItemShowTakstolInfo.setName("MenuItemShowTakstolInfo");
 	menuItemShowTakstolInfo.setEnabled(hasWriteAccess());
 	menuItemMap.put(ProductionColumn.TAKSTOL.getColumnName() + "Takstolinfo", menuItemShowTakstolInfo);
+
+	menuItemUpdate.addActionListener(new MenuItemUpdate(window));
     }
 
     /**
@@ -2643,6 +2674,48 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 		doRefresh(window);
 		Util.setDefaultCursor(window.getComponent());
 	    }
+	}
+
+    }
+
+    private class MenuItemUpdate implements ActionListener {
+	private WindowInterface window;
+
+	public MenuItemUpdate(WindowInterface window) {
+	    this.window = window;
+	}
+
+	public void actionPerformed(ActionEvent actionEvent) {
+	    Util.setWaitCursor(window);
+	    ProductionOverviewV productionOverviewV = getSelectedProductionOverviewV();
+	    Map<String, String> statusMap = Util.createStatusMap(productionOverviewV.getStatus());
+	    Set<String> checkers = statusCheckers.keySet();
+	    OrderManager orderManager = (OrderManager) ModelUtil.getBean(OrderManager.MANAGER_NAME);
+	    boolean needToSave = false;
+	    Order order = null;
+	    for (String checkerName : checkers) {
+		StatusCheckerInterface<Transportable> checker = statusCheckers.get(checkerName);
+		String status = statusMap.get(checker.getArticleName());
+
+		if (status == null) {
+		    needToSave = true;
+		    if (!productionOverviewV.isPostShipment()) {
+			order = orderManager.findByOrderNr(productionOverviewV.getOrderNr());
+			orderManager.lazyLoadOrder(order, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.ORDER_LINES,
+				LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES, LazyLoadOrderEnum.COMMENTS, LazyLoadOrderEnum.PROCENT_DONE });
+			status = checker.getArticleStatus(order);
+			statusMap.put(checker.getArticleName(), status);
+			order.setStatus(Util.statusMapToString(statusMap));
+		    }
+
+		}
+
+	    }
+	    if (needToSave && order != null) {
+		orderManager.saveObject(order);
+	    }
+	    doRefresh(window);
+	    Util.setDefaultCursor(window);
 	}
 
     }
@@ -2981,7 +3054,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    ProductionOverviewV productionOverviewV = getSelectedProductionOverviewV();
 	    productionOverviewV.setEstimatedTimeWall(order.getEstimatedTimeWall());
 	} catch (ProTransException e) {
-	    Util.showErrorDialog(window, "Feil", e.getMessage());
+	    Util.showErrorDialog(aWindow, "Feil", e.getMessage());
 	    e.printStackTrace();
 	}
     }
@@ -3000,7 +3073,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    ProductionOverviewV productionOverviewV = getSelectedProductionOverviewV();
 	    productionOverviewV.setEstimatedTimeGavl(order.getEstimatedTimeGavl());
 	} catch (ProTransException e) {
-	    Util.showErrorDialog(window, "Feil", e.getMessage());
+	    Util.showErrorDialog(aWindow, "Feil", e.getMessage());
 	    e.printStackTrace();
 	}
     }
@@ -3019,7 +3092,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    ProductionOverviewV productionOverviewV = getSelectedProductionOverviewV();
 	    productionOverviewV.setEstimatedTimePack(order.getEstimatedTimePack());
 	} catch (ProTransException e) {
-	    Util.showErrorDialog(window, "Feil", e.getMessage());
+	    Util.showErrorDialog(aWindow, "Feil", e.getMessage());
 	    e.printStackTrace();
 	}
     }
@@ -3052,7 +3125,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	try {
 	    managerRepository.getOrderManager().saveOrder(order);
 	} catch (ProTransException e) {
-	    Util.showErrorDialog(window, "Feil", e.getMessage());
+	    Util.showErrorDialog(aWindow, "Feil", e.getMessage());
 	    e.printStackTrace();
 	}
 
@@ -3207,7 +3280,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	if (transportable != null) {
 	    ProductionViewHandler handler = (ProductionViewHandler) productionPackageHandlers.get("TakstolProduksjon");
 	    if (handler != null) {
-		return handler.getApplyObject(transportable, window);
+		return handler.getApplyObject(transportable, null);
 	    }
 	}
 	return null;

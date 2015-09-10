@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -50,7 +49,7 @@ public class ApplyListView<T extends Applyable> implements Viewer {
 
     protected boolean printable;
 
-    JComboBox comboBoxProductAreaGroup;
+    // JComboBox comboBoxProductAreaGroup;
     protected JButton buttonStart;
     protected JButton buttonNotStart;
     protected JButton buttonAddAccident;
@@ -83,7 +82,7 @@ public class ApplyListView<T extends Applyable> implements Viewer {
 	buttonSearch = viewHandler.getButtonSearch(window);
 	buttonPrint = viewHandler.getButtonPrint(window);
 	buttonDeviation = viewHandler.getButtonDeviation(window);
-	comboBoxProductAreaGroup = viewHandler.getComboBoxProductAreaGroup();
+	// comboBoxProductAreaGroup = viewHandler.getComboBoxProductAreaGroup();
 	buttonStart = viewHandler.getButtonStart();
 	buttonNotStart = viewHandler.getButtonNotStart();
 	buttonAddAccident = viewHandler.getButtonAddAccident(window);
@@ -104,8 +103,8 @@ public class ApplyListView<T extends Applyable> implements Viewer {
 	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
 	CellConstraints cc = new CellConstraints();
 	builder.add(checkBoxFilter, cc.xy(7, 2));
-	builder.addLabel("Produktområde:", cc.xy(2, 2));
-	builder.add(comboBoxProductAreaGroup, cc.xy(4, 2));
+	// builder.addLabel("Produktområde:", cc.xy(2, 2));
+	// builder.add(comboBoxProductAreaGroup, cc.xy(4, 2));
 	builder.add(buildButtons(), cc.xywh(7, 4, 1, 6));
 	builder.add(new JScrollPane(tableAppList), cc.xywh(2, 4, 4, 6));
 	builder.add(ButtonBarFactory.buildCenteredBar(buttonRefresh, buttonCancel), cc.xyw(2, 11, 7));

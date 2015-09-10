@@ -8,6 +8,7 @@ import no.ugland.utransprod.gui.AssemblyPlannerView;
 import no.ugland.utransprod.gui.Login;
 import no.ugland.utransprod.gui.MenuBarBuilderInterface;
 import no.ugland.utransprod.gui.handlers.AssemblyPlannerViewHandler;
+import no.ugland.utransprod.gui.handlers.DeviationViewHandlerFactory;
 import no.ugland.utransprod.gui.handlers.OrderViewHandler;
 import no.ugland.utransprod.gui.handlers.OrderViewHandlerFactory;
 import no.ugland.utransprod.gui.handlers.SupplierOrderViewHandlerFactory;
@@ -30,11 +31,14 @@ public class AssemblyAction extends AbstractAction {
     private Login login;
     private ManagerRepository managerRepository;
     private static final long serialVersionUID = 1L;
+    private DeviationViewHandlerFactory deviationViewHandlerFactory;
 
     @Inject
     public AssemblyAction(MenuBarBuilderInterface aMenuBarBuilder, OrderViewHandlerFactory orderViewHandlerFactory, Login aLogin,
-	    ManagerRepository aManagerRepository, SupplierOrderViewHandlerFactory aSupplierOrderViewHandlerFactory) {
+	    ManagerRepository aManagerRepository, SupplierOrderViewHandlerFactory aSupplierOrderViewHandlerFactory,
+	    DeviationViewHandlerFactory aDeviationViewHandlerFactory) {
 	super("Montering...");
+	deviationViewHandlerFactory = aDeviationViewHandlerFactory;
 	login = aLogin;
 	managerRepository = aManagerRepository;
 	supplierOrderViewHandlerFactory = aSupplierOrderViewHandlerFactory;
@@ -44,6 +48,6 @@ public class AssemblyAction extends AbstractAction {
 
     public void actionPerformed(final ActionEvent arg0) {
 	menuBarBuilder.openFrame(new AssemblyPlannerView(new AssemblyPlannerViewHandler(orderViewHandler, login, supplierOrderViewHandlerFactory,
-		managerRepository)));
+		managerRepository, deviationViewHandlerFactory)));
     }
 }

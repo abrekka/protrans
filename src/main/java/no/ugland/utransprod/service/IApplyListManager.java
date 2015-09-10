@@ -7,18 +7,21 @@ import no.ugland.utransprod.model.ProductAreaGroup;
 
 /**
  * Interface for serviceklasser som brukes ved produksjon og pakking
+ * 
  * @author atle.brekka
  * @param <T>
  */
 public interface IApplyListManager<T> {
     /**
      * Finn alle
+     * 
      * @return artikler til pakking eller produksjon
      */
     List<T> findAllApplyable();
 
     /**
      * Finn basert på ordrenummer
+     * 
      * @param orderNr
      * @return artikler
      */
@@ -26,6 +29,7 @@ public interface IApplyListManager<T> {
 
     /**
      * Finn basert på kundenummer
+     * 
      * @param customerNr
      * @return artikler
      */
@@ -33,16 +37,15 @@ public interface IApplyListManager<T> {
 
     /**
      * Oppdater
+     * 
      * @param object
      */
     void refresh(T object);
+
     Ordln findOrdlnByOrderLine(Integer orderLineId);
 
-	List<T> findApplyableByOrderNrAndProductAreaGroup(String orderNr,
-			ProductAreaGroup productAreaGroup);
+    List<T> findApplyableByOrderNrAndProductAreaGroup(String orderNr, ProductAreaGroup productAreaGroup);
 
-	List<T> findApplyableByCustomerNrAndProductAreaGroup(Integer valueOf,
-			ProductAreaGroup productAreaGroup);
+    List<T> findApplyableByCustomerNrAndProductAreaGroup(Integer valueOf, ProductAreaGroup productAreaGroup);
 
-	
 }

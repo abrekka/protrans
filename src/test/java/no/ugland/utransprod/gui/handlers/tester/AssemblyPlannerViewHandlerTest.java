@@ -54,12 +54,13 @@ public class AssemblyPlannerViewHandlerTest {
 
 	OrderViewHandler orderViewHandler = new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory, deviationViewHandlerFactory,
 		true, null);
-	viewHandler = new AssemblyPlannerViewHandler(orderViewHandler, login, supplierOrderViewHandlerFactory, managerRepository);
+	viewHandler = new AssemblyPlannerViewHandler(orderViewHandler, login, supplierOrderViewHandlerFactory, managerRepository,
+		deviationViewHandlerFactory);
     }
 
     @Test
     public void testGetAssemblyTeams() {
-	assertNotNull(viewHandler.getSuppliers(new YearWeek(), null));
+	assertNotNull(viewHandler.getSuppliers(new YearWeek()));
     }
 
     @Test

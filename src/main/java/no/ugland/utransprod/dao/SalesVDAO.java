@@ -10,23 +10,16 @@ import no.ugland.utransprod.util.report.SaleReportData;
 import no.ugland.utransprod.util.report.SaleReportSum;
 
 public interface SalesVDAO extends DAO<SalesV> {
-    List<SaleReportSum> groupSumCountyByProbabilityProductAreaPeriode(
-            ProbabilityEnum probabilityEnum, ProductArea productArea, Periode periode);
-    
-    List<SaleReportSum> groupSumSalesmanByProbabilityProductAreaPeriode(
-            ProbabilityEnum probabilityEnum, ProductArea productArea, Periode periode);
+    List<SaleReportSum> groupSumCountyByProbabilityProductAreaPeriode(ProbabilityEnum probabilityEnum, ProductArea productArea, Periode periode);
 
-    Integer countByProbabilityProductAreaPeriode(ProbabilityEnum probabilityEnum,
-            ProductArea productArea, Periode periode);
+    List<SaleReportSum> groupSumSalesmanByProbabilityProductAreaPeriode(ProbabilityEnum probabilityEnum, ProductArea productArea, Periode periode);
 
-    List<SaleReportData> getSaleReportByProbabilityProductAreaPeriode(
-            ProbabilityEnum probabilityEnum, ProductArea productArea, Periode periode,
-            String typeName);
+    Integer countByProbabilityProductAreaPeriode(ProbabilityEnum probabilityEnum, ProductArea productArea, Periode periode);
 
-	List<SaleReportData> getSaleReportByProductAreaPeriode(
-			ProductArea productArea, Periode periode);
+    List<SaleReportData> getSaleReportByProbabilityProductAreaPeriode(ProbabilityEnum probabilityEnum, ProductArea productArea, Periode periode,
+	    String typeName);
 
-	SaleReportSum getGroupSumByProbabilityProductAreaPeriod(
-			ProbabilityEnum probability, ProductArea productArea,
-			Periode periode);
+    List<SaleReportData> getSaleReportByProductAreaPeriode(ProductArea productArea, Periode periode);
+
+    SaleReportSum getGroupSumByProbabilityProductAreaPeriod(ProbabilityEnum probability, ProductArea productArea, Periode periode);
 }

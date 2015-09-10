@@ -184,7 +184,7 @@ public class AssemblyPlannerViewTest {
 	    }
 	};
 	final AssemblyPlannerView view = new AssemblyPlannerView(new AssemblyPlannerViewHandler(orderViewHandler, login,
-		supplierOrderViewHandlerFactory, managerRepository));
+		supplierOrderViewHandlerFactory, managerRepository, deviationViewHandlerFactory));
 
 	JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
 	    protected JDialog executeInEDT() {

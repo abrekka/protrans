@@ -45,6 +45,7 @@ public class SalesV extends BaseObject {
 
     private String salesman;
     private Integer orderDate;
+    private String segmentno;
 
     public SalesV() {
 	super();
@@ -54,7 +55,7 @@ public class SalesV extends BaseObject {
 	    final Date isRegistered, final String aCustomerNr, final String aCustomerName, final String aDeliveryAddress, final String aPostalCode,
 	    final String aPostOffice, final BigDecimal aOwnProductionCost, final BigDecimal aTransportCost, final BigDecimal aAssemblyCost,
 	    final BigDecimal sumYesLines, final BigDecimal aContributionMargin, final String aCountyName, final String aSalesman,
-	    final Integer aOrderDate) {
+	    final Integer aOrderDate, String segmentno) {
 	super();
 	this.saleId = aSaleId;
 	this.orderNr = aOrderNr;
@@ -75,6 +76,7 @@ public class SalesV extends BaseObject {
 	this.countyName = aCountyName;
 	this.salesman = aSalesman;
 	this.orderDate = aOrderDate;
+	this.segmentno = segmentno;
     }
 
     public final BigDecimal getAssemblyCost() {
@@ -258,5 +260,13 @@ public class SalesV extends BaseObject {
 
     public final void setOrderDate(final Integer aOrderDate) {
 	this.orderDate = aOrderDate;
+    }
+
+    public String getSegmentno() {
+	return segmentno;
+    }
+
+    public void setSegmentno(String segmentno) {
+	this.segmentno = segmentno;
     }
 }

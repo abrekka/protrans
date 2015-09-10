@@ -148,6 +148,7 @@ public class FilterAssemblyView implements Closeable {
 	private String assemblyCost;
 	private String firstPlanned;
 	private String craningCost;
+	private String constructionTypeName;
 
 	public AssemblyFilter() {
 	    sort1SelectionList = new SelectionInList(AssemblyColumn.getVisibleColumns());
@@ -358,6 +359,14 @@ public class FilterAssemblyView implements Closeable {
 
 	public void setCraningCost(String craningCost) {
 	    this.craningCost = craningCost;
+	}
+
+	public String getConstructionTypeName() {
+	    return constructionTypeName;
+	}
+
+	public void setConstructionTypeName(String constructionTypeName) {
+	    this.constructionTypeName = constructionTypeName;
 	}
 
     }

@@ -167,7 +167,8 @@ public class OrderManagerImpl extends ManagerImpl<Order> implements OrderManager
 
 	if (list != null && list.size() != 0) {
 	    TakstolInfoVManager takstolInfoVManager = (TakstolInfoVManager) ModelUtil.getBean(TakstolInfoVManager.MANAGER_NAME);
-	    List<Object[]> beregnetTidForOrdre = takstolInfoVManager.getBeregnetTidForOrdre(fromString, toString, transportConstraintEnum, productArea.getProductArea());
+	    List<Object[]> beregnetTidForOrdre = takstolInfoVManager.getBeregnetTidForOrdre(fromString, toString, transportConstraintEnum,
+		    productArea.getProductArea());
 	    list.addAll(beregnetTidForOrdre);
 	    Collections.sort(list, sorterId());
 	    return generateReportData(list);

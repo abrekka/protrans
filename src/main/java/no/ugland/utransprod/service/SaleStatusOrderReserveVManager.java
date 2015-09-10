@@ -5,8 +5,8 @@ import no.ugland.utransprod.model.SaleStatusOrderReserveV;
 
 public interface SaleStatusOrderReserveVManager {
 
-	public static final String MANAGER_NAME = "saleStatusOrderReserveVManager";
+    public static final String MANAGER_NAME = "saleStatusOrderReserveVManager";
 
-	SaleStatusOrderReserveV findByProductArea(ProductArea productArea);
+    SaleStatusOrderReserveV findByProductArea(ProductArea productArea);
 
 }

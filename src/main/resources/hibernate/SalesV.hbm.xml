@@ -132,5 +132,11 @@
         column="ORDER_DATE"
         length="32"
     />
+    <property
+        name="segmentno"
+        type="java.lang.String"
+        column="SEGMENTNO"
+        length="150"
+    />
 </class>
 </hibernate-mapping>

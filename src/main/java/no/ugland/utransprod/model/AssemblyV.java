@@ -32,6 +32,9 @@ public class AssemblyV {
     private String firstPlanned;
     private BigDecimal kraningCost;
     private Integer hasMissingCollies;
+    private String constructionTypeName;
+    private String info;
+    private String specialConcern;
 
     public Integer getAssemblyId() {
 	return assemblyId;
@@ -272,4 +275,27 @@ public class AssemblyV {
 	return Joiner.on(" ").skipNulls().join(transportYear, transportWeek, transportName);
     }
 
+    public String getConstructionTypeName() {
+	return constructionTypeName;
+    }
+
+    public void setConstructionTypeName(String constructionTypeName) {
+	this.constructionTypeName = constructionTypeName;
+    }
+
+    public String getInfo() {
+	return info;
+    }
+
+    public void setInfo(String info) {
+	this.info = info;
+    }
+
+    public String getSpecialConcern() {
+	return specialConcern;
+    }
+
+    public void setSpecialConcern(String specialConcern) {
+	this.specialConcern = specialConcern;
+    }
 }

@@ -13,37 +13,37 @@ import no.ugland.utransprod.model.VeggProductionV;
  * 
  */
 public interface VeggProductionVDAO extends DAO<VeggProductionV> {
-	/**
-	 * Finner alle vegger som skal produseres
-	 * 
-	 * @return vegger
-	 */
-	List<Produceable> findAll();
+    /**
+     * Finner alle vegger som skal produseres
+     * 
+     * @return vegger
+     */
+    List<Produceable> findAll();
 
-	/**
-	 * Finner vegg som skal produseres basert op ordrenummer
-	 * 
-	 * @param orderNr
-	 * @return vegg
-	 */
-	List<Produceable> findByOrderNr(String orderNr);
+    /**
+     * Finner vegg som skal produseres basert op ordrenummer
+     * 
+     * @param orderNr
+     * @return vegg
+     */
+    List<Produceable> findByOrderNr(String orderNr);
 
-	/**
-	 * Oppdater objekt
-	 * 
-	 * @param veggProductionV
-	 */
-	void refresh(Produceable veggProductionV);
-	/**
-	 * Finner basert på kundenummer
-	 * @param customerNr
-	 * @return veggproduksjon
-	 */
-	List<Produceable> findByCustomerNr(Integer customerNr);
+    /**
+     * Oppdater objekt
+     * 
+     * @param veggProductionV
+     */
+    void refresh(Produceable veggProductionV);
 
-	List<Produceable> findByCustomerNrAndProductAreaGroup(Integer customerNr,
-			ProductAreaGroup productAreaGroup);
+    /**
+     * Finner basert på kundenummer
+     * 
+     * @param customerNr
+     * @return veggproduksjon
+     */
+    List<Produceable> findByCustomerNr(Integer customerNr);
 
-	List<Produceable> findByOrderNrAndProductAreaGroup(String orderNr,
-			ProductAreaGroup productAreaGroup);
+    List<Produceable> findByCustomerNrAndProductAreaGroup(Integer customerNr, ProductAreaGroup productAreaGroup);
+
+    List<Produceable> findByOrderNrAndProductAreaGroup(String orderNr, ProductAreaGroup productAreaGroup);
 }

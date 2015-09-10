@@ -526,11 +526,11 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
      * @param productAreaGroup
      * @return transportruter
      */
-    public final SelectionInList getTransportSelectionList(final YearWeek routeDate1, final ProductAreaGroup productAreaGroup) {
+    public final SelectionInList getTransportSelectionList(final YearWeek routeDate1) {
 	transportList.clear();
 
 	List<Transport> transports = managerRepository.getTransportManager().findByYearAndWeekAndProductAreaGroup(routeDate1.getYear(),
-		routeDate1.getWeek(), productAreaGroup);
+		routeDate1.getWeek());
 	Collections.sort(transports, new TransportComparator());
 	transportList.addAll(transports);
 	return transportSelectionList;
@@ -544,8 +544,8 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
      * @return transportruter
      */
     @SuppressWarnings("unchecked")
-    public final List<Transport> getTransportList(final YearWeek routeDate1, final ProductAreaGroup productAreaGroup) {
-	getTransportSelectionList(routeDate1, productAreaGroup);
+    public final List<Transport> getTransportList(final YearWeek routeDate1) {
+	getTransportSelectionList(routeDate1);
 	return transportList;
     }
 
@@ -892,8 +892,9 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
      * @param sentFilter
      * @param productAreaGroup
      */
-    public void setFilterSent(boolean sentFilter, ProductAreaGroup productAreaGroup) {
-	PrefsUtil.setInvisibleColumns(productAreaGroup.getProductAreaGroupName(), TableEnum.TABLETRANSPORTORDERSLIST.getTableName(), tableOrdersList);
+    public void setFilterSent(boolean sentFilter) {
+	PrefsUtil.setInvisibleColumns(ProductAreaGroup.UNKNOWN.getProductAreaGroupName(), TableEnum.TABLETRANSPORTORDERSLIST.getTableName(),
+		tableOrdersList);
 	Collection<TransportViewHandler> viewhandlers = transportViewHandlers.values();
 
 	if (listView) {
@@ -915,7 +916,7 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 	} else {
 	    if (viewhandlers != null) {
 		for (TransportViewHandler handler : viewhandlers) {
-		    handler.handleFilter(sentFilter, productAreaGroup);
+		    handler.handleFilter(sentFilter);
 		}
 	    }
 	}
@@ -934,7 +935,7 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
     public void cleanUp() {
     }
 
-    public JXTable getTableOrders(ProductAreaGroup productAreaGroup, WindowInterface aWindow) {
+    public JXTable getTableOrders(WindowInterface aWindow) {
 	updateTransportableList();
 	tableOrdersList = new JXTable();
 	TableModel transportOrderTableModel = new TransportOrderTableModelList(transportableSelectionList, transportableList, Util.getGavlChecker(),
@@ -963,7 +964,7 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 	tableOrdersList.addHighlighter(TransportViewHandler.getNotSentHighlighter(tableOrdersList, "Ikke sendt"));
 	tableOrdersList.setShowGrid(true);
 	tableOrdersList.setName(TableEnum.TABLETRANSPORTORDERSLIST.getTableName());
-	PrefsUtil.setInvisibleColumns(productAreaGroup.getProductAreaGroupName(), tableOrdersList.getName(), tableOrdersList);
+	PrefsUtil.setInvisibleColumns(ProductAreaGroup.UNKNOWN.getProductAreaGroupName(), tableOrdersList.getName(), tableOrdersList);
 
 	// addMenuListeners(aWindow);
 	return tableOrdersList;

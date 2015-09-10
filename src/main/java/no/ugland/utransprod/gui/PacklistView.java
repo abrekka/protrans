@@ -55,7 +55,7 @@ public class PacklistView extends ApplyListView<PacklistV> {
 	labelBudget = ((PacklistViewHandler) viewHandler).getLabelBudget();
 	labelCountWeek = ((PacklistViewHandler) viewHandler).getLabelCountWeek();
 	labelCountYear = ((PacklistViewHandler) viewHandler).getLabelCountYear();
-	comboBoxProductAreaGroup = viewHandler.getComboBoxProductAreaGroup();
+	// comboBoxProductAreaGroup = viewHandler.getComboBoxProductAreaGroup();
 	textFieldWeekFrom = ((PacklistViewHandler) viewHandler).getTextFieldWeekFrom();
 	textFieldWeekTo = ((PacklistViewHandler) viewHandler).getTextFieldWeekTo();
 	buttonFilter = ((PacklistViewHandler) viewHandler).getButtonFilter();
@@ -72,8 +72,8 @@ public class PacklistView extends ApplyListView<PacklistV> {
 	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),
 	// layout);
 	CellConstraints cc = new CellConstraints();
-	builder.addLabel("Produktområde:", cc.xy(2, 2));
-	builder.add(comboBoxProductAreaGroup, cc.xy(4, 2));
+	// builder.addLabel("Produktområde:", cc.xy(2, 2));
+	// builder.add(comboBoxProductAreaGroup, cc.xy(4, 2));
 	builder.addLabel("Budsjett:", cc.xy(6, 2));
 	builder.add(labelBudget, cc.xy(8, 2));
 	builder.addLabel("# denne uke:", cc.xy(10, 2));

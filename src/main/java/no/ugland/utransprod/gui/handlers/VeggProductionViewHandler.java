@@ -55,7 +55,7 @@ public class VeggProductionViewHandler extends ProductionViewHandler {
      */
     @Override
     protected Integer getApplyColumn() {
-	return 7;
+	return 4;
     }
 
     /**
@@ -81,23 +81,23 @@ public class VeggProductionViewHandler extends ProductionViewHandler {
 	table.getColumnExt(table.getModel().getColumnName(2)).setCellRenderer(tableCellRenderer);
 	table.getColumnExt(table.getModel().getColumnName(2)).setPreferredWidth(70);
 	// Antall
-	table.getColumnExt(table.getModel().getColumnName(3)).setPreferredWidth(50);
-	// spesifikasjon
-	table.getColumnExt(table.getModel().getColumnName(4)).setPreferredWidth(200);
+	// table.getColumnExt(table.getModel().getColumnName(3)).setPreferredWidth(50);
+	// // spesifikasjon
+	// table.getColumnExt(table.getModel().getColumnName(4)).setPreferredWidth(200);
 	// front
-	table.getColumnExt(table.getModel().getColumnName(5)).setPreferredWidth(50);
+	// table.getColumnExt(table.getModel().getColumnName(3)).setPreferredWidth(50);
 	// opplasting
-	table.getColumnExt(table.getModel().getColumnName(6)).setPreferredWidth(70);
+	table.getColumnExt(table.getModel().getColumnName(3)).setPreferredWidth(70);
 	// produsert
-	table.getColumnExt(table.getModel().getColumnName(7)).setPreferredWidth(100);
+	table.getColumnExt(table.getModel().getColumnName(4)).setPreferredWidth(100);
 	// startet
-	table.getColumnExt(table.getModel().getColumnName(10)).setPreferredWidth(100);
+	table.getColumnExt(table.getModel().getColumnName(7)).setPreferredWidth(100);
 	// reell tidsforbruk
 	// DefaultTableCellRenderer tableCellRenderer = new
 	// DefaultTableCellRenderer();
 	tableCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-	table.getColumnExt(table.getModel().getColumnName(11)).setCellRenderer(tableCellRenderer);
-	table.getColumnExt(table.getModel().getColumnName(11)).setPreferredWidth(120);
+	table.getColumnExt(table.getModel().getColumnName(8)).setCellRenderer(tableCellRenderer);
+	table.getColumnExt(table.getModel().getColumnName(8)).setPreferredWidth(120);
     }
 
     /**
@@ -114,11 +114,13 @@ public class VeggProductionViewHandler extends ProductionViewHandler {
 	private WindowInterface window;
 
 	public VeggProductionTableModel(ListModel listModel, WindowInterface aWindow) {
-	    super(listModel, new String[] { "Transport", "Ordre", "Prod. uke", "Antall", "Spesifikasjon", "Front", "Opplasting", "Produsert",
-		    "Produktområde", "Prod.enhet", "Startet", "Reell tidsforbruk", "Gjort av" });
+	    super(listModel, new String[] { "Transport", "Ordre", "Prod. uke",
+		    // "Antall", "Spesifikasjon",
+		    // "Front",
+		    "Opplasting", "Produsert", "Produktområde", "Prod.enhet", "Startet", "Reell tidsforbruk", "Gjort av" });
 	    frontChecker = Util.getFrontChecker();
 	    window = aWindow;
-	    initStatus(listModel);
+	    // initStatus(listModel);
 	}
 
 	private void initStatus(ListModel list) {
@@ -160,7 +162,8 @@ public class VeggProductionViewHandler extends ProductionViewHandler {
 	    DecimalFormat decimalFormat = new DecimalFormat();
 	    decimalFormat.setDecimalSeparatorAlwaysShown(false);
 	    decimalFormat.setParseIntegerOnly(true);
-	    Map<String, String> statusMap = Util.createStatusMap(veggProductionV.getOrderStatus());
+	    // Map<String, String> statusMap =
+	    // Util.createStatusMap(veggProductionV.getOrderStatus());
 
 	    switch (columnIndex) {
 	    case 0:
@@ -170,47 +173,49 @@ public class VeggProductionViewHandler extends ProductionViewHandler {
 	    case 2:
 
 		return veggProductionV.getProductionWeek();
-	    case 3:
-		if (veggProductionV.getNumberOfItems() != null) {
-		    return decimalFormat.format(veggProductionV.getNumberOfItems());
-		}
-		return "";
+		// case 3:
+		// if (veggProductionV.getNumberOfItems() != null) {
+		// return
+		// decimalFormat.format(veggProductionV.getNumberOfItems());
+		// }
+		// return "";
 
-	    case 4:
-		if (veggProductionV.getOrdln() != null) {
-		    return veggProductionV.getOrdln().getDescription();
-		}
-		return Util.removeNoAttributes(veggProductionV.getAttributeInfo());
-	    case 5:
-		return statusMap.get(frontChecker.getArticleName());
-	    case 6:
+		// case 4:
+		// if (veggProductionV.getOrdln() != null) {
+		// return veggProductionV.getOrdln().getDescription();
+		// }
+		// return
+		// Util.removeNoAttributes(veggProductionV.getAttributeInfo());
+		// case 3:
+		// return statusMap.get(frontChecker.getArticleName());
+	    case 3:
 		Date loadingDate = veggProductionV.getLoadingDate();
 		if (loadingDate != null) {
 		    return Util.SHORT_DATE_FORMAT.format(loadingDate);
 		}
 		return null;
 
-	    case 7:
+	    case 4:
 		if (veggProductionV.getProduced() != null) {
 		    return Util.SHORT_DATE_TIME_FORMAT.format(veggProductionV.getProduced());
 		}
 		return "---";
-	    case 8:
+	    case 5:
 		if (veggProductionV.getProductAreaGroupName() != null) {
 		    return veggProductionV.getProductAreaGroupName();
 		}
 		return "";
-	    case 9:
+	    case 6:
 		return veggProductionV.getProductionUnitName();
-	    case 10:
+	    case 7:
 		if (veggProductionV.getActionStarted() != null) {
 		    return Util.SHORT_DATE_TIME_FORMAT.format(veggProductionV.getActionStarted());
 		}
 		return "---";
-	    case 11:
+	    case 8:
 		return veggProductionV.getRealProductionHours() == null ? Tidsforbruk.beregnTidsforbruk(veggProductionV.getActionStarted(),
 			veggProductionV.getProduced()) : veggProductionV.getRealProductionHours();
-	    case 12:
+	    case 9:
 		return veggProductionV.getDoneBy();
 	    default:
 		throw new IllegalStateException("Unknown column");
@@ -227,6 +232,7 @@ public class VeggProductionViewHandler extends ProductionViewHandler {
 	    switch (columnIndex) {
 	    case 0:
 
+		// case 3:
 	    case 3:
 	    case 4:
 	    case 5:
@@ -234,14 +240,13 @@ public class VeggProductionViewHandler extends ProductionViewHandler {
 	    case 7:
 	    case 8:
 	    case 9:
-	    case 10:
-	    case 12:
+	    case 11:
 		return String.class;
 	    case 2:
 		return Integer.class;
 	    case 1:
 		return VeggProductionV.class;
-	    case 11:
+	    case 10:
 		return BigDecimal.class;
 	    default:
 		throw new IllegalStateException("Unknown column");
@@ -254,12 +259,12 @@ public class VeggProductionViewHandler extends ProductionViewHandler {
      */
     @Override
     protected int getProductAreaColumn() {
-	return 8;
+	return 5;
     }
 
     @Override
     protected Integer getStartColumn() {
-	return 10;
+	return 7;
     }
 
 }

@@ -42,6 +42,7 @@ public class SaleReportData implements Comparable<SaleReportData> {
 
     private BigDecimal contributionMargin;
     private Integer productAreaNr;
+    private String segmentno;
 
     public SaleReportData() {
 	super();
@@ -49,7 +50,7 @@ public class SaleReportData implements Comparable<SaleReportData> {
 
     public SaleReportData(int probability, String countyName, String salesman, String customerNr, String customerName, String orderNr,
 	    BigDecimal ownProductionCost, BigDecimal transportCost, BigDecimal assemblyCost, BigDecimal yesLines, BigDecimal db, Date aSalesDate,
-	    Date aRegsiteredDate, Integer aOrderDate, BigDecimal aContributionMargin, Integer productAreaNr) {
+	    Date aRegsiteredDate, Integer aOrderDate, BigDecimal aContributionMargin, Integer productAreaNr, String segmentNo) {
 	super();
 	this.contributionMargin = aContributionMargin;
 	// this.type = type;
@@ -79,11 +80,12 @@ public class SaleReportData implements Comparable<SaleReportData> {
 	    this.orderDate = Util.convertIntToDate(aOrderDate.intValue());
 	}
 	this.probabilityEnum = ProbabilityEnum.getProbabilityEnum(probability);
+	this.segmentno = segmentNo;
     }
 
     public SaleReportData(String type, String countyName, String salesman, String customerNr, String customerName, String orderNr,
 	    BigDecimal ownProductionCost, BigDecimal transportCost, BigDecimal assemblyCost, BigDecimal yesLines, BigDecimal db, BigDecimal dg,
-	    Date aSalesDate, Integer productAreaNr) {
+	    Date aSalesDate, Integer productAreaNr, String segmentNo) {
 	super();
 	this.type = type;
 	this.countyName = countyName;
@@ -99,6 +101,7 @@ public class SaleReportData implements Comparable<SaleReportData> {
 	this.dg = dg;
 	this.salesDate = aSalesDate;
 	this.productAreaNr = productAreaNr;
+	this.segmentno = segmentNo;
     }
 
     public Integer getProductAreaNr() {
@@ -255,6 +258,14 @@ public class SaleReportData implements Comparable<SaleReportData> {
 	this.type = probabilityEnum.getTypeName();
     }
 
+    public void setSegmentno(String segmentno) {
+	this.segmentno = segmentno;
+    }
+
+    public String getSegmentno() {
+	return segmentno;
+    }
+
     public SaleReportData cloneSaleData() {
 	SaleReportData tmp = new SaleReportData();
 	tmp.setAssemblyCost(this.getAssemblyCost());
@@ -274,6 +285,7 @@ public class SaleReportData implements Comparable<SaleReportData> {
 	tmp.setType(this.getType());
 	tmp.setYesLines(this.getYesLines());
 	tmp.setProductArea(this.getProductAreaNr());
+	tmp.setSegmentno(this.getSegmentno());
 
 	return tmp;
     }

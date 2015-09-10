@@ -94,6 +94,13 @@ public class ReadyCount {
 	return order.getCost("Egenproduksjon", "Kunde");
     }
 
+    public final BigDecimal getGarageValueInternal() {
+	if (row != 1) {
+	    return null;
+	}
+	return order.getCost("Egenproduksjon", "Intern");
+    }
+
     /**
      * Henter transportverdi.
      * 

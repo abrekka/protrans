@@ -10,7 +10,6 @@ import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
 import no.ugland.utransprod.gui.handlers.TransportWeekViewHandler;
-import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.Transport;
 import no.ugland.utransprod.util.YearWeek;
 
@@ -44,10 +43,14 @@ public class TransportWeekView {
 
     private WindowInterface currentWindow;
 
-    private ProductAreaGroup productAreaGroup;
+    // private ProductAreaGroup productAreaGroup;
 
-    public TransportWeekView(final YearWeek aRouteDate, final TransportWeekViewHandler aHandler, final ProductAreaGroup aProductAreaGroup) {
-	productAreaGroup = aProductAreaGroup;
+    public TransportWeekView(final YearWeek aRouteDate, final TransportWeekViewHandler aHandler) {// ,
+												  // final
+												  // ProductAreaGroup
+												  // aProductAreaGroup)
+												  // {
+	// productAreaGroup = aProductAreaGroup;
 	viewHandler = aHandler;
 	routeDate = aRouteDate;
     }
@@ -58,7 +61,7 @@ public class TransportWeekView {
      * @param window
      */
     private void initComponents(final WindowInterface window) {
-	transportList = viewHandler.getTransportList(routeDate, productAreaGroup);
+	transportList = viewHandler.getTransportList(routeDate);
 	buttonAddTransport = viewHandler.getButtonAddTransport(window);
 	buttonRemoveTransport = viewHandler.getButtonRemoveTransport(window);
 	buttonRemoveTransport.setEnabled(false);
@@ -118,7 +121,7 @@ public class TransportWeekView {
 	int number = 0;
 	for (Transport transport : transportList) {
 	    number++;
-	    builder.append(viewHandler.getTransportView(transport).buildPanel(window, number, productAreaGroup));
+	    builder.append(viewHandler.getTransportView(transport).buildPanel(window, number, viewHandler, this));
 	}
 	builder.nextLine();
 
@@ -126,7 +129,7 @@ public class TransportWeekView {
     }
 
     private JPanel buildTransportPanelList(WindowInterface window) {
-	return viewHandler.getTransportListView(window).buildPanel(productAreaGroup);
+	return viewHandler.getTransportListView(window).buildPanel();
     }
 
     /**
@@ -147,11 +150,13 @@ public class TransportWeekView {
 	    routeDate.setYear(newYear);
 	}
 	viewHandler.clear();
-	ProductAreaGroup group = null;
-	if (!productAreaGroup.getProductAreaGroupName().equalsIgnoreCase("Alle")) {
-	    group = productAreaGroup;
-	}
-	transportList = viewHandler.getTransportList(routeDate, group);
+	// ProductAreaGroup group = null;
+	// if
+	// (!productAreaGroup.getProductAreaGroupName().equalsIgnoreCase("Alle"))
+	// {
+	// group = productAreaGroup;
+	// }
+	transportList = viewHandler.getTransportList(routeDate);
 	panelTransportMain.remove(panelTransport);
 	panelTransport = buildTransportPanel(currentWindow);
 	CellConstraints cc = new CellConstraints();
@@ -206,8 +211,13 @@ public class TransportWeekView {
 	return transportList.size();
     }
 
-    public final void setProductAreaGroup(final ProductAreaGroup aProductAreaGroup) {
-	this.productAreaGroup = aProductAreaGroup;
+    public List<Transport> getTransportList() {
+	return transportList;
     }
+
+    // public final void setProductAreaGroup(final ProductAreaGroup
+    // aProductAreaGroup) {
+    // this.productAreaGroup = aProductAreaGroup;
+    // }
 
 }

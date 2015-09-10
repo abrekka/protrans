@@ -411,9 +411,9 @@ public class ProductionViewHandler extends AbstractProductionPackageViewHandler<
     @Override
     protected void setStarted(final Produceable object, final boolean started) {
 	applyListInterface.setStarted(object, started);
-	if (object.getOrderLineId() == null) {
-	    doRefresh(null);
-	}
+	// if (object.getOrderLineId() == null) {
+	// doRefresh(null);
+	// }
 
     }
 

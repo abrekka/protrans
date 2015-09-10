@@ -9,6 +9,7 @@ import no.ugland.utransprod.service.PacklistVManager;
 
 /**
  * Implementasjon av serviceklasse for view PACKLIST_V.
+ * 
  * @author atle.brekka
  */
 public class PacklistVManagerImpl extends AbstractApplyListManager<PacklistV> implements PacklistVManager {
@@ -18,21 +19,21 @@ public class PacklistVManagerImpl extends AbstractApplyListManager<PacklistV> im
      * @param aDao
      */
     public final void setPacklistVDAO(final PacklistVDAO aDao) {
-        this.dao = aDao;
+	this.dao = aDao;
     }
 
     /**
      * @see no.ugland.utransprod.service.IApplyListManager#findAllApplyable()
      */
     public final List<PacklistV> findAllApplyable() {
-        return dao.findAll();
+	return dao.findAll();
     }
 
     /**
      * @see no.ugland.utransprod.service.IApplyListManager#findApplyableByOrderNr(java.lang.String)
      */
     public final List<PacklistV> findApplyableByOrderNr(final String orderNr) {
-        return dao.findByOrderNr(orderNr);
+	return dao.findByOrderNr(orderNr);
     }
 
     /**
@@ -40,7 +41,7 @@ public class PacklistVManagerImpl extends AbstractApplyListManager<PacklistV> im
      * @see no.ugland.utransprod.service.IApplyListManager#refresh(java.lang.Object)
      */
     public final void refresh(final PacklistV productionV) {
-        dao.refresh(productionV);
+	dao.refresh(productionV);
 
     }
 
@@ -48,17 +49,15 @@ public class PacklistVManagerImpl extends AbstractApplyListManager<PacklistV> im
      * @see no.ugland.utransprod.service.IApplyListManager#findApplyableByCustomerNr(java.lang.Integer)
      */
     public final List<PacklistV> findApplyableByCustomerNr(final Integer customerNr) {
-        return dao.findByCustomerNr(customerNr);
+	return dao.findByCustomerNr(customerNr);
     }
 
-	public List<PacklistV> findApplyableByCustomerNrAndProductAreaGroup(
-			Integer customerNr, ProductAreaGroup productAreaGroup) {
-		return dao.findByCustomerNrAndProductAreaGroup(customerNr,productAreaGroup);
-	}
+    public List<PacklistV> findApplyableByCustomerNrAndProductAreaGroup(Integer customerNr, ProductAreaGroup productAreaGroup) {
+	return dao.findByCustomerNrAndProductAreaGroup(customerNr, productAreaGroup);
+    }
 
-	public List<PacklistV> findApplyableByOrderNrAndProductAreaGroup(
-			String orderNr, ProductAreaGroup productAreaGroup) {
-		return dao.findByOrderNrAndProductAreaGroup(orderNr,productAreaGroup);
-	}
+    public List<PacklistV> findApplyableByOrderNrAndProductAreaGroup(String orderNr, ProductAreaGroup productAreaGroup) {
+	return dao.findByOrderNrAndProductAreaGroup(orderNr, productAreaGroup);
+    }
 
 }

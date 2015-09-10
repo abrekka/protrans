@@ -7,13 +7,15 @@ import no.ugland.utransprod.model.ProductAreaGroup;
 
 /**
  * Interface for manager for brukere.
+ * 
  * @author atle.brekka
  */
-public interface ApplicationUserManager extends
-        OverviewManager<ApplicationUser> {
-    public static final String MANAGER_NAME="applicationUserManager";
+public interface ApplicationUserManager extends OverviewManager<ApplicationUser> {
+    public static final String MANAGER_NAME = "applicationUserManager";
+
     /**
      * Login bruker.
+     * 
      * @param userName
      * @param password
      * @return bruker dersom bruker kan logges inn
@@ -27,18 +29,21 @@ public interface ApplicationUserManager extends
 
     /**
      * Finner alle brukere som ikke er gruppebrukere.
+     * 
      * @return brukere
      */
     List<ApplicationUser> findAllNotGroup();
 
     /**
      * Finner alle pakkere.
+     * 
      * @return pakkere
      */
     List<String> findAllPackers(ProductAreaGroup productAreaGroup);
 
     /**
      * Sjekker om bruker er funksjonsleder.
+     * 
      * @param user
      * @return true dersom bruker er funksjonsleder
      */
@@ -46,19 +51,23 @@ public interface ApplicationUserManager extends
 
     /**
      * Lazy lasting av bruker.
+     * 
      * @param applicationUser
      * @param enums
      */
-    //void lazyLoad(ApplicationUser applicationUser,LazyLoadApplicationUserEnum[] enums);
+    // void lazyLoad(ApplicationUser
+    // applicationUser,LazyLoadApplicationUserEnum[] enums);
 
     /**
      * Finner alle navn på brukere som ikke er gruppebruker.
+     * 
      * @return navn
      */
     List<String> findAllNamesNotGroup();
 
     /**
      * Lagrer bruker.
+     * 
      * @param user
      */
     void saveApplicationUser(ApplicationUser user);

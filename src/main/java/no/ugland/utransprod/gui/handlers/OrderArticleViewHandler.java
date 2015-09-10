@@ -75,6 +75,7 @@ import no.ugland.utransprod.util.Util;
 import org.apache.commons.lang.StringUtils;
 import org.jdesktop.swingx.JXTreeTable;
 
+import com.google.inject.internal.Lists;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.list.ArrayListModel;
 import com.jgoodies.binding.value.BufferedValueModel;
@@ -1078,11 +1079,26 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 
     private void removeOrderLines(Order incomingOrder) throws ProTransException {
 	Set<OrderLine> orderLines = incomingOrder.getOrderLines();
+	List<OrderLine> ordrelinjerSomKanFjernes = Lists.newArrayList();
+	boolean inneholderOrdrelinjeSomErPakket = false;
 	if (orderLines != null) {
-	    orderLines.clear();
+	    for (OrderLine orderLine : orderLines) {
+		if (orderLine.getColli() == null) {
+		    ordrelinjerSomKanFjernes.add(orderLine);
+		} else {
+		    inneholderOrdrelinjeSomErPakket = true;
+		}
+	    }
+	    // orderLines.clear();
+	}
+	for (OrderLine orderLine : ordrelinjerSomKanFjernes) {
+	    orderLines.remove(orderLine);
 	}
 
 	managerRepository.getOrderManager().saveOrder(incomingOrder, true);
+	if (inneholderOrdrelinjeSomErPakket) {
+	    Util.showMsgDialog(null, "Allerede pakket", "Noen ordrelinjer er allerede pakket og vil ikke bli importert på nytt");
+	}
     }
 
     @SuppressWarnings("unchecked")
