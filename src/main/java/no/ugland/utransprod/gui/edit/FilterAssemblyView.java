@@ -149,6 +149,12 @@ public class FilterAssemblyView implements Closeable {
 	private String firstPlanned;
 	private String craningCost;
 	private String constructionTypeName;
+	private String info;
+	private String specialConcern;
+	private String assemblerCost;
+	private String assemblerCraning;
+	private String assemblyComment;
+	private String dg;
 
 	public AssemblyFilter() {
 	    sort1SelectionList = new SelectionInList(AssemblyColumn.getVisibleColumns());
@@ -367,6 +373,54 @@ public class FilterAssemblyView implements Closeable {
 
 	public void setConstructionTypeName(String constructionTypeName) {
 	    this.constructionTypeName = constructionTypeName;
+	}
+
+	public String getInfo() {
+	    return info;
+	}
+
+	public void setInfo(String info) {
+	    this.info = info;
+	}
+
+	public String getSpecialConcern() {
+	    return specialConcern;
+	}
+
+	public void setSpecialConcern(String specialConcern) {
+	    this.specialConcern = specialConcern;
+	}
+
+	public String getAssemblerCost() {
+	    return assemblerCost;
+	}
+
+	public void setAssemblerCost(String assemblerCost) {
+	    this.assemblerCost = assemblerCost;
+	}
+
+	public String getAssemblerCraning() {
+	    return assemblerCraning;
+	}
+
+	public void setAssemblerCraning(String assemblerCraning) {
+	    this.assemblerCraning = assemblerCraning;
+	}
+
+	public String getAssemblyComment() {
+	    return assemblyComment;
+	}
+
+	public void setAssemblyComment(String assemblyComment) {
+	    this.assemblyComment = assemblyComment;
+	}
+
+	public String getDg() {
+	    return dg;
+	}
+
+	public void setDg(String dg) {
+	    this.dg = dg;
 	}
 
     }

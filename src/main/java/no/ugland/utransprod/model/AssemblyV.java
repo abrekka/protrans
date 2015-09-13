@@ -35,6 +35,43 @@ public class AssemblyV {
     private String constructionTypeName;
     private String info;
     private String specialConcern;
+    private BigDecimal assemblerCost;
+    private BigDecimal assemblerCraning;
+    private String sentMailCustomer;
+    private String assemblyComment;
+    private BigDecimal dg;
+
+    public String getAssemblyComment() {
+	return assemblyComment;
+    }
+
+    public void setAssemblyComment(String assemblyComment) {
+	this.assemblyComment = assemblyComment;
+    }
+
+    public String getSentMailCustomer() {
+	return sentMailCustomer;
+    }
+
+    public void setSentMailCustomer(String sentMailCustomer) {
+	this.sentMailCustomer = sentMailCustomer;
+    }
+
+    public BigDecimal getAssemblerCraning() {
+	return assemblerCraning;
+    }
+
+    public void setAssemblerCraning(BigDecimal assemblerCraning) {
+	this.assemblerCraning = assemblerCraning;
+    }
+
+    public BigDecimal getAssemblerCost() {
+	return assemblerCost;
+    }
+
+    public void setAssemblerCost(BigDecimal assemblerCost) {
+	this.assemblerCost = assemblerCost;
+    }
 
     public Integer getAssemblyId() {
 	return assemblyId;
@@ -297,5 +334,13 @@ public class AssemblyV {
 
     public void setSpecialConcern(String specialConcern) {
 	this.specialConcern = specialConcern;
+    }
+
+    public BigDecimal getDg() {
+	return dg;
+    }
+
+    public void setDg(BigDecimal dg) {
+	this.dg = dg;
     }
 }

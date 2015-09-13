@@ -649,6 +649,23 @@ public final class Util {
 	return optionsPaneView.getInputText();
     }
 
+    public static String showTextAreaInputDialogWithdefaultValue(final WindowInterface window, final String heading, final String labelText,
+	    final String defaultValue) {
+	TextAreaOptionsPaneView optionsPaneView = new TextAreaOptionsPaneView(null, true, false, false, null, labelText, true, defaultValue, null);
+	// showOptionsPane(window, heading, optionsPaneView);
+
+	JDialog dialog = getDialog(window, heading, true);
+
+	dialog.setName(heading);
+	WindowInterface dialogWindow = new JDialogAdapter(dialog);
+	dialog.add(optionsPaneView.buildPanel(dialogWindow));
+	dialog.pack();
+	locateOnScreenCenter(dialogWindow);
+	dialog.setVisible(true);
+
+	return optionsPaneView.getInputText();
+    }
+
     public static Collection<?> showOptionsDialog(final WindowInterface window, final Collection<?> objects, final String heading,
 	    final boolean useOkButton, final boolean checkBoxAll) {
 	OptionsPaneView optionsPaneView = new OptionsPaneView(objects, useOkButton, checkBoxAll, false, null, null, false, null, null);

@@ -207,7 +207,36 @@
         column="SPECIAL_CONCERN"
         length="255"
     />
-
+<property
+        name="assemblerCost"
+        type="java.math.BigDecimal"
+        column="MONTERING_SUM"
+        length="2"
+    />
+    <property
+        name="assemblerCraning"
+        type="java.math.BigDecimal"
+        column="ASSEMBLER_CRANING"
+        length="2"
+    />
+    <property
+        name="sentMailCustomer"
+        type="java.lang.String"
+        column="SENT_MAIL_CUSTOMER"
+        length="255"
+    />
+    <property
+        name="assemblyComment"
+        type="java.lang.String"
+        column="ASSEMBLY_COMMENT"
+        length="255"
+    />
+    <property
+        name="dg"
+        type="java.math.BigDecimal"
+        column="DG"
+        length="2"
+    />
 
 </class>
 </hibernate-mapping>

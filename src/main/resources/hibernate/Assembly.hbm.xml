@@ -88,6 +88,12 @@
         column="INACTIVE"
         length="32"
     />
+    <property
+        name="assemblyComment"
+        type="java.lang.String"
+        column="ASSEMBLY_COMMENT"
+        length="3"
+    />
     
     <!-- Associations -->
   <many-to-one

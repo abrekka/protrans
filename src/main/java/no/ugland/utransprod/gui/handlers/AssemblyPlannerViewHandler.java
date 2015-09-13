@@ -159,6 +159,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
     JMenuItem menuItemShowMissing;
     JMenuItem menuItemAssemblyReport;
     JMenuItem menuItemDeviation;
+    JMenuItem menuItemSetComment;
 
     private WindowInterface currentWindow;
 
@@ -308,6 +309,9 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	menuItemSetSentBase = new JMenuItem("Sendt underlag...");
 	menuItemSetSentBase.addActionListener(menuItemListenerAssembly);
 
+	menuItemSetComment = new JMenuItem("Legg til kommentar...");
+	menuItemSetComment.addActionListener(menuItemListenerAssembly);
+
 	menuItemAssemblyReport = new JMenuItem("Fakturagrunnlag...");
 	menuItemAssemblyReport.addActionListener(new AssemblyReportListener(window));
 
@@ -320,6 +324,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	popupMenuAssembly.add(menuItemAssemblyReport);
 	popupMenuAssembly.add(menuItemDeviation);
 	popupMenuAssembly.add(menuItemSetSentBase);
+	popupMenuAssembly.add(menuItemSetComment);
     }
 
     private class AssemblyReportListener implements ActionListener {
@@ -1095,6 +1100,16 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		assembly.setSentBase(value);
 		assemblyManager.saveAssembly(assembly);
 
+	    } else if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemSetComment.getText())) {
+		AssemblyManager assemblyManager = ((AssemblyManager) ModelUtil.getBean(AssemblyManager.MANAGER_NAME));
+		AssemblyV assemblyV = getSelectedAssembly();
+		Assembly assembly = assemblyManager.get(assemblyV.getAssemblyId());
+
+		String value = Util.showTextAreaInputDialogWithdefaultValue(window, "Kommentar", "Kommentar",
+			assembly.getAssemblyComment() == null ? "" : assembly.getAssemblyComment());
+		assembly.setAssemblyComment(value);
+		assemblyManager.saveAssembly(assembly);
+		doRefresh(window);
 	    }
 	}
     }
@@ -1873,6 +1888,98 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		return true;
 	    }
 	},
+	LENGDE_BREDDE("Lengde bredde", VISIBLE, NOT_CENTER, 80) {
+	    @Override
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getInfo();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getInfo().compareTo(assembly2.getInfo());
+	    }
+
+	    @Override
+	    public Component getFilterComponent(PresentationModel presentationModel) {
+		return BasicComponentFactory.createTextField(presentationModel.getModel("info"), false);
+	    }
+
+	    @Override
+	    public boolean filter(AssemblyV assemblyV, AssemblyFilter assemblyFilter) {
+		if (StringUtils.isNotBlank(assemblyFilter.getInfo())) {
+		    return assemblyV.getInfo() != null
+			    && assemblyV.getInfo().toLowerCase().matches(assemblyFilter.getInfo().toLowerCase().replaceAll("%", ".*") + ".*");
+		}
+		return true;
+	    }
+	},
+	ADVARSLER("Advarsler", VISIBLE, NOT_CENTER, 80) {
+	    @Override
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getSpecialConcern();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getSpecialConcern().compareTo(assembly2.getSpecialConcern());
+	    }
+
+	    @Override
+	    public Component getFilterComponent(PresentationModel presentationModel) {
+		return BasicComponentFactory.createTextField(presentationModel.getModel("specialConcern"), false);
+	    }
+
+	    @Override
+	    public boolean filter(AssemblyV assemblyV, AssemblyFilter assemblyFilter) {
+		if (StringUtils.isNotBlank(assemblyFilter.getSpecialConcern())) {
+		    return assemblyV.getSpecialConcern() != null
+			    && assemblyV.getSpecialConcern().toLowerCase()
+				    .matches(assemblyFilter.getSpecialConcern().toLowerCase().replaceAll("%", ".*") + ".*");
+		}
+		return true;
+	    }
+	},
+	KOMMENTAR("Kommentar", VISIBLE, NOT_CENTER, 80) {
+	    @Override
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getAssemblyComment();
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getAssemblyComment().compareTo(assembly2.getAssemblyComment());
+	    }
+
+	    @Override
+	    public Component getFilterComponent(PresentationModel presentationModel) {
+		return BasicComponentFactory.createTextField(presentationModel.getModel("assemblyComment"), false);
+	    }
+
+	    @Override
+	    public boolean filter(AssemblyV assemblyV, AssemblyFilter assemblyFilter) {
+		if (StringUtils.isNotBlank(assemblyFilter.getAssemblyComment())) {
+		    return assemblyV.getAssemblyComment() != null
+			    && assemblyV.getAssemblyComment().toLowerCase()
+				    .matches(assemblyFilter.getAssemblyComment().toLowerCase().replaceAll("%", ".*") + ".*");
+		}
+		return true;
+	    }
+	},
 	PLANLAGT("Planlagt", VISIBLE, NOT_CENTER, 60) {
 	    @Override
 	    public Object getValue(AssemblyV assembly) {
@@ -2340,6 +2447,68 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		return true;
 	    }
 	},
+	BELØP_MONTØR("Beløp montør", VISIBLE, CENTER, 70) {
+	    @Override
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getAssemblerCost() == null ? null : String.format("%.2f", assembly.getAssemblerCost());
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getAssemblerCost().compareTo(assembly2.getAssemblerCost());
+	    }
+
+	    @Override
+	    public Component getFilterComponent(PresentationModel presentationModel) {
+		return BasicComponentFactory.createTextField(presentationModel.getModel("assemblerCost"), false);
+	    }
+
+	    @Override
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
+		if (StringUtils.isNotBlank(assemblyFilter.getAssemblerCost())) {
+		    return assembly.getAssemblerCost() != null
+			    && String.valueOf(assembly.getAssemblerCost()).toLowerCase()
+				    .matches(assemblyFilter.getAssemblerCost().toLowerCase().replaceAll("%", ".*") + ".*");
+		}
+		return true;
+	    }
+	},
+	DG("DG", VISIBLE, CENTER, 70) {
+	    @Override
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getDg() == null ? null : String.format("%.2f", assembly.getDg());
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getDg().compareTo(assembly2.getDg());
+	    }
+
+	    @Override
+	    public Component getFilterComponent(PresentationModel presentationModel) {
+		return BasicComponentFactory.createTextField(presentationModel.getModel("dg"), false);
+	    }
+
+	    @Override
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
+		if (StringUtils.isNotBlank(assemblyFilter.getDg())) {
+		    return assembly.getDg() != null
+			    && String.valueOf(assembly.getDg()).toLowerCase()
+				    .matches(assemblyFilter.getDg().toLowerCase().replaceAll("%", ".*") + ".*");
+		}
+		return true;
+	    }
+	},
 
 	OPPRINNELIG("Opprinnelig", VISIBLE, CENTER, 60) {
 	    @Override
@@ -2403,6 +2572,37 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		return true;
 	    }
 	},
+	KRANING_MONTØR("Kraning montør", VISIBLE, CENTER, 60) {
+	    @Override
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getAssemblerCraning() == null ? null : String.format("%.2f", assembly.getAssemblerCraning());
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getAssemblerCraning().compareTo(assembly2.getAssemblerCraning());
+	    }
+
+	    @Override
+	    public Component getFilterComponent(PresentationModel presentationModel) {
+		return BasicComponentFactory.createTextField(presentationModel.getModel("assemblerCraning"), false);
+	    }
+
+	    @Override
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
+		if (StringUtils.isNotBlank(assemblyFilter.getAssemblerCraning())) {
+		    return assembly.getAssemblerCraning() != null
+			    && String.valueOf(assembly.getAssemblerCraning()).toLowerCase()
+				    .matches(assemblyFilter.getAssemblerCraning().toLowerCase().replaceAll("%", ".*") + ".*");
+		}
+		return true;
+	    }
+	},
 	OVERTID("Overtid", INVISIBLE, CENTER, 50) {
 	    @Override
 	    public Object getValue(AssemblyV assembly) {
@@ -2447,6 +2647,32 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    @Override
 	    public Class<?> getColumnClass() {
 		return Integer.class;
+	    }
+
+	    @Override
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return 0;
+	    }
+
+	    @Override
+	    public Component getFilterComponent(PresentationModel presentationModel) {
+		return null;
+	    }
+
+	    @Override
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
+		return true;
+	    }
+	},
+	SENDT_MAIL("Sendt mail", INVISIBLE, CENTER, 50) {
+	    @Override
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getSentMailCustomer() == null ? "Nei" : "Ja";
+	    }
+
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
 	    }
 
 	    @Override

@@ -40,6 +40,8 @@ public class Assembly extends BaseObject implements Comparable<Assembly> {
 
     private String sentBase = "0";
 
+    private String assemblyComment;
+
     public static final Assembly UNKNOWN = new Assembly() {
 
 	private static final long serialVersionUID = 7650049577311091406L;
@@ -357,6 +359,14 @@ public class Assembly extends BaseObject implements Comparable<Assembly> {
 
     public String getAssemblyteamName() {
 	return supplier == null ? "" : supplier.getSupplierName();
+    }
+
+    public void setAssemblyComment(String assemblyComment) {
+	this.assemblyComment = assemblyComment;
+    }
+
+    public String getAssemblyComment() {
+	return assemblyComment;
     }
 
 }
