@@ -2,6 +2,7 @@ package no.ugland.utransprod.gui.handlers;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
@@ -18,6 +19,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.SwingConstants;
@@ -93,6 +95,8 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
     private CostUnit costUnitTross;
     private JTextField textFieldWeekFrom;
     private JTextField textFieldWeekTo;
+    private StatusCheckerInterface<Transportable> takstolChecker;
+    private JMenuItem menuItemUpdateStatus;
 
     @Inject
     public PacklistViewHandler(Login login, ManagerRepository aManagerRepository, DeviationViewHandlerFactory deviationViewHandlerFactory,
@@ -104,11 +108,14 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	orderViewHandler = orderViewHandlerFactory.create(true);
 	presentationModelBudget = new PresentationModel(new ProductionBudgetModel(new Budget(null, null, null, BigDecimal.valueOf(0), null, null)));
 	presentationModelCount = new PresentationModel(new CountModel(Integer.valueOf(0), Integer.valueOf(0)));
+	takstolChecker = Util.getTakstolChecker(managerRepository);
 
 	initBudgetAndCount();
 	emptySelectionListener = new EmptySelectionListener(objectSelectionList);
 	objectSelectionList.addPropertyChangeListener(SelectionInList.PROPERTYNAME_SELECTION_EMPTY, emptySelectionListener);
+	menuItemUpdateStatus = new JMenuItem("Oppdater status");
 
+	popupMenu.add(menuItemUpdateStatus);
     }
 
     /**
@@ -117,9 +124,10 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
     private void initBudgetAndCount() {
 
 	YearWeek yearWeekPlussOne = Util.addWeek(new YearWeek(Util.getCurrentYear(), Util.getCurrentWeek()), 1);
-	ProductAreaGroup group = (ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP);
+	// ProductAreaGroup group = (ProductAreaGroup)
+	// productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP);
 	Budget productionBudget = managerRepository.getBudgetManager().findByYearAndWeekPrProductAreaGroup(yearWeekPlussOne.getYear(),
-		yearWeekPlussOne.getWeek(), group, BudgetType.PRODUCTION);
+		yearWeekPlussOne.getWeek(), BudgetType.PRODUCTION);
 
 	if (productionBudget == null) {
 	    productionBudget = new Budget(null, null, null, BigDecimal.valueOf(0), null, null);
@@ -129,11 +137,11 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 
 	Date fromDateWeek = Util.getFirstDateInWeek(Util.getCurrentYear(), Util.getCurrentWeek());
 	Date toDateWeek = Util.getLastDateInWeek(Util.getCurrentYear(), Util.getCurrentWeek());
-	Integer weekCount = managerRepository.getOrderManager().getPacklistCountForWeekByProductAreaGroupName(fromDateWeek, toDateWeek, group);
+	Integer weekCount = managerRepository.getOrderManager().getPacklistCountForWeekByProductAreaGroupName(fromDateWeek, toDateWeek);
 
 	Date fromDateYear = Util.getFirstDateInYear(Util.getCurrentYear());
 	Date toDateYear = Util.getLastDateInWeek(Util.getCurrentYear(), Util.getCurrentWeek());
-	Integer yearCount = managerRepository.getOrderManager().getPacklistCountForWeekByProductAreaGroupName(fromDateYear, toDateYear, group);
+	Integer yearCount = managerRepository.getOrderManager().getPacklistCountForWeekByProductAreaGroupName(fromDateYear, toDateYear);
 
 	if (weekCount == null) {
 	    weekCount = Integer.valueOf(0);
@@ -467,10 +475,13 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-	    if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2)
+	    if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2) {
 		if (objectSelectionList.getSelection() != null) {
 		    doEditAction(window);
 		}
+	    } else if (SwingUtilities.isRightMouseButton(e)) {
+		popupMenu.show((JXTable) e.getSource(), e.getX(), e.getY());
+	    }
 	}
     }
 
@@ -812,26 +823,29 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	String getStatus(StatusCheckerInterface<Transportable> checker, Map<String, String> statusMap, PacklistV packlistV, WindowInterface window,
 		ManagerRepository managerRepository, ApplyListInterface<PacklistV> applyListInterface) {
 	    String status = statusMap.get(checker.getArticleName());
-	    if (status != null) {
-		return status;
-	    }
 
-	    Order order = managerRepository.getOrderManager().findByOrderNr(packlistV.getOrderNr());
-	    if (order != null) {
-		managerRepository.getOrderManager().lazyLoadTree(order);
-		status = checker.getArticleStatus(order);
-		statusMap.put(checker.getArticleName(), status);
-		order.setStatus(Util.statusMapToString(statusMap));
-		try {
-		    managerRepository.getOrderManager().saveOrder(order);
-		} catch (ProTransException e) {
-		    Util.showErrorDialog(window, "Feil", e.getMessage());
-		    e.printStackTrace();
-		}
-		applyListInterface.refresh(packlistV);
+	    return status == null ? "MANGLER" : status;
+	    // if (status != null) {
+	    // return status;
+	    // }
 
-	    }
-	    return status;
+	    // Order order =
+	    // managerRepository.getOrderManager().findByOrderNr(packlistV.getOrderNr());
+	    // if (order != null) {
+	    // managerRepository.getOrderManager().lazyLoadTree(order);
+	    // status = checker.getArticleStatus(order);
+	    // statusMap.put(checker.getArticleName(), status);
+	    // order.setStatus(Util.statusMapToString(statusMap));
+	    // try {
+	    // managerRepository.getOrderManager().saveOrder(order);
+	    // } catch (ProTransException e) {
+	    // Util.showErrorDialog(window, "Feil", e.getMessage());
+	    // e.printStackTrace();
+	    // }
+	    // applyListInterface.refresh(packlistV);
+	    //
+	    // }
+	    // return status;
 	}
     }
 
@@ -1158,6 +1172,12 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	return button;
     }
 
+    public JButton getButtonUpdateStatus(WindowInterface window) {
+	JButton button = new JButton(new UpdateStatusAction(window));
+	menuItemUpdateStatus.addActionListener(new UpdateOrderstatusActionListener(window));
+	return button;
+    }
+
     public class FilterAction extends AbstractAction {
 
 	public FilterAction() {
@@ -1183,10 +1203,79 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	    return new Predicate<PacklistV>() {
 
 		public boolean apply(PacklistV packlistV) {
-		    return packlistV.getProductionWeek() >= fraUke && packlistV.getProductionWeek() <= tilUke;
+		    return fraUke != null && tilUke != null && packlistV.getProductionWeek() >= fraUke && packlistV.getProductionWeek() <= tilUke;
 		}
 	    };
 	}
 
     }
+
+    public class UpdateStatusAction extends AbstractAction {
+	private WindowInterface window;
+
+	public UpdateStatusAction(WindowInterface window) {
+	    super("Oppdater status");
+	    this.window = window;
+	}
+
+	public void actionPerformed(ActionEvent arg0) {
+	    Util.setWaitCursor(window);
+	    for (PacklistV packlistV : applyListInterface.getObjectLines()) {
+		Map<String, String> statusMap = Util.createStatusMap(packlistV.getOrderStatus());
+		String status = statusMap.get(takstolChecker.getArticleName());
+		if (status == null) {
+		    updateOrderStatus(packlistV, statusMap, window);
+		}
+	    }
+	    Util.setDefaultCursor(window);
+
+	}
+
+    }
+
+    private void updateOrderStatus(PacklistV packlistV, Map<String, String> statusMap, WindowInterface window) {
+	String status;
+	Order order = managerRepository.getOrderManager().findByOrderNr(packlistV.getOrderNr());
+	if (order != null) {
+	    managerRepository.getOrderManager().lazyLoadTree(order);
+	    status = takstolChecker.getArticleStatus(order);
+	    statusMap.put(takstolChecker.getArticleName(), status);
+	    order.setStatus(Util.statusMapToString(statusMap));
+	    try {
+		managerRepository.getOrderManager().saveOrder(order);
+	    } catch (ProTransException e) {
+		Util.showErrorDialog(window, "Feil", e.getMessage());
+		e.printStackTrace();
+	    }
+	    applyListInterface.refresh(packlistV);
+	}
+    }
+
+    class UpdateOrderstatusActionListener implements ActionListener {
+	private WindowInterface window;
+
+	/**
+	 * @param aWindow
+	 */
+	public UpdateOrderstatusActionListener(final WindowInterface aWindow) {
+	    window = aWindow;
+	}
+
+	/**
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	@SuppressWarnings("unchecked")
+	public void actionPerformed(final ActionEvent arg0) {
+	    Util.setWaitCursor(window);
+	    PacklistV packlistV = (PacklistV) objectSelectionList.getElementAt(table.convertRowIndexToModel(objectSelectionList.getSelectionIndex()));
+	    Map<String, String> statusMap = Util.createStatusMap(packlistV.getOrderStatus());
+	    String status = statusMap.get(takstolChecker.getArticleName());
+	    if (status == null) {
+		updateOrderStatus(packlistV, statusMap, window);
+	    }
+	    Util.setDefaultCursor(window);
+	}
+
+    }
+
 }

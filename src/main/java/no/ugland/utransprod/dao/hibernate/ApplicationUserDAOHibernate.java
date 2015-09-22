@@ -8,7 +8,6 @@ import no.ugland.utransprod.model.ApplicationUser;
 import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.util.ApplicationParamUtil;
 
-import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -72,14 +71,15 @@ public class ApplicationUserDAOHibernate extends BaseDAOHibernate<ApplicationUse
      * @see no.ugland.utransprod.dao.ApplicationUserDAO#findAllPackers()
      */
     @SuppressWarnings("unchecked")
-    public List<String> findAllPackers(final ProductAreaGroup productAreaGroup) {
+    public List<String> findAllPackers() {
 	return (List<String>) getHibernateTemplate().execute(new HibernateCallback() {
 
 	    public Object doInHibernate(Session session) throws HibernateException {
 		Criteria criteria = session.createCriteria(ApplicationUser.class).add(Restrictions.eq("groupUser", "Nei"));
 
-		ProductAreaGroupSelector selector = ProductAreaGroupSelector.valueOf(StringUtils.upperCase(productAreaGroup.getProductAreaGroupName()));
-		selector.setRestriction(criteria, productAreaGroup);
+		// ProductAreaGroupSelector selector =
+		// ProductAreaGroupSelector.valueOf(StringUtils.upperCase(productAreaGroup.getProductAreaGroupName()));
+		// selector.setRestriction(criteria, productAreaGroup);
 
 		criteria = criteria.createCriteria("userRoles").createCriteria("userType")
 			.add(Restrictions.eq("description", ApplicationParamUtil.findParamByName("user_type_package")));

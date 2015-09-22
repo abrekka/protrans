@@ -13,6 +13,7 @@ import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -74,7 +75,6 @@ import no.ugland.utransprod.gui.model.ListMultilineRenderer;
 import no.ugland.utransprod.gui.model.OrderModel;
 import no.ugland.utransprod.gui.model.Packable;
 import no.ugland.utransprod.gui.model.PostShipmentModel;
-import no.ugland.utransprod.gui.model.ProductAreaGroupModel;
 import no.ugland.utransprod.gui.model.ProductionBudgetModel;
 import no.ugland.utransprod.gui.model.SumOrderReadyVModel;
 import no.ugland.utransprod.gui.model.TextPaneRendererOrder;
@@ -106,18 +106,17 @@ import no.ugland.utransprod.service.OrderLineManager;
 import no.ugland.utransprod.service.OrderManager;
 import no.ugland.utransprod.service.OverviewManager;
 import no.ugland.utransprod.service.PostShipmentManager;
-import no.ugland.utransprod.service.ProductAreaGroupManager;
 import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.service.enums.LazyLoadArticleTypeEnum;
 import no.ugland.utransprod.service.enums.LazyLoadEnum;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
+import no.ugland.utransprod.service.enums.LazyLoadOrderLineEnum;
 import no.ugland.utransprod.service.enums.LazyLoadPostShipmentEnum;
 import no.ugland.utransprod.util.ApplicationParamUtil;
 import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.UserUtil;
 import no.ugland.utransprod.util.Util;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.hibernate.Hibernate;
 import org.jdesktop.swingx.JXTable;
@@ -212,6 +211,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
     private JPopupMenu popupMenuPostShipment;
 
     private JMenuItem menuItemPacklist;
+    private JMenuItem menuItemUpdateColliesPostshipment;
 
     final ArrayListModel orderComments;
 
@@ -224,10 +224,11 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
     private JPopupMenu popupMenuOrder;
 
     private JMenuItem menuItemDeviation;
+    private JMenuItem menuItemUpdateCollies;
 
-    private List<ProductAreaGroup> productAreaGroupList;
+    // private List<ProductAreaGroup> productAreaGroupList;
 
-    private PresentationModel productAreaGroupModel;
+    // private PresentationModel productAreaGroupModel;
     private VismaFileCreator vismaFileCreator;
 
     private ManagerRepository managerRepository;
@@ -272,7 +273,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	presentationModelSum = new PresentationModel(new SumOrderReadyVModel(new SumOrderReadyV(null, BigDecimal.valueOf(0), null, null, null)));
 	presentationModelWeekSum = new PresentationModel(new SumOrderReadyVModel(new SumOrderReadyV(null, BigDecimal.valueOf(0), null, null, null)));
 	presentationModelBudget = new PresentationModel(new ProductionBudgetModel(new Budget(null, null, null, BigDecimal.valueOf(0), null, null)));
-	initProductAreaGroup();
+	// initProductAreaGroup();
 	colliListViewHandler = new ColliListViewHandler(login, managerRepository, colliSetup);
 	colliListViewHandler.addListDataListener(this);
 	colliListViewHandler.addColliListener(this);
@@ -281,11 +282,15 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 
 	popupMenuPostShipment = new JPopupMenu("Etterlevering");
 	menuItemPacklist = new JMenuItem("Pakkliste...");
+	menuItemUpdateColliesPostshipment = new JMenuItem("Oppdater kollier");
 	popupMenuPostShipment.add(menuItemPacklist);
+	popupMenuPostShipment.add(menuItemUpdateColliesPostshipment);
 
 	popupMenuOrder = new JPopupMenu();
 	menuItemDeviation = new JMenuItem("Registrer avvik...");
+	menuItemUpdateCollies = new JMenuItem("Oppdater kollier");
 	popupMenuOrder.add(menuItemDeviation);
+	popupMenuOrder.add(menuItemUpdateCollies);
 
 	popupMenuOrderLine = new JPopupMenu();
 	menuItemPack = new JMenuItem("Pakk...");
@@ -296,16 +301,19 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
     /**
      * Initierer liste med produktområdegrupper
      */
-    private void initProductAreaGroup() {
-	productAreaGroupModel = new PresentationModel(new ProductAreaGroupModel(ProductAreaGroup.UNKNOWN));
-	productAreaGroupModel.addBeanPropertyChangeListener(new FilterPropertyChangeListener());
-	ProductAreaGroupManager productAreaGroupManager = (ProductAreaGroupManager) ModelUtil.getBean("productAreaGroupManager");
-	productAreaGroupList = new ArrayList<ProductAreaGroup>();
-	List<ProductAreaGroup> groups = productAreaGroupManager.findAll();
-	if (groups != null) {
-	    productAreaGroupList.addAll(groups);
-	}
-    }
+    // private void initProductAreaGroup() {
+    // productAreaGroupModel = new PresentationModel(new
+    // ProductAreaGroupModel(ProductAreaGroup.UNKNOWN));
+    // productAreaGroupModel.addBeanPropertyChangeListener(new
+    // FilterPropertyChangeListener());
+    // ProductAreaGroupManager productAreaGroupManager =
+    // (ProductAreaGroupManager) ModelUtil.getBean("productAreaGroupManager");
+    // productAreaGroupList = new ArrayList<ProductAreaGroup>();
+    // List<ProductAreaGroup> groups = productAreaGroupManager.findAll();
+    // if (groups != null) {
+    // productAreaGroupList.addAll(groups);
+    // }
+    // }
 
     /**
      * Initierer klasse
@@ -338,9 +346,9 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	presentationModelWeekSum = new PresentationModel(new SumOrderReadyVModel(sumWeek));
 
 	Budget productionBudget = null;
-	ProductAreaGroup productAreaGroup = (ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP);
-	productionBudget = managerRepository.getBudgetManager().findByYearAndWeekPrProductAreaGroup(currentYear, currentWeek, productAreaGroup,
-		BudgetType.PRODUCTION);
+	// ProductAreaGroup productAreaGroup = (ProductAreaGroup)
+	// productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP);
+	productionBudget = managerRepository.getBudgetManager().findByYearAndWeekPrProductAreaGroup(currentYear, currentWeek, BudgetType.PRODUCTION);
 
 	if (productionBudget == null) {
 	    productionBudget = new Budget(null, null, null, BigDecimal.valueOf(0), null, null);
@@ -372,6 +380,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
      */
     public JXTable getTableOrders(WindowInterface window) {
 	menuItemDeviation.addActionListener(new MenuItemListenerDeviation(window));
+	menuItemUpdateCollies.addActionListener(new MenuItemListenerDeviation(window));
 	tableOrders = new JXTable();
 	packageOrderTableModel = new PackageOrderTableModel(orderSelectionList);
 	tableOrders.setModel(packageOrderTableModel);
@@ -424,6 +433,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 
 	tablePostShipment.addMouseListener(new TableClickHandler());
 	menuItemPacklist.addActionListener(new MenuItemListenerPacklist(window));
+	menuItemUpdateColliesPostshipment.addActionListener(new MenuItemListenerPacklist(window));
 
 	tablePostShipment.addHighlighter(pattern);
 	tablePostShipment.setRowHeight(40);
@@ -751,7 +761,8 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
      */
     @SuppressWarnings("unchecked")
     void refreshTableOrder(OrderLine updatedOrderLine, boolean removeColli, WindowInterface window, boolean combo) {
-	AbstractOrderModel abstractOrderModel = lazyLoadPackable();
+	// AbstractOrderModel abstractOrderModel = lazyLoadPackable();
+	AbstractOrderModel abstractOrderModel = (AbstractOrderModel) presentationModelPackable.getBean();
 	OverviewManager overviewManager = (OverviewManager) ModelUtil.getBean(abstractOrderModel.getManagerName());
 
 	int rowCount = tableOrderLines.getRowCount();
@@ -1081,30 +1092,30 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
      */
     void setSums() {
 	Budget productionBudget = null;
-	ProductAreaGroup productAreaGroup = (ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP);
+	// ProductAreaGroup productAreaGroup = (ProductAreaGroup)
+	// productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP);
 
-	String productAreaGroupName = null;
-	if (productAreaGroup != null && !productAreaGroup.getProductAreaGroupName().equalsIgnoreCase("Alle")) {
-	    productAreaGroupName = productAreaGroup.getProductAreaGroupName();
-	}
+	// String productAreaGroupName = null;
+	// if (productAreaGroup != null &&
+	// !productAreaGroup.getProductAreaGroupName().equalsIgnoreCase("Alle"))
+	// {
+	// productAreaGroupName = productAreaGroup.getProductAreaGroupName();
+	// }
 
-	SumOrderReadyV sum = managerRepository.getSumOrderReadyVManager().findByDateAndProductAreaGroupName(Calendar.getInstance().getTime(),
-		productAreaGroupName);
+	SumOrderReadyV sum = managerRepository.getSumOrderReadyVManager().findByDateAndProductAreaGroupName(Calendar.getInstance().getTime());
 	if (sum == null) {
 	    sum = new SumOrderReadyV(null, BigDecimal.valueOf(0), null, null, null);
 	}
 	presentationModelSum.setBean(new SumOrderReadyVModel(sum));
 
-	SumOrderReadyV sumWeek = managerRepository.getSumOrderReadyVManager().findSumByWeekAndProductAreaGroupName(currentYear, currentWeek,
-		productAreaGroupName);
+	SumOrderReadyV sumWeek = managerRepository.getSumOrderReadyVManager().findSumByWeekAndProductAreaGroupName(currentYear, currentWeek);
 	if (sumWeek == null) {
 	    sumWeek = new SumOrderReadyV(null, BigDecimal.valueOf(0), null, null, null);
 	}
 
 	presentationModelWeekSum.setBean(new SumOrderReadyVModel(sumWeek));
 
-	productionBudget = managerRepository.getBudgetManager().findByYearAndWeekPrProductAreaGroup(currentYear, currentWeek, productAreaGroup,
-		BudgetType.PRODUCTION);
+	productionBudget = managerRepository.getBudgetManager().findByYearAndWeekPrProductAreaGroup(currentYear, currentWeek, BudgetType.PRODUCTION);
 
 	if (productionBudget == null) {
 	    productionBudget = new Budget(null, null, null, BigDecimal.valueOf(0), null, null);
@@ -1317,12 +1328,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		changeOrderBean();
 	    }
 
-	    // selectedColliViewHandlers.clear();
-	    // buttonAddColli.setEnabled(hasWriteAccess());
-	    // buttonRemoveColli.setEnabled(false);
-	    // buttonEditColli.setEnabled(false);
-	    // checkCollies(window);
-	    colliListViewHandler.checkCollies(window);
+	    // colliListViewHandler.checkCollies(window);
 	    updatePanel();
 	} catch (ProTransException e) {
 	    e.printStackTrace();
@@ -2130,7 +2136,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
     ) {
 	PackInitialsViewHandler packInitialsViewHandler = new PackInitialsViewHandler(packedBy,
 	// height,
-		(ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP),
+
 		managerRepository.getApplicationUserManager());
 	EditPackInitialsView editPackInitialsView = new EditPackInitialsView(packInitialsViewHandler);
 	JDialog dialog = Util.getDialog(window, "Pakket av", true);
@@ -2202,9 +2208,10 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
      * 
      * @return komboboks
      */
-    public JComboBox getComboBoxProductAreaGroup() {
-	return Util.getComboBoxProductAreaGroup(login.getApplicationUser(), login.getUserType(), productAreaGroupModel);
-    }
+    // public JComboBox getComboBoxProductAreaGroup() {
+    // return Util.getComboBoxProductAreaGroup(login.getApplicationUser(),
+    // login.getUserType(), productAreaGroupModel);
+    // }
 
     public JComboBox getComboBoxPakketype() {
 	comboBoxPakketype = new JComboBox(Packagetype.values());
@@ -2288,7 +2295,8 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	    boolean useDefaultColli) {
 
 	articlePacker.packOrderLines(orderLines, packable, window, useDefaultColli);
-	refreshTableOrder(null, false, window, true);
+	changeOrderBean();
+	// refreshTableOrder(null, false, window, true);
     }
 
     /**
@@ -2582,7 +2590,8 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
      * @see no.ugland.utransprod.gui.model.ColliListener#orderLineRemoved(no.ugland.utransprod.gui.WindowInterface)
      */
     public void orderLineRemoved(WindowInterface window) {
-	refreshTableOrder(null, false, window, true);
+	changeOrderBean();
+	// refreshTableOrder(null, false, window, true);
 
     }
 
@@ -2647,9 +2656,15 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent actionEvent) {
+	    Util.setWaitCursor(window);
 	    PostShipment postShipment = (PostShipment) postShipmentSelectionList.getElementAt(tablePostShipment
 		    .convertRowIndexToModel(postShipmentSelectionList.getSelectionIndex()));
-	    Util.runInThreadWheel(window.getRootPane(), new PacklistPrinter(window, postShipment), null);
+	    if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemPacklist.getActionCommand())) {
+		Util.runInThreadWheel(window.getRootPane(), new PacklistPrinter(window, postShipment), null);
+	    } else if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemUpdateColliesPostshipment.getActionCommand())) {
+		checkCollies(postShipment);
+	    }
+	    Util.setDefaultCursor(window);
 	}
 
     }
@@ -2740,15 +2755,21 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	/**
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent action) {
+	    Util.setWaitCursor(window);
 	    MainPackageV mainPackageV = (MainPackageV) orderSelectionList.getElementAt(tableOrders.convertRowIndexToModel(orderSelectionList
 		    .getSelectionIndex()));
 	    OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
 	    Order order = orderManager.findByOrderNr(mainPackageV.getOrderNr());
 	    if (order != null) {
-		DeviationViewHandler deviationViewHandler = deviationViewHandlerFactory.create(order, true, false, true, null, true);
-		deviationViewHandler.registerDeviation(order, window);
+		if (action.getActionCommand().equalsIgnoreCase(menuItemDeviation.getActionCommand())) {
+		    DeviationViewHandler deviationViewHandler = deviationViewHandlerFactory.create(order, true, false, true, null, true);
+		    deviationViewHandler.registerDeviation(order, window);
+		} else if (action.getActionCommand().equalsIgnoreCase(menuItemUpdateCollies.getActionCommand())) {
+		    checkCollies(order);
+		}
 	    }
+	    Util.setDefaultCursor(window);
 	}
 
     }
@@ -2800,12 +2821,14 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
      */
     protected void handleFilter() {
 	// gi beskjed til alle transportlister at de skal filtrere
-	ProductAreaGroup group = (ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP);
+	// ProductAreaGroup group = (ProductAreaGroup)
+	// productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP);
 
 	List<Filter> filtersOrder = new ArrayList<Filter>();
 	List<Filter> filtersPostShipment = new ArrayList<Filter>();
 
-	FilterGroupSelector.valueOf(StringUtils.upperCase(group.getProductAreaGroupName())).addFilter(group, filtersOrder, filtersPostShipment);
+	// FilterGroupSelector.valueOf(StringUtils.upperCase(group.getProductAreaGroupName())).addFilter(group,
+	// filtersOrder, filtersPostShipment);
 
 	@SuppressWarnings("unused")
 	boolean added = !checkBoxShowPackaged.isSelected() ? addPackedFilter(filtersOrder, filtersPostShipment) : false;
@@ -2919,5 +2942,159 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	    setTableOrderLinesFilters();
 	}
 
+    }
+
+    public JButton getButtonUpdateCollies(WindowInterface window) {
+	return new JButton(new UpdateColliesAction(window));
+    }
+
+    private class UpdateColliesAction extends AbstractAction {
+	private WindowInterface window;
+
+	public UpdateColliesAction(WindowInterface window) {
+	    super("Oppdater kollier");
+	    this.window = window;
+	}
+
+	public void actionPerformed(ActionEvent arg0) {
+	    Util.setWaitCursor(window);
+	    for (Object object : mainPackageVList) {
+		MainPackageV mainPackageV = (MainPackageV) object;
+		Order order = managerRepository.getOrderManager().lazyLoadOrderLineAndCollies(mainPackageV.getOrderId());
+		checkCollies(order);
+	    }
+
+	    for (Object object : postShipmentList) {
+		PostShipment postShipment = (PostShipment) object;
+		checkCollies(postShipment);
+	    }
+	    Util.setDefaultCursor(window);
+
+	}
+
+    }
+
+    public void checkCollies(Packable packable) throws ProTransException {
+	OverviewManager overviewManager = (OverviewManager) ModelUtil.getBean(packable.getManagerName());
+	if (!Util.convertNumberToBoolean(packable.getDefaultColliesGenerated())) {
+	    overviewManager.refreshObject(packable);
+	    packable.setDefaultColliesGenerated(1);
+	    // overviewManager.saveObject(packable);
+	    // packable = (Packable) overviewManager.merge(packable);
+	    List<Colli> collies = packable.getColliList();
+	    List<OrderLine> orderLines = packable.getOrderLineList();
+	    Colli tmpColli;
+
+	    tmpColli = new Colli(null, packable.getOrder(), null, null, null, null, packable.getPostShipment(), null, null);
+	    if (collies == null) {
+		collies = new ArrayList<Colli>();
+
+	    }
+	    // sjekk om kollier Takstol,Gavl,Gulvspon,Garasjepakke er med
+	    // for
+	    // ordre,
+	    // sjekk mot artikler
+
+	    Set<String> colliNames = colliSetup.keySet();
+	    if (colliNames != null) {
+		for (String colliName : colliNames) {
+		    tmpColli.setColliName(colliName);
+		    if (!collies.contains(tmpColli)) {
+			if (!Hibernate.isInitialized(packable.getCollies())) {
+			    initializePackable(packable);
+			}
+			if (shouldHaveColli(orderLines, colliSetup.get(colliName), packable.getTransportable())) {
+			    Colli newColli = new Colli(null, tmpColli.getOrder(), tmpColli.getColliName(), null, null, null,
+				    tmpColli.getPostShipment(), null, null);
+			    packable.addColli(newColli);
+
+			    if (colliName.equalsIgnoreCase("Takstein")) {
+				checkTakstein(orderLines, newColli, null);
+			    }
+			    managerRepository.getColliManager().saveColli(newColli);
+			}
+		    }
+		}
+	    }
+
+	    overviewManager.saveObject(packable);
+	    // setPackable(packable, null);
+	}
+    }
+
+    private void initializePackable(Packable packable) {
+	if (Order.class.isInstance(packable)) {
+	    managerRepository.getOrderManager().lazyLoadOrder((Order) packable, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES });
+	} else {
+	    managerRepository.getPostShipmentManager().lazyLoad((PostShipment) packable,
+		    new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.COLLIES });
+	}
+
+	// Manager manager = (Manager)
+	// ModelUtil.getBean(packable.getManagerName());
+	// manager.lazyLoad(packable, new LazyLoadEnum[][] { {
+	// LazyLoadEnum.COLLIES, LazyLoadEnum.NONE },
+	// { LazyLoadEnum.ORDER_LINES, LazyLoadEnum.NONE }, {
+	// LazyLoadEnum.ORDER_COMMENTS, LazyLoadEnum.NONE } });
+
+    }
+
+    private void checkTakstein(List<OrderLine> orderLines, Colli colli, WindowInterface window) {
+
+	if (orderLines != null) {
+	    for (OrderLine orderLine : orderLines) {
+		managerRepository.getOrderLineManager().lazyLoad(orderLine,
+			new LazyLoadOrderLineEnum[] { LazyLoadOrderLineEnum.ORDER_LINE_ATTRIBUTE });
+		if (orderLine.getArticleName().equalsIgnoreCase("Takstein")) {
+		    Set<OrderLineAttribute> attributes = orderLine.getOrderLineAttributes();
+		    if (attributes != null) {
+			for (OrderLineAttribute attribute : attributes) {
+			    if (attribute.getAttributeName().equalsIgnoreCase("Sendes fra GG")
+				    && (attribute.getAttributeValue() == null || attribute.getAttributeValue().equalsIgnoreCase("Nei"))) {
+				// ColliViewHandler colliViewHandler =
+				// colliViewHandlers.get(colli);
+				ColliViewHandler colliViewHandler = colliListViewHandler.getColliViewHandler(colli);
+				try {
+				    if (colliViewHandler != null) {
+					colliViewHandler.addOrderLine(orderLine, 0);
+				    } else {
+					colliViewHandler = new ColliViewHandler("Kolli", colli,
+					// (Packable)
+					// presentationModelPackable.getBean(),
+						colliListViewHandler.getPackable(), login, managerRepository, window);
+					colliViewHandler.addOrderLine(orderLine, 0);
+					colliListViewHandler.putColliViewHandler(colli, colliViewHandler);
+					// colliViewHandlers.put(colli,
+					// colliViewHandler);
+					colliViewHandler.addColliSelectionListener(this);
+					colliListViewHandler.addColliListener(colliViewHandler);
+				    }
+				    // fireOrderLineRemoved(null);
+				    colliListViewHandler.fireListChanged();
+				} catch (ProTransException e) {
+				    Util.showErrorDialog(window, "Feil", e.getMessage());
+				    e.printStackTrace();
+				}
+			    }
+			}
+		    }
+		}
+	    }
+	}
+    }
+
+    private boolean shouldHaveColli(List<OrderLine> orderLines, Collection<String> articlenames, Transportable transportable) {
+	OrderLineManager orderLineManager = (OrderLineManager) ModelUtil.getBean("orderLineManager");
+	if (orderLines != null) {
+	    for (OrderLine orderLine : orderLines) {
+		if (orderLine.getHasArticle() == null) {
+		    orderLineManager.lazyLoad(orderLine, new LazyLoadOrderLineEnum[] { LazyLoadOrderLineEnum.ORDER_LINE_ATTRIBUTE });
+		}
+		if (articlenames.contains(orderLine.getArticleName()) && orderLine.hasArticle() && orderLine.belongTo(transportable)) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 }

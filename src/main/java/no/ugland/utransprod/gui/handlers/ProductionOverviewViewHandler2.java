@@ -25,8 +25,8 @@ import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
@@ -57,7 +57,6 @@ import no.ugland.utransprod.gui.edit.ProductionoverviewFilter;
 import no.ugland.utransprod.gui.model.Applyable;
 import no.ugland.utransprod.gui.model.ColorEnum;
 import no.ugland.utransprod.gui.model.ProcentDoneModel;
-import no.ugland.utransprod.gui.model.ProductAreaGroupModel;
 import no.ugland.utransprod.gui.model.TakstolPackageApplyList;
 import no.ugland.utransprod.gui.model.TakstolProductionApplyList;
 import no.ugland.utransprod.gui.model.TextPaneRenderer;
@@ -75,7 +74,6 @@ import no.ugland.utransprod.model.UserType;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.OrderManager;
 import no.ugland.utransprod.service.PostShipmentManager;
-import no.ugland.utransprod.service.ProductAreaGroupManager;
 import no.ugland.utransprod.service.ProductionOverviewVManager;
 import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
@@ -128,6 +126,10 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
     private SelectionInList objectSelectionList;
     // private WindowInterface window;
     private JButton buttonCancel;
+    private JLabel labelAntallGarasjer;
+    private JLabel labelSumTidVegg;
+    private JLabel labelSumTidGavl;
+    private JLabel labelSumTidPakk;
 
     JButton buttonRefresh;
     Map<String, StatusCheckerInterface<Transportable>> statusCheckers;
@@ -174,9 +176,9 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 
     Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers;
 
-    private List<ProductAreaGroup> productAreaGroupList;
+    // private List<ProductAreaGroup> productAreaGroupList;
 
-    PresentationModel productAreaGroupModel;
+    // PresentationModel productAreaGroupModel;
 
     JCheckBox checkBoxFilter;
     private VismaFileCreator vismaFileCreator;
@@ -224,7 +226,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	productionPackageHandlers = Util.getProductionPackageHandlers(vismaFileCreator, login, orderViewHandlerFactory, managerRepository,
 		deviationViewHandlerFactory, showTakstolInfoActionFactory, aArticleTypeTakstol, takstolPackageApplyList, takstolProductionApplyList,
 		aSetProductionUnitActionFactory, aCostTypeTross, aCostUnitTross);
-	initProductAreaGroup();
+	// initProductAreaGroup();
 
     }
 
@@ -325,16 +327,19 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	popupMenuProduction.add(menuItemUpdate);
     }
 
-    private void initProductAreaGroup() {
-	productAreaGroupModel = new PresentationModel(new ProductAreaGroupModel(ProductAreaGroup.UNKNOWN));
-	productAreaGroupModel.addBeanPropertyChangeListener(new FilterPropertyChangeListener());
-	ProductAreaGroupManager productAreaGroupManager = (ProductAreaGroupManager) ModelUtil.getBean("productAreaGroupManager");
-	productAreaGroupList = new ArrayList<ProductAreaGroup>();
-	List<ProductAreaGroup> groups = productAreaGroupManager.findAll();
-	if (groups != null) {
-	    productAreaGroupList.addAll(groups);
-	}
-    }
+    // private void initProductAreaGroup() {
+    // productAreaGroupModel = new PresentationModel(new
+    // ProductAreaGroupModel(ProductAreaGroup.UNKNOWN));
+    // productAreaGroupModel.addBeanPropertyChangeListener(new
+    // FilterPropertyChangeListener());
+    // ProductAreaGroupManager productAreaGroupManager =
+    // (ProductAreaGroupManager) ModelUtil.getBean("productAreaGroupManager");
+    // productAreaGroupList = new ArrayList<ProductAreaGroup>();
+    // List<ProductAreaGroup> groups = productAreaGroupManager.findAll();
+    // if (groups != null) {
+    // productAreaGroupList.addAll(groups);
+    // }
+    // }
 
     // @Override
     public TableModel getTableModel(WindowInterface window) {
@@ -1255,7 +1260,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 				: hentOnsketLevering(productionOverviewV1).compareTo(hentOnsketLevering(productionOverviewV2));
 	    }
 	},
-	VEGG("Vegg", true, 50, true) {
+	VEGG("Vegg", true, 50, false) {
 	    @Override
 	    public Class<?> getColumnClass() {
 		return String.class;
@@ -2286,6 +2291,33 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 		// }
 		objectList.addAll(productionoverviewList);
 	    }
+
+	    Summer summer = summerProduksjon(productionoverviewList);
+
+	    if (labelAntallGarasjer == null) {
+		labelAntallGarasjer = new JLabel(String.valueOf(summer.antallGarasjer));
+	    } else {
+		labelAntallGarasjer.setText(String.valueOf(summer.antallGarasjer));
+	    }
+
+	    if (labelSumTidVegg == null) {
+		labelSumTidVegg = new JLabel(String.valueOf(summer.sumTidVegg));
+	    } else {
+		labelSumTidVegg.setText(String.valueOf(summer.sumTidVegg));
+	    }
+
+	    if (labelSumTidGavl == null) {
+		labelSumTidGavl = new JLabel(String.valueOf(summer.sumTidGavl));
+	    } else {
+		labelSumTidGavl.setText(String.valueOf(summer.sumTidGavl));
+	    }
+
+	    if (labelSumTidPakk == null) {
+		labelSumTidPakk = new JLabel(String.valueOf(summer.sumTidPakk));
+	    } else {
+		labelSumTidPakk.setText(String.valueOf(summer.sumTidPakk));
+	    }
+
 	    // PostShipmentManager postShipmentManager = (PostShipmentManager)
 	    // ModelUtil.getBean("postShipmentManager");
 	    // List<PostShipment> allPostShipments =
@@ -2300,6 +2332,20 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    }
 
 	}
+    }
+
+    private Summer summerProduksjon(List<ProductionOverviewV> produksjonliste) {
+	Summer summer = new Summer();
+	for (ProductionOverviewV productionOverviewV : produksjonliste) {
+	    summer.antallGarasjer++;
+	    summer.sumTidVegg = summer.sumTidVegg.add(productionOverviewV.getEstimatedTimeWall() == null ? BigDecimal.ZERO : productionOverviewV
+		    .getEstimatedTimeWall());
+	    summer.sumTidGavl = summer.sumTidVegg.add(productionOverviewV.getEstimatedTimeGavl() == null ? BigDecimal.ZERO : productionOverviewV
+		    .getEstimatedTimeGavl());
+	    summer.sumTidPakk = summer.sumTidPakk.add(productionOverviewV.getEstimatedTimePack() == null ? BigDecimal.ZERO : productionOverviewV
+		    .getEstimatedTimePack());
+	}
+	return summer;
     }
 
     private boolean initOrders(List<ProductionOverviewV> productionoverviewList) {
@@ -2360,9 +2406,10 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	return checkBoxFilter;
     }
 
-    public JComboBox getComboBoxProductAreaGroup() {
-	return Util.getComboBoxProductAreaGroup(login.getApplicationUser(), userType, productAreaGroupModel);
-    }
+    // public JComboBox getComboBoxProductAreaGroup() {
+    // return Util.getComboBoxProductAreaGroup(login.getApplicationUser(),
+    // userType, productAreaGroupModel);
+    // }
 
     @SuppressWarnings("unchecked")
     // @Override
@@ -2471,9 +2518,22 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	// TextPaneRendererCustTr());
 
 	// table.getColumnExt(ProductionColumn.KOMPLETT.ordinal()).setVisible(false);
-	table.getColumnExt(ProductionColumn.PRODUKTOMRÅDE.ordinal()).setVisible(false);
-	table.getColumnExt(ProductionColumn.KLAR.ordinal()).setVisible(false);
-	table.getColumnExt(ProductionColumn.KOMPLETT.ordinal()).setVisible(false);
+	table.getColumnExt(20).setVisible(false);
+	table.getColumnExt(20).setVisible(false);
+	table.getColumnExt(20).setVisible(false);
+	table.getColumnExt(20).setVisible(false);
+	table.getColumnExt(20).setVisible(false);
+	table.getColumnExt(20).setVisible(false);
+	table.getColumnExt(27).setVisible(false);
+	table.getColumnExt(26).setVisible(false);
+	table.getColumnExt(25).setVisible(false);
+
+	// table.getColumnExt(ProductionColumn.VEGG.ordinal()).setVisible(false);
+	// table.getColumnExt(ProductionColumn.GULVSPON.ordinal()).setVisible(false);
+	// table.getColumnExt(ProductionColumn.TAKSTOL.ordinal()).setVisible(false);
+	// table.getColumnExt(ProductionColumn.GAVL.ordinal()).setVisible(false);
+	// table.getColumnExt(ProductionColumn.PAKK.ordinal()).setVisible(false);
+	// table.getColumnExt(ProductionColumn.TAKSTEIN.ordinal()).setVisible(false);
 	// table.getColumnExt(10).setVisible(false);
 	// table.getColumnExt(11).setVisible(false);
 	// table.getColumnExt(10).setVisible(false);
@@ -3230,9 +3290,11 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	table.clearSelection();
 	objectSelectionList.clearSelection();
 
-	ProductAreaGroup group = (ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP);
-	PrefsUtil.setInvisibleColumns(group.getProductAreaGroupName(), table.getName(), table);
-	group = group.getProductAreaGroupName().equalsIgnoreCase("Alle") ? ProductAreaGroup.UNKNOWN : group;
+	// ProductAreaGroup group = (ProductAreaGroup)
+	// productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP);
+	PrefsUtil.setInvisibleColumns(ProductAreaGroup.UNKNOWN.getProductAreaGroupName(), table.getName(), table);
+	// group = group.getProductAreaGroupName().equalsIgnoreCase("Alle") ?
+	// ProductAreaGroup.UNKNOWN : group;
 
 	List<Filter> filterList = new ArrayList<Filter>();
 
@@ -3240,15 +3302,17 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    PatternFilter filterDone = new PatternFilter("Nei", Pattern.CASE_INSENSITIVE, ProductionColumn.KOMPLETT.ordinal());
 	    filterList.add(filterDone);
 	}
-	if (group != ProductAreaGroup.UNKNOWN) {
-	    if (!group.getProductAreaGroupName().equalsIgnoreCase("Takstol")) {
-		filterList
-			.add(new PatternFilter(group.getProductAreaGroupName(), Pattern.CASE_INSENSITIVE, ProductionColumn.PRODUKTOMRÅDE.ordinal()));
-	    } else {
-		filterList.add(new PatternFilter(".*e.*", Pattern.CASE_INSENSITIVE, ProductionColumn.TAKSTOL.ordinal()));
-	    }
-
-	}
+	// if (group != ProductAreaGroup.UNKNOWN) {
+	// if (!group.getProductAreaGroupName().equalsIgnoreCase("Takstol")) {
+	// filterList
+	// .add(new PatternFilter(group.getProductAreaGroupName(),
+	// Pattern.CASE_INSENSITIVE, ProductionColumn.PRODUKTOMRÅDE.ordinal()));
+	// } else {
+	// filterList.add(new PatternFilter(".*e.*", Pattern.CASE_INSENSITIVE,
+	// ProductionColumn.TAKSTOL.ordinal()));
+	// }
+	//
+	// }
 	if (filterList.size() != 0) {
 	    Filter[] filterArray = new Filter[filterList.size()];
 	    table.setFilters(new FilterPipeline(filterList.toArray(filterArray)));
@@ -3260,13 +3324,14 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
     }
 
     public String getProductAreaGroupName() {
-	return ((ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP)).getProductAreaGroupName();
+	// return ((ProductAreaGroup)
+	// productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP)).getProductAreaGroupName();
+	return ProductAreaGroup.UNKNOWN.getProductAreaGroupName();
     }
 
     // @Override
     public void beforeClose() {
-	PrefsUtil
-		.putUserInvisibleColumns(table, (ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP));
+	PrefsUtil.putUserInvisibleColumns(table, ProductAreaGroup.UNKNOWN);
     }
 
     public String getSelectedOrderNr() {
@@ -3472,6 +3537,13 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	Collections.sort(filtered, sorter(productionoverviewFilter));
 	objectList.addAll(filtered);
 
+	Summer summer = summerProduksjon(filtered);
+
+	labelAntallGarasjer.setText(String.valueOf(summer.antallGarasjer));
+	labelSumTidVegg.setText(String.valueOf(summer.sumTidVegg));
+	labelSumTidGavl.setText(String.valueOf(summer.sumTidGavl));
+	labelSumTidPakk.setText(String.valueOf(summer.sumTidPakk));
+
     }
 
     private Comparator<ProductionOverviewV> sorter(final ProductionoverviewFilter productionoverviewFilter) {
@@ -3493,4 +3565,38 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	};
     }
 
+    public JLabel getLabelAntallGarasjer() {
+	if (labelAntallGarasjer == null) {
+	    labelAntallGarasjer = new JLabel("test");
+	}
+	return labelAntallGarasjer;
+    }
+
+    public JLabel getLabelSumTidVegg() {
+	if (labelSumTidVegg == null) {
+	    labelSumTidVegg = new JLabel("test");
+	}
+	return labelSumTidVegg;
+    }
+
+    public static class Summer {
+	int antallGarasjer = 0;
+	BigDecimal sumTidVegg = BigDecimal.ZERO;
+	BigDecimal sumTidGavl = BigDecimal.ZERO;
+	BigDecimal sumTidPakk = BigDecimal.ZERO;
+    }
+
+    public JLabel getLabelSumTidGavl() {
+	if (labelSumTidGavl == null) {
+	    labelSumTidGavl = new JLabel("test");
+	}
+	return labelSumTidGavl;
+    }
+
+    public JLabel getLabelSumTidPakk() {
+	if (labelSumTidPakk == null) {
+	    labelSumTidPakk = new JLabel("test");
+	}
+	return labelSumTidPakk;
+    }
 }

@@ -3,7 +3,6 @@ package no.ugland.utransprod.service;
 import java.util.List;
 
 import no.ugland.utransprod.model.ApplicationUser;
-import no.ugland.utransprod.model.ProductAreaGroup;
 
 /**
  * Interface for manager for brukere.
@@ -39,7 +38,7 @@ public interface ApplicationUserManager extends OverviewManager<ApplicationUser>
      * 
      * @return pakkere
      */
-    List<String> findAllPackers(ProductAreaGroup productAreaGroup);
+    List<String> findAllPackers();
 
     /**
      * Sjekker om bruker er funksjonsleder.

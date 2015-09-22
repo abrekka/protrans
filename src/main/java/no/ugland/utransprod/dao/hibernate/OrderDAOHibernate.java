@@ -937,16 +937,20 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
      * @see no.ugland.utransprod.dao.OrderDAO#getPacklistCountForWeekByProductAreaGroupName(java.util.Date,
      *      java.util.Date, no.ugland.utransprod.model.ProductAreaGroup)
      */
-    public final Integer getPacklistCountForWeekByProductAreaGroupName(final Date fromDate, final Date toDate, final ProductAreaGroup group) {
+    public final Integer getPacklistCountForWeekByProductAreaGroupName(final Date fromDate, final Date toDate) {
 	return (Integer) getHibernateTemplate().execute(new HibernateCallback() {
 
 	    @SuppressWarnings("unchecked")
 	    public Object doInHibernate(final Session session) {
 		String query = "select count(customerOrder.orderId) " + " from Order customerOrder "
-			+ " where customerOrder.packlistReady between :fromDate and :toDate and "
-			+ "customerOrder.productArea.productAreaGroup.productAreaGroupName=" + ":groupName";
+			+ " where customerOrder.packlistReady between :fromDate and :toDate "
+		// +
+		// "and customerOrder.productArea.productAreaGroup.productAreaGroupName="
+		// + ":groupName"
+		;
 		List<Integer> list = session.createQuery(query).setParameter("fromDate", fromDate).setParameter("toDate", toDate)
-			.setParameter("groupName", group.getProductAreaGroupName()).list();
+		// .setParameter("groupName", group.getProductAreaGroupName())
+			.list();
 		if (list != null && list.size() == 1) {
 		    Object object = list.get(0);
 		    if (object instanceof Long) {

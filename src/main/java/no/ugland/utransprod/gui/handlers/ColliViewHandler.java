@@ -213,8 +213,9 @@ public class ColliViewHandler extends AbstractViewHandlerShort<Colli, ColliModel
 
 	if (order != null) {
 
-	    managerRepository.getOrderLineManager().lazyLoadOrder(order,
-		    new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES });
+	    managerRepository.getOrderLineManager().lazyLoadOrder(order, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES });// ,
+																    // LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES
+																    // });
 	    if (order.isDonePackage()) {
 		order.setOrderComplete(Util.getCurrentDate());
 		managerRepository.getOrderLineManager().saveOrder(order);
@@ -442,7 +443,9 @@ public class ColliViewHandler extends AbstractViewHandlerShort<Colli, ColliModel
 	    if (ApplicationParamUtil.getNotPackageList().indexOf(orderLine.getArticleName()) < 0) {
 
 		Colli currentColli = ((ColliModel) presentationModel.getBean()).getObject();
-		((ColliManager) overviewManager).lazyLoad(currentColli, new LazyLoadEnum[][] { { LazyLoadEnum.ORDER_LINES, LazyLoadEnum.NONE } });
+		// ((ColliManager) overviewManager).lazyLoad(currentColli, new
+		// LazyLoadEnum[][] { { LazyLoadEnum.ORDER_LINES,
+		// LazyLoadEnum.NONE } });
 		Set<OrderLine> orderLines = currentColli.getOrderLines();
 		if (orderLines == null) {
 		    orderLines = new HashSet<OrderLine>();
@@ -451,7 +454,7 @@ public class ColliViewHandler extends AbstractViewHandlerShort<Colli, ColliModel
 		boolean success = orderLines.remove(orderLine);
 		if (success) {
 		    orderLine.setColli(null);
-		    currentColli.setOrderLines(orderLines);
+		    // currentColli.setOrderLines(orderLines);
 
 		    if (orderLines.size() == 0) {
 			currentColli.setPackageDate(null);
@@ -465,6 +468,7 @@ public class ColliViewHandler extends AbstractViewHandlerShort<Colli, ColliModel
 		    if (order != null) {
 			managerRepository.getOrderLineManager().refreshOrder(order);
 			order.setOrderComplete(null);
+			order.setColliesDone(0);
 			try {
 
 			    managerRepository.getOrderLineManager().saveOrder(order);

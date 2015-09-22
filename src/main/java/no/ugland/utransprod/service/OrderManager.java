@@ -205,7 +205,7 @@ public interface OrderManager extends OverviewManager<Order>, ExcelManager {
      * @param group
      * @return antall
      */
-    Integer getPacklistCountForWeekByProductAreaGroupName(Date fromDate, Date toDate, ProductAreaGroup group);
+    Integer getPacklistCountForWeekByProductAreaGroupName(Date fromDate, Date toDate);
 
     List<Order> findSentInPeriod(Periode periode, String productAreaGroupName);
 

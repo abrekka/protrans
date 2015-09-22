@@ -595,11 +595,8 @@ public class OrderManagerImpl extends ManagerImpl<Order> implements OrderManager
      *      getPacklistCountForWeekByProductAreaGroupName(java.util.Date,
      *      java.util.Date, no.ugland.utransprod.model.ProductAreaGroup)
      */
-    public final Integer getPacklistCountForWeekByProductAreaGroupName(final Date fromDate, final Date toDate, final ProductAreaGroup group) {
-	if (group == null) {
-	    return getPacklistCountForWeek(fromDate, toDate);
-	}
-	return ((OrderDAO) dao).getPacklistCountForWeekByProductAreaGroupName(fromDate, toDate, group);
+    public final Integer getPacklistCountForWeekByProductAreaGroupName(final Date fromDate, final Date toDate) {
+	return getPacklistCountForWeek(fromDate, toDate);
     }
 
     public final List<Order> findSentInPeriod(final Periode periode, final String productAreaGroupName) {

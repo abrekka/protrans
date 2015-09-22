@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -61,10 +62,12 @@ import no.ugland.utransprod.gui.model.ListMultilineRenderer;
 import no.ugland.utransprod.gui.model.OrderCommentModel;
 import no.ugland.utransprod.gui.model.OrderModel;
 import no.ugland.utransprod.gui.model.OrderTableModel;
+import no.ugland.utransprod.gui.model.Packable;
 import no.ugland.utransprod.gui.model.TextPaneRendererCustomer;
 import no.ugland.utransprod.gui.model.Transportable;
 import no.ugland.utransprod.importing.CuttingImport;
 import no.ugland.utransprod.model.Assembly;
+import no.ugland.utransprod.model.Colli;
 import no.ugland.utransprod.model.ConstructionType;
 import no.ugland.utransprod.model.Customer;
 import no.ugland.utransprod.model.Cutting;
@@ -73,6 +76,7 @@ import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderComment;
 import no.ugland.utransprod.model.OrderCost;
 import no.ugland.utransprod.model.OrderLine;
+import no.ugland.utransprod.model.OrderLineAttribute;
 import no.ugland.utransprod.model.PostShipment;
 import no.ugland.utransprod.model.ProductArea;
 import no.ugland.utransprod.model.ProductAreaGroup;
@@ -84,6 +88,7 @@ import no.ugland.utransprod.service.ConstructionTypeManager;
 import no.ugland.utransprod.service.CustomerManager;
 import no.ugland.utransprod.service.CuttingManager;
 import no.ugland.utransprod.service.ManagerRepository;
+import no.ugland.utransprod.service.OrderLineManager;
 import no.ugland.utransprod.service.OrderManager;
 import no.ugland.utransprod.service.OrdlnManager;
 import no.ugland.utransprod.service.ProjectManager;
@@ -91,6 +96,9 @@ import no.ugland.utransprod.service.TransportManager;
 import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.service.enums.LazyLoadEnum;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
+import no.ugland.utransprod.service.enums.LazyLoadOrderLineEnum;
+import no.ugland.utransprod.service.enums.LazyLoadPostShipmentEnum;
+import no.ugland.utransprod.util.ApplicationParamUtil;
 import no.ugland.utransprod.util.CommentTypeUtil;
 import no.ugland.utransprod.util.FileExtensionFilter;
 import no.ugland.utransprod.util.ModelUtil;
@@ -99,6 +107,7 @@ import no.ugland.utransprod.util.Threadable;
 import no.ugland.utransprod.util.UserUtil;
 import no.ugland.utransprod.util.Util;
 
+import org.hibernate.Hibernate;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.ColorHighlighter;
 import org.jdesktop.swingx.decorator.Filter;
@@ -107,6 +116,7 @@ import org.jdesktop.swingx.decorator.PatternFilter;
 import org.jdesktop.swingx.decorator.PatternPredicate;
 import org.springframework.orm.hibernate3.HibernateOptimisticLockingFailureException;
 
+import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.jgoodies.binding.PresentationModel;
@@ -180,6 +190,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
     private DeviationOverviewViewFactory deviationOverviewViewFactory;
     private DeviationViewHandlerFactory deviationViewHandlerFactory;
     private VismaFileCreator vismaFileCreator;
+    private Multimap<String, String> colliSetup;
 
     /**
      * @param notInitData
@@ -191,6 +202,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
     public OrderViewHandler(Login aLogin, ManagerRepository aManagerRepository, DeviationOverviewViewFactory aDeviationOverviewViewFactory,
 	    DeviationViewHandlerFactory aDeviationViewHandlerFactory, @Assisted boolean notInitData, VismaFileCreator vismaFileCreator) {
 	super("Ordre", aManagerRepository.getOrderManager(), notInitData, aLogin.getUserType(), false);
+
 	this.vismaFileCreator = vismaFileCreator;
 	deviationViewHandlerFactory = aDeviationViewHandlerFactory;
 	deviationOverviewViewFactory = aDeviationOverviewViewFactory;
@@ -214,6 +226,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 
 	presentationModelProductAreaGroup = new PresentationModel(new ProductAreaGroupModel());
 	presentationModelProductAreaGroup.addBeanPropertyChangeListener(new ProductAreaGroupChangeListener());
+	this.colliSetup = ApplicationParamUtil.getColliSetup();
     }
 
     /**
@@ -624,8 +637,10 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	    updateOrder(object, order);
 
 	    try {
+
 		((OrderManager) overviewManager).saveOrder(order);
 		vismaFileCreator.createVismaFileForProductionWeek(order);
+		checkCollies(order, window);
 	    } catch (ProTransException e) {
 		Util.showErrorDialog(window, "Feil", e.getMessage());
 		e.printStackTrace();
@@ -647,6 +662,133 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 
 	fireContentsChanged();
 	return true;
+    }
+
+    public void checkCollies(Order order, WindowInterface window) throws ProTransException {
+	if (!Util.convertNumberToBoolean(order.getDefaultColliesGenerated())) {
+
+	    // packable = (Packable) overviewManager.merge(packable);
+	    List<Colli> collies = order.getColliList();
+	    List<OrderLine> orderLines = order.getOrderLineList();
+	    Colli tmpColli;
+
+	    tmpColli = new Colli(null, order, null, null, null, null, null, null, null);
+	    if (collies == null) {
+		collies = new ArrayList<Colli>();
+
+	    }
+	    // sjekk om kollier Takstol,Gavl,Gulvspon,Garasjepakke er med
+	    // for
+	    // ordre,
+	    // sjekk mot artikler
+
+	    Set<String> colliNames = colliSetup.keySet();
+	    if (colliNames != null) {
+		for (String colliName : colliNames) {
+		    tmpColli.setColliName(colliName);
+		    if (!collies.contains(tmpColli)) {
+			if (!Hibernate.isInitialized(order.getCollies())) {
+			    initializePackable(order);
+			}
+			if (shouldHaveColli(orderLines, colliSetup.get(colliName), order.getTransportable())) {
+			    Colli newColli = new Colli(null, tmpColli.getOrder(), tmpColli.getColliName(), null, null, null,
+				    tmpColli.getPostShipment(), null, null);
+			    order.addColli(newColli);
+
+			    if (colliName.equalsIgnoreCase("Takstein")) {
+				checkTakstein(order, orderLines, newColli, window);
+			    }
+			    managerRepository.getColliManager().saveColli(newColli);
+			}
+		    }
+		}
+	    }
+	    order.setDefaultColliesGenerated(1);
+	    overviewManager.saveObject(order);
+	    // setPackable(packable, null);
+	}
+    }
+
+    private void checkTakstein(Order order, List<OrderLine> orderLines, Colli colli, WindowInterface window) {
+
+	if (orderLines != null) {
+	    for (OrderLine orderLine : orderLines) {
+		managerRepository.getOrderLineManager().lazyLoad(orderLine,
+			new LazyLoadOrderLineEnum[] { LazyLoadOrderLineEnum.ORDER_LINE_ATTRIBUTE });
+		if (orderLine.getArticleName().equalsIgnoreCase("Takstein")) {
+		    Set<OrderLineAttribute> attributes = orderLine.getOrderLineAttributes();
+		    if (attributes != null) {
+			for (OrderLineAttribute attribute : attributes) {
+			    if (attribute.getAttributeName().equalsIgnoreCase("Sendes fra GG")
+				    && (attribute.getAttributeValue() == null || attribute.getAttributeValue().equalsIgnoreCase("Nei"))) {
+				// ColliViewHandler colliViewHandler =
+				// colliViewHandlers.get(colli);
+				// ColliViewHandler colliViewHandler =
+				// colliListViewHandler.getColliViewHandler(colli);
+				try {
+				    // if (colliViewHandler != null) {
+				    // colliViewHandler.addOrderLine(orderLine,
+				    // 0);
+				    // } else {
+				    ColliViewHandler colliViewHandler = new ColliViewHandler("Kolli", colli,
+				    // (Packable)
+				    // presentationModelPackable.getBean(),
+					    order, login, managerRepository, window);
+				    colliViewHandler.addOrderLine(orderLine, 0);
+				    // colliListViewHandler.putColliViewHandler(colli,
+				    // colliViewHandler);
+				    // colliViewHandlers.put(colli,
+				    // colliViewHandler);
+				    // colliViewHandler.addColliSelectionListener(this);
+				    // colliListViewHandler.addColliListener(colliViewHandler);
+				    // }
+				    // fireOrderLineRemoved(null);
+				    // colliListViewHandler.fireListChanged();
+				} catch (ProTransException e) {
+				    Util.showErrorDialog(window, "Feil", e.getMessage());
+				    e.printStackTrace();
+				}
+			    }
+			}
+		    }
+		}
+	    }
+	}
+    }
+
+    private void initializePackable(Packable packable) {
+	if (Order.class.isInstance(packable)) {
+	    managerRepository.getOrderManager().lazyLoadOrder(
+		    (Order) packable,
+		    new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_COSTS,
+			    LazyLoadOrderEnum.COMMENTS });
+	} else {
+	    managerRepository.getPostShipmentManager().lazyLoad((PostShipment) packable,
+		    new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.COLLIES });
+	}
+
+	// Manager manager = (Manager)
+	// ModelUtil.getBean(packable.getManagerName());
+	// manager.lazyLoad(packable, new LazyLoadEnum[][] { {
+	// LazyLoadEnum.COLLIES, LazyLoadEnum.NONE },
+	// { LazyLoadEnum.ORDER_LINES, LazyLoadEnum.NONE }, {
+	// LazyLoadEnum.ORDER_COMMENTS, LazyLoadEnum.NONE } });
+
+    }
+
+    private boolean shouldHaveColli(List<OrderLine> orderLines, Collection<String> articlenames, Transportable transportable) {
+	OrderLineManager orderLineManager = (OrderLineManager) ModelUtil.getBean("orderLineManager");
+	if (orderLines != null) {
+	    for (OrderLine orderLine : orderLines) {
+		if (orderLine.getHasArticle() == null) {
+		    orderLineManager.lazyLoad(orderLine, new LazyLoadOrderLineEnum[] { LazyLoadOrderLineEnum.ORDER_LINE_ATTRIBUTE });
+		}
+		if (articlenames.contains(orderLine.getArticleName()) && orderLine.hasArticle() && orderLine.belongTo(transportable)) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 
     private void handleAssembly(final OrderModel object) {

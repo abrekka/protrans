@@ -40,11 +40,8 @@ public class SumOrderReadyVManagerImpl implements SumOrderReadyVManager {
      * @see no.ugland.utransprod.service.SumOrderReadyVManager#
      *      findByDateAndProductAreaGroupName(java.util.Date, java.lang.String)
      */
-    public final SumOrderReadyV findByDateAndProductAreaGroupName(final Date date, final String productAreaGroupName) {
-	if (productAreaGroupName == null) {
-	    return findByDate(date);
-	}
-	return dao.findByDateAndProductAreaGroupName(DATE_FORMAT.format(date), productAreaGroupName);
+    public final SumOrderReadyV findByDateAndProductAreaGroupName(final Date date) {
+	return findByDate(date);
     }
 
     /**
@@ -52,11 +49,8 @@ public class SumOrderReadyVManagerImpl implements SumOrderReadyVManager {
      *      findSumByWeekAndProductAreaGroupName(java.lang.Integer,
      *      java.lang.Integer, java.lang.String)
      */
-    public final SumOrderReadyV findSumByWeekAndProductAreaGroupName(final Integer year, final Integer week, final String productAreaGroupName) {
-	if (productAreaGroupName == null) {
-	    return findSumByWeek(year, week);
-	}
-	return dao.findSumByWeekAndProductAreaGroupName(year, week, productAreaGroupName);
+    public final SumOrderReadyV findSumByWeekAndProductAreaGroupName(final Integer year, final Integer week) {
+	return findSumByWeek(year, week);
     }
 
 }

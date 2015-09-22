@@ -36,7 +36,7 @@ public interface SumOrderReadyVManager {
      * @param productAreaGroupName
      * @return sum
      */
-    SumOrderReadyV findByDateAndProductAreaGroupName(Date date, String productAreaGroupName);
+    SumOrderReadyV findByDateAndProductAreaGroupName(Date date);
 
     /**
      * Finner for gitt uke og produktområdegruppe
@@ -46,5 +46,5 @@ public interface SumOrderReadyVManager {
      * @param productAreaGroupName
      * @return sum
      */
-    SumOrderReadyV findSumByWeekAndProductAreaGroupName(Integer year, Integer week, String productAreaGroupName);
+    SumOrderReadyV findSumByWeekAndProductAreaGroupName(Integer year, Integer week);
 }

@@ -12,7 +12,6 @@ import no.ugland.utransprod.gui.Closeable;
 import no.ugland.utransprod.gui.IconEnum;
 import no.ugland.utransprod.gui.WindowInterface;
 import no.ugland.utransprod.gui.buttons.CancelButton;
-import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.service.ApplicationUserManager;
 import no.ugland.utransprod.util.Util;
 
@@ -36,7 +35,7 @@ public class PackInitialsViewHandler implements Closeable {
 
     public PackInitialsViewHandler(String initials,
     // Integer colliHeight,
-	    ProductAreaGroup productAreaGroup, ApplicationUserManager applicationUserManager) {
+	    ApplicationUserManager applicationUserManager) {
 	String[] initialsArray = null;
 	if (initials != null) {
 	    initialsArray = initials.split("/");
@@ -45,7 +44,7 @@ public class PackInitialsViewHandler implements Closeable {
 	// , colliHeight
 		));
 
-	packInitials = applicationUserManager.findAllPackers(productAreaGroup);
+	packInitials = applicationUserManager.findAllPackers();
     }
 
     /**

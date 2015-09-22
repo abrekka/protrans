@@ -5,7 +5,7 @@ import java.awt.Component;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
 import no.ugland.utransprod.gui.handlers.ProductionOverviewViewHandler2;
@@ -31,7 +31,7 @@ public class ProductionOverviewView2 implements Viewer {
 
     private JButton buttonClose;
 
-    private JComboBox comboBoxProductAreaGroup;
+    // private JComboBox comboBoxProductAreaGroup;
 
     private JButton buttonRefresh;
 
@@ -41,6 +41,10 @@ public class ProductionOverviewView2 implements Viewer {
     private JCheckBox checkBoxFilter;
     // private JButton buttonShowTakstolInfo;
     private JButton buttonExcel;
+    private JLabel labelAntallGarasjer;
+    private JLabel labelSumTidVegg;
+    private JLabel labelSumTidGavl;
+    private JLabel labelSumTidPakk;
 
     @Inject
     public ProductionOverviewView2(ProductionOverviewViewHandler2 viewHandler) {
@@ -56,8 +60,12 @@ public class ProductionOverviewView2 implements Viewer {
 	buttonRefresh = viewHandler.getButtonRefresh(window);
 	// buttonSearch = viewHandler.getButtonSearch(window);
 	buttonFilter = viewHandler.getButtonFilter(window);
-	comboBoxProductAreaGroup = viewHandler.getComboBoxProductAreaGroup();
+	// comboBoxProductAreaGroup = viewHandler.getComboBoxProductAreaGroup();
 	// buttonShowTakstolInfo = viewHandler.getButtonShowTakstolInfo(window);
+	labelAntallGarasjer = viewHandler.getLabelAntallGarasjer();
+	labelSumTidVegg = viewHandler.getLabelSumTidVegg();
+	labelSumTidGavl = viewHandler.getLabelSumTidGavl();
+	labelSumTidPakk = viewHandler.getLabelSumTidPakk();
     }
 
     /**
@@ -68,20 +76,29 @@ public class ProductionOverviewView2 implements Viewer {
      */
     public Component buildPanel(WindowInterface window) {
 	initComponents(window);
-	FormLayout layout = new FormLayout("10dlu,p,3dlu,p,3dlu,p,3dlu,p,3dlu,p,p:grow,10dlu", "10dlu,p,3dlu,fill:300dlu:grow,3dlu,p");
+	FormLayout layout = new FormLayout("10dlu,p,3dlu,p,3dlu,p,3dlu,p,30dlu,p,3dlu,p,30dlu,p,3dlu,p,30dlu,p,3dlu,p:grow,10dlu",
+		"10dlu,p,3dlu,fill:300dlu:grow,3dlu,p");
 	PanelBuilder builder = new PanelBuilder(layout);
 	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),
 	// layout);
 	CellConstraints cc = new CellConstraints();
 	JScrollPane scrollPane = new JScrollPane(productionTable);
 	scrollPane.setName("ScrollPaneTable");
-	builder.addLabel("Produktområde:", cc.xy(2, 2));
-	builder.add(comboBoxProductAreaGroup, cc.xy(4, 2));
+	// builder.addLabel("Produktområde:", cc.xy(2, 2));
+	// builder.add(comboBoxProductAreaGroup, cc.xy(4, 2));
 	// builder.add(buttonSearch, cc.xy(6, 2));
-	builder.add(checkBoxFilter, cc.xy(8, 2));
-	builder.add(buttonFilter, cc.xy(10, 2));
-	builder.add(scrollPane, cc.xyw(2, 4, 10));
-	builder.add(ButtonBarFactory.buildCenteredBar(buttonExcel, buttonRefresh, buttonClose), cc.xyw(2, 6, 10));
+	builder.add(checkBoxFilter, cc.xy(2, 2));
+	builder.add(buttonFilter, cc.xy(4, 2));
+	builder.addLabel("Antall garasjer:", cc.xy(6, 2));
+	builder.add(labelAntallGarasjer, cc.xy(8, 2));
+	builder.addLabel("Sum estimert tid vegg:", cc.xy(10, 2));
+	builder.add(labelSumTidVegg, cc.xy(12, 2));
+	builder.addLabel("Sum estimert tid gavl:", cc.xy(14, 2));
+	builder.add(labelSumTidGavl, cc.xy(16, 2));
+	builder.addLabel("Sum estimert tid pakk:", cc.xy(18, 2));
+	builder.add(labelSumTidPakk, cc.xy(20, 2));
+	builder.add(scrollPane, cc.xyw(2, 4, 20));
+	builder.add(ButtonBarFactory.buildCenteredBar(buttonExcel, buttonRefresh, buttonClose), cc.xyw(2, 6, 20));
 
 	return builder.getPanel();
     }

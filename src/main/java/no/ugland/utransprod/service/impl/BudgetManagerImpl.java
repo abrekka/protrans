@@ -11,7 +11,6 @@ import no.ugland.utransprod.dao.BudgetDAO;
 import no.ugland.utransprod.gui.model.BudgetType;
 import no.ugland.utransprod.model.Budget;
 import no.ugland.utransprod.model.ProductArea;
-import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.service.BudgetManager;
 import no.ugland.utransprod.service.ProductAreaManager;
 import no.ugland.utransprod.util.Periode;
@@ -112,10 +111,8 @@ public class BudgetManagerImpl extends ManagerImpl<Budget> implements BudgetMana
      *      findByYearAndWeekPrProductAreaGroup(java.lang.Integer,
      *      java.lang.Integer, no.ugland.utransprod.model.ProductAreaGroup)
      */
-    public final Budget findByYearAndWeekPrProductAreaGroup(final Integer year, final Integer week, final ProductAreaGroup productAreaGroup,
-	    BudgetType budgetType) {
-	return productAreaGroup.getProductAreaGroupName().length() != 0 ? ((BudgetDAO) dao).findByYearAndWeekPrProductAreaGroup(year, week,
-		productAreaGroup, budgetType) : ((BudgetDAO) dao).findByYearAndWeek(year, week, budgetType);
+    public final Budget findByYearAndWeekPrProductAreaGroup(final Integer year, final Integer week, BudgetType budgetType) {
+	return ((BudgetDAO) dao).findByYearAndWeek(year, week, budgetType);
     }
 
     public void importBudget(String excelFileName, BudgetType budgetType) throws ProTransException {

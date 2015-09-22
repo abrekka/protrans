@@ -8,7 +8,6 @@ import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.gui.model.BudgetType;
 import no.ugland.utransprod.model.Budget;
 import no.ugland.utransprod.model.ProductArea;
-import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.util.Periode;
 
 /**
@@ -63,7 +62,7 @@ public interface BudgetManager extends OverviewManager<Budget> {
      * @param productAreaGroup
      * @return budsjett
      */
-    Budget findByYearAndWeekPrProductAreaGroup(Integer year, Integer week, ProductAreaGroup productAreaGroup, BudgetType budgetType);
+    Budget findByYearAndWeekPrProductAreaGroup(Integer year, Integer week, BudgetType budgetType);
 
     List<Budget> findByYear(Integer year, ProductArea productArea, BudgetType budgetType);
 

@@ -6,7 +6,6 @@ import java.util.List;
 
 import no.ugland.utransprod.dao.ApplicationUserDAO;
 import no.ugland.utransprod.model.ApplicationUser;
-import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.service.ApplicationUserManager;
 import no.ugland.utransprod.service.JobFunctionManager;
 
@@ -90,9 +89,9 @@ public class ApplicationUserManagerImpl extends ManagerImpl<ApplicationUser> imp
     /**
      * @see no.ugland.utransprod.service.ApplicationUserManager#findAllPackers()
      */
-    public final List<String> findAllPackers(ProductAreaGroup productAreaGroup) {
+    public final List<String> findAllPackers() {
 
-	return ((ApplicationUserDAO) dao).findAllPackers(productAreaGroup);
+	return ((ApplicationUserDAO) dao).findAllPackers();
     }
 
     /**

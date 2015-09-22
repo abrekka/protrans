@@ -290,7 +290,7 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
 
 	YearWeek yearWeekMinusOne = Util.addWeek(yearWeek, -1);
 	Budget productionBudget = managerRepository.getBudgetManager().findByYearAndWeekPrProductAreaGroup(yearWeekMinusOne.getYear(),
-		yearWeekMinusOne.getWeek(), ProductAreaGroup.UNKNOWN, BudgetType.PRODUCTION);
+		yearWeekMinusOne.getWeek(), BudgetType.PRODUCTION);
 
 	presentationModelBudget.setBean(new ProductionBudgetModel(productionBudget));
     }

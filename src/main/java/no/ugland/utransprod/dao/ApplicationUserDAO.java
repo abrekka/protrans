@@ -3,7 +3,6 @@ package no.ugland.utransprod.dao;
 import java.util.List;
 
 import no.ugland.utransprod.model.ApplicationUser;
-import no.ugland.utransprod.model.ProductAreaGroup;
 
 /**
  * Interface for DAO klasse mot tabell APPLICATION_USER
@@ -39,7 +38,7 @@ public interface ApplicationUserDAO extends DAO<ApplicationUser> {
      * 
      * @return initialer
      */
-    List<String> findAllPackers(ProductAreaGroup productAreaGroup);
+    List<String> findAllPackers();
 
     ApplicationUser findByFullName(String fullName);
 

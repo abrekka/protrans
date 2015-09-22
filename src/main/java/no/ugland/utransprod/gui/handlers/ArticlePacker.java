@@ -125,9 +125,16 @@ public class ArticlePacker {
     }
 
     private Colli getColliToUse(String useColliName, List<Colli> collies, WindowInterface window) {
+	List<Colli> useColliList = null;
 	Colli useColli = null;
 	if (useColliName != null) {
-	    useColli = getColliFromColliName(useColliName, collies);
+	    useColliList = getColliFromColliName(useColliName, collies);
+	    if (useColliList.size() == 1) {
+		useColli = useColliList.get(0);
+	    } else if (useColliList.size() > 1) {
+		Colli defaultColli = useColliList.get(0);
+		useColli = (Colli) Util.showOptionsDialogCombo(window, useColliList, "Velg kolli", true, defaultColli);
+	    }
 	} else {
 	    Colli defaultColli = getDefaultColli(collies);
 	    useColli = (Colli) Util.showOptionsDialogCombo(window, collies, "Velg kolli", true, defaultColli);
@@ -140,12 +147,11 @@ public class ArticlePacker {
 	return defaultColli;
     }
 
-    private Colli getColliFromColliName(String useColliName, List<Colli> collies) {
-	Colli useColli = null;
+    private List<Colli> getColliFromColliName(String useColliName, List<Colli> collies) {
+	List<Colli> useColli = Lists.newArrayList();
 	for (Colli colli : collies) {
-	    if (colli.getColliName().equalsIgnoreCase(useColliName)) {
-		useColli = colli;
-		break;
+	    if (colli.getColliName().startsWith(useColliName)) {
+		useColli.add(colli);
 	    }
 	}
 	return useColli;

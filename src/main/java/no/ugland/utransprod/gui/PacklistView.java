@@ -39,6 +39,7 @@ public class PacklistView extends ApplyListView<PacklistV> {
     private JTextField textFieldWeekFrom;
     private JTextField textFieldWeekTo;
     private JButton buttonFilter;
+    private JButton buttonUpdateStatus;
 
     public PacklistView(AbstractProductionPackageViewHandler<PacklistV> aViewHandler) {
 	super(aViewHandler, false);
@@ -59,6 +60,7 @@ public class PacklistView extends ApplyListView<PacklistV> {
 	textFieldWeekFrom = ((PacklistViewHandler) viewHandler).getTextFieldWeekFrom();
 	textFieldWeekTo = ((PacklistViewHandler) viewHandler).getTextFieldWeekTo();
 	buttonFilter = ((PacklistViewHandler) viewHandler).getButtonFilter();
+	buttonUpdateStatus = ((PacklistViewHandler) viewHandler).getButtonUpdateStatus(window);
     }
 
     @Override
@@ -66,7 +68,7 @@ public class PacklistView extends ApplyListView<PacklistV> {
 	initComponents(window);
 
 	FormLayout layout = new FormLayout(
-		"10dlu,p,3dlu,p,3dlu,p,3dlu,35dlu,3dlu,p,3dlu,20dlu,3dlu,p,3dlu,20dlu,3dlu,p,3dlu,50dlu,3dlu,p,3dlu,50dlu,3dlu,p,50dlu:grow,3dlu,p,10dlu",
+		"10dlu,p,3dlu,p,3dlu,p,3dlu,35dlu,3dlu,p,3dlu,20dlu,3dlu,p,3dlu,20dlu,3dlu,p,3dlu,50dlu,3dlu,p,3dlu,50dlu,3dlu,p,p,50dlu:grow,3dlu,p,10dlu",
 		"10dlu,top:p,3dlu,top:p,top:3dlu,top:p,3dlu,top:p,120dlu:grow,5dlu,p,3dlu");
 	PanelBuilder builder = new PanelBuilder(layout);
 	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),
@@ -85,10 +87,11 @@ public class PacklistView extends ApplyListView<PacklistV> {
 	builder.addLabel("til:", cc.xy(22, 2));
 	builder.add(textFieldWeekTo, cc.xy(24, 2));
 	builder.add(buttonFilter, cc.xy(26, 2));
-	builder.add(checkBoxFilter, cc.xy(29, 4));
+	builder.add(buttonUpdateStatus, cc.xy(27, 2));
+	builder.add(checkBoxFilter, cc.xy(30, 4));
 
-	builder.add(buildButtons(), cc.xywh(29, 6, 1, 6));
-	builder.add(new JScrollPane(tableAppList), cc.xywh(2, 4, 26, 6));
+	builder.add(buildButtons(), cc.xywh(30, 6, 1, 6));
+	builder.add(new JScrollPane(tableAppList), cc.xywh(2, 4, 27, 6));
 	builder.add(ButtonBarFactory.buildCenteredBar(buttonExcel, buttonRefresh, buttonCancel), cc.xyw(2, 11, 28));
 	return builder.getPanel();
     }

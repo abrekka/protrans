@@ -1,7 +1,6 @@
 package no.ugland.utransprod.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -74,8 +73,10 @@ public class MainPackageView implements Viewer {
 
     private JButton buttonAddComment;
 
-    private JComboBox comboBoxProductAreaGroup;
+    // private JComboBox comboBoxProductAreaGroup;
     private JComboBox comboBoxPakketype;
+
+    private JButton buttonUpdateCollies;
 
     public MainPackageView(MainPackageViewHandler handler) {
 	viewHandler = handler;
@@ -116,7 +117,9 @@ public class MainPackageView implements Viewer {
 	listComments = viewHandler.getListComments();
 
 	buttonAddComment = viewHandler.getButtonAddComment(window);
-	comboBoxProductAreaGroup = viewHandler.getComboBoxProductAreaGroup();
+	// comboBoxProductAreaGroup = viewHandler.getComboBoxProductAreaGroup();
+
+	buttonUpdateCollies = viewHandler.getButtonUpdateCollies(window);
 
     }
 
@@ -140,8 +143,8 @@ public class MainPackageView implements Viewer {
 	PanelBuilder builder = new PanelBuilder(layout);
 	CellConstraints cc = new CellConstraints();
 
-	builder.addLabel("Produktområde:", cc.xy(1, 1));
-	builder.add(comboBoxProductAreaGroup, cc.xy(3, 1));
+	// builder.addLabel("Produktområde:", cc.xy(1, 1));
+	// builder.add(comboBoxProductAreaGroup, cc.xy(3, 1));
 	builder.add(ButtonBarFactory.buildLeftAlignedBar(buttonSearchOrder), cc.xy(1, 3));
 	builder.add(checkBoxShowPackaged, cc.xy(3, 3));
 
@@ -197,6 +200,7 @@ public class MainPackageView implements Viewer {
 	builder.add(labelPackedByPakk, cc.xy(11, 3));
 	builder.addLabel("Pakketype:", cc.xy(13, 1));
 	builder.add(comboBoxPakketype, cc.xy(15, 1));
+	builder.add(buttonUpdateCollies, cc.xy(15, 3));
 
 	return builder.getPanel();
     }
@@ -330,19 +334,18 @@ public class MainPackageView implements Viewer {
 	return builder.getPanel();
     }
 
-    private Component buildOrderlineFilterPanel() {
-	FormLayout layout = new FormLayout("p,3dlu,p", "p");
-	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),
-	// layout);
-	PanelBuilder builder = new PanelBuilder(layout);
-	CellConstraints cc = new CellConstraints();
-
-	builder.addLabel("Pakketype:", cc.xy(1, 1));
-	builder.add(comboBoxPakketype, cc.xy(3, 1));
-
-	return builder.getPanel();
-    }
-
+    // private Component buildOrderlineFilterPanel() {
+    // FormLayout layout = new FormLayout("p,3dlu,p", "p");
+    // PanelBuilder builder = new PanelBuilder(new FormDebugPanel(), layout);
+    // PanelBuilder builder = new PanelBuilder(layout);
+    // CellConstraints cc = new CellConstraints();
+    //
+    // builder.addLabel("Pakketype:", cc.xy(1, 1));
+    // builder.add(comboBoxPakketype, cc.xy(3, 1));
+    //
+    // return builder.getPanel();
+    // }
+    //
     /**
      * Bygger kommentarpanel
      * 

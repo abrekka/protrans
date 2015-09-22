@@ -230,7 +230,7 @@ public class ColliListViewHandler implements ColliListener, Updateable, ColliVie
 	buttonRemoveColli.setEnabled(false);
     }
 
-    private void fireListChanged() {
+    public void fireListChanged() {
 	for (ListDataListener listener : colliListListeners) {
 	    listener.contentsChanged(new ListDataEvent(this, -1, -1, -1));
 	}
@@ -245,6 +245,9 @@ public class ColliListViewHandler implements ColliListener, Updateable, ColliVie
 		packable.setDefaultColliesGenerated(1);
 		overviewManager.saveObject(packable);
 		// packable = (Packable) overviewManager.merge(packable);
+		if (!Hibernate.isInitialized(packable.getCollies())) {
+		    initializePackable(packable);
+		}
 		List<Colli> collies = packable.getColliList();
 		List<OrderLine> orderLines = packable.getOrderLineList();
 		Colli tmpColli;
@@ -428,5 +431,13 @@ public class ColliListViewHandler implements ColliListener, Updateable, ColliVie
 	    listener.refreshCollies();
 	}
 
+    }
+
+    public Packable getPackable() {
+	return packable;
+    }
+
+    public void putColliViewHandler(Colli colli, ColliViewHandler colliViewHandler) {
+	colliViewHandlers.put(colli, colliViewHandler);
     }
 }

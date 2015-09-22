@@ -209,7 +209,7 @@ public interface OrderDAO extends DAO<Order> {
      * @param group
      * @return antall
      */
-    Integer getPacklistCountForWeekByProductAreaGroupName(Date fromDate, Date toDate, ProductAreaGroup group);
+    Integer getPacklistCountForWeekByProductAreaGroupName(Date fromDate, Date toDate);
 
     List<Order> findByConfirmWeekProductArea(Integer year, Integer weekFrom, Integer weekTo, String productAreaName);
 
