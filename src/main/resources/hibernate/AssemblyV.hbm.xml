@@ -237,6 +237,12 @@
         column="DG"
         length="2"
     />
+    <property
+        name="deliveryAddress"
+        type="java.lang.String"
+        column="DELIVERY_ADDRESS"
+        length="255"
+    />
 
 </class>
 </hibernate-mapping>

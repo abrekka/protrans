@@ -2166,6 +2166,36 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		return true;
 	    }
 	},
+	ADRESSE("Adresse", VISIBLE, NOT_CENTER, 100) {
+	    @Override
+	    public Class<?> getColumnClass() {
+		return String.class;
+	    }
+
+	    @Override
+	    public Object getValue(AssemblyV assembly) {
+		return assembly.getDeliveryAddress();
+	    }
+
+	    @Override
+	    public int sort(AssemblyV assembly1, AssemblyV assembly2) {
+		return assembly1.getDeliveryAddress().compareTo(assembly2.getDeliveryAddress());
+	    }
+
+	    @Override
+	    public Component getFilterComponent(PresentationModel presentationModel) {
+		return BasicComponentFactory.createTextField(presentationModel.getModel("deliveryAddress"), false);
+	    }
+
+	    @Override
+	    public boolean filter(AssemblyV assembly, AssemblyFilter assemblyFilter) {
+		if (StringUtils.isNotBlank(assemblyFilter.getDeliveryAddress())) {
+		    return assembly.getDeliveryAddress().toLowerCase()
+			    .matches(assemblyFilter.getDeliveryAddress().toLowerCase().replaceAll("%", ".*") + ".*");
+		}
+		return true;
+	    }
+	},
 	POSTNR("Postnr", VISIBLE, CENTER, 50) {
 	    @Override
 	    public Object getValue(AssemblyV assembly) {

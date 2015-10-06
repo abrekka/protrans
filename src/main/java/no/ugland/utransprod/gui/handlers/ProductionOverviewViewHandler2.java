@@ -2340,7 +2340,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	    summer.antallGarasjer++;
 	    summer.sumTidVegg = summer.sumTidVegg.add(productionOverviewV.getEstimatedTimeWall() == null ? BigDecimal.ZERO : productionOverviewV
 		    .getEstimatedTimeWall());
-	    summer.sumTidGavl = summer.sumTidVegg.add(productionOverviewV.getEstimatedTimeGavl() == null ? BigDecimal.ZERO : productionOverviewV
+	    summer.sumTidGavl = summer.sumTidGavl.add(productionOverviewV.getEstimatedTimeGavl() == null ? BigDecimal.ZERO : productionOverviewV
 		    .getEstimatedTimeGavl());
 	    summer.sumTidPakk = summer.sumTidPakk.add(productionOverviewV.getEstimatedTimePack() == null ? BigDecimal.ZERO : productionOverviewV
 		    .getEstimatedTimePack());

@@ -155,6 +155,7 @@ public class FilterAssemblyView implements Closeable {
 	private String assemblerCraning;
 	private String assemblyComment;
 	private String dg;
+	private String deliveryAddress;
 
 	public AssemblyFilter() {
 	    sort1SelectionList = new SelectionInList(AssemblyColumn.getVisibleColumns());
@@ -421,6 +422,14 @@ public class FilterAssemblyView implements Closeable {
 
 	public void setDg(String dg) {
 	    this.dg = dg;
+	}
+
+	public String getDeliveryAddress() {
+	    return this.deliveryAddress;
+	}
+
+	public void setDeliveryAddress(String deliveryAddress) {
+	    this.deliveryAddress = deliveryAddress;
 	}
 
     }

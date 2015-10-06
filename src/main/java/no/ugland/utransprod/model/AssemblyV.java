@@ -40,6 +40,7 @@ public class AssemblyV {
     private String sentMailCustomer;
     private String assemblyComment;
     private BigDecimal dg;
+    private String deliveryAddress;
 
     public String getAssemblyComment() {
 	return assemblyComment;
@@ -342,5 +343,13 @@ public class AssemblyV {
 
     public void setDg(BigDecimal dg) {
 	this.dg = dg;
+    }
+
+    public String getDeliveryAddress() {
+	return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(String deliveryAddress) {
+	this.deliveryAddress = deliveryAddress;
     }
 }
