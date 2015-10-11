@@ -13,6 +13,13 @@
             </bean>
         </property>
 		</bean>
+		<bean id="orderSegmentNoVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.OrderSegmentNoVManagerImpl">
+                <property name="orderSegmentNoVDao" ref="orderSegmentNoVDAO"/>
+            </bean>
+        </property>
+		</bean>
 		
 		<bean id="customerManager" parent="txProxyTemplate">
         <property name="target">
@@ -588,7 +595,7 @@
         <property name="target">
             <bean class="no.ugland.utransprod.service.impl.SalesVManagerImpl">
                 <property name="salesVDAO" ref="salesVDAO"/>
-				<property name="orderManager" ref="orderManager"/>
+				<property name="orderSegmentNoVManager" ref="orderSegmentNoVManager"/>
 				<property name="salesDataSnapshotDAO" ref="salesDataSnapshotDAO"/>
 				<property name="productAreaManager" ref="productAreaManager"/>
 				<property name="budgetManager" ref="budgetManager"/>

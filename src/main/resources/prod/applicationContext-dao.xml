@@ -13,6 +13,13 @@
 			</bean>
 		</property>
 	</bean>
+	<bean id="orderSegmentNoVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.OrderSegmentNoVDAOHibernate"
+				autowire="byName">
+			</bean>
+		</property>
+	</bean>
 
 	<bean id="customerDAO" parent="txProxyTemplate">
 		<property name="target">

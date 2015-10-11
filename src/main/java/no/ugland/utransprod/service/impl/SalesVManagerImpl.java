@@ -15,7 +15,7 @@ import no.ugland.utransprod.model.ProductArea;
 import no.ugland.utransprod.model.SalesmanGoal;
 import no.ugland.utransprod.model.SalesmanGoal.PeriodeEnum;
 import no.ugland.utransprod.service.BudgetManager;
-import no.ugland.utransprod.service.OrderManager;
+import no.ugland.utransprod.service.OrderSegmentNoVManager;
 import no.ugland.utransprod.service.ProductAreaManager;
 import no.ugland.utransprod.service.SalesVManager;
 import no.ugland.utransprod.util.Periode;
@@ -37,7 +37,7 @@ public class SalesVManagerImpl implements SalesVManager {
 
     private SalesDataSnapshotDAO salesDataSnapshotDAO;
 
-    private OrderManager orderManager;
+    private OrderSegmentNoVManager orderManager;
     private BudgetManager budgetManager;
 
     private ProductAreaManager productAreaManager;
@@ -53,7 +53,7 @@ public class SalesVManagerImpl implements SalesVManager {
 	this.dao = aDao;
     }
 
-    public final void setOrderManager(final OrderManager aOrderManager) {
+    public final void setOrderSegmentNoVManager(final OrderSegmentNoVManager aOrderManager) {
 	this.orderManager = aOrderManager;
     }
 

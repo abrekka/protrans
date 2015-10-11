@@ -98,21 +98,37 @@ public class SalesDataDao<T> extends BaseDAOHibernate<T> {
 	    @SuppressWarnings("unchecked")
 	    public Object doInHibernate(final Session session) {
 
-		String sql = "select count($TABLE_VAR_NAME$.$ID_COLUMN_NAME$)" + "   from $TABLE_NAME$ $TABLE_VAR_NAME$ "
-			+ "   where   $TABLE_VAR_NAME$.productAreaNr in (:productAreaNr) and "
+		String sql = "select count($TABLE_VAR_NAME$.$ID_COLUMN_NAME$)"
+			+ "   from $TABLE_NAME$ $TABLE_VAR_NAME$ "
+			+ "   where   "
+			// +
+			// "$TABLE_VAR_NAME$.productAreaNr in (:productAreaNr) and "
 			+ "     $TABLE_VAR_NAME$.probability in(:probabilityList) and " + "           $TABLE_VAR_NAME$."
 			+ probabilityEnum.getDateString() + " between :startDate and :endDate and "
 			+ "     $TABLE_VAR_NAME$.ownProductionCost is not null and "
 			+ "     $TABLE_VAR_NAME$.ownProductionCost > :ownProductionCostLimit";
+
+		if (productArea == null || !"Proff".equalsIgnoreCase(productArea.getProductArea())) {
+		    sql = sql + " and $TABLE_VAR_NAME$.productAreaNr in (:productAreaNr) and "
+			    + "($TABLE_VAR_NAME$.segmentno is null or $TABLE_VAR_NAME$.segmentno<>2)";
+		} else {
+		    sql = sql + " and $TABLE_VAR_NAME$.segmentno=2";
+		}
+
 		sql = StringUtils.replace(sql, "$TABLE_NAME$", tableName);
 		sql = StringUtils.replace(sql, "$TABLE_VAR_NAME$", tableName);
 		sql = StringUtils.replace(sql, "$ID_COLUMN_NAME$", idColumnName);
 
-		List<Integer> productAreaNrList = productArea == null ? findAllProductAreaNr() : productArea.getProductAreaNrList();
 		BigDecimal ownProductionCostLimit = productArea == null ? BigDecimal.valueOf(15000) : productArea.getOwnProductionCostLimit();
 
 		Query query = session.createQuery(sql).setParameterList("probabilityList", probabilityEnum.getProbabilityList())
-			.setParameterList("productAreaNr", productAreaNrList).setParameter("ownProductionCostLimit", ownProductionCostLimit);
+			.setParameter("ownProductionCostLimit", ownProductionCostLimit);
+
+		if (productArea == null || !"Proff".equalsIgnoreCase(productArea.getProductArea())) {
+		    List<Integer> productAreaNrList = productArea == null ? findAllProductAreaNr() : productArea.getProductAreaNrList();
+		    query = query.setParameterList("productAreaNr", productAreaNrList);
+		}
+
 		query = setDateParameter(query, probabilityEnum, periode);
 
 		List<Integer> countList = query.list();
@@ -202,21 +218,39 @@ public class SalesDataDao<T> extends BaseDAOHibernate<T> {
 			+ "               $TABLE_VAR_NAME$.customerNr," + "               $TABLE_VAR_NAME$.customerName,"
 			+ "               $TABLE_VAR_NAME$.orderNr," + "               $TABLE_VAR_NAME$.ownProductionCost,"
 			+ "         $TABLE_VAR_NAME$.transportCost," + "       $TABLE_VAR_NAME$.assemblyCost," + "       $TABLE_VAR_NAME$.yesLines,"
-			+ "       $TABLE_VAR_NAME$.contributionMargin," + "       $TABLE_VAR_NAME$.saledate," + "$TABLE_VAR_NAME$.registered,"
+			+ "       $TABLE_VAR_NAME$.contributionMargin,"
+			+ "       $TABLE_VAR_NAME$.saledate,"
+			+ "$TABLE_VAR_NAME$.registered,"
 			+ "$TABLE_VAR_NAME$.orderDate,"
 			+ "$TABLE_VAR_NAME$.contributionMargin,$TABLE_VAR_NAME$.productAreaNr,$TABLE_VAR_NAME$.segmentno)"
-			+ "   from $TABLE_NAME$ $TABLE_VAR_NAME$ " + "   where   $TABLE_VAR_NAME$.productAreaNr in (:productAreaNr) and "
+			+ "   from $TABLE_NAME$ $TABLE_VAR_NAME$ "
+			+ "   where   "
+			// +
+			// "$TABLE_VAR_NAME$.productAreaNr in (:productAreaNr) and "
 			+ "           $TABLE_VAR_NAME$.saledate " + " between :startDate and :endDate and "
 			+ "     $TABLE_VAR_NAME$.ownProductionCost is not null and "
 			+ "     $TABLE_VAR_NAME$.ownProductionCost > :ownProductionCostLimit";
+
+		if (productArea == null || !"Proff".equalsIgnoreCase(productArea.getProductArea())) {
+		    sql = sql
+			    + " and $TABLE_VAR_NAME$.productAreaNr in (:productAreaNr) and ($TABLE_VAR_NAME$.segmentno is null or $TABLE_VAR_NAME$.segmentno<>2)";
+		} else {
+		    sql = sql + " and $TABLE_VAR_NAME$.segmentno=2";
+		}
+
 		sql = StringUtils.replace(sql, "$TABLE_NAME$", tableName);
 		sql = StringUtils.replace(sql, "$TABLE_VAR_NAME$", tableName);
 
-		List<Integer> productAreaNrList = productArea == null ? findAllProductAreaNr() : productArea.getProductAreaNrList();
 		BigDecimal ownProductionCostLimit = productArea == null ? BigDecimal.valueOf(15000) : productArea.getOwnProductionCostLimit();
 
-		return session.createQuery(sql).setParameterList("productAreaNr", productAreaNrList).setParameter("startDate", startDate)
-			.setParameter("endDate", endDate).setParameter("ownProductionCostLimit", ownProductionCostLimit).list();
+		Query query = session.createQuery(sql).setParameter("startDate", startDate).setParameter("endDate", endDate)
+			.setParameter("ownProductionCostLimit", ownProductionCostLimit);
+
+		if (productArea == null || !"Proff".equalsIgnoreCase(productArea.getProductArea())) {
+		    List<Integer> productAreaNrList = productArea == null ? findAllProductAreaNr() : productArea.getProductAreaNrList();
+		    query = query.setParameterList("productAreaNr", productAreaNrList);
+		}
+		return query.list();
 	    }
 
 	});

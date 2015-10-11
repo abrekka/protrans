@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping default-lazy="false">
+
+<class
+    name="no.ugland.utransprod.model.OrderSegmentNoV"
+    table="ORDER_SEGMENT_NO_V"
+>
+<id name="orderId" type="java.lang.Integer" column="ORDER_ID">
+        <generator class="identity"/>
+        </id>
+
+	<property
+        name="orderNr"
+        type="java.lang.String"
+        column="ORDER_NR"
+        length="50"
+    />
+    <property
+        name="customerFullName"
+        type="java.lang.String"
+        column="CUSTOMER_FULL_NAME"
+        length="50"
+    />
+    <property
+        name="customerNr"
+        type="java.lang.Integer"
+        column="CUSTOMER_NR"
+        length="50"
+    />
+    <property
+        name="constructionTypeName"
+        type="java.lang.String"
+        column="CONSTRUCTION_TYPE_NAME"
+        length="50"
+    />
+    <property
+        name="segmentNo"
+        type="java.lang.String"
+        column="SEGMENTNO"
+        length="50"
+    />
+     <property
+        name="productAreaName"
+        type="java.lang.String"
+        column="PRODUCT_AREA_NAME"
+        length="50"
+    />
+
+    <property
+        name="postalCode"
+        type="java.lang.String"
+        column="POSTAL_CODE"
+        length="50"
+    />
+    <property
+        name="productAreaNr"
+        type="java.lang.String"
+        column="PRODUCT_AREA_NR"
+        length="50"
+    />
+
+    <property
+        name="orderDate"
+        type="java.util.Date"
+        column="ORDER_DATE"
+        length="32"
+    />
+	<property
+        name="agreementDate"
+        type="java.util.Date"
+        column="AGREEMENT_DATE"
+        length="32"
+    />
+	<property
+        name="salesman"
+        type="java.lang.String"
+        column="SALESMAN"
+        length="255"
+    />
+    
+    <property
+        name="assemblyCost"
+        type="java.math.BigDecimal"
+        column="ASSEMBLY_COST"
+        length="32"
+    />
+    <property
+        name="ownProduction"
+        type="java.math.BigDecimal"
+        column="OWN_PRODUCTION"
+        length="32"
+    />
+    <property
+        name="deliveryCost"
+        type="java.math.BigDecimal"
+        column="DELIVERY_COST"
+        length="32"
+    />
+    <property
+        name="contributionMargin"
+        type="java.math.BigDecimal"
+        column="CONTRIBUTION_MARGIN"
+        length="32"
+    />
+    <property
+        name="contributionRate"
+        type="java.math.BigDecimal"
+        column="CONTRIBUTION_RATE"
+        length="32"
+    />
+    <property
+        name="jaLinjer"
+        type="java.math.BigDecimal"
+        column="JALINJER"
+        length="32"
+    />
+    
+
+</class>
+</hibernate-mapping>

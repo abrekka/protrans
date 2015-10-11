@@ -123,6 +123,7 @@
 				<value>hibernate/FakturagrunnlagV.hbm.xml</value>
 				<value>hibernate/ProductionoverviewV.hbm.xml</value>
 				<value>hibernate/AssemblyV.hbm.xml</value>
+				<value>hibernate/OrderSegmentNoV.hbm.xml</value>
 			</list>
 		</property>
 	</bean>

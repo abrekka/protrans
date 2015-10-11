@@ -170,23 +170,23 @@ public class SaleReportSum implements Serializable {
     }
 
     public void addSumAssembly(BigDecimal assemblySum) {
-	sumAssembly = sumAssembly.add(assemblySum);
+	sumAssembly = sumAssembly.add(assemblySum == null ? BigDecimal.ZERO : assemblySum);
     }
 
     public void addSumOwnProduction(BigDecimal ownProductionSum) {
-	sumOwnProduction = sumOwnProduction.add(ownProductionSum);
+	sumOwnProduction = sumOwnProduction.add(ownProductionSum == null ? BigDecimal.ZERO : ownProductionSum);
     }
 
     public void addSumTransport(BigDecimal transportSum) {
-	sumTransport = sumTransport.add(transportSum);
+	sumTransport = sumTransport.add(transportSum == null ? BigDecimal.ZERO : transportSum);
     }
 
     public void addSumDb(BigDecimal dbSum) {
-	sumDb = sumDb.add(dbSum);
+	sumDb = sumDb.add(dbSum == null ? BigDecimal.ZERO : dbSum);
     }
 
     public void addSumYesLines(BigDecimal yesLinesSum) {
-	sumYesLines = sumYesLines.add(yesLinesSum);
+	sumYesLines = sumYesLines.add(yesLinesSum == null ? BigDecimal.ZERO : yesLinesSum);
     }
 
     public String getSalesman() {

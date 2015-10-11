@@ -2062,7 +2062,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	if (tableOrders != null) {
 	    List<Filter> filters = new ArrayList<Filter>();
 	    if (sentFilter) {
-		Filter filter = new PatternFilter("Nei", Pattern.CASE_INSENSITIVE, 19);
+		Filter filter = new PatternFilter("Nei", Pattern.CASE_INSENSITIVE, 13);
 		filters.add(filter);
 	    }
 	    // if (productAreaGroup != null) {

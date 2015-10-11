@@ -16,6 +16,7 @@ import java.util.Set;
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.model.ProductArea;
 import no.ugland.utransprod.service.OrderManager;
+import no.ugland.utransprod.service.OrderSegmentNoVManager;
 import no.ugland.utransprod.service.SalesVManager;
 import no.ugland.utransprod.util.Periode;
 import no.ugland.utransprod.util.report.ProbabilityEnum;
@@ -31,13 +32,13 @@ public enum SalesReportType {
 
     SALES_REPORT_OFFER_STATISTIC("Tilbud", ProbabilityEnum.PROBABILITY_OFFER, true, false) {
 	@Override
-	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderManager orderManager, ProductArea productArea,
+	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderSegmentNoVManager orderManager, ProductArea productArea,
 		Periode periode) {
 	    return getSumData(reportMap, getProbability());
 	}
 
 	@Override
-	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderManager orderManager)
+	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderSegmentNoVManager orderManager)
 		throws ProTransException {
 	    // TODO Auto-generated method stub
 	    return null;
@@ -45,35 +46,33 @@ public enum SalesReportType {
     },
     SALES_REPORT_ORDER_STATISTIC("Ordre", ProbabilityEnum.PROBABILITY_ORDER, true, false) {
 	@Override
-	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderManager orderManager, ProductArea productArea,
+	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderSegmentNoVManager orderManager, ProductArea productArea,
 		Periode periode) {
 	    return getSumData(reportMap, getProbability());
 	}
 
 	@Override
-	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderManager orderManager)
+	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderSegmentNoVManager orderManager)
 		throws ProTransException {
-	    // TODO Auto-generated method stub
 	    return null;
 	}
     },
     SALES_REPORT_CONFIRMED_ORDER_STATISTIC("Avrop", ProbabilityEnum.PROBABILITY_CONFRIM_ORDER, true, false) {
 	@Override
-	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderManager orderManager, ProductArea productArea,
+	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderSegmentNoVManager orderManager, ProductArea productArea,
 		Periode periode) {
 	    return orderManager.sumByProductAreaConfirmPeriode(productArea, periode);
 	}
 
 	@Override
-	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderManager orderManager)
+	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderSegmentNoVManager orderManager)
 		throws ProTransException {
-	    // TODO Auto-generated method stub
 	    return null;
 	}
     },
     SALES_REPORT("Tilbud", ProbabilityEnum.PROBABILITY_OFFER, false, false) {
 	@Override
-	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderManager orderManager, ProductArea productArea,
+	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderSegmentNoVManager orderManager, ProductArea productArea,
 		Periode periode) {
 	    List<SaleReportSum> list = getSumDataByCounty(reportMap, getProbability());
 	    Collections.sort(list, new SaleReportSumDataCountyComparator());
@@ -82,13 +81,13 @@ public enum SalesReportType {
 	}
 
 	@Override
-	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderManager orderManager) {
+	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderSegmentNoVManager orderManager) {
 	    return null;
 	}
     },
     SALES_REPORT_SALESMAN("Tilbud", ProbabilityEnum.PROBABILITY_OFFER, false, true) {
 	@Override
-	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderManager orderManager, ProductArea productArea,
+	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderSegmentNoVManager orderManager, ProductArea productArea,
 		Periode periode) {
 	    List<SaleReportSum> list = getSumDataBySalesman(reportMap, getProbability());
 	    Collections.sort(list, new SaleReportSumDataSalesmanComparator());
@@ -96,13 +95,13 @@ public enum SalesReportType {
 	}
 
 	@Override
-	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderManager orderManager) {
+	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderSegmentNoVManager orderManager) {
 	    return null;
 	}
     },
     SALES_REPORT_ORDER("Ordre", ProbabilityEnum.PROBABILITY_ORDER, false, false) {
 	@Override
-	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderManager orderManager, ProductArea productArea,
+	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderSegmentNoVManager orderManager, ProductArea productArea,
 		Periode periode) {
 	    List<SaleReportSum> list = getSumDataByCounty(reportMap, getProbability());
 	    Collections.sort(list, new SaleReportSumDataCountyComparator());
@@ -111,13 +110,13 @@ public enum SalesReportType {
 	}
 
 	@Override
-	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderManager orderManager) {
+	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderSegmentNoVManager orderManager) {
 	    return null;
 	}
     },
     SALES_REPORT_ORDER_SALESMAN("Ordre", ProbabilityEnum.PROBABILITY_ORDER, false, true) {
 	@Override
-	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderManager orderManager, ProductArea productArea,
+	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderSegmentNoVManager orderManager, ProductArea productArea,
 		Periode periode) {
 	    List<SaleReportSum> list = getSumDataBySalesman(reportMap, getProbability());
 	    Collections.sort(list, new SaleReportSumDataSalesmanComparator());
@@ -125,13 +124,13 @@ public enum SalesReportType {
 	}
 
 	@Override
-	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderManager orderManager) {
+	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderSegmentNoVManager orderManager) {
 	    return null;
 	}
     },
     SALES_REPORT_CONFIRMED_ORDER("Avrop", ProbabilityEnum.PROBABILITY_CONFRIM_ORDER, false, false) {
 	@Override
-	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderManager orderManager, ProductArea productArea,
+	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderSegmentNoVManager orderManager, ProductArea productArea,
 		Periode periode) {
 	    List<SaleReportSum> list = orderManager.groupSumCountyByProductAreaConfirmPeriode(productArea, periode);
 	    Collections.sort(list, new SaleReportSumDataCountyComparator());
@@ -139,14 +138,14 @@ public enum SalesReportType {
 	}
 
 	@Override
-	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderManager orderManager)
+	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderSegmentNoVManager orderManager)
 		throws ProTransException {
 	    return getInfoButtomConfirmed(productArea, periode, salesVManager, orderManager);
 	}
     },
     SALES_REPORT_CONFIRMED_ORDER_SALESMAN("Avrop", ProbabilityEnum.PROBABILITY_CONFRIM_ORDER, false, true) {
 	@Override
-	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderManager orderManager, ProductArea productArea,
+	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderSegmentNoVManager orderManager, ProductArea productArea,
 		Periode periode) {
 	    List<SaleReportSum> list = orderManager.groupSumSalesmanByProductAreaConfirmPeriode(productArea, periode);
 	    Collections.sort(list, new SaleReportSumDataSalesmanComparator());
@@ -155,14 +154,14 @@ public enum SalesReportType {
 	}
 
 	@Override
-	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderManager orderManager)
+	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderSegmentNoVManager orderManager)
 		throws ProTransException {
 	    return getInfoButtomConfirmed(productArea, periode, salesVManager, orderManager);
 	}
     },
     SALES_REPORT_BASIS("Grunnlag", ProbabilityEnum.PROBABILITY_UNKNOWN, false, false) {
 	@Override
-	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderManager orderManager, ProductArea productArea,
+	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderSegmentNoVManager orderManager, ProductArea productArea,
 		Periode periode) {
 
 	    Set<SaleReportData> salesDataSetOffer = reportMap.get(ProbabilityEnum.PROBABILITY_OFFER);
@@ -177,13 +176,13 @@ public enum SalesReportType {
 	}
 
 	@Override
-	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderManager orderManager) {
+	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderSegmentNoVManager orderManager) {
 	    return null;
 	}
     },
     SALES_REPORT_BASIS_SALESMAN("Grunnlag", ProbabilityEnum.PROBABILITY_UNKNOWN, false, false) {
 	@Override
-	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderManager orderManager, ProductArea productArea,
+	public List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderSegmentNoVManager orderManager, ProductArea productArea,
 		Periode periode) {
 
 	    Set<SaleReportData> salesDataSetOffer = reportMap.get(ProbabilityEnum.PROBABILITY_OFFER);
@@ -198,7 +197,7 @@ public enum SalesReportType {
 	}
 
 	@Override
-	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderManager orderManager) {
+	public String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderSegmentNoVManager orderManager) {
 	    return null;
 	}
     };
@@ -314,10 +313,10 @@ public enum SalesReportType {
 	return list;
     }
 
-    public abstract List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderManager orderManager, ProductArea productArea,
-	    Periode periode);
+    public abstract List<?> getData(Map<ProbabilityEnum, Set<SaleReportData>> reportMap, OrderSegmentNoVManager orderManager,
+	    ProductArea productArea, Periode periode);
 
-    public abstract String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderManager orderManager)
+    public abstract String getInfoButtom(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderSegmentNoVManager orderManager)
 	    throws ProTransException;
 
     public String getInfoTop() {
@@ -334,8 +333,8 @@ public enum SalesReportType {
 	return salesDataList;
     }
 
-    private static String getInfoButtomConfirmed(ProductArea productArea, Periode periode, SalesVManager salesVManager, OrderManager orderManager)
-	    throws ProTransException {
+    private static String getInfoButtomConfirmed(ProductArea productArea, Periode periode, SalesVManager salesVManager,
+	    OrderSegmentNoVManager orderManager) throws ProTransException {
 	BigDecimal numberOfOffer = BigDecimal.valueOf(salesVManager.countByProbabilityProductAreaPeriode(ProbabilityEnum.PROBABILITY_OFFER,
 		productArea, periode));
 	BigDecimal numberOfOrder = BigDecimal.valueOf(salesVManager.countByProbabilityProductAreaPeriode(ProbabilityEnum.PROBABILITY_ORDER,
