@@ -50,8 +50,8 @@
 					</textElement>
 					<text><![CDATA[Hver montering må merkes med vårt bestillingsnr:]]></text>
 				</staticText>
-				<textField isBlankWhenNull="true">
-					<reportElement key="textField-7" positionType="Float" x="321" y="22" width="27" height="14"/>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-7" positionType="Float" x="321" y="22" width="40" height="14"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -82,11 +82,11 @@
 					<subreportParameter name="ORDRENR">
 						<subreportParameterExpression><![CDATA[$F{order.orderNr}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="IGLAND_GARASJE_LOGO">
-						<subreportParameterExpression><![CDATA[$P{IGLAND_GARASJE_LOGO}]]></subreportParameterExpression>
-					</subreportParameter>
 					<subreportParameter name="KUNDE">
 						<subreportParameterExpression><![CDATA[$F{order.customer.firstName}+" "+$F{order.customer.lastName}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="IGLAND_GARASJE_LOGO">
+						<subreportParameterExpression><![CDATA[$P{IGLAND_GARASJE_LOGO}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportExpression class="java.lang.String"><![CDATA["reports/hms.jasper"]]></subreportExpression>
 				</subreport>

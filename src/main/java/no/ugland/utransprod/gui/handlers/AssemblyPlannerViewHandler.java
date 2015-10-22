@@ -2420,7 +2420,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	    private String hentTaksteininfo(AssemblyV assembly) {
 		// OrderLine takstein =
 		// assembly.getOrder().getOrderLine("Takstein");
-		return assembly.getTaksteinInfo();
+		return assembly.getTaksteinInfo() == null ? "" : assembly.getTaksteinInfo();
 	    }
 
 	    @Override
