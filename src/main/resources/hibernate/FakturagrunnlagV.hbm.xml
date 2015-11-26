@@ -98,5 +98,11 @@
         column="ALLOC"
         length="32"
     />
+     <property
+        name="ordNo"
+        type="java.lang.Integer"
+        column="ORDNO"
+        length="32"
+    />
 </class>
 </hibernate-mapping>

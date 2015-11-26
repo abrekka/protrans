@@ -22,6 +22,15 @@ public class FakturagrunnlagV {
     private Integer lnPurcno;
     private Integer alloc;
     private BigDecimal orgPriceMont;
+    private Integer ordNo;
+
+    public Integer getOrdNo() {
+	return ordNo;
+    }
+
+    public void setOrdNo(Integer ordNo) {
+	this.ordNo = ordNo;
+    }
 
     public FakturagrunnlagVPK getFakturagrunnlagVPK() {
 	return fakturagrunnlagVPK;
@@ -274,6 +283,19 @@ public class FakturagrunnlagV {
 	} else if (!sumLine.equals(other.sumLine))
 	    return false;
 	return true;
+    }
+
+    public FakturagrunnlagV medOrdNo(int ordno) {
+	this.ordNo = ordno;
+	return this;
+    }
+
+    public FakturagrunnlagV medLnNo(int lnno) {
+	if (this.fakturagrunnlagVPK == null) {
+	    this.fakturagrunnlagVPK = new FakturagrunnlagVPK();
+	}
+	this.fakturagrunnlagVPK.setLnno(lnno);
+	return this;
     }
 
 }

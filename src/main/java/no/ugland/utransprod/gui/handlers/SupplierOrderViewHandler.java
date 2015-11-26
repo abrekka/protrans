@@ -885,7 +885,8 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 		order.cacheComments();
 		orderViewHandler.getOrderManager().saveOrder(order);
 	    }
-	    vismaFileCreator.createVismaFileForAssembly(order, assembly.getAssembliedBool());
+	    vismaFileCreator.createVismaFileForAssembly(order, assembly.getAssembliedBool(), false, 1);
+	    vismaFileCreator.createVismaFileForAssembly(order, assembly.getAssembliedBool(), true, 2);
 	} catch (ProTransException e) {
 	    Util.showErrorDialog(window, "Feil", e.getMessage());
 	    e.printStackTrace();

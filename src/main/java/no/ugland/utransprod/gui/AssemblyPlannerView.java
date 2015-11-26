@@ -414,10 +414,10 @@ public class AssemblyPlannerView implements Viewer {
 	int weekStart = yearWeek.getWeek() - 1;
 	int weekStop = yearWeek.getWeek() + 1;
 	String columnLayout = "p,p,p,p,p";
-	if (weekStart == 0) {
-	    weekStart = 1;
-	    columnLayout = "p,p,p,";
-	}
+	// if (weekStart == 0) {
+	// weekStart = 1;
+	// columnLayout = "p,p,p,";
+	// }
 	if (weekStop == 54) {
 	    weekStop = 53;
 	    columnLayout = "p,p,p,";
@@ -436,12 +436,19 @@ public class AssemblyPlannerView implements Viewer {
 	for (Supplier supplier : suppliers) {
 	    weekCounter = 0;
 	    for (int i = weekStart; i <= weekStop; i++) {
+
 		weekCounter++;
 		currentYearWeek.setWeek(i);
 
-		builder.appendRow(new RowSpec("fill:p"));
-		builder.append(viewHandler.getAssemblyTeamOrderView(supplier, currentYearWeek, weekCounter, starting).buildPanel(window,
-			supplierRowSizes.get(supplier)));
+		if (yearWeek.getWeek() == 1 && i == 0) {
+		    builder.appendRow(new RowSpec("fill:p"));
+		    builder.append("                                                                                       ");
+		} else {
+
+		    builder.appendRow(new RowSpec("fill:p"));
+		    builder.append(viewHandler.getAssemblyTeamOrderView(supplier, currentYearWeek, weekCounter, starting).buildPanel(window,
+			    supplierRowSizes.get(supplier)));
+		}
 	    }
 	}
 
@@ -463,14 +470,18 @@ public class AssemblyPlannerView implements Viewer {
 	DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 	int weekStart = yearWeek.getWeek() - 1;
 	int weekStop = yearWeek.getWeek() + 1;
-	if (weekStart == 0) {
-	    weekStart = 1;
-	}
+	// if (weekStart == 0) {
+	// weekStart = 1;
+	// }
 	if (weekStop == 54) {
 	    weekStop = 53;
 	}
 	for (int j = weekStart; j <= weekStop; j++) {
-	    builder.append("Uke " + j);
+	    if (yearWeek.getWeek() == 1 && j == 0) {
+		builder.append(" ");
+	    } else {
+		builder.append("Uke " + j);
+	    }
 	}
 	return builder.getPanel();
     }

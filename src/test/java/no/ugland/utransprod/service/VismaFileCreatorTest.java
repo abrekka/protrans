@@ -64,7 +64,7 @@ public class VismaFileCreatorTest {
 	employee.setLastName("testesen");
 	transport.setEmployee(employee);
 	transport.setTransportName("turnavn");
-	VismaFile vismafil = ((VismaFileCreatorImpl) vismaFileCreator).createDeliveryFile(transport, fakturagrunnlag, true);
+	VismaFile vismafil = ((VismaFileCreatorImpl) vismaFileCreator).createDeliveryFile(transport, fakturagrunnlag, true, false);
 	List<String> stringLines = vismafil.getLinjer();
 	assertEquals(0, stringLines.size());
     }
@@ -86,12 +86,36 @@ public class VismaFileCreatorTest {
 	employee.setLastName("testesen");
 	transport.setEmployee(employee);
 	transport.setTransportName("turnavn");
-	VismaFile vismafil = ((VismaFileCreatorImpl) vismaFileCreator).createDeliveryFile(transport, fakturagrunnlag, true);
+	VismaFile vismafil = ((VismaFileCreatorImpl) vismaFileCreator).createDeliveryFile(transport, fakturagrunnlag, true, false);
 	List<String> stringLines = vismafil.getLinjer();
 	assertEquals(2, stringLines.size());
 	assertEquals("H;;2617;;;300017;;;;;;;;;;;;;;;;;;;20140516;;;;;turnavn;test testesen;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;4",
 		stringLines.get(0));
 	assertEquals("L;5;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1;1;1;3", stringLines.get(1));
+    }
+
+    @Test
+    public void skalLageVismafilForTilbakemeldingForTransportMedVismaOrdrenummer() throws Exception {
+	List<FakturagrunnlagV> fakturagrunnlag = Lists.newArrayList(
+		new FakturagrunnlagV().medProdno("Montering villa").medPurcno(2616).medLnPurcno(10).medAlloc(1).medOrdNo(1678).medLnNo(10),
+		new FakturagrunnlagV().medProdno("MONTSPIKER").medPurcno(2616).medLnPurcno(11).medAlloc(1).medOrdNo(1678).medLnNo(11),
+		new FakturagrunnlagV().medProdno("KRANBIL").medPurcno(2616).medLnPurcno(12).medAlloc(1).medOrdNo(1678).medLnNo(12),
+		new FakturagrunnlagV().medProdno("FRAKT").medPurcno(2617).medLnPurcno(5).medAlloc(1).medOrdNo(1678).medLnNo(9990));
+	Transport transport = new Transport();
+	Supplier supplier = new Supplier();
+	supplier.setSupplierNr("300017");
+	transport.setSupplier(supplier);
+	transport.setLoadingDate(new SimpleDateFormat("yyyyMMdd").parse("20140516"));
+	Employee employee = new Employee();
+	employee.setFirstName("test");
+	employee.setLastName("testesen");
+	transport.setEmployee(employee);
+	transport.setTransportName("turnavn");
+	VismaFile vismafil = ((VismaFileCreatorImpl) vismaFileCreator).createDeliveryFile(transport, fakturagrunnlag, true, true);
+	List<String> stringLines = vismafil.getLinjer();
+	assertEquals(2, stringLines.size());
+	assertEquals("H;;1678;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;4", stringLines.get(0));
+	assertEquals("L;9990;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1;1;1;3", stringLines.get(1));
     }
 
     @Test
@@ -101,7 +125,7 @@ public class VismaFileCreatorTest {
 		new FakturagrunnlagV().medProdno("Montering villa").medPurcno(2616).medLnPurcno(10).medAlloc(1),
 		new FakturagrunnlagV().medProdno("MONTSPIKER").medPurcno(2616).medLnPurcno(11).medAlloc(1),
 		new FakturagrunnlagV().medProdno("KRANBIL").medPurcno(2616).medLnPurcno(12).medAlloc(1));
-	List<VismaFile> vismafiler = ((VismaFileCreatorImpl) vismaFileCreator).createAssemblyFiles(fakturagrunnlag, false, null);
+	List<VismaFile> vismafiler = ((VismaFileCreatorImpl) vismaFileCreator).createAssemblyFiles(fakturagrunnlag, false, null, false);
 	Assertions.assertThat(vismafiler).hasSize(1);
 	List<String> stringLines = vismafiler.get(0).getLinjer();
 	assertEquals(4, stringLines.size());
@@ -123,7 +147,7 @@ public class VismaFileCreatorTest {
 	supplier.setSupplierNr("300018");
 	assembly.setSupplier(supplier);
 	order.setAssembly(assembly);
-	List<String> fileNames = ((VismaFileCreatorImpl) vismaFileCreator).createVismaAssemblyFiles(order, fakturagrunnlag, "visma", true);
+	List<String> fileNames = ((VismaFileCreatorImpl) vismaFileCreator).createVismaAssemblyFiles(order, fakturagrunnlag, "visma", true, false, 1);
 	Assertions.assertThat(fileNames).hasSize(1);
 	File file = new File("visma/" + fileNames.get(0));
 	assertEquals(true, file.exists());
@@ -141,7 +165,7 @@ public class VismaFileCreatorTest {
 		new FakturagrunnlagV().medProdno("Montering villa").medPurcno(2616).medLnPurcno(10).medAlloc(1),
 		new FakturagrunnlagV().medProdno("MONTSPIKER").medPurcno(2616).medLnPurcno(11).medAlloc(1),
 		new FakturagrunnlagV().medProdno("KRANBIL").medPurcno(2617).medLnPurcno(12).medAlloc(1));
-	List<VismaFile> vismafiler = ((VismaFileCreatorImpl) vismaFileCreator).createAssemblyFiles(fakturagrunnlag, true, null);
+	List<VismaFile> vismafiler = ((VismaFileCreatorImpl) vismaFileCreator).createAssemblyFiles(fakturagrunnlag, true, null, false);
 	Assertions.assertThat(vismafiler).hasSize(2);
 	List<String> stringLines = vismafiler.get(0).getLinjer();
 	assertEquals(3, stringLines.size());
@@ -165,7 +189,7 @@ public class VismaFileCreatorTest {
 	Supplier supplier = new Supplier();
 	supplier.setSupplierNr("300018");
 	assembly.setSupplier(supplier);
-	List<VismaFile> vismafiler = ((VismaFileCreatorImpl) vismaFileCreator).createAssemblyFiles(fakturagrunnlag, true, assembly);
+	List<VismaFile> vismafiler = ((VismaFileCreatorImpl) vismaFileCreator).createAssemblyFiles(fakturagrunnlag, true, assembly, false);
 	Assertions.assertThat(vismafiler).hasSize(1);
 	List<String> stringLines = vismafiler.get(0).getLinjer();
 	assertEquals(4, stringLines.size());
@@ -173,6 +197,26 @@ public class VismaFileCreatorTest {
 	assertEquals("L;10;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1;1;1;3", stringLines.get(1));
 	assertEquals("L;11;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1;1;1;3", stringLines.get(2));
 	assertEquals("L;12;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1;1;1;3", stringLines.get(3));
+    }
+
+    @Test
+    public void skalLageGrunnlagForVismaFilForMonteringForVisma() {
+	List<FakturagrunnlagV> fakturagrunnlag = Lists.newArrayList(
+		new FakturagrunnlagV().medProdno("Montering villa").medPurcno(2616).medLnPurcno(10).medAlloc(1).medOrdNo(1234).medLnNo(111),
+		new FakturagrunnlagV().medProdno("MONTSPIKER").medPurcno(2616).medLnPurcno(11).medAlloc(1).medOrdNo(1234).medLnNo(112),
+		new FakturagrunnlagV().medProdno("KRANBIL").medPurcno(2616).medLnPurcno(12).medAlloc(1).medOrdNo(1234).medLnNo(113));
+	Assembly assembly = new Assembly();
+	Supplier supplier = new Supplier();
+	supplier.setSupplierNr("300018");
+	assembly.setSupplier(supplier);
+	List<VismaFile> vismafiler = ((VismaFileCreatorImpl) vismaFileCreator).createAssemblyFiles(fakturagrunnlag, true, assembly, true);
+	Assertions.assertThat(vismafiler).hasSize(1);
+	List<String> stringLines = vismafiler.get(0).getLinjer();
+	assertEquals(4, stringLines.size());
+	assertEquals("H;;1234;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;4", stringLines.get(0));
+	assertEquals("L;111;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1;1;1;3", stringLines.get(1));
+	assertEquals("L;112;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1;1;1;3", stringLines.get(2));
+	assertEquals("L;113;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1;1;1;3", stringLines.get(3));
     }
 
     @Test
@@ -232,7 +276,7 @@ public class VismaFileCreatorTest {
 	final List<OrdchgrLineV> lines = new ArrayList<OrdchgrLineV>();
 	lines.add(ordchgrLine);
 
-	String fileName = ((VismaFileCreatorImpl) vismaFileCreator).createFile(ordchgrHead, lines, "1", "visma", null);
+	String fileName = ((VismaFileCreatorImpl) vismaFileCreator).createFile(ordchgrHead, lines, "1", "visma", null, 1);
 
 	File file = new File("visma/" + fileName);
 	assertEquals(true, file.exists());

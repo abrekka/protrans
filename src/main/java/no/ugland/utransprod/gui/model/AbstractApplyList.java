@@ -127,7 +127,7 @@ public abstract class AbstractApplyList<T extends Applyable> implements ApplyLis
     }
 
     protected String createVismaFile(List<OrderLine> orderLines) throws ProTransException {
-	return vismaFileCreator != null ? vismaFileCreator.createVismaFile(orderLines) : null;
+	return vismaFileCreator != null ? vismaFileCreator.createVismaFile(orderLines, 1) : null;
 
     }
 

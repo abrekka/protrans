@@ -118,7 +118,12 @@
         column="JALINJER"
         length="32"
     />
-    
+<property
+        name="countyName"
+        type="java.lang.String"
+        column="COUNTY_NAME"
+        length="255"
+    />    
 
 </class>
 </hibernate-mapping>

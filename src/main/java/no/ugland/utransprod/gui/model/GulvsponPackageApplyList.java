@@ -159,7 +159,7 @@ public class GulvsponPackageApplyList extends PackageApplyList {
 	OrderLineManager orderLineManager = (OrderLineManager) ModelUtil.getBean("orderLineManager");
 	OrderLine orderLine = orderLineManager.findByOrderLineId(object.getOrderLineId());
 	if (orderLine != null) {
-	    vismaFileCreator.createVismaFile(Lists.newArrayList(orderLine));
+	    vismaFileCreator.createVismaFile(Lists.newArrayList(orderLine), 1);
 	}
     }
 

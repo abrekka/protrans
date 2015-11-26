@@ -23,6 +23,7 @@ public class OrderSegmentNoV {
     private String constructionTypeName;
     private String productAreaName;
     private String segmentNo;
+    private String countyName;
 
     public String getSegmentNo() {
 	return segmentNo;
@@ -166,5 +167,13 @@ public class OrderSegmentNoV {
 
     public void setProductAreaNr(String productAreaNr) {
 	this.productAreaNr = productAreaNr;
+    }
+
+    public String getCountyName() {
+	return countyName;
+    }
+
+    public void setCountyName(String countyName) {
+	this.countyName = countyName;
     }
 }

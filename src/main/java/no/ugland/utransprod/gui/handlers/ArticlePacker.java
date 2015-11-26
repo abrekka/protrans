@@ -72,8 +72,10 @@ public class ArticlePacker {
 	Colli useColli = getColliToUse(useColliName, collies, window);
 
 	if (useColli != null) {
+	    int teller = 0;
 	    for (OrderLine orderLine : orderLines) {
-		addArticleToColliAndSendFileToVisma(orderLine, useColli, window);
+		teller++;
+		addArticleToColliAndSendFileToVisma(orderLine, useColli, window, teller);
 	    }
 	}
     }
@@ -90,10 +92,10 @@ public class ArticlePacker {
 	};
     }
 
-    private void addArticleToColliAndSendFileToVisma(OrderLine orderLine, Colli useColli, WindowInterface window) {
+    private void addArticleToColliAndSendFileToVisma(OrderLine orderLine, Colli useColli, WindowInterface window, int teller) {
 	try {
 	    addArticleToColli(orderLine, useColli);
-	    sendFileToVisma(orderLine);
+	    sendFileToVisma(orderLine, teller);
 	} catch (ProTransException e1) {
 	    Util.showErrorDialog(window, "Feil", e1.getMessage());
 	    e1.printStackTrace();
@@ -107,9 +109,9 @@ public class ArticlePacker {
 	}
     }
 
-    private void sendFileToVisma(final OrderLine orderLine) throws ProTransException {
+    private void sendFileToVisma(final OrderLine orderLine, int teller) throws ProTransException {
 	if (orderLineIsImportedfromVisma(orderLine)) {
-	    vismaFileCreator.createVismaFile(addOrderLineToList(orderLine));
+	    vismaFileCreator.createVismaFile(addOrderLineToList(orderLine), teller);
 	}
 
     }

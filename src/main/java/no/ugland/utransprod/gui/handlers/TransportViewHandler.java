@@ -1291,7 +1291,8 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	    }
 
 	    for (TransportListable transportListable : listTransportable) {
-		vismaFileCreator.createVismaFileForDelivery(transportListable.getOrder());
+		vismaFileCreator.createVismaFileForDelivery(transportListable.getOrder(), false, 1);
+		vismaFileCreator.createVismaFileForDelivery(transportListable.getOrder(), true, 2);
 	    }
 
 	    Util.setDefaultCursor(window.getComponent());

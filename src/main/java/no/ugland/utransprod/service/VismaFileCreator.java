@@ -9,15 +9,15 @@ import no.ugland.utransprod.model.OrderLine;
 
 public interface VismaFileCreator {
 
-    String createVismaFile(List<OrderLine> orderLines) throws ProTransException;
+    String createVismaFile(List<OrderLine> orderLines, int teller) throws ProTransException;
 
     boolean ignoreVismaFile(OrderLine orderLine, WindowInterface window);
 
     String createVismaFileForTransport(Order order) throws ProTransException;
 
-    void createVismaFileForAssembly(Order order, boolean assemblied);
+    void createVismaFileForAssembly(Order order, boolean assemblied, boolean forVisma, int teller);
 
-    void createVismaFileForDelivery(Order order);
+    void createVismaFileForDelivery(Order order, boolean forVisma, int teller);
 
     String createVismaFileForProductionWeek(Order order);
 

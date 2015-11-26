@@ -48,8 +48,8 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 	this.fakturagrunnlagVManager = fakturagrunnlagVManager;
     }
 
-    public String createVismaFile(List<OrderLine> orderLines) throws ProTransException {
-	return ordchgrManager != null ? createHeadAndLines(orderLines) : null;
+    public String createVismaFile(List<OrderLine> orderLines, int teller) throws ProTransException {
+	return ordchgrManager != null ? createHeadAndLines(orderLines, teller) : null;
     }
 
     public String createVismaFileForTransport(Order order) throws ProTransException {
@@ -80,13 +80,13 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 	};
     }
 
-    private String createHeadAndLines(List<OrderLine> orderLines) throws ProTransException {
+    private String createHeadAndLines(List<OrderLine> orderLines, int teller) throws ProTransException {
 	if (orderLines != null && orderLines.size() != 0) {
 	    String transportDate = getTransportDate(orderLines.get(0).getOrder().getTransport());
 	    OrdchgrHeadV head = ordchgrManager.getHead(orderLines.get(0).getOrdNo());
 	    List<OrdchgrLineV> lines = head != null ? ordchgrManager.getLines(orderLines.get(0).getOrdNo(), getLnNos(orderLines)) : null;
 	    return head != null ? createFile(head, lines, orderLines.get(0).getOrderNr(), ApplicationParamUtil.findParamByName(VISMA_OUT_DIR),
-		    transportDate) : null;
+		    transportDate, teller) : null;
 	}
 	return null;
     }
@@ -99,7 +99,7 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 	return list;
     }
 
-    public String createFile(OrdchgrHeadV head, List<OrdchgrLineV> fileLines, final String orderNr, String outdir, String transportDate)
+    public String createFile(OrdchgrHeadV head, List<OrdchgrLineV> fileLines, final String orderNr, String outdir, String transportDate, int teller)
 	    throws ProTransException {
 	try {
 	    List<String> lines = new ArrayList<String>();
@@ -107,19 +107,19 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 	    for (OrdchgrLineV ordchgrLineV : fileLines) {
 		lines.add(ordchgrLineV.getLineLine());
 	    }
-	    return writeFile(orderNr, outdir, lines);
+	    return writeFile(orderNr, outdir, lines, teller);
 	} catch (IOException e) {
 	    e.printStackTrace();
 	    throw new ProTransException(e.getMessage());
 	}
     }
 
-    private String writeFile(final String orderNr, String outdir, List<String> lines) throws IOException {
+    private String writeFile(final String orderNr, String outdir, List<String> lines, int teller) throws IOException {
 	try {
 	    if (lines == null || lines.isEmpty()) {
 		return null;
 	    }
-	    String fileName = orderNr + "_";
+	    String fileName = orderNr + "_" + teller + "_";
 	    fileName += uniqueFileName ? Util.getCurrentDateAsDateTimeStringWithSeconds() : "";
 	    fileName += ".edi";
 	    File file = new File(outdir + "/" + fileName);
@@ -146,7 +146,7 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 	}
 	String transportDate = getTransportDate(order.getTransport());
 
-	return writeFile(order.getOrderNr(), outdir, Lists.newArrayList(head.getHeadLine(transportDate)));
+	return writeFile(order.getOrderNr(), outdir, Lists.newArrayList(head.getHeadLine(transportDate)), 1);
     }
 
     public String createProductionWeekFile(Order order, OrdchgrHeadV head, String outdir) throws IOException {
@@ -154,7 +154,7 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 	    return null;
 	}
 
-	return writeFile(order.getOrderNr(), outdir, Lists.newArrayList(head.getHeadLineForProductionWeek(order.getProductionWeek())));
+	return writeFile(order.getOrderNr(), outdir, Lists.newArrayList(head.getHeadLineForProductionWeek(order.getProductionWeek())), 1);
     }
 
     private String getTransportDate(Transport transport) {
@@ -166,7 +166,7 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 	return transportDate;
     }
 
-    public List<VismaFile> createAssemblyFiles(List<FakturagrunnlagV> fakturagrunnlag, boolean assemblied, Assembly assembly) {
+    public List<VismaFile> createAssemblyFiles(List<FakturagrunnlagV> fakturagrunnlag, boolean assemblied, Assembly assembly, boolean forVisma) {
 
 	Iterable<FakturagrunnlagV> monteringsbestillinger = Iterables.filter(fakturagrunnlag, linjerForMonteringMedBestilling());
 	ImmutableListMultimap<Integer, FakturagrunnlagV> purcnoMap = Multimaps.index(monteringsbestillinger, purcno());
@@ -175,11 +175,13 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 	    ImmutableList<FakturagrunnlagV> grunnlagliste = purcnoMap.get(purcno);
 	    List<String> linjer = Lists.newArrayList();
 
-	    String assemblyteamNr = assembly == null ? "" : assembly.getAssemblyTeamNr() == null ? "" : assembly.getAssemblyTeamNr();
-	    linjer.add(String.format(OrdchgrHeadV.HEAD_LINE_WITH_SUPPLIER_TMP, purcno, assemblyteamNr, ""));
+	    String assemblyteamNr = assembly == null || forVisma ? "" : assembly.getAssemblyTeamNr() == null ? "" : assembly.getAssemblyTeamNr();
+	    Integer ordrenummer = forVisma ? grunnlagliste.get(0).getOrdNo() : purcno;
+	    linjer.add(String.format(OrdchgrHeadV.HEAD_LINE_WITH_SUPPLIER_TMP, ordrenummer, assemblyteamNr, ""));
 
 	    for (FakturagrunnlagV grunnlag : grunnlagliste) {
-		linjer.add(OrdchgrLineV.getLinje(grunnlag.getLnPurcno(), assemblied ? grunnlag.getAlloc() : grunnlag.getAlloc() * -1));
+		Integer linjenummer = forVisma ? grunnlag.getFakturagrunnlagVPK().getLnno() : grunnlag.getLnPurcno();
+		linjer.add(OrdchgrLineV.getLinje(linjenummer, assemblied ? grunnlag.getAlloc() : grunnlag.getAlloc() * -1));
 	    }
 	    vismafiler.add(new VismaFile(linjer));
 	}
@@ -205,12 +207,13 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 	};
     }
 
-    public List<String> createVismaAssemblyFiles(Order order, List<FakturagrunnlagV> fakturagrunnlag, String outdir, boolean assemblied) {
+    public List<String> createVismaAssemblyFiles(Order order, List<FakturagrunnlagV> fakturagrunnlag, String outdir, boolean assemblied,
+	    boolean forVisma, int teller) {
 	List<String> filenames = Lists.newArrayList();
 	try {
-	    List<VismaFile> assemblyFiles = createAssemblyFiles(fakturagrunnlag, assemblied, order.getAssembly());
+	    List<VismaFile> assemblyFiles = createAssemblyFiles(fakturagrunnlag, assemblied, order.getAssembly(), forVisma);
 	    for (VismaFile vismaFile : assemblyFiles) {
-		filenames.add(writeFile(order.getOrderNr(), outdir, vismaFile.getLinjer()));
+		filenames.add(writeFile(order.getOrderNr(), outdir, vismaFile.getLinjer(), teller));
 	    }
 	} catch (IOException e) {
 	    e.printStackTrace();
@@ -220,13 +223,13 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 	return filenames;
     }
 
-    public void createVismaFileForAssembly(Order order, boolean assemblied) {
+    public void createVismaFileForAssembly(Order order, boolean assemblied, boolean forVisma, int teller) {
 	createVismaAssemblyFiles(order, fakturagrunnlagVManager.findFakturagrunnlag(order.getOrderId()),
-		ApplicationParamUtil.findParamByName(VISMA_OUT_DIR), assemblied);
+		ApplicationParamUtil.findParamByName(VISMA_OUT_DIR), assemblied, forVisma, teller);
 
     }
 
-    public VismaFile createDeliveryFile(Transport transport, List<FakturagrunnlagV> fakturagrunnlag, boolean sendt) {
+    public VismaFile createDeliveryFile(Transport transport, List<FakturagrunnlagV> fakturagrunnlag, boolean sendt, boolean forVisma) {
 	List<FakturagrunnlagV> fraktbestillinger = Lists.newArrayList(Iterables.filter(fakturagrunnlag, linjerForFraktMedBestilling()));
 
 	if (fraktbestillinger.size() > 1) {
@@ -236,13 +239,15 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 	if (!fraktbestillinger.isEmpty()) {
 	    FakturagrunnlagV fakturagrunnlagV = fraktbestillinger.get(0);
 	    List<String> linjer = Lists.newArrayList();
-	    String levNr = transport.getSupplierNr() == null ? "" : transport.getSupplierNr();
-	    String transportDate = getTransportDate(transport);
-	    transportDate = transportDate == null ? "0" : transportDate;
-	    String transportnavn = transport.getTransportName() == null ? "" : transport.getTransportName();
-	    String driver = transport.getDriver() == null ? "" : transport.getDriver();
-	    linjer.add(String.format(OrdchgrHeadV.HEAD_LINE_DELIVERY_TMP, fakturagrunnlagV.getPurcno(), levNr, transportDate, transportnavn, driver));
-	    linjer.add(OrdchgrLineV.getLinje(fakturagrunnlagV.getLnPurcno(), sendt ? fakturagrunnlagV.getAlloc() : fakturagrunnlagV.getAlloc() * -1));
+	    String levNr = transport.getSupplierNr() == null || forVisma ? "" : transport.getSupplierNr();
+	    String transportDate = forVisma ? "" : getTransportDate(transport);
+	    transportDate = forVisma ? "" : transportDate == null ? "0" : transportDate;
+	    String transportnavn = transport.getTransportName() == null || forVisma ? "" : transport.getTransportName();
+	    String driver = transport.getDriver() == null || forVisma ? "" : transport.getDriver();
+	    Integer ordrenummer = forVisma ? fakturagrunnlagV.getOrdNo() : fakturagrunnlagV.getPurcno();
+	    linjer.add(String.format(OrdchgrHeadV.HEAD_LINE_DELIVERY_TMP, ordrenummer, levNr, transportDate, transportnavn, driver));
+	    Integer linjenr = forVisma ? fakturagrunnlagV.getFakturagrunnlagVPK().getLnno() : fakturagrunnlagV.getLnPurcno();
+	    linjer.add(OrdchgrLineV.getLinje(linjenr, sendt ? fakturagrunnlagV.getAlloc() : fakturagrunnlagV.getAlloc() * -1));
 	    return new VismaFile(linjer);
 	}
 	return new VismaFile();
@@ -257,11 +262,11 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 	};
     }
 
-    public void createVismaFileForDelivery(Order order) {
+    public void createVismaFileForDelivery(Order order, boolean forVisma, int teller) {
 	try {
 	    VismaFile vismaFile = createDeliveryFile(order.getTransport(), fakturagrunnlagVManager.findFakturagrunnlag(order.getOrderId()),
-		    order.getSentBool());
-	    writeFile(order.getOrderNr(), ApplicationParamUtil.findParamByName(VISMA_OUT_DIR), vismaFile.getLinjer());
+		    order.getSentBool(), forVisma);
+	    writeFile(order.getOrderNr(), ApplicationParamUtil.findParamByName(VISMA_OUT_DIR), vismaFile.getLinjer(), teller);
 	} catch (IOException e) {
 	    e.printStackTrace();
 	    throw new ProTransException(e.getMessage());

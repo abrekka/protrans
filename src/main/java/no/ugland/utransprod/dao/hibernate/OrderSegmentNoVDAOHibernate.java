@@ -115,7 +115,8 @@ public class OrderSegmentNoVDAOHibernate extends BaseDAOHibernate<OrderSegmentNo
     }
 
     private void addOrderToCountyMap(final Map<String, List<OrderSegmentNoV>> countyOrders, final OrderSegmentNoV order) {
-	String countyName = getCountyName(order);
+	// String countyName = getCountyName(order);
+	String countyName = order.getCountyName() == null ? "" : order.getCountyName();
 	List<OrderSegmentNoV> countyOrderList = countyOrders.get(countyName);
 	if (countyOrderList == null) {
 	    countyOrderList = new ArrayList<OrderSegmentNoV>();
@@ -124,14 +125,15 @@ public class OrderSegmentNoVDAOHibernate extends BaseDAOHibernate<OrderSegmentNo
 	countyOrders.put(countyName, countyOrderList);
     }
 
-    private String getCountyName(final OrderSegmentNoV order) {
-
-	String countyName = transportCostDAO.findCountyNameByPostalCode(order.getPostalCode());
-	if (countyName == null) {
-	    countyName = "";
-	}
-	return countyName;
-    }
+    // private String getCountyName(final OrderSegmentNoV order){
+    //
+    // String countyName =
+    // transportCostDAO.findCountyNameByPostalCode(order.getPostalCode());
+    // if (countyName == null) {
+    // countyName = "";
+    // }
+    // return countyName;
+    // }
 
     private List<SaleReportSum> aggregateCountySaleReportSums(final Map<String, List<OrderSegmentNoV>> countyOrders) {
 	List<SaleReportSum> saleReportSums = new ArrayList<SaleReportSum>();
@@ -223,11 +225,12 @@ public class OrderSegmentNoVDAOHibernate extends BaseDAOHibernate<OrderSegmentNo
 	    for (OrderSegmentNoV order : orders) {
 		// lazyLoad(order, new LazyLoadOrderEnum[] {
 		// LazyLoadOrderEnum.ORDER_COSTS });
-		String countyName = transportCostDAO.findCountyNameByPostalCode(order.getPostalCode());
-		saleReportDataList.add(new SaleReportData("Avrop", countyName, order.getSalesman(), String.valueOf(order.getCustomerNr()), order
-			.getCustomerFullName(), order.getOrderNr(), order.getOwnProduction(), order.getDeliveryCost(), order.getAssemblyCost(), order
-			.getJaLinjer(), order.getContributionMargin(), order.getContributionRate(), order.getOrderDate(), Integer.valueOf(order
-			.getProductAreaNr()), order.getSegmentNo()));
+		// String countyName =
+		// transportCostDAO.findCountyNameByPostalCode(order.getPostalCode());
+		saleReportDataList.add(new SaleReportData("Avrop", order.getCountyName(), order.getSalesman(), String.valueOf(order.getCustomerNr()),
+			order.getCustomerFullName(), order.getOrderNr(), order.getOwnProduction(), order.getDeliveryCost(), order.getAssemblyCost(),
+			order.getJaLinjer(), order.getContributionMargin(), order.getContributionRate(), order.getOrderDate(), Integer.valueOf(order
+				.getProductAreaNr()), order.getSegmentNo()));
 	    }
 	}
 	return saleReportDataList;

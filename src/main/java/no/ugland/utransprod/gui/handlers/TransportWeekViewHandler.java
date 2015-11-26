@@ -1197,7 +1197,8 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 	    // }
 
 	    // for (TransportListable transportListable : listTransportable) {
-	    vismaFileCreator.createVismaFileForDelivery(transportable.getOrder());
+	    vismaFileCreator.createVismaFileForDelivery(transportable.getOrder(), false, 1);
+	    vismaFileCreator.createVismaFileForDelivery(transportable.getOrder(), true, 2);
 	    // }
 
 	    Util.setDefaultCursor(window.getComponent());
