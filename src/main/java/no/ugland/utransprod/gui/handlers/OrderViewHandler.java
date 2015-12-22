@@ -733,7 +733,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 				    ColliViewHandler colliViewHandler = new ColliViewHandler("Kolli", colli,
 				    // (Packable)
 				    // presentationModelPackable.getBean(),
-					    order, login, managerRepository, window);
+					    order, login, managerRepository, window, vismaFileCreator);
 				    colliViewHandler.addOrderLine(orderLine, 0);
 				    // colliListViewHandler.putColliViewHandler(colli,
 				    // colliViewHandler);

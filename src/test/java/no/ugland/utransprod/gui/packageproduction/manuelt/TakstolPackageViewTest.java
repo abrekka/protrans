@@ -269,7 +269,7 @@ public class TakstolPackageViewTest extends PackageProductionTest {
     private class ArticlePackageViewHandlerFactoryTest implements ArticlePackageViewHandlerFactory {
 
 	public ArticlePackageViewHandler create(ArticleType articleType, String colliName) {
-	    return new ArticlePackageViewHandler(new SetProductionUnitActionFactoryTest(), login, managerRepository, null, null, null);
+	    return new ArticlePackageViewHandler(new SetProductionUnitActionFactoryTest(), login, managerRepository, null, null, null, null);
 	}
 
     }

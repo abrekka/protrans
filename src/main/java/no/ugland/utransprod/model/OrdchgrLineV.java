@@ -33,12 +33,12 @@ public class OrdchgrLineV extends BaseObject {
 	lineStatus = aLineStatus;
     }
 
-    public String getLineLine() {
+    public String getLineLine(boolean minus) {
 	StringBuilder stringBuilder = new StringBuilder();
 	stringBuilder.append(HEAD_START).append(StringUtils.leftPad("", NUMBER_OF_SEMICOLONS, ";")).append(HEAD_END);
 	String lineString = StringUtils.replaceOnce(stringBuilder.toString(), LN_NO_STRING, ordchgrLineVPK.getLnNo() != null ? ordchgrLineVPK
 		.getLnNo().toString() : "");
-	return StringUtils.replaceOnce(lineString, LINE_STATUS_STRING, lineStatus.toString());
+	return StringUtils.replaceOnce(lineString, LINE_STATUS_STRING, (minus ? "-" : "") + lineStatus.toString());
     }
 
     public static String getLinje(Integer lnno, Integer numberOf) {

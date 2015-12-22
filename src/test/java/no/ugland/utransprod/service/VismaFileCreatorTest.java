@@ -276,7 +276,7 @@ public class VismaFileCreatorTest {
 	final List<OrdchgrLineV> lines = new ArrayList<OrdchgrLineV>();
 	lines.add(ordchgrLine);
 
-	String fileName = ((VismaFileCreatorImpl) vismaFileCreator).createFile(ordchgrHead, lines, "1", "visma", null, 1);
+	String fileName = ((VismaFileCreatorImpl) vismaFileCreator).createFile(ordchgrHead, lines, "1", "visma", null, 1, false);
 
 	File file = new File("visma/" + fileName);
 	assertEquals(true, file.exists());

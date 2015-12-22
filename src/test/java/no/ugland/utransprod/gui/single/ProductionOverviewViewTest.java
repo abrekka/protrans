@@ -197,7 +197,7 @@ public class ProductionOverviewViewTest {
 
 	OrdchgrHeadVManager ordchgrHeadVManager = (OrdchgrHeadVManager) ModelUtil.getBean(OrdchgrHeadVManager.MANAGER_NAME);
 	FakturagrunnlagVManager fakturagrunnlagVManager = (FakturagrunnlagVManager) ModelUtil.getBean(FakturagrunnlagVManager.MANAGER_NAME);
-	VismaFileCreator vismaFileCreator = new VismaFileCreatorImpl(ordchgrHeadVManager, false, fakturagrunnlagVManager);
+	final VismaFileCreator vismaFileCreator = new VismaFileCreatorImpl(ordchgrHeadVManager, false, fakturagrunnlagVManager);
 	final SetProductionUnitActionFactory setProductionUnitActionFactory = new SetProductionUnitActionFactory() {
 
 	    public SetProductionUnitAction create(ArticleType aArticleType, ProduceableProvider aProduceableProvider, WindowInterface aWindow) {
@@ -208,7 +208,8 @@ public class ProductionOverviewViewTest {
 	final ArticlePackageViewHandlerFactory articlePackageViewHandlerFactory = new ArticlePackageViewHandlerFactory() {
 
 	    public ArticlePackageViewHandler create(ArticleType articleType, String defaultColliName) {
-		return new ArticlePackageViewHandler(setProductionUnitActionFactory, login, managerRepository, null, articleType, defaultColliName);
+		return new ArticlePackageViewHandler(setProductionUnitActionFactory, login, managerRepository, null, articleType, defaultColliName,
+			vismaFileCreator);
 	    }
 	};
 	ArticlePackageViewFactory articlePackageViewFactory = new ArticlePackageViewFactory() {

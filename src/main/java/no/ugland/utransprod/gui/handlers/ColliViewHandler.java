@@ -34,6 +34,7 @@ import no.ugland.utransprod.model.PostShipment;
 import no.ugland.utransprod.service.ColliManager;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.PostShipmentManager;
+import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.service.enums.LazyLoadEnum;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.service.enums.LazyLoadPostShipmentEnum;
@@ -44,6 +45,7 @@ import no.ugland.utransprod.util.Util;
 
 import org.jdesktop.swingx.JXTable;
 
+import com.google.inject.internal.Lists;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
@@ -80,6 +82,7 @@ public class ColliViewHandler extends AbstractViewHandlerShort<Colli, ColliModel
     JMenuItem menuItemRemoveOrderLine;
 
     private ManagerRepository managerRepository;
+    private VismaFileCreator vismaFileCreator;
 
     /**
      * @param aHeading
@@ -89,8 +92,9 @@ public class ColliViewHandler extends AbstractViewHandlerShort<Colli, ColliModel
      * @param userType
      */
     public ColliViewHandler(String aHeading, Colli aColli, Packable aPackable, Login login, ManagerRepository aManagerRepository,
-	    WindowInterface currentWindow) {
+	    WindowInterface currentWindow, VismaFileCreator aVismaFileCreator) {
 	super(aHeading, aManagerRepository.getColliManager(), true, login.getUserType(), true);
+	vismaFileCreator = aVismaFileCreator;
 	managerRepository = aManagerRepository;
 	packable = aPackable;
 
@@ -463,6 +467,11 @@ public class ColliViewHandler extends AbstractViewHandlerShort<Colli, ColliModel
 		    ((ColliManager) overviewManager).saveColli(currentColli);
 		    managerRepository.getOrderLineManager().saveOrderLine(orderLine);
 		    orderLineList.remove(orderLine);
+
+		    if (orderLine.getOrdNo() != null) {
+			orderLine.setOrdln(managerRepository.getOrderLineManager().findOrdlnByOrderLine(orderLine.getOrderLineId()));
+			vismaFileCreator.createVismaFile(Lists.newArrayList(orderLine), 1, true);
+		    }
 
 		    Order order = currentColli.getOrder();
 		    if (order != null) {

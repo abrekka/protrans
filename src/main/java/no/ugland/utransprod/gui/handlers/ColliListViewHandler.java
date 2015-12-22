@@ -31,6 +31,7 @@ import no.ugland.utransprod.service.Manager;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.OrderLineManager;
 import no.ugland.utransprod.service.OverviewManager;
+import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.service.enums.LazyLoadEnum;
 import no.ugland.utransprod.service.enums.LazyLoadOrderLineEnum;
 import no.ugland.utransprod.util.ModelUtil;
@@ -58,9 +59,12 @@ public class ColliListViewHandler implements ColliListener, Updateable, ColliVie
 
     private List<Colli> colliList;
     private Packable packable;
+    private VismaFileCreator vismaFileCreator;
 
     @Inject
-    public ColliListViewHandler(Login aLogin, ManagerRepository aManagerRepository, @Assisted Multimap<String, String> aColliSetup) {
+    public ColliListViewHandler(Login aLogin, ManagerRepository aManagerRepository, @Assisted Multimap<String, String> aColliSetup,
+	    VismaFileCreator vismaFileCreator) {
+	this.vismaFileCreator = vismaFileCreator;
 	login = aLogin;
 	managerRepository = aManagerRepository;
 	this.colliSetup = aColliSetup;
@@ -103,7 +107,7 @@ public class ColliListViewHandler implements ColliListener, Updateable, ColliVie
 	if (colliViewHandler == null) {
 	    colliViewHandler = new ColliViewHandler("Kolli", colli,
 	    // (Packable) presentationModelPackable.getBean(),
-		    packable, login, managerRepository, window);
+		    packable, login, managerRepository, window, vismaFileCreator);
 	    colliViewHandlers.put(colli, colliViewHandler);
 	    colliViewHandler.addColliSelectionListener(this);
 	    addColliListener(colliViewHandler);
@@ -187,7 +191,7 @@ public class ColliListViewHandler implements ColliListener, Updateable, ColliVie
 		packable.getPostShipment(), null, null);
 	ColliViewHandler colliViewHandler = new ColliViewHandler("Kolli", newColli,
 	// abstractOrderModel,
-		packable, login, managerRepository, window);
+		packable, login, managerRepository, window, vismaFileCreator);
 	boolean isOk = colliViewHandler.openEditView(null, false, window);
 	// abstractOrderModel.addColli(newColli);
 	if (newColli.getColliId() != null) {
@@ -340,7 +344,7 @@ public class ColliListViewHandler implements ColliListener, Updateable, ColliVie
 					colliViewHandler = new ColliViewHandler("Kolli", colli,
 					// (Packable)
 					// presentationModelPackable.getBean(),
-						packable, login, managerRepository, window);
+						packable, login, managerRepository, window, vismaFileCreator);
 					colliViewHandler.addOrderLine(orderLine, 0);
 					colliViewHandlers.put(colli, colliViewHandler);
 					colliViewHandler.addColliSelectionListener(this);

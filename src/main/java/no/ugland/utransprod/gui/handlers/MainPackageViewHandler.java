@@ -274,7 +274,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	presentationModelWeekSum = new PresentationModel(new SumOrderReadyVModel(new SumOrderReadyV(null, BigDecimal.valueOf(0), null, null, null)));
 	presentationModelBudget = new PresentationModel(new ProductionBudgetModel(new Budget(null, null, null, BigDecimal.valueOf(0), null, null)));
 	// initProductAreaGroup();
-	colliListViewHandler = new ColliListViewHandler(login, managerRepository, colliSetup);
+	colliListViewHandler = new ColliListViewHandler(login, managerRepository, colliSetup, vismaFileCreator);
 	colliListViewHandler.addListDataListener(this);
 	colliListViewHandler.addColliListener(this);
 
@@ -1074,7 +1074,8 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 
 	Colli newColli = new Colli(null, abstractOrderModel.getOrderModelOrder(), null, null, null, null,
 		abstractOrderModel.getOrderModelPostShipment(), null, null);
-	ColliViewHandler colliViewHandler = new ColliViewHandler("Kolli", newColli, abstractOrderModel, login, managerRepository, window);
+	ColliViewHandler colliViewHandler = new ColliViewHandler("Kolli", newColli, abstractOrderModel, login, managerRepository, window,
+		vismaFileCreator);
 	colliViewHandler.openEditView(null, false, window);
 	abstractOrderModel.addColli(newColli);
 	updatePanel();
@@ -3061,7 +3062,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 					colliViewHandler = new ColliViewHandler("Kolli", colli,
 					// (Packable)
 					// presentationModelPackable.getBean(),
-						colliListViewHandler.getPackable(), login, managerRepository, window);
+						colliListViewHandler.getPackable(), login, managerRepository, window, vismaFileCreator);
 					colliViewHandler.addOrderLine(orderLine, 0);
 					colliListViewHandler.putColliViewHandler(colli, colliViewHandler);
 					// colliViewHandlers.put(colli,

@@ -32,6 +32,7 @@ import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.Produceable;
 import no.ugland.utransprod.service.ManagerRepository;
+import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.service.enums.LazyLoadEnum;
 import no.ugland.utransprod.util.Util;
 
@@ -62,11 +63,13 @@ public class ArticlePackageViewHandler implements Closeable, ProduceableProvider
     private ColliListViewHandler colliListViewHandler;
     private List<ColliListener> colliListeners = new ArrayList<ColliListener>();
     private String defaultColliName;
+    private VismaFileCreator vismaFileCreator;
 
     @Inject
     public ArticlePackageViewHandler(final SetProductionUnitActionFactory aSetProductionUnitActionFactory, final Login aLogin,
 	    final ManagerRepository aManagerRepository, final @Named("colli_setup") Multimap aColliSetup, final @Assisted ArticleType aArticleType,
-	    final @Assisted String aDefaultColliName) {
+	    final @Assisted String aDefaultColliName, VismaFileCreator vismaFileCreator) {
+	this.vismaFileCreator = vismaFileCreator;
 	defaultColliName = aDefaultColliName;
 	colliSetup = aColliSetup;
 	login = aLogin;
@@ -76,7 +79,7 @@ public class ArticlePackageViewHandler implements Closeable, ProduceableProvider
 	articles = new ArrayListModel();
 	articleSelectionList = new SelectionInList((ListModel) articles);
 	articleSelectionList.addPropertyChangeListener(SelectionInList.PROPERTYNAME_SELECTION_EMPTY, new SelectionIndexListener());
-	colliListViewHandler = new ColliListViewHandler(login, managerRepository, colliSetup);
+	colliListViewHandler = new ColliListViewHandler(login, managerRepository, colliSetup, vismaFileCreator);
 	addColliListener(colliListViewHandler);
     }
 

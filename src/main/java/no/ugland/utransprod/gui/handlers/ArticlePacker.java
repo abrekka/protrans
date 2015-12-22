@@ -111,7 +111,7 @@ public class ArticlePacker {
 
     private void sendFileToVisma(final OrderLine orderLine, int teller) throws ProTransException {
 	if (orderLineIsImportedfromVisma(orderLine)) {
-	    vismaFileCreator.createVismaFile(addOrderLineToList(orderLine), teller);
+	    vismaFileCreator.createVismaFile(addOrderLineToList(orderLine), teller, false);
 	}
 
     }

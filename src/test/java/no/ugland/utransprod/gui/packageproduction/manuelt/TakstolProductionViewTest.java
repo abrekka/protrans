@@ -57,402 +57,346 @@ import com.birosoft.liquid.LiquidLookAndFeel;
  */
 @Category(ManuellTest.class)
 public class TakstolProductionViewTest extends PackageProductionTest {
-	static {
-		try {
+    static {
+	try {
 
-			UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
-			JFrame.setDefaultLookAndFeelDecorated(true);
-			LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
+	    JFrame.setDefaultLookAndFeelDecorated(true);
+	    LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+    }
+
+    private TakstolProductionViewHandler takstolProductionViewHandler;
+
+    private DialogFixture dialogFixture;
+    @Mock
+    private ShowTakstolInfoActionFactory showTakstolInfoActionFactory;
+
+    @Before
+    public void setUp() throws Exception {
+
+	super.setUp();
+
+	final ArticlePackageViewHandler articlePackageViewHandler = new ArticlePackageViewHandler(new SetProductionUnitActionFactoryTest(), login,
+		managerRepository, null, null, null, null);
+
+	final ArticlePackageViewHandlerFactory articlePackageViewHandlerFactory = new ArticlePackageViewHandlerFactory() {
+
+	    public ArticlePackageViewHandler create(ArticleType articleType, String colliName) {
+		return articlePackageViewHandler;
+	    }
+	};
+
+	ArticlePackageViewFactory articlePackageViewFactory = new ArticlePackageViewFactory() {
+
+	    public ArticleProductionPackageView create(ArticleType articleType, ApplyListInterface applyListInterface, String colliName) {
+		return new ArticleProductionPackageView(articlePackageViewHandlerFactory, articleType, null);
+	    }
+	};
+	TakstolProductionApplyList takstolProductionApplyList = new TakstolProductionApplyList("Takstol", login, "Takstoler", managerRepository,
+		articlePackageViewFactory);
+	SetProductionUnitActionFactory setProductionUnitActionFactory = new SetProductionUnitActionFactory() {
+
+	    public SetProductionUnitAction create(ArticleType aArticleType, ProduceableProvider aProduceableProvider, WindowInterface aWindow) {
+		return new SetProductionUnitAction(managerRepository, aArticleType, aProduceableProvider, aWindow);
+	    }
+	};
+
+	takstolProductionViewHandler = new TakstolProductionViewHandler(takstolProductionApplyList, login, managerRepository,
+		deviationViewHandlerFactory, showTakstolInfoActionFactory, setProductionUnitActionFactory);
+
+	final TakstolApplyListView productionView = new TakstolApplyListView(takstolProductionViewHandler);
+
+	JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
+	    protected JDialog executeInEDT() {
+		JDialog dialog = new JDialog();
+		WindowInterface window = new JDialogAdapter(dialog);
+		dialog.add(productionView.buildPanel(window));
+		dialog.pack();
+		return dialog;
+	    }
+	});
+	dialogFixture = new DialogFixture(dialog);
+	dialogFixture.show();
+
+    }
+
+    /**
+     * @see junit.framework.TestCase#tearDown()
+     */
+    @After
+    public void tearDown() throws Exception {
+	dialogFixture.cleanUp();
+    }
+
+    @Test
+    public void testSetApplied() {
+	dialogFixture.comboBox("ComboBoxProductAreaGroup").selectItem("Takstol");
+	dialogFixture.checkBox("CheckBoxFilter").uncheck();
+
+	JTableFixture tableFixture = dialogFixture.table(TableEnum.TABLEPRODUCTIONTAKSTOL.getTableName());
+
+	tableFixture.cell(row(0).column(1)).click();
+
+	Produceable order = takstolProductionViewHandler.getSelectedObject();
+	int index = 0;
+	while (order.getProbability() != 100 || order.getProduced() != null) {
+	    index++;
+	    tableFixture.cell(row(index).column(1)).click();
+	    order = takstolProductionViewHandler.getSelectedObject();
 	}
 
-	private TakstolProductionViewHandler takstolProductionViewHandler;
+	dialogFixture.button("ButtonApply").requireEnabled();
+	dialogFixture.button("ButtonUnapply").requireDisabled();
 
-	private DialogFixture dialogFixture;
-	@Mock
-	private ShowTakstolInfoActionFactory showTakstolInfoActionFactory;
+	dialogFixture.button("ButtonApply").click();
 
-	@Before
-	public void setUp() throws Exception {
+	DialogFixture productionUnitDialog = WindowFinder.findDialog("Velg produksjonsenhet").using(dialogFixture.robot);
+	productionUnitDialog.comboBox().selectItem("Jig 1");
+	productionUnitDialog.button("ButtonOk").click();
 
-		super.setUp();
+	DialogFixture articleView = WindowFinder.findDialog("ArticlePackageView").withTimeout(30000).using(dialogFixture.robot);
+	articleView.button("ButtonOk").click();
 
-		final ArticlePackageViewHandler articlePackageViewHandler = new ArticlePackageViewHandler(
-				new SetProductionUnitActionFactoryTest(), login,
-				managerRepository, null, null, null);
+	tableFixture.cell(row(0).column(1)).click();
 
-		final ArticlePackageViewHandlerFactory articlePackageViewHandlerFactory = new ArticlePackageViewHandlerFactory() {
+	dialogFixture.button("ButtonApply").requireDisabled();
+	dialogFixture.button("ButtonUnapply").requireEnabled();
+    }
 
-			public ArticlePackageViewHandler create(ArticleType articleType,
-					String colliName) {
-				return articlePackageViewHandler;
-			}
-		};
+    @Test
+    public void testSetStartProduction() {
+	dialogFixture.show(new Dimension(1000, 500));
+	dialogFixture.checkBox("CheckBoxFilter").uncheck();
+	dialogFixture.button("ButtonStart").requireDisabled();
+	dialogFixture.button("ButtonStart").requireText("Startet produksjon");
 
-		ArticlePackageViewFactory articlePackageViewFactory = new ArticlePackageViewFactory() {
+	dialogFixture.button("ButtonNotStart").requireDisabled();
+	dialogFixture.button("ButtonNotStart").requireText("Ikke startet produksjon");
 
-			public ArticleProductionPackageView create(ArticleType articleType,
-					ApplyListInterface applyListInterface, String colliName) {
-				return new ArticleProductionPackageView(
-						articlePackageViewHandlerFactory, articleType, null);
-			}
-		};
-		TakstolProductionApplyList takstolProductionApplyList = new TakstolProductionApplyList(
-				"Takstol", login, "Takstoler", managerRepository,
-				articlePackageViewFactory);
-		SetProductionUnitActionFactory setProductionUnitActionFactory = new SetProductionUnitActionFactory() {
+	JTableFixture tableFixture = dialogFixture.table(TableEnum.TABLEPRODUCTIONTAKSTOL.getTableName());
 
-			public SetProductionUnitAction create(ArticleType aArticleType,
-					ProduceableProvider aProduceableProvider,
-					WindowInterface aWindow) {
-				return new SetProductionUnitAction(managerRepository,
-						aArticleType, aProduceableProvider, aWindow);
-			}
-		};
+	assertEquals("Startet", tableFixture.target.getColumnName(8));
 
-		takstolProductionViewHandler = new TakstolProductionViewHandler(
-				takstolProductionApplyList, login, managerRepository,
-				deviationViewHandlerFactory, showTakstolInfoActionFactory,
-				setProductionUnitActionFactory);
+	tableFixture.cell(row(0).column(1)).click();
 
-		final TakstolApplyListView productionView = new TakstolApplyListView(
-				takstolProductionViewHandler);
-
-		JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
-			protected JDialog executeInEDT() {
-				JDialog dialog = new JDialog();
-				WindowInterface window = new JDialogAdapter(dialog);
-				dialog.add(productionView.buildPanel(window));
-				dialog.pack();
-				return dialog;
-			}
-		});
-		dialogFixture = new DialogFixture(dialog);
-		dialogFixture.show();
-
+	Produceable order = takstolProductionViewHandler.getSelectedObject();
+	int index = 0;
+	while (order.getProbability() != 100 || order.getProduced() != null) {
+	    index++;
+	    tableFixture.cell(row(index).column(1)).click();
+	    order = takstolProductionViewHandler.getSelectedObject();
 	}
 
-	/**
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	@After
-	public void tearDown() throws Exception {
-		dialogFixture.cleanUp();
+	String content = tableFixture.cell(row(index).column(8)).value();
+
+	if (content.equalsIgnoreCase("---")) {
+	    dialogFixture.button("ButtonStart").requireEnabled();
+	    dialogFixture.button("ButtonStart").click();
+	    dialogFixture.button("ButtonStart").requireDisabled();
+
+	    tableFixture.cell(row(index).column(1)).click();
+	    dialogFixture.button("ButtonStart").requireDisabled();
+	    dialogFixture.button("ButtonNotStart").requireEnabled();
+
+	} else {
+	    dialogFixture.button("ButtonNotStart").requireEnabled();
+	    dialogFixture.button("ButtonNotStart").click();
+	    dialogFixture.button("ButtonNotStart").requireDisabled();
+
+	    tableFixture.cell(row(index).column(1)).click();
+	    dialogFixture.button("ButtonNotStart").requireDisabled();
+	    dialogFixture.button("ButtonStart").requireEnabled();
+	}
+    }
+
+    @Test
+    public void testShowProductionDate() {
+	dialogFixture.show(new Dimension(1000, 500));
+	JTableFixture tableFixture = dialogFixture.table(TableEnum.TABLEPRODUCTIONTAKSTOL.getTableName());
+
+	assertEquals("Prod.dato", tableFixture.target.getColumnName(2));
+
+    }
+
+    @Test
+    public void testShowTakstolInfo() {
+	dialogFixture.show(new Dimension(1000, 500));
+	dialogFixture.button("ButtonShowTakstolInfo").requireVisible();
+	dialogFixture.button("ButtonShowTakstolInfo").requireDisabled();
+    }
+
+    @Test
+    public void skalViseKnapperForKapping() {
+	dialogFixture.show(new Dimension(1000, 500));
+	dialogFixture.button("ButtonStartetKapping").requireVisible();
+	dialogFixture.button("ButtonStartetKapping").requireText("Startet kapping");
+	dialogFixture.button("ButtonIkkeStartetKapping").requireVisible();
+	dialogFixture.button("ButtonIkkeStartetKapping").requireText("Ikke startet kapping");
+
+	dialogFixture.button("ButtonFerdigKappet").requireVisible();
+	dialogFixture.button("ButtonFerdigKappet").requireText("Ferdig kappet");
+
+	dialogFixture.button("ButtonIkkeFerdigKappet").requireVisible();
+	dialogFixture.button("ButtonIkkeFerdigKappet").requireText("Ikke ferdig kappet");
+    }
+
+    @Test
+    public void skalSetteStartetKapping() {
+	dialogFixture.comboBox("ComboBoxProductAreaGroup").selectItem("Takstol");
+	dialogFixture.checkBox("CheckBoxFilter").uncheck();
+
+	JTableFixture tableFixture = dialogFixture.table(TableEnum.TABLEPRODUCTIONTAKSTOL.getTableName());
+
+	tableFixture.cell(row(0).column(1)).click();
+
+	TakstolProductionV takstol = (TakstolProductionV) takstolProductionViewHandler.getSelectedObject();
+	int index = 0;
+	while (takstol.getProbability() != 100 || takstol.getProduced() != null || takstol.getActionStarted() != null
+		|| takstol.getCuttingStarted() != null) {
+	    index++;
+	    tableFixture.cell(row(index).column(1)).click();
+	    takstol = (TakstolProductionV) takstolProductionViewHandler.getSelectedObject();
 	}
 
-	@Test
-	public void testSetApplied() {
-		dialogFixture.comboBox("ComboBoxProductAreaGroup")
-				.selectItem("Takstol");
-		dialogFixture.checkBox("CheckBoxFilter").uncheck();
+	dialogFixture.button("ButtonStartetKapping").requireEnabled();
+	dialogFixture.button("ButtonStartetKapping").click();
+	tableFixture.cell(row(index - 1).column(1)).click();
+	assertEquals(ColorEnum.BLUE.getColor(), tableFixture.cell(row(index).column(1)).foreground().target());
 
-		JTableFixture tableFixture = dialogFixture
-				.table(TableEnum.TABLEPRODUCTIONTAKSTOL.getTableName());
+	OrderManager orderManager = (OrderManager) ModelUtil.getBean(OrderManager.MANAGER_NAME);
+	Order order = orderManager.findByOrderNr(takstol.getOrderNr());
+	orderManager.lazyLoadTree(order);
+	OrderLine orderLineTakstol = order.getOrderLine("Takstoler");
+	assertNotNull(orderLineTakstol.getCuttingStarted());
 
-		tableFixture.cell(row(0).column(1)).click();
+    }
 
-		Produceable order = takstolProductionViewHandler.getSelectedObject();
-		int index = 0;
-		while (order.getProbability() != 100 || order.getProduced() != null) {
-			index++;
-			tableFixture.cell(row(index).column(1)).click();
-			order = takstolProductionViewHandler.getSelectedObject();
-		}
+    @Test
+    public void skalIkkeKunneSetteStartetKappingDersomStartetProduksjon() {
+	dialogFixture.comboBox("ComboBoxProductAreaGroup").selectItem("Takstol");
+	dialogFixture.checkBox("CheckBoxFilter").uncheck();
 
-		dialogFixture.button("ButtonApply").requireEnabled();
-		dialogFixture.button("ButtonUnapply").requireDisabled();
+	JTableFixture tableFixture = dialogFixture.table(TableEnum.TABLEPRODUCTIONTAKSTOL.getTableName());
 
-		dialogFixture.button("ButtonApply").click();
+	tableFixture.cell(row(0).column(1)).click();
 
-		DialogFixture productionUnitDialog = WindowFinder.findDialog(
-				"Velg produksjonsenhet").using(dialogFixture.robot);
-		productionUnitDialog.comboBox().selectItem("Jig 1");
-		productionUnitDialog.button("ButtonOk").click();
-
-		DialogFixture articleView = WindowFinder.findDialog(
-				"ArticlePackageView").withTimeout(30000).using(
-				dialogFixture.robot);
-		articleView.button("ButtonOk").click();
-
-		tableFixture.cell(row(0).column(1)).click();
-
-		dialogFixture.button("ButtonApply").requireDisabled();
-		dialogFixture.button("ButtonUnapply").requireEnabled();
+	TakstolProductionV takstol = (TakstolProductionV) takstolProductionViewHandler.getSelectedObject();
+	int index = 0;
+	boolean funnetStartetProduksjon = false;
+	while (!funnetStartetProduksjon) {
+	    index++;
+	    tableFixture.cell(row(index).column(1)).click();
+	    takstol = (TakstolProductionV) takstolProductionViewHandler.getSelectedObject();
+	    if (takstol.getActionStarted() != null && takstol.getProduced() == null) {
+		funnetStartetProduksjon = true;
+	    }
 	}
 
-	@Test
-	public void testSetStartProduction() {
-		dialogFixture.show(new Dimension(1000, 500));
-		dialogFixture.checkBox("CheckBoxFilter").uncheck();
-		dialogFixture.button("ButtonStart").requireDisabled();
-		dialogFixture.button("ButtonStart").requireText("Startet produksjon");
+	dialogFixture.button("ButtonStartetKapping").requireDisabled();
 
-		dialogFixture.button("ButtonNotStart").requireDisabled();
-		dialogFixture.button("ButtonNotStart").requireText(
-				"Ikke startet produksjon");
+    }
 
-		JTableFixture tableFixture = dialogFixture
-				.table(TableEnum.TABLEPRODUCTIONTAKSTOL.getTableName());
+    @Test
+    public void skalSettIkkeStartetKapping() {
+	dialogFixture.comboBox("ComboBoxProductAreaGroup").selectItem("Takstol");
+	dialogFixture.checkBox("CheckBoxFilter").uncheck();
 
-		assertEquals("Startet", tableFixture.target.getColumnName(8));
+	JTableFixture tableFixture = dialogFixture.table(TableEnum.TABLEPRODUCTIONTAKSTOL.getTableName());
 
-		tableFixture.cell(row(0).column(1)).click();
+	tableFixture.cell(row(0).column(1)).click();
 
-		Produceable order = takstolProductionViewHandler.getSelectedObject();
-		int index = 0;
-		while (order.getProbability() != 100 || order.getProduced() != null) {
-			index++;
-			tableFixture.cell(row(index).column(1)).click();
-			order = takstolProductionViewHandler.getSelectedObject();
-		}
-
-		String content = tableFixture.cell(row(index).column(8)).value();
-
-		if (content.equalsIgnoreCase("---")) {
-			dialogFixture.button("ButtonStart").requireEnabled();
-			dialogFixture.button("ButtonStart").click();
-			dialogFixture.button("ButtonStart").requireDisabled();
-
-			tableFixture.cell(row(index).column(1)).click();
-			dialogFixture.button("ButtonStart").requireDisabled();
-			dialogFixture.button("ButtonNotStart").requireEnabled();
-
-		} else {
-			dialogFixture.button("ButtonNotStart").requireEnabled();
-			dialogFixture.button("ButtonNotStart").click();
-			dialogFixture.button("ButtonNotStart").requireDisabled();
-
-			tableFixture.cell(row(index).column(1)).click();
-			dialogFixture.button("ButtonNotStart").requireDisabled();
-			dialogFixture.button("ButtonStart").requireEnabled();
-		}
+	TakstolProductionV takstol = (TakstolProductionV) takstolProductionViewHandler.getSelectedObject();
+	int index = 0;
+	while (takstol.getProbability() != 100 || takstol.getProduced() != null || takstol.getActionStarted() != null
+		|| takstol.getCuttingStarted() == null || takstol.getCuttingDone() != null) {
+	    index++;
+	    tableFixture.cell(row(index).column(1)).click();
+	    takstol = (TakstolProductionV) takstolProductionViewHandler.getSelectedObject();
 	}
 
-	@Test
-	public void testShowProductionDate() {
-		dialogFixture.show(new Dimension(1000, 500));
-		JTableFixture tableFixture = dialogFixture
-				.table(TableEnum.TABLEPRODUCTIONTAKSTOL.getTableName());
+	dialogFixture.button("ButtonStartetKapping").requireDisabled();
+	dialogFixture.button("ButtonIkkeStartetKapping").requireEnabled();
+	dialogFixture.button("ButtonIkkeStartetKapping").click();
+	tableFixture.cell(row(index).column(1)).foreground().requireEqualTo(new Color(3, 3, 3));
 
-		assertEquals("Prod.dato", tableFixture.target.getColumnName(2));
+	OrderManager orderManager = (OrderManager) ModelUtil.getBean(OrderManager.MANAGER_NAME);
+	Order order = orderManager.findByOrderNr(takstol.getOrderNr());
+	orderManager.lazyLoadTree(order);
+	OrderLine orderLineTakstol = order.getOrderLine("Takstoler");
+	assertNull(orderLineTakstol.getCuttingStarted());
+    }
 
+    @Test
+    public void skalSetteFerdigKapping() {
+	dialogFixture.comboBox("ComboBoxProductAreaGroup").selectItem("Takstol");
+	dialogFixture.checkBox("CheckBoxFilter").uncheck();
+
+	JTableFixture tableFixture = dialogFixture.table(TableEnum.TABLEPRODUCTIONTAKSTOL.getTableName());
+
+	tableFixture.cell(row(0).column(1)).click();
+
+	TakstolProductionV takstol = (TakstolProductionV) takstolProductionViewHandler.getSelectedObject();
+	int index = 0;
+	while (takstol.getProbability() != 100 || takstol.getProduced() != null || takstol.getActionStarted() != null
+		|| takstol.getCuttingDone() != null) {
+	    index++;
+	    tableFixture.cell(row(index).column(1)).click();
+	    takstol = (TakstolProductionV) takstolProductionViewHandler.getSelectedObject();
 	}
 
-	@Test
-	public void testShowTakstolInfo() {
-		dialogFixture.show(new Dimension(1000, 500));
-		dialogFixture.button("ButtonShowTakstolInfo").requireVisible();
-		dialogFixture.button("ButtonShowTakstolInfo").requireDisabled();
+	dialogFixture.button("ButtonFerdigKappet").requireEnabled();
+	dialogFixture.button("ButtonFerdigKappet").click();
+	tableFixture.cell(row(index - 1).column(1)).click();
+	assertEquals(ColorEnum.GREEN.getColor(), tableFixture.cell(row(index).column(1)).foreground().target());
+
+	OrderManager orderManager = (OrderManager) ModelUtil.getBean(OrderManager.MANAGER_NAME);
+	Order order = orderManager.findByOrderNr(takstol.getOrderNr());
+	orderManager.lazyLoadTree(order);
+	OrderLine orderLineTakstol = order.getOrderLine("Takstoler");
+	assertNotNull(orderLineTakstol.getCuttingDone());
+
+    }
+
+    @Test
+    public void skalSettIkkeferdigKapping() {
+	dialogFixture.comboBox("ComboBoxProductAreaGroup").selectItem("Takstol");
+	dialogFixture.checkBox("CheckBoxFilter").uncheck();
+
+	JTableFixture tableFixture = dialogFixture.table(TableEnum.TABLEPRODUCTIONTAKSTOL.getTableName());
+
+	tableFixture.cell(row(0).column(1)).click();
+
+	TakstolProductionV takstol = (TakstolProductionV) takstolProductionViewHandler.getSelectedObject();
+	int index = 0;
+	while (takstol.getProbability() != 100 || takstol.getProduced() != null || takstol.getActionStarted() != null
+		|| takstol.getCuttingDone() == null) {
+	    index++;
+	    tableFixture.cell(row(index).column(1)).click();
+	    takstol = (TakstolProductionV) takstolProductionViewHandler.getSelectedObject();
 	}
 
-	@Test
-	public void skalViseKnapperForKapping() {
-		dialogFixture.show(new Dimension(1000, 500));
-		dialogFixture.button("ButtonStartetKapping").requireVisible();
-		dialogFixture.button("ButtonStartetKapping").requireText(
-				"Startet kapping");
-		dialogFixture.button("ButtonIkkeStartetKapping").requireVisible();
-		dialogFixture.button("ButtonIkkeStartetKapping").requireText(
-				"Ikke startet kapping");
+	dialogFixture.button("ButtonFerdigKappet").requireDisabled();
+	dialogFixture.button("ButtonIkkeFerdigKappet").requireEnabled();
+	dialogFixture.button("ButtonIkkeFerdigKappet").click();
+	tableFixture.cell(row(index).column(1)).foreground().requireEqualTo(new Color(3, 3, 3));
 
-		dialogFixture.button("ButtonFerdigKappet").requireVisible();
-		dialogFixture.button("ButtonFerdigKappet").requireText("Ferdig kappet");
+	OrderManager orderManager = (OrderManager) ModelUtil.getBean(OrderManager.MANAGER_NAME);
+	Order order = orderManager.findByOrderNr(takstol.getOrderNr());
+	orderManager.lazyLoadTree(order);
+	OrderLine orderLineTakstol = order.getOrderLine("Takstoler");
+	assertNull(orderLineTakstol.getCuttingDone());
+    }
 
-		dialogFixture.button("ButtonIkkeFerdigKappet").requireVisible();
-		dialogFixture.button("ButtonIkkeFerdigKappet").requireText(
-				"Ikke ferdig kappet");
+    private class SetProductionUnitActionFactoryTest implements SetProductionUnitActionFactory {
+
+	public SetProductionUnitAction create(ArticleType aArticleType, ProduceableProvider aProduceableProvider, WindowInterface aWindow) {
+	    // TODO Auto-generated method stub
+	    return null;
 	}
 
-	@Test
-	public void skalSetteStartetKapping() {
-		dialogFixture.comboBox("ComboBoxProductAreaGroup")
-				.selectItem("Takstol");
-		dialogFixture.checkBox("CheckBoxFilter").uncheck();
-
-		JTableFixture tableFixture = dialogFixture
-				.table(TableEnum.TABLEPRODUCTIONTAKSTOL.getTableName());
-
-		tableFixture.cell(row(0).column(1)).click();
-
-		TakstolProductionV takstol = (TakstolProductionV) takstolProductionViewHandler
-				.getSelectedObject();
-		int index = 0;
-		while (takstol.getProbability() != 100 || takstol.getProduced() != null
-				|| takstol.getActionStarted() != null
-				|| takstol.getCuttingStarted() != null) {
-			index++;
-			tableFixture.cell(row(index).column(1)).click();
-			takstol = (TakstolProductionV) takstolProductionViewHandler
-					.getSelectedObject();
-		}
-
-		dialogFixture.button("ButtonStartetKapping").requireEnabled();
-		dialogFixture.button("ButtonStartetKapping").click();
-		tableFixture.cell(row(index-1).column(1)).click();
-		assertEquals(ColorEnum.BLUE.getColor(),tableFixture.cell(row(index).column(1)).foreground().target());
-
-		OrderManager orderManager = (OrderManager) ModelUtil
-				.getBean(OrderManager.MANAGER_NAME);
-		Order order = orderManager.findByOrderNr(takstol.getOrderNr());
-		orderManager.lazyLoadTree(order);
-		OrderLine orderLineTakstol = order.getOrderLine("Takstoler");
-		assertNotNull(orderLineTakstol.getCuttingStarted());
-
-	}
-
-	@Test
-	public void skalIkkeKunneSetteStartetKappingDersomStartetProduksjon() {
-		dialogFixture.comboBox("ComboBoxProductAreaGroup")
-				.selectItem("Takstol");
-		dialogFixture.checkBox("CheckBoxFilter").uncheck();
-
-		JTableFixture tableFixture = dialogFixture
-				.table(TableEnum.TABLEPRODUCTIONTAKSTOL.getTableName());
-
-		tableFixture.cell(row(0).column(1)).click();
-
-		TakstolProductionV takstol = (TakstolProductionV) takstolProductionViewHandler
-				.getSelectedObject();
-		int index = 0;
-		boolean funnetStartetProduksjon = false;
-		while (!funnetStartetProduksjon) {
-			index++;
-			tableFixture.cell(row(index).column(1)).click();
-			takstol = (TakstolProductionV) takstolProductionViewHandler
-					.getSelectedObject();
-			if (takstol.getActionStarted() != null
-					&& takstol.getProduced() == null) {
-				funnetStartetProduksjon = true;
-			}
-		}
-
-		dialogFixture.button("ButtonStartetKapping").requireDisabled();
-
-	}
-
-	@Test
-	public void skalSettIkkeStartetKapping() {
-		dialogFixture.comboBox("ComboBoxProductAreaGroup")
-				.selectItem("Takstol");
-		dialogFixture.checkBox("CheckBoxFilter").uncheck();
-
-		JTableFixture tableFixture = dialogFixture
-				.table(TableEnum.TABLEPRODUCTIONTAKSTOL.getTableName());
-
-		tableFixture.cell(row(0).column(1)).click();
-
-		TakstolProductionV takstol = (TakstolProductionV) takstolProductionViewHandler
-				.getSelectedObject();
-		int index = 0;
-		while (takstol.getProbability() != 100 || takstol.getProduced() != null
-				|| takstol.getActionStarted() != null
-				|| takstol.getCuttingStarted() == null||takstol.getCuttingDone()!=null) {
-			index++;
-			tableFixture.cell(row(index).column(1)).click();
-			takstol = (TakstolProductionV) takstolProductionViewHandler
-					.getSelectedObject();
-		}
-
-		dialogFixture.button("ButtonStartetKapping").requireDisabled();
-		dialogFixture.button("ButtonIkkeStartetKapping").requireEnabled();
-		dialogFixture.button("ButtonIkkeStartetKapping").click();
-		tableFixture.cell(row(index).column(1)).foreground().requireEqualTo(
-				new Color(3,3,3));
-
-		OrderManager orderManager = (OrderManager) ModelUtil
-				.getBean(OrderManager.MANAGER_NAME);
-		Order order = orderManager.findByOrderNr(takstol.getOrderNr());
-		orderManager.lazyLoadTree(order);
-		OrderLine orderLineTakstol = order.getOrderLine("Takstoler");
-		assertNull(orderLineTakstol.getCuttingStarted());
-	}
-
-	@Test
-	public void skalSetteFerdigKapping() {
-		dialogFixture.comboBox("ComboBoxProductAreaGroup")
-				.selectItem("Takstol");
-		dialogFixture.checkBox("CheckBoxFilter").uncheck();
-
-		JTableFixture tableFixture = dialogFixture
-				.table(TableEnum.TABLEPRODUCTIONTAKSTOL.getTableName());
-
-		tableFixture.cell(row(0).column(1)).click();
-
-		TakstolProductionV takstol = (TakstolProductionV) takstolProductionViewHandler
-				.getSelectedObject();
-		int index = 0;
-		while (takstol.getProbability() != 100 || takstol.getProduced() != null
-				|| takstol.getActionStarted() != null
-				|| takstol.getCuttingDone() != null) {
-			index++;
-			tableFixture.cell(row(index).column(1)).click();
-			takstol = (TakstolProductionV) takstolProductionViewHandler
-					.getSelectedObject();
-		}
-
-		dialogFixture.button("ButtonFerdigKappet").requireEnabled();
-		dialogFixture.button("ButtonFerdigKappet").click();
-		tableFixture.cell(row(index-1).column(1)).click();
-		assertEquals(ColorEnum.GREEN.getColor(),tableFixture.cell(row(index).column(1)).foreground().target());
-
-		OrderManager orderManager = (OrderManager) ModelUtil
-				.getBean(OrderManager.MANAGER_NAME);
-		Order order = orderManager.findByOrderNr(takstol.getOrderNr());
-		orderManager.lazyLoadTree(order);
-		OrderLine orderLineTakstol = order.getOrderLine("Takstoler");
-		assertNotNull(orderLineTakstol.getCuttingDone());
-
-	}
-
-	@Test
-	public void skalSettIkkeferdigKapping() {
-		dialogFixture.comboBox("ComboBoxProductAreaGroup")
-				.selectItem("Takstol");
-		dialogFixture.checkBox("CheckBoxFilter").uncheck();
-
-		JTableFixture tableFixture = dialogFixture
-				.table(TableEnum.TABLEPRODUCTIONTAKSTOL.getTableName());
-
-		tableFixture.cell(row(0).column(1)).click();
-
-		TakstolProductionV takstol = (TakstolProductionV) takstolProductionViewHandler
-				.getSelectedObject();
-		int index = 0;
-		while (takstol.getProbability() != 100 || takstol.getProduced() != null
-				|| takstol.getActionStarted() != null
-				|| takstol.getCuttingDone() == null) {
-			index++;
-			tableFixture.cell(row(index).column(1)).click();
-			takstol = (TakstolProductionV) takstolProductionViewHandler
-					.getSelectedObject();
-		}
-
-		dialogFixture.button("ButtonFerdigKappet").requireDisabled();
-		dialogFixture.button("ButtonIkkeFerdigKappet").requireEnabled();
-		dialogFixture.button("ButtonIkkeFerdigKappet").click();
-		tableFixture.cell(row(index).column(1)).foreground().requireEqualTo(
-				new Color(3,3,3));
-
-		OrderManager orderManager = (OrderManager) ModelUtil
-				.getBean(OrderManager.MANAGER_NAME);
-		Order order = orderManager.findByOrderNr(takstol.getOrderNr());
-		orderManager.lazyLoadTree(order);
-		OrderLine orderLineTakstol = order.getOrderLine("Takstoler");
-		assertNull(orderLineTakstol.getCuttingDone());
-	}
-
-	private class SetProductionUnitActionFactoryTest implements
-			SetProductionUnitActionFactory {
-
-		public SetProductionUnitAction create(ArticleType aArticleType,
-				ProduceableProvider aProduceableProvider,
-				WindowInterface aWindow) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-	}
+    }
 }

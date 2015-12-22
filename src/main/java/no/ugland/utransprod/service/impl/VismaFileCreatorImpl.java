@@ -48,8 +48,8 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 	this.fakturagrunnlagVManager = fakturagrunnlagVManager;
     }
 
-    public String createVismaFile(List<OrderLine> orderLines, int teller) throws ProTransException {
-	return ordchgrManager != null ? createHeadAndLines(orderLines, teller) : null;
+    public String createVismaFile(List<OrderLine> orderLines, int teller, boolean minus) throws ProTransException {
+	return ordchgrManager != null ? createHeadAndLines(orderLines, teller, minus) : null;
     }
 
     public String createVismaFileForTransport(Order order) throws ProTransException {
@@ -80,13 +80,13 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 	};
     }
 
-    private String createHeadAndLines(List<OrderLine> orderLines, int teller) throws ProTransException {
+    private String createHeadAndLines(List<OrderLine> orderLines, int teller, boolean minus) throws ProTransException {
 	if (orderLines != null && orderLines.size() != 0) {
 	    String transportDate = getTransportDate(orderLines.get(0).getOrder().getTransport());
 	    OrdchgrHeadV head = ordchgrManager.getHead(orderLines.get(0).getOrdNo());
 	    List<OrdchgrLineV> lines = head != null ? ordchgrManager.getLines(orderLines.get(0).getOrdNo(), getLnNos(orderLines)) : null;
 	    return head != null ? createFile(head, lines, orderLines.get(0).getOrderNr(), ApplicationParamUtil.findParamByName(VISMA_OUT_DIR),
-		    transportDate, teller) : null;
+		    transportDate, teller, minus) : null;
 	}
 	return null;
     }
@@ -99,13 +99,13 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 	return list;
     }
 
-    public String createFile(OrdchgrHeadV head, List<OrdchgrLineV> fileLines, final String orderNr, String outdir, String transportDate, int teller)
-	    throws ProTransException {
+    public String createFile(OrdchgrHeadV head, List<OrdchgrLineV> fileLines, final String orderNr, String outdir, String transportDate, int teller,
+	    boolean minus) throws ProTransException {
 	try {
 	    List<String> lines = new ArrayList<String>();
 	    lines.add(head.getHeadLine(transportDate));
 	    for (OrdchgrLineV ordchgrLineV : fileLines) {
-		lines.add(ordchgrLineV.getLineLine());
+		lines.add(ordchgrLineV.getLineLine(minus));
 	    }
 	    return writeFile(orderNr, outdir, lines, teller);
 	} catch (IOException e) {

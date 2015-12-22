@@ -111,7 +111,7 @@ public class ArticlePackerTest {
 
 	order.addColli(colli);
 	packable = new OrderModel(order, false, false, false, null, null);
-	final ColliViewHandler colliViewHandler = new ColliViewHandler(null, colli, packable, login, managerRepository, null);
+	final ColliViewHandler colliViewHandler = new ColliViewHandler(null, colli, packable, login, managerRepository, null, null);
 	when(colliViewHandlerProvider.getColliViewHandler(colli)).thenReturn(colliViewHandler);
 
     }

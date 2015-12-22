@@ -33,73 +33,69 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 public class EditColliViewTest {
-	private DialogFixture dialogFixture;
-	@Mock
-	private UserTypeManager userTypeManager;
-	@Mock
-	private Login login;
-	@Mock
-	private ManagerRepository managerRepository;
-	@Mock
-	private ColliManager colliManager;
+    private DialogFixture dialogFixture;
+    @Mock
+    private UserTypeManager userTypeManager;
+    @Mock
+    private Login login;
+    @Mock
+    private ManagerRepository managerRepository;
+    @Mock
+    private ColliManager colliManager;
 
-	@Before
-	public void setup() {
-		FailOnThreadViolationRepaintManager.install();
-		MockitoAnnotations.initMocks(this);
-		final Colli colli = new Colli();
-		final ColliModel colliModel = new ColliModel(colli);
+    @Before
+    public void setup() {
+	FailOnThreadViolationRepaintManager.install();
+	MockitoAnnotations.initMocks(this);
+	final Colli colli = new Colli();
+	final ColliModel colliModel = new ColliModel(colli);
 
-		final Packable packable = null;
-		final UserType userType = new UserType();
-		Set<UserTypeAccess> userTypeAccesses = new HashSet<UserTypeAccess>();
-		userType.setUserTypeAccesses(userTypeAccesses);
-		UserUtil.setUserTypeManagerForTest(userTypeManager);
-		when(managerRepository.getColliManager()).thenReturn(colliManager);
-		when(login.getUserType()).thenReturn(userType);
+	final Packable packable = null;
+	final UserType userType = new UserType();
+	Set<UserTypeAccess> userTypeAccesses = new HashSet<UserTypeAccess>();
+	userType.setUserTypeAccesses(userTypeAccesses);
+	UserUtil.setUserTypeManagerForTest(userTypeManager);
+	when(managerRepository.getColliManager()).thenReturn(colliManager);
+	when(login.getUserType()).thenReturn(userType);
 
-		
+	JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
+	    protected JDialog executeInEDT() {
+		ColliViewHandler colliViewHandler = new ColliViewHandler("Kolli", colli, packable, login, managerRepository, null, null);
+		final EditColliView editColliView = new EditColliView(false, colliModel, colliViewHandler);
+		JDialog dialog = new JDialog();
+		WindowInterface window = new JDialogAdapter(dialog);
+		dialog.add(editColliView.buildPanel(window));
+		dialog.pack();
+		return dialog;
+	    }
+	});
+	dialogFixture = new DialogFixture(dialog);
+	dialogFixture.show();
 
-		JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
-			protected JDialog executeInEDT() {
-				ColliViewHandler colliViewHandler = new ColliViewHandler("Kolli",
-						colli, packable, login, managerRepository, null);
-				final EditColliView editColliView = new EditColliView(false,
-						colliModel, colliViewHandler);
-				JDialog dialog = new JDialog();
-				WindowInterface window = new JDialogAdapter(dialog);
-				dialog.add(editColliView.buildPanel(window));
-				dialog.pack();
-				return dialog;
-			}
-		});
-		dialogFixture = new DialogFixture(dialog);
-		dialogFixture.show();
+    }
 
-	}
+    @After
+    public void tear() {
+	dialogFixture.cleanUp();
+    }
 
-	@After
-	public void tear() {
-		dialogFixture.cleanUp();
-	}
+    @Test
+    public void show() {
+	dialogFixture.requireVisible();
+    }
 
-	@Test
-	public void show() {
-		dialogFixture.requireVisible();
-	}
+    @Test
+    public void setName() {
 
-	@Test
-	public void setName() {
+	dialogFixture.show();
+	dialogFixture.textBox("TextFieldColliName").enterText("test");
+	dialogFixture.button("EditCancelColli").requireEnabled();
+	dialogFixture.button("EditCancelColli").click();
+    }
 
-		dialogFixture.show();
-		dialogFixture.textBox("TextFieldColliName").enterText("test");
-		dialogFixture.button("EditCancelColli").requireEnabled();
-		dialogFixture.button("EditCancelColli").click();
-	}
-
-	@Test
-	public void setNumberOfCollies() {
-		dialogFixture.show();
-		dialogFixture.textBox("TextFieldNumberOfCollies").enterText("test");
-	}
+    @Test
+    public void setNumberOfCollies() {
+	dialogFixture.show();
+	dialogFixture.textBox("TextFieldNumberOfCollies").enterText("test");
+    }
 }

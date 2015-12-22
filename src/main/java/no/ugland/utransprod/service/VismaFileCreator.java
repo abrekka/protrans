@@ -9,7 +9,7 @@ import no.ugland.utransprod.model.OrderLine;
 
 public interface VismaFileCreator {
 
-    String createVismaFile(List<OrderLine> orderLines, int teller) throws ProTransException;
+    String createVismaFile(List<OrderLine> orderLines, int teller, boolean minus) throws ProTransException;
 
     boolean ignoreVismaFile(OrderLine orderLine, WindowInterface window);
 
