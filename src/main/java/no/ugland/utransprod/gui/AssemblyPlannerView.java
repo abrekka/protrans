@@ -235,6 +235,7 @@ public class AssemblyPlannerView implements Viewer {
 
 	builder.add(splitPane, cc.xy(2, 2));
 	builder.add(ButtonBarFactory.buildCenteredBar(buttonExcel, buttonPrint, buttonRefresh, buttonCancel), cc.xy(2, 4));
+
 	return builder.getPanel();
     }
 

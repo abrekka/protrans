@@ -2,13 +2,20 @@ package no.ugland.utransprod.gui.edit;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRootPane;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 import no.ugland.utransprod.gui.Closeable;
 import no.ugland.utransprod.gui.WindowInterface;
@@ -61,7 +68,6 @@ public class FilterAssemblyView implements Closeable {
 	builder.add(comboBoxSort3, cc.xy(6, 8));
 
 	builder.add(ButtonBarFactory.buildCenteredBar(buttonFilter, buttonCancel), cc.xyw(2, 12, 5));
-
 	return builder.getPanel();
     }
 
@@ -73,6 +79,10 @@ public class FilterAssemblyView implements Closeable {
 	for (AssemblyColumn column : AssemblyColumn.getVisibleColumns()) {
 	    Component component = column.getFilterComponent(presentationModel);
 	    if (component != null) {
+		if (JTextField.class.isInstance(component)) {
+		    ((JTextField) component).getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "filter");
+		    ((JTextField) component).getActionMap().put("filter", buttonFilter.getAction());
+		}
 		builder.appendRow(new RowSpec("fill:p"));
 		builder.append(column.getColumnName());
 		builder.append(component);
@@ -80,6 +90,10 @@ public class FilterAssemblyView implements Closeable {
 		builder.nextRow();
 	    }
 	}
+	JPanel panel = builder.getPanel();
+	JRootPane root = SwingUtilities.getRootPane(panel);
+	panel.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "filter");
+	panel.getActionMap().put("filter", buttonFilter.getAction());
 	return builder.getPanel();
     }
 
@@ -91,7 +105,12 @@ public class FilterAssemblyView implements Closeable {
 	assemblyfilter = new AssemblyFilter();
 	presentationModel = new PresentationModel(assemblyfilter);
 	buttonCancel = new CancelButton(window, this, true);
-	buttonFilter = new JButton(new FilterAction(assemblyfilterListener));
+	Action action = new FilterAction(assemblyfilterListener, window);
+	buttonFilter = new JButton(action);
+
+	buttonFilter.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "FILTER");
+	buttonFilter.getActionMap().put("FILTER", action);
+
 	comboBoxSort1 = BasicComponentFactory.createComboBox(assemblyfilter.getSort1SelectionInList());
 	comboBoxSort2 = BasicComponentFactory.createComboBox(assemblyfilter.getSort2SelectionInList());
 	comboBoxSort3 = BasicComponentFactory.createComboBox(assemblyfilter.getSort3SelectionInList());
@@ -111,14 +130,19 @@ public class FilterAssemblyView implements Closeable {
     @SuppressWarnings("serial")
     public class FilterAction extends AbstractAction {
 	private AssemblyfilterListener assemblyfilterListener;
+	private WindowInterface window;
 
-	public FilterAction(AssemblyfilterListener listener) {
+	public FilterAction(AssemblyfilterListener listener, WindowInterface window) {
 	    super("Filtrer");
 	    this.assemblyfilterListener = listener;
+	    this.window = window;
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
 	    assemblyfilterListener.doFilter(assemblyfilter);
+
+	    window.dispose();
+	    window = null;
 	}
 
     }

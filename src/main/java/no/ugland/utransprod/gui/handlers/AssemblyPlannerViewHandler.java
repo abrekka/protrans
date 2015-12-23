@@ -32,6 +32,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollBar;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -2096,7 +2097,17 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 
 	    @Override
 	    public Component getFilterComponent(PresentationModel presentationModel) {
-		return BasicComponentFactory.createTextField(presentationModel.getModel("orderNr"), false);
+		final JTextField textfield = BasicComponentFactory.createTextField(presentationModel.getModel("orderNr"), false);
+		textfield.requestFocusInWindow();
+
+		SwingUtilities.invokeLater(new Runnable() {
+
+		    public void run() {
+			textfield.requestFocus();
+
+		    }
+		});
+		return textfield;
 	    }
 
 	    @Override
