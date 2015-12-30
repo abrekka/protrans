@@ -226,9 +226,10 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
     }
 
     private void initFilter() {
-	int filterColumn = 16;
+	int filterColumn = 18;
+
 	if (isForOrderInfo) {
-	    filterColumn = 5;
+	    filterColumn = 6;
 	}
 
 	Filter[] filtersDone = new Filter[] { new PatternFilter("[^1]", Pattern.CASE_INSENSITIVE, filterColumn) };
@@ -238,13 +239,13 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 
 	    userFullName = login.getApplicationUser().getFullName();
 
-	    MultiColPatternFilter ownFilters = new MultiColPatternFilter(2, 7);
+	    MultiColPatternFilter ownFilters = new MultiColPatternFilter(3, 7);
 	    ownFilters.setFilterStr(userFullName, SuperPatternFilter.MODE.REGEX_FIND);
 	    Filter[] filtersOwn = new Filter[] { ownFilters };
 
 	    filterPipelineOwn = new FilterPipeline(filtersOwn);
 
-	    ownFilters = new MultiColPatternFilter(2, 7);
+	    ownFilters = new MultiColPatternFilter(3, 7);
 	    ownFilters.setFilterStr(userFullName, SuperPatternFilter.MODE.REGEX_FIND);
 
 	    Filter[] filtersOwnDone = new Filter[] { new PatternFilter("[^1]", Pattern.CASE_INSENSITIVE, filterColumn), ownFilters };
@@ -1150,7 +1151,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
     @Override
     public Dimension getWindowSize() {
 
-	return new Dimension(850, 810);
+	return new Dimension(1000, 810);
 
     }
 
@@ -1343,59 +1344,67 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	    col = table.getColumnModel().getColumn(1);
 	    col.setPreferredWidth(80);
 
-	    // Navn
+	    // Initiert av
 	    col = table.getColumnModel().getColumn(2);
+	    col.setPreferredWidth(80);
+
+	    // Navn
+	    col = table.getColumnModel().getColumn(3);
 	    col.setPreferredWidth(100);
 
 	    // Kundenr
-	    col = table.getColumnModel().getColumn(3);
+	    col = table.getColumnModel().getColumn(4);
 	    col.setPreferredWidth(50);
 
 	    // Kundenavn
-	    col = table.getColumnModel().getColumn(4);
+	    col = table.getColumnModel().getColumn(5);
 	    col.setPreferredWidth(100);
 
 	    // Ordrenr
-	    col = table.getColumnModel().getColumn(5);
+	    col = table.getColumnModel().getColumn(6);
 	    col.setPreferredWidth(50);
 
 	    // Prouktområde
-	    col = table.getColumnModel().getColumn(6);
-	    col.setPreferredWidth(100);
+	    col = table.getColumnModel().getColumn(7);
+	    col.setPreferredWidth(90);
+
+	    // CS ID
+	    col = table.getColumnModel().getColumn(8);
+	    col.setPreferredWidth(90);
 
 	    // Behandlingsansvarlig
-	    col = table.getColumnModel().getColumn(7);
+	    col = table.getColumnModel().getColumn(9);
 	    col.setPreferredWidth(150);
 
 	    // Egen funksjon
-	    col = table.getColumnModel().getColumn(8);
+	    col = table.getColumnModel().getColumn(10);
 	    col.setPreferredWidth(150);
 
 	    // Avviksfunksjon
-	    col = table.getColumnModel().getColumn(9);
-	    col.setPreferredWidth(100);
-
-	    // Kategori
-	    col = table.getColumnModel().getColumn(10);
-	    col.setPreferredWidth(100);
-
-	    // Korrigerende tiltak
 	    col = table.getColumnModel().getColumn(11);
 	    col.setPreferredWidth(100);
 
-	    // Status
+	    // Kategori
 	    col = table.getColumnModel().getColumn(12);
+	    col.setPreferredWidth(100);
+
+	    // Korrigerende tiltak
+	    col = table.getColumnModel().getColumn(13);
+	    col.setPreferredWidth(100);
+
+	    // Status
+	    col = table.getColumnModel().getColumn(14);
 	    col.setPreferredWidth(120);
 	    // Endret
-	    col = table.getColumnModel().getColumn(13);
+	    col = table.getColumnModel().getColumn(15);
 	    col.setPreferredWidth(80);
 
 	    // Viser ikke lukket
-	    table.getColumnExt(13).setVisible(false);
+	    table.getColumnExt(15).setVisible(false);
 	    // Viser ikke kommentar
-	    table.getColumnExt(13).setVisible(false);
+	    table.getColumnExt(15).setVisible(false);
 	    // Viser ikke ferdig
-	    table.getColumnExt(14).setVisible(false);
+	    table.getColumnExt(16).setVisible(false);
 	}
 
     }
@@ -1620,6 +1629,19 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 		return Util.SHORT_DATE_FORMAT.format(deviation.getRegistrationDate());
 	    }
 	},
+	INITIERT_AV("Initiert av") {
+
+	    @Override
+	    public Object getValue(Deviation deviation, boolean report) {
+		return deviation.getInitiatedBy();
+	    }
+
+	    @Override
+	    public Class getClassFor() {
+		return String.class;
+	    }
+
+	},
 	NAVN("Navn") {
 	    @SuppressWarnings("unchecked")
 	    @Override
@@ -1679,6 +1701,19 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	    public Object getValue(Deviation deviation, boolean report) {
 		return deviation.getProductArea() != null ? deviation.getProductArea().toString() : null;
 	    }
+	},
+	CS_ID("CS ID") {
+
+	    @Override
+	    public Object getValue(Deviation deviation, boolean report) {
+		return deviation.getCsId();
+	    }
+
+	    @Override
+	    public Class getClassFor() {
+		return String.class;
+	    }
+
 	},
 	BEHANDLINGSANSVARLIG("Behandlingsansvarlig") {
 	    @SuppressWarnings("unchecked")

@@ -224,9 +224,9 @@ public abstract class AbstractEditView<E, T> implements Closeable, Updateable, C
 
 	initComponents(window);
 	updateValidationResult();
-	// if (!search) {
-	initComponentAnnotations();
-	// }
+	if (!search) {
+	    initComponentAnnotations();
+	}
 	initEventHandling();
 	// if (search) {
 	window.getRootPane().setDefaultButton(buttonSave);

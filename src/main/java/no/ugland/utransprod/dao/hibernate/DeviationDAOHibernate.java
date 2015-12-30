@@ -236,6 +236,10 @@ public class DeviationDAOHibernate extends BaseDAOHibernate<Deviation> implement
 				Util.getShortDateLast(deviation.getDateTo())));
 		    }
 
+		    if (deviation.getCsId() != null) {
+			crit.add(Restrictions.eq("csId", deviation.getCsId()));
+		    }
+
 		    return crit.list();
 		}
 
