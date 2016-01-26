@@ -150,9 +150,9 @@ public enum ExcelReportEnum {
      * Salgsrapport grunnlag.
      */
     SALES_REPORT_BASIS("Salgsrapport - grunnlag", "Salgsrapport", "salesVManager", new String[] { "Type", "Fylke", "Selger", "Salgsdato", "Salgsuke",
-	    "Kundenr", "Navn", "Ordrenr", "Egenproduksjon", "Frakt", "Montering", "Jalinjer", "DB", "DG", "Avdeling", "Segment" }, new Integer[] { 4,
+	    "Kundenr", "Navn", "Ordrenr", "Egenproduksjon", "Frakt", "Montering", "Jalinjer", "DB", "DG", "Avdeling", "Segment","Areal" }, new Integer[] { 4,
 	    8, 9, 10, 11, 12, 13 }, new String[] { "Type", "CountyName", "Salesman", "SalesDateString", "SalesWeek", "CustomerNr", "CustomerName",
-	    "OrderNr", "OwnProductionCost", "TransportCost", "AssemblyCost", "YesLines", "Db", "Dg", "ProductAreaNr", "Segmentno" }, null, 10, null,
+	    "OrderNr", "OwnProductionCost", "TransportCost", "AssemblyCost", "YesLines", "Db", "Dg", "ProductAreaNr", "Segmentno","Areal" }, null, 10, null,
 	    null, null, null, null, false, true, 0, null, true, false, new ExcelSumFormula(new Integer[] { 8, 9, 10, 11, 12 }, "Sum:", "M$ROW/I$ROW",
 		    13, 7), null, true, true, true),
     /**

@@ -124,6 +124,11 @@
         column="COUNTY_NAME"
         length="255"
     />    
+    <property
+        name="areal"
+        type="java.math.BigDecimal"
+        column="AREAL"
+    />
 
 </class>
 </hibernate-mapping>

@@ -222,7 +222,7 @@ public class SalesDataDao<T> extends BaseDAOHibernate<T> {
 			+ "       $TABLE_VAR_NAME$.saledate,"
 			+ "$TABLE_VAR_NAME$.registered,"
 			+ "$TABLE_VAR_NAME$.orderDate,"
-			+ "$TABLE_VAR_NAME$.contributionMargin,$TABLE_VAR_NAME$.productAreaNr,$TABLE_VAR_NAME$.segmentno)"
+			+ "$TABLE_VAR_NAME$.contributionMargin,$TABLE_VAR_NAME$.productAreaNr,$TABLE_VAR_NAME$.segmentno,$TABLE_VAR_NAME$.areal)"
 			+ "   from $TABLE_NAME$ $TABLE_VAR_NAME$ "
 			+ "   where   "
 			// +

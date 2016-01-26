@@ -239,13 +239,13 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 
 	    userFullName = login.getApplicationUser().getFullName();
 
-	    MultiColPatternFilter ownFilters = new MultiColPatternFilter(3, 7);
+	    MultiColPatternFilter ownFilters = new MultiColPatternFilter(3, 9);
 	    ownFilters.setFilterStr(userFullName, SuperPatternFilter.MODE.REGEX_FIND);
 	    Filter[] filtersOwn = new Filter[] { ownFilters };
 
 	    filterPipelineOwn = new FilterPipeline(filtersOwn);
 
-	    ownFilters = new MultiColPatternFilter(3, 7);
+	    ownFilters = new MultiColPatternFilter(3,9);
 	    ownFilters.setFilterStr(userFullName, SuperPatternFilter.MODE.REGEX_FIND);
 
 	    Filter[] filtersOwnDone = new Filter[] { new PatternFilter("[^1]", Pattern.CASE_INSENSITIVE, filterColumn), ownFilters };

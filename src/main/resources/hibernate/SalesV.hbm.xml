@@ -138,5 +138,20 @@
         column="SEGMENTNO"
         length="150"
     />
+    <property
+        name="lengde"
+        type="java.math.BigDecimal"
+        column="LENGDE"
+    />
+    <property
+        name="bredde"
+        type="java.math.BigDecimal"
+        column="BREDDE"
+    />
+    <property
+        name="areal"
+        type="java.math.BigDecimal"
+        column="AREAL"
+    />
 </class>
 </hibernate-mapping>

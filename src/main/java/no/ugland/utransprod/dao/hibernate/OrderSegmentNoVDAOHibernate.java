@@ -230,7 +230,7 @@ public class OrderSegmentNoVDAOHibernate extends BaseDAOHibernate<OrderSegmentNo
 		saleReportDataList.add(new SaleReportData("Avrop", order.getCountyName(), order.getSalesman(), String.valueOf(order.getCustomerNr()),
 			order.getCustomerFullName(), order.getOrderNr(), order.getOwnProduction(), order.getDeliveryCost(), order.getAssemblyCost(),
 			order.getJaLinjer(), order.getContributionMargin(), order.getContributionRate(), order.getOrderDate(), Integer.valueOf(order
-				.getProductAreaNr()), order.getSegmentNo()));
+				.getProductAreaNr()), order.getSegmentNo(),order.getAreal()));
 	    }
 	}
 	return saleReportDataList;
