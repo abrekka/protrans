@@ -121,68 +121,68 @@ public enum ExcelReportEnum {
      * Salgsrapport ordre.
      */
     SALES_REPORT_ORDER("Salgsrapport - ordre", "Salgsrapport", "salesVManager", new String[] { "Fylke", "Antall", "Egenproduksjon", "Frakt",
-	    "Montering", "Jalinjer", "DB", "DG" }, new Integer[] { 1, 2, 3, 4, 5, 6 }, new String[] { "CountyName", "OrderCount", "SumOwnProduction",
-	    "SumTransport", "SumAssembly", "SumYesLines", "SumDb", "SumDg" }, null, 10, null, null, null, null, null, false, true, 0, null, true,
-	    false, new ExcelSumFormula(new Integer[] { 1, 2, 3, 4, 5, 6 }, "Sum:", "G$ROW/C$ROW", 7, 0), null, true, true, true),
+	    "Montering", "Jalinjer", "DB", "DG","Areal" }, new Integer[] { 1, 2, 3, 4, 5, 6,8 }, new String[] { "CountyName", "OrderCount", "SumOwnProduction",
+	    "SumTransport", "SumAssembly", "SumYesLines", "SumDb", "SumDg","SumAreal" }, null, 10, null, null, null, null, null, false, true, 0, null, true,
+	    false, new ExcelSumFormula(new Integer[] { 1, 2, 3, 4, 5, 6,8 }, "Sum:", "G$ROW/C$ROW", 7, 0), null, true, true, true),
     /**
      * Salgsrapport ordre pr selge.
      */
     SALES_REPORT_ORDER_SALESMAN("Salgsrapport - ordre", "Salgsrapport", "salesVManager", new String[] { "Selger", "Antall", "Egenproduksjon",
-	    "Frakt", "Montering", "Jalinjer", "DB", "DG" }, new Integer[] { 1, 2, 3, 4, 5, 6 }, new String[] { "Salesman", "OrderCount",
-	    "SumOwnProduction", "SumTransport", "SumAssembly", "SumYesLines", "SumDb", "SumDg" }, null, 10, null, null, null, null, null, false,
-	    true, 0, null, true, false, new ExcelSumFormula(new Integer[] { 1, 2, 3, 4, 5, 6 }, "Sum:", "G$ROW/C$ROW", 7, 0), null, true, true, true),
+	    "Frakt", "Montering", "Jalinjer", "DB", "DG","Areal" }, new Integer[] { 1, 2, 3, 4, 5, 6,8 }, new String[] { "Salesman", "OrderCount",
+	    "SumOwnProduction", "SumTransport", "SumAssembly", "SumYesLines", "SumDb", "SumDg","SumAreal" }, null, 10, null, null, null, null, null, false,
+	    true, 0, null, true, false, new ExcelSumFormula(new Integer[] { 1, 2, 3, 4, 5, 6,8 }, "Sum:", "G$ROW/C$ROW", 7, 0), null, true, true, true),
     /**
      * Salgsrapport avrop.
      */
     SALES_REPORT_CONFIRMED_ORDER("Salgsrapport - avrop", "Salgsrapport", "salesVManager", new String[] { "Fylke", "Antall", "Egenproduksjon",
-	    "Frakt", "Montering", "Jalinjer", "DB", "DG" }, new Integer[] { 1, 2, 3, 4, 5, 6 }, new String[] { "CountyName", "OrderCount",
-	    "SumOwnProduction", "SumTransport", "SumAssembly", "SumYesLines", "SumDb", "SumDg" }, null, 10, null, null, null, null, null, false,
-	    true, 0, null, true, false, new ExcelSumFormula(new Integer[] { 1, 2, 3, 4, 5, 6 }, "Sum:", "G$ROW/C$ROW", 7, 0), null, true, true, true),
+	    "Frakt", "Montering", "Jalinjer", "DB", "DG","Areal" }, new Integer[] { 1, 2, 3, 4, 5, 6,8 }, new String[] { "CountyName", "OrderCount",
+	    "SumOwnProduction", "SumTransport", "SumAssembly", "SumYesLines", "SumDb", "SumDg","SumAreal" }, null, 10, null, null, null, null, null, false,
+	    true, 0, null, true, false, new ExcelSumFormula(new Integer[] { 1, 2, 3, 4, 5, 6,8 }, "Sum:", "G$ROW/C$ROW", 7, 0), null, true, true, true),
     /**
      * Salgsrapport avrop pr selger.
      */
     SALES_REPORT_CONFIRMED_ORDER_SALESMAN("Salgsrapport - avrop", "Salgsrapport", "salesVManager", new String[] { "Selger", "Antall",
-	    "Egenproduksjon", "Frakt", "Montering", "Jalinjer", "DB", "DG" }, new Integer[] { 1, 2, 3, 4, 5, 6 }, new String[] { "Salesman",
-	    "OrderCount", "SumOwnProduction", "SumTransport", "SumAssembly", "SumYesLines", "SumDb", "SumDg" }, null, 10, null, null, null, null,
-	    null, false, true, 0, null, true, false, new ExcelSumFormula(new Integer[] { 1, 2, 3, 4, 5, 6 }, "Sum:", "G$ROW/C$ROW", 7, 0), null,
+	    "Egenproduksjon", "Frakt", "Montering", "Jalinjer", "DB", "DG","Areal" }, new Integer[] { 1, 2, 3, 4, 5, 6,8 }, new String[] { "Salesman",
+	    "OrderCount", "SumOwnProduction", "SumTransport", "SumAssembly", "SumYesLines", "SumDb", "SumDg","SumAreal" }, null, 10, null, null, null, null,
+	    null, false, true, 0, null, true, false, new ExcelSumFormula(new Integer[] { 1, 2, 3, 4, 5, 6,8 }, "Sum:", "G$ROW/C$ROW", 7, 0), null,
 	    true, true, true),
     /**
      * Salgsrapport grunnlag.
      */
     SALES_REPORT_BASIS("Salgsrapport - grunnlag", "Salgsrapport", "salesVManager", new String[] { "Type", "Fylke", "Selger", "Salgsdato", "Salgsuke",
 	    "Kundenr", "Navn", "Ordrenr", "Egenproduksjon", "Frakt", "Montering", "Jalinjer", "DB", "DG", "Avdeling", "Segment","Areal" }, new Integer[] { 4,
-	    8, 9, 10, 11, 12, 13 }, new String[] { "Type", "CountyName", "Salesman", "SalesDateString", "SalesWeek", "CustomerNr", "CustomerName",
+	    8, 9, 10, 11, 12, 13,16 }, new String[] { "Type", "CountyName", "Salesman", "SalesDateString", "SalesWeek", "CustomerNr", "CustomerName",
 	    "OrderNr", "OwnProductionCost", "TransportCost", "AssemblyCost", "YesLines", "Db", "Dg", "ProductAreaNr", "Segmentno","Areal" }, null, 10, null,
-	    null, null, null, null, false, true, 0, null, true, false, new ExcelSumFormula(new Integer[] { 8, 9, 10, 11, 12 }, "Sum:", "M$ROW/I$ROW",
+	    null, null, null, null, false, true, 0, null, true, false, new ExcelSumFormula(new Integer[] { 8, 9, 10, 11, 12,16 }, "Sum:", "M$ROW/I$ROW",
 		    13, 7), null, true, true, true),
     /**
      * Salgsrapport grunnlag r selger.
      */
     SALES_REPORT_BASIS_SALESMAN("Salgsrapport - grunnlag", "Salgsrapport", "salesVManager", new String[] { "Type", "Fylke", "Selger", "Salgsdato",
-	    "Salgsuke", "Kundenr", "Navn", "Ordrenr", "Egenproduksjon", "Frakt", "Montering", "Jalinjer", "DB", "DG", "Avdeling", "Segment" },
-	    new Integer[] { 4, 8, 9, 10, 11, 12, 13 }, new String[] { "Type", "CountyName", "Salesman", "SalesDateString", "SalesWeek", "CustomerNr",
+	    "Salgsuke", "Kundenr", "Navn", "Ordrenr", "Egenproduksjon", "Frakt", "Montering", "Jalinjer", "DB", "DG", "Avdeling", "Segment","Areal" },
+	    new Integer[] { 4, 8, 9, 10, 11, 12, 13,16 }, new String[] { "Type", "CountyName", "Salesman", "SalesDateString", "SalesWeek", "CustomerNr",
 		    "CustomerName", "OrderNr", "OwnProductionCost", "TransportCost", "AssemblyCost", "YesLines", "Db", "Dg", "ProductAreaNr",
-		    "Segmentno" }, null, 10, null, null, null, null, null, false, true, 0, null, true, false, new ExcelSumFormula(new Integer[] { 8,
-		    9, 10, 11, 12 }, "Sum:", "M$ROW/I$ROW", 13, 7), null, true, true, true),
+		    "Segmentno","Areal" }, null, 10, null, null, null, null, null, false, true, 0, null, true, false, new ExcelSumFormula(new Integer[] { 8,
+		    9, 10, 11, 12,16 }, "Sum:", "M$ROW/I$ROW", 13, 7), null, true, true, true),
 
     /**
      * Salgsrapport.
      */
     SALES_REPORT("Salgsrapport", "Salgsrapport", "salesVManager", new String[] { "Fylke", "Antall", "Egenproduksjon", "Frakt", "Montering",
-	    "Jalinjer", "DB", "DG" }, new Integer[] { 1, 2, 3, 4, 5, 6 }, new String[] { "CountyName", "OrderCount", "SumOwnProduction",
-	    "SumTransport", "SumAssembly", "SumYesLines", "SumDb", "SumDg" }, new Integer[][] { { 0, 3000 }, { 1, 3000 }, { 2, 3000 }, { 3, 3000 },
+	    "Jalinjer", "DB", "DG","Areal" }, new Integer[] { 1, 2, 3, 4, 5, 6,8 }, new String[] { "CountyName", "OrderCount", "SumOwnProduction",
+	    "SumTransport", "SumAssembly", "SumYesLines", "SumDb", "SumDg","SumAreal" }, new Integer[][] { { 0, 3000 }, { 1, 3000 }, { 2, 3000 }, { 3, 3000 },
 	    { 4, 3000 }, { 5, 4000 }, { 6, 3000 }, { 6, 3000 } }, 10, null, null, null, null, null, false, true, 0, new ExcelReportEnum[] {
 	    SALES_REPORT_ORDER, SALES_REPORT_CONFIRMED_ORDER, SALES_REPORT_BASIS }, true, false, new ExcelSumFormula(
-	    new Integer[] { 1, 2, 3, 4, 5, 6 }, "Sum:", "G$ROW/C$ROW", 7, 0), null, true, true, true),
+	    new Integer[] { 1, 2, 3, 4, 5, 6,8 }, "Sum:", "G$ROW/C$ROW", 7, 0), null, true, true, true),
     /**
      * Salgsrapport pr selger.
      */
     SALES_REPORT_SALESMAN("Salgsrapport", "Salgsrapport", "salesVManager", new String[] { "Selger", "Antall", "Egenproduksjon", "Frakt", "Montering",
-	    "Jalinjer", "DB", "DG" }, new Integer[] { 1, 2, 3, 4, 5, 6 }, new String[] { "Salesman", "OrderCount", "SumOwnProduction",
-	    "SumTransport", "SumAssembly", "SumYesLines", "SumDb", "SumDg" }, new Integer[][] { { 0, 3000 }, { 1, 3000 }, { 2, 3000 }, { 3, 3000 },
+	    "Jalinjer", "DB", "DG","Areal" }, new Integer[] { 1, 2, 3, 4, 5, 6,8 }, new String[] { "Salesman", "OrderCount", "SumOwnProduction",
+	    "SumTransport", "SumAssembly", "SumYesLines", "SumDb", "SumDg","SumAreal" }, new Integer[][] { { 0, 3000 }, { 1, 3000 }, { 2, 3000 }, { 3, 3000 },
 	    { 4, 3000 }, { 5, 4000 }, { 6, 3000 }, { 6, 3000 } }, 10, null, null, null, null, null, false, true, 0, new ExcelReportEnum[] {
 	    SALES_REPORT_ORDER_SALESMAN, SALES_REPORT_CONFIRMED_ORDER_SALESMAN, SALES_REPORT_BASIS_SALESMAN }, true, false, new ExcelSumFormula(
-	    new Integer[] { 1, 2, 3, 4, 5, 6 }, "Sum:", "G$ROW/C$ROW", 7, 0), null, true, true, true),
+	    new Integer[] { 1, 2, 3, 4, 5, 6,8 }, "Sum:", "G$ROW/C$ROW", 7, 0), null, true, true, true),
     /**
      * Tegningsrapport grunnlag.
      */

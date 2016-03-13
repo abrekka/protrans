@@ -16,6 +16,7 @@ public enum ReportEnum {
 	 * 
 	 */
     GULVSPON("Gulvspon.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Gulvspon"),
+    IGARASJEN("Igarasjen.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Igrasjen"),
     /**
 	 * 
 	 */

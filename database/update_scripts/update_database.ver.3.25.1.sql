@@ -1,0 +1,1 @@
+insert into window_access(window_name) values('Igarasjen');

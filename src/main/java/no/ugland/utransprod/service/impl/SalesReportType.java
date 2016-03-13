@@ -255,6 +255,7 @@ public enum SalesReportType {
 		saleReportSum.addSumAssembly(sale.getAssemblyCost());
 		saleReportSum.addSumYesLines(sale.getYesLines());
 		saleReportSum.addSumDb(sale.getDb());
+		saleReportSum.addSumAreal(sale.getAreal());
 		saleReportSum.setCountyName("Alle");
 	    }
 	    LOGGER.debug("Count : " + saleReportSum.getOrderCount());
@@ -283,6 +284,7 @@ public enum SalesReportType {
 		saleReportSum.addSumYesLines(sale.getYesLines());
 		saleReportSum.addSumDb(sale.getDb());
 		saleReportSum.setCountyName(countyName);
+		saleReportSum.addSumAreal(sale.getAreal());
 		salesMap.put(countyName, saleReportSum);
 	    }
 	}
@@ -306,6 +308,7 @@ public enum SalesReportType {
 		saleReportSum.addSumYesLines(sale.getYesLines());
 		saleReportSum.addSumDb(sale.getDb());
 		saleReportSum.setSalesman(salesman);
+		saleReportSum.addSumAreal(sale.getAreal());
 		salesMap.put(salesman, saleReportSum);
 	    }
 	}

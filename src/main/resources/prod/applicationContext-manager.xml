@@ -195,6 +195,14 @@
             </bean>
         </property>
 		</bean>
+		<bean id="igarasjenPackageVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.IgarasjenPackageVManagerImpl">
+                <property name="igarasjenPackageVDAO" ref="igarasjenPackageVDAO"/>
+                <property name="orderLineDAO" ref="orderLineDAO"/>
+            </bean>
+        </property>
+		</bean>
 	<bean id="gavlProductionVManager" parent="txProxyTemplate">
         <property name="target">
             <bean class="no.ugland.utransprod.service.impl.GavlProductionVManagerImpl">

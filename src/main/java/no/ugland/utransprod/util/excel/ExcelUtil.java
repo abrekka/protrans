@@ -1341,6 +1341,8 @@ public class ExcelUtil {
 	    return "O";
 	case 15:
 	    return "P";
+	case 16:
+		return "Q";
 	default:
 	    throw new IllegalStateException("Kolonne ikke definert");
 	}

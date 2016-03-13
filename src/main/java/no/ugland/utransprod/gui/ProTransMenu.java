@@ -12,62 +12,58 @@ import com.google.inject.Inject;
 
 public abstract class ProTransMenu {
 	private Login login;
-	
+
 	@Inject
-	public ProTransMenu(final Login aLogin){
+	public ProTransMenu(final Login aLogin) {
 		login = aLogin;
 	}
+
 	public abstract JMenu buildMenu();
+
 	protected JMenu addMenu(final String menuText, final int keyEvent) {
 		JMenu menu = new JMenu(menuText);
 		menu.setMnemonic(keyEvent);
 		return menu;
 	}
-	protected JMenuItem addMenuItem(final JMenu menu,
-			final Action menuItemAction, final int keyEvent,
-			final KeyStroke accelerator, final IconEnum iconEnum,
-			final String actionCommand, final boolean adminOnly) {
-		return addMenuItem(menu, menuItemAction, keyEvent, accelerator,
-				iconEnum, actionCommand, null, false, adminOnly);
+
+	protected JMenuItem addMenuItem(final JMenu menu, final Action menuItemAction, final int keyEvent,
+			final KeyStroke accelerator, final IconEnum iconEnum, final String actionCommand, final boolean adminOnly) {
+		return addMenuItem(menu, menuItemAction, keyEvent, accelerator, iconEnum, actionCommand, null, false,
+				adminOnly);
 	}
-	protected JMenuItem addMenuItem(final JMenu menu,
-			final Action menuItemAction, final int keyEvent,
-			final KeyStroke accelerator, final IconEnum iconEnum,
-			final String actionCommand, final String windowName,
+
+	protected JMenuItem addMenuItem(final JMenu menu, final Action menuItemAction, final int keyEvent,
+			final KeyStroke accelerator, final IconEnum iconEnum, final String actionCommand, final String windowName,
 			final boolean writeAccess) {
-		return addMenuItem(menu, menuItemAction, keyEvent, accelerator,
-				iconEnum, actionCommand, windowName, writeAccess, false);
+		return addMenuItem(menu, menuItemAction, keyEvent, accelerator, iconEnum, actionCommand, windowName,
+				writeAccess, false);
 	}
-	
-	
-	protected JMenuItem addMenuItem(final JMenu menu,
-			final Action menuItemAction, final int keyEvent,
-			final KeyStroke accelerator, final IconEnum iconEnum,
-			final String actionCommand, final String windowName,
+
+	protected JMenuItem addMenuItem(final JMenu menu, final Action menuItemAction, final int keyEvent,
+			final KeyStroke accelerator, final IconEnum iconEnum, final String actionCommand, final String windowName,
 			final boolean writeAccess, final boolean adminOnly) {
 		JMenuItem menuItem = null;
-		if(menuItemAction!=null){
-		menuItem = new JMenuItem(menuItemAction);
+		if (menuItemAction != null) {
+			menuItem = new JMenuItem(menuItemAction);
 
-		menuItem.setName("MenuItem" + menuItemAction.getValue(Action.NAME));
-		setKeyEvent(keyEvent, menuItem);
+			menuItem.setName("MenuItem" + menuItemAction.getValue(Action.NAME));
+			setKeyEvent(keyEvent, menuItem);
 
-		setAccelerator(accelerator, menuItem);
+			setAccelerator(accelerator, menuItem);
 
-		setIcon(iconEnum, menuItem);
+			setIcon(iconEnum, menuItem);
 
-		setActionCommand(actionCommand, menuItem);
+			setActionCommand(actionCommand, menuItem);
 
-		menu.add(menuItem);
-		menuItem.setEnabled(false);
+			menu.add(menuItem);
+			menuItem.setEnabled(false);
 
-		handleAdmin(windowName, writeAccess, adminOnly, menuItem);
+			handleAdmin(windowName, writeAccess, adminOnly, menuItem);
 		}
 		return menuItem;
 	}
-	
-	private void handleAdmin(final String windowName,
-			final boolean writeAccess, final boolean adminOnly,
+
+	private void handleAdmin(final String windowName, final boolean writeAccess, final boolean adminOnly,
 			JMenuItem menuItem) {
 		if (adminOnly) {
 			enableIfAdmin(menuItem);
@@ -77,8 +73,7 @@ public abstract class ProTransMenu {
 		}
 	}
 
-	private void enableIfWriteAccess(final String windowName,
-			final boolean writeAccess, JMenuItem menuItem) {
+	private void enableIfWriteAccess(final String windowName, final boolean writeAccess, JMenuItem menuItem) {
 		if (windowName != null) {
 			if (writeAccess) {
 				enableWritwAccess(windowName, menuItem);
@@ -132,6 +127,5 @@ public abstract class ProTransMenu {
 			menuItem.setMnemonic(keyEvent);
 		}
 	}
-
 
 }

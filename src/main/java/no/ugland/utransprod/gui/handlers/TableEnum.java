@@ -24,6 +24,8 @@ public enum TableEnum {
     TABLEPACKLIST("TablePacklist",new String[] {"Produktområde"}),
     //Pakking gulvspon
     TABLEPACKAGEGULVSPON("TablePackageGulvspon",new String[] {"Produktområde"}),
+  //Pakking gulvspon
+    TABLEPACKAGEIGARASJEN("TablePackageIgarasjen",new String[] {"Produktområde"}),
     //Forhåndsbetaling
     TABLEPAID("TablePaid", new String[] {"Produktområde"}),
     //Takstein

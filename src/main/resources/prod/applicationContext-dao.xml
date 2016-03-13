@@ -169,6 +169,13 @@
 				autowire="byName" />
 		</property>
 	</bean>
+	<bean id="igarasjenPackageVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.IgarasjenPackageVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
 	<bean id="gavlProductionVDAO" parent="txProxyTemplate">
 		<property name="target">
 			<bean

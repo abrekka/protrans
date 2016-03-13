@@ -46,6 +46,7 @@
 				<value>hibernate/VeggProductionV.hbm.xml</value>
 				<value>hibernate/SumOrderReadyV.hbm.xml</value>
 				<value>hibernate/GulvsponPackageV.hbm.xml</value>
+				<value>hibernate/IgarasjenPackageV.hbm.xml</value>
 				<value>hibernate/GavlProductionV.hbm.xml</value>
 				<value>hibernate/PostShipment.hbm.xml</value>
 				<value>hibernate/FaktureringV.hbm.xml</value>

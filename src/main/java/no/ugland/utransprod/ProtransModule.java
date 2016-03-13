@@ -1,5 +1,11 @@
 package no.ugland.utransprod;
 
+import com.google.common.collect.Multimap;
+import com.google.inject.AbstractModule;
+import com.google.inject.Singleton;
+import com.google.inject.assistedinject.FactoryProvider;
+import com.google.inject.name.Names;
+
 import no.ugland.utransprod.gui.ArticlePackageViewFactory;
 import no.ugland.utransprod.gui.ArticleProductionPackageView;
 import no.ugland.utransprod.gui.DeviationOverviewViewFactory;
@@ -61,6 +67,7 @@ import no.ugland.utransprod.service.FaktureringVManager;
 import no.ugland.utransprod.service.FrontProductionVManager;
 import no.ugland.utransprod.service.FunctionCategoryManager;
 import no.ugland.utransprod.service.GulvsponPackageVManager;
+import no.ugland.utransprod.service.IgarasjenPackageVManager;
 import no.ugland.utransprod.service.IncomingOrderManager;
 import no.ugland.utransprod.service.InfoManager;
 import no.ugland.utransprod.service.IntelleVManager;
@@ -99,12 +106,6 @@ import no.ugland.utransprod.util.ApplicationParamUtil;
 import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.report.AssemblyReportFactory;
 import no.ugland.utransprod.util.report.AssemblyReportImpl;
-
-import com.google.common.collect.Multimap;
-import com.google.inject.AbstractModule;
-import com.google.inject.Singleton;
-import com.google.inject.assistedinject.FactoryProvider;
-import com.google.inject.name.Names;
 
 public class ProtransModule extends AbstractModule {
 
@@ -178,6 +179,7 @@ public class ProtransModule extends AbstractModule {
 	bind(AssemblyManager.class).toInstance((AssemblyManager) ModelUtil.getBean(AssemblyManager.MANAGER_NAME));
 	bind(FaktureringVManager.class).toInstance((FaktureringVManager) ModelUtil.getBean(FaktureringVManager.MANAGER_NAME));
 	bind(GulvsponPackageVManager.class).toInstance((GulvsponPackageVManager) ModelUtil.getBean(GulvsponPackageVManager.MANAGER_NAME));
+	bind(IgarasjenPackageVManager.class).toInstance((IgarasjenPackageVManager) ModelUtil.getBean(IgarasjenPackageVManager.MANAGER_NAME));
 	bind(PacklistVManager.class).toInstance((PacklistVManager) ModelUtil.getBean(PacklistVManager.MANAGER_NAME));
 	bind(TakstolInfoVManager.class).toInstance((TakstolInfoVManager) ModelUtil.getBean(TakstolInfoVManager.MANAGER_NAME));
 	bind(ShowTakstolInfoActionFactory.class).toProvider(
