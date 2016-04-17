@@ -12,114 +12,140 @@ import no.ugland.utransprod.gui.IconEnum;
  * 
  */
 public enum ReportEnum {
-    /**
+	/**
 	 * 
 	 */
-    GULVSPON("Gulvspon.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Gulvspon"),
-    IGARASJEN("Igarasjen.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Igrasjen"),
-    /**
+	GULVSPON("Gulvspon.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Gulvspon"), IGARASJEN("Igarasjen.jasper",
+			IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Igrasjen"),
+	/**
 	 * 
 	 */
-    TAKSTOL("Takstol.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Takstol"),
-    /**
+	TAKSTOL("Takstol.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Takstol"),
+	/**
 	 * 
 	 */
-    MONTERING("Montering_bean.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Montering"),
-    /**
+	MONTERING("Montering_bean.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Montering"),
+	/**
 	 * 
 	 */
-    NOKKEl("Nokkeltall_bean.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Nøkkeltall - Salg/Drift/Transport"),
-    /**
+	NOKKEl("Nokkeltall_bean.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Nøkkeltall - Salg/Drift/Transport"),
+	/**
 	 * 
 	 */
-    NOKKEl_PRODUCTION("Nokkeltall_produksjon_alt_bean.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Nøkkeltall - Produksjon"),
-    /**
+	NOKKEl_PRODUCTION("Nokkeltall_produksjon_alt_bean.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER,
+			"Nøkkeltall - Produksjon"),
+	/**
 	 * 
 	 */
-    NOKKEl_ASSEMBLY("Nokkeltall_mont_ok_bean.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Nøkkeltall - Montering/Økonomi"),
-    /**
+	NOKKEl_ASSEMBLY("Nokkeltall_mont_ok_bean.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER,
+			"Nøkkeltall - Montering/Økonomi"),
+	/**
 	 * 
 	 */
-    FAX("Order_fax.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Fax"),
-    /**
+	FAX("Order_fax.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Fax"),
+	/**
 	 * 
 	 */
-    DEVIATION("Deviation_report.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Avvik"),
-    /**
+	DEVIATION("Deviation_report.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Avvik"),
+	/**
 	 * 
 	 */
-    TRANSPORT_LETTER("Fraktbrev.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Fraktbrev"),
-    /**
+	TRANSPORT_LETTER("Fraktbrev.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Fraktbrev"),
+	/**
 	 * 
 	 */
-    PACKLIST("Pakkliste.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Pakkliste"), TRANSPORT_COST("Transport_cost.jasper",
-	    IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Transportkostnad"), ASSEMBLY("Assembly.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Montering"), ASSEMBLY_NY(
-	    "assembly_ny.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Montering"), ACCIDENT("Accident.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER,
-	    "Hendelse/ulykke"), TAKSTOL_INFO("Takstolinfo.jasper", IconEnum.ICON_JATAK, "Takstolinfo"), KORRIGERENDE_TILTAK(
-	    "korrigerende_tiltak.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Korrigerende tiltak");
-    /**
+	PACKLIST("Pakkliste.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Pakkliste"),
+	/**
 	 * 
 	 */
-    private String reportFileName;
+	TRANSPORT_COST("Transport_cost.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Transportkostnad"),
+	/**
+	 * 
+	 */
+	ASSEMBLY("Assembly.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Montering"),
+	/**
+	 * 
+	 */
+	ASSEMBLY_NY("assembly_ny.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Montering"),
+	/**
+	 * 
+	 */
+	ACCIDENT("Accident.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Hendelse/ulykke"),
+	/**
+	 * 
+	 */
+	TAKSTOL_INFO("Takstolinfo.jasper", IconEnum.ICON_JATAK, "Takstolinfo"),
+	/**
+	 * 
+	 */
+	KORRIGERENDE_TILTAK("korrigerende_tiltak.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Korrigerende tiltak"),
+	/**
+	 * 
+	 */
+	PRODUCTION_REPORT("produksjon.jasper", IconEnum.ICON_IGLAND, "Produksjon");
+	/**
+	 * 
+	 */
+	private String reportFileName;
 
-    /**
+	/**
 	 * 
 	 */
-    private String reportName;
+	private String reportName;
 
-    /**
+	/**
 	 * 
 	 */
-    private IconEnum icon;
+	private IconEnum icon;
 
-    /**
-     * @param aReportFileName
-     * @param iconEnum
-     * @param aReportName
-     */
-    private ReportEnum(String aReportFileName, IconEnum iconEnum, String aReportName) {
-	reportFileName = aReportFileName;
-	icon = iconEnum;
-	reportName = aReportName;
-    }
+	/**
+	 * @param aReportFileName
+	 * @param iconEnum
+	 * @param aReportName
+	 */
+	private ReportEnum(String aReportFileName, IconEnum iconEnum, String aReportName) {
+		reportFileName = aReportFileName;
+		icon = iconEnum;
+		reportName = aReportName;
+	}
 
-    /**
-     * @return filnavn
-     */
-    public String getReportFileName() {
-	return reportFileName;
-    }
+	/**
+	 * @return filnavn
+	 */
+	public String getReportFileName() {
+		return reportFileName;
+	}
 
-    /**
-     * @return rapportnavn
-     */
-    public String getReportName() {
-	return reportName;
-    }
+	/**
+	 * @return rapportnavn
+	 */
+	public String getReportName() {
+		return reportName;
+	}
 
-    /**
-     * @return katalog for bilde
-     */
-    public String getImagePath() {
-	return icon.getIconPath();
-    }
+	/**
+	 * @return katalog for bilde
+	 */
+	public String getImagePath() {
+		return icon.getIconPath();
+	}
 
-    /**
-     * @return nøkkelrapporter
-     */
-    public static List<ReportEnum> getKeyReports() {
-	ArrayList<ReportEnum> reportList = new ArrayList<ReportEnum>();
-	reportList.add(NOKKEl);
-	reportList.add(NOKKEl_ASSEMBLY);
-	reportList.add(NOKKEl_PRODUCTION);
-	return reportList;
-    }
+	/**
+	 * @return nøkkelrapporter
+	 */
+	public static List<ReportEnum> getKeyReports() {
+		ArrayList<ReportEnum> reportList = new ArrayList<ReportEnum>();
+		reportList.add(NOKKEl);
+		reportList.add(NOKKEl_ASSEMBLY);
+		reportList.add(NOKKEl_PRODUCTION);
+		return reportList;
+	}
 
-    /**
-     * @see java.lang.Enum#toString()
-     */
-    @Override
-    public String toString() {
-	return reportName;
-    }
+	/**
+	 * @see java.lang.Enum#toString()
+	 */
+	@Override
+	public String toString() {
+		return reportName;
+	}
 }

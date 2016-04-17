@@ -16,6 +16,7 @@ import no.ugland.utransprod.dao.OrderDAO;
 import no.ugland.utransprod.gui.handlers.CheckObject;
 import no.ugland.utransprod.gui.handlers.ReportConstraintViewHandler.TransportConstraintEnum;
 import no.ugland.utransprod.gui.handlers.ReportDataTransport;
+import no.ugland.utransprod.gui.model.Ordreinfo;
 import no.ugland.utransprod.model.Colli;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
@@ -664,5 +665,9 @@ public class OrderManagerImpl extends ManagerImpl<Order> implements OrderManager
 	return ((OrderDAO) dao).merge(object);
 
     }
+
+	public List<Ordreinfo> finnOrdreinfo(String orderNr) {
+		return ((OrderDAO) dao).finnOrdreinfo(orderNr);
+	}
 
 }

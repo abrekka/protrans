@@ -7,6 +7,7 @@ import java.util.Set;
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.gui.handlers.ReportConstraintViewHandler.TransportConstraintEnum;
 import no.ugland.utransprod.gui.handlers.ReportDataTransport;
+import no.ugland.utransprod.gui.model.Ordreinfo;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.ProductArea;
@@ -228,5 +229,7 @@ public interface OrderManager extends OverviewManager<Order>, ExcelManager {
     List<ReadyCount> findReadyCountByProductArea(final ProductArea productArea);
 
     SaleReportSum groupSumByProductAreaConfirmPeriode(ProductArea productArea, Periode periode);
+
+	List<Ordreinfo> finnOrdreinfo(String orderNr);
 
 }

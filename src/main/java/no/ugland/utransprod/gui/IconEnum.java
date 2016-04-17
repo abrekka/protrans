@@ -99,7 +99,7 @@ public enum IconEnum {
      */
     ICON_MAIL("images/mail.png"), ICON_CHECKED("images/checked.jpeg"), ICON_UGLAND_TAKSTOL_BYGGELEMENT("images/takstol_byggelement.jpg"), ICON_UTSTIKKTYPE_1(
 	    "images/Utstikktype1.jpg"), ICON_UTSTIKKTYPE_2("images/Utstikktype2.jpg"), ICON_UTSTIKKTYPE_3("images/Utstikktype3.jpg"), ICON_UTSTIKKTYPE_4(
-	    "images/Utstikktype4.jpg"), ICON_JATAK("images/Jatak.JPG"), ;
+	    "images/Utstikktype4.jpg"), ICON_JATAK("images/Jatak.JPG"),ICON_IGLAND("images/igland_garasjen.png"), ;
 
     /**
      * Ikon

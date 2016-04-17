@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import no.ugland.utransprod.gui.handlers.ReportConstraintViewHandler.TransportConstraintEnum;
+import no.ugland.utransprod.gui.model.Ordreinfo;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.ProductArea;
@@ -230,4 +231,6 @@ public interface OrderDAO extends DAO<Order> {
     SaleReportSum groupSumByProductAreaConfirmPeriode(ProductArea productArea, Periode periode);
 
     Order merge(Order object);
+
+	List<Ordreinfo> finnOrdreinfo(String orderNr);
 }
