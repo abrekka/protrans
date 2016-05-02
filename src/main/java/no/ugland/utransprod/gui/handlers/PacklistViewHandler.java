@@ -57,6 +57,8 @@ import no.ugland.utransprod.model.CostUnit;
 import no.ugland.utransprod.model.ExternalOrder;
 import no.ugland.utransprod.model.FakturagrunnlagV;
 import no.ugland.utransprod.model.Order;
+import no.ugland.utransprod.model.OrderLine;
+import no.ugland.utransprod.model.Ordln;
 import no.ugland.utransprod.model.PacklistV;
 import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.service.CraningCostManager;
@@ -1170,13 +1172,26 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 		PacklistV packlistV = getSelectedObject();
 		if (packlistV != null) {
 			Order order = managerRepository.getOrderManager().findByOrderNr(packlistV.getOrderNr());
-			List<Ordreinfo> ordreinfo=managerRepository.getOrderManager().finnOrdreinfo(order.getOrderNr());
+			managerRepository.getOrderManager().lazyLoadOrder(order,
+					new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ATTRIBUTES,LazyLoadOrderEnum.COMMENTS });
+			List<Ordreinfo> ordreinfo = managerRepository.getOrderManager().finnOrdreinfo(order.getOrderNr());
+
+			OrderLine takstein = order.getOrderLine("Takstein");
+			Ordln ordlnTakstein = managerRepository.getOrdlnManager().findByOrdNoAndLnNo(takstein.getOrdNo(), takstein.getLnNo());
+			if (ordlnTakstein != null) {
+			    takstein.setOrdln(ordlnTakstein);
+			}
+
 			ProductionReportData productionReportData = new ProductionReportData(packlistV.getOrderNr())
-					.medPoststed(order.getPostOffice())
-					.medMontering(order.getDoAssembly())
+					.medNavn(order.getCustomer().getFullName()).medLeveringsadresse(order.getDeliveryAddress())
+					.medPostnr(order.getPostalCode()).medTelefonliste(order.getTelephoneNr())
+					.medPoststed(order.getPostOffice()).medMontering(order.getDoAssembly())
+					.medTransportuke(order.getTransport()==null?null:order.getTransport().getTransportWeek())
 					.medProduksjonsuke(order.getProductionWeek())
+					.medKommentarer(order.getOrderComments())
 					.medOrdreinfo(ordreinfo)
-					.medProductArea(order.getProductArea());
+					.medTaktekke(takstein.getDetailsWithoutNoAttributes()).medPakketAv(order.getPacklistDoneBy())
+					.medBruker(login.getApplicationUser().getFullName()).medProductArea(order.getProductArea());
 					// Order order = packlistV.getOrder() == null ?
 					// assembly.getDeviation().getOrder() : assembly.getOrder();
 					// managerRepository.getOrderManager().lazyLoadOrder(order,

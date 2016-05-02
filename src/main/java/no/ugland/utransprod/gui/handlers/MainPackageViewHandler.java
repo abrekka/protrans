@@ -1362,6 +1362,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	    ((OrderModel) presentationModelPackable.getBean()).firePropertiesChanged();
 	    refreshOwnOrderLineList(orderModel);
 
+	    orderComments.clear();
 	    orderComments.addAll((List<OrderComment>) presentationModelPackable.getBufferedValue(OrderModel.PROPERTY_COMMENTS));
 	}
 

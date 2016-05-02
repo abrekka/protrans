@@ -1312,7 +1312,10 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 		return (List<Ordreinfo>) getHibernateTemplate().execute(new HibernateCallback() {
 
 			public Object doInHibernate(final Session session) {
-				String sql = "SELECT Protrans2.dbo.customer_order.order_nr,F0100.dbo.ordln.LnNo,F0100.dbo.ordln.descr"
+				String sql = "SELECT Protrans2.dbo.customer_order.order_nr,F0100.dbo.ordln.LnNo,"
+						+ "F0100.dbo.ordln.descr,cast(F0100.dbo.ord.free1 as int) as vegg,cast(F0100.dbo.ord.free2 as int) as mur,"
+						+ "F0100.dbo.ordln.prodno,F0100.dbo.prod.inf8,F0100.dbo.ordln.PurcNo,F0100.dbo.prod.PrCatNo,"
+						+ " cast(F0100.dbo.ordln.free4 as int) as free4,F0100.dbo.prod.PrCatNo2,F0100.dbo.prod.inf"
 						+ " FROM F0100.dbo.ord inner join"
 						+ " F0100.dbo.ordln on F0100.dbo.ord.ordno = F0100.dbo.ordln.ordno inner join"
 						+ " F0100.dbo.prod on F0100.dbo.ordln.prodno =  F0100.dbo.prod.prodno inner join"
@@ -1320,12 +1323,16 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 						+ " where Protrans2.dbo.customer_order.order_nr='" + orderNr
 						+ "' and(F0100.dbo.ordln.prodno like 'tak %' or" + " F0100.dbo.ordln.prodno like 'ff%' or"
 						+ " F0100.dbo.prod.PrCatNo2 = 32 or" + " F0100.dbo.prod.PrCatNo2 = 4 or"
-						+ " F0100.dbo.ordln.prodno='OVERSKRIFT')";
+						+ " F0100.dbo.ordln.prodno='OVERSKRIFT' or" + " F0100.dbo.ordln.descr like 'Vegg:%' or"
+						+ " F0100.dbo.ordln.descr like 'Gavl:%' or" + " F0100.dbo.prod.PrCatNo2 in(29,30) or"
+						+ " (F0100.dbo.prod.PrCatNo = 509600 and F0100.dbo.ordln.purcno>0))";
 
 				List<Ordreinfo> ordreinfo = Lists.newArrayList();
 				List<Object[]> resultater = session.createSQLQuery(sql).list();
 				for (Object[] linje : resultater) {
-					ordreinfo.add(new Ordreinfo((String)linje[0], (Integer)linje[1], (String)linje[2]));
+					ordreinfo.add(new Ordreinfo((String) linje[0], (Integer) linje[1], (String) linje[2],
+							(Integer) linje[3], (Integer) linje[4], (String) linje[5], (String) linje[6],
+							(Integer) linje[7], (Integer) linje[8], (Integer) linje[9], (Integer) linje[10],(String)linje[11]));
 				}
 				return ordreinfo;
 			}

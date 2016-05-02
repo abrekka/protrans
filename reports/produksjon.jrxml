@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="produksjon" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="539" leftMargin="28" rightMargin="28" topMargin="28" bottomMargin="28">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="produksjon" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -14,13 +14,13 @@
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="25" splitType="Stretch"/>
+		<band height="3" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="165" splitType="Stretch">
+		<band height="147" splitType="Stretch">
 			<subreport>
 				<reportElement x="0" y="10" width="539" height="24"/>
 				<subreportParameter name="ugland_logo">
@@ -32,10 +32,52 @@
 				<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{rapportdata})]]></dataSourceExpression>
 				<subreportExpression class="java.lang.String"><![CDATA["reports/produksjon_vegg.jasper"]]></subreportExpression>
 			</subreport>
+			<subreport>
+				<reportElement x="0" y="43" width="539" height="24"/>
+				<subreportParameter name="ugland_logo">
+					<subreportParameterExpression><![CDATA[$P{ugland_logo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="produksjonstype">
+					<subreportParameterExpression><![CDATA["Produksjon"]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{rapportdata})]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA["reports/produksjon_vegg.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="0" y="77" width="539" height="24"/>
+				<subreportParameter name="ugland_logo">
+					<subreportParameterExpression><![CDATA[$P{ugland_logo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="produksjonstype">
+					<subreportParameterExpression><![CDATA["Takstol"]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{rapportdata})]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA["reports/produksjon_vegg.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="1" y="110" width="539" height="24"/>
+				<subreportParameter name="ugland_logo">
+					<subreportParameterExpression><![CDATA[$P{ugland_logo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="produksjonstype">
+					<subreportParameterExpression><![CDATA["Pakking"]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{rapportdata})]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA["reports/produksjon_vegg.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="36" width="100" height="1"/>
+			</break>
+			<break>
+				<reportElement x="0" y="70" width="100" height="1"/>
+			</break>
+			<break>
+				<reportElement x="0" y="105" width="100" height="1"/>
+			</break>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="36" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band splitType="Stretch"/>
