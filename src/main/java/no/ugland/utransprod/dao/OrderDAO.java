@@ -7,6 +7,7 @@ import java.util.Set;
 
 import no.ugland.utransprod.gui.handlers.ReportConstraintViewHandler.TransportConstraintEnum;
 import no.ugland.utransprod.gui.model.Ordreinfo;
+import no.ugland.utransprod.gui.model.Ordrelinjeinfo;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.ProductArea;
@@ -233,4 +234,6 @@ public interface OrderDAO extends DAO<Order> {
     Order merge(Order object);
 
 	List<Ordreinfo> finnOrdreinfo(String orderNr);
+
+	List<Ordrelinjeinfo> finnOrdrelinjeinfo(String orderNr);
 }

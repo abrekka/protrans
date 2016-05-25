@@ -828,14 +828,14 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
     private List<OrderLine> getInitiatedOrderLines(Packable packable) {
 
 	List<OrderLine> orderLines = packable.getOwnOrderLines();
-	if (orderLines != null) {
-	    OrderLineManager orderLineManager = (OrderLineManager) ModelUtil.getBean("orderLineManager");
-	    for (OrderLine orderLine : orderLines) {
-		if (orderLine.getOrdNo() != null) {
-		    orderLine.setOrdln(orderLineManager.findOrdlnByOrderLine(orderLine.getOrderLineId()));
-		}
-	    }
-	}
+//	if (orderLines != null) {
+//	    OrderLineManager orderLineManager = (OrderLineManager) ModelUtil.getBean("orderLineManager");
+//	    for (OrderLine orderLine : orderLines) {
+//		if (orderLine.getOrdNo() != null) {
+//		    orderLine.setOrdln(orderLineManager.findOrdlnByOrderLine(orderLine.getOrderLineId()));
+//		}
+//	    }
+//	}
 	Collections.sort(orderLines, etterProdtp2OgTrlnf3());
 	return orderLines;
     }

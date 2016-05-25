@@ -14,6 +14,7 @@ import no.ugland.utransprod.dao.OrderLineDAO;
 import no.ugland.utransprod.dao.TransportCostDAO;
 import no.ugland.utransprod.gui.handlers.ReportConstraintViewHandler.TransportConstraintEnum;
 import no.ugland.utransprod.gui.model.Ordreinfo;
+import no.ugland.utransprod.gui.model.Ordrelinjeinfo;
 import no.ugland.utransprod.model.Assembly;
 import no.ugland.utransprod.model.Colli;
 import no.ugland.utransprod.model.Customer;
@@ -1335,6 +1336,29 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 							(Integer) linje[7], (Integer) linje[8], (Integer) linje[9], (Integer) linje[10],(String)linje[11]));
 				}
 				return ordreinfo;
+			}
+
+		});
+	}
+
+	public List<Ordrelinjeinfo> finnOrdrelinjeinfo(final String orderNr) {
+		return (List<Ordrelinjeinfo>) getHibernateTemplate().execute(new HibernateCallback() {
+
+			public Object doInHibernate(final Session session) {
+				String sql = "SELECT F0100.dbo.ordln.TrInf3,"
+						+ "F0100.dbo.ordln.prodTp2"
+						+ " FROM F0100.dbo.ord inner join"
+						+ " F0100.dbo.ordln on F0100.dbo.ord.ordno = F0100.dbo.ordln.ordno inner join"
+						+ " F0100.dbo.prod on F0100.dbo.ordln.prodno =  F0100.dbo.prod.prodno inner join"
+						+ " Protrans2.dbo.customer_order on Protrans2.dbo.customer_order.order_nr=F0100.dbo.ord.inf6"
+						+ " where Protrans2.dbo.customer_order.order_nr='" + orderNr+"'";
+
+				List<Ordrelinjeinfo> ordrelinjeinfo = Lists.newArrayList();
+				List<Object[]> resultater = session.createSQLQuery(sql).list();
+				for (Object[] linje : resultater) {
+//					ordrelinjeinfo.add(new Ordrelinjeinfo((String) linje[0], (Integer) linje[1]));
+				}
+				return ordrelinjeinfo;
 			}
 
 		});
