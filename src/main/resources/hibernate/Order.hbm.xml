@@ -313,6 +313,12 @@
         column="PRODUCTION_BASIS"
         length="32"
     />
+    <property
+        name="antallStandardvegger"
+        type="java.lang.String"
+        column="ANTALL_STANDARD_VEGGER"
+        length="255"
+    />
 
     <!-- Associations -->
 
@@ -409,19 +415,19 @@
             class="no.ugland.utransprod.model.PostShipment"
         />
     </set>
-	<set
-        name="externalOrders"
-        lazy="true"
-        inverse="true"
-		cascade="all-delete-orphan"
-    >
-        <key>
-            <column name="ORDER_ID" />
-        </key>
-        <one-to-many
-            class="no.ugland.utransprod.model.ExternalOrder"
-        />
-    </set>
+<!-- 	<set -->
+<!--         name="externalOrders" -->
+<!--         lazy="true" -->
+<!--         inverse="true" -->
+<!-- 		cascade="all-delete-orphan" -->
+<!--     > -->
+<!--         <key> -->
+<!--             <column name="ORDER_ID" /> -->
+<!--         </key> -->
+<!--         <one-to-many -->
+<!--             class="no.ugland.utransprod.model.ExternalOrder" -->
+<!--         /> -->
+<!--     </set> -->
 <set
         name="orderComments"
         lazy="true"

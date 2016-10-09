@@ -245,7 +245,7 @@ DefaultAbstractViewHandler<Employee, EmployeeModel> {
 	 */
 	public Employee insertNewEmployee(WindowInterface window) {
 		Employee employee = new Employee();
-		openEditView(employee, false, window);
+		openEditView(employee, false, window,false);
 		return employee;
 	}
 

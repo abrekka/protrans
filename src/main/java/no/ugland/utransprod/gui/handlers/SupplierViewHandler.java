@@ -321,7 +321,7 @@ public class SupplierViewHandler extends DefaultAbstractViewHandler<Supplier, Su
      */
     public Supplier insertNewSupplier(WindowInterface window) {
 	Supplier supplier = new Supplier();
-	openEditView(supplier, false, window);
+	openEditView(supplier, false, window,false);
 	return supplier;
     }
 

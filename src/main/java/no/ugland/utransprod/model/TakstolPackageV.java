@@ -23,6 +23,7 @@ public class TakstolPackageV extends PackageProduction implements TextRenderable
     private Integer purcno;
 
     private Integer rest;
+    private Integer productionWeek;
 
     public TakstolPackageV() {
 	super();
@@ -37,6 +38,14 @@ public class TakstolPackageV extends PackageProduction implements TextRenderable
 		aNumberOfItems, aLoadingDate, someTransportDetails, aComment, aTransportYear, aTransportWeek, aLoadTime, aPostShipmentId,
 		aProductAreaGroupName, actionStartedDate, aColli);
     }
+    
+    public Integer getProductionWeek(){
+    	return productionWeek;
+    }
+    
+    public void setProductionWeek(Integer productionWeek) {
+		this.productionWeek = productionWeek;
+	}
 
     public List<Applyable> getRelatedArticles() {
 	return relatedArticles;
@@ -152,10 +161,6 @@ public class TakstolPackageV extends PackageProduction implements TextRenderable
 	this.rest = rest;
     }
 
-    public Integer getProductionWeek() {
-	// TODO Auto-generated method stub
-	return null;
-    }
 
     public Date getPacklistReady() {
 	// TODO Auto-generated method stub

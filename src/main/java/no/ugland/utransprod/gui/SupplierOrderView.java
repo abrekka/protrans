@@ -18,6 +18,7 @@ import com.jgoodies.forms.layout.RowSpec;
  * 
  */
 public class SupplierOrderView {
+	private boolean lettvekt;
 	/**
 	 * 
 	 */
@@ -31,15 +32,16 @@ public class SupplierOrderView {
 	/**
 	 * @param handler
 	 */
-	public SupplierOrderView(SupplierOrderViewHandler handler) {
+	public SupplierOrderView(SupplierOrderViewHandler handler,boolean lettvekt) {
 		viewHandler = handler;
+		this.lettvekt=lettvekt;
 	}
 
 	/**
 	 * @param window
 	 */
 	private void initComponents(WindowInterface window) {
-		tableOrders = viewHandler.getTableOrders(window);
+		tableOrders = viewHandler.getTableOrders(window,lettvekt);
 	}
 
 	/**

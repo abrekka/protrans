@@ -71,7 +71,7 @@ public class IgarasjenPackageApplyList extends PackageApplyList {
 
 				buffer.append(" - ").append(igarasjenPackageV.getOrderNr()).append(", ")
 						.append(igarasjenPackageV.getAddress()).append(" ,")
-						.append(igarasjenPackageV.getConstructionTypeName()).append(",")
+//						.append(igarasjenPackageV.getConstructionTypeName()).append(",")
 						.append(igarasjenPackageV.getInfo());
 
 				return buffer.toString();

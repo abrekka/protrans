@@ -455,7 +455,7 @@ public class ApplicationParamViewHandler extends
 	}
 
 	public boolean openEditViewExt(ApplicationParam object, boolean searching,
-			WindowInterface parentWindow) {
+			WindowInterface parentWindow,boolean lettvekt) {
 		return false;
 	}
 

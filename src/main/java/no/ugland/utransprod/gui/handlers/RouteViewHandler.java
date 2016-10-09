@@ -727,7 +727,7 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
      * @return orderview
      */
     public OrderPanelView getOrderPanelView() {
-	return new OrderPanelView(orderViewHandler, OrderPanelTypeEnum.NEW_ORDERS, "Ordre:");
+	return new OrderPanelView(orderViewHandler, OrderPanelTypeEnum.NEW_ORDERS, "Ordre:",false);
     }
 
     /**
@@ -1433,7 +1433,7 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
 	order.setOrderNr(orderNr);
 	order.setTransport(transport);
 	orderViewHandler.setEditEnabled(true);
-	orderViewHandler.openOrderView(order, false, window);
+	orderViewHandler.openOrderView(order, false, window,false);
 	/*
 	 * EditOrderView editOrderView = new EditOrderView(orderViewHandler,
 	 * order, false); WindowInterface dialog = new JDialogAdapter(new
@@ -1498,7 +1498,7 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
 	public void actionPerformed(ActionEvent arg0) {
 	    if (transportWeekViewHandler.getUseListView()) {
 		String excelDirectory = ApplicationParamUtil.findParamByName("excel_path");
-		String fileName = "Transportlist_" + Util.getCurrentDateAsDateTimeString() + ".xls";
+		String fileName = "Transportlist_" + Util.getCurrentDateAsDateTimeString() + ".xlsx";
 		ExcelUtil.showTableDataInExcel(excelDirectory, fileName, null, "Transportliste", transportWeekViewHandler.getTableOrdersList(), null,
 			null, 16, false);
 	    } else {
@@ -1593,7 +1593,7 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
 	    labelInfo.setText("Generer excel for transport...");
 	    String errorString = null;
 	    try {
-		String fileName = "transport_" + Util.getCurrentDateAsDateTimeString() + ".xls";
+		String fileName = "transport_" + Util.getCurrentDateAsDateTimeString() + ".xlsx";
 		String excelDirectory = ApplicationParamUtil.findParamByName("excel_path");
 		ExcelUtil excelUtil = new ExcelUtil();
 		excelUtil.showDataInExcelTransport(excelDirectory, fileName, null, models);

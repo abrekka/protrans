@@ -14,6 +14,23 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import org.fest.swing.edt.GuiActionRunner;
+import org.fest.swing.edt.GuiQuery;
+import org.fest.swing.finder.JOptionPaneFinder;
+import org.fest.swing.finder.WindowFinder;
+import org.fest.swing.fixture.DialogFixture;
+import org.fest.swing.fixture.JOptionPaneFixture;
+import org.fest.swing.fixture.JTableFixture;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import com.birosoft.liquid.LiquidLookAndFeel;
+import com.google.common.collect.Multimap;
+
 import no.ugland.utransprod.gui.DeviationOverviewViewFactory;
 import no.ugland.utransprod.gui.JDialogAdapter;
 import no.ugland.utransprod.gui.LFEnum;
@@ -50,23 +67,6 @@ import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.test.ManuellTest;
 import no.ugland.utransprod.util.ApplicationParamUtil;
 import no.ugland.utransprod.util.ModelUtil;
-
-import org.fest.swing.edt.GuiActionRunner;
-import org.fest.swing.edt.GuiQuery;
-import org.fest.swing.finder.JOptionPaneFinder;
-import org.fest.swing.finder.WindowFinder;
-import org.fest.swing.fixture.DialogFixture;
-import org.fest.swing.fixture.JOptionPaneFixture;
-import org.fest.swing.fixture.JTableFixture;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import com.birosoft.liquid.LiquidLookAndFeel;
-import com.google.common.collect.Multimap;
 
 /**
  * @author atle.brekka

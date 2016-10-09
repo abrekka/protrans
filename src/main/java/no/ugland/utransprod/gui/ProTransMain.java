@@ -76,7 +76,7 @@ public class ProTransMain extends JFrame implements MainWindow {
      * @return vindu
      */
     public Component buildFrame() {
-	setTitle("ProTrans - Grimstad Industrier");
+	setTitle("ProTrans - Igland Garasjen AS");
 	setIconImage(IconEnum.ICON_UGLAND2.getIcon().getImage());
 
 	setJMenuBar(menuBarBuilder.buildMenuBar(this, login.getApplicationUser(), login.getUserType()));

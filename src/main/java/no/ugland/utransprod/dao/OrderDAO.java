@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import no.ugland.utransprod.gui.handlers.ReportConstraintViewHandler.TransportConstraintEnum;
+import no.ugland.utransprod.gui.model.Delelisteinfo;
 import no.ugland.utransprod.gui.model.Ordreinfo;
 import no.ugland.utransprod.gui.model.Ordrelinjeinfo;
 import no.ugland.utransprod.model.Order;
@@ -235,5 +236,14 @@ public interface OrderDAO extends DAO<Order> {
 
 	List<Ordreinfo> finnOrdreinfo(String orderNr);
 
-	List<Ordrelinjeinfo> finnOrdrelinjeinfo(String orderNr);
+	List<Ordrelinjeinfo> finnOrdrelinjeinfo(Integer orderId);
+
+
+	void fjernOrdreKomplett(String ordrenr);
+
+	void setOrdreKomplett(String orderNr,Date dato);
+
+	void setStatus(Integer orderId,String status);
+
+	List<Delelisteinfo> finnDeleliste(String ordrenr,String kundenavn,String sted,String garasjetype);
 }

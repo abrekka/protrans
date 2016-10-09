@@ -66,7 +66,7 @@ public class GarageTransportLetter extends AbstractTransportLetter {
 
     @Override
     public IconEnum getLogoIcon() {
-	return IconEnum.ICON_GRIMSTAD_INDUSTRIER;
+	return IconEnum.ICON_IGLAND;
     }
 
     @Override

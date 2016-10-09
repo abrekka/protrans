@@ -151,6 +151,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 
 	JMenuItem menuItemShowMissing;
 	JMenuItem menuItemSetComment;
+	JMenuItem menuItemSetAntallStandardvegger;
 
 	JMenuItem menuItemShowContent;
 
@@ -340,6 +341,9 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 		
 		menuItemSetComment = new JMenuItem("Legg til kommentar...");
 		popupMenuProduction.add(menuItemSetComment);
+		
+		menuItemSetAntallStandardvegger = new JMenuItem("Sett antall standardvegger...");
+		popupMenuProduction.add(menuItemSetAntallStandardvegger);
 	}
 
 	// private void initProductAreaGroup() {
@@ -2295,6 +2299,44 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
 				return 0;
 			}
+		},
+		ANTALL_STANDARDVEGGER("Antall standardvegger", false, 200, false) {
+			@Override
+			public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				return transportable.getAntallStandardvegger();
+			}
+
+			@Override
+			public Class<?> getColumnClass() {
+				return String.class;
+			}
+
+			@Override
+			public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap,
+					WindowInterface window, Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers,
+					JPopupMenu popupMenuProduction) {
+				return true;
+			}
+
+			@Override
+			public Component getFilterComponent(PresentationModel presentationModel) {
+				return null;
+			}
+
+			@Override
+			public boolean filter(ProductionOverviewV productionOverviewV,
+					ProductionoverviewFilter productionoverviewFilter, Map<String, String> statusMap,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				return false;
+			}
+
+			@Override
+			public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2,
+					Map<String, String> statusMap1, Map<String, String> statusMap2,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				return 0;
+			}
 		}
 		// REST("Rest") {
 		// @Override
@@ -2896,6 +2938,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 		menuItemSetProductionWeek.addActionListener(new MenuItemListenerSetProductionWeek(window));
 		menuItemShowMissing.addActionListener(new MenuItemListenerShowMissing(window));
 		menuItemSetComment.addActionListener(new MenuItemListenerSetComment(window));
+		menuItemSetAntallStandardvegger.addActionListener(new MenuItemListenerSetAntallStandardvegger(window));
 		menuItemShowContent.addActionListener(new MenuItemListenerShowContent(window));
 		menuItemDeviation.addActionListener(new MenuItemListenerDeviation(window));
 		menuItemSetProcent.addActionListener(new MenuItemListenerSetProcent(window));
@@ -2935,6 +2978,27 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 			}
 		}
 	}
+	class MenuItemListenerSetAntallStandardvegger implements ActionListener {
+
+		private WindowInterface window;
+
+		public MenuItemListenerSetAntallStandardvegger(WindowInterface aWindow) {
+			window = aWindow;
+		}
+
+		public void actionPerformed(ActionEvent actionEvent) {
+			Transportable transportable = getSelectedTransportable();
+
+			if (transportable != null && transportable instanceof Order) {
+				Order order = (Order) transportable;
+				String value = Util.showTextAreaInputDialogWithdefaultValue(window, "Antall standardvegger", "Antall standardvegger",
+						order.getAntallStandardvegger() == null ? "" : order.getAntallStandardvegger());
+				order.setAntallStandardvegger(value);
+				managerRepository.getOrderManager().saveOrder(order);
+				doRefresh(window);
+			}
+		}
+	}
 
 	/**
 	 * Henter vindustittel
@@ -2954,7 +3018,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	void openOrderView(Transportable transportable, WindowInterface window) {
 		@SuppressWarnings("unused")
 		boolean success = transportable != null
-				? orderViewHandler.openOrderView(transportable.getOrder(), false, window) : false;
+				? orderViewHandler.openOrderView(transportable.getOrder(), false, window,false) : false;
 	}
 
 	/**
@@ -3748,7 +3812,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 		public void actionPerformed(ActionEvent arg0) {
 			Util.setWaitCursor(window.getComponent());
 			try {
-				String fileName = "Produksjonsoversikt_" + Util.getCurrentDateAsDateTimeString() + ".xls";
+				String fileName = "Produksjonsoversikt_" + Util.getCurrentDateAsDateTimeString() + ".xlsx";
 				String excelDirectory = ApplicationParamUtil.findParamByName("excel_path");
 
 				// JXTable tableReport = new JXTable(new

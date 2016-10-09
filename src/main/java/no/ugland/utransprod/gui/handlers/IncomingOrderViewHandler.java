@@ -227,7 +227,7 @@ public class IncomingOrderViewHandler extends
         return null;
     }
 
-    public boolean openEditViewExt(Order object, boolean searching, WindowInterface parentWindow) {
+    public boolean openEditViewExt(Order object, boolean searching, WindowInterface parentWindow,boolean lettvekt) {
         try {
             if (searching) {
                 doSearch();

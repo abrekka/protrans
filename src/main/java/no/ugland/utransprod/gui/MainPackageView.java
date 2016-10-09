@@ -11,9 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
-import no.ugland.utransprod.gui.handlers.MainPackageViewHandler;
-import no.ugland.utransprod.util.InternalFrameBuilder;
-
 import org.jdesktop.swingx.JXTable;
 
 import com.jgoodies.forms.builder.PanelBuilder;
@@ -21,6 +18,9 @@ import com.jgoodies.forms.debug.FormDebugPanel;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
+
+import no.ugland.utransprod.gui.handlers.MainPackageViewHandler;
+import no.ugland.utransprod.util.InternalFrameBuilder;
 
 /**
  * Klasse som håndterer visning av vindu for pakking av garasjepakke

@@ -5,7 +5,7 @@ import no.ugland.utransprod.gui.model.AbstractModel;
 
 public interface ViewHandlerExt<T,E> {
     boolean openEditViewExt(T object, boolean searching,
-            WindowInterface parentWindow);
+            WindowInterface parentWindow,boolean lettvekt);
     boolean saveObjectExt(AbstractModel<T, E> objectModel,
             WindowInterface window);
 }

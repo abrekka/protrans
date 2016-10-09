@@ -652,7 +652,7 @@ public class SearchAttributeViewHandler implements Closeable {
                     order.setOrderLines(new HashSet<OrderLine>(orderLines1));
                     // OrderWrapper orderWrapper = new OrderWrapper(order);
                     OrderWrapper orderWrapper = new OrderWrapper(
-                            new OrderModel(order, false, false, false,null,null));
+                            new OrderModel(order, false, false, false,null,null,false));
                     treeTableModelChosen = new OrderLineTreeTableModel(
                             orderWrapper);
                     treeTableChosen.setTreeTableModel(treeTableModelChosen);

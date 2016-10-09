@@ -28,6 +28,22 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.Hibernate;
+import org.jdesktop.swingx.JXTable;
+
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.inject.Inject;
+import com.google.inject.internal.Lists;
+import com.google.inject.name.Named;
+import com.jgoodies.binding.PresentationModel;
+import com.jgoodies.binding.adapter.AbstractTableAdapter;
+import com.jgoodies.binding.adapter.BasicComponentFactory;
+import com.jgoodies.binding.beans.Model;
+import com.jgoodies.binding.list.SelectionInList;
+
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.gui.IconEnum;
 import no.ugland.utransprod.gui.JDialogAdapter;
@@ -39,6 +55,7 @@ import no.ugland.utransprod.gui.checker.StatusCheckerInterface;
 import no.ugland.utransprod.gui.edit.EditPacklistView;
 import no.ugland.utransprod.gui.model.ApplyListInterface;
 import no.ugland.utransprod.gui.model.BudgetType;
+import no.ugland.utransprod.gui.model.Delelisteinfo;
 import no.ugland.utransprod.gui.model.ExternalOrderModel;
 import no.ugland.utransprod.gui.model.HorizontalAlignmentCellRenderer;
 import no.ugland.utransprod.gui.model.Ordreinfo;
@@ -49,19 +66,15 @@ import no.ugland.utransprod.gui.model.ProductionReportData;
 import no.ugland.utransprod.gui.model.ReportEnum;
 import no.ugland.utransprod.gui.model.TextPaneRendererOrder;
 import no.ugland.utransprod.gui.model.Transportable;
-import no.ugland.utransprod.model.Assembly;
-import no.ugland.utransprod.model.AssemblyV;
 import no.ugland.utransprod.model.Budget;
 import no.ugland.utransprod.model.CostType;
 import no.ugland.utransprod.model.CostUnit;
 import no.ugland.utransprod.model.ExternalOrder;
-import no.ugland.utransprod.model.FakturagrunnlagV;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.Ordln;
 import no.ugland.utransprod.model.PacklistV;
 import no.ugland.utransprod.model.ProductAreaGroup;
-import no.ugland.utransprod.service.CraningCostManager;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.OrderManager;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
@@ -72,23 +85,7 @@ import no.ugland.utransprod.util.UserUtil;
 import no.ugland.utransprod.util.Util;
 import no.ugland.utransprod.util.YearWeek;
 import no.ugland.utransprod.util.excel.ExcelUtil;
-import no.ugland.utransprod.util.report.AssemblyReportNy;
-import no.ugland.utransprod.util.report.MailConfig;
 import no.ugland.utransprod.util.report.ReportViewer;
-
-import org.apache.commons.lang.StringUtils;
-import org.jdesktop.swingx.JXTable;
-
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.google.inject.Inject;
-import com.google.inject.internal.Lists;
-import com.google.inject.name.Named;
-import com.jgoodies.binding.PresentationModel;
-import com.jgoodies.binding.adapter.AbstractTableAdapter;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
-import com.jgoodies.binding.beans.Model;
-import com.jgoodies.binding.list.SelectionInList;
 
 /**
  * Håndterer setting av pakkliste klar
@@ -475,7 +472,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 		Util.setWaitCursor(window.getComponent());
 		PacklistV packlistV = getSelectedObject();
 		Order order = orderManager.findByOrderNr(packlistV.getOrderNr());
-		orderViewHandler.openOrderView(order, false, window);
+		orderViewHandler.openOrderView(order, false, window, false);
 		Util.setDefaultCursor(window.getComponent());
 
 	}
@@ -1044,6 +1041,13 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 		return buttonProductionReport;
 	}
 
+	public JButton getButtonDelelisteReport(WindowInterface window) {
+		JButton buttonDelelisteReport = new JButton(new DelelisteReportAction(window));
+		buttonDelelisteReport.setEnabled(false);
+		emptySelectionListener.addButton(buttonDelelisteReport);
+		return buttonDelelisteReport;
+	}
+
 	public JButton getButtonExcel(WindowInterface window) {
 		JButton buttonExcel = new JButton(new ExcelAction(window));
 		buttonExcel.setIcon(IconEnum.ICON_EXCEL.getIcon());
@@ -1082,7 +1086,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	}
 
 	private void exportToExcel(WindowInterface window) throws ProTransException {
-		String fileName = "Pakkliste_" + Util.getCurrentDateAsDateTimeString() + ".xls";
+		String fileName = "Pakkliste_" + Util.getCurrentDateAsDateTimeString() + ".xlsx";
 		String excelDirectory = ApplicationParamUtil.findParamByName("excel_path");
 
 		// JXTable tableReport = new JXTable(new
@@ -1168,30 +1172,87 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 
 	}
 
+	private class DelelisteReportAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+		private WindowInterface window;
+
+		public DelelisteReportAction(WindowInterface aWindow) {
+			super("Deleliste kunde...");
+			window = aWindow;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			Util.runInThreadWheel(window.getRootPane(), new Threadable() {
+
+				public void enableComponents(boolean enable) {
+				}
+
+				public Object doWork(Object[] params, JLabel labelInfo) {
+					labelInfo.setText("Genererer deleliste kunde...");
+					String errorMsg = null;
+					try {
+						// generateAssemblyReport();
+						generateDelelisteReport(window);
+					} catch (ProTransException e) {
+						errorMsg = e.getMessage();
+						e.printStackTrace();
+					}
+					return errorMsg;
+				}
+
+				public void doWhenFinished(Object object) {
+					if (object != null) {
+						Util.showErrorDialog(window, "Feil", object.toString());
+					}
+				}
+
+			}, null);
+
+		}
+
+	}
+
 	private void generateProductionReport(WindowInterface window) throws ProTransException {
 		PacklistV packlistV = getSelectedObject();
 		if (packlistV != null) {
 			Order order = managerRepository.getOrderManager().findByOrderNr(packlistV.getOrderNr());
 			managerRepository.getOrderManager().lazyLoadOrder(order,
-					new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ATTRIBUTES,LazyLoadOrderEnum.COMMENTS });
+					new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ATTRIBUTES,
+							LazyLoadOrderEnum.COMMENTS });
 			List<Ordreinfo> ordreinfo = managerRepository.getOrderManager().finnOrdreinfo(order.getOrderNr());
 
+			List<String> garasjetyper = Lists
+					.newArrayList(Iterables.transform(Iterables.filter(ordreinfo, new Predicate<Ordreinfo>() {
+
+						public boolean apply(Ordreinfo ordreinfo) {
+							return ordreinfo.getBeskrivelse().contains("GARASJETYPE");
+						}
+					}), new Function<Ordreinfo, String>() {
+
+						public String apply(Ordreinfo from) {
+							return from.getBeskrivelse();
+						}
+					}));
+
+			List<Delelisteinfo> deleliste = managerRepository.getOrderManager().finnDeleliste(order.getOrderNr(),
+					order.getCustomer().getFullName(), order.getPostOffice(), garasjetyper.get(0));
+
 			OrderLine takstein = order.getOrderLine("Takstein");
-			Ordln ordlnTakstein = managerRepository.getOrdlnManager().findByOrdNoAndLnNo(takstein.getOrdNo(), takstein.getLnNo());
+			Ordln ordlnTakstein = managerRepository.getOrdlnManager().findByOrdNoAndLnNo(takstein.getOrdNo(),
+					takstein.getLnNo());
 			if (ordlnTakstein != null) {
-			    takstein.setOrdln(ordlnTakstein);
+				takstein.setOrdln(ordlnTakstein);
 			}
 
 			ProductionReportData productionReportData = new ProductionReportData(packlistV.getOrderNr())
 					.medNavn(order.getCustomer().getFullName()).medLeveringsadresse(order.getDeliveryAddress())
 					.medPostnr(order.getPostalCode()).medTelefonliste(order.getTelephoneNr())
 					.medPoststed(order.getPostOffice()).medMontering(order.getDoAssembly())
-					.medTransportuke(order.getTransport()==null?null:order.getTransport().getTransportWeek())
-					.medProduksjonsuke(order.getProductionWeek())
-					.medKommentarer(order.getOrderComments())
-					.medOrdreinfo(ordreinfo)
-					.medTaktekke(takstein.getDetailsWithoutNoAttributes()).medPakketAv(order.getPacklistDoneBy())
-					.medBruker(login.getApplicationUser().getFullName()).medProductArea(order.getProductArea());
+					.medTransportuke(order.getTransport() == null ? null : order.getTransport().getTransportWeek())
+					.medProduksjonsuke(order.getProductionWeek()).medKommentarer(order.getOrderComments())
+					.medOrdreinfo(ordreinfo).medTaktekke(takstein.getDetailsWithoutNoAttributes())
+					.medPakketAv(order.getPacklistDoneBy()).medBruker(login.getApplicationUser().getFullName())
+					.medProductArea(order.getProductArea()).medDeleliste(deleliste);
 					// Order order = packlistV.getOrder() == null ?
 					// assembly.getDeviation().getOrder() : assembly.getOrder();
 					// managerRepository.getOrderManager().lazyLoadOrder(order,
@@ -1225,11 +1286,61 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 			// "Fakturagrunnlag", "", "");
 			// mailConfig.addToHeading(" for ordrenummer " + orderNr);
 			//
-			ReportViewer reportViewer = new ReportViewer("Montering");
+			ReportViewer reportViewer = new ReportViewer("Produksjon");
 			List<ProductionReportData> reportList = Lists.newArrayList(productionReportData);
 			// assemblyReportList.add(assemblyReport);
-			reportViewer.generateProtransReportFromBeanAndShow(reportList, "Montering", ReportEnum.PRODUCTION_REPORT,
+			reportViewer.generateProtransReportFromBeanAndShow(reportList, "Produksjon", ReportEnum.PRODUCTION_REPORT,
 					null, null, window, true);
+
+		}
+	}
+
+	private void generateDelelisteReport(WindowInterface window) throws ProTransException {
+		PacklistV packlistV = getSelectedObject();
+		if (packlistV != null) {
+			Order order = managerRepository.getOrderManager().findByOrderNr(packlistV.getOrderNr());
+			managerRepository.getOrderManager().lazyLoadOrder(order,
+					new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ATTRIBUTES,
+							LazyLoadOrderEnum.COMMENTS });
+			List<Ordreinfo> ordreinfo = managerRepository.getOrderManager().finnOrdreinfo(order.getOrderNr());
+
+			List<String> garasjetyper = Lists
+					.newArrayList(Iterables.transform(Iterables.filter(ordreinfo, new Predicate<Ordreinfo>() {
+
+						public boolean apply(Ordreinfo ordreinfo) {
+							return ordreinfo.getBeskrivelse().contains("GARASJETYPE");
+						}
+					}), new Function<Ordreinfo, String>() {
+
+						public String apply(Ordreinfo from) {
+							return from.getBeskrivelse();
+						}
+					}));
+
+			List<Delelisteinfo> deleliste = managerRepository.getOrderManager().finnDeleliste(order.getOrderNr(),
+					order.getCustomer().getFullName(), order.getPostOffice(), garasjetyper.get(0));
+
+			OrderLine takstein = order.getOrderLine("Takstein");
+			Ordln ordlnTakstein = managerRepository.getOrdlnManager().findByOrdNoAndLnNo(takstein.getOrdNo(),
+					takstein.getLnNo());
+			if (ordlnTakstein != null) {
+				takstein.setOrdln(ordlnTakstein);
+			}
+
+			ProductionReportData productionReportData = new ProductionReportData(packlistV.getOrderNr())
+					.medNavn(order.getCustomer().getFullName()).medLeveringsadresse(order.getDeliveryAddress())
+					.medPostnr(order.getPostalCode()).medTelefonliste(order.getTelephoneNr())
+					.medPoststed(order.getPostOffice()).medMontering(order.getDoAssembly())
+					.medTransportuke(order.getTransport() == null ? null : order.getTransport().getTransportWeek())
+					.medProduksjonsuke(order.getProductionWeek()).medKommentarer(order.getOrderComments())
+					.medOrdreinfo(ordreinfo).medTaktekke(takstein.getDetailsWithoutNoAttributes())
+					.medPakketAv(order.getPacklistDoneBy()).medBruker(login.getApplicationUser().getFullName())
+					.medProductArea(order.getProductArea()).medDeleliste(deleliste);
+			//
+			ReportViewer reportViewer = new ReportViewer("Deleliste kunde");
+			List<ProductionReportData> reportList = Lists.newArrayList(productionReportData);
+			reportViewer.generateProtransReportFromBeanAndShow(reportList, "Deleliste kunde",
+					ReportEnum.DELELISTE_KUNDE_REPORT, null, null, window, true);
 
 		}
 	}
@@ -1380,7 +1491,10 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 
 		public void actionPerformed(ActionEvent arg0) {
 			Util.setWaitCursor(window);
+
 			for (PacklistV packlistV : applyListInterface.getObjectLines()) {
+				oppdaterInfo(packlistV);
+
 				Map<String, String> statusMap = Util.createStatusMap(packlistV.getOrderStatus());
 				String status = statusMap.get(takstolChecker.getArticleName());
 				if (status == null) {
@@ -1391,6 +1505,22 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 
 		}
 
+	}
+
+	private void oppdaterInfo(PacklistV packlistV) {
+		Order order = managerRepository.getOrderManager().findByOrderNr(packlistV.getOrderNr());
+
+		if (order.getInfo() == null) {
+			if (!Hibernate.isInitialized(order.getOrderLines())) {
+				managerRepository.getOrderManager().lazyLoadOrder(order,
+						new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES,
+								LazyLoadOrderEnum.ORDER_LINE_ATTRIBUTES, LazyLoadOrderEnum.COMMENTS,
+								LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES, LazyLoadOrderEnum.ORDER_COSTS,
+								LazyLoadOrderEnum.COLLIES });
+			}
+			order.setInfo(order.orderLinesToString());
+			managerRepository.getOrderManager().saveOrder(order);
+		}
 	}
 
 	private void updateOrderStatus(PacklistV packlistV, Map<String, String> statusMap, WindowInterface window) {
@@ -1429,6 +1559,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 			Util.setWaitCursor(window);
 			PacklistV packlistV = (PacklistV) objectSelectionList
 					.getElementAt(table.convertRowIndexToModel(objectSelectionList.getSelectionIndex()));
+			oppdaterInfo(packlistV);
 			Map<String, String> statusMap = Util.createStatusMap(packlistV.getOrderStatus());
 			String status = statusMap.get(takstolChecker.getArticleName());
 			if (status == null) {

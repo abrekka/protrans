@@ -6,6 +6,9 @@ import java.util.Map;
 
 import javax.swing.AbstractAction;
 
+import com.google.common.collect.Multimap;
+import com.google.inject.Inject;
+
 import no.ugland.utransprod.gui.MainPackageView;
 import no.ugland.utransprod.gui.MenuBarBuilderInterface;
 import no.ugland.utransprod.gui.checker.LagerProductionStatusChecker;
@@ -14,9 +17,6 @@ import no.ugland.utransprod.gui.handlers.MainPackageViewHandler;
 import no.ugland.utransprod.gui.handlers.MainPackageViewHandlerFactory;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.util.ApplicationParamUtil;
-
-import com.google.common.collect.Multimap;
-import com.google.inject.Inject;
 
 /**
  * Håndterer menyvalg Garasjepakke...

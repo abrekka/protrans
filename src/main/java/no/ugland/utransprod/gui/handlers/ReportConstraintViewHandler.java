@@ -598,7 +598,7 @@ public class ReportConstraintViewHandler implements Closeable {
      * @throws ProTransException
      */
     void exportToExcel() throws ProTransException {
-	String fileName = "transport_" + Util.getCurrentDateAsDateTimeString() + ".xls";
+	String fileName = "transport_" + Util.getCurrentDateAsDateTimeString() + ".xlsx";
 	String excelDirectory = ApplicationParamUtil.findParamByName("excel_path");
 
 	JXTable excelTable = null;

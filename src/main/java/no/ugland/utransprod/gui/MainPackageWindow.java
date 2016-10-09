@@ -7,6 +7,9 @@ import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import com.google.common.collect.Multimap;
+import com.google.inject.Inject;
+
 import no.ugland.utransprod.gui.checker.LagerProductionStatusChecker;
 import no.ugland.utransprod.gui.checker.StatusCheckerInterface;
 import no.ugland.utransprod.gui.handlers.MainPackageViewHandler;
@@ -17,9 +20,6 @@ import no.ugland.utransprod.service.GulvsponPackageVManager;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.Util;
-
-import com.google.common.collect.Multimap;
-import com.google.inject.Inject;
 
 /**
  * Klasse som viser pakkevindu som frittstående vindu

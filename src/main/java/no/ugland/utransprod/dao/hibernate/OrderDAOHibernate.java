@@ -9,10 +9,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.Type;
+import org.springframework.orm.hibernate3.HibernateCallback;
+
+import com.google.common.collect.Lists;
+
 import no.ugland.utransprod.dao.OrderDAO;
 import no.ugland.utransprod.dao.OrderLineDAO;
 import no.ugland.utransprod.dao.TransportCostDAO;
 import no.ugland.utransprod.gui.handlers.ReportConstraintViewHandler.TransportConstraintEnum;
+import no.ugland.utransprod.gui.model.Delelisteinfo;
 import no.ugland.utransprod.gui.model.Ordreinfo;
 import no.ugland.utransprod.gui.model.Ordrelinjeinfo;
 import no.ugland.utransprod.model.Assembly;
@@ -29,19 +43,6 @@ import no.ugland.utransprod.util.Periode;
 import no.ugland.utransprod.util.Util;
 import no.ugland.utransprod.util.report.SaleReportData;
 import no.ugland.utransprod.util.report.SaleReportSum;
-
-import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
-import org.hibernate.criterion.Example;
-import org.hibernate.criterion.Expression;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.type.Type;
-import org.springframework.orm.hibernate3.HibernateCallback;
-
-import com.google.common.collect.Lists;
 
 /**
  * Implementasjon av DAO for tabell ORDER for hibernate
@@ -1331,9 +1332,10 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 				List<Ordreinfo> ordreinfo = Lists.newArrayList();
 				List<Object[]> resultater = session.createSQLQuery(sql).list();
 				for (Object[] linje : resultater) {
-					ordreinfo.add(new Ordreinfo((String) linje[0], (Integer) linje[1], (String) linje[2],
-							(Integer) linje[3], (Integer) linje[4], (String) linje[5], (String) linje[6],
-							(Integer) linje[7], (Integer) linje[8], (Integer) linje[9], (Integer) linje[10],(String)linje[11]));
+					ordreinfo.add(
+							new Ordreinfo((String) linje[0], (Integer) linje[1], (String) linje[2], (Integer) linje[3],
+									(Integer) linje[4], (String) linje[5], (String) linje[6], (Integer) linje[7],
+									(Integer) linje[8], (Integer) linje[9], (Integer) linje[10], (String) linje[11]));
 				}
 				return ordreinfo;
 			}
@@ -1341,24 +1343,96 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 		});
 	}
 
-	public List<Ordrelinjeinfo> finnOrdrelinjeinfo(final String orderNr) {
+	public List<Ordrelinjeinfo> finnOrdrelinjeinfo(final Integer orderId) {
 		return (List<Ordrelinjeinfo>) getHibernateTemplate().execute(new HibernateCallback() {
 
 			public Object doInHibernate(final Session session) {
-				String sql = "SELECT F0100.dbo.ordln.TrInf3,"
-						+ "F0100.dbo.ordln.prodTp2"
-						+ " FROM F0100.dbo.ord inner join"
-						+ " F0100.dbo.ordln on F0100.dbo.ord.ordno = F0100.dbo.ordln.ordno inner join"
-						+ " F0100.dbo.prod on F0100.dbo.ordln.prodno =  F0100.dbo.prod.prodno inner join"
-						+ " Protrans2.dbo.customer_order on Protrans2.dbo.customer_order.order_nr=F0100.dbo.ord.inf6"
-						+ " where Protrans2.dbo.customer_order.order_nr='" + orderNr+"'";
+				String sql = "SELECT TrInf3," + "prodTp2," + "article_name," + "descr," + "attribute_info"
+						+ " FROM main_package_order_line_v" + " where order_id=" + orderId;
 
 				List<Ordrelinjeinfo> ordrelinjeinfo = Lists.newArrayList();
 				List<Object[]> resultater = session.createSQLQuery(sql).list();
 				for (Object[] linje : resultater) {
-//					ordrelinjeinfo.add(new Ordrelinjeinfo((String) linje[0], (Integer) linje[1]));
+					ordrelinjeinfo.add(new Ordrelinjeinfo((String) linje[0], (Integer) linje[1], (String) linje[2],
+							(Integer) linje[3], (String) linje[4], (String) linje[5]));
 				}
 				return ordrelinjeinfo;
+			}
+
+		});
+	}
+
+	public void fjernOrdreKomplett(final String orderNr) {
+		getHibernateTemplate().execute(new HibernateCallback() {
+
+			public Object doInHibernate(final Session session) {
+
+				String sql = "update Order o set o.orderComplete=:komplett, o.colliesDone=:done where o.orderNr=:orderNr";
+
+				session.createQuery(sql).setString("komplett", null).setInteger("done", 0).setString("orderNr", orderNr)
+						.executeUpdate();
+				return null;
+			}
+
+		});
+
+	}
+
+	public void setOrdreKomplett(final String orderNr, final Date dato) {
+		getHibernateTemplate().execute(new HibernateCallback() {
+
+			public Object doInHibernate(final Session session) {
+
+				String sql = "update Order o set o.orderComplete=:komplett where o.orderNr=:orderNr";
+
+				session.createQuery(sql).setTimestamp("komplett", dato).setString("orderNr", orderNr).executeUpdate();
+				return null;
+			}
+
+		});
+
+	}
+
+	public void setStatus(final Integer orderId, final String status) {
+		getHibernateTemplate().execute(new HibernateCallback() {
+
+			public Object doInHibernate(final Session session) {
+
+				String sql = "update Order o set o.status=:status where o.orderId=:orderId";
+
+				session.createQuery(sql).setString("status", status).setInteger("orderId", orderId).executeUpdate();
+				return null;
+			}
+
+		});
+
+	}
+
+	public List<Delelisteinfo> finnDeleliste(final String ordrenr, final String kundenavn, final String sted,
+			final String garasjetype) {
+		return (List<Delelisteinfo>) getHibernateTemplate().execute(new HibernateCallback() {
+
+			public Object doInHibernate(final Session session) {
+				String sql = "SELECT cast(NoInvoAb as int) as antall,F0100.dbo.ordln.prodtp," + "F0100.dbo.txt.txt, "
+						+ "F0100.dbo.ordln.prodtp2, " + "F0100.dbo.Unit.descr as enhet"
+						+ ", F0100.dbo.ordln.descr, F0100.dbo.ordln.trinf4,F0100.dbo.prod.inf8,F0100.dbo.prod.prodno,F0100.dbo.prod.PrCatNo2 "
+						+ "FROM F0100.dbo.OrdLn inner join "
+						+ "F0100.dbo.txt on F0100.dbo.txt.txtno=F0100.dbo.ordln.prodtp2 inner join "
+						+ "F0100.dbo.ord on F0100.dbo.ordln.ordno=F0100.dbo.ord.ordno inner join "
+						+ "F0100.dbo.Unit on F0100.dbo.Unit.un=F0100.dbo.ordln.un inner join "
+						+ "F0100.dbo.prod on F0100.dbo.prod.prodno=F0100.dbo.ordln.ProdNo "
+						+ "where F0100.dbo.txt.Lang = 47 and F0100.dbo.txt.txttp = 58 and F0100.dbo.ordln.prodtp in(10,20,30,35,40,50) "
+						+ " and F0100.dbo.ord.inf6='" + ordrenr + "' "
+						+ "order by F0100.dbo.ordln.prodtp2,F0100.dbo.ordln.trinf3,F0100.dbo.ordln.trinf4";
+
+				List<Delelisteinfo> deleliste = Lists.newArrayList();
+				List<Object[]> resultater = session.createSQLQuery(sql).list();
+				for (Object[] linje : resultater) {
+					deleliste.add(new Delelisteinfo(ordrenr, kundenavn, sted, garasjetype, (Integer) linje[0],
+							(Integer) linje[1], (String) linje[2], (Integer) linje[3], (String) linje[4],
+							(String) linje[5], (String) linje[6], (String) linje[7], (String) linje[8],(Integer) linje[9]));
+				}
+				return deleliste;
 			}
 
 		});

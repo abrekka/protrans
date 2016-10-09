@@ -66,7 +66,7 @@ public enum IconEnum {
      * Logo med grimstad garasjene tekst
      */
     // ICON_UGLAND_GRIMSTAD_GARASJENE("images/GRIMSTAD_GARASJENE_logo.jpg"),
-    ICON_GRIMSTAD_INDUSTRIER("images/GRIMSTAD_INDUSTRIER_logo.jpg"),
+//    ICON_GRIMSTAD_INDUSTRIER("images/GRIMSTAD_INDUSTRIER_logo.jpg"),
     /**
      * Ikon som brukes på dialoger
      */

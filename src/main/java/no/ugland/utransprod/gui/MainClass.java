@@ -67,7 +67,7 @@ public final class MainClass {
 	    testString += " test";
 	}
 
-	LoadView loadView = new LoadView(version + testString, "ProTrans - Grimstad Industrier");
+	LoadView loadView = new LoadView(version + testString, "ProTrans - Igland Garasjen AS");
 	loadDialog = loadView.buildDialog();
 
 	Util.locateOnScreenCenter(loadDialog);

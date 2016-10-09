@@ -1475,7 +1475,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
      */
     void openOrderView(Transportable transportable, WindowInterface window) {
 	@SuppressWarnings("unused")
-	boolean success = transportable != null ? orderViewHandler.openOrderView(transportable.getOrder(), false, window) : false;
+	boolean success = transportable != null ? orderViewHandler.openOrderView(transportable.getOrder(), false, window,false) : false;
     }
 
     /**
@@ -2157,7 +2157,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	public void actionPerformed(ActionEvent arg0) {
 	    Util.setWaitCursor(window.getComponent());
 	    try {
-		String fileName = "Produksjonsoversikt_" + Util.getCurrentDateAsDateTimeString() + ".xls";
+		String fileName = "Produksjonsoversikt_" + Util.getCurrentDateAsDateTimeString() + ".xlsx";
 		String excelDirectory = ApplicationParamUtil.findParamByName("excel_path");
 
 		// JXTable tableReport = new JXTable(new

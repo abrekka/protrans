@@ -422,7 +422,7 @@ public class TransportOverviewReportHandler implements Closeable {
                 Map<Integer, Map<Transport, TransportOverviewTableModel>> weekModels)
                 throws ProTransException {
             String fileName = "transportoversikt_"
-                    + Util.getCurrentDateAsDateTimeString() + ".xls";
+                    + Util.getCurrentDateAsDateTimeString() + ".xlsx";
             String excelDirectory = ApplicationParamUtil
                     .findParamByName("excel_path");
             ExcelUtil excelUtil = new ExcelUtil();

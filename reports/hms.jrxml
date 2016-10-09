@@ -25,7 +25,7 @@
 				<textElement>
 					<font fontName="Times New Roman" size="14"/>
 				</textElement>
-				<text><![CDATA[SJA - Montører under oppdrag for Grimstad Industrier.]]></text>
+				<text><![CDATA[SJA - Montører under oppdrag for Igland Garasjen AS.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="312" y="7" width="142" height="36"/>

@@ -161,6 +161,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	JMenuItem menuItemAssemblyReport;
 	JMenuItem menuItemDeviation;
 	JMenuItem menuItemSetComment;
+	JMenuItem menuItemOppdaterLengdeBredde;
 
 	private WindowInterface currentWindow;
 
@@ -319,6 +320,9 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		menuItemDeviation = new JMenuItem("Registrere avvik...");
 		menuItemDeviation.addActionListener(menuItemListenerAssembly);
 
+		menuItemOppdaterLengdeBredde = new JMenuItem("Oppdater lengde/bredde...");
+		menuItemOppdaterLengdeBredde.addActionListener(menuItemListenerAssembly);
+
 		popupMenuAssembly.add(menuItemEdit);
 		popupMenuAssembly.add(menuItemRemoveAssembly);
 		popupMenuAssembly.add(menuItemShowMissing);
@@ -326,6 +330,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		popupMenuAssembly.add(menuItemDeviation);
 		popupMenuAssembly.add(menuItemSetSentBase);
 		popupMenuAssembly.add(menuItemSetComment);
+		popupMenuAssembly.add(menuItemOppdaterLengdeBredde);
 	}
 
 	private class AssemblyReportListener implements ActionListener {
@@ -609,7 +614,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 			}
 
 			try {
-				String fileName = "Produksjonsoversikt_" + Util.getCurrentDateAsDateTimeString() + ".xls";
+				String fileName = "Produksjonsoversikt_" + Util.getCurrentDateAsDateTimeString() + ".xlsx";
 				String excelDirectory = ApplicationParamUtil.findParamByName("excel_path");
 
 				// JXTable tableReport = new JXTable(new
@@ -662,7 +667,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	 */
 	public OrderPanelView getOrderPanelView() {
 
-		return new OrderPanelView(orderViewHandler, OrderPanelTypeEnum.ASSEMBLY_ORDERS, "Ordre:");
+		return new OrderPanelView(orderViewHandler, OrderPanelTypeEnum.ASSEMBLY_ORDERS, "Ordre:", true);
 	}
 
 	public void setAssemblyPlannerView(AssemblyPlannerView assemblyPlannerView) {
@@ -976,7 +981,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 			boolean starting) {
 		SupplierOrderViewHandler supplierOrderViewHandler = getSupplierOrderViewHandler(supplier, currentYearWeek,
 				weekCounter, starting);
-		return new SupplierOrderView(supplierOrderViewHandler);
+		return new SupplierOrderView(supplierOrderViewHandler, true);
 	}
 
 	/**
@@ -1124,6 +1129,21 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 				assembly.setAssemblyComment(value);
 				assemblyManager.saveAssembly(assembly);
 				doRefresh(window);
+			} else if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemOppdaterLengdeBredde.getText())) {
+				AssemblyV assemblyV = getSelectedAssembly();
+				if (assemblyV.getInfo() == null) {
+					Order order = managerRepository.getOrderManager().findByOrderNr(assemblyV.getOrderNr());
+					managerRepository.getOrderManager().lazyLoadOrder(order,
+							new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES,
+									LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES, LazyLoadOrderEnum.ORDER_COSTS });
+					order.setInfo(order.orderLinesToString());
+					try {
+						managerRepository.getOrderManager().saveOrder(order);
+					} catch (ProTransException e) {
+						e.printStackTrace();
+					}
+					doRefresh(window);
+				}
 			}
 		}
 	}
@@ -1751,7 +1771,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 					int index = tableAssembly.convertRowIndexToModel(assemblySelectionList.getSelectionIndex());
 					AssemblyV assembly = (AssemblyV) assemblySelectionList.getElementAt(index);
 					Order order = orderViewHandler.getOrderManager().findByOrderNr(assembly.getOrderNr());
-					orderViewHandler.openOrderView(order, false, window);
+					orderViewHandler.openOrderView(order, false, window, true);
 				}
 				Util.setDefaultCursor(window.getComponent());
 			}

@@ -162,7 +162,7 @@ DefaultAbstractViewHandler<SupplierType, SupplierTypeModel> {
 	 */
 	public SupplierType insertNewSupplierType(WindowInterface window) {
 		SupplierType supplierType = new SupplierType();
-		openEditView(supplierType, false, window);
+		openEditView(supplierType, false, window,false);
 		return supplierType;
 	}
 

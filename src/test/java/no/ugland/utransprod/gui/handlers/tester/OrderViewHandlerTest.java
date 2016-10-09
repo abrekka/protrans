@@ -151,7 +151,7 @@ public class OrderViewHandlerTest {
 	order.setPostalCode("4841");
 	order.setPostOffice("postOffice");
 	order.setOrderDate(Util.getCurrentDate());
-	OrderModel orderModel = new OrderModel(order, false, true, true, null, null);
+	OrderModel orderModel = new OrderModel(order, false, true, true, null, null,false);
 	orderModel.setCustomerNr("100000");
 	orderModel.setCustomerFirstName("test");
 	orderModel.setCustomerLastName("testesen");

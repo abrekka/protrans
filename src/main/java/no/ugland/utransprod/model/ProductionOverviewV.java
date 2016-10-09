@@ -73,6 +73,8 @@ public class ProductionOverviewV {
 
     private Date orderReady;
 
+	private String antallStandardvegger;
+
     public ProductionOverviewVPK getProductionOverviewVPK() {
 	return productionOverviewVPK;
     }
@@ -421,4 +423,11 @@ public class ProductionOverviewV {
     public String toString() {
 	return orderNr;
     }
+
+	public String getAntallStandardvegger() {
+		return antallStandardvegger;
+	}
+	public void setAntallStandardvegger(String antallStandardvegger) {
+		this.antallStandardvegger = antallStandardvegger;
+	}
 }

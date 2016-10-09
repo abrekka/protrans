@@ -173,11 +173,11 @@
     >
         <column name="COLLI_ID" />
     </many-to-one>
-	 <one-to-one
-        name="externalOrderLine"
-        class="no.ugland.utransprod.model.ExternalOrderLine"
-        property-ref="orderLine"
-    />
+<!-- 	 <one-to-one -->
+<!--         name="externalOrderLine" -->
+<!--         class="no.ugland.utransprod.model.ExternalOrderLine" -->
+<!--         property-ref="orderLine" -->
+<!--     /> -->
 	<many-to-one
         name="deviation"
         class="no.ugland.utransprod.model.Deviation"

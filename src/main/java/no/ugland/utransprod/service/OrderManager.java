@@ -7,6 +7,7 @@ import java.util.Set;
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.gui.handlers.ReportConstraintViewHandler.TransportConstraintEnum;
 import no.ugland.utransprod.gui.handlers.ReportDataTransport;
+import no.ugland.utransprod.gui.model.Delelisteinfo;
 import no.ugland.utransprod.gui.model.Ordreinfo;
 import no.ugland.utransprod.gui.model.Ordrelinjeinfo;
 import no.ugland.utransprod.model.Order;
@@ -233,6 +234,14 @@ public interface OrderManager extends OverviewManager<Order>, ExcelManager {
 
 	List<Ordreinfo> finnOrdreinfo(String orderNr);
 
-	List<Ordrelinjeinfo> finnOrdrelinjeinfo(String orderNr);
+	List<Ordrelinjeinfo> finnOrdrelinjeinfo(Integer orderId);
+
+	void fjernOrdreKomplett(String ordrenr);
+
+	void settOrdreKomplett(String orderNr,Date currentDate);
+
+	void settStatus(Integer orderId,String status);
+
+	List<Delelisteinfo> finnDeleliste(String orderNr,String kundenavn,String sted,String garsjetype);
 
 }

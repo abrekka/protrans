@@ -192,7 +192,7 @@ public class ColliListViewHandler implements ColliListener, Updateable, ColliVie
 	ColliViewHandler colliViewHandler = new ColliViewHandler("Kolli", newColli,
 	// abstractOrderModel,
 		packable, login, managerRepository, window, vismaFileCreator);
-	boolean isOk = colliViewHandler.openEditView(null, false, window);
+	boolean isOk = colliViewHandler.openEditView(null, false, window,false);
 	// abstractOrderModel.addColli(newColli);
 	if (newColli.getColliId() != null) {
 	    packable.addColli(newColli);
@@ -387,7 +387,7 @@ public class ColliListViewHandler implements ColliListener, Updateable, ColliVie
 	    } else {
 		Colli colli = selectedColliViewHandlers.keySet().iterator().next();
 		ColliViewHandler handler = selectedColliViewHandlers.remove(colli);
-		handler.openEditView(colli, false, window);
+		handler.openEditView(colli, false, window,false);
 		handler.setColliSelected(false);
 		colliViewHandlers.put(colli, handler);
 		selectedColliViewHandlers.clear();

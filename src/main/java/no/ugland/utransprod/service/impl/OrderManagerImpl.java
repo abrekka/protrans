@@ -16,6 +16,7 @@ import no.ugland.utransprod.dao.OrderDAO;
 import no.ugland.utransprod.gui.handlers.CheckObject;
 import no.ugland.utransprod.gui.handlers.ReportConstraintViewHandler.TransportConstraintEnum;
 import no.ugland.utransprod.gui.handlers.ReportDataTransport;
+import no.ugland.utransprod.gui.model.Delelisteinfo;
 import no.ugland.utransprod.gui.model.Ordreinfo;
 import no.ugland.utransprod.gui.model.Ordrelinjeinfo;
 import no.ugland.utransprod.model.Colli;
@@ -676,8 +677,27 @@ public class OrderManagerImpl extends ManagerImpl<Order> implements OrderManager
 		return ((OrderDAO) dao).finnOrdreinfo(orderNr);
 	}
 
-	public List<Ordrelinjeinfo> finnOrdrelinjeinfo(String orderNr) {
-		return ((OrderDAO) dao).finnOrdrelinjeinfo(orderNr);
+	public List<Ordrelinjeinfo> finnOrdrelinjeinfo(Integer orderId) {
+		return ((OrderDAO) dao).finnOrdrelinjeinfo(orderId);
+	}
+
+	public void fjernOrdreKomplett(String ordrenr) {
+		((OrderDAO) dao).fjernOrdreKomplett(ordrenr);
+		
+	}
+
+	public void settOrdreKomplett(String orderNr,Date dato) {
+		((OrderDAO) dao).setOrdreKomplett(orderNr,dato);
+		
+	}
+
+	public void settStatus(Integer orderId,String status) {
+		((OrderDAO) dao).setStatus(orderId,status);
+		
+	}
+
+	public List<Delelisteinfo> finnDeleliste(String ordrenr,String kundenavn,String sted,String garasjetype) {
+		return ((OrderDAO) dao).finnDeleliste(ordrenr,kundenavn,sted,garasjetype);
 	}
 
 }

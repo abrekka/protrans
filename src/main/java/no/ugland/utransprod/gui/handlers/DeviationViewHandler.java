@@ -2752,7 +2752,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	    preventiveAction.setFunctionCategory((FunctionCategory) presentationModel.getBufferedValue(DeviationModel.PROPERTY_FUNCTION_CATEGORY));
 	    preventiveAction.setJobFunction((JobFunction) presentationModel.getBufferedValue(DeviationModel.PROPERTY_DEVIATION_FUNCTION));
 
-	    preventiveActionViewHandler.openEditView(preventiveAction, false, window);
+	    preventiveActionViewHandler.openEditView(preventiveAction, false, window,false);
 	    setPreventiveActionList(presentationModel, preventiveAction);
 
 	}
@@ -3131,12 +3131,12 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
     public void registerDeviation(Order order, WindowInterface window) {
 	Deviation deviation = new Deviation();
 	deviation.setOrder(order);
-	openEditView(deviation, false, window);
+	openEditView(deviation, false, window,false);
     }
 
     public void showDeviation(Deviation deviation, WindowInterface window) {
 	if (deviation != null) {
-	    openEditView(deviation, false, window);
+	    openEditView(deviation, false, window,false);
 	}
     }
 
@@ -3221,7 +3221,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	return false;
     }
 
-    public boolean openEditViewExt(Deviation object, boolean searching, WindowInterface parentWindow) {
+    public boolean openEditViewExt(Deviation object, boolean searching, WindowInterface parentWindow,boolean lettvekt) {
 	return false;
     }
 

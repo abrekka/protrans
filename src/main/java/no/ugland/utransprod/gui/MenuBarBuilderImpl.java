@@ -1076,7 +1076,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 
 				MainClass.version = configuration.getString("version");
 			}
-			Util.showMsgFrame(ProTransMain.PRO_TRANS_MAIN.getContentPane(), "ProTrans - Grimstad Industrier",
+			Util.showMsgFrame(ProTransMain.PRO_TRANS_MAIN.getContentPane(), "ProTrans - Igland Garasjen AS",
 					"Versjon " + MainClass.version);
 
 		}

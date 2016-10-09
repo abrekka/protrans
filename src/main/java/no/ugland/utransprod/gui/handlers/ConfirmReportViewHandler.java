@@ -158,7 +158,7 @@ public class ConfirmReportViewHandler implements Closeable {
 	public final OrderPanelView getOrderPanelView() {
 
 		return new OrderPanelView(orderViewHandler,
-				OrderPanelTypeEnum.CONFIRM_REPORT, null);
+				OrderPanelTypeEnum.CONFIRM_REPORT, null,false);
 	}
 
 	public class ConfirmReport extends Model {
@@ -640,7 +640,7 @@ public class ConfirmReportViewHandler implements Closeable {
 		colSizes.put(0, 5000);
 		colSizes.put(2, 5000);
 		colSizes.put(4, 4000);
-		ExcelUtil.showDataInExcelInThread(window, "Avropsrapport.xls",
+		ExcelUtil.showDataInExcelInThread(window, "Avropsrapport.xlsx",
 				"Avropsrapport", tableResult, null, colSizes, 12, false);
 	}
 
@@ -661,7 +661,7 @@ public class ConfirmReportViewHandler implements Closeable {
 		numCols.add(9);
 		numCols.add(10);
 		numCols.add(11);
-		ExcelUtil.showDataInExcelInThread(window, "Avropsrapport_grunnlag.xls",
+		ExcelUtil.showDataInExcelInThread(window, "Avropsrapport_grunnlag.xlsx",
 				"Grunnlag " + salesman.getSalesmanName(), orderViewHandler
 						.getPanelTableOrders(OrderPanelTypeEnum.CONFIRM_REPORT,
 								window), numCols, colSizes, 12, false);

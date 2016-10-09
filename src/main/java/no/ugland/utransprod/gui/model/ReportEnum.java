@@ -15,62 +15,62 @@ public enum ReportEnum {
 	/**
 	 * 
 	 */
-	GULVSPON("Gulvspon.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Gulvspon"), IGARASJEN("Igarasjen.jasper",
-			IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Igrasjen"),
+	GULVSPON("Gulvspon.jasper", IconEnum.ICON_IGLAND, "Gulvspon"), IGARASJEN("Gulvspon.jasper",
+			IconEnum.ICON_IGLAND, "Igrasjen"),
 	/**
 	 * 
 	 */
-	TAKSTOL("Takstol.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Takstol"),
+	TAKSTOL("Takstol.jasper", IconEnum.ICON_IGLAND, "Takstol"),
 	/**
 	 * 
 	 */
-	MONTERING("Montering_bean.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Montering"),
+	MONTERING("Montering_bean.jasper", IconEnum.ICON_IGLAND, "Montering"),
 	/**
 	 * 
 	 */
-	NOKKEl("Nokkeltall_bean.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Nøkkeltall - Salg/Drift/Transport"),
+	NOKKEl("Nokkeltall_bean.jasper", IconEnum.ICON_IGLAND, "Nøkkeltall - Salg/Drift/Transport"),
 	/**
 	 * 
 	 */
-	NOKKEl_PRODUCTION("Nokkeltall_produksjon_alt_bean.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER,
+	NOKKEl_PRODUCTION("Nokkeltall_produksjon_alt_bean.jasper", IconEnum.ICON_IGLAND,
 			"Nøkkeltall - Produksjon"),
 	/**
 	 * 
 	 */
-	NOKKEl_ASSEMBLY("Nokkeltall_mont_ok_bean.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER,
+	NOKKEl_ASSEMBLY("Nokkeltall_mont_ok_bean.jasper", IconEnum.ICON_IGLAND,
 			"Nøkkeltall - Montering/Økonomi"),
 	/**
 	 * 
 	 */
-	FAX("Order_fax.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Fax"),
+	FAX("Order_fax.jasper", IconEnum.ICON_IGLAND, "Fax"),
 	/**
 	 * 
 	 */
-	DEVIATION("Deviation_report.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Avvik"),
+	DEVIATION("Deviation_report.jasper", IconEnum.ICON_IGLAND, "Avvik"),
 	/**
 	 * 
 	 */
-	TRANSPORT_LETTER("Fraktbrev.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Fraktbrev"),
+	TRANSPORT_LETTER("Fraktbrev.jasper", IconEnum.ICON_IGLAND, "Fraktbrev"),
 	/**
 	 * 
 	 */
-	PACKLIST("Pakkliste.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Pakkliste"),
+	PACKLIST("Pakkliste.jasper", IconEnum.ICON_IGLAND, "Pakkliste"),
 	/**
 	 * 
 	 */
-	TRANSPORT_COST("Transport_cost.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Transportkostnad"),
+	TRANSPORT_COST("Transport_cost.jasper", IconEnum.ICON_IGLAND, "Transportkostnad"),
 	/**
 	 * 
 	 */
-	ASSEMBLY("Assembly.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Montering"),
+	ASSEMBLY("Assembly.jasper", IconEnum.ICON_IGLAND, "Montering"),
 	/**
 	 * 
 	 */
-	ASSEMBLY_NY("assembly_ny.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Montering"),
+	ASSEMBLY_NY("assembly_ny.jasper", IconEnum.ICON_IGLAND, "Montering"),
 	/**
 	 * 
 	 */
-	ACCIDENT("Accident.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Hendelse/ulykke"),
+	ACCIDENT("Accident.jasper", IconEnum.ICON_IGLAND, "Hendelse/ulykke"),
 	/**
 	 * 
 	 */
@@ -78,11 +78,12 @@ public enum ReportEnum {
 	/**
 	 * 
 	 */
-	KORRIGERENDE_TILTAK("korrigerende_tiltak.jasper", IconEnum.ICON_GRIMSTAD_INDUSTRIER, "Korrigerende tiltak"),
+	KORRIGERENDE_TILTAK("korrigerende_tiltak.jasper", IconEnum.ICON_IGLAND, "Korrigerende tiltak"),
 	/**
 	 * 
 	 */
-	PRODUCTION_REPORT("produksjon.jasper", IconEnum.ICON_IGLAND, "Produksjon");
+	PRODUCTION_REPORT("produksjon.jasper", IconEnum.ICON_IGLAND, "Produksjon"),
+	DELELISTE_KUNDE_REPORT("deleliste_kunde.jasper", IconEnum.ICON_IGLAND, "Deleliste kunde");
 	/**
 	 * 
 	 */

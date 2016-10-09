@@ -30,8 +30,8 @@ public class PostShipmentModel extends AbstractOrderModel<PostShipment, PostShip
 
     private String orderNr;
 
-    public PostShipmentModel(PostShipment object) {
-	super(object);
+    public PostShipmentModel(PostShipment object,boolean lettvekt) {
+	super(object,lettvekt);
 
     }
 

@@ -265,5 +265,11 @@
         column="ORDER_READY"
         length="100"
     />
+    <property
+        name="antallStandardvegger"
+        type="java.lang.String"
+        column="ANTALL_STANDARD_VEGGER"
+        length="100"
+    />
 </class>
 </hibernate-mapping>

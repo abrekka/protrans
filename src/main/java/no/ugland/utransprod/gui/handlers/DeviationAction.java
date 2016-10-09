@@ -77,6 +77,6 @@ class DeviationAction<T> extends AbstractAction {
     public void actionPerformed(final ActionEvent arg0) {
         //DeviationViewHandler deviationViewHandler = new DeviationViewHandler(applicationUser, null,
           //      userType, true, false, true, null, true,deviationManager,preventiveActionManager,attributeManager,articleTypeManager,externalOrderManager,orderManager,attributeChoiceManager);
-        deviationViewHandler.openEditView(new Deviation(), false, window);
+        deviationViewHandler.openEditView(new Deviation(), false, window,false);
     }
 }

@@ -87,7 +87,7 @@ public class LoadView implements ActionListener {
 				7));
 
 		JDialog dialog = new JDialog();
-		dialog.setTitle("Produksjon og transport - Grimstad Industrier");
+		dialog.setTitle("Produksjon og transport - Igland Garasjen AS");
 
 		dialog.setResizable(false);
 

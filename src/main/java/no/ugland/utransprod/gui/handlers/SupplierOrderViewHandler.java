@@ -236,7 +236,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
      * @param aWindow
      * @return tabell
      */
-    public JXTable getTableOrders(WindowInterface aWindow) {
+    public JXTable getTableOrders(WindowInterface aWindow,boolean lettvekt) {
 	window = aWindow;
 	initMenuItems(aWindow);
 
@@ -250,7 +250,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 	tableOrders.setSelectionModel(new SingleListSelectionAdapter(assemblySelectionList.getSelectionIndexHolder()));
 	tableOrders.setColumnControlVisible(true);
 	tableOrders.setSearchable(null);
-	tableOrders.addMouseListener(new MouseClickHandler(aWindow));
+	tableOrders.addMouseListener(new MouseClickHandler(aWindow,lettvekt));
 
 	tableOrders.setRowHeight(40);
 	tableOrders.setShowGrid(true);
@@ -306,8 +306,8 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
      * @param order
      * @param window
      */
-    void openOrderView(Order order, WindowInterface window) {
-	orderViewHandler.openOrderView(order, false, window);
+    void openOrderView(Order order, WindowInterface window,boolean lettvekt) {
+	orderViewHandler.openOrderView(order, false, window,lettvekt);
     }
 
     /**
@@ -316,16 +316,15 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
      * @author atle.brekka
      */
     final class MouseClickHandler extends MouseAdapter {
-	/**
-         *
-         */
 	private WindowInterface window;
+private boolean lettvekt;
 
 	/**
 	 * @param aWindow
 	 */
-	public MouseClickHandler(WindowInterface aWindow) {
+	public MouseClickHandler(WindowInterface aWindow,boolean lettvekt) {
 	    window = aWindow;
+	    this.lettvekt=lettvekt;
 	}
 
 	/**
@@ -339,7 +338,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 		    int index = tableOrders.convertRowIndexToModel(assemblySelectionList.getSelectionIndex());
 		    Assembly assembly = (Assembly) assemblySelectionList.getElementAt(index);
 		    Order order = assembly.getOrder() == null ? assembly.getDeviation().getOrder() : assembly.getOrder();
-		    openOrderView(order, window);
+		    openOrderView(order, window,lettvekt);
 		}
 		Util.setDefaultCursor(window.getComponent());
 	    } else if (SwingUtilities.isRightMouseButton(e) && assemblySelectionList.getSelectionIndex() != -1) {
@@ -365,7 +364,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
     void editAssembly(WindowInterface window) {
 	Assembly assembly = (Assembly) assemblySelectionList.getSelection();
 	if (assembly != null) {
-	    openEditView(assembly, false, window);
+	    openEditView(assembly, false, window,false);
 	}
 	fireAsesemblyChanged();
     }

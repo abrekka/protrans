@@ -54,9 +54,9 @@
 				<value>hibernate/SupplierType.hbm.xml</value>
 				<value>hibernate/EmployeeType.hbm.xml</value>
 				<value>hibernate/Employee.hbm.xml</value>
-				<value>hibernate/ExternalOrder.hbm.xml</value>
-				<value>hibernate/ExternalOrderLine.hbm.xml</value>
-				<value>hibernate/ExternalOrderLineAttribute.hbm.xml</value>
+<!-- 				<value>hibernate/ExternalOrder.hbm.xml</value> -->
+<!-- 				<value>hibernate/ExternalOrderLine.hbm.xml</value> -->
+<!-- 				<value>hibernate/ExternalOrderLineAttribute.hbm.xml</value> -->
 				<value>hibernate/AssemblyOverdueV.hbm.xml</value>
 				<value>hibernate/PacklistV.hbm.xml</value>
 				<value>hibernate/WindowAccess.hbm.xml</value>

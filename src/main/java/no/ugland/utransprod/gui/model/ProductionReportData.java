@@ -31,6 +31,7 @@ public class ProductionReportData {
 	private String bruker;
 	private Integer produksjonsuke;
 	private Set<OrderComment> kommentarer;
+	private List<Delelisteinfo> deleliste;
 
 	public ProductionReportData(String ordrenummer) {
 		this.ordrenummer = ordrenummer;
@@ -79,7 +80,7 @@ public class ProductionReportData {
 	}
 
 	public String getTransportuke() {
-		return transportuke==null?"":String.valueOf(transportuke);
+		return transportuke == null ? "" : String.valueOf(transportuke);
 	}
 
 	public ProductionReportData medOrdreinfo(List<Ordreinfo> ordreinfo) {
@@ -155,14 +156,16 @@ public class ProductionReportData {
 
 	public String getVegghoyde() {
 		if (ordreinfo != null && !ordreinfo.isEmpty()) {
-			return String.format("%s mm", ordreinfo.get(0).getVegghoyde()==null?0:ordreinfo.get(0).getVegghoyde()*10);
+			return String.format("%s mm",
+					ordreinfo.get(0).getVegghoyde() == null ? 0 : ordreinfo.get(0).getVegghoyde() * 10);
 		}
 		return "";
 	}
-	
+
 	public String getRingmur() {
 		if (ordreinfo != null && !ordreinfo.isEmpty()) {
-			return String.format("%s mm", ordreinfo.get(0).getMurhoyde()==null?0:ordreinfo.get(0).getMurhoyde()*10);
+			return String.format("%s mm",
+					ordreinfo.get(0).getMurhoyde() == null ? 0 : ordreinfo.get(0).getMurhoyde() * 10);
 		}
 		return "";
 	}
@@ -237,7 +240,7 @@ public class ProductionReportData {
 			List<Ordreinfo> tilpasning = Lists.newArrayList(Iterables.filter(ordreinfo, new Predicate<Ordreinfo>() {
 
 				public boolean apply(Ordreinfo ordreinfo) {
-					return ordreinfo.getPrcatno()==509600;
+					return ordreinfo.getPrcatno() == 509600;
 				}
 			}));
 			return tilpasning == null || tilpasning.isEmpty() ? 0 : tilpasning.get(0).getPurcno();
@@ -303,66 +306,125 @@ public class ProductionReportData {
 	}
 
 	public ProductionReportData medTaktekke(String taktekke) {
-		this.taktekke=taktekke;
+		this.taktekke = taktekke;
 		return this;
 	}
+
 	public String getTaktekke() {
 		return taktekke;
 	}
 
 	public ProductionReportData medPakketAv(String pakketAv) {
-		this.pakketAv=pakketAv;
+		this.pakketAv = pakketAv;
 		return this;
 	}
 
 	public ProductionReportData medBruker(String bruker) {
-		this.bruker=bruker;
+		this.bruker = bruker;
 		return this;
 	}
-	
-	public String getAnsatt(){
-		return pakketAv==null?bruker:pakketAv;
+
+	public String getAnsatt() {
+		return pakketAv == null ? bruker : pakketAv;
 	}
 
 	public ProductionReportData medProduksjonsuke(Integer productionWeek) {
-		this.produksjonsuke=productionWeek;
+		this.produksjonsuke = productionWeek;
 		return this;
 	}
-	
+
 	public Integer getProduksjonsuke() {
 		return produksjonsuke;
 	}
 
 	public ProductionReportData medKommentarer(Set<OrderComment> kommentarer) {
-		this.kommentarer=kommentarer;
+		this.kommentarer = kommentarer;
 		return this;
 	}
-	
-	public String getKommentarer(){
-		if(kommentarer!=null){
-			List<String> kommentarliste=Lists.newArrayList(Iterables.transform(Iterables.filter(kommentarer, new Predicate<OrderComment>() {
 
-				public boolean apply(OrderComment kommentar) {
-					if(kommentar.getCommentTypes()!=null){
-						List<OrderCommentCommentType> pakkekommentarer=Lists.newArrayList(Iterables.filter(kommentar.getOrderCommentCommentTypes(), new Predicate<OrderCommentCommentType>() {
+	public String getKommentarer() {
+		if (kommentarer != null) {
+			List<String> kommentarliste = Lists
+					.newArrayList(Iterables.transform(Iterables.filter(kommentarer, new Predicate<OrderComment>() {
 
-							public boolean apply(OrderCommentCommentType type) {
-								return "Pakking".equals(type.getCommentType().getCommentTypeName());
+						public boolean apply(OrderComment kommentar) {
+							if (kommentar.getCommentTypes() != null) {
+								List<OrderCommentCommentType> pakkekommentarer = Lists
+										.newArrayList(Iterables.filter(kommentar.getOrderCommentCommentTypes(),
+												new Predicate<OrderCommentCommentType>() {
+
+									public boolean apply(OrderCommentCommentType type) {
+										return "Pakking".equals(type.getCommentType().getCommentTypeName());
+									}
+								}));
+								return !pakkekommentarer.isEmpty();
 							}
-						}));
-						return !pakkekommentarer.isEmpty();
-					}
-					return false;
-				}
-			}),new Function<OrderComment, String>() {
+							return false;
+						}
+					}), new Function<OrderComment, String>() {
 
-				public String apply(OrderComment from) {
-					// TODO Auto-generated method stub
-					return from.getComment();
-				}
-			}));
+						public String apply(OrderComment from) {
+							// TODO Auto-generated method stub
+							return from.getComment();
+						}
+					}));
 			return Joiner.on(" ").skipNulls().join(kommentarliste);
 		}
 		return "";
+	}
+
+	public ProductionReportData medDeleliste(List<Delelisteinfo> deleliste) {
+		this.deleliste = deleliste;
+		return this;
+	}
+
+	public List<Delelisteinfo> getDelelisteVegg() {
+		return Lists.newArrayList(Iterables.filter(deleliste, new Predicate<Delelisteinfo>() {
+
+			public boolean apply(Delelisteinfo del) {
+				return del.getProdtp() == 10;
+			}
+		}));
+	}
+
+	public List<Delelisteinfo> getDelelisteTak() {
+		return Lists.newArrayList(Iterables.filter(deleliste, new Predicate<Delelisteinfo>() {
+
+			public boolean apply(Delelisteinfo del) {
+				return del.getProdtp() == 20;
+			}
+		}));
+	}
+
+	public List<Delelisteinfo> getDelelistePakking() {
+		return Lists.newArrayList(Iterables.filter(deleliste, new Predicate<Delelisteinfo>() {
+
+			public boolean apply(Delelisteinfo del) {
+				return del.getProdtp() == 30 && del.getProdtp2() != 190
+						&& !del.getProdno().toUpperCase().startsWith("TAKR");
+			}
+		}));
+	}
+	
+	public List<Delelisteinfo> getDelelisteTakrenner() {
+		return Lists.newArrayList(Iterables.filter(deleliste, new Predicate<Delelisteinfo>() {
+
+			public boolean apply(Delelisteinfo del) {
+				return (del.getProdtp() == 30||del.getProdtp() == 35)&&(del.getProdtp2()==190||del.getPrCatNo2()==9);
+			}
+		}));
+	}
+	
+	public List<Delelisteinfo> getDelelisteAltUtenTakrennedeler() {
+		return Lists.newArrayList(Iterables.filter(deleliste, new Predicate<Delelisteinfo>() {
+
+			public boolean apply(Delelisteinfo del) {
+				return del.getProdtp() != 35;
+			}
+		}));
+	}
+	
+	public List<Delelisteinfo> getDelelisteKunde() {
+		return deleliste;
 	}
 }
