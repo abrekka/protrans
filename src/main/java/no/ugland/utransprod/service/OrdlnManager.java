@@ -32,4 +32,6 @@ public interface OrdlnManager {
     Ord findByOrdNo(Integer purcno);
 
     List<Ordln> findTaksteinInfo(String orderNr);
+
+	List<Ordln> findOrdLnByOrdNo(Integer purcno);
 }

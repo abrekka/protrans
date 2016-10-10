@@ -116,7 +116,7 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 		}
 	}
 
-	private String writeFile(final String orderNr, String outdir, List<String> lines, int teller) throws IOException {
+	public String writeFile(final String orderNr, String outdir, List<String> lines, int teller) throws IOException {
 		try {
 			if (lines == null || lines.isEmpty()) {
 				return null;

@@ -1104,7 +1104,7 @@ public final class Util {
 		addPacklist(map, orderViewHandlerFactory, managerRepository, deviationViewHandlerFactory, login, costTypeTross,
 				costUnitTross);
 
-		addVeggProduction(login, map, deviationViewHandlerFactory, managerRepository, setProductionUnitActionFactory);
+		addVeggProduction(login, map, deviationViewHandlerFactory, managerRepository, setProductionUnitActionFactory,vismaFileCreator);
 
 		addFrontProduction(login, map, managerRepository, deviationViewHandlerFactory, setProductionUnitActionFactory);
 
@@ -1202,9 +1202,9 @@ public final class Util {
 	private static void addVeggProduction(final Login login,
 			final Map<String, AbstractProductionPackageViewHandler> map,
 			DeviationViewHandlerFactory deviationViewHandlerFactory, ManagerRepository managerRepository,
-			SetProductionUnitActionFactory setProductionUnitActionFactory) {
+			SetProductionUnitActionFactory setProductionUnitActionFactory,VismaFileCreator vismaFileCreator) {
 		VeggProductionWindow veggProductionWindow = new VeggProductionWindow(login, managerRepository,
-				deviationViewHandlerFactory, setProductionUnitActionFactory);
+				deviationViewHandlerFactory, setProductionUnitActionFactory,vismaFileCreator);
 		veggProductionWindow.setLogin(login);
 
 		map.put("Vegg", (AbstractProductionPackageViewHandler) veggProductionWindow.getViewHandler());

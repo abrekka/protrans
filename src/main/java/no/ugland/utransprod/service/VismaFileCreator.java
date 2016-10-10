@@ -1,5 +1,6 @@
 package no.ugland.utransprod.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import no.ugland.utransprod.ProTransException;
@@ -21,4 +22,5 @@ public interface VismaFileCreator {
 
     String createVismaFileForProductionWeek(Order order);
 
+    String writeFile(final String orderNr, String outdir, List<String> lines, int teller) throws IOException;
 }

@@ -67,7 +67,7 @@ public class TaksteinAction extends AbstractAction {
 		AbstractProductionPackageViewHandler<Produceable> productionViewHandler = new TaksteinSkarpnesViewHandler(
 				new ProductionApplyList(login, taksteinSkarpnesVManager,
 						"Takstein", "Takstein", new Integer[] { 2 },
-						managerRepository), login, managerRepository,
+						managerRepository,null), login, managerRepository,
 				deviationViewHandlerFactory,setProductionUnitActionFactory,articleTypeTakstein);
 
 		menuBarBuilder.openFrame(new ApplyListView<Produceable>(

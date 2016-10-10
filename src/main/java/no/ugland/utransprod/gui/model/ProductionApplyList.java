@@ -21,6 +21,7 @@ import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.OrderLineManager;
 import no.ugland.utransprod.service.OrderManager;
 import no.ugland.utransprod.service.PostShipmentManager;
+import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.service.enums.LazyLoadEnum;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.service.enums.LazyLoadPostShipmentEnum;
@@ -54,8 +55,8 @@ public class ProductionApplyList extends AbstractApplyList<Produceable> {
      * @param somInvisibleCells
      */
     public ProductionApplyList(final Login login, final IApplyListManager<Produceable> manager, final String aColliName, final String aWindowName,
-	    final Integer[] somInvisibleCells, final ManagerRepository aManagerRepository) {
-	super(login, manager, null);
+	    final Integer[] somInvisibleCells, final ManagerRepository aManagerRepository,VismaFileCreator vismaFileCreator) {
+	super(login, manager, vismaFileCreator);
 	managerRepository = aManagerRepository;
 	colliName = aColliName;
 	windowName = aWindowName;

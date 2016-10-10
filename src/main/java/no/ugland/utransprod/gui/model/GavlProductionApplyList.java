@@ -22,7 +22,7 @@ public class GavlProductionApplyList extends ProductionApplyList {
 
     public GavlProductionApplyList(Login login, IApplyListManager<Produceable> manager, String aColliName, String aWindowName,
 	    Integer[] somInvisibleCells, ManagerRepository aManagerRepository) {
-	super(login, manager, aColliName, aWindowName, somInvisibleCells, aManagerRepository);
+	super(login, manager, aColliName, aWindowName, somInvisibleCells, aManagerRepository,null);
     }
 
     @Override

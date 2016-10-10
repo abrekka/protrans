@@ -49,7 +49,7 @@ public class VeggProductionViewTest extends PackageProductionTest {
 		super.setUp();
 
 		VeggProductionWindow veggProductionWindow = new VeggProductionWindow(
-				login, managerRepository, deviationViewHandlerFactory, null);
+				login, managerRepository, deviationViewHandlerFactory, null,null);
 		veggProductionWindow.setLogin(login);
 
 		final ApplyListView<Produceable> productionView = new ApplyListView<Produceable>(

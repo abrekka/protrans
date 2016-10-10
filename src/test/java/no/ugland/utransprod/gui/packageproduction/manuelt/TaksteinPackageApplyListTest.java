@@ -81,7 +81,7 @@ public class TaksteinPackageApplyListTest extends PackageProductionTest {
 
 		AbstractProductionPackageViewHandler<Produceable> productionViewHandler = new ProductionViewHandler(
 				new ProductionApplyList(login, taksteinSkarpnesVManager,
-						"Takstein", "Takstein", null, managerRepository), "Takstein", login,
+						"Takstein", "Takstein", null, managerRepository,null), "Takstein", login,
 				"bestilt", null, TableEnum.TABLETAKSTEIN, null,
 				managerRepository, deviationViewHandlerFactory,
 				setProductionUnitActionFactory);

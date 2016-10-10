@@ -28,7 +28,7 @@ public class VeggProductionWindowTest extends WindowTest {
 		super.setUp();
 
 		final VeggProductionWindow veggProductionWindow = new VeggProductionWindow(
-				login, managerRepository, deviationViewHandlerFactory, null);
+				login, managerRepository, deviationViewHandlerFactory, null,null);
 		veggProductionWindow.setLogin(login);
 
 		JFrame frame = GuiActionRunner.execute(new GuiQuery<JFrame>() {

@@ -32,7 +32,7 @@ public class TakstolProductionApplyList extends ProductionApplyList {
 			final ManagerRepository managerRepository,
 			final ArticlePackageViewFactory aArticlePackageViewFactory) {
 		super(login, managerRepository.getTakstolProductionVManager(),
-				colliName, "Takstol", null, managerRepository);
+				colliName, "Takstol", null, managerRepository,null);
 		mainArticleName = aMainArticleName;
 		articlePackageView = aArticlePackageViewFactory.create(
 				managerRepository.getArticleTypeManager().findByName(

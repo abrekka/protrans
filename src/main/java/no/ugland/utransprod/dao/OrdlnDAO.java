@@ -30,4 +30,6 @@ public interface OrdlnDAO extends DAO<Ordln> {
     Ord findByOrdNo(Integer ordNo);
 
     List<Ordln> findTaksteinInfo(String orderNr);
+
+	List<Ordln> findOrdLnByOrdNo(Integer ordno);
 }
