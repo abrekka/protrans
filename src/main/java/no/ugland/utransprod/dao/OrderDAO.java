@@ -9,6 +9,7 @@ import no.ugland.utransprod.gui.handlers.ReportConstraintViewHandler.TransportCo
 import no.ugland.utransprod.gui.model.Delelisteinfo;
 import no.ugland.utransprod.gui.model.Ordreinfo;
 import no.ugland.utransprod.gui.model.Ordrelinjeinfo;
+import no.ugland.utransprod.model.Assembly;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.ProductArea;
@@ -246,4 +247,8 @@ public interface OrderDAO extends DAO<Order> {
 	void setStatus(Integer orderId,String status);
 
 	List<Delelisteinfo> finnDeleliste(String ordrenr,String kundenavn,String sted,String garasjetype);
+
+	void settMontering(Integer orderId, Assembly assembly);
+
+	void settMontering(Integer orderId, boolean montering);
 }

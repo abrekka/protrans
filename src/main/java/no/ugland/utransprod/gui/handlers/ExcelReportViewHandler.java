@@ -9,6 +9,14 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
+import com.jgoodies.binding.PresentationModel;
+import com.jgoodies.binding.adapter.ComboBoxAdapter;
+import com.jgoodies.binding.beans.PropertyConnector;
+import com.jgoodies.forms.builder.PanelBuilder;
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
+import com.toedter.calendar.JYearChooser;
+
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.gui.Closeable;
 import no.ugland.utransprod.gui.IconEnum;
@@ -20,14 +28,6 @@ import no.ugland.utransprod.util.excel.ExcelManager;
 import no.ugland.utransprod.util.excel.ExcelReportEnum;
 import no.ugland.utransprod.util.excel.ExcelReportSetting;
 import no.ugland.utransprod.util.excel.ExcelUtil;
-
-import com.jgoodies.binding.PresentationModel;
-import com.jgoodies.binding.adapter.ComboBoxAdapter;
-import com.jgoodies.binding.beans.PropertyConnector;
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-import com.toedter.calendar.JYearChooser;
 
 /**
  * Hjelpeklasse for generering av excelrapporter

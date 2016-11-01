@@ -10,6 +10,7 @@ import no.ugland.utransprod.gui.handlers.ReportDataTransport;
 import no.ugland.utransprod.gui.model.Delelisteinfo;
 import no.ugland.utransprod.gui.model.Ordreinfo;
 import no.ugland.utransprod.gui.model.Ordrelinjeinfo;
+import no.ugland.utransprod.model.Assembly;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.ProductArea;
@@ -243,5 +244,9 @@ public interface OrderManager extends OverviewManager<Order>, ExcelManager {
 	void settStatus(Integer orderId,String status);
 
 	List<Delelisteinfo> finnDeleliste(String orderNr,String kundenavn,String sted,String garsjetype);
+
+	void settMontering(Integer orderId, Assembly assembly);
+
+	void settMontering(Integer orderId, boolean b);
 
 }

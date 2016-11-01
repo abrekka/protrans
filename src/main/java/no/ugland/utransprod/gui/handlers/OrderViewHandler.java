@@ -232,6 +232,9 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 		this.colliSetup = ApplicationParamUtil.getColliSetup();
 	}
 
+	public ManagerRepository getManagerRepository() {
+		return managerRepository;
+	}
 	/**
 	 * Initierer liste med produktområder
 	 */
@@ -1647,6 +1650,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	 */
 	public void addEditComponent(Component comp) {
 		editComponents.add(comp);
+		
 	}
 
 	/**

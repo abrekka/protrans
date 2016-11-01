@@ -158,4 +158,6 @@ public interface OrderLineDAO extends DAO<OrderLine> {
     Ordln findOrdlnByOrderLine(Integer orderLineId);
 
     List<Order> findTakstolOwnOrderByPeriode(Periode periode);
+
+	void fjernColli(Integer orderLineId);
 }

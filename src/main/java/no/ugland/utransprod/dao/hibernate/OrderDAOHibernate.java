@@ -1438,4 +1438,36 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 		});
 	}
 
+	public void settMontering(final Integer orderId, final Assembly assembly) {
+		getHibernateTemplate().execute(new HibernateCallback() {
+
+			public Object doInHibernate(final Session session) {
+
+				String sql = "update Order o set o.assembly=:assembly where o.orderId=:orderId";
+
+				session.createQuery(sql).setEntity("assembly", assembly).setInteger("orderId", orderId).executeUpdate();
+				return null;
+			}
+
+		});
+
+		
+	}
+
+	public void settMontering(final Integer orderId, final boolean montering) {
+		getHibernateTemplate().execute(new HibernateCallback() {
+
+			public Object doInHibernate(final Session session) {
+
+				String sql = "update Order o set o.doAssembly=:montering where o.orderId=:orderId";
+
+				session.createQuery(sql).setBoolean("montering", montering).setInteger("orderId", orderId).executeUpdate();
+				return null;
+			}
+
+		});
+
+		
+	}
+
 }

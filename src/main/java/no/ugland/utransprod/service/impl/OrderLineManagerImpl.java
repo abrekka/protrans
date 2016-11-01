@@ -374,4 +374,9 @@ public class OrderLineManagerImpl extends AbstractApplyListManager<PackableListI
     public List<PackableListItem> findApplyableByOrderNrAndProductAreaGroup(String orderNr, ProductAreaGroup productAreaGroup) {
 	return findApplyableByOrderNr(orderNr);
     }
+
+	public void fjernColli(Integer orderLineId) {
+		orderLineDAO.fjernColli(orderLineId);
+		
+	}
 }

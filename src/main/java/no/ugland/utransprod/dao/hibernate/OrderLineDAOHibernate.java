@@ -936,4 +936,19 @@ public class OrderLineDAOHibernate extends BaseDAOHibernate<OrderLine> implement
             }
         });
     }
+
+	public void fjernColli(final Integer orderLineId) {
+		getHibernateTemplate().execute(new HibernateCallback() {
+
+			public Object doInHibernate(final Session session) {
+
+				String sql = "update OrderLine o set o.colli=null where o.orderLineId=:orderLineId";
+
+				session.createQuery(sql).setInteger("orderLineId", orderLineId).executeUpdate();
+				return null;
+			}
+
+		});
+		
+	}
 }

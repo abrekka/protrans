@@ -164,4 +164,6 @@ public interface OrderLineManager extends IApplyListManager<PackableListItem>,Ex
     List<OrderLine> findByCustomerNrArticleNameAndAttribute(Integer customerNr,
             String articleName, String attributeName, String attributeValue);
     List<OrderLine> findAllConstructionTypeNotSent(ProductArea productArea);
+
+	void fjernColli(Integer orderLineId);
 }

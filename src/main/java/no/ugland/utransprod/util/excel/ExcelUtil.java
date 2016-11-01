@@ -1105,8 +1105,12 @@ public class ExcelUtil {
 				row = excelSheet.createRow((short) l);
 
 				createCell(row, cellStyle.getGroupStyle(), (short) (startCell - addedColumn), groupValue);
+				try{
 				excelSheet.addMergedRegion(
-						new CellRangeAddress(l, 0, l, (columnCount + addedColumn - notVisibleColumnsSize - 1)));
+						new CellRangeAddress(l, l,0,  (columnCount + addedColumn - notVisibleColumnsSize - 1)));
+				}catch(IllegalArgumentException e){
+					System.out.println("test");
+				}
 				l++;
 
 			}
@@ -1260,9 +1264,9 @@ public class ExcelUtil {
 		for (ExcelGroupSum excelGroupSum : formulaCells) {
 			excelGroupSum.setFormula();
 
-			if (groupResultColumn != null) {
+			if (groupResultColumn != null&&excelGroupSum.getFromRow()!=excelGroupSum.getToRow()) {
 				excelSheet.addMergedRegion(new CellRangeAddress((excelGroupSum.getFromRow() - 1),
-						(groupResultColumn.shortValue() + addedColumn), (excelGroupSum.getToRow() - 1),
+						(excelGroupSum.getToRow() - 1),(groupResultColumn.shortValue() + addedColumn), 
 						(groupResultColumn.shortValue() + addedColumn)));
 				// excelSheet.addMergedRegion(new Region((short)
 				// (excelGroupSum.getFromRow() - 1),

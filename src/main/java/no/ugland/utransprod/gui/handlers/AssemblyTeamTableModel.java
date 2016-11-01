@@ -117,9 +117,9 @@ public final class AssemblyTeamTableModel extends AbstractTableAdapter {
 	Order order = assembly.getOrder();
 	Deviation deviation = assembly.getDeviation();
 
-	if (order != null && order.getSent() != null && order.getHasMissingCollies() == null) {
-	    setHasMissingCollies(order, window);
-	}
+//	if (order != null && order.getSent() != null && order.getHasMissingCollies() == null) {
+//	    setHasMissingCollies(order, window);
+//	}
 
 	return AssemblyTeamColumn.valueOf(columnName).getValue(assembly, order, deviation);
 

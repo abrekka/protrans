@@ -1,5 +1,6 @@
 package no.ugland.utransprod.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -37,4 +38,6 @@ public interface AssemblyDAO extends DAO<Assembly> {
     List<Assembly> findBySupplierYearWeek(Supplier supplier, Integer year, Integer week);
 
     List<Assembly> findByYear(Integer year);
+
+	void oppdaterMontering(Integer assemblyId, Date assembliedDate, String planned);
 }

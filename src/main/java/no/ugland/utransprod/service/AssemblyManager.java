@@ -1,5 +1,6 @@
 package no.ugland.utransprod.service;
 
+import java.util.Date;
 import java.util.List;
 
 import no.ugland.utransprod.model.Assembly;
@@ -33,4 +34,6 @@ public interface AssemblyManager extends OverviewManager<Assembly> {
     List<Assembly> findByYear(Integer year);
 
     Assembly get(Integer assemblyId);
+
+	void oppdaterMontering(Integer assemblyId, Date assembliedDate, String planned);
 }

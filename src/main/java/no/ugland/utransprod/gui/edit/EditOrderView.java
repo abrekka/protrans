@@ -1,6 +1,10 @@
 package no.ugland.utransprod.gui.edit;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -15,20 +19,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-
-import no.ugland.utransprod.ProTransException;
-import no.ugland.utransprod.gui.OrderArticleView;
-import no.ugland.utransprod.gui.OrderCostsView;
-import no.ugland.utransprod.gui.WindowInterface;
-import no.ugland.utransprod.gui.handlers.OrderViewHandler;
-import no.ugland.utransprod.gui.model.OrderModel;
-import no.ugland.utransprod.model.Customer;
-import no.ugland.utransprod.model.Order;
-import no.ugland.utransprod.model.Project;
-import no.ugland.utransprod.model.validators.OrderValidator;
-import no.ugland.utransprod.service.VismaFileCreator;
-import no.ugland.utransprod.util.IconFeedbackPanel;
-import no.ugland.utransprod.util.Util;
 
 import org.jdesktop.swingx.JXCollapsiblePane;
 
@@ -45,6 +35,22 @@ import com.jgoodies.validation.Validator;
 import com.jgoodies.validation.view.ValidationComponentUtils;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JYearChooser;
+
+import no.ugland.utransprod.ProTransException;
+import no.ugland.utransprod.gui.OrderArticleView;
+import no.ugland.utransprod.gui.OrderCostsView;
+import no.ugland.utransprod.gui.WindowInterface;
+import no.ugland.utransprod.gui.handlers.OrderViewHandler;
+import no.ugland.utransprod.gui.model.OrderModel;
+import no.ugland.utransprod.model.Assembly;
+import no.ugland.utransprod.model.Customer;
+import no.ugland.utransprod.model.Order;
+import no.ugland.utransprod.model.Project;
+import no.ugland.utransprod.model.Supplier;
+import no.ugland.utransprod.model.validators.OrderValidator;
+import no.ugland.utransprod.service.VismaFileCreator;
+import no.ugland.utransprod.util.IconFeedbackPanel;
+import no.ugland.utransprod.util.Util;
 
 /**
  * Klasse som håndterer editeringsvindu for ordre
@@ -159,6 +165,32 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 		orderViewHandler = handler;
 	}
 
+	private void settMontering() {
+		OrderModel orderModel = (OrderModel) presentationModel.getBean();
+		Order order = orderModel.getObject();
+		Integer monteringsuke = (Integer) comboBoxAssemblyWeek.getSelectedItem();
+		if (checkBoxAssembly.isSelected()) {
+			if (monteringsuke != null) {
+				Supplier supplier = (Supplier) comboBoxAssemblyTeam.getSelectedItem();
+				
+				Assembly assembly = order.getAssembly();
+				if (assembly == null) {
+					assembly = new Assembly();
+					assembly.setOrder(order);
+				}
+				assembly.setSupplier(supplier);
+				assembly.setAssemblyYear(yearChooser.getValue());
+				assembly.setAssemblyWeek(monteringsuke);
+				orderViewHandler.getManagerRepository().getAssemblyManager().saveAssembly(assembly);
+				order.setAssembly(assembly);
+				presentationModel.triggerCommit();
+			}
+		}else{
+			orderViewHandler.getManagerRepository().getOrderManager().settMontering(order.getOrderId(),false);
+			presentationModel.triggerCommit();
+		}
+	}
+
 	@Override
 	protected final void initEditComponents(final WindowInterface window1) {
 		orderViewHandler.checkAddresses(presentationModel, window1);
@@ -166,6 +198,15 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 				presentationModel.getBufferedModel(OrderModel.PROPERTY_SUPPLIER)));
 		comboBoxAssemblyTeam.setName("ComboBoxAssemblyTeam");
 		orderViewHandler.addEditComponent(comboBoxAssemblyTeam);
+
+		comboBoxAssemblyTeam.addItemListener(new ItemListener() {
+
+			public void itemStateChanged(ItemEvent e) {
+				settMontering();
+
+			}
+
+		});
 
 		createAssemblyFields();
 
@@ -176,6 +217,13 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 		createOrderFields(window1);
 		checkBoxAssembly = BasicComponentFactory
 				.createCheckBox(presentationModel.getBufferedModel(OrderModel.PROPERTY_DO_ASSEMBLY), "Montering");
+		checkBoxAssembly.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				settMontering();
+
+			}
+		});
 		checkBoxAssembly.setName("Assembly");
 		orderViewHandler.addEditComponent(checkBoxAssembly);
 
@@ -363,6 +411,13 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 		comboBoxAssemblyWeek = new JComboBox(new ComboBoxAdapter(Util.getWeeks(),
 				presentationModel.getBufferedModel(OrderModel.PROPERTY_ASSEMBLY_WEEK)));
 		comboBoxAssemblyWeek.setName("AssemblyWeek");
+		comboBoxAssemblyWeek.addItemListener(new ItemListener() {
+			
+			public void itemStateChanged(ItemEvent e) {
+				settMontering();
+				
+			}
+		});
 		orderViewHandler.addEditComponent(comboBoxAssemblyWeek);
 	}
 
@@ -614,8 +669,8 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 	 * @return panel
 	 */
 	private JPanel buildCostPanel(final WindowInterface window) {
-		OrderCostsView orderCostsView = new OrderCostsView(orderViewHandler.getOrderCostsViewHandler(presentationModel,lettvekt),
-				true);
+		OrderCostsView orderCostsView = new OrderCostsView(
+				orderViewHandler.getOrderCostsViewHandler(presentationModel, lettvekt), true);
 		try {
 			collapsiblePaneCost.add(orderCostsView.buildPanel(window), BorderLayout.CENTER);
 		} catch (ProTransException e) {

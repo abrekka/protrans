@@ -469,6 +469,7 @@ public class ColliViewHandler extends AbstractViewHandlerShort<Colli, ColliModel
 				boolean success = orderLines.remove(orderLine);
 				if (success) {
 					orderLine.setColli(null);
+					managerRepository.getOrderLineManager().fjernColli(orderLine.getOrderLineId());
 					// currentColli.setOrderLines(orderLines);
 
 					if (orderLines.size() == 0) {
@@ -476,7 +477,7 @@ public class ColliViewHandler extends AbstractViewHandlerShort<Colli, ColliModel
 					}
 
 					((ColliManager) overviewManager).saveColli(currentColli);
-					managerRepository.getOrderLineManager().saveOrderLine(orderLine);
+//					managerRepository.getOrderLineManager().saveOrderLine(orderLine);
 					orderLineList.remove(orderLine);
 
 					if (orderLine.getOrdNo() != null) {

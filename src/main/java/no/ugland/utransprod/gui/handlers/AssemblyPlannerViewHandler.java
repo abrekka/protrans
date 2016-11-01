@@ -1345,7 +1345,9 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		if (order != null && team != null && validTransport(order, window)) {
 			if (setAssembly(team, order, window)) {
 				try {
-					orderViewHandler.getOrderManager().saveOrder(order);
+//					orderViewHandler.getOrderManager().saveOrder(order);
+					
+//					orderViewHandler.getOrderManager().settMontering(order.getOrderId(),order.getAssembly());
 
 					orderViewHandler.getOrderManager().lazyLoadOrder(order,
 							new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COMMENTS, LazyLoadOrderEnum.ORDER_LINES });
@@ -1361,7 +1363,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	private Order getSelectedOrder(int index) {
 		SelectionInList orderPanelSelectionList = orderViewHandler.getOrderPanelSelectionList();
 		Order order = (Order) orderPanelSelectionList.getElementAt(index);
-		orderViewHandler.getOrderManager().refreshObject(order);
+//		orderViewHandler.getOrderManager().refreshObject(order);
 		return order;
 	}
 

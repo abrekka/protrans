@@ -1,6 +1,7 @@
 package no.ugland.utransprod.service.impl;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import no.ugland.utransprod.dao.AssemblyDAO;
@@ -95,5 +96,10 @@ public class AssemblyManagerImpl extends ManagerImpl<Assembly> implements Assemb
     public Assembly get(Integer assemblyId) {
 	return ((AssemblyDAO) dao).getObject(assemblyId);
     }
+
+	public void oppdaterMontering(Integer assemblyId, Date assembliedDate, String planned) {
+		((AssemblyDAO) dao).oppdaterMontering(assemblyId, assembliedDate,planned);
+		
+	}
 
 }
