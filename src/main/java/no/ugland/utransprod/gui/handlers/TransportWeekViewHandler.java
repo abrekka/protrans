@@ -25,6 +25,20 @@ import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import javax.swing.table.TableModel;
 
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.Hibernate;
+import org.jdesktop.swingx.JXTable;
+import org.jdesktop.swingx.decorator.Filter;
+import org.jdesktop.swingx.decorator.FilterPipeline;
+import org.jdesktop.swingx.decorator.HighlighterFactory;
+import org.jdesktop.swingx.decorator.PatternFilter;
+
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
+import com.jgoodies.binding.adapter.SingleListSelectionAdapter;
+import com.jgoodies.binding.list.ArrayListModel;
+import com.jgoodies.binding.list.SelectionInList;
+
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.gui.JDialogAdapter;
 import no.ugland.utransprod.gui.Login;
@@ -39,6 +53,7 @@ import no.ugland.utransprod.gui.WindowInterface;
 import no.ugland.utransprod.gui.buttons.DeleteButton;
 import no.ugland.utransprod.gui.buttons.NewButton;
 import no.ugland.utransprod.gui.edit.EditTransportView;
+import no.ugland.utransprod.gui.handlers.TransportViewHandler.TableClickHandler;
 import no.ugland.utransprod.gui.model.TransportListable;
 import no.ugland.utransprod.gui.model.TransportModel;
 import no.ugland.utransprod.gui.model.TransportSelectionListener;
@@ -67,20 +82,6 @@ import no.ugland.utransprod.util.Util;
 import no.ugland.utransprod.util.YearWeek;
 import no.ugland.utransprod.util.report.TransportLetter;
 import no.ugland.utransprod.util.report.TransportLetterSelector;
-
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.Hibernate;
-import org.jdesktop.swingx.JXTable;
-import org.jdesktop.swingx.decorator.Filter;
-import org.jdesktop.swingx.decorator.FilterPipeline;
-import org.jdesktop.swingx.decorator.HighlighterFactory;
-import org.jdesktop.swingx.decorator.PatternFilter;
-
-import com.google.inject.Inject;
-import com.google.inject.assistedinject.Assisted;
-import com.jgoodies.binding.adapter.SingleListSelectionAdapter;
-import com.jgoodies.binding.list.ArrayListModel;
-import com.jgoodies.binding.list.SelectionInList;
 
 /**
  * Hjelpeklasse forvisning av transporter for en gitt uke
@@ -949,7 +950,7 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 	tableOrdersList.setRowHeight(40);
 	tableOrdersList.setShowGrid(true);
 	tableOrdersList.setShowVerticalLines(true);
-	// tableOrdersList.addMouseListener(new TableClickHandler(aWindow));
+//	 tableOrdersList.addMouseListener(new TableClickHandler(aWindow));
 
 	List<TransportOrderTableModelList.TransportColumn> columns = TransportOrderTableModelList.TransportColumn.getTableColumns();
 

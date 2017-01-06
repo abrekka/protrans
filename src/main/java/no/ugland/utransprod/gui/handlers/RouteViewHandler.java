@@ -544,7 +544,7 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
      * @return vindusstørrelse
      */
     public Dimension getWindowSize() {
-	return new Dimension(1000, 660);
+	return new Dimension(1500, 800);
     }
 
     /**

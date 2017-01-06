@@ -27,6 +27,13 @@
     />
     
     <property
+        name="deviationId"
+        type="java.lang.Integer"
+        column="DEVIATION_ID"
+        length="32"
+    />
+    
+    <property
         name="sent"
         type="java.util.Date"
         column="SENT"

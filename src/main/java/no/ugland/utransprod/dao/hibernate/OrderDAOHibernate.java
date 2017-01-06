@@ -1470,4 +1470,23 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 		
 	}
 
+	
+	public Order getOrderWithOrderLinesAbdCollies(final String orderNr) {
+		return (Order) getHibernateTemplate().execute(new HibernateCallback() {
+
+			public Object doInHibernate(final Session session) {
+				StringBuffer sqlBuffer = new StringBuffer("select customerOrder from Order customerOrder")
+						.append(" left outer join fetch customerOrder.orderLines")
+						.append(" left outer join fetch customerOrder.collies c")
+						.append(" left outer join fetch c.orderLines")
+//						.append(" left outer join fetch customerOrder.orderComments")
+						.append(" where customerOrder.orderNr = :orderNr");
+				return session.createQuery(sqlBuffer.toString()).setParameter("orderNr", orderNr).uniqueResult();
+
+			}
+
+		});
+
+	}
+
 }

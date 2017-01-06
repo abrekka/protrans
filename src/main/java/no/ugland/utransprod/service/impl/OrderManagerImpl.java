@@ -711,4 +711,8 @@ public class OrderManagerImpl extends ManagerImpl<Order> implements OrderManager
 		
 	}
 
+	public Order getOrderWithOrderLinesAndCollies(String orderNr) {
+		return ((OrderDAO)dao).getOrderWithOrderLinesAbdCollies(orderNr);
+	}
+
 }

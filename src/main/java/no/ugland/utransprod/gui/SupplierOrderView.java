@@ -52,7 +52,7 @@ public class SupplierOrderView {
 	public JComponent buildPanel(WindowInterface window, int rowSize) {
 		initComponents(window);
 
-		FormLayout layout = new FormLayout("150dlu", "");
+		FormLayout layout = new FormLayout("200dlu", "");
 		DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 		// DefaultFormBuilder builder = new DefaultFormBuilder(new
 		// FormDebugPanel(),layout);

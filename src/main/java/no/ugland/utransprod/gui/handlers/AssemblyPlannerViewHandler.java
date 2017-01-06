@@ -1,5 +1,6 @@
 package no.ugland.utransprod.gui.handlers;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.AbstractAction;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
@@ -48,18 +50,23 @@ import no.ugland.utransprod.gui.JDialogAdapter;
 import no.ugland.utransprod.gui.Login;
 import no.ugland.utransprod.gui.OrderPanelTypeEnum;
 import no.ugland.utransprod.gui.OrderPanelView;
+import no.ugland.utransprod.gui.ProTransMain;
 import no.ugland.utransprod.gui.SupplierOrderView;
 import no.ugland.utransprod.gui.Updateable;
 import no.ugland.utransprod.gui.WindowInterface;
 import no.ugland.utransprod.gui.buttons.CancelButton;
 import no.ugland.utransprod.gui.buttons.RefreshButton;
 import no.ugland.utransprod.gui.edit.EditAssemblyView;
+import no.ugland.utransprod.gui.edit.EditDeviationView;
 import no.ugland.utransprod.gui.edit.FilterAssemblyView;
 import no.ugland.utransprod.gui.edit.FilterAssemblyView.AssemblyFilter;
 import no.ugland.utransprod.gui.edit.FilterAssemblyView.AssemblyfilterListener;
 import no.ugland.utransprod.gui.model.AssemblyModel;
 import no.ugland.utransprod.gui.model.ColorEnum;
+import no.ugland.utransprod.gui.model.DeviationModel;
 import no.ugland.utransprod.gui.model.ReportEnum;
+import no.ugland.utransprod.gui.model.TextPaneRenderer;
+import no.ugland.utransprod.gui.model.TextPaneRendererTransport;
 import no.ugland.utransprod.gui.model.Transportable;
 import no.ugland.utransprod.model.Assembly;
 import no.ugland.utransprod.model.AssemblyOverdueV;
@@ -70,6 +77,7 @@ import no.ugland.utransprod.model.FakturagrunnlagV;
 import no.ugland.utransprod.model.IAssembly;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
+import no.ugland.utransprod.model.PostShipment;
 import no.ugland.utransprod.model.ProductArea;
 import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.Supplier;
@@ -159,6 +167,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	JMenuItem menuItemRemoveAssembly;
 	JMenuItem menuItemShowMissing;
 	JMenuItem menuItemAssemblyReport;
+	JMenuItem menuItemAssemblyDeviation;
 	JMenuItem menuItemDeviation;
 	JMenuItem menuItemSetComment;
 	JMenuItem menuItemOppdaterLengdeBredde;
@@ -317,6 +326,9 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		menuItemAssemblyReport = new JMenuItem("Fakturagrunnlag...");
 		menuItemAssemblyReport.addActionListener(new AssemblyReportListener(window));
 
+		menuItemAssemblyDeviation = new JMenuItem("Se avvik...");
+		menuItemAssemblyDeviation.addActionListener(menuItemListenerAssembly);
+
 		menuItemDeviation = new JMenuItem("Registrere avvik...");
 		menuItemDeviation.addActionListener(menuItemListenerAssembly);
 
@@ -331,6 +343,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		popupMenuAssembly.add(menuItemSetSentBase);
 		popupMenuAssembly.add(menuItemSetComment);
 		popupMenuAssembly.add(menuItemOppdaterLengdeBredde);
+		popupMenuAssembly.add(menuItemAssemblyDeviation);
 	}
 
 	private class AssemblyReportListener implements ActionListener {
@@ -464,6 +477,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		tableAssembly.addHighlighter(assembliedHighlighter);
 		tableAssembly.addHighlighter(missingHighlighter);
 		tableAssembly.addHighlighter(overdueHighlighter);
+
+		tableAssembly.getColumnModel().getColumn(6).setCellRenderer(new TextPaneRendererAssemblyV());
 
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -781,7 +796,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	 * @return vindusstørrelse
 	 */
 	public Dimension getWindowSize() {
-		return new Dimension(1275, 700);
+		return new Dimension(1500, 900);
 	}
 
 	/**
@@ -1144,7 +1159,41 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 					}
 					doRefresh(window);
 				}
+			} else if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemAssemblyDeviation.getText())) {
+				AssemblyV assembly = getSelectedAssembly();
+
+				if (assembly.getDeviationId() != null) {
+					Deviation soekDeviation = new Deviation();
+					soekDeviation.setDeviationId(assembly.getDeviationId());
+					Deviation deviation = managerRepository.getDeviationManager().findByObject(soekDeviation).get(0);
+					managerRepository.getDeviationManager().lazyLoad(deviation,
+							new LazyLoadDeviationEnum[] { LazyLoadDeviationEnum.ORDER_COSTS,
+									LazyLoadDeviationEnum.COMMENTS, LazyLoadDeviationEnum.ORDER_LINES,
+									LazyLoadDeviationEnum.ORDER_LINE_ORDER_LINES });
+					Order order = managerRepository.getOrderManager().findByOrderNr(assembly.getOrderNr());
+					managerRepository.getOrderManager().lazyLoadTree(order);// LoadOrder(order,
+																			// new
+																			// LazyLoadOrderEnum[]
+																			// {
+					// LazyLoadOrderEnum.ORDER_LINES,
+					// LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES });
+					DeviationViewHandler deviationViewHandler = deviationViewHandlerFactory.create(order, true, false,
+							true, null, true);
+
+					EditDeviationView editDeviationView = new EditDeviationView(false,
+							new DeviationModel(deviation, false), deviationViewHandler, false, false);
+
+					JDialog dialog = new JDialog(ProTransMain.PRO_TRANS_MAIN, "Avvik", true);
+					WindowInterface window = new JDialogAdapter(dialog);
+
+					window.add(editDeviationView.buildPanel(window), BorderLayout.CENTER);
+
+					window.pack();
+					Util.locateOnScreenCenter(window);
+					window.setVisible(true);
+				}
 			}
+
 		}
 	}
 
@@ -1345,9 +1394,9 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		if (order != null && team != null && validTransport(order, window)) {
 			if (setAssembly(team, order, window)) {
 				try {
-//					orderViewHandler.getOrderManager().saveOrder(order);
-					
-//					orderViewHandler.getOrderManager().settMontering(order.getOrderId(),order.getAssembly());
+					// orderViewHandler.getOrderManager().saveOrder(order);
+
+					// orderViewHandler.getOrderManager().settMontering(order.getOrderId(),order.getAssembly());
 
 					orderViewHandler.getOrderManager().lazyLoadOrder(order,
 							new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COMMENTS, LazyLoadOrderEnum.ORDER_LINES });
@@ -1363,7 +1412,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	private Order getSelectedOrder(int index) {
 		SelectionInList orderPanelSelectionList = orderViewHandler.getOrderPanelSelectionList();
 		Order order = (Order) orderPanelSelectionList.getElementAt(index);
-//		orderViewHandler.getOrderManager().refreshObject(order);
+		// orderViewHandler.getOrderManager().refreshObject(order);
 		return order;
 	}
 
@@ -1765,7 +1814,15 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		public void mouseClicked(MouseEvent e) {
 
 			if (SwingUtilities.isRightMouseButton(e)) {
-
+				int index = tableAssembly.convertRowIndexToModel(assemblySelectionList.getSelectionIndex());
+				AssemblyV assembly = (AssemblyV) assemblySelectionList.getElementAt(index);
+				if(assembly.getDeviationId()!=null){
+					popupMenuAssembly.add(menuItemAssemblyDeviation);
+					popupMenuAssembly.remove(menuItemAssemblyReport);
+				}else{
+					popupMenuAssembly.remove(menuItemAssemblyDeviation);
+					popupMenuAssembly.add(menuItemAssemblyReport);
+				}
 				popupMenuAssembly.show((JXTable) e.getSource(), e.getX(), e.getY());
 			} else if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2) {
 				Util.setWaitCursor(window.getComponent());
@@ -1966,12 +2023,12 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		ADVARSLER("Advarsler", VISIBLE, NOT_CENTER, 80) {
 			@Override
 			public Object getValue(AssemblyV assembly) {
-				return assembly.getSpecialConcern();
+				return assembly;// .getSpecialConcern();
 			}
 
 			@Override
 			public Class<?> getColumnClass() {
-				return String.class;
+				return AssemblyV.class;
 			}
 
 			@Override
@@ -2957,4 +3014,35 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 			}
 		};
 	}
+
+	public class TextPaneRendererAssemblyV extends TextPaneRenderer<AssemblyV> {
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		protected List<Icon> getIcons(AssemblyV assemblyV) {
+			List<Icon> icons = new ArrayList<Icon>();
+			if (assemblyV.getDeviationId() != null) {
+				icons.add(IconEnum.ICON_POST_SHIPMENT.getIcon());
+			}
+			return icons;
+		}
+
+		@Override
+		protected String getPaneText(AssemblyV assemblyV) {
+			return assemblyV.getSpecialConcern();
+		}
+
+		@Override
+		protected void setCenteredAlignment() {
+
+		}
+
+		@Override
+		protected StringBuffer getPaneToolTipText(AssemblyV object) {
+			return new StringBuffer();
+		}
+
+	}
+
 }

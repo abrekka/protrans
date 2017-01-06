@@ -1,5 +1,6 @@
 package no.ugland.utransprod.gui.handlers;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,12 +53,15 @@ import no.ugland.utransprod.gui.IconEnum;
 import no.ugland.utransprod.gui.JDialogAdapter;
 import no.ugland.utransprod.gui.Login;
 import no.ugland.utransprod.gui.OrderPanelTypeEnum;
+import no.ugland.utransprod.gui.ProTransMain;
 import no.ugland.utransprod.gui.WindowInterface;
 import no.ugland.utransprod.gui.edit.AbstractEditView;
 import no.ugland.utransprod.gui.edit.EditAssemblyView;
 import no.ugland.utransprod.gui.edit.EditCommentView;
+import no.ugland.utransprod.gui.edit.EditDeviationView;
 import no.ugland.utransprod.gui.model.AssemblyModel;
 import no.ugland.utransprod.gui.model.ColorEnum;
+import no.ugland.utransprod.gui.model.DeviationModel;
 import no.ugland.utransprod.gui.model.OrderCommentModel;
 import no.ugland.utransprod.gui.model.ReportEnum;
 import no.ugland.utransprod.gui.model.TextPaneRendererTransport;
@@ -122,6 +126,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 	JMenuItem menuItemShowContent;
 
 	JMenuItem menuItemDeviation;
+	JMenuItem menuItemShowDeviation;
 
 	JMenuItem menuItemAssemblyReport;
 
@@ -190,6 +195,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 		menuItemShowContent = new JMenuItem("Se innhold...");
 		menuItemDeviation = new JMenuItem("Registrere avvik...");
 		menuItemAssemblyReport = new JMenuItem("Fakturagrunnlag...");
+		menuItemShowDeviation = new JMenuItem("Se avvik...");
 
 		popupMenuEdit.add(menuItemEdit);
 		popupMenuEdit.add(menuItemRemoveAssembly);
@@ -304,6 +310,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 			menuItemShowMissing.addActionListener(menuItemListener);
 			menuItemShowContent.addActionListener(menuItemListener);
 			menuItemDeviation.addActionListener(menuItemListener);
+			menuItemShowDeviation.addActionListener(menuItemListener);
 			menuItemAssemblyReport.addActionListener(new AssemblyReportListener());
 		}
 	}
@@ -356,9 +363,13 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 				if (assembly.getDeviation() != null) {
 					popupMenuEdit.add(menuItemShowContent);
 					popupMenuEdit.remove(menuItemDeviation);
+					popupMenuEdit.remove(menuItemAssemblyReport);
+					popupMenuEdit.add(menuItemShowDeviation);
 				} else {
+					popupMenuEdit.add(menuItemAssemblyReport);
 					popupMenuEdit.remove(menuItemShowContent);
 					popupMenuEdit.add(menuItemDeviation);
+					popupMenuEdit.remove(menuItemShowDeviation);
 				}
 				popupMenuEdit.show((JXTable) e.getSource(), e.getX(), e.getY());
 			}
@@ -448,6 +459,29 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 							true, null, true);
 					deviationViewHandler.registerDeviation(order, window);
 				}
+			} else if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemShowDeviation.getText())) {
+				Assembly assembly = (Assembly) assemblySelectionList
+						.getElementAt(tableOrders.convertRowIndexToModel(assemblySelectionList.getSelectionIndex()));
+				Deviation deviation = assembly.getDeviation();
+				managerRepository.getDeviationManager().lazyLoad(deviation,
+						new LazyLoadDeviationEnum[] { LazyLoadDeviationEnum.ORDER_COSTS,LazyLoadDeviationEnum.COMMENTS,LazyLoadDeviationEnum.ORDER_LINES,LazyLoadDeviationEnum.ORDER_LINE_ORDER_LINES });
+				Order order = assembly.getOrder();
+				managerRepository.getOrderManager().lazyLoadTree(order);//LoadOrder(order, new LazyLoadOrderEnum[] {
+//						LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES });
+				DeviationViewHandler deviationViewHandler = deviationViewHandlerFactory.create(order, true, false, true,
+						null, true);
+
+				EditDeviationView editDeviationView = new EditDeviationView(false, new DeviationModel(deviation, false),
+						deviationViewHandler, false, false);
+
+				JDialog dialog = new JDialog(ProTransMain.PRO_TRANS_MAIN, "Avvik", true);
+				WindowInterface window = new JDialogAdapter(dialog);
+
+				window.add(editDeviationView.buildPanel(window), BorderLayout.CENTER);
+
+				window.pack();
+				Util.locateOnScreenCenter(window);
+				window.setVisible(true);
 			}
 
 		}
@@ -901,14 +935,14 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 			if (order == null && assembly.getDeviation() != null) {
 				order = assembly.getDeviation().getOrder();
 			}
-//			if (order != null) {
-//				if (!Hibernate.isInitialized(order.getOrderComments())) {
-//					managerRepository.getOrderManager().lazyLoadOrder(order,
-//							new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COMMENTS });
-//				}
-//				order.cacheComments();
-//				orderViewHandler.getOrderManager().saveOrder(order);
-//			}
+			// if (order != null) {
+			// if (!Hibernate.isInitialized(order.getOrderComments())) {
+			// managerRepository.getOrderManager().lazyLoadOrder(order,
+			// new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COMMENTS });
+			// }
+			// order.cacheComments();
+			// orderViewHandler.getOrderManager().saveOrder(order);
+			// }
 			vismaFileCreator.createVismaFileForAssembly(order, assembly.getAssembliedBool(), false, 1);
 			vismaFileCreator.createVismaFileForAssembly(order, assembly.getAssembliedBool(), true, 2);
 		} catch (ProTransException e) {
@@ -944,17 +978,20 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 
 		public void actionPerformed(ActionEvent e) {
 			presentationModel.triggerCommit();
-//			Boolean assemblied = (Boolean) presentationModel.getBufferedValue(AssemblyModel.PROPERTY_ASSEMBLIED_BOOL);
+			// Boolean assemblied = (Boolean)
+			// presentationModel.getBufferedValue(AssemblyModel.PROPERTY_ASSEMBLIED_BOOL);
 			Date assembliedDate = (Date) presentationModel.getBufferedValue(AssemblyModel.PROPERTY_ASSEMBLIED_DATE);
-//			assemblied
-//					? presentationModel.getBufferedValue(AssemblyModel.PROPERTY_ASSEMBLIED_DATE) == null ? new Date()
-//							: (Date) presentationModel.getBufferedValue(AssemblyModel.PROPERTY_ASSEMBLIED_DATE)
-//					: null;
-//			assembliedDate=assemblied?assembliedDate:null;
+			// assemblied
+			// ?
+			// presentationModel.getBufferedValue(AssemblyModel.PROPERTY_ASSEMBLIED_DATE)
+			// == null ? new Date()
+			// : (Date)
+			// presentationModel.getBufferedValue(AssemblyModel.PROPERTY_ASSEMBLIED_DATE)
+			// : null;
+			// assembliedDate=assemblied?assembliedDate:null;
 			List<OrderComment> assemblyComments = (List<OrderComment>) presentationModel
 					.getBufferedValue(AssemblyModel.PROPERTY_COMMENT_LIST);
 			String planned = (String) presentationModel.getBufferedValue(AssemblyModel.PROPERTY_PLANNED);
-			
 
 			AssemblyModel assemblyModel = ((AssemblyModel) presentationModel.getBean());
 			Assembly assembly = assemblyModel.getObject();
@@ -965,7 +1002,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 				assembly.getOrder().getOrderComments().addAll(assemblyComments);
 				managerRepository.getOrderManager().saveOrder(assembly.getOrder());
 			}
-			
+
 			afterSaveObject(assembly, window);
 		}
 
