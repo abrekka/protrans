@@ -10,39 +10,36 @@ import no.ugland.utransprod.util.Periode;
 
 public class AdditionWidhtHeight extends AbstractAddition {
 
-    public AdditionWidhtHeight(final TransportCostAddition addition,
-            final String articlePath, final String info) {
-        super(addition, articlePath, info);
-    }
+	public AdditionWidhtHeight(final TransportCostAddition addition, final String articlePath, final String info) {
+		super(addition, articlePath, info);
+	}
 
-    public final BigDecimal calculateAddition(final BigDecimal basis,
-            final Transportable transportable, final Periode period,
-            final boolean ignoreSent) {
-        BigDecimal additionValue = BigDecimal.valueOf(0);
-        if (transportable.getPostShipment() == null) {
-            additionValue = calculateAdditionForOrder(basis, transportable);
-        }
-        return additionValue;
-    }
+	public final BigDecimal calculateAddition(final BigDecimal basis,
+			final Transportable transportable, final Periode period, final boolean ignoreSent) {
+		BigDecimal additionValue = BigDecimal.valueOf(0);
+		if (transportable.getPostShipment() == null) {
+			additionValue = calculateAdditionForOrder(basis, transportable);
+		}
+		return additionValue;
+	}
 
-    private BigDecimal calculateAdditionForOrder(final BigDecimal basis,
-            final Transportable transportable) {
-        BigDecimal additionValue = BigDecimal.valueOf(0);
-        Order order = transportable.getOrder();
-        String orderInfo = order.getInfo();
-        if (orderInfo == null) {
-            orderInfo = order.orderLinesToString();
-        }
-        if (orderInfo != null && orderInfo.length() != 0) {
-            String[] infoSplit = orderInfo.split("x");
-            double totalLenght = (Double.valueOf(infoSplit[0]) * 2)
-                    + (Double.valueOf(infoSplit[1]) * 2);
-            if (totalLenght >= Double.valueOf(transportCostAdditon.getBasis())) {
-                additionValue = basis.multiply(
-                        transportCostAdditon.getAddition()).divide(
-                        BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
-            }
-        }
-        return additionValue;
-    }
+	private BigDecimal calculateAdditionForOrder(final BigDecimal basis, 
+			final Transportable transportable) {
+		BigDecimal additionValue = BigDecimal.valueOf(0);
+		Order order = transportable.getOrder();
+		String orderInfo = order.getInfo();
+		if (orderInfo == null) {
+			orderInfo = order.orderLinesToString();
+		}
+		if (orderInfo != null && orderInfo.length() != 0) {
+			String[] infoSplit = orderInfo.split("x");
+			double totalLenght = (Double.valueOf(infoSplit[0]) * 2) + (Double.valueOf(infoSplit[1]) * 2);
+			if (totalLenght >= Double.valueOf(transportCostAdditon.getBasis())
+					&& totalLenght < Double.valueOf(transportCostAdditon.getBasis2())) {
+				additionValue = basis.multiply(transportCostAdditon.getAddition()).divide(BigDecimal.valueOf(100), 2,
+						RoundingMode.HALF_UP);
+			}
+		}
+		return additionValue;
+	}
 }

@@ -201,6 +201,7 @@ public class TransportCostManagerImpl implements TransportCostManager {
 	TransportCostAddition transportCostAddition = new TransportCostAddition();
 	transportCostAddition.setDescription(excelUtil.readCell(row, COLUMN_UPDATE_ADDITION_DESCRIPTION, null));
 	transportCostAddition.setBasis(excelUtil.readCell(row, COLUMN_UPDATE_BASIS, null));
+	transportCostAddition.setBasis2(excelUtil.readCell(row, COLUMN_UPDATE_BASIS2, null));
 	transportCostAddition.setAddition(excelUtil.readCellAsBigDecimal(row, COLUMN_UPDATE_ADDITION_ADDITION));
 	transportCostAddition.setMetric(excelUtil.readCell(row, COLUMN_UPDATE_METRIC, null));
 	transportCostAddition.setTransportBasis(excelUtil.readCellAsInteger(row, COLUMN_UPDATE_TRANSPORT_BASIS));

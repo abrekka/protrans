@@ -261,6 +261,7 @@ public class TransportDAOHibernate extends BaseDAOHibernate<Transport> implement
     final List<Transport> getTransportList(final Integer year, final Integer week, final Session session) {
 	String sql = "select transport from Transport transport " + " left outer join fetch transport.orders transportOrder "
 	 + "left outer join fetch transportOrder.orderLines "
+	 + "left outer join fetch transportOrder.orderComments "
 		+ " left outer join fetch transport.postShipments transportPostShipment "
 		// + "left outer join fetch transportPostShipment.orderLines "
 		+ "          where transport.transportYear=:year and " + "                  transport.transportWeek=:week ";

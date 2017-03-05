@@ -15,6 +15,7 @@ import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -518,15 +519,18 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		// {
 		List<Supplier> suppliers = (List<Supplier>) supplierMap.get(ProductAreaGroup.UNKNOWN);
 		if (suppliers == null || suppliers.size() == 0) {
-			List<Supplier> suppliersHavingAssembly = new ArrayListModel(managerRepository.getSupplierManager()
-					.findHavingAssembly(yearWeek.getYear(), yearWeek.getWeek() - 1, yearWeek.getWeek() + 1));
+			
 			List<Supplier> activeSuppliers = new ArrayListModel(
 					managerRepository.getSupplierManager().findActiveByTypeName("Montering", "postalCode"));
-			suppliers = new ArrayListModel(CollectionUtils.union(suppliersHavingAssembly, activeSuppliers));
+			suppliers = new ArrayListModel(activeSuppliers);
 			Collections.sort(suppliers, new SupplierComparator());
 			supplierMap.putAll(ProductAreaGroup.UNKNOWN, suppliers);
 		}
-		return suppliers;
+		List<Supplier> suppliersHavingAssembly = new ArrayListModel(managerRepository.getSupplierManager()
+				.findHavingAssembly(yearWeek.getYear(), yearWeek.getWeek() - 1, yearWeek.getWeek() + 1));
+		
+//		supplierMap.putAll(ProductAreaGroup.UNKNOWN, CollectionUtils.union(suppliersHavingAssembly,suppliers));
+		return Lists.newArrayList(CollectionUtils.union(suppliersHavingAssembly,suppliers));
 	}
 
 	/**

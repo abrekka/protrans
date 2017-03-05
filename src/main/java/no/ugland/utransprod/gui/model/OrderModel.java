@@ -31,10 +31,13 @@ import no.ugland.utransprod.model.ProductArea;
 import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.Supplier;
 import no.ugland.utransprod.model.Transport;
+import no.ugland.utransprod.service.OrderManager;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
+import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.Util;
 
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.Hibernate;
 
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.list.ArrayListModel;
@@ -794,7 +797,8 @@ public class OrderModel extends AbstractOrderModel<Order, OrderModel> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void viewToModel() {
-		Set<OrderComment> comments = object.getOrderComments();
+//		if(!lettvekt)
+		Set<OrderComment> comments = null;//object.getOrderComments();
 		if (comments == null) {
 			comments = new HashSet<OrderComment>();
 		}

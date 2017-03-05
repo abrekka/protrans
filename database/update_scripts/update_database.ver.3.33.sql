@@ -1,0 +1,1 @@
+alter table [Protrans2].[dbo].[transport_cost_addition] add basis2 nvarchar(100);

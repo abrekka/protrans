@@ -39,7 +39,13 @@ public final class TransportCostAdditionImplFacory {
 			return new AdditionTruss(addition, "Takstoler", "Takstol");
 		} else if (description.equalsIgnoreCase("Stående tak")) {
 			return new AdditionStandingRoof(addition, null, "Stående tak");
-		} else {
+		} else if (description.equalsIgnoreCase("Gulvspon")) {
+			return new AdditionGulvspon(addition, "Gulvspon", "Gulvspon");
+		} else if (description.equalsIgnoreCase("Innredning")) {
+			return new AdditionInnredning(addition, "iGarasjen innredning", "Innredning");
+		}else if (description.equalsIgnoreCase("MaxBreddeX2+høydeX2")) {
+			return new AdditionWidhtHeightMax(addition, null, "Ekstra lang garasje");
+		}		else {
 			throw new ProTransException("Ikke definert klasse for tillegg "
 					+ addition.getDescription());
 		}

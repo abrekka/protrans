@@ -37,14 +37,15 @@ public interface TransportCostManager {
     int COLUMN_UPDATE_ADDITION_DESCRIPTION = 6;
 
     int COLUMN_UPDATE_BASIS = 7;
+    int COLUMN_UPDATE_BASIS2 = 8;
 
-    int COLUMN_UPDATE_ADDITION_ADDITION = 8;
+    int COLUMN_UPDATE_ADDITION_ADDITION = 9;
 
-    int COLUMN_UPDATE_METRIC = 9;
+    int COLUMN_UPDATE_METRIC = 10;
 
-    int COLUMN_UPDATE_TRANSPORT_BASIS = 10;
+    int COLUMN_UPDATE_TRANSPORT_BASIS = 11;
 
-    int COLUMN_UPDATE_MEMBER_OF_MAX_ADDITIONS = 11;
+    int COLUMN_UPDATE_MEMBER_OF_MAX_ADDITIONS = 12;
 
     // snølast
     int COLUMN_AREA_SNOWLOAD_BASIC_VALUE = 1;
@@ -56,7 +57,7 @@ public interface TransportCostManager {
     String FILE_HEADER_IMPORT = "Postnummer;Sted;Kommunenr;";
     String FILE_HEADER_ZONE_ADDITION_ASSEMBLY_IMPORT = "Postnummer;Sted;Montørtillegg;";
 
-    String FILE_HEADER_UPDATE = "Fra;Til;Pris;Max tillegg;Påslag;Tillegg:;Beskrivelse;Grunnlag;Tillegg;Enhet;" + "Transportgrunnlag;Max tillegg;";
+    String FILE_HEADER_UPDATE = "Fra;Til;Pris;Max tillegg;Påslag;Tillegg:;Beskrivelse;Grunnlag;Til;Tillegg;Enhet;" + "Transportgrunnlag;Max tillegg;";
 
     static final String FILE_HEADER_IMPORT_AREA = "Kommunenr;Kommunenavn;";
     static final String FILE_HEADER_IMPORT_COUNTY = "Fylkesnr;Fylke;";

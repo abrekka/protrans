@@ -27,6 +27,12 @@
         column="BASIS"
         length="100"
     />
+    <property
+        name="basis2"
+        type="java.lang.String"
+        column="BASIS2"
+        length="100"
+    />
 	<property
         name="addition"
         type="java.math.BigDecimal"

@@ -185,7 +185,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 		return new Predicate<Order>() {
 
 			public boolean apply(Order order) {
-				return !ordrenr.equals(order.getOrderNr());
+				return !ordrenr.equals(order.getOrderNr())
+						&& order.getConstructionType().getName().contains("Tilleggsordre");
 			}
 		};
 	}
@@ -598,7 +599,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 			@Override
 			public Object getValue(ReportObject reportObject, Integer colliCount) {
-				Order order=reportObject.getOrder();return order.getDeliveryAddress();
+				Order order = reportObject.getOrder();
+				return order.getDeliveryAddress();
 			}
 		},
 		FIRST_NAME("first_name") {
@@ -609,7 +611,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 			@Override
 			public Object getValue(ReportObject reportObject, Integer colliCount) {
-				Order order=reportObject.getOrder();return order.getCustomer().getFirstName();
+				Order order = reportObject.getOrder();
+				return order.getCustomer().getFirstName();
 			}
 		},
 		LAST_NAME("last_name") {
@@ -620,7 +623,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 			@Override
 			public Object getValue(ReportObject reportObject, Integer colliCount) {
-				Order order=reportObject.getOrder();return order.getCustomer().getLastName();
+				Order order = reportObject.getOrder();
+				return order.getCustomer().getLastName();
 			}
 		},
 		POSTAL_CODE("postal_code") {
@@ -631,7 +635,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 			@Override
 			public Object getValue(ReportObject reportObject, Integer colliCount) {
-				Order order=reportObject.getOrder();return order.getPostalCode();
+				Order order = reportObject.getOrder();
+				return order.getPostalCode();
 			}
 		},
 		POST_OFFICE("post_office") {
@@ -642,7 +647,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 			@Override
 			public Object getValue(ReportObject reportObject, Integer colliCount) {
-				Order order=reportObject.getOrder();return order.getPostOffice();
+				Order order = reportObject.getOrder();
+				return order.getPostOffice();
 			}
 		},
 		ORDER_NR("order_nr") {
@@ -653,7 +659,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 			@Override
 			public Object getValue(ReportObject reportObject, Integer colliCount) {
-				Order order=reportObject.getOrder();return order.getOrderNr();
+				Order order = reportObject.getOrder();
+				return order.getOrderNr();
 			}
 		},
 		CUSTOMER_NR("customer_nr") {
@@ -664,7 +671,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 			@Override
 			public Object getValue(ReportObject reportObject, Integer colliCount) {
-				Order order=reportObject.getOrder();return order.getCustomer().getCustomerNr();
+				Order order = reportObject.getOrder();
+				return order.getCustomer().getCustomerNr();
 			}
 		},
 		PHONE_NR("phone_nr") {
@@ -675,7 +683,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 			@Override
 			public Object getValue(ReportObject reportObject, Integer colliCount) {
-				Order order=reportObject.getOrder();return order.getTelephoneNr();
+				Order order = reportObject.getOrder();
+				return order.getTelephoneNr();
 			}
 		},
 		NUMBER_OF_COLLI("number_of_colli") {
@@ -697,7 +706,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 			@Override
 			public Object getValue(ReportObject reportObject, Integer colliCount) {
-				TransportLetterObject letterObject=reportObject.getTransportLetterObject();return Util.upperFirstLetter(letterObject.getName());// +
+				TransportLetterObject letterObject = reportObject.getTransportLetterObject();
+				return Util.upperFirstLetter(letterObject.getName());// +
 				// (letterObject.getNumberOf()
 				// != null
 				// ? " - "
@@ -714,7 +724,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 			@Override
 			public Object getValue(ReportObject reportObject, Integer colliCount) {
-				TransportLetterObject letterObject=reportObject.getTransportLetterObject();return letterObject.getNumberOf();
+				TransportLetterObject letterObject = reportObject.getTransportLetterObject();
+				return letterObject.getNumberOf();
 			}
 		},
 		LENGHT("lenght") {
@@ -725,7 +736,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 			@Override
 			public Object getValue(ReportObject reportObject, Integer colliCount) {
-				TransportLetterObject letterObject=reportObject.getTransportLetterObject();return letterObject.getLenght();
+				TransportLetterObject letterObject = reportObject.getTransportLetterObject();
+				return letterObject.getLenght();
 			}
 		},
 		WIDTH("width") {
@@ -736,7 +748,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 			@Override
 			public Object getValue(ReportObject reportObject, Integer colliCount) {
-				TransportLetterObject letterObject=reportObject.getTransportLetterObject();return letterObject.getWidht();
+				TransportLetterObject letterObject = reportObject.getTransportLetterObject();
+				return letterObject.getWidht();
 			}
 		},
 		HEIGHT("height") {
@@ -747,7 +760,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 			@Override
 			public Object getValue(ReportObject reportObject, Integer colliCount) {
-				TransportLetterObject letterObject=reportObject.getTransportLetterObject();return letterObject.getHeight();
+				TransportLetterObject letterObject = reportObject.getTransportLetterObject();
+				return letterObject.getHeight();
 			}
 		},
 		COLLI_DETAILS("colli_details") {
@@ -758,7 +772,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 			@Override
 			public Object getValue(ReportObject reportObject, Integer colliCount) {
-				TransportLetterObject letterObject=reportObject.getTransportLetterObject();return letterObject.getDetails();
+				TransportLetterObject letterObject = reportObject.getTransportLetterObject();
+				return letterObject.getDetails();
 			}
 		},
 		ELEMENT_NAME("element_name") {
@@ -769,7 +784,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 			@Override
 			public Object getValue(ReportObject reportObject, Integer colliCount) {
-				TransportLetterObject letterObject=reportObject.getTransportLetterObject();return letterObject.getTypeName();
+				TransportLetterObject letterObject = reportObject.getTransportLetterObject();
+				return letterObject.getTypeName();
 			}
 		},
 		IS_NOT_POST_SHIPMENT("is_not_post_shipment") {
@@ -780,7 +796,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 			@Override
 			public Object getValue(ReportObject reportObject, Integer colliCount) {
-				TransportLetterObject letterObject=reportObject.getTransportLetterObject();return letterObject.isNotPostShipment();
+				TransportLetterObject letterObject = reportObject.getTransportLetterObject();
+				return letterObject.isNotPostShipment();
 			}
 		},
 		REPORT_NUMBER("report_number") {
@@ -810,14 +827,17 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 					deviationManager.lazyLoad(transportable.getDeviation(),
 							new LazyLoadDeviationEnum[] { LazyLoadDeviationEnum.COMMENTS });
 				}
-				
+
 				if (!Hibernate.isInitialized(transportable.getOrderComments())) {
-//					if (transportable instanceof PostShipment) {
-//						PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil
-//								.getBean("postShipmentManager");
-//						postShipmentManager.lazyLoad((PostShipment) transportable,
-//								new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_COMMENTS });
-//					} else {
+					// if (transportable instanceof PostShipment) {
+					// PostShipmentManager postShipmentManager =
+					// (PostShipmentManager) ModelUtil
+					// .getBean("postShipmentManager");
+					// postShipmentManager.lazyLoad((PostShipment)
+					// transportable,
+					// new LazyLoadPostShipmentEnum[] {
+					// LazyLoadPostShipmentEnum.ORDER_COMMENTS });
+					// } else {
 					if (transportable instanceof Order) {
 						OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
 
@@ -840,7 +860,8 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 			@Override
 			public Object getValue(ReportObject reportObject, Integer colliCount) {
-				Order order=reportObject.getOrder();return order.getTelephoneNrSite();
+				Order order = reportObject.getOrder();
+				return order.getTelephoneNrSite();
 			}
 		},
 		CUSTOMER_REF("customer_ref") {

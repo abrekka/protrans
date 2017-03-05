@@ -32,7 +32,7 @@ public class TransportPriceHandler implements Threadable {
     public final void importOrUpdateTransportPrices(final JLabel label, final WindowInterface window) throws ProTransException {
 	TransportCostManager transportCostManager = (TransportCostManager) ModelUtil.getBean("transportCostManager");
 	transportCostManager.setLabelInfo(label);
-	String excelFileName = Util.getFileName(component, new FileExtensionFilter("xls", "Excel"), null);
+	String excelFileName = Util.getFileName(component, new FileExtensionFilter(new String[]{"xls","xlsx"}, "Excel"), null);
 
 	if (excelFileName != null) {
 	    transportCostActionEnum.doImport(window, managerRepository.getTransportCostManager(), label, excelFileName);

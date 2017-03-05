@@ -24,6 +24,8 @@ public class TransportCostAddition extends BaseObject {
     private Integer transportBasis;
     private Integer memberOfMaxAdditions;
 
+	private String basis2;
+
     public TransportCostAddition() {
         super();
     }
@@ -121,4 +123,11 @@ public class TransportCostAddition extends BaseObject {
     public void setMemberOfMaxAdditions(Integer memberOfMaxAdditions) {
         this.memberOfMaxAdditions = memberOfMaxAdditions;
     }
+
+	public void setBasis2(String basis2) {
+		this.basis2=basis2;
+	}
+	public String getBasis2() {
+		return basis2;
+	}
 }

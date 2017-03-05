@@ -59,6 +59,7 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 //import org.apache.poi.hssf.usermodel.HSSFCell;
 //import org.apache.poi.hssf.usermodel.CellStyle;
 //import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -103,7 +104,8 @@ public class ExcelUtil {
 		try {
 			File excelFile = getFile(excelFileName);
 //			POIFSFileSystem fileSystem = new POIFSFileSystem(new FileInputStream(excelFile));
-			Workbook workbook = new XSSFWorkbook(excelFile);
+			Workbook workbook =WorkbookFactory.create(excelFile);
+//			Workbook workbook = new XSSFWorkbook(excelFile);
 			readSheet = workbook.getSheetAt(0);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
