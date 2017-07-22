@@ -1,9 +1,11 @@
 package no.ugland.utransprod.gui.model;
 
+import java.math.BigDecimal;
+
 public class Delelisteinfo {
 
 	private String ordrenummer;
-	private Integer antall;
+	private BigDecimal antall;
 	private Integer prodtp;
 	private String txt;
 	private Integer prodtp2;
@@ -17,7 +19,7 @@ public class Delelisteinfo {
 	private String prodno;
 	private Integer prCatNo2;
 
-	public Delelisteinfo(String ordrenummer, String kundenavn, String sted, String garasjetype, Integer antall,
+	public Delelisteinfo(String ordrenummer, String kundenavn, String sted, String garasjetype, BigDecimal antall,
 			Integer prodtp, String txt, Integer prodtp2, String enhet,String beskrivelse,String nummer,String informasjon,String prodno,Integer prCatNo2) {
 		this.prCatNo2=prCatNo2;
 		this.prodno=prodno;
@@ -82,7 +84,7 @@ public class Delelisteinfo {
 		return ordrenummer;
 	}
 
-	public Integer getAntall() {
+	public BigDecimal getAntall() {
 		return antall;
 	}
 

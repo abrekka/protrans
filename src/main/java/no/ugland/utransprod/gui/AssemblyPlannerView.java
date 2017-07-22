@@ -95,7 +95,7 @@ public class AssemblyPlannerView implements Viewer {
 	private JTextField textFieldRed;
 	private JCheckBox checkBoxListView;
 
-	private boolean useListView = true;
+//	private boolean useListView = true;
 
 	private JXTable tableAssembly;
 

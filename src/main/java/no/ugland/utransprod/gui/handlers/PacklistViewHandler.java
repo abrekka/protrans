@@ -1320,7 +1320,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 					}));
 
 			List<Delelisteinfo> deleliste = managerRepository.getOrderManager().finnDeleliste(order.getOrderNr(),
-					order.getCustomer().getFullName(), order.getPostOffice(), garasjetyper.get(0));
+					order.getCustomer().getFullName(), order.getPostOffice(), garasjetyper.isEmpty()?"":garasjetyper.get(0));
 
 			OrderLine takstein = order.getOrderLine("Takstein");
 			Ordln ordlnTakstein = managerRepository.getOrdlnManager().findByOrdNoAndLnNo(takstein.getOrdNo(),

@@ -2975,7 +2975,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	public JCheckBox getCheckBoxListView(WindowInterface window) {
 		checkBoxListView = new JCheckBox(new ListAction(window));
 		checkBoxListView.setName("CheckBoxListView");
-		checkBoxListView.setSelected(true);
+		checkBoxListView.setSelected(false);
 		return checkBoxListView;
 	}
 

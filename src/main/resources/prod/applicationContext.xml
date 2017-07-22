@@ -13,6 +13,7 @@
 			<ref bean="dataSource" />
 		</property>
 
+
 		<property name="mappingResources">
 			<list>
 				<value>hibernate/Order.hbm.xml</value>
