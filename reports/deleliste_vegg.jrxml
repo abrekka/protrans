@@ -3,7 +3,7 @@
 	<parameter name="ugland_logo" class="java.io.InputStream" isForPrompting="false"/>
 	<parameter name="produksjonstype" class="java.lang.String"/>
 	<field name="txtGruppe" class="java.lang.String"/>
-	<field name="antall" class="java.lang.Integer"/>
+	<field name="antall" class="java.math.BigDecimal"/>
 	<field name="ordrenummer" class="java.lang.String"/>
 	<field name="enhet" class="java.lang.String"/>
 	<field name="kundenavn" class="java.lang.String"/>
@@ -234,7 +234,7 @@
 				<textElement textAlignment="Center">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{antall}]]></textFieldExpression>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{antall}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="363" y="0" width="30" height="20"/>
