@@ -816,7 +816,7 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
      */
     void doSearch(WindowInterface window) {
 	labelSearchResult.setText("");
-	Transportable transportable = orderViewHandler.searchOrder(window, true);
+	Transportable transportable = orderViewHandler.searchOrder(window, true,true);
 	if (transportable == null) {
 	    labelSearchResult.setText("Det ble ikke funnet noen ordre");
 

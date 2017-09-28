@@ -116,6 +116,12 @@
         column="INITIATED_BY"
         length="32"
     />
+    <property
+        name="supplierName"
+        type="java.lang.String"
+        column="SUPPLIER_NAME"
+        length="32"
+    />
 
 
     <!-- Associations -->

@@ -71,6 +71,7 @@ import no.ugland.utransprod.model.Colli;
 import no.ugland.utransprod.model.ConstructionType;
 import no.ugland.utransprod.model.Customer;
 import no.ugland.utransprod.model.Cutting;
+import no.ugland.utransprod.model.Deviation;
 import no.ugland.utransprod.model.OfferAddress;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderComment;
@@ -2277,7 +2278,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	 * @param window
 	 * @return ordre
 	 */
-	public Transportable searchOrder(WindowInterface window, boolean includePostShipment) {
+	public Transportable searchOrder(WindowInterface window, boolean includePostShipment,boolean includeDeviation) {
 		Order searchOrder = new Order();
 		boolean isCanceled = openOrderView(searchOrder, true, window, false);
 		Transportable transportable = null;
@@ -2295,6 +2296,14 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 
 					if (postShipments != null) {
 						transportables.addAll(postShipments);
+					}
+				}
+				
+				if (includeDeviation) {
+					List<Deviation> deviations= findDeviations(orderList);
+
+					if (deviations != null) {
+						transportables.addAll(deviations);
 					}
 				}
 			}
@@ -2337,6 +2346,19 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 			}
 		}
 		return postShipments;
+	}
+	
+	private List<Deviation> findDeviations(List<Order> orders) {
+		List<Deviation> deviations = null;
+		if (orders != null) {
+			deviations = new ArrayList<Deviation>();
+			for (Order order : orders) {
+				((OrderManager) overviewManager).lazyLoadOrder(order,
+						new LazyLoadOrderEnum[] { LazyLoadOrderEnum.DEVIATIONS});
+				deviations.addAll(order.getDeviations());
+			}
+		}
+		return deviations;
 	}
 
 	/**

@@ -399,17 +399,10 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 					StatusCheckerInterface<Transportable> gulvsponChecker) {
 				try {
 					return transportable.getOrderComplete() != null ? "Ja" : "Nei";
-					// List<OrderLine> missing =
-					// transportable.getMissingCollies();
-					// return missing != null && !missing.isEmpty() ? "Nei" :
-					// "Ja;";
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return null;
-				// return transportable.getOrderComplete() != null ? "Ja" :
-				// "Nei";
 			}
 
 			@Override

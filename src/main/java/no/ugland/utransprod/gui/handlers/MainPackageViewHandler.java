@@ -2542,7 +2542,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	 * @return order dersom funnet
 	 */
 	Transportable doSearch(WindowInterface window) {
-		Transportable transportable = orderViewHandler.searchOrder(window, true);
+		Transportable transportable = orderViewHandler.searchOrder(window, true,true);
 		return transportable;
 	}
 

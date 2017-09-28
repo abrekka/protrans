@@ -700,7 +700,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	 * @param assemblyPlannerView
 	 */
 	void doSearch(WindowInterface window, AssemblyPlannerView assemblyPlannerView) {
-		Transportable transportable = orderViewHandler.searchOrder(window, true);
+		Transportable transportable = orderViewHandler.searchOrder(window, true,true);
 		if (transportable != null) {
 
 			if (transportable.getAssembly() != null) {

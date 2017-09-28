@@ -1,9 +1,0 @@
-CREATE VIEW [dbo].[main_package_order_line_v]
-AS
-select order_id,order_line_id,ord_no,ln_no
-,Number_of_items
-,F0100.dbo.ordln.TrInf3
-,F0100.dbo.ordln.ProdTp2
-,Protrans2.dbo.order_line_article_name(order_line_id,Construction_type_article_id,Article_type_id) AS ARTICLE_NAME
-from Protrans2.dbo.order_line left outer join
-F0100.dbo.ordln on F0100.dbo.ordln.ordno=Protrans2.dbo.order_line.ord_no and F0100.dbo.ordln.LnNo=Protrans2.dbo.order_line.ln_no

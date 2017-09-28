@@ -2037,7 +2037,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
     void doSearch(WindowInterface window) {
 	checkBoxFilter.setSelected(true);
 	handleFilter();
-	Transportable transportable = orderViewHandler.searchOrder(window, true);
+	Transportable transportable = orderViewHandler.searchOrder(window, true,true);
 	if (transportable != null) {
 	    if (objectList.contains(transportable)) {
 		int index = objectList.indexOf(transportable);
