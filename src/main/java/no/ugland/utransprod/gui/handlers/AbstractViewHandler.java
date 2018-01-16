@@ -49,7 +49,6 @@ import com.jgoodies.binding.adapter.SingleListSelectionAdapter;
 import com.jgoodies.binding.beans.Model;
 import com.jgoodies.binding.list.ArrayListModel;
 import com.jgoodies.binding.list.SelectionInList;
-
 /**
  * Abstrakt klasse som brukes for de klasser som håndterer vindusvariable
  * 

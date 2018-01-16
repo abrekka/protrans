@@ -19,6 +19,7 @@ import no.ugland.utransprod.gui.model.TextPaneRendererTransportSent;
 import no.ugland.utransprod.gui.model.Transportable;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
+import no.ugland.utransprod.model.PostShipment;
 import no.ugland.utransprod.model.Transport;
 import no.ugland.utransprod.service.OrderManager;
 import no.ugland.utransprod.service.OverviewManager;
@@ -47,6 +48,7 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 
 	private static final long serialVersionUID = 1L;
 	private ListModel listModel;
+	private TransportColumn.ForExcel isForExcel;
 
 	/**
 	 * @param listModel
@@ -61,6 +63,7 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 			StatusCheckerInterface<Transportable> aSteinChecker, StatusCheckerInterface<Transportable> aGulvsponChecker,
 			TransportColumn.ForExcel forExcel) {
 		super(aListModel, TransportColumn.getColumnNames(forExcel));
+		isForExcel = forExcel;
 		listModel = aListModel;
 		list = aOrderList;
 		gavlChecker = aGavlChecker;
@@ -274,8 +277,9 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 				if (!Hibernate.isInitialized(transportable.getOrderLines())) {
 					if (Order.class.isInstance(transportable)) {
 						OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
-						orderManager.lazyLoadOrder(transportable.getOrder(), new LazyLoadOrderEnum[] {
-								LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_COSTS });
+						orderManager.lazyLoadOrder(transportable.getOrder(),
+								new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_COSTS,
+										LazyLoadOrderEnum.COLLIES });
 					} else {
 						PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil
 								.getBean(PostShipmentManager.MANAGER_NAME);
@@ -322,18 +326,22 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 					StatusCheckerInterface<Transportable> steinChecker,
 					StatusCheckerInterface<Transportable> gulvsponChecker) {
 
-				if (!Hibernate.isInitialized(transportable.getOrderLines())) {
-					if (Order.class.isInstance(transportable)) {
-						OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
-						orderManager.lazyLoadOrder(transportable.getOrder(),
-								new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES });
-					} else {
-						PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil
-								.getBean("orderManager");
-						postShipmentManager.lazyLoad(transportable.getPostShipment(),
-								new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_LINES });
-					}
-				}
+				// if (!Hibernate.isInitialized(transportable.getOrderLines()))
+				// {
+				// if (Order.class.isInstance(transportable)) {
+				// OrderManager orderManager = (OrderManager)
+				// ModelUtil.getBean("orderManager");
+				// orderManager.lazyLoadOrder(transportable.getOrder(),
+				// new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES });
+				// } else {
+				// PostShipmentManager postShipmentManager =
+				// (PostShipmentManager) ModelUtil
+				// .getBean("orderManager");
+				// postShipmentManager.lazyLoad(transportable.getPostShipment(),
+				// new LazyLoadPostShipmentEnum[] {
+				// LazyLoadPostShipmentEnum.ORDER_LINES });
+				// }
+				// }
 
 				OrderLine gulvspon = transportable.getOrderLine("Gulvspon");
 				if (gulvspon != null) {
@@ -453,12 +461,29 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 					StatusCheckerInterface<Transportable> takstolChecker,
 					StatusCheckerInterface<Transportable> steinChecker,
 					StatusCheckerInterface<Transportable> gulvsponChecker) {
-				OverviewManager<Object> manager = (OverviewManager<Object>) ModelUtil
-						.getBean(transportable.getManagerName());
-				manager.lazyLoad(transportable,
-						new LazyLoadEnum[][] { { LazyLoadEnum.COLLIES, LazyLoadEnum.NONE },
-								{ LazyLoadEnum.ORDER_LINES, LazyLoadEnum.NONE },
-								{ LazyLoadEnum.ORDER_COMMENTS, LazyLoadEnum.NONE } });
+				// OverviewManager<Object> manager = (OverviewManager<Object>)
+				// ModelUtil
+				// .getBean(transportable.getManagerName());
+				// manager.lazyLoad(transportable,
+				// new LazyLoadEnum[][] { { LazyLoadEnum.COLLIES,
+				// LazyLoadEnum.NONE },
+				// { LazyLoadEnum.ORDER_LINES, LazyLoadEnum.NONE },
+				// { LazyLoadEnum.ORDER_COMMENTS, LazyLoadEnum.NONE } });
+
+				// OrderManager orderManager = (OrderManager)
+				// ModelUtil.getBean(OrderManager.MANAGER_NAME);
+				// if (!Hibernate.isInitialized(transportable.getCollies())) {
+				// orderManager.lazyLoadOrder(transportable.getOrder(), new
+				// LazyLoadOrderEnum[] {
+				// LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.ORDER_LINES,
+				// LazyLoadOrderEnum.COMMENTS });
+
+				// manager.lazyLoad(transportable,
+				// new LazyLoadEnum[][] { { LazyLoadEnum.COLLIES,
+				// LazyLoadEnum.NONE },
+				// { LazyLoadEnum.ORDER_LINES, LazyLoadEnum.NONE },
+				// { LazyLoadEnum.ORDER_COMMENTS, LazyLoadEnum.NONE } });
+				// }
 				return transportable.getCollies() != null ? transportable.getCollies().size() : null;
 			}
 
@@ -537,7 +562,7 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 
 			}
 		},
-		
+
 		// REST("Rest", ForExcel.TABLE) {
 		// @Override
 		// public Object getValue(Transportable transportable, Map<String,
@@ -800,22 +825,26 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 					StatusCheckerInterface<Transportable> takstolChecker,
 					StatusCheckerInterface<Transportable> steinChecker,
 					StatusCheckerInterface<Transportable> gulvsponChecker) {
-				if (!Hibernate.isInitialized(transportable.getOrderLines())) {
-					if (Order.class.isInstance(transportable)) {
-						OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
-						orderManager.lazyLoadOrder(transportable.getOrder(),
-								new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES });
-					} else {
-						PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil
-								.getBean("orderManager");
-						postShipmentManager.lazyLoad(transportable.getPostShipment(),
-								new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_LINES });
-					}
-				}
+				// if (!Hibernate.isInitialized(transportable.getOrderLines()))
+				// {
+				// if (Order.class.isInstance(transportable)) {
+				// OrderManager orderManager = (OrderManager)
+				// ModelUtil.getBean("orderManager");
+				// orderManager.lazyLoadOrder(transportable.getOrder(),
+				// new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES });
+				// } else {
+				// PostShipmentManager postShipmentManager =
+				// (PostShipmentManager) ModelUtil
+				// .getBean("orderManager");
+				// postShipmentManager.lazyLoad(transportable.getPostShipment(),
+				// new LazyLoadPostShipmentEnum[] {
+				// LazyLoadPostShipmentEnum.ORDER_LINES });
+				// }
+				// }
 
 				OrderLine igar = transportable.getOrderLine("iGarasjen innredning");
 				if (igar != null) {
-					if (igar.getHasArticle()!=null&&igar.getHasArticle()==1) {
+					if (igar.getHasArticle() != null && igar.getHasArticle() == 1) {
 						return "V" + (igar.getNumberOfItems() != null ? igar.getNumberOfItems() : "")
 								+ (igar.getColli() != null ? "X" : "");
 
@@ -911,25 +940,27 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Transportable transportable = (Transportable) getRow(rowIndex);
 
-		// if (!Hibernate.isInitialized(transportable.getOrderLines())) {
-		// if (transportable instanceof PostShipment) {
-		// PostShipmentManager postShipmentManager = (PostShipmentManager)
-		// ModelUtil.getBean("postShipmentManager");
-		// postShipmentManager.lazyLoad((PostShipment) transportable, new
-		// LazyLoadPostShipmentEnum[] {
-		// LazyLoadPostShipmentEnum.ORDER_LINES,
-		// LazyLoadPostShipmentEnum.COLLIES,
-		// LazyLoadPostShipmentEnum.ORDER_COMMENTS });
-		// } else {
-		// OrderManager orderManager = (OrderManager)
-		// ModelUtil.getBean("orderManager");
-		//
-		// orderManager.lazyLoadOrder((Order) transportable, new
-		// LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES,
-		// LazyLoadOrderEnum.ORDER_LINE_ATTRIBUTES, LazyLoadOrderEnum.COLLIES,
-		// LazyLoadOrderEnum.COMMENTS });
-		//
-		// }
+		if (TransportColumn.ForExcel.EXCEL.equals(isForExcel)) {
+			if (!Hibernate.isInitialized(transportable.getOrderLines())
+					|| !Hibernate.isInitialized(transportable.getCollies())
+					|| !Hibernate.isInitialized(transportable.getOrderComments())) {
+				if (transportable instanceof PostShipment) {
+					PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil
+							.getBean("postShipmentManager");
+					postShipmentManager
+							.lazyLoad((PostShipment) transportable,
+									new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_LINES,
+											LazyLoadPostShipmentEnum.COLLIES,
+											LazyLoadPostShipmentEnum.ORDER_COMMENTS });
+				} else {
+					OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
+
+					orderManager.lazyLoadOrder((Order) transportable, new LazyLoadOrderEnum[] {
+							LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.COMMENTS });
+
+				}
+			}
+		}
 
 		Map<String, String> statusMap = Util.createStatusMap(transportable.getStatus());
 

@@ -21,6 +21,8 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.Type;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import no.ugland.utransprod.dao.OrderDAO;
@@ -86,8 +88,26 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 			public Object doInHibernate(final Session session) {
 				Criteria crit = session.createCriteria(Order.class).add(Restrictions.isNull("transport"));
 				crit.setFetchMode("assembly", FetchMode.JOIN);
+
 				crit.setFetchMode("assembly.assemblyTeam", FetchMode.JOIN);
-				return crit.list();
+				List<Order> alleOrdre = crit.list();
+
+				List<Order> ordreUtenMontering = Lists.newArrayList(Iterables.filter(alleOrdre, new Predicate<Order>() {
+					public boolean apply(Order ordre) {
+						List<OrderLine> ordrelinjer = Lists
+								.newArrayList(Iterables.filter(ordre.getOrderLines(), new Predicate<OrderLine>() {
+							public boolean apply(OrderLine orderline) {
+								return orderline.getArticleType() != null
+										&& orderline.getArticleType().getProdCatNo() != null
+										&& orderline.getArticleType().getProdCatNo() == 1330100
+										&& orderline.getArticleType().getProdCatNo2() != null
+										&& orderline.getArticleType().getProdCatNo2() == 0;
+							}
+						}));
+						return ordrelinjer.size() == 0;
+					}
+				}));
+				return ordreUtenMontering;
 			}
 
 		});
@@ -1327,10 +1347,8 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 						+ "' and(F0100.dbo.ordln.prodno like 'tak %' or" + " F0100.dbo.ordln.prodno like 'ff%' or"
 						+ " F0100.dbo.prod.PrCatNo2 = 32 or" + " F0100.dbo.prod.PrCatNo2 = 4 or"
 						+ " F0100.dbo.ordln.prodno='OVERSKRIFT' or" + " F0100.dbo.ordln.descr like 'Vegg:%' or"
-						+ " F0100.dbo.ordln.descr like 'Gavl:%' or" + " F0100.dbo.prod.PrCatNo2 in(29,30) or"
+						+ " F0100.dbo.ordln.descr like 'Gavl:%' or" + " F0100.dbo.prod.PrCatNo2 in(29,30,9) or"
 						+ " (F0100.dbo.prod.PrCatNo = 509600 and F0100.dbo.ordln.purcno>0))";
-				
-		
 
 				List<Ordreinfo> ordreinfo = Lists.newArrayList();
 				List<Object[]> resultater = session.createSQLQuery(sql).list();
@@ -1416,17 +1434,17 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 		return (List<Delelisteinfo>) getHibernateTemplate().execute(new HibernateCallback() {
 
 			public Object doInHibernate(final Session session) {
-				String sql = "SELECT cast(NoInvoAb as numeric(10,2)) as antall,F0100.dbo.ordln.prodtp," + "F0100.dbo.txt.txt, "
-						+ "F0100.dbo.ordln.prodtp2, " + "F0100.dbo.Unit.descr as enhet"
-						+ ", F0100.dbo.ordln.descr, F0100.dbo.ordln.trinf4,F0100.dbo.prod.inf8,F0100.dbo.prod.prodno,F0100.dbo.prod.PrCatNo2 "
+				String sql = "SELECT cast(NoInvoAb as numeric(10,2)) as antall,F0100.dbo.ordln.prodtp,"
+						+ "F0100.dbo.txt.txt, " + "F0100.dbo.ordln.prodtp2, " + "F0100.dbo.Unit.descr as enhet"
+						+ ", F0100.dbo.ordln.descr, F0100.dbo.ordln.trinf4,F0100.dbo.prod.inf8,F0100.dbo.prod.prodno,F0100.dbo.prod.PrCatNo2"
+						+ ",F0100.dbo.ordln.purcno,F0100.dbo.ordln.ProdGr "
 						+ "FROM F0100.dbo.OrdLn inner join "
 						+ "F0100.dbo.txt on F0100.dbo.txt.txtno=F0100.dbo.ordln.prodtp2 inner join "
 						+ "F0100.dbo.ord on F0100.dbo.ordln.ordno=F0100.dbo.ord.ordno inner join "
 						+ "F0100.dbo.Unit on F0100.dbo.Unit.un=F0100.dbo.ordln.un inner join "
 						+ "F0100.dbo.prod on F0100.dbo.prod.prodno=F0100.dbo.ordln.ProdNo "
 						+ "where F0100.dbo.txt.Lang = 47 and F0100.dbo.txt.txttp = 58 and F0100.dbo.ordln.prodtp in(10,20,30,35,40,50) "
-						+ " and NoInvoAb > 0"
-						+ " and F0100.dbo.ord.inf6='" + ordrenr + "' "
+						+ " and NoInvoAb > 0" + " and F0100.dbo.ord.inf6='" + ordrenr + "' "
 						+ "order by F0100.dbo.ordln.prodtp2,F0100.dbo.ordln.trinf3,F0100.dbo.ordln.trinf4";
 
 				List<Delelisteinfo> deleliste = Lists.newArrayList();
@@ -1434,7 +1452,8 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 				for (Object[] linje : resultater) {
 					deleliste.add(new Delelisteinfo(ordrenr, kundenavn, sted, garasjetype, (BigDecimal) linje[0],
 							(Integer) linje[1], (String) linje[2], (Integer) linje[3], (String) linje[4],
-							(String) linje[5], (String) linje[6], (String) linje[7], (String) linje[8],(Integer) linje[9]));
+							(String) linje[5], (String) linje[6], (String) linje[7], (String) linje[8],
+							(Integer) linje[9],(Integer) linje[10],(Integer) linje[11]));
 				}
 				return deleliste;
 			}
@@ -1455,7 +1474,6 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 
 		});
 
-		
 	}
 
 	public void settMontering(final Integer orderId, final boolean montering) {
@@ -1465,16 +1483,15 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 
 				String sql = "update Order o set o.doAssembly=:montering where o.orderId=:orderId";
 
-				session.createQuery(sql).setBoolean("montering", montering).setInteger("orderId", orderId).executeUpdate();
+				session.createQuery(sql).setBoolean("montering", montering).setInteger("orderId", orderId)
+						.executeUpdate();
 				return null;
 			}
 
 		});
 
-		
 	}
 
-	
 	public Order getOrderWithOrderLinesAbdCollies(final String orderNr) {
 		return (Order) getHibernateTemplate().execute(new HibernateCallback() {
 
@@ -1483,7 +1500,8 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 						.append(" left outer join fetch customerOrder.orderLines")
 						.append(" left outer join fetch customerOrder.collies c")
 						.append(" left outer join fetch c.orderLines")
-//						.append(" left outer join fetch customerOrder.orderComments")
+						// .append(" left outer join fetch
+						// customerOrder.orderComments")
 						.append(" where customerOrder.orderNr = :orderNr");
 				return session.createQuery(sqlBuffer.toString()).setParameter("orderNr", orderNr).uniqueResult();
 

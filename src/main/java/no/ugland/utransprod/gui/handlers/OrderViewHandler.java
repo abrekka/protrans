@@ -39,6 +39,7 @@ import javax.swing.table.TableModel;
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.gui.AttachmentView;
 import no.ugland.utransprod.gui.DeviationOverviewView;
+import no.ugland.utransprod.gui.DeviationOverviewView2;
 import no.ugland.utransprod.gui.DeviationOverviewViewFactory;
 import no.ugland.utransprod.gui.FileView;
 import no.ugland.utransprod.gui.IconEnum;
@@ -172,7 +173,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 
 	private JLabel labelFilterInfo;
 
-	private DeviationOverviewView deviationOverviewView;
+	private DeviationOverviewView2 deviationOverviewView;
 
 	protected List<Component> editComponents = new ArrayList<Component>();
 
@@ -2127,7 +2128,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	 */
 	public JPanel getDeviationPane(WindowInterface window, PresentationModel presentationModel) {
 		Order order = ((OrderModel) presentationModel.getBean()).getObject();
-		DeviationViewHandler deviationViewHandler = deviationViewHandlerFactory.create(order, true, true, false, null,
+		DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(order, true, true, false, null,
 				false);
 
 		deviationOverviewView = deviationOverviewViewFactory.create(deviationViewHandler, false, order, true, true,

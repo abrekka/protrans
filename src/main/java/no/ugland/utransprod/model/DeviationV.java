@@ -26,7 +26,22 @@ public class DeviationV extends BaseObject {
 	private BigDecimal externalCost;
 	private String initiatedBy;
 	private Date orderReady;
-	private String supplierName;
+	// private String supplierName;
+	private String csId;
+	private Integer preventiveActionId;
+	private String preventiveActionName;
+	private Date dateClosed;
+	private String lastChanged;
+	private Integer postShipmentId;
+	private String transportnavn;
+	private Integer transportYear;
+	private Integer transportWeek;
+	private Integer doAssembly;
+	private Integer assemblyYear;
+	private Integer assemblyWeek;
+	private String montoernavn;
+	private Date transportSent;
+	private Date assembliedDate;
 
 	public DeviationV() {
 		super();
@@ -55,16 +70,124 @@ public class DeviationV extends BaseObject {
 		this.registrationYear = registrationYear;
 		this.internalCost = internalCost;
 		this.externalCost = externalCost;
-		this.supplierName = supplierName;
+		// this.supplierName = supplierName;
 	}
 
-	public String getSupplierName() {
-		return supplierName;
+	public Date getTransportSent() {
+		return transportSent;
+	}
+	public void setTransportSent(Date transportSent) {
+		this.transportSent = transportSent;
+	}
+	public Date getAssembliedDate() {
+		return assembliedDate;
+	}
+	public void setAssembliedDate(Date assembliedDate) {
+		this.assembliedDate = assembliedDate;
+	}
+	public Integer getDoAssembly() {
+		return doAssembly;
+	}
+	public void setDoAssembly(Integer doAssembly) {
+		this.doAssembly = doAssembly;
+	}
+	public Integer getAssemblyWeek() {
+		return assemblyWeek;
+	}
+	public void setAssemblyWeek(Integer assemblyWeek) {
+		this.assemblyWeek = assemblyWeek;
+	}
+	public Integer getAssemblyYear() {
+		return assemblyYear;
+	}
+	public void setAssemblyYear(Integer assemblyYear) {
+		this.assemblyYear = assemblyYear;
+	}
+	public String getMontoernavn() {
+		return montoernavn;
+	}
+	public void setMontoernavn(String montoernavn) {
+		this.montoernavn = montoernavn;
+	}
+	public Integer getTransportWeek() {
+		return transportWeek;
 	}
 
-	public void setSupplierName(String supplierName) {
-		this.supplierName = supplierName;
+	public void setTransportWeek(Integer transportWeek) {
+		this.transportWeek = transportWeek;
 	}
+
+	public Integer getTransportYear() {
+		return transportYear;
+	}
+
+	public void setTransportYear(Integer transportYear) {
+		this.transportYear = transportYear;
+	}
+
+	public String getTransportnavn() {
+		return transportnavn;
+	}
+
+	public void setTransportnavn(String transportnavn) {
+		this.transportnavn = transportnavn;
+	}
+
+	public Integer getPostShipmentId() {
+		return postShipmentId;
+	}
+
+	public void setPostShipmentId(Integer postShipmentId) {
+		this.postShipmentId = postShipmentId;
+	}
+
+	public String getLastChanged() {
+		return lastChanged;
+	}
+
+	public void setLastChanged(String lastChanged) {
+		this.lastChanged = lastChanged;
+	}
+
+	public Date getDateClosed() {
+		return dateClosed;
+	}
+
+	public void setDateClosed(Date dateClosed) {
+		this.dateClosed = dateClosed;
+	}
+
+	public Integer getPreventiveActionId() {
+		return preventiveActionId;
+	}
+
+	public String getPreventiveActionName() {
+		return preventiveActionName;
+	}
+
+	public void setPreventiveActionId(Integer preventiveActionId) {
+		this.preventiveActionId = preventiveActionId;
+	}
+
+	public void setPreventiveActionName(String preventiveActionName) {
+		this.preventiveActionName = preventiveActionName;
+	}
+
+	public String getCsId() {
+		return csId;
+	}
+
+	public void setCsId(String csId) {
+		this.csId = csId;
+	}
+
+	// public String getSupplierName() {
+	// return supplierName;
+	// }
+	//
+	// public void setSupplierName(String supplierName) {
+	// this.supplierName = supplierName;
+	// }
 
 	public Date getOrderReady() {
 		return orderReady;

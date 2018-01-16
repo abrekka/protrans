@@ -1252,7 +1252,8 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 					.medPoststed(order.getPostOffice()).medMontering(order.getDoAssembly())
 					.medTransportuke(order.getTransport() == null ? null : order.getTransport().getTransportWeek())
 					.medProduksjonsuke(order.getProductionWeek()).medKommentarer(order.getOrderComments())
-					.medOrdreinfo(ordreinfo).medTaktekke(takstein.getDetailsWithoutNoAttributes())
+					.medOrdreinfo(ordreinfo)
+//					.medTaktekke(takstein.getDetailsWithoutNoAttributes())
 					.medPakketAv(order.getPacklistDoneBy()).medBruker(login.getApplicationUser().getFullName())
 					.medProductArea(order.getProductArea()).medDeleliste(deleliste);
 					// Order order = packlistV.getOrder() == null ?
@@ -1335,7 +1336,8 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 					.medPoststed(order.getPostOffice()).medMontering(order.getDoAssembly())
 					.medTransportuke(order.getTransport() == null ? null : order.getTransport().getTransportWeek())
 					.medProduksjonsuke(order.getProductionWeek()).medKommentarer(order.getOrderComments())
-					.medOrdreinfo(ordreinfo).medTaktekke(takstein.getDetailsWithoutNoAttributes())
+					.medOrdreinfo(ordreinfo)
+//					.medTaktekke(takstein.getDetailsWithoutNoAttributes())
 					.medPakketAv(order.getPacklistDoneBy()).medBruker(login.getApplicationUser().getFullName())
 					.medProductArea(order.getProductArea()).medDeleliste(deleliste);
 			//

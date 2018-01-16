@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 import no.ugland.utransprod.gui.DeviationOverviewView;
+import no.ugland.utransprod.gui.DeviationOverviewView2;
 import no.ugland.utransprod.gui.DeviationOverviewViewFactory;
 import no.ugland.utransprod.gui.JDialogAdapter;
 import no.ugland.utransprod.gui.LFEnum;
@@ -21,6 +22,7 @@ import no.ugland.utransprod.gui.Login;
 import no.ugland.utransprod.gui.OrderOverviewView;
 import no.ugland.utransprod.gui.WindowInterface;
 import no.ugland.utransprod.gui.handlers.DeviationViewHandler;
+import no.ugland.utransprod.gui.handlers.DeviationViewHandler2;
 import no.ugland.utransprod.gui.handlers.DeviationViewHandlerFactory;
 import no.ugland.utransprod.gui.handlers.DeviationViewHandlerFactoryImpl;
 import no.ugland.utransprod.gui.handlers.OrderViewHandler;
@@ -130,9 +132,9 @@ public class OrderOverviewViewTest {
 
 	final DeviationOverviewViewFactory deviationOverviewViewFactory = new DeviationOverviewViewFactory() {
 
-	    public DeviationOverviewView create(DeviationViewHandler deviationViewHandler, boolean useSearchButton, Order aOrder, boolean doSeeAll,
+	    public DeviationOverviewView2 create(DeviationViewHandler2 deviationViewHandler, boolean useSearchButton, Order aOrder, boolean doSeeAll,
 		    boolean forOrderInfo, boolean isForRegisterNew, Deviation notDisplayDeviation, boolean isDeviationTableEditable) {
-		return new DeviationOverviewView(null, deviationViewHandler, false, null, false, true, true, null, true);
+		return new DeviationOverviewView2(null, deviationViewHandler, false, null, false, true, true, null, true,managerRepository);
 	    }
 	};
 

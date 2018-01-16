@@ -511,8 +511,9 @@ public class SentTransportViewHandler implements Closeable {
 		PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil
 				.getBean("postShipmentManager");
 
-		DeviationViewHandler deviationViewHandler = deviationViewHandlerFactory.create(transportlistable.getOrder(), false,
-				false, false, null, true);
+//		DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(transportlistable.getOrder(), false,
+//				false, false, null, true);
+		DeviationViewHandler deviationViewHandler=new DeviationViewHandler(login, managerRepository, null, transportlistable.getOrder(), true, false, true, null, true);
 
 		Deviation deviation = new Deviation();
 

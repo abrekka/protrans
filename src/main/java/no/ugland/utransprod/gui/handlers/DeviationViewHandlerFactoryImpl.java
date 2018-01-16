@@ -27,10 +27,10 @@ public class DeviationViewHandlerFactoryImpl implements
 		managerRepository = aManagerRepository;
 	}
 
-	public DeviationViewHandler create(Order aOrder, boolean doSeAll,
+	public DeviationViewHandler2 create(Order aOrder, boolean doSeAll,
 			boolean forOrderInfo, boolean isForRegisterNew,
 			Deviation notDisplayDeviation, boolean isDeviationTableEditable) {
-		return new DeviationViewHandler(login, managerRepository,
+		return new DeviationViewHandler2(login, managerRepository,
 				preventiveActionViewHandler, 
 				//deviationOverviewViewFactory,
 				aOrder, doSeAll, forOrderInfo, isForRegisterNew,

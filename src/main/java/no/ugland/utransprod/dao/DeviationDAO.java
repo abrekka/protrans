@@ -71,4 +71,6 @@ public interface DeviationDAO extends DAO<Deviation> {
 
     List<Deviation> findByResponsible(ApplicationUser applicationUser);
 
+	Deviation findById(Integer deviationId);
+
 }

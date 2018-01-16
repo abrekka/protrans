@@ -1731,7 +1731,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		}
 
 		if (transportable != null && transportable instanceof Order) {
-		    DeviationViewHandler deviationViewHandler = deviationViewHandlerFactory.create((Order) transportable, true, false, true, null,
+		    DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create((Order) transportable, true, false, true, null,
 			    true);
 		    deviationViewHandler.registerDeviation((Order) transportable, window);
 		}

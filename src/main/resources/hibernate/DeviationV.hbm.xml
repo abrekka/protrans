@@ -13,6 +13,96 @@
         <generator class="identity"/>
         </id>
 
+<property
+        name="postShipmentId"
+        type="java.lang.Integer"
+        column="POST_SHIPMENT_ID"
+        length="32"
+    />
+    <property
+        name="doAssembly"
+        type="java.lang.Integer"
+        column="DO_ASSEMBLY"
+        length="32"
+    />
+    <property
+        name="assemblyYear"
+        type="java.lang.Integer"
+        column="ASSEMBLY_YEAR"
+        length="32"
+    />
+    <property
+        name="assemblyWeek"
+        type="java.lang.Integer"
+        column="ASSEMBLY_WEEK"
+        length="32"
+    />
+    <property
+        name="transportYear"
+        type="java.lang.Integer"
+        column="TRANSPORT_YEAR"
+        length="32"
+    />
+    <property
+        name="transportWeek"
+        type="java.lang.Integer"
+        column="TRANSPORT_WEEK"
+        length="32"
+    />
+ <property
+        name="csId"
+        type="java.lang.String"
+        column="CS_ID"
+        length="255"
+    />
+    <property
+        name="montoernavn"
+        type="java.lang.String"
+        column="MONTOERNAVN"
+        length="255"
+    />
+    <property
+        name="transportnavn"
+        type="java.lang.String"
+        column="TRANSPORTNAVN"
+        length="255"
+    />
+    <property
+        name="preventiveActionId"
+        type="java.lang.Integer"
+        column="PREVENTIVE_ACTION_ID"
+        length="32"
+    />
+	<property
+        name="preventiveActionName"
+        type="java.lang.String"
+        column="PREVENTIVE_ACTION_NAME"
+        length="32"
+    />
+    <property
+        name="dateClosed"
+        type="java.util.Date"
+        column="DATE_CLOSED"
+        length="32"
+    />
+     <property
+        name="transportSent"
+        type="java.util.Date"
+        column="TRANSPORT_SENT"
+        length="32"
+    />
+     <property
+        name="assembliedDate"
+        type="java.util.Date"
+        column="ASSEMBLIED_DATE"
+        length="32"
+    />
+    <property
+        name="lastChanged"
+        type="java.lang.String"
+        column="LAST_CHANGED"
+        length="100"
+    />
     <property
         name="registrationDate"
         type="java.util.Date"
@@ -116,12 +206,12 @@
         column="INITIATED_BY"
         length="32"
     />
-    <property
-        name="supplierName"
-        type="java.lang.String"
-        column="SUPPLIER_NAME"
-        length="32"
-    />
+<!--     <property -->
+<!--         name="supplierName" -->
+<!--         type="java.lang.String" -->
+<!--         column="SUPPLIER_NAME" -->
+<!--         length="32" -->
+<!--     /> -->
 
 
     <!-- Associations -->

@@ -136,4 +136,8 @@ public class DeviationManagerImpl extends ManagerImpl<Deviation> implements Devi
 		return ((DeviationDAO) dao).findByResponsible(applicationUser);
 	}
 
+	public Deviation findById(Integer deviationId) {
+		return ((DeviationDAO)dao).findById(deviationId);
+	}
+
 }

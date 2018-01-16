@@ -1,5 +1,7 @@
 package no.ugland.utransprod.service;
 
+import no.ugland.utransprod.model.Deviation;
+
 public interface ManagerRepository {
 
     public abstract ArticleTypeManager getArticleTypeManager();
@@ -89,5 +91,8 @@ public interface ManagerRepository {
     public abstract FrontProductionVManager getFrontProductionVManager();
 
     public abstract FakturagrunnlagVManager getFakturagrunnlagVManager();
+
+	public abstract DeviationVManager getDeviationVManager();
+
 
 }

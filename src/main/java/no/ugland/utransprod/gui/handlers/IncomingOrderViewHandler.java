@@ -1,16 +1,28 @@
 package no.ugland.utransprod.gui.handlers;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.table.TableModel;
 
+import org.jdesktop.swingx.JXTable;
+import org.jdesktop.swingx.decorator.Filter;
+import org.jdesktop.swingx.decorator.FilterPipeline;
+import org.jdesktop.swingx.decorator.PatternFilter;
+
+import com.google.inject.Inject;
+import com.jgoodies.binding.PresentationModel;
+
 import no.ugland.utransprod.ProTransException;
+import no.ugland.utransprod.gui.IconEnum;
 import no.ugland.utransprod.gui.JDialogAdapter;
 import no.ugland.utransprod.gui.Login;
 import no.ugland.utransprod.gui.OrderPanelTypeEnum;
@@ -28,14 +40,6 @@ import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.util.UserUtil;
 import no.ugland.utransprod.util.Util;
 
-import org.jdesktop.swingx.JXTable;
-import org.jdesktop.swingx.decorator.Filter;
-import org.jdesktop.swingx.decorator.FilterPipeline;
-import org.jdesktop.swingx.decorator.PatternFilter;
-
-import com.google.inject.Inject;
-import com.jgoodies.binding.PresentationModel;
-
 /**
  * Håndterer ordre til avrop
  * @author atle.brekka
@@ -48,6 +52,8 @@ public class IncomingOrderViewHandler extends
 
     private final PresentationModel presentationModelProductAreaGroup;
     private ManagerRepository managerRepository;
+
+	private JButton buttonRefresh;
 
     /**
      * @param aOrderViewHandler
@@ -256,4 +262,46 @@ public class IncomingOrderViewHandler extends
     public boolean saveObjectExt(AbstractModel<Order, OrderModel> objectModel, WindowInterface window) {
         return false;
     }
+
+	public JButton getButtonRefresh() {
+		buttonRefresh = new JButton(new RefreshAction(window));
+		buttonRefresh.setIcon(IconEnum.ICON_REFRESH.getIcon());
+		buttonRefresh.setName("ButtonRefresh");
+		return buttonRefresh;
+	}
+	
+	private class RefreshAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+
+		private WindowInterface window;
+
+		public RefreshAction(WindowInterface aWindow) {
+			super("Oppdater");
+			window = aWindow;
+		}
+
+		public void actionPerformed(ActionEvent arg0) {
+			Util.setWaitCursor(window.getComponent());
+			initObjects();
+			Util.setDefaultCursor(window.getComponent());
+		}
+	}
+	
+	protected void initObjects() {
+		if (!loaded) {
+			setFiltered(false);
+			objectSelectionList.clearSelection();
+			objectList.clear();
+			List<Order> allObjects = overviewManager.findAll();
+			if (allObjects != null) {
+				objectList.addAll(allObjects);
+			}
+			noOfObjects = objectList.getSize();
+			if (table != null) {
+				table.scrollRowToVisible(0);
+			}
+			addObjectInfo();
+		}
+	}
+
 }

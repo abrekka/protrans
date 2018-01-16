@@ -299,6 +299,7 @@ public class ReportViewer extends JDialog implements Closeable {
 	private void sendMail(final WindowInterface window) {
 		try {
 			Util.setWaitCursor(window.getComponent());
+//			HtmlEx
 			String tmpPath = getTempDir();
 			String tempFileName = getTempFileName(tmpPath, mailConfig.getFileName());
 			File pdfFile = new File(tempFileName);

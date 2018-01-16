@@ -16,6 +16,7 @@ import javax.swing.UIManager;
 import no.ugland.utransprod.gui.ArticlePackageViewFactory;
 import no.ugland.utransprod.gui.ArticleProductionPackageView;
 import no.ugland.utransprod.gui.DeviationOverviewView;
+import no.ugland.utransprod.gui.DeviationOverviewView2;
 import no.ugland.utransprod.gui.DeviationOverviewViewFactory;
 import no.ugland.utransprod.gui.JDialogAdapter;
 import no.ugland.utransprod.gui.LFEnum;
@@ -28,6 +29,7 @@ import no.ugland.utransprod.gui.action.SetProductionUnitActionFactory;
 import no.ugland.utransprod.gui.handlers.ArticlePackageViewHandler;
 import no.ugland.utransprod.gui.handlers.ArticlePackageViewHandlerFactory;
 import no.ugland.utransprod.gui.handlers.DeviationViewHandler;
+import no.ugland.utransprod.gui.handlers.DeviationViewHandler2;
 import no.ugland.utransprod.gui.handlers.DeviationViewHandlerFactory;
 import no.ugland.utransprod.gui.handlers.OrderNrProvider;
 import no.ugland.utransprod.gui.handlers.OrderViewHandler;
@@ -403,12 +405,12 @@ public class ProductionOverviewViewTest {
 	Order selectedOrder = productionOverviewViewHandler.getSelectedObject().getOrder();
 
 	final PreventiveActionViewHandler preventiveActionViewHandler = new PreventiveActionViewHandler(login, managerRepository);
-	DeviationViewHandler deviationViewHandler = new DeviationViewHandler(login, managerRepository, preventiveActionViewHandler, selectedOrder,
+	DeviationViewHandler2 deviationViewHandler = new DeviationViewHandler2(login, managerRepository, preventiveActionViewHandler, selectedOrder,
 		true, false, true, null, true);
 	when(deviationViewHandlerFactory.create(selectedOrder, true, true, false, null, false)).thenReturn(deviationViewHandler);
 
-	DeviationOverviewView deviationOverviewView = new DeviationOverviewView(preventiveActionViewHandler, deviationViewHandler, false,
-		selectedOrder, true, false, true, null, true);
+	DeviationOverviewView2 deviationOverviewView = new DeviationOverviewView2(preventiveActionViewHandler, deviationViewHandler, false,
+		selectedOrder, true, false, true, null, true,managerRepository);
 	when(deviationOverviewViewFactory.create(deviationViewHandler, false, selectedOrder, true, true, false, null, false)).thenReturn(
 		deviationOverviewView);
 

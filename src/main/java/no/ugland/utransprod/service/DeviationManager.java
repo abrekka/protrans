@@ -63,4 +63,6 @@ public interface DeviationManager extends OverviewManager<Deviation> {
     void saveDeviation(Deviation deviation);
 
     List<Deviation> findByResponsible(ApplicationUser applicationUser);
+    
+    Deviation findById(Integer deviationId);
 }

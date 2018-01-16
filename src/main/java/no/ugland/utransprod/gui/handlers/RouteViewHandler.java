@@ -1392,7 +1392,8 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
 	deviation.setCustomerNr(order.getCustomer().getCustomerNr());
 	deviation.setOrderNr(order.getOrderNr());
 
-	DeviationViewHandler deviationViewHandler = deviationViewHandlerFactory.create(null, false, false, false, null, true);
+//	DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(null, false, false, false, null, true);
+	DeviationViewHandler deviationViewHandler=new DeviationViewHandler(login, managerRepository, null, null, true, false, true, null, true);
 
 	DeviationModel deviationModel = new DeviationModel(deviation, true);
 
@@ -1946,7 +1947,7 @@ public class RouteViewHandler implements Closeable, Updateable, ListDataListener
 	// PostShipment postShipment = (PostShipment)
 	// postShipmentSelectionList.getSelection();
 
-	DeviationViewHandler deviationViewHandler = deviationViewHandlerFactory.create(null, true, false, true, null, true);
+	DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(null, true, false, true, null, true);
 	deviationViewHandler.showDeviation(postShipment.getDeviation(), aWindow);
     }
 

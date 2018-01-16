@@ -15,6 +15,7 @@ import javax.swing.UIManager;
 
 import no.ugland.utransprod.gui.AssemblyPlannerView;
 import no.ugland.utransprod.gui.DeviationOverviewView;
+import no.ugland.utransprod.gui.DeviationOverviewView2;
 import no.ugland.utransprod.gui.DeviationOverviewViewFactory;
 import no.ugland.utransprod.gui.JDialogAdapter;
 import no.ugland.utransprod.gui.LFEnum;
@@ -22,6 +23,7 @@ import no.ugland.utransprod.gui.Login;
 import no.ugland.utransprod.gui.WindowInterface;
 import no.ugland.utransprod.gui.handlers.AssemblyPlannerViewHandler;
 import no.ugland.utransprod.gui.handlers.DeviationViewHandler;
+import no.ugland.utransprod.gui.handlers.DeviationViewHandler2;
 import no.ugland.utransprod.gui.handlers.DeviationViewHandlerFactory;
 import no.ugland.utransprod.gui.handlers.OrderViewHandler;
 import no.ugland.utransprod.gui.handlers.OrderViewHandlerFactory;
@@ -139,19 +141,19 @@ public class AssemblyPlannerViewTest {
 	final PreventiveActionViewHandler preventiveActionViewHandler = new PreventiveActionViewHandler(login, managerRepository);
 	final DeviationViewHandlerFactory deviationViewHandlerFactory = new DeviationViewHandlerFactory() {
 
-	    public DeviationViewHandler create(Order aOrder, boolean doSeAll, boolean forOrderInfo, boolean isForRegisterNew,
+	    public DeviationViewHandler2 create(Order aOrder, boolean doSeAll, boolean forOrderInfo, boolean isForRegisterNew,
 		    Deviation notDisplayDeviation, boolean isDeviationTableEditable) {
 
-		return new DeviationViewHandler(login, managerRepository, preventiveActionViewHandler, aOrder, doSeAll, forOrderInfo,
+		return new DeviationViewHandler2(login, managerRepository, preventiveActionViewHandler, aOrder, doSeAll, forOrderInfo,
 			isForRegisterNew, notDisplayDeviation, isDeviationTableEditable);
 	    }
 	};
 	final DeviationOverviewViewFactory deviationOverviewViewFactory = new DeviationOverviewViewFactory() {
 
-	    public DeviationOverviewView create(DeviationViewHandler deviationViewHandler, boolean useSearchButton, Order aOrder, boolean doSeeAll,
+	    public DeviationOverviewView2 create(DeviationViewHandler2 deviationViewHandler, boolean useSearchButton, Order aOrder, boolean doSeeAll,
 		    boolean forOrderInfo, boolean isForRegisterNew, Deviation notDisplayDeviation, boolean isDeviationTableEditable) {
-		return new DeviationOverviewView(preventiveActionViewHandler, deviationViewHandler, useSearchButton, aOrder, doSeeAll, forOrderInfo,
-			isForRegisterNew, notDisplayDeviation, isDeviationTableEditable);
+		return new DeviationOverviewView2(preventiveActionViewHandler, deviationViewHandler, useSearchButton, aOrder, doSeeAll, forOrderInfo,
+			isForRegisterNew, notDisplayDeviation, isDeviationTableEditable,managerRepository);
 	    }
 	};
 	final OrderViewHandlerFactory orderViewHandlerFactory = new OrderViewHandlerFactory() {

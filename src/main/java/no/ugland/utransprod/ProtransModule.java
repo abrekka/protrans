@@ -58,6 +58,7 @@ import no.ugland.utransprod.service.CustTrManager;
 import no.ugland.utransprod.service.CustomerManager;
 import no.ugland.utransprod.service.DeviationManager;
 import no.ugland.utransprod.service.DeviationStatusManager;
+import no.ugland.utransprod.service.DeviationVManager;
 import no.ugland.utransprod.service.EmployeeManager;
 import no.ugland.utransprod.service.EmployeeTypeManager;
 import no.ugland.utransprod.service.ExternalOrderLineManager;
@@ -149,6 +150,7 @@ public class ProtransModule extends AbstractModule {
 	bind(ConstructionTypeManager.class).toInstance((ConstructionTypeManager) ModelUtil.getBean(ConstructionTypeManager.MANAGER_NAME));
 	bind(CustomerManager.class).toInstance((CustomerManager) ModelUtil.getBean(CustomerManager.MANAGER_NAME));
 	bind(DeviationManager.class).toInstance((DeviationManager) ModelUtil.getBean(DeviationManager.MANAGER_NAME));
+	bind(DeviationVManager.class).toInstance((DeviationVManager) ModelUtil.getBean(DeviationVManager.MANAGER_NAME));
 	bind(ExternalOrderLineManager.class).toInstance((ExternalOrderLineManager) ModelUtil.getBean(ExternalOrderLineManager.MANAGER_NAME));
 	bind(String.class).annotatedWith(Names.named("gulvspon_article")).toInstance(ApplicationParamUtil.findParamByName("gulvspon_artikkel"));
 	bind(AccidentManager.class).toInstance((AccidentManager) ModelUtil.getBean(AccidentManager.MANAGER_NAME));

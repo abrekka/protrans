@@ -26,7 +26,7 @@ public class ProductionReportData {
 	private String telefonliste;
 	private String leveringsadresse;
 	private String postnr;
-	private String taktekke;
+	// private String taktekke;
 	private String pakketAv;
 	private String bruker;
 	private Integer produksjonsuke;
@@ -103,7 +103,7 @@ public class ProductionReportData {
 								&& !ordreinfo.getBeskrivelse().contains("Gavl:")
 								&& !ordreinfo.getBeskrivelse().contains("Vindsperre")
 								&& !ordreinfo.getBeskrivelse().contains("Takstol:")
-								&& !ordreinfo.getProdno().contains("HJKASSSPES");
+								&& !ordreinfo.getProdno().contains("HJKASSSPES") && ordreinfo.getPrCatNo2() != 9;
 					}
 				}), new Function<Ordreinfo, String>() {
 
@@ -305,13 +305,23 @@ public class ProductionReportData {
 		return "";
 	}
 
-	public ProductionReportData medTaktekke(String taktekke) {
-		this.taktekke = taktekke;
-		return this;
-	}
+	// public ProductionReportData medTaktekke(String taktekke) {
+	// this.taktekke = taktekke;
+	// return this;
+	// }
 
 	public String getTaktekke() {
-		return taktekke;
+		// return taktekke;
+		if (ordreinfo != null && !ordreinfo.isEmpty()) {
+			List<Ordreinfo> taktekke = Lists.newArrayList(Iterables.filter(ordreinfo, new Predicate<Ordreinfo>() {
+
+				public boolean apply(Ordreinfo ordreinfo) {
+					return ordreinfo.getPrCatNo2() != null && ordreinfo.getPrCatNo2() == 9;
+				}
+			}));
+			return taktekke == null || taktekke.isEmpty() ? "" : taktekke.get(0).getBeskrivelse();
+		}
+		return "";
 	}
 
 	public ProductionReportData medPakketAv(String pakketAv) {
@@ -405,16 +415,17 @@ public class ProductionReportData {
 			}
 		}));
 	}
-	
+
 	public List<Delelisteinfo> getDelelisteTakrenner() {
 		return Lists.newArrayList(Iterables.filter(deleliste, new Predicate<Delelisteinfo>() {
 
 			public boolean apply(Delelisteinfo del) {
-				return (del.getProdtp() == 30||del.getProdtp() == 35)&&(del.getProdtp2()==190||del.getPrCatNo2()==9);
+				return (del.getProdtp() == 30 || del.getProdtp() == 35)
+						&& (del.getProdtp2() == 190 || del.getPrCatNo2() == 9);
 			}
 		}));
 	}
-	
+
 	public List<Delelisteinfo> getDelelisteAltUtenTakrennedeler() {
 		return Lists.newArrayList(Iterables.filter(deleliste, new Predicate<Delelisteinfo>() {
 
@@ -423,7 +434,7 @@ public class ProductionReportData {
 			}
 		}));
 	}
-	
+
 	public List<Delelisteinfo> getDelelisteKunde() {
 		return deleliste;
 	}

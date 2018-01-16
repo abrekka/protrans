@@ -1,5 +1,6 @@
 package no.ugland.utransprod.gui;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -24,6 +25,7 @@ import com.jgoodies.forms.layout.FormLayout;
 public class IncomingOrderOverviewView extends OverviewView<Order, OrderModel> {
 
     private JComboBox comboBoxProductAreaGroup;
+	private JButton buttonRefresh;
 
     /**
      * @param handler
@@ -40,6 +42,8 @@ public class IncomingOrderOverviewView extends OverviewView<Order, OrderModel> {
     @Override
     protected final void initComponents(final WindowInterface window) {
         super.initComponents(window);
+        buttonRefresh=((IncomingOrderViewHandler) viewHandler)
+                .getButtonRefresh();
         buttonAdd.setText("Importer ordre...");
         comboBoxProductAreaGroup = ((IncomingOrderViewHandler) viewHandler)
                 .getComboBoxProductAreaGroup();
@@ -68,7 +72,7 @@ public class IncomingOrderOverviewView extends OverviewView<Order, OrderModel> {
         builder.add(comboBoxProductAreaGroup, cc.xy(5, 2));
         builder.add(scrollPaneTable, cc.xywh(2, 4, 5, 9));
         builder.add(buildButtonPanel(), cc.xywh(8, 5, 1, 10));
-        builder.add(ButtonBarFactory.buildCenteredBar(buttonCancel), cc.xyw(2,
+        builder.add(ButtonBarFactory.buildCenteredBar(buttonCancel,buttonRefresh), cc.xyw(2,
                 15, 7));
         return builder.getPanel();
     }

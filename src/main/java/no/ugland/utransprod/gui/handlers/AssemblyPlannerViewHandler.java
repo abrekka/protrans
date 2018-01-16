@@ -67,6 +67,7 @@ import no.ugland.utransprod.gui.model.ColorEnum;
 import no.ugland.utransprod.gui.model.DeviationModel;
 import no.ugland.utransprod.gui.model.ReportEnum;
 import no.ugland.utransprod.gui.model.TextPaneRenderer;
+import no.ugland.utransprod.gui.model.TextPaneRendererCustomer;
 import no.ugland.utransprod.gui.model.TextPaneRendererTransport;
 import no.ugland.utransprod.gui.model.Transportable;
 import no.ugland.utransprod.model.Assembly;
@@ -444,6 +445,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		tableDeviation = new JXTable();
 
 		initDeviationList();
+		tableDeviation.setRowHeight(25);
 		tableDeviation.setModel(new DeviationTableModel(deviationSelectionList));
 		tableDeviation.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tableDeviation
@@ -453,6 +455,12 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		tableDeviation.addMouseListener(new DeviationRightClickListener());
 
 		tableDeviation.setName("TableDeviation");
+
+		// tableDeviation.getColumnModel().getColumn(0).setCellRenderer(new
+		// TextPaneRendererTransport());
+		tableDeviation.getColumnModel().getColumn(0).setCellRenderer(new TextPaneRendererCustomer());
+		tableDeviation.getColumnModel().getColumn(0).setPreferredWidth(200);
+
 		return tableDeviation;
 	}
 
@@ -465,7 +473,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 				new PatternPredicate("1", AssemblyColumn.SENDT_MANGLER.ordinal()), ColorEnum.YELLOW.getColor(), null);
 		ColorHighlighter overdueHighlighter = new ColorHighlighter(
 				new PatternPredicate("1", AssemblyColumn.OVERTID.ordinal()), ColorEnum.RED.getColor(), null);
-		initAssemblyList();
+		// initAssemblyList();
 		tableAssembly.setModel(new AssemblyTableModel(assemblyArrayListModel));
 		tableAssembly.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tableAssembly.setSortable(true);
@@ -519,7 +527,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		// {
 		List<Supplier> suppliers = (List<Supplier>) supplierMap.get(ProductAreaGroup.UNKNOWN);
 		if (suppliers == null || suppliers.size() == 0) {
-			
+
 			List<Supplier> activeSuppliers = new ArrayListModel(
 					managerRepository.getSupplierManager().findActiveByTypeName("Montering", "postalCode"));
 			suppliers = new ArrayListModel(activeSuppliers);
@@ -528,9 +536,10 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		}
 		List<Supplier> suppliersHavingAssembly = new ArrayListModel(managerRepository.getSupplierManager()
 				.findHavingAssembly(yearWeek.getYear(), yearWeek.getWeek() - 1, yearWeek.getWeek() + 1));
-		
-//		supplierMap.putAll(ProductAreaGroup.UNKNOWN, CollectionUtils.union(suppliersHavingAssembly,suppliers));
-		return Lists.newArrayList(CollectionUtils.union(suppliersHavingAssembly,suppliers));
+
+		// supplierMap.putAll(ProductAreaGroup.UNKNOWN,
+		// CollectionUtils.union(suppliersHavingAssembly,suppliers));
+		return Lists.newArrayList(CollectionUtils.union(suppliersHavingAssembly, suppliers));
 	}
 
 	/**
@@ -700,7 +709,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	 * @param assemblyPlannerView
 	 */
 	void doSearch(WindowInterface window, AssemblyPlannerView assemblyPlannerView) {
-		Transportable transportable = orderViewHandler.searchOrder(window, true,true);
+		Transportable transportable = orderViewHandler.searchOrder(window, true, true);
 		if (transportable != null) {
 
 			if (transportable.getAssembly() != null) {
@@ -1125,7 +1134,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 				Order order = assembly.getOrder();
 				if (order != null) {
 
-					DeviationViewHandler deviationViewHandler = deviationViewHandlerFactory.create(order, true, false,
+					DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(order, true, false,
 							true, null, true);
 					deviationViewHandler.registerDeviation(order, window);
 				}
@@ -1181,8 +1190,12 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 																			// {
 					// LazyLoadOrderEnum.ORDER_LINES,
 					// LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES });
-					DeviationViewHandler deviationViewHandler = deviationViewHandlerFactory.create(order, true, false,
-							true, null, true);
+					// DeviationViewHandler deviationViewHandler =
+					// deviationViewHandlerFactory.create(order, true, false,
+					// true, null, true);
+
+					DeviationViewHandler deviationViewHandler = new DeviationViewHandler(login, managerRepository, null,
+							order, true, false, true, null, true);
 
 					EditDeviationView editDeviationView = new EditDeviationView(false,
 							new DeviationModel(deviation, false), deviationViewHandler, false, false);
@@ -1656,13 +1669,15 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 			KUNDE("Kunde") {
 				@Override
 				public Class<?> getColumnClass() {
-					return Customer.class;
+					return Deviation.class;
 				}
 
 				@Override
 				public Object getValue(Deviation deviation) {
-					return deviation != null && deviation.getOrder() != null ? deviation.getOrder().getCustomer()
-							: null;
+					return deviation;
+					// return deviation != null && deviation.getOrder() != null
+					// ? deviation.getOrder().getCustomer()
+					// : null;
 				}
 			},
 			ORDRENR("Ordrenr") {
@@ -1820,10 +1835,10 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 			if (SwingUtilities.isRightMouseButton(e)) {
 				int index = tableAssembly.convertRowIndexToModel(assemblySelectionList.getSelectionIndex());
 				AssemblyV assembly = (AssemblyV) assemblySelectionList.getElementAt(index);
-				if(assembly.getDeviationId()!=null){
+				if (assembly.getDeviationId() != null) {
 					popupMenuAssembly.add(menuItemAssemblyDeviation);
 					popupMenuAssembly.remove(menuItemAssemblyReport);
-				}else{
+				} else {
 					popupMenuAssembly.remove(menuItemAssemblyDeviation);
 					popupMenuAssembly.add(menuItemAssemblyReport);
 				}

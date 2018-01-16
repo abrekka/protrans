@@ -43,7 +43,7 @@ class DeviationAction<T> extends AbstractAction {
 
 	private AttributeChoiceManager attributeChoiceManager;*/
 	
-	private DeviationViewHandler deviationViewHandler;
+	private DeviationViewHandler2 deviationViewHandler;
     
     /**
      * @param aWindow

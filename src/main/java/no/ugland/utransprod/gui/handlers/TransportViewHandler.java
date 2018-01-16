@@ -1641,7 +1641,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 			if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemDeviation.getText())) {
 				Order order = (Order) transportableSelectionList.getElementAt(
 						tableOrders.convertRowIndexToModel(transportableSelectionList.getSelectionIndex()));
-				DeviationViewHandler deviationViewHandler = deviationViewHandlerFactory.create(order, true, false, true,
+				DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(order, true, false, true,
 						null, true);
 				deviationViewHandler.registerDeviation(order, window);
 
@@ -1782,7 +1782,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		Transportable transportable = (Transportable) transportableSelectionList
 				.getElementAt(tableOrders.convertRowIndexToModel(transportableSelectionList.getSelectionIndex()));
 
-		DeviationViewHandler deviationViewHandler = deviationViewHandlerFactory.create(null, true, false, true, null,
+		DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(null, true, false, true, null,
 				true);
 		deviationViewHandler.showDeviation(transportable.getDeviation(), aWindow);
 	}

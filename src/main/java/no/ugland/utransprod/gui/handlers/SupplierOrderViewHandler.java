@@ -455,7 +455,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 				Order order = assembly.getOrder();
 				if (order != null) {
 
-					DeviationViewHandler deviationViewHandler = deviationViewHandlerFactory.create(order, true, false,
+					DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(order, true, false,
 							true, null, true);
 					deviationViewHandler.registerDeviation(order, window);
 				}
@@ -468,8 +468,9 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 				Order order = assembly.getOrder();
 				managerRepository.getOrderManager().lazyLoadTree(order);//LoadOrder(order, new LazyLoadOrderEnum[] {
 //						LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES });
-				DeviationViewHandler deviationViewHandler = deviationViewHandlerFactory.create(order, true, false, true,
-						null, true);
+//				DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(order, true, false, true,
+//						null, true);
+				DeviationViewHandler deviationViewHandler=new DeviationViewHandler(login, managerRepository, null, order, true, false, true, null, true);
 
 				EditDeviationView editDeviationView = new EditDeviationView(false, new DeviationModel(deviation, false),
 						deviationViewHandler, false, false);

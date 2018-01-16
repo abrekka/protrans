@@ -232,7 +232,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 		int filterColumn = 18;
 
 		if (isForOrderInfo) {
-			filterColumn = 6;
+			filterColumn = 5;
 		}
 
 		Filter[] filtersDone = new Filter[] { new PatternFilter("[^1]", Pattern.CASE_INSENSITIVE, filterColumn) };

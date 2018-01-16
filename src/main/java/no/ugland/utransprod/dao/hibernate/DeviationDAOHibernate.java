@@ -303,4 +303,14 @@ public class DeviationDAOHibernate extends BaseDAOHibernate<Deviation> implement
 	});
     }
 
+	public Deviation findById(final Integer deviationId) {
+		return (Deviation) getHibernateTemplate().execute(new HibernateCallback() {
+
+		    public Object doInHibernate(Session session) throws HibernateException {
+			return session.load(Deviation.class, deviationId);
+		    }
+
+		});
+	}
+
 }

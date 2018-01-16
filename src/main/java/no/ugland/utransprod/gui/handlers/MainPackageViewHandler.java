@@ -2843,7 +2843,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 			Order order = orderManager.findByOrderNr(mainPackageV.getOrderNr());
 			if (order != null) {
 				if (action.getActionCommand().equalsIgnoreCase(menuItemDeviation.getActionCommand())) {
-					DeviationViewHandler deviationViewHandler = deviationViewHandlerFactory.create(order, true, false,
+					DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(order, true, false,
 							true, null, true);
 					deviationViewHandler.registerDeviation(order, window);
 				} else if (action.getActionCommand().equalsIgnoreCase(menuItemUpdateCollies.getActionCommand())) {

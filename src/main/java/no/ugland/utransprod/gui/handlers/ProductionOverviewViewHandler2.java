@@ -3354,7 +3354,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 				// }
 
 				if (transportable != null && transportable instanceof Order) {
-					DeviationViewHandler deviationViewHandler = deviationViewHandlerFactory
+					DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory
 							.create((Order) transportable, true, false, true, null, true);
 					deviationViewHandler.registerDeviation((Order) transportable, window);
 				}

@@ -18,14 +18,17 @@ public class Delelisteinfo {
 	private String informasjon;
 	private String prodno;
 	private Integer prCatNo2;
+	private Integer purcno;
+	private Integer prodgr;
 
 	public Delelisteinfo(String ordrenummer, String kundenavn, String sted, String garasjetype, BigDecimal antall,
-			Integer prodtp, String txt, Integer prodtp2, String enhet,String beskrivelse,String nummer,String informasjon,String prodno,Integer prCatNo2) {
-		this.prCatNo2=prCatNo2;
-		this.prodno=prodno;
-		this.informasjon=informasjon;
-		this.nummer=nummer;
-		this.beskrivelse=beskrivelse;
+			Integer prodtp, String txt, Integer prodtp2, String enhet, String beskrivelse, String nummer,
+			String informasjon, String prodno, Integer prCatNo2, Integer purcno, Integer prodgr) {
+		this.prCatNo2 = prCatNo2;
+		this.prodno = prodno;
+		this.informasjon = informasjon;
+		this.nummer = nummer;
+		this.beskrivelse = beskrivelse;
 		this.ordrenummer = ordrenummer;
 		this.kundenavn = kundenavn;
 		this.sted = sted;
@@ -35,19 +38,29 @@ public class Delelisteinfo {
 		this.prodtp2 = prodtp2;
 		this.enhet = enhet;
 		this.garasjetype = garasjetype;
+		this.purcno = purcno;
+		this.prodgr = prodgr;
 	}
+
 	public Integer getPrCatNo2() {
 		return prCatNo2;
 	}
+
 	public String getProdno() {
 		return prodno;
 	}
+
 	public String getInformasjon() {
+		if (purcno != 0 && (prodgr == 1440 || prodgr == 1430 || prodgr == 3000)) {
+			return informasjon + purcno;
+		}
 		return informasjon;
 	}
+
 	public String getNummer() {
 		return nummer;
 	}
+
 	public String getBeskrivelse() {
 		return beskrivelse;
 	}

@@ -6,7 +6,7 @@ import no.ugland.utransprod.model.Order;
 import com.google.inject.assistedinject.Assisted;
 
 public interface DeviationViewHandlerFactory {
-	DeviationViewHandler create(Order aOrder, 
+	DeviationViewHandler2 create(Order aOrder, 
 			boolean doSeAll, boolean forOrderInfo,
 			boolean isForRegisterNew,
 			Deviation notDisplayDeviation,

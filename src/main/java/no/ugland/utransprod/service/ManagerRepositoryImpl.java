@@ -12,6 +12,7 @@ public class ManagerRepositoryImpl implements ManagerRepository {
     private EmployeeTypeManager employeeTypeManager;
     private PreventiveActionManager preventiveActionManager;
     private DeviationManager deviationManager;
+    private DeviationVManager deviationVManager;
     private OrderManager orderManager;
     private AccidentManager accidentManager;
     private JobFunctionManager jobFunctionManager;
@@ -68,7 +69,7 @@ public class ManagerRepositoryImpl implements ManagerRepository {
 	    SumOrderReadyVManager aSumOrderReadyVManager, DeviationStatusManager aDeviationStatusManager, UdsalesmallManager aUdsalesmallManager,
 	    TransportSumVManager aTransportSumVManager, IntelleVManager aIpkOrdManager, ProductAreaGroupManager aProductAreaGroupManager,
 	    CustTrManager aCustTrManager, AssemblyOverdueVManager aAssemblyOverdueVManager, FrontProductionVManager frontProductionVManager,
-	    FakturagrunnlagVManager fakturagrunnlagVManager) {
+	    FakturagrunnlagVManager fakturagrunnlagVManager,DeviationVManager aDeviationVManager) {
 	ipkOrdManager = aIpkOrdManager;
 	transportSumVManager = aTransportSumVManager;
 	udsalesmallManager = aUdsalesmallManager;
@@ -94,6 +95,7 @@ public class ManagerRepositoryImpl implements ManagerRepository {
 	accidentManager = aAccidentManager;
 	orderManager = aOrderManager;
 	deviationManager = aDeviationManager;
+	deviationVManager = aDeviationVManager;
 	preventiveActionManager = aPreventiveActionManager;
 	employeeTypeManager = aEmployeeTypeManager;
 	employeeManager = aEmployeeManager;
@@ -393,5 +395,9 @@ public class ManagerRepositoryImpl implements ManagerRepository {
     public FakturagrunnlagVManager getFakturagrunnlagVManager() {
 	return fakturagrunnlagVManager;
     }
+
+	public DeviationVManager getDeviationVManager() {
+		return deviationVManager;
+	}
 
 }
