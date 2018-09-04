@@ -17,432 +17,394 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * 
  */
 public class FaktureringV extends BaseObject implements TextRenderable, Applyable {
-    /**
-	 * 
+	private static final long serialVersionUID = 1L;
+
+	private Integer orderId;
+	private Integer customerNr;
+
+	private String firstName;
+	private String lastName;
+	private String postalCode;
+	private String postOffice;
+	private String constructionName;
+	private Date levert;
+	private BigDecimal customerCost;
+	private String orderNr;
+	private Date invoiceDate;
+	private String comment;
+	private Date assembliedDate;
+	private String productAreaGroupName;
+	private String ordrekoordinator;
+	private Date sentMail;
+
+	public FaktureringV() {
+		super();
+	}
+
+	/**
+	 * @param orderId
+	 * @param customerNr
+	 * @param firstName
+	 * @param lastName
+	 * @param postalCode
+	 * @param postOffice
+	 * @param constructionName
+	 * @param sent
+	 * @param customerCost
+	 * @param orderNr
+	 * @param invoiceDate
+	 * @param comment
+	 * @param assembliedDate
+	 * @param productAreaGroupName
 	 */
-    private static final long serialVersionUID = 1L;
+	public FaktureringV(Integer orderId, Integer customerNr, String firstName, String lastName, String postalCode,
+			String postOffice, String constructionName, Date levert, BigDecimal customerCost, String orderNr,
+			Date invoiceDate, String comment, Date assembliedDate, String productAreaGroupName,
+			String ordrekoordinator) {
+		super();
+		this.orderId = orderId;
+		this.customerNr = customerNr;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.postalCode = postalCode;
+		this.postOffice = postOffice;
+		this.constructionName = constructionName;
+		this.levert = levert;
+		this.customerCost = customerCost;
+		this.orderNr = orderNr;
+		this.invoiceDate = invoiceDate;
+		this.comment = comment;
+		this.assembliedDate = assembliedDate;
+		this.productAreaGroupName = productAreaGroupName;
+		this.ordrekoordinator = ordrekoordinator;
+	}
 
-    /**
-	 * 
+	public Date getSentMail() {
+		return sentMail;
+	}
+
+	public void setSentMail(Date sentMail) {
+		this.sentMail = sentMail;
+	}
+
+	public String getOrdrekoordinator() {
+		return ordrekoordinator;
+	}
+
+	public void setOrdrekoordinator(String ordrekoordinator) {
+		this.ordrekoordinator = ordrekoordinator;
+	}
+
+	/**
+	 * @return garasjetype
 	 */
-    private Integer orderId;
+	public String getConstructionName() {
+		return constructionName;
+	}
 
-    /**
-	 * 
+	/**
+	 * @param constructionName
 	 */
-    private Integer customerNr;
+	public void setConstructionName(String constructionName) {
+		this.constructionName = constructionName;
+	}
 
-    /**
-	 * 
+	/**
+	 * @return kundekostnad
 	 */
-    private String firstName;
+	public BigDecimal getCustomerCost() {
+		return customerCost;
+	}
 
-    /**
-	 * 
+	/**
+	 * @param customerCost
 	 */
-    private String lastName;
+	public void setCustomerCost(BigDecimal customerCost) {
+		this.customerCost = customerCost;
+	}
 
-    /**
-	 * 
+	/**
+	 * @return kundenummer
 	 */
-    private String postalCode;
+	public Integer getCustomerNr() {
+		return customerNr;
+	}
 
-    /**
-	 * 
+	/**
+	 * @param customerNr
 	 */
-    private String postOffice;
+	public void setCustomerNr(Integer customerNr) {
+		this.customerNr = customerNr;
+	}
 
-    /**
-	 * 
+	/**
+	 * @return fornavn
 	 */
-    private String constructionName;
+	public String getFirstName() {
+		return firstName;
+	}
 
-    /**
-	 * 
+	/**
+	 * @param firstName
 	 */
-    private Date sent;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    /**
-	 * 
+	/**
+	 * @return etternavn
 	 */
-    private BigDecimal customerCost;
+	public String getLastName() {
+		return lastName;
+	}
 
-    /**
-	 * 
+	/**
+	 * @param lastName
 	 */
-    private String orderNr;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    /**
-	 * 
+	/**
+	 * @return ordreid
 	 */
-    private Date invoiceDate;
+	public Integer getOrderId() {
+		return orderId;
+	}
 
-    /**
-	 * 
+	/**
+	 * @param orderId
 	 */
-    private String comment;
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
+	}
 
-    /**
-	 * 
+	/**
+	 * @return postnummrt
 	 */
-    private Date assembliedDate;
+	public String getPostalCode() {
+		return postalCode;
+	}
 
-    /**
-	 * 
+	/**
+	 * @param postalCode
 	 */
-    private String productAreaGroupName;
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
 
-    /**
-	 * 
+	/**
+	 * @return poststed
 	 */
-    public FaktureringV() {
-	super();
-    }
+	public String getPostOffice() {
+		return postOffice;
+	}
 
-    /**
-     * @param orderId
-     * @param customerNr
-     * @param firstName
-     * @param lastName
-     * @param postalCode
-     * @param postOffice
-     * @param constructionName
-     * @param sent
-     * @param customerCost
-     * @param orderNr
-     * @param invoiceDate
-     * @param comment
-     * @param assembliedDate
-     * @param productAreaGroupName
-     */
-    public FaktureringV(Integer orderId, Integer customerNr, String firstName, String lastName, String postalCode, String postOffice,
-	    String constructionName, Date sent, BigDecimal customerCost, String orderNr, Date invoiceDate, String comment, Date assembliedDate,
-	    String productAreaGroupName) {
-	super();
-	this.orderId = orderId;
-	this.customerNr = customerNr;
-	this.firstName = firstName;
-	this.lastName = lastName;
-	this.postalCode = postalCode;
-	this.postOffice = postOffice;
-	this.constructionName = constructionName;
-	this.sent = sent;
-	this.customerCost = customerCost;
-	this.orderNr = orderNr;
-	this.invoiceDate = invoiceDate;
-	this.comment = comment;
-	this.assembliedDate = assembliedDate;
-	this.productAreaGroupName = productAreaGroupName;
-    }
+	/**
+	 * @param postOffice
+	 */
+	public void setPostOffice(String postOffice) {
+		this.postOffice = postOffice;
+	}
 
-    /**
-     * @return garasjetype
-     */
-    public String getConstructionName() {
-	return constructionName;
-    }
+	/**
+	 * @return dato sendt
+	 */
+	public Date getLevert() {
+		return levert;
+	}
 
-    /**
-     * @param constructionName
-     */
-    public void setConstructionName(String constructionName) {
-	this.constructionName = constructionName;
-    }
+	/**
+	 * @param sent
+	 */
+	public void setLevert(Date levert) {
+		this.levert = levert;
+	}
 
-    /**
-     * @return kundekostnad
-     */
-    public BigDecimal getCustomerCost() {
-	return customerCost;
-    }
+	/**
+	 * @see no.ugland.utransprod.model.BaseObject#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object other) {
+		if (!(other instanceof FaktureringV))
+			return false;
+		FaktureringV castOther = (FaktureringV) other;
+		return new EqualsBuilder().append(orderId, castOther.orderId).isEquals();
+	}
 
-    /**
-     * @param customerCost
-     */
-    public void setCustomerCost(BigDecimal customerCost) {
-	this.customerCost = customerCost;
-    }
+	/**
+	 * @see no.ugland.utransprod.model.BaseObject#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(orderId).toHashCode();
+	}
 
-    /**
-     * @return kundenummer
-     */
-    public Integer getCustomerNr() {
-	return customerNr;
-    }
+	/**
+	 * @see no.ugland.utransprod.model.BaseObject#toString()
+	 */
+	@Override
+	public String toString() {
+		return customerNr + " " + firstName + " " + lastName + " " + postalCode + " " + postOffice + " "
+				+ constructionName;
+	}
 
-    /**
-     * @param customerNr
-     */
-    public void setCustomerNr(Integer customerNr) {
-	this.customerNr = customerNr;
-    }
+	/**
+	 * @see no.ugland.utransprod.gui.model.Applyable#getOrderNr()
+	 */
+	public String getOrderNr() {
+		return orderNr;
+	}
 
-    /**
-     * @return fornavn
-     */
-    public String getFirstName() {
-	return firstName;
-    }
+	/**
+	 * @param orderNr
+	 */
+	public void setOrderNr(String orderNr) {
+		this.orderNr = orderNr;
+	}
 
-    /**
-     * @param firstName
-     */
-    public void setFirstName(String firstName) {
-	this.firstName = firstName;
-    }
+	/**
+	 * @return fakturadato
+	 */
+	public Date getInvoiceDate() {
+		return invoiceDate;
+	}
 
-    /**
-     * @return etternavn
-     */
-    public String getLastName() {
-	return lastName;
-    }
+	/**
+	 * @param invoiceDate
+	 */
+	public void setInvoiceDate(Date invoiceDate) {
+		this.invoiceDate = invoiceDate;
+	}
 
-    /**
-     * @param lastName
-     */
-    public void setLastName(String lastName) {
-	this.lastName = lastName;
-    }
+	/**
+	 * @see no.ugland.utransprod.gui.model.TextRenderable#getComment()
+	 */
+	public String getComment() {
+		return comment;
+	}
 
-    /**
-     * @return ordreid
-     */
-    public Integer getOrderId() {
-	return orderId;
-    }
+	/**
+	 * @see no.ugland.utransprod.gui.model.TextRenderable#getOrderString()
+	 */
+	public String getOrderString() {
+		return customerNr + " " + firstName + " " + lastName + " - " + orderNr + "\n" + postalCode + " " + postOffice
+				+ "," + constructionName;
 
-    /**
-     * @param orderId
-     */
-    public void setOrderId(Integer orderId) {
-	this.orderId = orderId;
-    }
+	}
 
-    /**
-     * @return postnummrt
-     */
-    public String getPostalCode() {
-	return postalCode;
-    }
+	/**
+	 * @param comment
+	 */
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 
-    /**
-     * @param postalCode
-     */
-    public void setPostalCode(String postalCode) {
-	this.postalCode = postalCode;
-    }
+	/**
+	 * @return monteringsdato
+	 */
+	public Date getAssembliedDate() {
+		return assembliedDate;
+	}
 
-    /**
-     * @return poststed
-     */
-    public String getPostOffice() {
-	return postOffice;
-    }
+	/**
+	 * @param assembliedDate
+	 */
+	public void setAssembliedDate(Date assembliedDate) {
+		this.assembliedDate = assembliedDate;
+	}
 
-    /**
-     * @param postOffice
-     */
-    public void setPostOffice(String postOffice) {
-	this.postOffice = postOffice;
-    }
+	/**
+	 * @see no.ugland.utransprod.gui.model.Applyable#isForPostShipment()
+	 */
+	public Boolean isForPostShipment() {
+		return null;
+	}
 
-    /**
-     * @return dato sendt
-     */
-    public Date getSent() {
-	return sent;
-    }
+	/**
+	 * @return produktområdegruppenavn
+	 */
+	public String getProductAreaGroupName() {
+		return productAreaGroupName;
+	}
 
-    /**
-     * @param sent
-     */
-    public void setSent(Date sent) {
-	this.sent = sent;
-    }
+	/**
+	 * @param productAreaGroupName
+	 */
+	public void setProductAreaGroupName(String productAreaGroupName) {
+		this.productAreaGroupName = productAreaGroupName;
+	}
 
-    /**
-     * @see no.ugland.utransprod.model.BaseObject#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(final Object other) {
-	if (!(other instanceof FaktureringV))
-	    return false;
-	FaktureringV castOther = (FaktureringV) other;
-	return new EqualsBuilder().append(orderId, castOther.orderId).isEquals();
-    }
+	public Ordln getOrdln() {
+		return null;
+	}
 
-    /**
-     * @see no.ugland.utransprod.model.BaseObject#hashCode()
-     */
-    @Override
-    public int hashCode() {
-	return new HashCodeBuilder().append(orderId).toHashCode();
-    }
+	public void setOrdln(Ordln ordln) {
 
-    /**
-     * @see no.ugland.utransprod.model.BaseObject#toString()
-     */
-    @Override
-    public String toString() {
-	return customerNr + " " + firstName + " " + lastName + " " + postalCode + " " + postOffice + " " + constructionName;
-    }
+	}
 
-    /**
-     * @see no.ugland.utransprod.gui.model.Applyable#getOrderNr()
-     */
-    public String getOrderNr() {
-	return orderNr;
-    }
+	public Integer getOrderLineId() {
+		return null;
+	}
 
-    /**
-     * @param orderNr
-     */
-    public void setOrderNr(String orderNr) {
-	this.orderNr = orderNr;
-    }
+	public String getArticleName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    /**
-     * @return fakturadato
-     */
-    public Date getInvoiceDate() {
-	return invoiceDate;
-    }
+	public Colli getColli() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    /**
-     * @param invoiceDate
-     */
-    public void setInvoiceDate(Date invoiceDate) {
-	this.invoiceDate = invoiceDate;
-    }
+	public Date getProduced() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    /**
-     * @see no.ugland.utransprod.gui.model.TextRenderable#getComment()
-     */
-    public String getComment() {
-	return comment;
-    }
+	public List<Applyable> getRelatedArticles() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    /**
-     * @see no.ugland.utransprod.gui.model.TextRenderable#getOrderString()
-     */
-    public String getOrderString() {
-	return customerNr + " " + firstName + " " + lastName + " - " + orderNr + "\n" + postalCode + " " + postOffice + "," + constructionName;
+	public boolean isRelatedArticlesComplete() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-    }
+	public void setColli(Colli colli) {
+		// TODO Auto-generated method stub
 
-    /**
-     * @param comment
-     */
-    public void setComment(String comment) {
-	this.comment = comment;
-    }
+	}
 
-    /**
-     * @return monteringsdato
-     */
-    public Date getAssembliedDate() {
-	return assembliedDate;
-    }
+	public void setProduced(Date produced) {
+		// TODO Auto-generated method stub
 
-    /**
-     * @param assembliedDate
-     */
-    public void setAssembliedDate(Date assembliedDate) {
-	this.assembliedDate = assembliedDate;
-    }
+	}
 
-    /**
-     * @see no.ugland.utransprod.gui.model.Applyable#isForPostShipment()
-     */
-    public Boolean isForPostShipment() {
-	return null;
-    }
+	public void setRelatedArticles(List<Applyable> relatedArticles) {
+		// TODO Auto-generated method stub
 
-    /**
-     * @return produktområdegruppenavn
-     */
-    public String getProductAreaGroupName() {
-	return productAreaGroupName;
-    }
+	}
 
-    /**
-     * @param productAreaGroupName
-     */
-    public void setProductAreaGroupName(String productAreaGroupName) {
-	this.productAreaGroupName = productAreaGroupName;
-    }
+	public Integer getNumberOfItems() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public Ordln getOrdln() {
-	return null;
-    }
+	public String getProductionUnitName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public void setOrdln(Ordln ordln) {
+	public BigDecimal getRealProductionHours() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    }
-
-    public Integer getOrderLineId() {
-	return null;
-    }
-
-    public String getArticleName() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    public Colli getColli() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    public Date getProduced() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    public List<Applyable> getRelatedArticles() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    public boolean isRelatedArticlesComplete() {
-	// TODO Auto-generated method stub
-	return false;
-    }
-
-    public void setColli(Colli colli) {
-	// TODO Auto-generated method stub
-
-    }
-
-    public void setProduced(Date produced) {
-	// TODO Auto-generated method stub
-
-    }
-
-    public void setRelatedArticles(List<Applyable> relatedArticles) {
-	// TODO Auto-generated method stub
-
-    }
-
-    public Integer getNumberOfItems() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    public String getProductionUnitName() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    public BigDecimal getRealProductionHours() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    public Date getActionStarted() {
-	// TODO Auto-generated method stub
-	return null;
-    }
+	public Date getActionStarted() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

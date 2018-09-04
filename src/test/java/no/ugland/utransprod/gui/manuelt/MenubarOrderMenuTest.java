@@ -116,7 +116,7 @@ public class MenubarOrderMenuTest {
 	menuBarBuilder.setGarageMenu(garageMenu);
 
 	ProductionMenu productionMenu = new ProductionMenu(login);
-	GavlProductionWindow gavlProductionWindow = new GavlProductionWindow(login, managerRepository, deviationViewHandlerFactory, null);
+	GavlProductionWindow gavlProductionWindow = new GavlProductionWindow(login, managerRepository, deviationViewHandlerFactory, null,null);
 	GavlProductionAction gavlProductionAction = new GavlProductionAction(menuBarBuilder, gavlProductionWindow);
 	productionMenu.setGavlProductionAction(gavlProductionAction);
 	menuBarBuilder.setProductionMenu(productionMenu);

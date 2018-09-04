@@ -9,18 +9,19 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import no.ugland.utransprod.gui.handlers.TransportViewHandler;
-import no.ugland.utransprod.gui.handlers.TransportWeekViewHandler;
-import no.ugland.utransprod.gui.model.TransportModel;
-import no.ugland.utransprod.model.Transport;
-
 import org.jdesktop.swingx.JXTable;
 
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.forms.builder.PanelBuilder;
+import com.jgoodies.forms.debug.FormDebugPanel;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
+
+import no.ugland.utransprod.gui.handlers.TransportViewHandler;
+import no.ugland.utransprod.gui.handlers.TransportWeekViewHandler;
+import no.ugland.utransprod.gui.model.TransportModel;
+import no.ugland.utransprod.model.Transport;
 
 /**
  * Klasse som håndterer visning av transportuke.
@@ -39,6 +40,7 @@ public class TransportView {
     private JCheckBox checkBoxSelection;
 
     private JCheckBox checkBoxSent;
+    private JCheckBox checkBoxLevert;
 
     private JComboBox comboBoxSupplier;
 
@@ -78,6 +80,7 @@ public class TransportView {
 
 	checkBoxSelection = viewHandler.getSelectionCheckBox(number);
 	checkBoxSent = viewHandler.getCheckBoxSent(window, number);
+	checkBoxLevert= viewHandler.getCheckBoxLevert(window, number);
 	comboBoxSupplier = viewHandler.getComboBoxSupplier(number);
 	comboBoxEmployee = viewHandler.getComboBoxEmployee();
 	textFieldLoadTime = viewHandler.getTextFieldLoadTime();
@@ -119,24 +122,25 @@ public class TransportView {
      * @return panel
      */
     private JPanel buildDetailPanel() {
-	FormLayout layout = new FormLayout("p,3dlu,5dlu,80dlu,3dlu,35dlu,5dlu,20dlu,3dlu,18dlu,3dlu,60dlu,3dlu,p,3dlu,25dlu", "p,3dlu,p");
+	FormLayout layout = new FormLayout("p,3dlu,5dlu,80dlu,3dlu,55dlu,3dlu,55dlu,5dlu,20dlu,3dlu,18dlu,3dlu,60dlu,3dlu,p,3dlu,25dlu", "p,3dlu,p");
 	PanelBuilder builder = new PanelBuilder(layout);
-	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
+//	 PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
 	CellConstraints cc = new CellConstraints();
 
 	builder.add(checkBoxSelection, cc.xy(1, 1));
 	builder.add(labelName, cc.xyw(3, 1, 2));
 	builder.add(checkBoxSent, cc.xy(6, 1));
-	builder.addLabel("Opplasting:", cc.xyw(8, 1, 3));
-	builder.add(datePicker, cc.xy(12, 1));
-	builder.addLabel("Tid:", cc.xy(14, 1));
-	builder.add(textFieldLoadTime, cc.xy(16, 1));
+	builder.add(checkBoxLevert, cc.xy(8, 1));
+	builder.addLabel("Opplasting:", cc.xyw(10, 1, 3));
+	builder.add(datePicker, cc.xy(14, 1));
+	builder.addLabel("Tid:", cc.xy(16, 1));
+	builder.add(textFieldLoadTime, cc.xy(18, 1));
 	builder.addLabel("Firma:", cc.xyw(1, 3, 3));
 	builder.add(comboBoxSupplier, cc.xyw(4, 3, 3));
-	builder.addLabel("Sjåfør:", cc.xy(8, 3));
-	builder.add(comboBoxEmployee, cc.xyw(10, 3, 3));
-	builder.addLabel("Tralle:", cc.xy(14, 3));
-	builder.add(textFieldTrolley, cc.xy(16, 3));
+	builder.addLabel("Sjåfør:", cc.xy(10, 3));
+	builder.add(comboBoxEmployee, cc.xyw(12, 3, 3));
+	builder.addLabel("Tralle:", cc.xy(16, 3));
+	builder.add(textFieldTrolley, cc.xy(18, 3));
 
 	return builder.getPanel();
     }

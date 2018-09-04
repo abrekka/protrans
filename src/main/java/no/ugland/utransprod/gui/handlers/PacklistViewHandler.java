@@ -1,5 +1,6 @@
 package no.ugland.utransprod.gui.handlers;
 
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,7 +8,11 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,6 +49,7 @@ import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.beans.Model;
 import com.jgoodies.binding.list.SelectionInList;
 
+import net.sf.jasperreports.engine.JRException;
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.gui.IconEnum;
 import no.ugland.utransprod.gui.JDialogAdapter;
@@ -80,6 +86,7 @@ import no.ugland.utransprod.service.OrderManager;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.util.ApplicationParamUtil;
 import no.ugland.utransprod.util.ModelUtil;
+import no.ugland.utransprod.util.PdfUtil;
 import no.ugland.utransprod.util.Threadable;
 import no.ugland.utransprod.util.UserUtil;
 import no.ugland.utransprod.util.Util;
@@ -1041,6 +1048,13 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 		return buttonProductionReport;
 	}
 
+	public JButton getButtonMonteringsanvisning(WindowInterface window) {
+		JButton buttonMonteringsanvisning = new JButton(new MonteringsanvisningAction(window));
+		buttonMonteringsanvisning.setEnabled(false);
+		emptySelectionListener.addButton(buttonMonteringsanvisning);
+		return buttonMonteringsanvisning;
+	}
+
 	public JButton getButtonDelelisteReport(WindowInterface window) {
 		JButton buttonDelelisteReport = new JButton(new DelelisteReportAction(window));
 		buttonDelelisteReport.setEnabled(false);
@@ -1172,6 +1186,68 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 
 	}
 
+	private class MonteringsanvisningAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+		private WindowInterface window;
+
+		public MonteringsanvisningAction(WindowInterface aWindow) {
+			super("Monteringsanvisning...");
+			window = aWindow;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			Util.runInThreadWheel(window.getRootPane(), new Threadable() {
+
+				public void enableComponents(boolean enable) {
+				}
+
+				public Object doWork(Object[] params, JLabel labelInfo) {
+					labelInfo.setText("Genererer monteringsanvisning...");
+					String errorMsg = null;
+					try {
+						opprettOgVisMonteringsanvisning(window);
+					} catch (ProTransException e) {
+						errorMsg = e.getMessage();
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (URISyntaxException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (JRException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return errorMsg;
+				}
+
+				public void doWhenFinished(Object object) {
+					if (object != null) {
+						Util.showErrorDialog(window, "Feil", object.toString());
+					}
+				}
+
+			}, null);
+
+		}
+
+	}
+
+	private void opprettOgVisMonteringsanvisning(WindowInterface window)
+			throws IOException, URISyntaxException, JRException {
+		PacklistV packlistV = getSelectedObject();
+		List<String> monteringsanvisninger = managerRepository.getOrderManager()
+				.finnMonteringsanvisninger(packlistV.getOrderNr());
+
+		if (monteringsanvisninger != null && !monteringsanvisninger.isEmpty()) {
+			String monteringsanvisning = PdfUtil.slaaSammenFiler(packlistV.getCustomerDetails(), packlistV.getOrderNr(),
+					monteringsanvisninger);
+			if (Desktop.isDesktopSupported()) {
+				Desktop.getDesktop().open(new File(monteringsanvisning));
+			}
+		}
+	}
+
 	private class DelelisteReportAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;
 		private WindowInterface window;
@@ -1253,7 +1329,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 					.medTransportuke(order.getTransport() == null ? null : order.getTransport().getTransportWeek())
 					.medProduksjonsuke(order.getProductionWeek()).medKommentarer(order.getOrderComments())
 					.medOrdreinfo(ordreinfo)
-//					.medTaktekke(takstein.getDetailsWithoutNoAttributes())
+					// .medTaktekke(takstein.getDetailsWithoutNoAttributes())
 					.medPakketAv(order.getPacklistDoneBy()).medBruker(login.getApplicationUser().getFullName())
 					.medProductArea(order.getProductArea()).medDeleliste(deleliste);
 					// Order order = packlistV.getOrder() == null ?
@@ -1321,7 +1397,8 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 					}));
 
 			List<Delelisteinfo> deleliste = managerRepository.getOrderManager().finnDeleliste(order.getOrderNr(),
-					order.getCustomer().getFullName(), order.getPostOffice(), garasjetyper.isEmpty()?"":garasjetyper.get(0));
+					order.getCustomer().getFullName(), order.getPostOffice(),
+					garasjetyper.isEmpty() ? "" : garasjetyper.get(0));
 
 			OrderLine takstein = order.getOrderLine("Takstein");
 			Ordln ordlnTakstein = managerRepository.getOrdlnManager().findByOrdNoAndLnNo(takstein.getOrdNo(),
@@ -1337,7 +1414,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 					.medTransportuke(order.getTransport() == null ? null : order.getTransport().getTransportWeek())
 					.medProduksjonsuke(order.getProductionWeek()).medKommentarer(order.getOrderComments())
 					.medOrdreinfo(ordreinfo)
-//					.medTaktekke(takstein.getDetailsWithoutNoAttributes())
+					// .medTaktekke(takstein.getDetailsWithoutNoAttributes())
 					.medPakketAv(order.getPacklistDoneBy()).medBruker(login.getApplicationUser().getFullName())
 					.medProductArea(order.getProductArea()).medDeleliste(deleliste);
 			//

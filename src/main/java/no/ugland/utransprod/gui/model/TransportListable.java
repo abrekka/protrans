@@ -110,7 +110,28 @@ public interface TransportListable {
 			// TODO Auto-generated method stub
 			return null;
 		}
+
+		public void setLevert(Date levertDate) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public Boolean getLevertBool() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		public List<OrderLine> getOrderLinesNotLevert() {
+			// TODO Auto-generated method stub
+			return null;
+		}
     };
 
 	Integer getProbability();
+
+	void setLevert(Date levertDate);
+
+	Boolean getLevertBool();
+
+	List<OrderLine> getOrderLinesNotLevert();
 }

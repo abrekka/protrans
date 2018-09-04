@@ -319,6 +319,18 @@
         column="ANTALL_STANDARD_VEGGER"
         length="255"
     />
+     <property
+        name="sentMail"
+        type="java.util.Date"
+        column="SENT_MAIL"
+        length="32"
+    />
+    <property
+        name="levert"
+        type="java.util.Date"
+        column="LEVERT"
+        length="32"
+    />
 
     <!-- Associations -->
 

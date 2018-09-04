@@ -1,6 +1,7 @@
 package no.ugland.utransprod.gui.handlers;
 
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -8,6 +9,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -59,11 +63,15 @@ import no.ugland.utransprod.gui.edit.EditCommentView;
 import no.ugland.utransprod.gui.edit.EditOrderView;
 import no.ugland.utransprod.gui.model.AbstractModel;
 import no.ugland.utransprod.gui.model.ColorEnum;
+import no.ugland.utransprod.gui.model.Delelisteinfo;
 import no.ugland.utransprod.gui.model.ListMultilineRenderer;
 import no.ugland.utransprod.gui.model.OrderCommentModel;
 import no.ugland.utransprod.gui.model.OrderModel;
 import no.ugland.utransprod.gui.model.OrderTableModel;
+import no.ugland.utransprod.gui.model.Ordreinfo;
 import no.ugland.utransprod.gui.model.Packable;
+import no.ugland.utransprod.gui.model.ProductionReportData;
+import no.ugland.utransprod.gui.model.ReportEnum;
 import no.ugland.utransprod.gui.model.TextPaneRendererCustomer;
 import no.ugland.utransprod.gui.model.Transportable;
 import no.ugland.utransprod.importing.CuttingImport;
@@ -79,6 +87,8 @@ import no.ugland.utransprod.model.OrderComment;
 import no.ugland.utransprod.model.OrderCost;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.OrderLineAttribute;
+import no.ugland.utransprod.model.Ordln;
+import no.ugland.utransprod.model.PacklistV;
 import no.ugland.utransprod.model.PostShipment;
 import no.ugland.utransprod.model.ProductArea;
 import no.ugland.utransprod.model.ProductAreaGroup;
@@ -104,10 +114,12 @@ import no.ugland.utransprod.util.ApplicationParamUtil;
 import no.ugland.utransprod.util.CommentTypeUtil;
 import no.ugland.utransprod.util.FileExtensionFilter;
 import no.ugland.utransprod.util.ModelUtil;
+import no.ugland.utransprod.util.PdfUtil;
 import no.ugland.utransprod.util.PrefsUtil;
 import no.ugland.utransprod.util.Threadable;
 import no.ugland.utransprod.util.UserUtil;
 import no.ugland.utransprod.util.Util;
+import no.ugland.utransprod.util.report.ReportViewer;
 
 import org.hibernate.Hibernate;
 import org.jdesktop.swingx.JXTable;
@@ -118,9 +130,13 @@ import org.jdesktop.swingx.decorator.PatternFilter;
 import org.jdesktop.swingx.decorator.PatternPredicate;
 import org.springframework.orm.hibernate3.HibernateOptimisticLockingFailureException;
 
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import com.google.inject.internal.Lists;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.adapter.ComboBoxAdapter;
@@ -130,6 +146,8 @@ import com.jgoodies.binding.beans.PropertyConnector;
 import com.jgoodies.binding.list.ArrayListModel;
 import com.jgoodies.binding.list.SelectionInList;
 import com.toedter.calendar.JDateChooser;
+
+import net.sf.jasperreports.engine.JRException;
 
 /**
  * Klassesom håndtrer vindusvariable for visning av ordre
@@ -2442,6 +2460,81 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 		return button;
 	}
 
+	public JButton getButtonMontering(PresentationModel presentationModel, WindowInterface aWindow) {
+		JButton buttonMontering = new JButton(new MonteringReportAction(presentationModel,window));
+//		buttonProductionReport.setEnabled(false);
+		return buttonMontering;
+	}
+	
+	private class MonteringReportAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+		private WindowInterface window;
+		private PresentationModel presentationModel;
+
+		public MonteringReportAction(PresentationModel presentationModel,WindowInterface aWindow) {
+			super("Monteringsanvisning...");
+			window = aWindow;
+			this.presentationModel=presentationModel;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			Util.runInThreadWheel(window.getRootPane(), new Threadable() {
+
+				public void enableComponents(boolean enable) {
+				}
+
+				public Object doWork(Object[] params, JLabel labelInfo) {
+					labelInfo.setText("Genererer monteringsanvisning...");
+					String errorMsg = null;
+					try {
+						opprettOgVisMonteringsanvisning(presentationModel,window);
+					} catch (ProTransException e) {
+						errorMsg = e.getMessage();
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (URISyntaxException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (JRException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return errorMsg;
+				}
+
+				public void doWhenFinished(Object object) {
+					if (object != null) {
+						Util.showErrorDialog(window, "Feil", object.toString());
+					}
+				}
+
+			}, null);
+
+		}
+
+
+	
+	}
+	
+
+	private void opprettOgVisMonteringsanvisning(PresentationModel presentationModel,WindowInterface window)
+			throws IOException, URISyntaxException, JRException {
+		Order order=((OrderModel)presentationModel.getBean()).getObject();
+		List<String> monteringsanvisninger = managerRepository.getOrderManager()
+				.finnMonteringsanvisninger(order.getOrderNr());
+
+		if (monteringsanvisninger != null && !monteringsanvisninger.isEmpty()) {
+			String monteringsanvisning = PdfUtil.slaaSammenFiler(order.getCustomerString(), order.getOrderNr(),
+					monteringsanvisninger);
+			if (Desktop.isDesktopSupported()) {
+				Desktop.getDesktop().open(new File(monteringsanvisning));
+			}
+		}
+	}
+	
+	
+	
 	private class ImportCuttingFileAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;
 		private WindowInterface window;

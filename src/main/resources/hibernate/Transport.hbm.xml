@@ -73,6 +73,13 @@
         length="1000"
     />
     
+    <property
+        name="levert"
+        type="java.util.Date"
+        column="LEVERT"
+        length="32"
+    />
+    
     <!-- Associations -->
     <set
         name="orders"

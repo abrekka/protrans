@@ -187,6 +187,9 @@ public class Order extends AbstractTransportable
 	private static final String COST_UNIT_INTERNAL = "Intern";
 
 	private String antallStandardvegger;
+	private Date sentMail;
+
+	private Date levert;
 
 	public Order() {
 
@@ -271,6 +274,14 @@ public class Order extends AbstractTransportable
 		this.productionDate = aProductionDate;
 		this.procentDones = someProcentDones;
 		this.takstolHeight = aTakstolHeight;
+	}
+
+	public Date getSentMail() {
+		return sentMail;
+	}
+
+	public void setSentMail(Date sentMail) {
+		this.sentMail = sentMail;
 	}
 
 	/**
@@ -1906,5 +1917,29 @@ public class Order extends AbstractTransportable
 
 	public void setAntallStandardvegger(String antallStandardvegger) {
 		this.antallStandardvegger = antallStandardvegger;
+	}
+
+	public void setLevert(Date levertDate) {
+		levert = levertDate;
+	}
+
+	public Boolean getLevertBool() {
+		return levert != null;
+	}
+	public Date getLevert() {
+		return levert;
+	}
+
+	public List<OrderLine> getOrderLinesNotLevert() {
+		ArrayList<OrderLine> linesNotLevert = new ArrayList<OrderLine>();
+		if (orderLines != null) {
+			for (OrderLine line : orderLines) {
+				if (line.hasTopLevelArticle() && line.hasArticle()
+						&& (line.getColli() == null || line.getColli().getLevert() == null)) {
+					linesNotLevert.add(line);
+				}
+			}
+		}
+		return linesNotLevert;
 	}
 }

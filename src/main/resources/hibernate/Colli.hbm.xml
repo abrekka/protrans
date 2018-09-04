@@ -63,6 +63,12 @@
         column="NUMBER_OF_COLLIES"
         length="32"
     />
+    <property
+        name="levert"
+        type="java.util.Date"
+        column="LEVERT"
+        length="32"
+    />
     
     <!-- Associations -->
     <set

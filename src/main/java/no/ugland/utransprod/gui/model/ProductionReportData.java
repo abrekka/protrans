@@ -1,5 +1,6 @@
 package no.ugland.utransprod.gui.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -392,7 +393,7 @@ public class ProductionReportData {
 		return Lists.newArrayList(Iterables.filter(deleliste, new Predicate<Delelisteinfo>() {
 
 			public boolean apply(Delelisteinfo del) {
-				return del.getProdtp() == 10;
+				return del.getTxt() != null && del.getProdtp() == 10;
 			}
 		}));
 	}
@@ -401,16 +402,27 @@ public class ProductionReportData {
 		return Lists.newArrayList(Iterables.filter(deleliste, new Predicate<Delelisteinfo>() {
 
 			public boolean apply(Delelisteinfo del) {
-				return del.getProdtp() == 20;
+				return del.getTxt() != null && del.getProdtp() == 20;
 			}
 		}));
+	}
+
+	public String getReisverk() {
+		ArrayList<Delelisteinfo> reisverkliste = Lists
+				.newArrayList(Iterables.filter(deleliste, new Predicate<Delelisteinfo>() {
+
+					public boolean apply(Delelisteinfo del) {
+						return del.getBeskrivelse().contains("Reisverk:");
+					}
+				}));
+		return reisverkliste.isEmpty() ? null : reisverkliste.get(0).getBeskrivelse();
 	}
 
 	public List<Delelisteinfo> getDelelistePakking() {
 		return Lists.newArrayList(Iterables.filter(deleliste, new Predicate<Delelisteinfo>() {
 
 			public boolean apply(Delelisteinfo del) {
-				return del.getProdtp() == 30 && del.getProdtp2() != 190
+				return del.getTxt() != null && del.getProdtp() == 30 && del.getProdtp2() != 190
 						&& !del.getProdno().toUpperCase().startsWith("TAKR");
 			}
 		}));
@@ -420,7 +432,7 @@ public class ProductionReportData {
 		return Lists.newArrayList(Iterables.filter(deleliste, new Predicate<Delelisteinfo>() {
 
 			public boolean apply(Delelisteinfo del) {
-				return (del.getProdtp() == 30 || del.getProdtp() == 35)
+				return (del.getTxt() != null && del.getProdtp() == 30 || del.getProdtp() == 35)
 						&& (del.getProdtp2() == 190 || del.getPrCatNo2() == 9);
 			}
 		}));
@@ -430,12 +442,17 @@ public class ProductionReportData {
 		return Lists.newArrayList(Iterables.filter(deleliste, new Predicate<Delelisteinfo>() {
 
 			public boolean apply(Delelisteinfo del) {
-				return del.getProdtp() != 35;
+				return del.getTxt() != null && del.getProdtp() != 35;
 			}
 		}));
 	}
 
 	public List<Delelisteinfo> getDelelisteKunde() {
-		return deleliste;
+		return Lists.newArrayList(Iterables.filter(deleliste, new Predicate<Delelisteinfo>() {
+
+			public boolean apply(Delelisteinfo del) {
+				return del.getTxt() != null;
+			}
+		}));
 	}
 }

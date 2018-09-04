@@ -10,7 +10,7 @@
 	<field name="sted" class="java.lang.String"/>
 	<field name="garasjetype" class="java.lang.String"/>
 	<field name="beskrivelse" class="java.lang.String"/>
-	<field name="nummer" class="java.lang.String"/>
+	<field name="lokasjon" class="java.lang.String"/>
 	<field name="informasjon" class="java.lang.String"/>
 	<group name="txtGruppe">
 		<groupExpression><![CDATA[$F{txtGruppe}]]></groupExpression>
@@ -25,7 +25,7 @@
 						<rightPen lineWidth="1.0" lineColor="#000000"/>
 					</box>
 					<textElement>
-						<font size="10"/>
+						<font size="11"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{txtGruppe}]]></textFieldExpression>
 				</textField>
@@ -36,10 +36,10 @@
 					<reportElement positionType="Float" x="48" y="0" width="47" height="14" backcolor="#333333"/>
 				</rectangle>
 				<rectangle>
-					<reportElement positionType="Float" x="363" y="0" width="30" height="14" backcolor="#333333"/>
+					<reportElement positionType="Float" x="363" y="0" width="45" height="14" backcolor="#333333"/>
 				</rectangle>
 				<rectangle>
-					<reportElement positionType="Float" x="393" y="0" width="80" height="14" backcolor="#333333"/>
+					<reportElement positionType="Float" x="408" y="0" width="65" height="14" backcolor="#333333"/>
 				</rectangle>
 				<rectangle>
 					<reportElement positionType="Float" x="472" y="0" width="80" height="14" backcolor="#333333"/>
@@ -67,7 +67,7 @@
 					<rightPen lineWidth="1.0" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<font size="10"/>
+					<font size="11"/>
 				</textElement>
 				<text><![CDATA[  Enhet]]></text>
 			</staticText>
@@ -80,12 +80,12 @@
 					<rightPen lineWidth="1.0" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<font size="10"/>
+					<font size="11"/>
 				</textElement>
 				<text><![CDATA[  Beskrivelse]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="363" y="97" width="30" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
+				<reportElement mode="Opaque" x="363" y="97" width="45" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
 				<box>
 					<topPen lineWidth="1.0" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineColor="#000000"/>
@@ -93,12 +93,12 @@
 					<rightPen lineWidth="1.0" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<font size="10"/>
+					<font size="11"/>
 				</textElement>
-				<text><![CDATA[  Nr]]></text>
+				<text><![CDATA[Lok]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="393" y="97" width="79" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
+				<reportElement mode="Opaque" x="408" y="97" width="64" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
 				<box>
 					<topPen lineWidth="1.0" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineColor="#000000"/>
@@ -106,7 +106,7 @@
 					<rightPen lineWidth="1.0" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<font size="10"/>
+					<font size="11"/>
 				</textElement>
 				<text><![CDATA[  Informasjon]]></text>
 			</staticText>
@@ -119,7 +119,7 @@
 					<rightPen lineWidth="1.0" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<font size="10"/>
+					<font size="11"/>
 				</textElement>
 				<text><![CDATA[  Notat]]></text>
 			</staticText>
@@ -179,7 +179,7 @@
 					<rightPen lineWidth="1.0" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<font size="10"/>
+					<font size="11"/>
 				</textElement>
 				<text><![CDATA[  Antall]]></text>
 			</staticText>
@@ -193,12 +193,12 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="13" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<rectangle>
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="472" y="0" width="80" height="13" backcolor="#FFFFFF"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="472" y="0" width="80" height="15" backcolor="#FFFFFF"/>
 			</rectangle>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="48" y="0" width="47" height="13"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="48" y="0" width="47" height="15"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -206,12 +206,12 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font size="8"/>
+					<font size="11"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{enhet}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="95" y="0" width="268" height="13" isPrintWhenDetailOverflows="true"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="95" y="0" width="268" height="15" isPrintWhenDetailOverflows="true"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -219,12 +219,12 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement>
-					<font size="8"/>
+					<font size="11"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{beskrivelse}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="48" height="13"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="48" height="15"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -232,12 +232,12 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font size="8"/>
+					<font size="11"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{antall}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="363" y="0" width="30" height="13"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="363" y="0" width="45" height="15"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -245,12 +245,12 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font size="8"/>
+					<font size="11"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{nummer}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{lokasjon}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="393" y="0" width="79" height="13" backcolor="#FFFFFF"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="408" y="0" width="64" height="15" backcolor="#FFFFFF"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -258,7 +258,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement>
-					<font size="8"/>
+					<font size="11"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{informasjon}]]></textFieldExpression>
 			</textField>

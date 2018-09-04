@@ -60,9 +60,9 @@
         length="255"
     />
 	<property
-        name="sent"
+        name="levert"
         type="java.util.Date"
-        column="SENT"
+        column="LEVERT"
         length="255"
     />
 	<property
@@ -100,6 +100,18 @@
         type="java.lang.String"
         column="PRODUCT_AREA_GROUP_NAME"
         length="32"
+    />
+    <property
+        name="ordrekoordinator"
+        type="java.lang.String"
+        column="ORDREKOORDINATOR"
+        length="32"
+    />
+    <property
+        name="sentMail"
+        type="java.util.Date"
+        column="SENT_MAIL"
+        length="255"
     />
     <!-- Associations -->
 

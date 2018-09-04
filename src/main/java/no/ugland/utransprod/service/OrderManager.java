@@ -252,4 +252,6 @@ public interface OrderManager extends OverviewManager<Order>, ExcelManager {
 
 	Order getOrderWithOrderLinesAndCollies(String orderNr);
 
+	List<String> finnMonteringsanvisninger(String orderNr);
+
 }

@@ -270,7 +270,8 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		postShipmentList = new ArrayListModel();
 		postShipmentSelectionList = new SelectionInList();
 
-		presentationModelPackable = new PresentationModel(new OrderModel(new Order(), false, false, false, null, null,false));
+		presentationModelPackable = new PresentationModel(
+				new OrderModel(new Order(), false, false, false, null, null, false));
 		presentationModelSum = new PresentationModel(
 				new SumOrderReadyVModel(new SumOrderReadyV(null, BigDecimal.valueOf(0), null, null, null)));
 		presentationModelWeekSum = new PresentationModel(
@@ -332,7 +333,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		if (orders.size() != 0) {
 			mainPackageVList.addAll(orders);
 		}
-		orderModel = new OrderModel(new Order(), false, false, true, null, null,false);
+		orderModel = new OrderModel(new Order(), false, false, true, null, null, false);
 		presentationModelPackable = new PresentationModel(orderModel);
 		// colliListViewHandler.setPresentationModel(presentationModelPackable);
 		orderLineSelectionList.addPropertyChangeListener(new OrderLineSelectionListener());
@@ -1093,7 +1094,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 				abstractOrderModel.getOrderModelPostShipment(), null, null);
 		ColliViewHandler colliViewHandler = new ColliViewHandler("Kolli", newColli, abstractOrderModel, login,
 				managerRepository, window, vismaFileCreator);
-		colliViewHandler.openEditView(null, false, window,false);
+		colliViewHandler.openEditView(null, false, window, false);
 		abstractOrderModel.addColli(newColli);
 		updatePanel();
 	}
@@ -1185,7 +1186,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		refreshing = false;
 		orderLineSelectionList.clearSelection();
 
-		presentationModelPackable.setBean(new OrderModel(new Order(), false, false, false, null, null,false));
+		presentationModelPackable.setBean(new OrderModel(new Order(), false, false, false, null, null, false));
 
 		ownOrderLineList.clear();
 		orderComments.clear();
@@ -1339,6 +1340,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	 * @param window
 	 */
 	final void changeBean(final WindowInterface window) {
+		Util.setWaitCursor(window);
 		try {
 			if (refreshing) {
 				return;
@@ -1358,7 +1360,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 			e.printStackTrace();
 			Util.showErrorDialog(window, "Feil", e.getMessage());
 		}
-
+		Util.setDefaultCursor(window);
 	}
 
 	private void changeOrderBean() {
@@ -1378,7 +1380,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 
 		Order order = managerRepository.getOrderManager().lazyLoadOrderLineAndCollies(mainPackageV.getOrderId());
 		if (order != null) {
-			OrderModel orderModel = new OrderModel(order, false, false, true, null, null,false);
+			OrderModel orderModel = new OrderModel(order, false, false, true, null, null, false);
 			colliListViewHandler.setPackable(order, null);
 
 			presentationModelPackable.setBean(orderModel);
@@ -1431,7 +1433,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 									new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.COLLIES,
 											LazyLoadPostShipmentEnum.ORDER_LINES,
 											LazyLoadPostShipmentEnum.ORDER_COMMENTS });
-							PostShipmentModel postShipmentModel = new PostShipmentModel(postShipment,false);
+							PostShipmentModel postShipmentModel = new PostShipmentModel(postShipment, false);
 							presentationModelPackable.setBean(postShipmentModel);
 							((PostShipmentModel) presentationModelPackable.getBean()).firePropertiesChanged();
 							refreshOwnOrderLineList(postShipmentModel);
@@ -1557,7 +1559,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 			postShipmentSelectionList.clearSelection();
 			orderSelectionList.clearSelection();
 			handleFilter();
-			presentationModelPackable.setBean(new OrderModel(new Order(), false, false, false, null, null,false));
+			presentationModelPackable.setBean(new OrderModel(new Order(), false, false, false, null, null, false));
 			ownOrderLineList.clear();
 			orderComments.clear();
 			mainPackageView.updateColliesPanel(true);
@@ -2542,7 +2544,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	 * @return order dersom funnet
 	 */
 	Transportable doSearch(WindowInterface window) {
-		Transportable transportable = orderViewHandler.searchOrder(window, true,true);
+		Transportable transportable = orderViewHandler.searchOrder(window, true, true);
 		return transportable;
 	}
 
@@ -3053,6 +3055,8 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 
 			for (Object object : postShipmentList) {
 				PostShipment postShipment = (PostShipment) object;
+				managerRepository.getPostShipmentManager().lazyLoad(postShipment,
+						new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.COLLIES });
 				checkCollies(postShipment);
 			}
 			Util.setDefaultCursor(window);
@@ -3064,7 +3068,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	public void checkCollies(Packable packable) throws ProTransException {
 		OverviewManager overviewManager = (OverviewManager) ModelUtil.getBean(packable.getManagerName());
 		if (!Util.convertNumberToBoolean(packable.getDefaultColliesGenerated())) {
-			overviewManager.refreshObject(packable);
+//			overviewManager.refreshObject(packable);
 			packable.setDefaultColliesGenerated(1);
 			// overviewManager.saveObject(packable);
 			// packable = (Packable) overviewManager.merge(packable);
@@ -3079,9 +3083,9 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 
 			}
 			// sjekk om kollier Takstol,Gavl,Gulvspon,Garasjepakke er med
-			// for
 			// ordre,
 			// sjekk mot artikler
+			// for
 
 			Set<String> colliNames = colliSetup.keySet();
 			if (colliNames != null) {
@@ -3097,7 +3101,8 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 							packable.addColli(newColli);
 
 							if (colliName.equalsIgnoreCase("Takstein")) {
-								checkTakstein(orderLines, newColli, null);
+								// checkTakstein(orderLines, newColli, null);
+								colliListViewHandler.checkTakstein(orderLines, newColli, null);
 							}
 							managerRepository.getColliManager().saveColli(newColli);
 						}

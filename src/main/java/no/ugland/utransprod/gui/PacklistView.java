@@ -42,6 +42,7 @@ public class PacklistView extends ApplyListView<PacklistV> {
 	private JButton buttonUpdateStatus;
 	private JButton buttonProductionReport;
 	private JButton buttonDelelisteReport;
+	private JButton buttonMonteringsanvisning;
 
 	public PacklistView(AbstractProductionPackageViewHandler<PacklistV> aViewHandler) {
 		super(aViewHandler, false);
@@ -50,6 +51,7 @@ public class PacklistView extends ApplyListView<PacklistV> {
 	@Override
 	protected void initComponents(WindowInterface window) {
 		super.initComponents(window);
+		buttonMonteringsanvisning= ((PacklistViewHandler) viewHandler).getButtonMonteringsanvisning(window);
 		buttonProductionReport = ((PacklistViewHandler) viewHandler).getButtonProductionReport(window);
 		buttonDelelisteReport = ((PacklistViewHandler) viewHandler).getButtonDelelisteReport(window);
 		buttonExcel = ((PacklistViewHandler) viewHandler).getButtonExcel(window);
@@ -116,12 +118,14 @@ public class PacklistView extends ApplyListView<PacklistV> {
 		builder.addGridded(buttonDeviation);
 		builder.addRelatedGap();
 		builder.addGridded(buttonTrossReady);
-		builder.addRelatedGap();
-		builder.addGridded(buttonProductionBasis);
+//		builder.addRelatedGap();
+//		builder.addGridded(buttonProductionBasis);
 		builder.addRelatedGap();
 		builder.addGridded(buttonProductionReport);
 		builder.addRelatedGap();
 		builder.addGridded(buttonDelelisteReport);
+		builder.addRelatedGap();
+		builder.addGridded(buttonMonteringsanvisning);
 
 		return builder.getPanel();
 	}

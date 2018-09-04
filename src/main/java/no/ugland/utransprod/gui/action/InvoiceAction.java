@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 import no.ugland.utransprod.gui.ApplyListView;
+import no.ugland.utransprod.gui.FaktureringView;
 import no.ugland.utransprod.gui.Login;
 import no.ugland.utransprod.gui.MenuBarBuilderInterface;
 import no.ugland.utransprod.gui.handlers.AbstractProductionPackageViewHandler;
@@ -61,8 +62,7 @@ public class InvoiceAction extends AbstractAction {
 		new InvoiceApplyList(menuBarBuilder.getUserType(), faktureringVManager),
 				menuBarBuilder.getUserType(), menuBarBuilder.getApplicationUser(),accidentManager,deviationManager,preventiveActionManager,articleTypeManager,attributeManager,externalOrderManager,orderManager,attributeChoiceManager);
 */
-		menuBarBuilder.openFrame(new ApplyListView<FaktureringV>(invoiceViewHandler,
-				false));
+		menuBarBuilder.openFrame(new FaktureringView(invoiceViewHandler));
 
 	}
 }

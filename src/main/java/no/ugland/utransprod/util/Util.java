@@ -952,7 +952,7 @@ public final class Util {
 
 							}
 						}
-					}else if(valueSplit != null && valueSplit.length == 1) {
+					} else if (valueSplit != null && valueSplit.length == 1) {
 						buffer.append(valueSplit[0]);
 					}
 
@@ -1104,11 +1104,13 @@ public final class Util {
 		addPacklist(map, orderViewHandlerFactory, managerRepository, deviationViewHandlerFactory, login, costTypeTross,
 				costUnitTross);
 
-		addVeggProduction(login, map, deviationViewHandlerFactory, managerRepository, setProductionUnitActionFactory,vismaFileCreator);
+		addVeggProduction(login, map, deviationViewHandlerFactory, managerRepository, setProductionUnitActionFactory,
+				vismaFileCreator);
 
 		addFrontProduction(login, map, managerRepository, deviationViewHandlerFactory, setProductionUnitActionFactory);
 
-		addGavlProduction(login, map, deviationViewHandlerFactory, managerRepository, setProductionUnitActionFactory);
+		addGavlProduction(login, map, deviationViewHandlerFactory, managerRepository, setProductionUnitActionFactory,
+				vismaFileCreator);
 
 		addTakstolProduction(map, login, deviationViewHandlerFactory, managerRepository, showTakstolInfoActionFactory,
 				articleTypeTakstol, takstolProductionApplyList, setProductionUnitActionFactory);
@@ -1179,9 +1181,9 @@ public final class Util {
 	private static void addGavlProduction(final Login login,
 			final Map<String, AbstractProductionPackageViewHandler> map,
 			DeviationViewHandlerFactory deviationViewHandlerFactory, ManagerRepository managerRepository,
-			SetProductionUnitActionFactory setProductionUnitActionFactory) {
+			SetProductionUnitActionFactory setProductionUnitActionFactory, VismaFileCreator vismaFileCreator) {
 		GavlProductionWindow gavlProductionWindow = new GavlProductionWindow(login, managerRepository,
-				deviationViewHandlerFactory, setProductionUnitActionFactory);
+				deviationViewHandlerFactory, setProductionUnitActionFactory, vismaFileCreator);
 		gavlProductionWindow.setLogin(login);
 
 		map.put("Gavl", (AbstractProductionPackageViewHandler) gavlProductionWindow.getViewHandler());
@@ -1202,9 +1204,9 @@ public final class Util {
 	private static void addVeggProduction(final Login login,
 			final Map<String, AbstractProductionPackageViewHandler> map,
 			DeviationViewHandlerFactory deviationViewHandlerFactory, ManagerRepository managerRepository,
-			SetProductionUnitActionFactory setProductionUnitActionFactory,VismaFileCreator vismaFileCreator) {
+			SetProductionUnitActionFactory setProductionUnitActionFactory, VismaFileCreator vismaFileCreator) {
 		VeggProductionWindow veggProductionWindow = new VeggProductionWindow(login, managerRepository,
-				deviationViewHandlerFactory, setProductionUnitActionFactory,vismaFileCreator);
+				deviationViewHandlerFactory, setProductionUnitActionFactory, vismaFileCreator);
 		veggProductionWindow.setLogin(login);
 
 		map.put("Vegg", (AbstractProductionPackageViewHandler) veggProductionWindow.getViewHandler());

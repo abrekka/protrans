@@ -769,6 +769,12 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 		radioButton.setName("RadioButtonInternal");
 		return radioButton;
 	}
+	public JRadioButton getRadioButtonEntrepenoer(PresentationModel presentationModel) {
+		JRadioButton radioButton = BasicComponentFactory.createRadioButton(
+				presentationModel.getBufferedModel(DeviationModel.PROPERTY_INITIATED_BY), "Entreprenør", "Entreprenør");
+		radioButton.setName("RadioButtonEntrepenoer");
+		return radioButton;
+	}
 
 	/**
 	 * Lager radioknapp for initiert av kunde

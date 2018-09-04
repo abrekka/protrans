@@ -35,9 +35,31 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
+import org.jdesktop.swingx.JXTable;
+import org.jdesktop.swingx.decorator.ColorHighlighter;
+import org.jdesktop.swingx.decorator.Filter;
+import org.jdesktop.swingx.decorator.FilterPipeline;
+import org.jdesktop.swingx.decorator.HighlighterFactory;
+import org.jdesktop.swingx.decorator.PatternFilter;
+import org.jdesktop.swingx.decorator.PatternPredicate;
+
+import com.google.inject.Inject;
+import com.jgoodies.binding.PresentationModel;
+import com.jgoodies.binding.adapter.BasicComponentFactory;
+import com.jgoodies.binding.adapter.ComboBoxAdapter;
+import com.jgoodies.binding.adapter.SingleListSelectionAdapter;
+import com.jgoodies.binding.beans.PropertyConnector;
+import com.jgoodies.binding.list.ArrayListModel;
+import com.jgoodies.binding.list.SelectionInList;
+import com.toedter.calendar.JDateChooser;
+
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.ProTransRuntimeException;
 import no.ugland.utransprod.gui.IconEnum;
+import no.ugland.utransprod.gui.LevertTransportView;
 import no.ugland.utransprod.gui.Login;
 import no.ugland.utransprod.gui.ProductAreaGroupProvider;
 import no.ugland.utransprod.gui.SentTransportView;
@@ -80,27 +102,6 @@ import no.ugland.utransprod.util.Util;
 import no.ugland.utransprod.util.YearWeek;
 import no.ugland.utransprod.util.report.TransportLetter;
 import no.ugland.utransprod.util.report.TransportLetterSelector;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import org.hibernate.Hibernate;
-import org.jdesktop.swingx.JXTable;
-import org.jdesktop.swingx.decorator.ColorHighlighter;
-import org.jdesktop.swingx.decorator.Filter;
-import org.jdesktop.swingx.decorator.FilterPipeline;
-import org.jdesktop.swingx.decorator.HighlighterFactory;
-import org.jdesktop.swingx.decorator.PatternFilter;
-import org.jdesktop.swingx.decorator.PatternPredicate;
-
-import com.google.inject.Inject;
-import com.jgoodies.binding.PresentationModel;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
-import com.jgoodies.binding.adapter.ComboBoxAdapter;
-import com.jgoodies.binding.adapter.SingleListSelectionAdapter;
-import com.jgoodies.binding.beans.PropertyConnector;
-import com.jgoodies.binding.list.ArrayListModel;
-import com.jgoodies.binding.list.SelectionInList;
-import com.toedter.calendar.JDateChooser;
 
 /**
  * Hjelpeklasse for visning en transport.
@@ -669,7 +670,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 			if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemSetTransportOrder.getText())) {
 				Util.setWaitCursor(window);
 				setTransport(false, window, transportWeekViewHandler);
-				transportWeekView.changeWeek(null);
+				transportWeekView.changeWeek(null,false);
 				Util.setDefaultCursor(window);
 			}
 
@@ -1024,12 +1025,27 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		transportPresentationModel.addBeanPropertyChangeListener(TransportModel.PROPERTY_SENT_BOOL,
 				new SentPropertyListener());
 		JCheckBox checkBox = BasicComponentFactory
-				.createCheckBox(transportPresentationModel.getModel(TransportModel.PROPERTY_SENT_BOOL), "Sendt");
+				.createCheckBox(transportPresentationModel.getModel(TransportModel.PROPERTY_SENT_BOOL), "Opplastet");
 		checkBox.setEnabled(hasWriteAccess());
 		checkBox.setName("CheckBoxSent" + number);
 
 		PropertyConnector conn = new PropertyConnector(
 				transportPresentationModel.getModel(TransportModel.PROPERTY_SENT_STRING), "value", checkBox,
+				"toolTipText");
+		conn.updateProperty2();
+		return checkBox;
+	}
+	
+	public JCheckBox getCheckBoxLevert(WindowInterface window, int number) {
+		transportPresentationModel.addBeanPropertyChangeListener(TransportModel.PROPERTY_LEVERT_BOOL,
+				new LevertPropertyListener());
+		JCheckBox checkBox = BasicComponentFactory
+				.createCheckBox(transportPresentationModel.getModel(TransportModel.PROPERTY_LEVERT_BOOL), "Levert");
+		checkBox.setEnabled(hasWriteAccess());
+		checkBox.setName("CheckBoxLevert" + number);
+
+		PropertyConnector conn = new PropertyConnector(
+				transportPresentationModel.getModel(TransportModel.PROPERTY_LEVERT_STRING), "value", checkBox,
 				"toolTipText");
 		conn.updateProperty2();
 		return checkBox;
@@ -1073,6 +1089,30 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 			if (errorString == null) {
 				transportPresentationModel.triggerCommit();
 				((TransportModel) transportPresentationModel.getBean()).getObject().setSent(sentDate);
+				saveObject((TransportModel) transportPresentationModel.getBean(), window);
+
+				updateTransportableList(true);
+			} else {
+
+				Util.showErrorDialog((Component) null, "Feil", errorString);
+
+			}
+		}
+	}
+	
+	public void saveTransportModelLevert(WindowInterface window, Date levertDate) {
+		if (transportPresentationModel != null) {
+			TransportModel transportModel = ((TransportModel) transportPresentationModel.getBean())
+					.getBufferedObjectModel(transportPresentationModel);
+
+			CheckObject checkObject = checkSaveObject(transportModel, null, window);
+			String errorString = null;
+			if (checkObject != null) {
+				errorString = checkObject.getMsg();
+			}
+			if (errorString == null) {
+				transportPresentationModel.triggerCommit();
+				((TransportModel) transportPresentationModel.getBean()).getObject().setLevert(levertDate);
 				saveObject((TransportModel) transportPresentationModel.getBean(), window);
 
 				updateTransportableList(true);
@@ -1258,6 +1298,32 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 
 		return sentDate;
 	}
+	
+	private Date showLevertOrders(final WindowInterface aWindow, final List<TransportListable> listTransportable,
+			final boolean levertTransport) throws ProTransException {
+		Date levertDate = Util.getCurrentDate();
+		boolean isCanceled = false;
+		handlingOrders = true;
+
+//		levertDate = checkLoadingDate(aWindow, levertDate,
+//				((TransportModel) transportPresentationModel.getBean()).getObject());
+		if (listTransportable.size() != 0) {
+			Transport transport = ((Transportable) listTransportable.get(0)).getTransport();
+			checkIfTransportableHasSupplier(transport);
+
+			isCanceled = showLevertOrders(aWindow, levertTransport, levertDate, listTransportable);
+			if (isCanceled) {
+				levertDate = null;
+			}
+		}
+
+		if (levertTransport && !isCanceled) {
+			saveTransportModelLevert(aWindow, levertDate);
+			transportOrderTableModel.fireTableDataChanged();
+		}
+
+		return levertDate;
+	}
 
 	private boolean showOrders(final WindowInterface window1, final boolean sentTransport, final Date sentDate,
 			final List<TransportListable> tmpTransportableList) {
@@ -1269,6 +1335,18 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 
 		handlingOrders = false;
 		return sentTransportViewHandler.isCanceled();
+	}
+	
+	private boolean showLevertOrders(final WindowInterface window1, final boolean levertTransport, final Date levertDate,
+			final List<TransportListable> tmpTransportableList) {
+
+		LevertTransportViewHandler levertTransportViewHandler = new LevertTransportViewHandler(login, managerRepository,
+				deviationViewHandlerFactory, tmpTransportableList, false, levertTransport, levertDate);
+
+		Util.showEditViewable(new LevertTransportView(levertTransportViewHandler), window1);
+
+		handlingOrders = false;
+		return levertTransportViewHandler.isCanceled();
 	}
 
 	private Date checkLoadingDate(WindowInterface window, Date sentDate, Transport transport) {
@@ -1334,6 +1412,35 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 
 			Util.setDefaultCursor(window.getComponent());
 			if (sentDate != null) {
+				return false;
+			}
+		} catch (ProTransException e) {
+			Util.showErrorDialog(window, "Feil", e.getMessage());
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	final boolean setLevert(final Boolean levert, final WindowInterface window,
+			final List<TransportListable> listTransportable, final boolean levertTransport) {
+		try {
+			Date levertDate = null;
+			if (levert) {
+				levertDate = handleTransportLevert(window, listTransportable, levertTransport);
+
+			} else {
+				levertDate = handleTransportNotSent(listTransportable, levertTransport);
+			}
+
+			transportPresentationModel.triggerCommit();
+
+			if (levertDate != null) {
+				fireSentChange();
+			}
+
+
+			Util.setDefaultCursor(window.getComponent());
+			if (levertDate != null) {
 				return false;
 			}
 		} catch (ProTransException e) {
@@ -1450,6 +1557,15 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		return sentDate;
 	}
 
+	private Date handleTransportLevert(final WindowInterface window1, final List<TransportListable> listTransportable,
+			final boolean levertTransport) throws ProTransException {
+		Date levertDate = null;
+
+			levertDate = showLevertOrders(window1, listTransportable, levertTransport);
+		return levertDate;
+	}
+
+	
 	private void checkIfTransportableHasSupplier(final Transport transport) throws ProTransException {
 		if (transport.getSupplier() == null) {
 			throw new ProTransException("Transport har ikke firma satt");
@@ -1486,6 +1602,19 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		}
 
 	}
+	
+	private class LevertPropertyListener implements PropertyChangeListener {
+
+		/**
+		 * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+		 */
+		public final void propertyChange(final PropertyChangeEvent event) {
+			if (!handlingOrders) {
+				handleLevertTransport(event);
+			}
+		}
+
+	}
 
 	@SuppressWarnings("unchecked")
 	void handleSentTransport(final PropertyChangeEvent event) {
@@ -1495,6 +1624,18 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		handlingOrders = true;
 		if (isCanceled) {
 			transportPresentationModel.setValue(TransportModel.PROPERTY_SENT_BOOL, !sent);
+		}
+		handlingOrders = false;
+		Util.setDefaultCursor(window.getComponent());
+	}
+	
+	void handleLevertTransport(final PropertyChangeEvent event) {
+		Util.setWaitCursor(window.getComponent());
+		Boolean levert = (Boolean) event.getNewValue();
+		boolean isCanceled = setLevert(levert, window, transportableList, true);
+		handlingOrders = true;
+		if (isCanceled) {
+			transportPresentationModel.setValue(TransportModel.PROPERTY_LEVERT_BOOL, !levert);
 		}
 		handlingOrders = false;
 		Util.setDefaultCursor(window.getComponent());

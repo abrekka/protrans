@@ -23,14 +23,14 @@
 		<band height="17" splitType="Stretch">
 			<subreport>
 				<reportElement positionType="Float" x="0" y="3" width="539" height="11"/>
-				<subreportParameter name="produksjonstype">
-					<subreportParameterExpression><![CDATA["Deleliste"]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="ugland_logo">
 					<subreportParameterExpression><![CDATA[$P{ugland_logo}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="produksjonstype">
+					<subreportParameterExpression><![CDATA["Deleliste"]]></subreportParameterExpression>
+				</subreportParameter>
 				<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{delelisteKunde})]]></dataSourceExpression>
-				<subreportExpression class="java.lang.String"><![CDATA["reports/deleliste_vegg.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA["reports/deleliste_kunde_detaljer.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

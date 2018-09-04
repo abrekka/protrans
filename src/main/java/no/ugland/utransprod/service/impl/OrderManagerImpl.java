@@ -715,4 +715,8 @@ public class OrderManagerImpl extends ManagerImpl<Order> implements OrderManager
 		return ((OrderDAO)dao).getOrderWithOrderLinesAbdCollies(orderNr);
 	}
 
+	public List<String> finnMonteringsanvisninger(String orderNr) {
+		return ((OrderDAO)dao).finnMonteringsanvisninger(orderNr);
+	}
+
 }

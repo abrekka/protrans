@@ -541,11 +541,11 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 	 * @param productAreaGroup
 	 * @return transportruter
 	 */
-	public final SelectionInList getTransportSelectionList(final YearWeek routeDate1) {
+	public final SelectionInList getTransportSelectionList(final YearWeek routeDate1, boolean ikkeTaMedOpplastet) {
 		transportList.clear();
 
 		List<Transport> transports = managerRepository.getTransportManager()
-				.findByYearAndWeekAndProductAreaGroup(routeDate1.getYear(), routeDate1.getWeek());
+				.findByYearAndWeekAndProductAreaGroup(routeDate1.getYear(), routeDate1.getWeek(), ikkeTaMedOpplastet);
 		Collections.sort(transports, new TransportComparator());
 		transportList.addAll(transports);
 		return transportSelectionList;
@@ -559,8 +559,8 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 	 * @return transportruter
 	 */
 	@SuppressWarnings("unchecked")
-	public final List<Transport> getTransportList(final YearWeek routeDate1) {
-		getTransportSelectionList(routeDate1);
+	public final List<Transport> getTransportList(final YearWeek routeDate1, boolean ikkeTaMedOpplastet) {
+		getTransportSelectionList(routeDate1, ikkeTaMedOpplastet);
 		return transportList;
 	}
 

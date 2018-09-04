@@ -33,6 +33,24 @@ public class KledningConverterTest {
 		ConstructionTypeManager constructionTypeManager=(ConstructionTypeManager)ModelUtil.getBean(ConstructionTypeManager.MANAGER_NAME);
 		when(managerRepository.getConstructionTypeManager()).thenReturn(constructionTypeManager);
 	}
+	
+	@Test
+	public void skalIkkeKonvertereKledningDersomFree4ErNoeAnnetEnn1_2Eller_0(){
+		KledningConverter kledningConverter=new KledningConverter(managerRepository);
+		ArticleType articleType=new ArticleType();
+		articleType.setArticleTypeName("Kledning");
+		Ordln ordln=new Ordln();
+		ordln.setOrdlnPK(new OrdlnPK(1, 1));
+		ordln.setFree4(BigDecimal.valueOf(3));
+		Order order=new Order();
+		OrderLine vegg=new OrderLine();
+		vegg.setArticlePath("Vegg");
+		order.addOrderLine(vegg);
+		Ord ord=null;
+		OrderLine kledning =kledningConverter.convert(articleType, ordln, order, ord);
+		assertNotNull(kledning);
+		assertEquals(OrderLine.UNKNOWN, kledning);
+	}
 
 	@Test
 	public void convertGavlKledning(){

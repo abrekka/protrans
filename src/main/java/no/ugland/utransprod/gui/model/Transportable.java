@@ -460,6 +460,16 @@ public interface Transportable {
 	    return null;
 	}
 
+	public Object getLevertBool() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setLevert(Date levertDate) {
+		// TODO Auto-generated method stub
+		
+	}
+
     };
 
     List<OrderLine> getOrderLineList(String articleTypeName);
@@ -487,5 +497,9 @@ public interface Transportable {
     void setTakstolKjopOrd(Ord ord);
 
     Ord getTakstolKjopOrd();
+
+	Object getLevertBool();
+
+	void setLevert(Date levertDate);
 
 }

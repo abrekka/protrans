@@ -123,7 +123,7 @@ public class RouteView implements Viewer {
 	buttonExcel = viewHandler.getButtonExcel(window);
 	labelOrderCount = viewHandler.getLabelOrderCount();
 	labelValue = viewHandler.getLabelGarageCost();
-	checkBoxFilterSent = viewHandler.getCheckBoxFilterSent();
+	checkBoxFilterSent = viewHandler.getCheckBoxFilterSent(window);
 	labelBudget = viewHandler.getLabelBudget();
 
 	// comboBoxProductAreaGroup = viewHandler.getComboBoxProductAreaGroup();

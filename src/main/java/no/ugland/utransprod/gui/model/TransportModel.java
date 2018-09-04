@@ -63,6 +63,7 @@ public class TransportModel extends AbstractModel<Transport, TransportModel> {
 	 * 
 	 */
 	public static final String PROPERTY_SENT_BOOL = "sentBool";
+	public static final String PROPERTY_LEVERT_BOOL = "levertBool";
 
 	/**
 	 * 
@@ -84,6 +85,7 @@ public class TransportModel extends AbstractModel<Transport, TransportModel> {
 	 */
 	public static final String PROPERTY_LOAD_TIME = "loadTime";
     public static final String PROPERTY_SENT_STRING = "sentString";
+    public static final String PROPERTY_LEVERT_STRING = "levertString";
     public static final String PROPERTY_TROLLEY = "trolley";
     public static final String PROPERTY_TRANSPORT_COMMENT = "transportComment";
 
@@ -247,6 +249,8 @@ public class TransportModel extends AbstractModel<Transport, TransportModel> {
 				.addValueChangeListener(listener);
 		presentationModel.getBufferedModel(PROPERTY_SENT_BOOL)
 				.addValueChangeListener(listener);
+		presentationModel.getBufferedModel(PROPERTY_LEVERT_BOOL)
+		.addValueChangeListener(listener);
 		presentationModel.getBufferedModel(PROPERTY_SUPPLIER)
 				.addValueChangeListener(listener);
 		presentationModel.getBufferedModel(PROPERTY_LOAD_TIME)
@@ -280,6 +284,8 @@ public class TransportModel extends AbstractModel<Transport, TransportModel> {
 				.getBufferedValue(PROPERTY_ORDERS));
 		transportModel.setSentBool((Boolean) presentationModel
 				.getBufferedValue(PROPERTY_SENT_BOOL));
+		transportModel.setSentBool((Boolean) presentationModel
+				.getBufferedValue(PROPERTY_LEVERT_BOOL));
 		transportModel.setSupplier((Supplier) presentationModel
 				.getBufferedValue(PROPERTY_SUPPLIER));
 		transportModel.setLoadTime((String) presentationModel
@@ -296,6 +302,12 @@ public class TransportModel extends AbstractModel<Transport, TransportModel> {
 	 */
 	public Boolean getSentBool() {
 		if (object.getSent() != null) {
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
+	}
+	public Boolean getLevertBool() {
+		if (object.getLevert() != null) {
 			return Boolean.TRUE;
 		}
 		return Boolean.FALSE;
@@ -317,6 +329,20 @@ public class TransportModel extends AbstractModel<Transport, TransportModel> {
         
         
 	}
+	
+	public void setLevertBool(Boolean levert) {
+		Boolean oldBool = getLevertBool();
+		if (levert) {
+			object.setLevert(Calendar.getInstance().getTime());
+            setLevertString(Util.SHORT_DATE_FORMAT.format(object.getLevert()));
+		} else {
+			object.setLevert(null);
+            setLevertString(null);
+		}
+		firePropertyChange(PROPERTY_LEVERT_BOOL, oldBool, levert);
+        
+        
+	}
     
     public final String getSentString() {
         if (object.getSent() != null) {
@@ -324,9 +350,19 @@ public class TransportModel extends AbstractModel<Transport, TransportModel> {
         }
         return "";
     }
+    public final String getLevertString() {
+        if (object.getLevert() != null) {
+            return Util.SHORT_DATE_FORMAT.format(object.getLevert());
+        }
+        return "";
+    }
     public final void setSentString(String sentString) {
         String oldSent = getSentString();
         firePropertyChange(PROPERTY_SENT_STRING, oldSent, sentString);
+    }
+    public final void setLevertString(String levertString) {
+        String oldLevert = getLevertString();
+        firePropertyChange(PROPERTY_LEVERT_STRING, oldLevert, levertString);
     }
 
     

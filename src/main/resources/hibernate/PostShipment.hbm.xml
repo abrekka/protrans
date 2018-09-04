@@ -73,6 +73,12 @@
         column="DEFAULT_COLLIES_GENERATED"
         length="32"
     />
+      <property
+        name="levert"
+        type="java.util.Date"
+        column="LEVERT"
+        length="32"
+    />
 	
     
     <!-- Associations -->

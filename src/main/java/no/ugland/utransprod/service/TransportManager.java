@@ -12,27 +12,27 @@ import no.ugland.utransprod.util.Periode;
  * @author atle.brekka
  */
 public interface TransportManager extends OverviewManager<Transport> {
-    public static final String MANAGER_NAME = "transportManager";
+	public static final String MANAGER_NAME = "transportManager";
 
-    List<Transport> findAll();
+	List<Transport> findAll();
 
-    void saveTransport(Transport transport);
+	void saveTransport(Transport transport);
 
-    void removeTransport(Transport transport);
+	void removeTransport(Transport transport);
 
-    List<Transport> findByYearAndWeek(Integer year, Integer week);
+	List<Transport> findByYearAndWeek(Integer year, Integer week);
 
-    void lazyLoadTransport(Transport transport, LazyLoadTransportEnum[] enums);
+	void lazyLoadTransport(Transport transport, LazyLoadTransportEnum[] enums);
 
-    List<Transport> findBetweenYearAndWeek(Integer year, Integer fromWeek, Integer toWeek, String[] orderBy);
+	List<Transport> findBetweenYearAndWeek(Integer year, Integer fromWeek, Integer toWeek, String[] orderBy);
 
-    List<Transport> findNewTransports();
+	List<Transport> findNewTransports();
 
-    List<Transport> findByYearAndWeekAndProductAreaGroup(Integer year, Integer week);
+	List<Transport> findByYearAndWeekAndProductAreaGroup(Integer year, Integer week, boolean ikkeTaMedOpplastet);
 
-    List<Transport> findSentInPeriode(Periode periode);
+	List<Transport> findSentInPeriode(Periode periode);
 
-    List<Transport> findInPeriode(Periode periode, String productAreaGroupName);
+	List<Transport> findInPeriode(Periode periode, String productAreaGroupName);
 
-    Transport findById(Integer id);
+	Transport findById(Integer id);
 }

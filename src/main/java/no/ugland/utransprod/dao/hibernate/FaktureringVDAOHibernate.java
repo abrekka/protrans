@@ -32,7 +32,7 @@ public class FaktureringVDAOHibernate extends BaseDAOHibernate<FaktureringV> imp
      */
     @SuppressWarnings("unchecked")
     public final List<FaktureringV> findAll() {
-	return getHibernateTemplate().find("from FaktureringV order by sent");
+	return getHibernateTemplate().find("from FaktureringV order by levert");
     }
 
     /**

@@ -25,199 +25,200 @@ import com.jgoodies.forms.layout.FormLayout;
  * @author atle.brekka
  */
 public class TransportWeekView {
-    private YearWeek routeDate;
+	private YearWeek routeDate;
 
-    private List<Transport> transportList;
+	private List<Transport> transportList;
 
-    private TransportWeekViewHandler viewHandler;
+	private TransportWeekViewHandler viewHandler;
 
-    private JButton buttonAddTransport;
+	private JButton buttonAddTransport;
 
-    private JPanel panelTransport;
+	private JPanel panelTransport;
 
-    private JPanel panelTransportMain;
+	private JPanel panelTransportMain;
 
-    private JButton buttonRemoveTransport;
+	private JButton buttonRemoveTransport;
 
-    private JButton buttonEditTransport;
+	private JButton buttonEditTransport;
 
-    private WindowInterface currentWindow;
+	private WindowInterface currentWindow;
 
-    // private ProductAreaGroup productAreaGroup;
+	// private ProductAreaGroup productAreaGroup;
 
-    public TransportWeekView(final YearWeek aRouteDate, final TransportWeekViewHandler aHandler) {// ,
-												  // final
-												  // ProductAreaGroup
-												  // aProductAreaGroup)
-												  // {
-	// productAreaGroup = aProductAreaGroup;
-	viewHandler = aHandler;
-	routeDate = aRouteDate;
-    }
-
-    /**
-     * Initierer komponenter
-     * 
-     * @param window
-     */
-    private void initComponents(final WindowInterface window) {
-	transportList = viewHandler.getTransportList(routeDate);
-	buttonAddTransport = viewHandler.getButtonAddTransport(window);
-	buttonRemoveTransport = viewHandler.getButtonRemoveTransport(window);
-	buttonRemoveTransport.setEnabled(false);
-	buttonEditTransport = viewHandler.getButtonEditTransport(window);
-	panelTransportMain = buildTransportMain();
-    }
-
-    /**
-     * Lager panel for transportvindu
-     * 
-     * @return panel
-     */
-    private JPanel buildTransportMain() {
-	FormLayout layout = new FormLayout("fill:p:grow", "fill:p:grow");
-	PanelBuilder builder = new PanelBuilder(layout);
-	return builder.getPanel();
-    }
-
-    /**
-     * Bygger panel.
-     * 
-     * @param window
-     * @return panel
-     */
-    public final Component buildPanel(final WindowInterface window) {
-	currentWindow = window;
-	initComponents(window);
-	initEventHandling();
-	FormLayout layout = new FormLayout("fill:230dlu:grow", "fill:270dlu:grow,3dlu,p");
-	// PanelBuilder builder = new PanelBuilder(layout, new
-	// FormDebugPanel());
-	PanelBuilder builder = new PanelBuilder(layout);
-	CellConstraints cc = new CellConstraints();
-	panelTransport = buildTransportPanel(window);
-	panelTransportMain.add(panelTransport, cc.xy(1, 1));
-	JScrollPane scrollPaneTransport = new JScrollPane(panelTransportMain);
-	scrollPaneTransport.setName("ScrollPaneTransport");
-	builder.add(scrollPaneTransport, cc.xy(1, 1));
-	builder.add(ButtonBarFactory.buildCenteredBar(buttonAddTransport, buttonEditTransport, buttonRemoveTransport), cc.xy(1, 3));
-	return builder.getPanel();
-    }
-
-    /**
-     * Bygger panel for visning av transportruter
-     * 
-     * @param window
-     * @return panel
-     */
-    private JPanel buildTransportPanel(final WindowInterface window) {
-	return viewHandler.useListView() ? buildTransportPanelList(window) : buildTransportPanelTransports(window);
-    }
-
-    private JPanel buildTransportPanelTransports(final WindowInterface window) {
-	FormLayout layout = new FormLayout("fill:p:grow", "");
-
-	DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-	int number = 0;
-	for (Transport transport : transportList) {
-	    number++;
-	    builder.append(viewHandler.getTransportView(transport).buildPanel(window, number, viewHandler, this));
+	public TransportWeekView(final YearWeek aRouteDate, final TransportWeekViewHandler aHandler) {// ,
+		// final
+		// ProductAreaGroup
+		// aProductAreaGroup)
+		// {
+		// productAreaGroup = aProductAreaGroup;
+		viewHandler = aHandler;
+		routeDate = aRouteDate;
 	}
-	builder.nextLine();
 
-	return builder.getPanel();
-    }
-
-    private JPanel buildTransportPanelList(WindowInterface window) {
-	return viewHandler.getTransportListView(window).buildPanel();
-    }
-
-    /**
-     * Initierer hendelsehåndtering
-     */
-    private void initEventHandling() {
-	viewHandler.addListDataListener(new TransportListListener());
-    }
-
-    /**
-     * Endring av uke og år.
-     * 
-     * @param newYear
-     */
-    public final void changeWeek(final Integer newYear) {
-	if (newYear != null) {
-
-	    routeDate.setYear(newYear);
+	/**
+	 * Initierer komponenter
+	 * 
+	 * @param window
+	 */
+	private void initComponents(final WindowInterface window, boolean ikkeTaMedOpplastet) {
+		transportList = viewHandler.getTransportList(routeDate, ikkeTaMedOpplastet);
+		buttonAddTransport = viewHandler.getButtonAddTransport(window);
+		buttonRemoveTransport = viewHandler.getButtonRemoveTransport(window);
+		buttonRemoveTransport.setEnabled(false);
+		buttonEditTransport = viewHandler.getButtonEditTransport(window);
+		panelTransportMain = buildTransportMain();
 	}
-	viewHandler.clear();
-	// ProductAreaGroup group = null;
-	// if
-	// (!productAreaGroup.getProductAreaGroupName().equalsIgnoreCase("Alle"))
-	// {
-	// group = productAreaGroup;
+
+	/**
+	 * Lager panel for transportvindu
+	 * 
+	 * @return panel
+	 */
+	private JPanel buildTransportMain() {
+		FormLayout layout = new FormLayout("fill:p:grow", "fill:p:grow");
+		PanelBuilder builder = new PanelBuilder(layout);
+		return builder.getPanel();
+	}
+
+	/**
+	 * Bygger panel.
+	 * 
+	 * @param window
+	 * @return panel
+	 */
+	public final Component buildPanel(final WindowInterface window) {
+		currentWindow = window;
+		initComponents(window, false);
+		initEventHandling();
+		FormLayout layout = new FormLayout("fill:230dlu:grow", "fill:270dlu:grow,3dlu,p");
+		// PanelBuilder builder = new PanelBuilder(layout, new
+		// FormDebugPanel());
+		PanelBuilder builder = new PanelBuilder(layout);
+		CellConstraints cc = new CellConstraints();
+		panelTransport = buildTransportPanel(window);
+		panelTransportMain.add(panelTransport, cc.xy(1, 1));
+		JScrollPane scrollPaneTransport = new JScrollPane(panelTransportMain);
+		scrollPaneTransport.setName("ScrollPaneTransport");
+		builder.add(scrollPaneTransport, cc.xy(1, 1));
+		builder.add(ButtonBarFactory.buildCenteredBar(buttonAddTransport, buttonEditTransport, buttonRemoveTransport),
+				cc.xy(1, 3));
+		return builder.getPanel();
+	}
+
+	/**
+	 * Bygger panel for visning av transportruter
+	 * 
+	 * @param window
+	 * @return panel
+	 */
+	private JPanel buildTransportPanel(final WindowInterface window) {
+		return viewHandler.useListView() ? buildTransportPanelList(window) : buildTransportPanelTransports(window);
+	}
+
+	private JPanel buildTransportPanelTransports(final WindowInterface window) {
+		FormLayout layout = new FormLayout("fill:p:grow", "");
+
+		DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+		int number = 0;
+		for (Transport transport : transportList) {
+			number++;
+			builder.append(viewHandler.getTransportView(transport).buildPanel(window, number, viewHandler, this));
+		}
+		builder.nextLine();
+
+		return builder.getPanel();
+	}
+
+	private JPanel buildTransportPanelList(WindowInterface window) {
+		return viewHandler.getTransportListView(window).buildPanel();
+	}
+
+	/**
+	 * Initierer hendelsehåndtering
+	 */
+	private void initEventHandling() {
+		viewHandler.addListDataListener(new TransportListListener());
+	}
+
+	/**
+	 * Endring av uke og år.
+	 * 
+	 * @param newYear
+	 */
+	public final void changeWeek(final Integer newYear, boolean ikkeTaMedOpplastet) {
+		if (newYear != null) {
+
+			routeDate.setYear(newYear);
+		}
+		viewHandler.clear();
+		// ProductAreaGroup group = null;
+		// if
+		// (!productAreaGroup.getProductAreaGroupName().equalsIgnoreCase("Alle"))
+		// {
+		// group = productAreaGroup;
+		// }
+		transportList = viewHandler.getTransportList(routeDate, ikkeTaMedOpplastet);
+		panelTransportMain.remove(panelTransport);
+		panelTransport = buildTransportPanel(currentWindow);
+		CellConstraints cc = new CellConstraints();
+		panelTransportMain.add(panelTransport, cc.xy(1, 1));
+		panelTransportMain.repaint();
+		panelTransportMain.validate();
+
+		panelTransportMain.getParent().repaint();
+		panelTransportMain.getParent().validate();
+
+	}
+
+	/**
+	 * Klasse som lytter på endring av data
+	 * 
+	 * @author atle.brekka
+	 */
+	final class TransportListListener implements ListDataListener {
+
+		/**
+		 * @see javax.swing.event.ListDataListener#contentsChanged(javax.swing.event.ListDataEvent)
+		 */
+		public void contentsChanged(final ListDataEvent arg0) {
+			changeWeek(null, false);
+
+		}
+
+		/**
+		 * @see javax.swing.event.ListDataListener#intervalAdded(javax.swing.event.ListDataEvent)
+		 */
+		public void intervalAdded(final ListDataEvent arg0) {
+			changeWeek(null, false);
+
+		}
+
+		/**
+		 * @see javax.swing.event.ListDataListener#intervalRemoved(javax.swing.event.ListDataEvent)
+		 */
+		public void intervalRemoved(final ListDataEvent arg0) {
+			changeWeek(null, false);
+
+		}
+
+	}
+
+	/**
+	 * Henter ut anatll transporter
+	 * 
+	 * @return antall
+	 */
+	public final int getNumberOfTransport() {
+		return transportList.size();
+	}
+
+	public List<Transport> getTransportList() {
+		return transportList;
+	}
+
+	// public final void setProductAreaGroup(final ProductAreaGroup
+	// aProductAreaGroup) {
+	// this.productAreaGroup = aProductAreaGroup;
 	// }
-	transportList = viewHandler.getTransportList(routeDate);
-	panelTransportMain.remove(panelTransport);
-	panelTransport = buildTransportPanel(currentWindow);
-	CellConstraints cc = new CellConstraints();
-	panelTransportMain.add(panelTransport, cc.xy(1, 1));
-	panelTransportMain.repaint();
-	panelTransportMain.validate();
-
-	panelTransportMain.getParent().repaint();
-	panelTransportMain.getParent().validate();
-
-    }
-
-    /**
-     * Klasse som lytter på endring av data
-     * 
-     * @author atle.brekka
-     */
-    final class TransportListListener implements ListDataListener {
-
-	/**
-	 * @see javax.swing.event.ListDataListener#contentsChanged(javax.swing.event.ListDataEvent)
-	 */
-	public void contentsChanged(final ListDataEvent arg0) {
-	    changeWeek(null);
-
-	}
-
-	/**
-	 * @see javax.swing.event.ListDataListener#intervalAdded(javax.swing.event.ListDataEvent)
-	 */
-	public void intervalAdded(final ListDataEvent arg0) {
-	    changeWeek(null);
-
-	}
-
-	/**
-	 * @see javax.swing.event.ListDataListener#intervalRemoved(javax.swing.event.ListDataEvent)
-	 */
-	public void intervalRemoved(final ListDataEvent arg0) {
-	    changeWeek(null);
-
-	}
-
-    }
-
-    /**
-     * Henter ut anatll transporter
-     * 
-     * @return antall
-     */
-    public final int getNumberOfTransport() {
-	return transportList.size();
-    }
-
-    public List<Transport> getTransportList() {
-	return transportList;
-    }
-
-    // public final void setProductAreaGroup(final ProductAreaGroup
-    // aProductAreaGroup) {
-    // this.productAreaGroup = aProductAreaGroup;
-    // }
 
 }

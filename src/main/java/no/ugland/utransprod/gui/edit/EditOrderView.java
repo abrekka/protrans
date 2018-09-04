@@ -155,6 +155,7 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 
 	private JTextField textFieldMaxTrossHeight;
 	private VismaFileCreator vismaFileCreator;
+	private JButton buttonMontering;
 
 	public EditOrderView(final OrderViewHandler handler, final Order order, final boolean searchDialog,
 			final Project project, VismaFileCreator vismaFileCreator, boolean erLettvekt) {
@@ -339,6 +340,7 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 		buttonImportCuttingFile = orderViewHandler.getButtonImportCuttingFile(window1, presentationModel);
 
 		buttonOpenCuttingFile = orderViewHandler.getButtonOpenCuttingFile(presentationModel, window1);
+		buttonMontering=orderViewHandler.getButtonMontering(presentationModel, window1);
 
 		textFieldTelephoneNrSite = orderViewHandler.getTextFieldTelephonenrSite(presentationModel);
 		textFieldMaxTrossHeight = orderViewHandler.getTextFieldMaxTrossHeight(presentationModel);
@@ -502,7 +504,7 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 		}
 
 		if (!search) {
-			builder.add(ButtonBarFactory.buildCenteredBar(buttonRefresh, buttonSave, buttonCancel), cc.xyw(2, 10, 5));
+			builder.add(ButtonBarFactory.buildCenteredBar(buttonMontering,buttonRefresh, buttonSave, buttonCancel), cc.xyw(2, 10, 5));
 		} else {
 			builder.add(ButtonBarFactory.buildCenteredBar(buttonSave, buttonCancel), cc.xyw(2, 10, 5));
 			window.getRootPane().setDefaultButton(buttonSave);

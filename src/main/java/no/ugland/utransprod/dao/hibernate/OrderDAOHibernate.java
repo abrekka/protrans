@@ -1437,14 +1437,22 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 				String sql = "SELECT cast(NoInvoAb as numeric(10,2)) as antall,F0100.dbo.ordln.prodtp,"
 						+ "F0100.dbo.txt.txt, " + "F0100.dbo.ordln.prodtp2, " + "F0100.dbo.Unit.descr as enhet"
 						+ ", F0100.dbo.ordln.descr, F0100.dbo.ordln.trinf4,F0100.dbo.prod.inf8,F0100.dbo.prod.prodno,F0100.dbo.prod.PrCatNo2"
-						+ ",F0100.dbo.ordln.purcno,F0100.dbo.ordln.ProdGr "
-						+ "FROM F0100.dbo.OrdLn inner join "
+						+ ",F0100.dbo.ordln.purcno,F0100.dbo.ordln.ProdGr"
+						+ ",(select F0100.dbo.stcbal.nrmloc "
+						+ "from F0100.dbo.stcbal " 
+						+ "where F0100.dbo.stcbal.prodno=F0100.dbo.ordln.ProdNo and " 
+						  + "F0100.dbo.stcbal.stcno= case when F0100.dbo.ordln.prodtp =10 then 1 " 
+						     + "                       when F0100.dbo.ordln.prodtp =20 then 3  "
+								+ "					when F0100.dbo.ordln.prodtp =30 then 2  "
+									+ "				when F0100.dbo.ordln.prodtp =35 then 2 end) as lokasjon " 
+						+ "FROM F0100.dbo.OrdLn left outer join "
 						+ "F0100.dbo.txt on F0100.dbo.txt.txtno=F0100.dbo.ordln.prodtp2 inner join "
 						+ "F0100.dbo.ord on F0100.dbo.ordln.ordno=F0100.dbo.ord.ordno inner join "
 						+ "F0100.dbo.Unit on F0100.dbo.Unit.un=F0100.dbo.ordln.un inner join "
 						+ "F0100.dbo.prod on F0100.dbo.prod.prodno=F0100.dbo.ordln.ProdNo "
-						+ "where F0100.dbo.txt.Lang = 47 and F0100.dbo.txt.txttp = 58 and F0100.dbo.ordln.prodtp in(10,20,30,35,40,50) "
-						+ " and NoInvoAb > 0" + " and F0100.dbo.ord.inf6='" + ordrenr + "' "
+						+ "where (F0100.dbo.txt.Lang is null or (F0100.dbo.txt.Lang = 47 and F0100.dbo.txt.txttp = 58))"
+						+ " and F0100.dbo.ordln.prodtp in(0,10,20,30,35,40,50) " + " and NoInvoAb > 0"
+						+ " and F0100.dbo.ord.inf6='" + ordrenr + "' "
 						+ "order by F0100.dbo.ordln.prodtp2,F0100.dbo.ordln.trinf3,F0100.dbo.ordln.trinf4";
 
 				List<Delelisteinfo> deleliste = Lists.newArrayList();
@@ -1453,7 +1461,7 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 					deleliste.add(new Delelisteinfo(ordrenr, kundenavn, sted, garasjetype, (BigDecimal) linje[0],
 							(Integer) linje[1], (String) linje[2], (Integer) linje[3], (String) linje[4],
 							(String) linje[5], (String) linje[6], (String) linje[7], (String) linje[8],
-							(Integer) linje[9],(Integer) linje[10],(Integer) linje[11]));
+							(Integer) linje[9], (Integer) linje[10], (Integer) linje[11], (String) linje[12]));
 				}
 				return deleliste;
 			}
@@ -1509,6 +1517,18 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 
 		});
 
+	}
+
+	public List<String> finnMonteringsanvisninger(final String orderNr) {
+		return (List<String>) getHibernateTemplate().execute(new HibernateCallback() {
+
+			public Object doInHibernate(final Session session) {
+				String sql = "SELECT Filsti " + "FROM dbo.monteringsanvisning_v " + "where order_nr='" + orderNr + "'";
+
+				return session.createSQLQuery(sql).list();
+			}
+
+		});
 	}
 
 }

@@ -253,4 +253,6 @@ public interface OrderDAO extends DAO<Order> {
 	void settMontering(Integer orderId, boolean montering);
 
 	Order getOrderWithOrderLinesAbdCollies(String orderNr);
+
+	List<String> finnMonteringsanvisninger(String orderNr);
 }

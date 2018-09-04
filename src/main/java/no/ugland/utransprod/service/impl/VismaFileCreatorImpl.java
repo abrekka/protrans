@@ -22,6 +22,8 @@ import no.ugland.utransprod.util.ApplicationParamUtil;
 import no.ugland.utransprod.util.Util;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -34,6 +36,7 @@ import com.google.inject.internal.Lists;
 import com.google.inject.name.Named;
 
 public class VismaFileCreatorImpl implements VismaFileCreator {
+	protected final Log logger = LogFactory.getLog(getClass());
 	private static final String VISMA_OUT_DIR = "visma_out_dir";
 	private static Boolean uniqueFileName = true;
 
@@ -125,6 +128,7 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 			fileName += uniqueFileName ? Util.getCurrentDateAsDateTimeStringWithSeconds() : "";
 			fileName += ".edi";
 			File file = new File(outdir + "/" + fileName);
+			logger.info(String.format("Skal skrive fil %s", file.getAbsolutePath()));
 			FileUtils.writeLines(file, lines);
 			return fileName;
 		} catch (Exception e) {

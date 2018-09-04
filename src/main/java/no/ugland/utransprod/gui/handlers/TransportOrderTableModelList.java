@@ -10,6 +10,7 @@ import javax.swing.ListModel;
 import no.ugland.utransprod.gui.checker.StatusCheckerInterface;
 import no.ugland.utransprod.gui.model.TextPaneRendererTransport;
 import no.ugland.utransprod.gui.model.Transportable;
+import no.ugland.utransprod.model.Deviation;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.PostShipment;
@@ -251,6 +252,12 @@ public final class TransportOrderTableModelList extends AbstractTableAdapter {
 					StatusCheckerInterface<Transportable> takstolChecker,
 					StatusCheckerInterface<Transportable> steinChecker,
 					StatusCheckerInterface<Transportable> gulvsponChecker) {
+				if(Deviation.class.isInstance(transportable)){
+					System.out.println("avvik");
+				}
+				if(PostShipment.class.isInstance(transportable)){
+					System.out.println("etterleverin");
+				}
 				if (transportable.getDoAssembly() != null && transportable.getDoAssembly() == 1) {
 					return transportable.getAssembly() == null ? "M"
 							: "M" + transportable.getAssembly().getAssemblyWeek();
