@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="deleliste_kunde_detaljer" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="ugland_logo" class="java.io.InputStream" isForPrompting="false"/>
+	<parameter name="produksjonstype" class="java.lang.String"/>
+	<field name="txtGruppe" class="java.lang.String"/>
+	<field name="antall" class="java.math.BigDecimal"/>
+	<field name="ordrenummer" class="java.lang.String"/>
+	<field name="enhet" class="java.lang.String"/>
+	<field name="kundenavn" class="java.lang.String"/>
+	<field name="sted" class="java.lang.String"/>
+	<field name="garasjetype" class="java.lang.String"/>
+	<field name="beskrivelse" class="java.lang.String"/>
+	<field name="nummer" class="java.lang.String"/>
+	<field name="informasjon" class="java.lang.String"/>
+	<group name="txtGruppe">
+		<groupExpression><![CDATA[$F{txtGruppe}]]></groupExpression>
+		<groupHeader>
+			<band height="14">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="Float" mode="Opaque" x="95" y="0" width="377" height="14" forecolor="#FFFFFF" backcolor="#333333"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{txtGruppe}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement positionType="Float" x="0" y="0" width="48" height="14" backcolor="#333333"/>
+				</rectangle>
+				<rectangle>
+					<reportElement positionType="Float" x="48" y="0" width="47" height="14" backcolor="#333333"/>
+				</rectangle>
+				<rectangle>
+					<reportElement positionType="Float" x="472" y="0" width="80" height="14" backcolor="#333333"/>
+				</rectangle>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="117" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="48" y="97" width="47" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[  Enhet]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="95" y="97" width="377" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[  Beskrivelse]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="472" y="97" width="80" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[  Notat]]></text>
+			</staticText>
+			<image scaleImage="FillFrame" isUsingCache="true">
+				<reportElement key="image-1" mode="Transparent" x="1" y="2" width="137" height="36"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression class="java.io.InputStream"><![CDATA[$P{ugland_logo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="48" width="55" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Ordrenr:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="55" y="48" width="279" height="20">
+					<printWhenExpression><![CDATA[new Boolean($F{ordrenummer}!=null)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ordrenummer}+" - "+ $F{kundenavn}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="334" y="48" width="34" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Sted:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="369" y="48" width="183" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{sted}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="68" width="552" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{garasjetype}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="97" width="48" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[  Antall]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="369" y="2" width="182" height="46"/>
+				<textElement textAlignment="Right">
+					<font size="36" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{produksjonstype}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<rectangle>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="472" y="0" width="80" height="13" backcolor="#FFFFFF"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="48" y="0" width="47" height="13"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{enhet}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="95" y="0" width="377" height="13" isPrintWhenDetailOverflows="true"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{beskrivelse}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="48" height="13"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{antall}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
