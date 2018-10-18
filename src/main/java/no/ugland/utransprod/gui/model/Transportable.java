@@ -460,7 +460,7 @@ public interface Transportable {
 	    return null;
 	}
 
-	public Object getLevertBool() {
+	public Boolean getLevertBool() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -498,7 +498,7 @@ public interface Transportable {
 
     Ord getTakstolKjopOrd();
 
-	Object getLevertBool();
+	Boolean getLevertBool();
 
 	void setLevert(Date levertDate);
 

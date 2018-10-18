@@ -36,7 +36,7 @@ public class RegisterDeviationAction extends AbstractAction {
 		// deviationViewHandler=deviationViewHandlerFactory.create(null, false,
 		// false, true, null, true);
 		deviationViewHandler = new DeviationViewHandler(login, managerRepository, null, null, false, false, true, null,
-				true);
+				true, true);
 
 		this.menuBarBuilder = aMenuBarBuilder;
 	}
@@ -48,7 +48,7 @@ public class RegisterDeviationAction extends AbstractAction {
 
 		DeviationModel deviationModel = new DeviationModel(new Deviation(), false);
 		EditDeviationView editDeviationView = new EditDeviationView(false, deviationModel, deviationViewHandler, false,
-				true);
+				true, true);
 
 		/*
 		 * WindowInterface window = InternalFrameBuilder.buildInternalFrame(

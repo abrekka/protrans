@@ -50,10 +50,8 @@ public class PackageProductionTest {
 	protected void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		// robot = BasicRobot.robotWithNewAwtHierarchy();
-		JobFunctionManager jobFunctionManager = (JobFunctionManager) ModelUtil
-				.getBean(JobFunctionManager.MANAGER_NAME);
-		when(managerRepository.getJobFunctionManager()).thenReturn(
-				jobFunctionManager);
+		JobFunctionManager jobFunctionManager = (JobFunctionManager) ModelUtil.getBean(JobFunctionManager.MANAGER_NAME);
+		when(managerRepository.getJobFunctionManager()).thenReturn(jobFunctionManager);
 		ApplicationUser applicationUser = new ApplicationUser();
 		ProductArea productArea = new ProductArea();
 		ProductAreaGroup productAreaGroup = new ProductAreaGroup();
@@ -61,54 +59,40 @@ public class PackageProductionTest {
 		applicationUser.setProductArea(productArea);
 		applicationUser.setGroupUser("Nei");
 		when(login.getApplicationUser()).thenReturn(applicationUser);
-		ProductAreaManager productAreaManager = (ProductAreaManager) ModelUtil
-				.getBean(ProductAreaManager.MANAGER_NAME);
-		when(managerRepository.getProductAreaManager()).thenReturn(
-				productAreaManager);
+		ProductAreaManager productAreaManager = (ProductAreaManager) ModelUtil.getBean(ProductAreaManager.MANAGER_NAME);
+		when(managerRepository.getProductAreaManager()).thenReturn(productAreaManager);
 		DeviationStatusManager deviationStatusManager = (DeviationStatusManager) ModelUtil
 				.getBean(DeviationStatusManager.MANAGER_NAME);
-		when(managerRepository.getDeviationStatusManager()).thenReturn(
-				deviationStatusManager);
+		when(managerRepository.getDeviationStatusManager()).thenReturn(deviationStatusManager);
 		ApplicationUserManager applicationUserManager = (ApplicationUserManager) ModelUtil
 				.getBean(ApplicationUserManager.MANAGER_NAME);
-		when(managerRepository.getApplicationUserManager()).thenReturn(
-				applicationUserManager);
+		when(managerRepository.getApplicationUserManager()).thenReturn(applicationUserManager);
 		ProductAreaGroupManager productAreaGroupManager = (ProductAreaGroupManager) ModelUtil
 				.getBean(ProductAreaGroupManager.MANAGER_NAME);
-		when(managerRepository.getProductAreaGroupManager()).thenReturn(
-				productAreaGroupManager);
-		OrderManager orderManager = (OrderManager) ModelUtil
-				.getBean(OrderManager.MANAGER_NAME);
+		when(managerRepository.getProductAreaGroupManager()).thenReturn(productAreaGroupManager);
+		OrderManager orderManager = (OrderManager) ModelUtil.getBean(OrderManager.MANAGER_NAME);
 		when(managerRepository.getOrderManager()).thenReturn(orderManager);
 		UserType userType = new UserType();
 		userType.setIsAdmin(1);
 		when(login.getUserType()).thenReturn(userType);
-		OrderLineManager orderLineManager = (OrderLineManager) ModelUtil
-				.getBean(OrderLineManager.MANAGER_NAME);
-		when(managerRepository.getOrderLineManager()).thenReturn(
-				orderLineManager);
-		ArticleTypeManager articleTypeManager = (ArticleTypeManager) ModelUtil
-				.getBean(ArticleTypeManager.MANAGER_NAME);
-		when(managerRepository.getArticleTypeManager()).thenReturn(
-				articleTypeManager);
+		OrderLineManager orderLineManager = (OrderLineManager) ModelUtil.getBean(OrderLineManager.MANAGER_NAME);
+		when(managerRepository.getOrderLineManager()).thenReturn(orderLineManager);
+		ArticleTypeManager articleTypeManager = (ArticleTypeManager) ModelUtil.getBean(ArticleTypeManager.MANAGER_NAME);
+		when(managerRepository.getArticleTypeManager()).thenReturn(articleTypeManager);
 		FrontProductionVManager frontProductionVManager = (FrontProductionVManager) ModelUtil
 				.getBean(FrontProductionVManager.MANAGER_NAME);
-		when(managerRepository.getFrontProductionVManager()).thenReturn(
-				frontProductionVManager);
+		when(managerRepository.getFrontProductionVManager()).thenReturn(frontProductionVManager);
 		ProductionUnitManager productionUnitManager = (ProductionUnitManager) ModelUtil
 				.getBean(ProductionUnitManager.MANAGER_NAME);
-		when(managerRepository.getProductionUnitManager()).thenReturn(
-				productionUnitManager);
-		ColliManager colliManager = (ColliManager) ModelUtil
-				.getBean(ColliManager.MANAGER_NAME);
+		when(managerRepository.getProductionUnitManager()).thenReturn(productionUnitManager);
+		ColliManager colliManager = (ColliManager) ModelUtil.getBean(ColliManager.MANAGER_NAME);
 		when(managerRepository.getColliManager()).thenReturn(colliManager);
 		TakstolProductionVManager takstolProductionVManager = (TakstolProductionVManager) ModelUtil
 				.getBean(TakstolProductionVManager.MANAGER_NAME);
-		when(managerRepository.getTakstolProductionVManager()).thenReturn(
-				takstolProductionVManager);
-		TakstolPackageVManager takstolPackageVManager=(TakstolPackageVManager)ModelUtil.getBean(TakstolPackageVManager.MANAGER_NAME);
-		when(managerRepository.getTakstolPackageVManager()).thenReturn(
-				takstolPackageVManager);
+		when(managerRepository.getTakstolProductionVManager()).thenReturn(takstolProductionVManager);
+		TakstolPackageVManager takstolPackageVManager = (TakstolPackageVManager) ModelUtil
+				.getBean(TakstolPackageVManager.MANAGER_NAME);
+		when(managerRepository.getTakstolPackageVManager()).thenReturn(takstolPackageVManager);
 		// vismaFileCreator =context.mock(VismaFileCreator.class);
 		// managerRepository = context.mock(ManagerRepository.class);
 		// deviationViewHandlerFactory = context
@@ -153,14 +137,13 @@ public class PackageProductionTest {
 		//
 		// }
 		// });
-		final PreventiveActionViewHandler preventiveActionViewHandler = new PreventiveActionViewHandler(
-				login, managerRepository);
+		final PreventiveActionViewHandler preventiveActionViewHandler = new PreventiveActionViewHandler(login,
+				managerRepository);
 		// final DeviationOverviewViewFactory deviationOverviewViewFactory =
 		// context
 		// .mock(DeviationOverviewViewFactory.class);
-		final DeviationViewHandler deviationViewHandler = new DeviationViewHandler(
-				login, managerRepository, preventiveActionViewHandler, null,
-				true, false, true, null, true);
+		final DeviationViewHandler deviationViewHandler = new DeviationViewHandler(login, managerRepository,
+				preventiveActionViewHandler, null, true, false, true, null, true, true);
 		// final OrderManager orderManager = (OrderManager) ModelUtil
 		// .getBean(OrderManager.MANAGER_NAME);
 		// final OrderLineManager orderLineManager = (OrderLineManager)

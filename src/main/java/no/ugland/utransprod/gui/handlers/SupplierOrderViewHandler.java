@@ -456,24 +456,33 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 				if (order != null) {
 
 					DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(order, true, false,
-							true, null, true);
+							true, null, true, true);
 					deviationViewHandler.registerDeviation(order, window);
 				}
 			} else if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemShowDeviation.getText())) {
 				Assembly assembly = (Assembly) assemblySelectionList
 						.getElementAt(tableOrders.convertRowIndexToModel(assemblySelectionList.getSelectionIndex()));
 				Deviation deviation = assembly.getDeviation();
-				managerRepository.getDeviationManager().lazyLoad(deviation,
-						new LazyLoadDeviationEnum[] { LazyLoadDeviationEnum.ORDER_COSTS,LazyLoadDeviationEnum.COMMENTS,LazyLoadDeviationEnum.ORDER_LINES,LazyLoadDeviationEnum.ORDER_LINE_ORDER_LINES });
+				managerRepository.getDeviationManager()
+						.lazyLoad(deviation,
+								new LazyLoadDeviationEnum[] { LazyLoadDeviationEnum.ORDER_COSTS,
+										LazyLoadDeviationEnum.COMMENTS, LazyLoadDeviationEnum.ORDER_LINES,
+										LazyLoadDeviationEnum.ORDER_LINE_ORDER_LINES });
 				Order order = assembly.getOrder();
-				managerRepository.getOrderManager().lazyLoadTree(order);//LoadOrder(order, new LazyLoadOrderEnum[] {
-//						LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES });
-//				DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(order, true, false, true,
-//						null, true);
-				DeviationViewHandler deviationViewHandler=new DeviationViewHandler(login, managerRepository, null, order, true, false, true, null, true);
+				managerRepository.getOrderManager().lazyLoadTree(order);// LoadOrder(order,
+																		// new
+																		// LazyLoadOrderEnum[]
+																		// {
+				// LazyLoadOrderEnum.ORDER_LINES,
+				// LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES });
+				// DeviationViewHandler2 deviationViewHandler =
+				// deviationViewHandlerFactory.create(order, true, false, true,
+				// null, true);
+				DeviationViewHandler deviationViewHandler = new DeviationViewHandler(login, managerRepository, null,
+						order, true, false, true, null, true, true);
 
 				EditDeviationView editDeviationView = new EditDeviationView(false, new DeviationModel(deviation, false),
-						deviationViewHandler, false, false);
+						deviationViewHandler, false, false, true);
 
 				JDialog dialog = new JDialog(ProTransMain.PRO_TRANS_MAIN, "Avvik", true);
 				WindowInterface window = new JDialogAdapter(dialog);

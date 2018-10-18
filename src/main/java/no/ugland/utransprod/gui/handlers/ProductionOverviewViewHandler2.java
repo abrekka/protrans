@@ -296,8 +296,6 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 		menuItemShowMissing.setName("MenuItemShowMissing");
 		popupMenuProduction.add(menuItemShowMissing);
 
-		
-
 		menuItemShowContent = new JMenuItem("Vis innhold...");
 		menuItemShowContent.setName("MenuItemShowContent");
 
@@ -338,10 +336,10 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 
 		menuItemUpdate = new JMenuItem("Oppdater linje");
 		popupMenuProduction.add(menuItemUpdate);
-		
+
 		menuItemSetComment = new JMenuItem("Legg til kommentar...");
 		popupMenuProduction.add(menuItemSetComment);
-		
+
 		menuItemSetAntallStandardvegger = new JMenuItem("Sett antall standardvegger...");
 		popupMenuProduction.add(menuItemSetAntallStandardvegger);
 	}
@@ -2978,6 +2976,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 			}
 		}
 	}
+
 	class MenuItemListenerSetAntallStandardvegger implements ActionListener {
 
 		private WindowInterface window;
@@ -2991,7 +2990,8 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 
 			if (transportable != null && transportable instanceof Order) {
 				Order order = (Order) transportable;
-				String value = Util.showTextAreaInputDialogWithdefaultValue(window, "Antall standardvegger", "Antall standardvegger",
+				String value = Util.showTextAreaInputDialogWithdefaultValue(window, "Antall standardvegger",
+						"Antall standardvegger",
 						order.getAntallStandardvegger() == null ? "" : order.getAntallStandardvegger());
 				order.setAntallStandardvegger(value);
 				managerRepository.getOrderManager().saveOrder(order);
@@ -3018,7 +3018,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	void openOrderView(Transportable transportable, WindowInterface window) {
 		@SuppressWarnings("unused")
 		boolean success = transportable != null
-				? orderViewHandler.openOrderView(transportable.getOrder(), false, window,false) : false;
+				? orderViewHandler.openOrderView(transportable.getOrder(), false, window, false) : false;
 	}
 
 	/**
@@ -3355,7 +3355,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 
 				if (transportable != null && transportable instanceof Order) {
 					DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory
-							.create((Order) transportable, true, false, true, null, true);
+							.create((Order) transportable, true, false, true, null, true, true);
 					deviationViewHandler.registerDeviation((Order) transportable, window);
 				}
 
@@ -3692,7 +3692,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	void doSearch(WindowInterface window) {
 		checkBoxFilter.setSelected(true);
 		handleFilter();
-		Transportable transportable = orderViewHandler.searchOrder(window, true,true);
+		Transportable transportable = orderViewHandler.searchOrder(window, true, true);
 		if (transportable != null) {
 			if (objectList.contains(transportable)) {
 				int index = objectList.indexOf(transportable);

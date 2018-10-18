@@ -1,5 +1,6 @@
 package no.ugland.utransprod.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import no.ugland.utransprod.model.PostShipment;
@@ -79,4 +80,8 @@ public interface PostShipmentDAO extends DAO<PostShipment> {
 	 */
 	void load(PostShipment postShipment);
     List<PostShipment> findSentInPeriod(Periode periode,String productAreraGroupName) ;
+
+	void settSentDato(PostShipment postShipment, Date sentDate);
+
+	void settLevert(PostShipment postShipment, Date levertDate);
 }

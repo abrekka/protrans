@@ -2846,7 +2846,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 			if (order != null) {
 				if (action.getActionCommand().equalsIgnoreCase(menuItemDeviation.getActionCommand())) {
 					DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(order, true, false,
-							true, null, true);
+							true, null, true, true);
 					deviationViewHandler.registerDeviation(order, window);
 				} else if (action.getActionCommand().equalsIgnoreCase(menuItemUpdateCollies.getActionCommand())) {
 					checkCollies(order);
@@ -3068,7 +3068,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	public void checkCollies(Packable packable) throws ProTransException {
 		OverviewManager overviewManager = (OverviewManager) ModelUtil.getBean(packable.getManagerName());
 		if (!Util.convertNumberToBoolean(packable.getDefaultColliesGenerated())) {
-//			overviewManager.refreshObject(packable);
+			// overviewManager.refreshObject(packable);
 			packable.setDefaultColliesGenerated(1);
 			// overviewManager.saveObject(packable);
 			// packable = (Packable) overviewManager.merge(packable);

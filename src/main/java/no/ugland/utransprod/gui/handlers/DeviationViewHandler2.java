@@ -228,6 +228,7 @@ public class DeviationViewHandler2 extends Model implements Updateable, Closeabl
 	private JButton buttonExcel;
 	private JButton buttonRefresh;
 	private TableModel tableModel;
+	private boolean brukOrdrelinjelinjer;
 
 	/**
 	 * @param aApplicationUser
@@ -244,11 +245,13 @@ public class DeviationViewHandler2 extends Model implements Updateable, Closeabl
 			PreventiveActionViewHandler aPreventiveActionViewHandler, @Assisted final Order aOrder,
 			@Assisted final boolean doSeAll, @Assisted final boolean forOrderInfo,
 			@Assisted final boolean isForRegisterNew, @Assisted final Deviation notDisplayDeviation,
-			@Assisted final boolean isDeviationTableEditable) {
+			@Assisted final boolean isDeviationTableEditable, boolean brukOrdrelinjelinjer) {
 		// super("Avvik", aManagerRepository.getDeviationManager(),
 		// aLogin.getUserType(), true);
+		this.brukOrdrelinjelinjer = brukOrdrelinjelinjer;
 		deviationViewhandler = new DeviationViewHandler(aLogin, aManagerRepository, aPreventiveActionViewHandler,
-				aOrder, doSeAll, forOrderInfo, isForRegisterNew, notDisplayDeviation, isDeviationTableEditable);
+				aOrder, doSeAll, forOrderInfo, isForRegisterNew, notDisplayDeviation, isDeviationTableEditable,
+				brukOrdrelinjelinjer);
 		// disposeOnClose = useDisposeOnClose;
 
 		userType = aLogin.getUserType();
@@ -1190,12 +1193,13 @@ public class DeviationViewHandler2 extends Model implements Updateable, Closeabl
 				labelInfo.setText("Oppdaterer vindu...");
 				objectSelectionList.clearSelection();
 				objectList.clear();
-//				List<DeviationV> objects = overviewManager.findByObject(object);
-				List<Deviation> objects=managerRepository.getDeviationManager().findByObject(object);
-				
-				List<DeviationV> deviations=new ArrayList<DeviationV>();
-				
-				for(Deviation avvik:objects){
+				// List<DeviationV> objects =
+				// overviewManager.findByObject(object);
+				List<Deviation> objects = managerRepository.getDeviationManager().findByObject(object);
+
+				List<DeviationV> deviations = new ArrayList<DeviationV>();
+
+				for (Deviation avvik : objects) {
 					deviations.add(managerRepository.getDeviationVManager().findByDeviationId(avvik.getDeviationId()));
 				}
 
@@ -3314,9 +3318,10 @@ public class DeviationViewHandler2 extends Model implements Updateable, Closeabl
 	 * @return hjelpeklasse
 	 */
 	public OrderArticleViewHandler<Deviation, DeviationModel> getOrderArticleViewHandler(
-			PresentationModel aPresentationModel, boolean searching, WindowInterface window) {
+			PresentationModel aPresentationModel, boolean searching, WindowInterface window,
+			boolean brukOrdrelinjelinjer) {
 		OrderArticleViewHandler<Deviation, DeviationModel> orderArticleViewHandler = new OrderArticleViewHandler<Deviation, DeviationModel>(
-				aPresentationModel, searching, login, managerRepository);
+				aPresentationModel, searching, login, managerRepository, brukOrdrelinjelinjer);
 
 		JButton buttonAddArticle = orderArticleViewHandler.getAddArticleButton(window,
 				new ArticleUpdateListener(aPresentationModel, window));
@@ -3402,7 +3407,7 @@ public class DeviationViewHandler2 extends Model implements Updateable, Closeabl
 			}
 
 			return new EditDeviationView(searching, new DeviationModel(object, false), deviationViewhandler, false,
-					addCost);
+					addCost, brukOrdrelinjelinjer);
 		}
 		return null;
 	}
@@ -3446,8 +3451,8 @@ public class DeviationViewHandler2 extends Model implements Updateable, Closeabl
 				dialog.setVisible(true);
 
 				if (searching && !view.isCanceled()) {
-//					DeviationV deviation=new DeviationV();
-//					deviation.setOrderNr(object.getOrderNr());
+					// DeviationV deviation=new DeviationV();
+					// deviation.setOrderNr(object.getOrderNr());
 					updateViewList(object, parentWindow);
 				}
 			}
@@ -3467,7 +3472,8 @@ public class DeviationViewHandler2 extends Model implements Updateable, Closeabl
 	public JPanel getDeviationPane(WindowInterface window, PresentationModel presentationModel, Deviation deviation) {
 		Order order1 = (Order) presentationModel.getBufferedValue(DeviationModel.PROPERTY_ORDER);
 		deviationViewHandlerOtherDeviations = new DeviationViewHandler2(login, managerRepository,
-				preventiveActionViewHandler, order1, true, true, false, deviation, deviationTableEditable);
+				preventiveActionViewHandler, order1, true, true, false, deviation, deviationTableEditable,
+				brukOrdrelinjelinjer);
 
 		DeviationOverviewView2 deviationOverviewView = new DeviationOverviewView2(preventiveActionViewHandler,
 				deviationViewHandlerOtherDeviations, false, order1, true, false, false, currentDeviation, false,

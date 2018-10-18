@@ -72,157 +72,165 @@ import org.mockito.MockitoAnnotations;
  */
 @Category(GUITests.class)
 public class AssemblyPlannerViewTest {
-    static {
-	try {
+	static {
+		try {
 
-	    UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
-	    JFrame.setDefaultLookAndFeelDecorated(true);
-	    // LiquidLookAndFeel.setLiquidDecorations(true, "mac");
+			UIManager.setLookAndFeel(LFEnum.LNF_LIQUID.getClassName());
+			JFrame.setDefaultLookAndFeelDecorated(true);
+			// LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 
-	} catch (Exception e) {
-	    e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-    }
 
-    private DialogFixture dialogFixture;
+	private DialogFixture dialogFixture;
 
-    @Mock
-    private Login login;
-    @Mock
-    private ManagerRepository managerRepository;
+	@Mock
+	private Login login;
+	@Mock
+	private ManagerRepository managerRepository;
 
-    // @Mock
-    // private DeviationOverviewViewFactory deviationOverviewViewFactory;
-    // @Mock
-    // private DeviationViewHandlerFactory deviationViewHandlerFactory;
-    // @Mock
-    // private AssemblyReportFactory assemblyReportFactory;
-    // @Mock
-    // private OrderViewHandlerFactory orderViewHandlerFactory;
-    // @Mock
-    // private SupplierOrderViewHandlerFactory supplierOrderViewHandlerFactory;
+	// @Mock
+	// private DeviationOverviewViewFactory deviationOverviewViewFactory;
+	// @Mock
+	// private DeviationViewHandlerFactory deviationViewHandlerFactory;
+	// @Mock
+	// private AssemblyReportFactory assemblyReportFactory;
+	// @Mock
+	// private OrderViewHandlerFactory orderViewHandlerFactory;
+	// @Mock
+	// private SupplierOrderViewHandlerFactory supplierOrderViewHandlerFactory;
 
-    @Before
-    public void setUp() throws Exception {
-	MockitoAnnotations.initMocks(this);
+	@Before
+	public void setUp() throws Exception {
+		MockitoAnnotations.initMocks(this);
 
-	ProductAreaManager productAreaManager = (ProductAreaManager) ModelUtil.getBean(ProductAreaManager.MANAGER_NAME);
-	AssemblyManager assemblyManager = (AssemblyManager) ModelUtil.getBean(AssemblyManager.MANAGER_NAME);
-	SupplierManager supplierManager = (SupplierManager) ModelUtil.getBean(SupplierManager.MANAGER_NAME);
-	OrderManager orderManager = (OrderManager) ModelUtil.getBean(OrderManager.MANAGER_NAME);
-	when(managerRepository.getProductAreaManager()).thenReturn(productAreaManager);
-	when(managerRepository.getAssemblyManager()).thenReturn(assemblyManager);
-	when(managerRepository.getSupplierManager()).thenReturn(supplierManager);
-	when(managerRepository.getOrderManager()).thenReturn(orderManager);
-	AssemblyOverdueVManager assemblyOverdueVmnager = (AssemblyOverdueVManager) ModelUtil.getBean(AssemblyOverdueVManager.MANAGER_NAME);
-	when(managerRepository.getAssemblyOverdueVManager()).thenReturn(assemblyOverdueVmnager);
-	JobFunctionManager jobFunctionManager = (JobFunctionManager) ModelUtil.getBean(JobFunctionManager.MANAGER_NAME);
-	when(managerRepository.getJobFunctionManager()).thenReturn(jobFunctionManager);
-	UserType userType = new UserType();
-	userType.setIsAdmin(1);
-	when(login.getUserType()).thenReturn(userType);
-	ApplicationUser applicationUser = new ApplicationUser();
-	ProductArea productArea = productAreaManager.findByName("Villa Element");
-	applicationUser.setProductArea(productArea);
-	when(login.getApplicationUser()).thenReturn(applicationUser);
-	final Supplier supplier = new Supplier();
-	supplier.setSupplierId(47);
-	supplier.setSupplierName("Sørensen Garagebygg ANS");
+		ProductAreaManager productAreaManager = (ProductAreaManager) ModelUtil.getBean(ProductAreaManager.MANAGER_NAME);
+		AssemblyManager assemblyManager = (AssemblyManager) ModelUtil.getBean(AssemblyManager.MANAGER_NAME);
+		SupplierManager supplierManager = (SupplierManager) ModelUtil.getBean(SupplierManager.MANAGER_NAME);
+		OrderManager orderManager = (OrderManager) ModelUtil.getBean(OrderManager.MANAGER_NAME);
+		when(managerRepository.getProductAreaManager()).thenReturn(productAreaManager);
+		when(managerRepository.getAssemblyManager()).thenReturn(assemblyManager);
+		when(managerRepository.getSupplierManager()).thenReturn(supplierManager);
+		when(managerRepository.getOrderManager()).thenReturn(orderManager);
+		AssemblyOverdueVManager assemblyOverdueVmnager = (AssemblyOverdueVManager) ModelUtil
+				.getBean(AssemblyOverdueVManager.MANAGER_NAME);
+		when(managerRepository.getAssemblyOverdueVManager()).thenReturn(assemblyOverdueVmnager);
+		JobFunctionManager jobFunctionManager = (JobFunctionManager) ModelUtil.getBean(JobFunctionManager.MANAGER_NAME);
+		when(managerRepository.getJobFunctionManager()).thenReturn(jobFunctionManager);
+		UserType userType = new UserType();
+		userType.setIsAdmin(1);
+		when(login.getUserType()).thenReturn(userType);
+		ApplicationUser applicationUser = new ApplicationUser();
+		ProductArea productArea = productAreaManager.findByName("Villa Element");
+		applicationUser.setProductArea(productArea);
+		when(login.getApplicationUser()).thenReturn(applicationUser);
+		final Supplier supplier = new Supplier();
+		supplier.setSupplierId(47);
+		supplier.setSupplierName("Sørensen Garagebygg ANS");
 
-	final YearWeek yearWeek = new YearWeek(2009, 34);
-	final CraningCostManager craningCostManager = (CraningCostManager) ModelUtil.getBean(CraningCostManager.MANAGER_NAME);
-	final AssemblyReportFactory assemblyReportFactory = new AssemblyReportFactory() {
+		final YearWeek yearWeek = new YearWeek(2009, 34);
+		final CraningCostManager craningCostManager = (CraningCostManager) ModelUtil
+				.getBean(CraningCostManager.MANAGER_NAME);
+		final AssemblyReportFactory assemblyReportFactory = new AssemblyReportFactory() {
 
-	    public AssemblyReport create(Order order, List<Ordln> vismaOrderLines) {
+			public AssemblyReport create(Order order, List<Ordln> vismaOrderLines) {
 
-		return new AssemblyReportImpl(craningCostManager, order, vismaOrderLines);
-	    }
-	};
-	final PreventiveActionViewHandler preventiveActionViewHandler = new PreventiveActionViewHandler(login, managerRepository);
-	final DeviationViewHandlerFactory deviationViewHandlerFactory = new DeviationViewHandlerFactory() {
+				return new AssemblyReportImpl(craningCostManager, order, vismaOrderLines);
+			}
+		};
+		final PreventiveActionViewHandler preventiveActionViewHandler = new PreventiveActionViewHandler(login,
+				managerRepository);
+		final DeviationViewHandlerFactory deviationViewHandlerFactory = new DeviationViewHandlerFactory() {
 
-	    public DeviationViewHandler2 create(Order aOrder, boolean doSeAll, boolean forOrderInfo, boolean isForRegisterNew,
-		    Deviation notDisplayDeviation, boolean isDeviationTableEditable) {
+			public DeviationViewHandler2 create(Order aOrder, boolean doSeAll, boolean forOrderInfo,
+					boolean isForRegisterNew, Deviation notDisplayDeviation, boolean isDeviationTableEditable,
+					boolean brukOrdrelinjelinjer) {
 
-		return new DeviationViewHandler2(login, managerRepository, preventiveActionViewHandler, aOrder, doSeAll, forOrderInfo,
-			isForRegisterNew, notDisplayDeviation, isDeviationTableEditable);
-	    }
-	};
-	final DeviationOverviewViewFactory deviationOverviewViewFactory = new DeviationOverviewViewFactory() {
+				return new DeviationViewHandler2(login, managerRepository, preventiveActionViewHandler, aOrder, doSeAll,
+						forOrderInfo, isForRegisterNew, notDisplayDeviation, isDeviationTableEditable,
+						brukOrdrelinjelinjer);
+			}
+		};
+		final DeviationOverviewViewFactory deviationOverviewViewFactory = new DeviationOverviewViewFactory() {
 
-	    public DeviationOverviewView2 create(DeviationViewHandler2 deviationViewHandler, boolean useSearchButton, Order aOrder, boolean doSeeAll,
-		    boolean forOrderInfo, boolean isForRegisterNew, Deviation notDisplayDeviation, boolean isDeviationTableEditable) {
-		return new DeviationOverviewView2(preventiveActionViewHandler, deviationViewHandler, useSearchButton, aOrder, doSeeAll, forOrderInfo,
-			isForRegisterNew, notDisplayDeviation, isDeviationTableEditable,managerRepository);
-	    }
-	};
-	final OrderViewHandlerFactory orderViewHandlerFactory = new OrderViewHandlerFactory() {
+			public DeviationOverviewView2 create(DeviationViewHandler2 deviationViewHandler, boolean useSearchButton,
+					Order aOrder, boolean doSeeAll, boolean forOrderInfo, boolean isForRegisterNew,
+					Deviation notDisplayDeviation, boolean isDeviationTableEditable) {
+				return new DeviationOverviewView2(preventiveActionViewHandler, deviationViewHandler, useSearchButton,
+						aOrder, doSeeAll, forOrderInfo, isForRegisterNew, notDisplayDeviation, isDeviationTableEditable,
+						managerRepository);
+			}
+		};
+		final OrderViewHandlerFactory orderViewHandlerFactory = new OrderViewHandlerFactory() {
 
-	    public OrderViewHandler create(boolean notInitData) {
+			public OrderViewHandler create(boolean notInitData) {
 
-		return new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory, deviationViewHandlerFactory, notInitData, null);
-	    }
-	};
-	final SupplierOrderViewHandler supplierOrderViewHandler = new SupplierOrderViewHandler(login, managerRepository, assemblyReportFactory,
-		deviationViewHandlerFactory, orderViewHandlerFactory, supplier, yearWeek, null);
+				return new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory,
+						deviationViewHandlerFactory, notInitData, null);
+			}
+		};
+		final SupplierOrderViewHandler supplierOrderViewHandler = new SupplierOrderViewHandler(login, managerRepository,
+				assemblyReportFactory, deviationViewHandlerFactory, orderViewHandlerFactory, supplier, yearWeek, null);
 
-	Set<UserTypeAccess> userTypeAccesses = new HashSet<UserTypeAccess>();
-	UserTypeAccess userTypeAccess = new UserTypeAccess();
-	userTypeAccess.setWindowAccess(new WindowAccess(null, "Attributter", null));
-	userTypeAccesses.add(userTypeAccess);
-	userType.setUserTypeAccesses(userTypeAccesses);
+		Set<UserTypeAccess> userTypeAccesses = new HashSet<UserTypeAccess>();
+		UserTypeAccess userTypeAccess = new UserTypeAccess();
+		userTypeAccess.setWindowAccess(new WindowAccess(null, "Attributter", null));
+		userTypeAccesses.add(userTypeAccess);
+		userType.setUserTypeAccesses(userTypeAccesses);
 
-	final List<Supplier> supplierList = new ArrayList<Supplier>();
-	supplierList.add(supplier);
+		final List<Supplier> supplierList = new ArrayList<Supplier>();
+		supplierList.add(supplier);
 
-	final OrderViewHandler orderViewHandler = new OrderViewHandler(login, managerRepository, deviationOverviewViewFactory,
-		deviationViewHandlerFactory, true, null);
+		final OrderViewHandler orderViewHandler = new OrderViewHandler(login, managerRepository,
+				deviationOverviewViewFactory, deviationViewHandlerFactory, true, null);
 
-	SupplierOrderViewHandlerFactory supplierOrderViewHandlerFactory = new SupplierOrderViewHandlerFactory() {
+		SupplierOrderViewHandlerFactory supplierOrderViewHandlerFactory = new SupplierOrderViewHandlerFactory() {
 
-	    public SupplierOrderViewHandler create(Supplier aSupplier, YearWeek aYearWeek) {
-		return new SupplierOrderViewHandler(login, managerRepository, assemblyReportFactory, deviationViewHandlerFactory,
-			orderViewHandlerFactory, supplier, yearWeek, null);
-	    }
-	};
-	final AssemblyPlannerView view = new AssemblyPlannerView(new AssemblyPlannerViewHandler(orderViewHandler, login,
-		supplierOrderViewHandlerFactory, managerRepository, deviationViewHandlerFactory));
+			public SupplierOrderViewHandler create(Supplier aSupplier, YearWeek aYearWeek) {
+				return new SupplierOrderViewHandler(login, managerRepository, assemblyReportFactory,
+						deviationViewHandlerFactory, orderViewHandlerFactory, supplier, yearWeek, null);
+			}
+		};
+		final AssemblyPlannerView view = new AssemblyPlannerView(new AssemblyPlannerViewHandler(orderViewHandler, login,
+				supplierOrderViewHandlerFactory, managerRepository, deviationViewHandlerFactory));
 
-	JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
-	    protected JDialog executeInEDT() {
-		JDialog dialog = new JDialog();
-		WindowInterface window = new JDialogAdapter(dialog);
-		dialog.add(view.buildPanel(window));
-		dialog.pack();
-		return dialog;
-	    }
-	});
-	dialogFixture = new DialogFixture(dialog);
-	dialogFixture.show();
+		JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
+			protected JDialog executeInEDT() {
+				JDialog dialog = new JDialog();
+				WindowInterface window = new JDialogAdapter(dialog);
+				dialog.add(view.buildPanel(window));
+				dialog.pack();
+				return dialog;
+			}
+		});
+		dialogFixture = new DialogFixture(dialog);
+		dialogFixture.show();
 
-    }
+	}
 
-    @After
-    public void tearDown() throws Exception {
-	dialogFixture.cleanUp();
-    }
+	@After
+	public void tearDown() throws Exception {
+		dialogFixture.cleanUp();
+	}
 
-    @Test
-    public void testOpenWindow() throws Exception {
+	@Test
+	public void testOpenWindow() throws Exception {
 
-	dialogFixture.requireVisible();
-    }
+		dialogFixture.requireVisible();
+	}
 
-    @Test
-    @Ignore
-    public void testSetAssemblyForDeviation() {
-	JTableFixture tableFixture = dialogFixture.table("TableDeviation");
-	tableFixture.cell(row(0).column(0)).select();
-    }
+	@Test
+	@Ignore
+	public void testSetAssemblyForDeviation() {
+		JTableFixture tableFixture = dialogFixture.table("TableDeviation");
+		tableFixture.cell(row(0).column(0)).select();
+	}
 
-    @Test
-    public void testAddComment() {
-	dialogFixture.show(new Dimension(1010, 600));
-    }
+	@Test
+	public void testAddComment() {
+		dialogFixture.show(new Dimension(1010, 600));
+	}
 
 }

@@ -252,12 +252,6 @@ public final class TransportOrderTableModelList extends AbstractTableAdapter {
 					StatusCheckerInterface<Transportable> takstolChecker,
 					StatusCheckerInterface<Transportable> steinChecker,
 					StatusCheckerInterface<Transportable> gulvsponChecker) {
-				if(Deviation.class.isInstance(transportable)){
-					System.out.println("avvik");
-				}
-				if(PostShipment.class.isInstance(transportable)){
-					System.out.println("etterleverin");
-				}
 				if (transportable.getDoAssembly() != null && transportable.getDoAssembly() == 1) {
 					return transportable.getAssembly() == null ? "M"
 							: "M" + transportable.getAssembly().getAssemblyWeek();
@@ -397,7 +391,7 @@ public final class TransportOrderTableModelList extends AbstractTableAdapter {
 
 			}
 		},
-		IKKE_SENDT("Ikke sendt", ForExcel.TABLE) {
+		IKKE_OPPLASTET("Ikke opplastet", ForExcel.TABLE) {
 			@Override
 			public Object getValue(Transportable transportable, Map<String, String> statusMap,
 					StatusCheckerInterface<Transportable> gavlChecker,
@@ -538,7 +532,7 @@ public final class TransportOrderTableModelList extends AbstractTableAdapter {
 
 			}
 		},
-		SENDT("Sendt", ForExcel.TABLE) {
+		OPPLASTET("Opplastet", ForExcel.TABLE) {
 			@Override
 			public Object getValue(Transportable transportable, Map<String, String> statusMap,
 					StatusCheckerInterface<Transportable> gavlChecker,
@@ -794,7 +788,34 @@ public final class TransportOrderTableModelList extends AbstractTableAdapter {
 
 			}
 		},
-		SENDT_FILTER("sendt filter", ForExcel.TABLE) {
+		OPPLASTET_FILTER("opplastet filter", ForExcel.TABLE) {
+			@Override
+			public Object getValue(Transportable transportable, Map<String, String> statusMap,
+					StatusCheckerInterface<Transportable> gavlChecker,
+					StatusCheckerInterface<Transportable> takstolChecker,
+					StatusCheckerInterface<Transportable> steinChecker,
+					StatusCheckerInterface<Transportable> gulvsponChecker) {
+				return transportable.getSentBool() ? "Ja" : "Nei";
+			}
+
+			@Override
+			public Class<?> getColumnClass() {
+				return String.class;
+			}
+
+			@Override
+			public void setCellRenderer(JXTable table) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void setPrefferedWidth(JXTable table) {
+				// TODO Auto-generated method stub
+
+			}
+		},
+		LEVERT("Levert", ForExcel.TABLE) {
 			@Override
 			public Object getValue(Transportable transportable, Map<String, String> statusMap,
 					StatusCheckerInterface<Transportable> gavlChecker,

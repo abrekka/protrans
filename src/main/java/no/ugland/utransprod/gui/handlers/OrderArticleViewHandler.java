@@ -118,6 +118,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	private ManagerRepository managerRepository;
 
 	private List<CostChangeListener> costChangeListeners = new ArrayList<CostChangeListener>();
+	private boolean brukOrdrelinjelinjer;
 
 	/**
 	 * @param a
@@ -126,12 +127,13 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	 * @param aUserType
 	 */
 	public OrderArticleViewHandler(final PresentationModel aPresentationModel, final boolean search, final Login aLogin,
-			ManagerRepository aManagerRepository) {
+			ManagerRepository aManagerRepository, boolean brukOrdrelinjelinjer) {
 		login = aLogin;
 		managerRepository = aManagerRepository;
 		presentationModel = aPresentationModel;
 
 		searching = search;
+		this.brukOrdrelinjelinjer = brukOrdrelinjelinjer;
 
 	}
 
@@ -223,7 +225,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 			throw new ProTransRuntimeException("PresentationModel er ikke initiert");
 		}
 		ICostableModel<T, E> costableModel = (ICostableModel) presentationModel.getBean();
-		orderLineTreeTableModel = new OrderLineTreeTableModel(new OrderWrapper(costableModel));
+		orderLineTreeTableModel = new OrderLineTreeTableModel(new OrderWrapper(costableModel), brukOrdrelinjelinjer);
 		treeTable = new JXTreeTable(orderLineTreeTableModel);
 		treeTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		treeTable.setColumnControlVisible(true);
@@ -489,7 +491,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 		if (orderWrapper.getOrderLines() != null) {
 			orderWrapper.getOrderLines().add(orderLineMain);
 		}
-		orderLineTreeTableModel.fireChanged();
+		orderLineTreeTableModel.fireChanged(brukOrdrelinjelinjer);
 
 		BufferedValueModel bufferedArticles = presentationModel
 				.getBufferedModel(ICostableModel.PROPERTY_ORDER_LINE_ARRAY_LIST_MODEL);
@@ -643,7 +645,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 						newConstructionType.getProductArea());
 			}
 
-			orderLineTreeTableModel.fireChanged();
+			orderLineTreeTableModel.fireChanged(brukOrdrelinjelinjer);
 		}
 	}
 
@@ -785,7 +787,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 					BufferedValueModel bufferedOrderLines = presentationModel
 							.getBufferedModel(ICostableModel.PROPERTY_ORDER_LINE_ARRAY_LIST_MODEL);
 					bufferedOrderLines.setValue(new ArrayListModel(orderWrapper.getOrderLines()));
-					orderLineTreeTableModel.fireChanged();
+					orderLineTreeTableModel.fireChanged(brukOrdrelinjelinjer);
 				}
 			} else {
 				deleted = false;
@@ -930,7 +932,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 			calculateAttributes(bufferedOrderLines);
 			rootOrder.setOrderLines(new ArrayList<OrderLine>(bufferedOrderLines));
 
-			orderLineTreeTableModel.fireChanged();
+			orderLineTreeTableModel.fireChanged(brukOrdrelinjelinjer);
 		}
 	}
 
@@ -1082,7 +1084,8 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 		Udsalesmall udsalesmall = managerRepository.getUdsalesmallManager().findByOrderNr(incomingOrder.getOrderNr());
 		managerRepository.getIncomingOrderManager().setCustomerCost(incomingOrder, udsalesmall);
 
-//		presentationModel.setBufferedValue(OrderModel.PROPERTY_PACKLIST_READY, Util.getCurrentDate());
+		// presentationModel.setBufferedValue(OrderModel.PROPERTY_PACKLIST_READY,
+		// Util.getCurrentDate());
 		if (incomingOrder.getOrderLines() != null) {
 			resetOrderLineTreeNode(new ArrayList<OrderLine>(incomingOrder.getOrderLines()));
 		}
@@ -1141,7 +1144,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 
 		orderWrapper.setOrderLines(orderLines);
 
-		orderLineTreeTableModel.fireChanged();
+		orderLineTreeTableModel.fireChanged(brukOrdrelinjelinjer);
 
 		BufferedValueModel bufferedArticles = presentationModel
 				.getBufferedModel(ICostableModel.PROPERTY_ORDER_LINE_ARRAY_LIST_MODEL);

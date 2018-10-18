@@ -117,11 +117,12 @@ public class TransportManagerImpl extends ManagerImpl<Transport> implements Tran
 	}
 
 	public final List<Transport> findByYearAndWeekAndProductAreaGroup(final Integer year, final Integer week,
-			final boolean ikkeTaMedOpplastet) {
+			final boolean ikkeTaMedOpplastet, final String transportfirma) {
 		// if (productAreaGroup == null) {
 		// return ((TransportDAO) dao).findByYearAndWeek(year, week);
 		// }
-		return ((TransportDAO) dao).findByYearAndWeekAndProductAreaGroup(year, week, ikkeTaMedOpplastet);
+		return ((TransportDAO) dao).findByYearAndWeekAndProductAreaGroup(year, week, ikkeTaMedOpplastet,
+				transportfirma);
 	}
 
 	public final List<Transport> findSentInPeriode(final Periode periode) {

@@ -255,6 +255,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	public ManagerRepository getManagerRepository() {
 		return managerRepository;
 	}
+
 	/**
 	 * Initierer liste med produktområder
 	 */
@@ -1506,7 +1507,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	 */
 	public OrderArticleViewHandler<Order, OrderModel> getOrderArticleViewHandler(PresentationModel aPresentationModel) {
 		orderArticleViewHandler = new OrderArticleViewHandler<Order, OrderModel>(aPresentationModel, searching, login,
-				managerRepository);
+				managerRepository, true);
 		return orderArticleViewHandler;
 	}
 
@@ -1670,7 +1671,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	 */
 	public void addEditComponent(Component comp) {
 		editComponents.add(comp);
-		
+
 	}
 
 	/**
@@ -2147,7 +2148,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	public JPanel getDeviationPane(WindowInterface window, PresentationModel presentationModel) {
 		Order order = ((OrderModel) presentationModel.getBean()).getObject();
 		DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(order, true, true, false, null,
-				false);
+				false, true);
 
 		deviationOverviewView = deviationOverviewViewFactory.create(deviationViewHandler, false, order, true, true,
 				false, null, false);
@@ -2297,7 +2298,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	 * @param window
 	 * @return ordre
 	 */
-	public Transportable searchOrder(WindowInterface window, boolean includePostShipment,boolean includeDeviation) {
+	public Transportable searchOrder(WindowInterface window, boolean includePostShipment, boolean includeDeviation) {
 		Order searchOrder = new Order();
 		boolean isCanceled = openOrderView(searchOrder, true, window, false);
 		Transportable transportable = null;
@@ -2310,19 +2311,38 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 			if (orderList != null && orderList.size() != 0) {
 				transportables = new ArrayList<Transportable>(orderList);
 
+				List<PostShipment> postShipments = null;
 				if (includePostShipment) {
-					List<PostShipment> postShipments = findPostShipments(orderList);
+					postShipments = findPostShipments(orderList);
 
 					if (postShipments != null) {
 						transportables.addAll(postShipments);
 					}
 				}
-				
+
 				if (includeDeviation) {
-					List<Deviation> deviations= findDeviations(orderList);
+					List<Deviation> deviations = findDeviations(orderList);
 
 					if (deviations != null) {
-						transportables.addAll(deviations);
+						if (postShipments != null) {
+							final List<Integer> postShipmentIder = Lists.newArrayList(
+									Iterables.transform(postShipments, new Function<PostShipment, Integer>() {
+
+										public Integer apply(PostShipment postShipment) {
+											return postShipment.getPostShipmentId();
+										}
+									}));
+							List<Deviation> avvik = Lists
+									.newArrayList(Iterables.filter(deviations, new Predicate<Deviation>() {
+
+										public boolean apply(Deviation deviation) {
+											return deviation.getPostShipment() != null && !postShipmentIder
+													.contains(deviation.getPostShipment().getPostShipmentId());
+										}
+									}));
+							transportables.addAll(avvik);
+						}
+
 					}
 				}
 			}
@@ -2366,14 +2386,14 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 		}
 		return postShipments;
 	}
-	
+
 	private List<Deviation> findDeviations(List<Order> orders) {
 		List<Deviation> deviations = null;
 		if (orders != null) {
 			deviations = new ArrayList<Deviation>();
 			for (Order order : orders) {
 				((OrderManager) overviewManager).lazyLoadOrder(order,
-						new LazyLoadOrderEnum[] { LazyLoadOrderEnum.DEVIATIONS});
+						new LazyLoadOrderEnum[] { LazyLoadOrderEnum.DEVIATIONS });
 				deviations.addAll(order.getDeviations());
 			}
 		}
@@ -2461,20 +2481,20 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	public JButton getButtonMontering(PresentationModel presentationModel, WindowInterface aWindow) {
-		JButton buttonMontering = new JButton(new MonteringReportAction(presentationModel,window));
-//		buttonProductionReport.setEnabled(false);
+		JButton buttonMontering = new JButton(new MonteringReportAction(presentationModel, window));
+		// buttonProductionReport.setEnabled(false);
 		return buttonMontering;
 	}
-	
+
 	private class MonteringReportAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;
 		private WindowInterface window;
 		private PresentationModel presentationModel;
 
-		public MonteringReportAction(PresentationModel presentationModel,WindowInterface aWindow) {
+		public MonteringReportAction(PresentationModel presentationModel, WindowInterface aWindow) {
 			super("Monteringsanvisning...");
 			window = aWindow;
-			this.presentationModel=presentationModel;
+			this.presentationModel = presentationModel;
 		}
 
 		public void actionPerformed(ActionEvent e) {
@@ -2487,7 +2507,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 					labelInfo.setText("Genererer monteringsanvisning...");
 					String errorMsg = null;
 					try {
-						opprettOgVisMonteringsanvisning(presentationModel,window);
+						opprettOgVisMonteringsanvisning(presentationModel, window);
 					} catch (ProTransException e) {
 						errorMsg = e.getMessage();
 						e.printStackTrace();
@@ -2513,14 +2533,11 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 
 		}
 
-
-	
 	}
-	
 
-	private void opprettOgVisMonteringsanvisning(PresentationModel presentationModel,WindowInterface window)
+	private void opprettOgVisMonteringsanvisning(PresentationModel presentationModel, WindowInterface window)
 			throws IOException, URISyntaxException, JRException {
-		Order order=((OrderModel)presentationModel.getBean()).getObject();
+		Order order = ((OrderModel) presentationModel.getBean()).getObject();
 		List<String> monteringsanvisninger = managerRepository.getOrderManager()
 				.finnMonteringsanvisninger(order.getOrderNr());
 
@@ -2532,9 +2549,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 			}
 		}
 	}
-	
-	
-	
+
 	private class ImportCuttingFileAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;
 		private WindowInterface window;

@@ -14,6 +14,7 @@ import no.ugland.utransprod.service.enums.LazyLoadTransportEnum;
 import no.ugland.utransprod.util.Periode;
 import no.ugland.utransprod.util.Util;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
@@ -249,12 +250,12 @@ public class TransportDAOHibernate extends BaseDAOHibernate<Transport> implement
 
 	@SuppressWarnings("unchecked")
 	public final List<Transport> findByYearAndWeekAndProductAreaGroup(final Integer year, final Integer week,
-			final boolean ikkeTaMedOpplastet) {
+			final boolean ikkeTaMedOpplastet, final String transportfirma) {
 		return (List<Transport>) getHibernateTemplate().execute(new HibernateCallback() {
 
 			public Object doInHibernate(final Session session) {
 
-				return getTransportList(year, week, session, ikkeTaMedOpplastet);
+				return getTransportList(year, week, session, ikkeTaMedOpplastet, transportfirma);
 				// List<Transport> emptyTransportList =
 				// findEmptyTransportsByYearAndWeek(year, week);
 				// transportList.addAll(emptyTransportList);
@@ -265,8 +266,8 @@ public class TransportDAOHibernate extends BaseDAOHibernate<Transport> implement
 	}
 
 	final List<Transport> getTransportList(final Integer year, final Integer week, final Session session,
-			final boolean ikkeTaMedOpplastet) {
-		String sql = "select transport from Transport transport "
+			final boolean ikkeTaMedOpplastet, final String transportfirma) {
+		String sql = "select transport from Transport transport " + " left outer join fetch transport.supplier supplier"
 				+ " left outer join fetch transport.orders transportOrder "
 				+ "left outer join fetch transportOrder.orderLines "
 				+ "left outer join fetch transportOrder.orderComments "
@@ -274,6 +275,10 @@ public class TransportDAOHibernate extends BaseDAOHibernate<Transport> implement
 				// + "left outer join fetch transportPostShipment.orderLines "
 				+ "          where transport.transportYear=:year and "
 				+ "                  transport.transportWeek=:week ";
+
+		if (StringUtils.isNotBlank(transportfirma)) {
+			sql += " and supplier.supplierName = '" + transportfirma+"'";
+		}
 
 		if (ikkeTaMedOpplastet) {
 			sql += " and transport.sent is null";

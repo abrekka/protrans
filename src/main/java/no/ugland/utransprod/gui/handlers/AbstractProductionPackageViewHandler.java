@@ -1150,8 +1150,8 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 			OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
 			Order order = orderManager.findByOrderNr(applyable.getOrderNr());
 			if (order != null) {
-				DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(order, true, false, true,
-						null, false);
+				DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(order, true, false,
+						true, null, false, true);
 				deviationViewHandler.registerDeviation(order, window);
 			}
 		}

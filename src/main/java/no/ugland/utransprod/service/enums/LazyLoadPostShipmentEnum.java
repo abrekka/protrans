@@ -13,6 +13,7 @@ public enum LazyLoadPostShipmentEnum {
      * Ordrelinjer.
      */
     ORDER_LINES,
+    ORDER_LINE_ATTRIBUTES,
     /**
      * Referanser til etterlevering.
      */

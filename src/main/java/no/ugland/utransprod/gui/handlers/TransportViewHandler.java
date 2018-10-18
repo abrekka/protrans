@@ -1,5 +1,6 @@
 package no.ugland.utransprod.gui.handlers;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -29,10 +30,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.ListModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 import org.apache.commons.lang.StringUtils;
@@ -70,6 +73,7 @@ import no.ugland.utransprod.gui.WindowInterface;
 import no.ugland.utransprod.gui.checker.StatusCheckerInterface;
 import no.ugland.utransprod.gui.edit.AbstractEditView;
 import no.ugland.utransprod.gui.model.ColorEnum;
+import no.ugland.utransprod.gui.model.TextPaneRendererTransport;
 import no.ugland.utransprod.gui.model.TransportListable;
 import no.ugland.utransprod.gui.model.TransportModel;
 import no.ugland.utransprod.gui.model.TransportSelectionListener;
@@ -141,6 +145,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	private JMenuItem menuItemRemoveTransport;
 
 	private JMenuItem menuItemSetSent;
+	private JMenuItem menuItemSetLevert;
 	private JMenuItem menuItemSetTransportOrder;
 	private JMenuItem menuItemUpdateStatus;
 
@@ -214,6 +219,9 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		menuItemRemoveTransport.setName("MenuItemRemoveTransport");
 		menuItemRemoveTransport.setEnabled(hasWriteAccess());
 		menuItemSetSent = new JMenuItem("Sett sent");
+		menuItemSetLevert = new JMenuItem("Sett levert");
+		menuItemSetLevert.setEnabled(hasWriteAccess());
+		menuItemSetLevert.setName("MenuItemSetLevert");
 		menuItemUpdateStatus = new JMenuItem("Oppdater status");
 		menuItemSetSent.setEnabled(hasWriteAccess());
 		menuItemSetSent.setName("MenuItemSetSent");
@@ -234,6 +242,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 
 		popupMenuTransport.add(menuItemRemoveTransport);
 		popupMenuTransport.add(menuItemSetSent);
+		popupMenuTransport.add(menuItemSetLevert);
 		popupMenuTransport.add(menuItemMissing);
 		popupMenuTransport.add(menuItemReport);
 		popupMenuTransport.add(menuItemSplitOrder);
@@ -595,11 +604,14 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 			column.setPrefferedWidth(tableOrders);
 		}
 
+		tableOrders.getColumnModel().getColumn(tableOrders.getColumnExt("Levert").getModelIndex())
+		.setCellRenderer(new LevertRenderer());
+
 		tableOrders.addHighlighter(HighlighterFactory.createAlternateStriping());
 
 		tableOrders.addHighlighter(TransportViewHandler.getStartedPackingHighlighter(tableOrders, "Klar"));
 		tableOrders.addHighlighter(TransportViewHandler.getReadyHighlighter(tableOrders, "Komplett"));
-		tableOrders.addHighlighter(TransportViewHandler.getNotSentHighlighter(tableOrders, "Ikke sendt"));
+		tableOrders.addHighlighter(TransportViewHandler.getNotSentHighlighter(tableOrders, "Ikke opplastet"));
 		tableOrders.addHighlighter(TransportViewHandler.getProbabilityHighlighter(tableOrders, "Sannsynlighet"));
 
 		tableOrders.setShowGrid(true);
@@ -670,7 +682,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 			if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemSetTransportOrder.getText())) {
 				Util.setWaitCursor(window);
 				setTransport(false, window, transportWeekViewHandler);
-				transportWeekView.changeWeek(null,false);
+				transportWeekView.changeWeek(null, false, null);
 				Util.setDefaultCursor(window);
 			}
 
@@ -1035,7 +1047,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		conn.updateProperty2();
 		return checkBox;
 	}
-	
+
 	public JCheckBox getCheckBoxLevert(WindowInterface window, int number) {
 		transportPresentationModel.addBeanPropertyChangeListener(TransportModel.PROPERTY_LEVERT_BOOL,
 				new LevertPropertyListener());
@@ -1099,7 +1111,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 			}
 		}
 	}
-	
+
 	public void saveTransportModelLevert(WindowInterface window, Date levertDate) {
 		if (transportPresentationModel != null) {
 			TransportModel transportModel = ((TransportModel) transportPresentationModel.getBean())
@@ -1173,14 +1185,19 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		private WindowInterface window;
 		private ActionTransportSending actionTransportSending;
 		private ActionTransportSending actionTransportNotSending;
+		private ActionTransportLevert actionTransportLevert;
+		private ActionTransportLevert actionTransportNotLevert;
 
 		/**
 		 * @param aWindow
 		 */
 		public TableClickHandler(WindowInterface aWindow) {
 			window = aWindow;
-			actionTransportSending = new ActionTransportSending(true, ActionTransportSending.SEND_STRING, window);
-			actionTransportNotSending = new ActionTransportSending(false, ActionTransportSending.NOT_SEND_STRING,
+			actionTransportSending = new ActionTransportSending(true, ActionTransportSending.OPPLASTET_STRING, window);
+			actionTransportNotSending = new ActionTransportSending(false, ActionTransportSending.IKKE_OPPLASTET_STRING,
+					window);
+			actionTransportLevert = new ActionTransportLevert(true, ActionTransportLevert.LEVERT_STRING, window);
+			actionTransportNotLevert = new ActionTransportLevert(false, ActionTransportLevert.IKKE_LEVERT_STRING,
 					window);
 		}
 
@@ -1223,6 +1240,12 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 						menuItemSetSent.setAction(actionTransportSending);
 					} else {
 						menuItemSetSent.setAction(actionTransportNotSending);
+					}
+
+					if (tmp.getLevertBool()) {
+						menuItemSetLevert.setAction(actionTransportNotLevert);
+					} else {
+						menuItemSetLevert.setAction(actionTransportLevert);
 					}
 				}
 
@@ -1298,15 +1321,15 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 
 		return sentDate;
 	}
-	
+
 	private Date showLevertOrders(final WindowInterface aWindow, final List<TransportListable> listTransportable,
 			final boolean levertTransport) throws ProTransException {
 		Date levertDate = Util.getCurrentDate();
 		boolean isCanceled = false;
 		handlingOrders = true;
 
-//		levertDate = checkLoadingDate(aWindow, levertDate,
-//				((TransportModel) transportPresentationModel.getBean()).getObject());
+		// levertDate = checkLoadingDate(aWindow, levertDate,
+		// ((TransportModel) transportPresentationModel.getBean()).getObject());
 		if (listTransportable.size() != 0) {
 			Transport transport = ((Transportable) listTransportable.get(0)).getTransport();
 			checkIfTransportableHasSupplier(transport);
@@ -1336,9 +1359,9 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		handlingOrders = false;
 		return sentTransportViewHandler.isCanceled();
 	}
-	
-	private boolean showLevertOrders(final WindowInterface window1, final boolean levertTransport, final Date levertDate,
-			final List<TransportListable> tmpTransportableList) {
+
+	private boolean showLevertOrders(final WindowInterface window1, final boolean levertTransport,
+			final Date levertDate, final List<TransportListable> tmpTransportableList) {
 
 		LevertTransportViewHandler levertTransportViewHandler = new LevertTransportViewHandler(login, managerRepository,
 				deviationViewHandlerFactory, tmpTransportableList, false, levertTransport, levertDate);
@@ -1401,9 +1424,9 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 
 			transportPresentationModel.triggerCommit();
 
-			if (sentDate != null) {
-				fireSentChange();
-			}
+			// if (sentDate != null) {
+			// fireSentChange();
+			// }
 
 			for (TransportListable transportListable : listTransportable) {
 				vismaFileCreator.createVismaFileForDelivery(transportListable.getOrder(), false, 1);
@@ -1429,7 +1452,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 				levertDate = handleTransportLevert(window, listTransportable, levertTransport);
 
 			} else {
-				levertDate = handleTransportNotSent(listTransportable, levertTransport);
+				levertDate = handleTransportNotLevert(listTransportable, levertTransport);
 			}
 
 			transportPresentationModel.triggerCommit();
@@ -1437,7 +1460,6 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 			if (levertDate != null) {
 				fireSentChange();
 			}
-
 
 			Util.setDefaultCursor(window.getComponent());
 			if (levertDate != null) {
@@ -1483,7 +1505,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 			collies = transportable.getCollies();
 			removeSentFromCollies(collies);
 
-			removeSentFromTransportable(transportable);
+			// removeSentFromTransportable(transportable);
 
 			saveTransportable(postShipmentManager, transportable);
 
@@ -1495,14 +1517,82 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		return sentDate;
 	}
 
+	private Date handleTransportNotLevert(final List<TransportListable> listTransportListable,
+			final boolean saveTransport) throws ProTransException {
+		Date levertDate;
+		PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil.getBean("postShipmentManager");
+		levertDate = Util.getCurrentDate();
+
+		Set<Colli> collies;
+
+		for (TransportListable transportable : listTransportListable) {
+			// lazyLoadTransportable(postShipmentManager, transportable);
+			if (!Hibernate.isInitialized(transportable.getCollies())) {
+				if (transportable instanceof Order) {
+					orderViewHandler.lazyLoadOrder((Order) transportable,
+							new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES });
+				} else {
+					postShipmentManager.lazyLoad((PostShipment) transportable,
+							new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.COLLIES });
+				}
+			}
+			collies = transportable.getCollies();
+			// removeSentFromCollies(collies);
+
+			// removeSentFromTransportable(transportable);
+
+			saveTransportableIkkeLevert(postShipmentManager, transportable);
+
+		}
+
+		if (saveTransport) {
+			saveTransportModelLevert(window, null);
+		}
+		return levertDate;
+	}
+
 	private void saveTransportable(PostShipmentManager postShipmentManager, TransportListable transportable)
 			throws ProTransException {
-		if (transportable instanceof Order) {
-			((Order) transportable).setHasMissingCollies(null);
+		// if (transportable instanceof Order) {
+		// orderViewHandler.refreshOrder((Order) transportable);
+		// }
 
-			orderViewHandler.getOrderManager().saveOrder((Order) transportable);
+		// Transport transport = transportable.getTransport();
+		// transport.setSent(null);
+		// managerRepository.getTransportManager().saveTransport(transport);
+
+		if (transportable instanceof Order) {
+			// ((Order) transportable).setHasMissingCollies(null);
+			//
+			// orderViewHandler.getOrderManager().saveOrder((Order)
+			// transportable);
+			orderViewHandler.getOrderManager().taBortSentOgManglerKolli((Order) transportable);
 
 		} else {
+			transportable.setSentBool(false);
+			postShipmentManager.savePostShipment((PostShipment) transportable);
+		}
+	}
+
+	private void saveTransportableIkkeLevert(PostShipmentManager postShipmentManager, TransportListable transportable)
+			throws ProTransException {
+		// if (transportable instanceof Order) {
+		// orderViewHandler.refreshOrder((Order) transportable);
+		// }
+
+		// Transport transport = transportable.getTransport();
+		// transport.setLevert(null);
+		// managerRepository.getTransportManager().saveTransport(transport);
+
+		if (transportable instanceof Order) {
+			// ((Order) transportable).setHasMissingCollies(null);
+			//
+			// orderViewHandler.getOrderManager().saveOrder((Order)
+			// transportable);
+			orderViewHandler.getOrderManager().settLevert((Order) transportable, null);
+
+		} else {
+			transportable.setLevert(null);
 			postShipmentManager.savePostShipment((PostShipment) transportable);
 		}
 	}
@@ -1561,11 +1651,10 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 			final boolean levertTransport) throws ProTransException {
 		Date levertDate = null;
 
-			levertDate = showLevertOrders(window1, listTransportable, levertTransport);
+		levertDate = showLevertOrders(window1, listTransportable, levertTransport);
 		return levertDate;
 	}
 
-	
 	private void checkIfTransportableHasSupplier(final Transport transport) throws ProTransException {
 		if (transport.getSupplier() == null) {
 			throw new ProTransException("Transport har ikke firma satt");
@@ -1602,7 +1691,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		}
 
 	}
-	
+
 	private class LevertPropertyListener implements PropertyChangeListener {
 
 		/**
@@ -1628,7 +1717,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		handlingOrders = false;
 		Util.setDefaultCursor(window.getComponent());
 	}
-	
+
 	void handleLevertTransport(final PropertyChangeEvent event) {
 		Util.setWaitCursor(window.getComponent());
 		Boolean levert = (Boolean) event.getNewValue();
@@ -1782,8 +1871,8 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 			if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemDeviation.getText())) {
 				Order order = (Order) transportableSelectionList.getElementAt(
 						tableOrders.convertRowIndexToModel(transportableSelectionList.getSelectionIndex()));
-				DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(order, true, false, true,
-						null, true);
+				DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(order, true, false,
+						true, null, true, false);
 				deviationViewHandler.registerDeviation(order, window);
 
 			}
@@ -1924,7 +2013,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 				.getElementAt(tableOrders.convertRowIndexToModel(transportableSelectionList.getSelectionIndex()));
 
 		DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(null, true, false, true, null,
-				true);
+				true, false);
 		deviationViewHandler.showDeviation(transportable.getDeviation(), aWindow);
 	}
 
@@ -2087,8 +2176,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	 * @param transportable
 	 * @param window
 	 */
-	public static void showMissingColliesForTransportable(Transportable transportable,
-			final WindowInterface window) {
+	public static void showMissingColliesForTransportable(Transportable transportable, final WindowInterface window) {
 		if (transportable != null) {
 			if (transportable instanceof PostShipment) {
 				PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil
@@ -2101,15 +2189,15 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 				if (!Hibernate.isInitialized(transportable.getOrderLines())
 						|| !Hibernate.isInitialized(transportable.getCollies())) {
 					OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
-					transportable=orderManager.getOrderWithOrderLinesAndCollies(transportable.getOrderNr());
+					transportable = orderManager.getOrderWithOrderLinesAndCollies(transportable.getOrderNr());
 
-//					orderManager.lazyLoadOrder((Order) transportable,
-//							new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES,
-//									// LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES,
-//									// LazyLoadOrderEnum.COMMENTS,
-//									LazyLoadOrderEnum.COLLIES// ,
-//							// LazyLoadOrderEnum.PROCENT_DONE
-//					});
+					// orderManager.lazyLoadOrder((Order) transportable,
+					// new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES,
+					// // LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES,
+					// // LazyLoadOrderEnum.COMMENTS,
+					// LazyLoadOrderEnum.COLLIES// ,
+					// // LazyLoadOrderEnum.PROCENT_DONE
+					// });
 				}
 
 			}
@@ -2353,8 +2441,8 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 
 	@SuppressWarnings("serial")
 	private class ActionTransportSending extends AbstractAction {
-		public static final String SEND_STRING = "Sett sent...";
-		public static final String NOT_SEND_STRING = "Sett ikke sent...";
+		public static final String OPPLASTET_STRING = "Sett opplastet...";
+		public static final String IKKE_OPPLASTET_STRING = "Sett ikke opplastet...";
 		private boolean sending = true;
 		private WindowInterface window;
 
@@ -2369,7 +2457,31 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 					Arrays.asList(
 							new TransportListable[] { (TransportListable) transportableSelectionList.getSelection() }),
 					false);
+			updateTransportableList(true);
 
+		}
+
+	}
+
+	@SuppressWarnings("serial")
+	private class ActionTransportLevert extends AbstractAction {
+		public static final String LEVERT_STRING = "Sett levert...";
+		public static final String IKKE_LEVERT_STRING = "Sett ikke levert...";
+		private boolean levert = true;
+		private WindowInterface window;
+
+		private ActionTransportLevert(boolean isLevert, String actionCommandString, WindowInterface aWindow) {
+			super(actionCommandString);
+			levert = isLevert;
+			window = aWindow;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			setLevert(levert, window,
+					Arrays.asList(
+							new TransportListable[] { (TransportListable) transportableSelectionList.getSelection() }),
+					false);
+			updateTransportableList(true);
 		}
 
 	}
@@ -2380,4 +2492,15 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		return transportable.getOrderNr();
 	}
 
+	public class LevertRenderer extends DefaultTableCellRenderer  {
+
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			Component c=super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			c.setBackground(Color.ORANGE);
+			c.setForeground(Color.ORANGE);
+			return c;
+		}
+
+	}
 }

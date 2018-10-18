@@ -255,4 +255,10 @@ public interface OrderDAO extends DAO<Order> {
 	Order getOrderWithOrderLinesAbdCollies(String orderNr);
 
 	List<String> finnMonteringsanvisninger(String orderNr);
+
+	void taBortSentOgManglerKolli(Order order);
+
+	void settSentDato(Order order, Date sentDate);
+
+	void settLevert(Order order, Date levertDate);
 }

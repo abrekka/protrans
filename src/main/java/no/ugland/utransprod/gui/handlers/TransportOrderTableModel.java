@@ -372,13 +372,16 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 
 			}
 		},
-		IKKE_SENDT("Ikke sendt", ForExcel.TABLE) {
+		IKKE_OPPLASTET("Ikke opplastet", ForExcel.TABLE) {
 			@Override
 			public Object getValue(Transportable transportable, Map<String, String> statusMap,
 					StatusCheckerInterface<Transportable> gavlChecker,
 					StatusCheckerInterface<Transportable> takstolChecker,
 					StatusCheckerInterface<Transportable> steinChecker,
 					StatusCheckerInterface<Transportable> gulvsponChecker) {
+				// if(transportable.getOrderNr().equals("145844")){
+				// System.out.println("test");
+				// }
 				return transportable.getTransport() != null && transportable.getTransport().getSent() != null
 						&& !transportable.getSentBool() ? "!" : "";
 			}
@@ -534,7 +537,7 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 
 			}
 		},
-		SENDT("Sendt", ForExcel.TABLE) {
+		OPPLASTET("Opplastet", ForExcel.TABLE) {
 			@Override
 			public Object getValue(Transportable transportable, Map<String, String> statusMap,
 					StatusCheckerInterface<Transportable> gavlChecker,
@@ -791,7 +794,7 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 
 			}
 		},
-		SENDT_FILTER("sendt filter", ForExcel.TABLE) {
+		OPPLASTET_FILTER("opplastet filter", ForExcel.TABLE) {
 			@Override
 			public Object getValue(Transportable transportable, Map<String, String> statusMap,
 					StatusCheckerInterface<Transportable> gavlChecker,
@@ -865,6 +868,61 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 			@Override
 			public void setPrefferedWidth(JXTable table) {
 				table.getColumnExt(table.getColumnExt(getColumnName()).getModelIndex()).setPreferredWidth(45);
+
+			}
+		},
+		LEVERT("Levert", ForExcel.BOTH) {
+			@Override
+			public Object getValue(Transportable transportable, Map<String, String> statusMap,
+					StatusCheckerInterface<Transportable> gavlChecker,
+					StatusCheckerInterface<Transportable> takstolChecker,
+					StatusCheckerInterface<Transportable> steinChecker,
+					StatusCheckerInterface<Transportable> gulvsponChecker) {
+
+				return transportable.getLevertBool() ? "Ja" : "Nei";
+			}
+
+			@Override
+			public Class<?> getColumnClass() {
+				return String.class;
+			}
+
+			@Override
+			public void setCellRenderer(JXTable table) {
+			}
+
+			@Override
+			public void setPrefferedWidth(JXTable table) {
+				table.getColumnExt(table.getColumnExt(getColumnName()).getModelIndex()).setPreferredWidth(45);
+
+			}
+		},
+		IKKE_LEVERT("Ikke levert", ForExcel.TABLE) {
+			@Override
+			public Object getValue(Transportable transportable, Map<String, String> statusMap,
+					StatusCheckerInterface<Transportable> gavlChecker,
+					StatusCheckerInterface<Transportable> takstolChecker,
+					StatusCheckerInterface<Transportable> steinChecker,
+					StatusCheckerInterface<Transportable> gulvsponChecker) {
+				// if(transportable.getOrderNr().equals("145844")){
+				// System.out.println("test");
+				// }
+				return transportable.getTransport() != null && transportable.getTransport().getSent() != null
+						&& !transportable.getLevertBool() ? "!" : "";
+			}
+
+			@Override
+			public Class<?> getColumnClass() {
+				return String.class;
+			}
+
+			@Override
+			public void setCellRenderer(JXTable table) {
+			}
+
+			@Override
+			public void setPrefferedWidth(JXTable table) {
+				table.getColumnExt(table.getColumnExt(getColumnName()).getModelIndex()).setPreferredWidth(40);
 
 			}
 		};

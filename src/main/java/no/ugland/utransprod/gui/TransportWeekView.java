@@ -60,8 +60,8 @@ public class TransportWeekView {
 	 * 
 	 * @param window
 	 */
-	private void initComponents(final WindowInterface window, boolean ikkeTaMedOpplastet) {
-		transportList = viewHandler.getTransportList(routeDate, ikkeTaMedOpplastet);
+	private void initComponents(final WindowInterface window, boolean ikkeTaMedOpplastet, String transportfirma) {
+		transportList = viewHandler.getTransportList(routeDate, ikkeTaMedOpplastet, transportfirma);
 		buttonAddTransport = viewHandler.getButtonAddTransport(window);
 		buttonRemoveTransport = viewHandler.getButtonRemoveTransport(window);
 		buttonRemoveTransport.setEnabled(false);
@@ -88,7 +88,7 @@ public class TransportWeekView {
 	 */
 	public final Component buildPanel(final WindowInterface window) {
 		currentWindow = window;
-		initComponents(window, false);
+		initComponents(window, false, null);
 		initEventHandling();
 		FormLayout layout = new FormLayout("fill:230dlu:grow", "fill:270dlu:grow,3dlu,p");
 		// PanelBuilder builder = new PanelBuilder(layout, new
@@ -145,7 +145,7 @@ public class TransportWeekView {
 	 * 
 	 * @param newYear
 	 */
-	public final void changeWeek(final Integer newYear, boolean ikkeTaMedOpplastet) {
+	public final void changeWeek(final Integer newYear, boolean ikkeTaMedOpplastet, String transportfirma) {
 		if (newYear != null) {
 
 			routeDate.setYear(newYear);
@@ -157,7 +157,7 @@ public class TransportWeekView {
 		// {
 		// group = productAreaGroup;
 		// }
-		transportList = viewHandler.getTransportList(routeDate, ikkeTaMedOpplastet);
+		transportList = viewHandler.getTransportList(routeDate, ikkeTaMedOpplastet, transportfirma);
 		panelTransportMain.remove(panelTransport);
 		panelTransport = buildTransportPanel(currentWindow);
 		CellConstraints cc = new CellConstraints();
@@ -181,7 +181,7 @@ public class TransportWeekView {
 		 * @see javax.swing.event.ListDataListener#contentsChanged(javax.swing.event.ListDataEvent)
 		 */
 		public void contentsChanged(final ListDataEvent arg0) {
-			changeWeek(null, false);
+			changeWeek(null, false, null);
 
 		}
 
@@ -189,7 +189,7 @@ public class TransportWeekView {
 		 * @see javax.swing.event.ListDataListener#intervalAdded(javax.swing.event.ListDataEvent)
 		 */
 		public void intervalAdded(final ListDataEvent arg0) {
-			changeWeek(null, false);
+			changeWeek(null, false, null);
 
 		}
 
@@ -197,7 +197,7 @@ public class TransportWeekView {
 		 * @see javax.swing.event.ListDataListener#intervalRemoved(javax.swing.event.ListDataEvent)
 		 */
 		public void intervalRemoved(final ListDataEvent arg0) {
-			changeWeek(null, false);
+			changeWeek(null, false, null);
 
 		}
 

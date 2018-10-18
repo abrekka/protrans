@@ -1,6 +1,7 @@
 package no.ugland.utransprod.service.impl;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import no.ugland.utransprod.dao.PostShipmentDAO;
@@ -149,5 +150,15 @@ public class PostShipmentManagerImpl extends ManagerImpl<PostShipment>implements
     protected Serializable getObjectId(PostShipment object) {
         return object.getPostShipmentId();
     }
+
+	public void settSentDato(PostShipment postShipment, Date sentDate) {
+		((PostShipmentDAO)dao).settSentDato(postShipment, sentDate);
+		
+	}
+
+	public void settLevert(PostShipment postShipment, Date levertDate) {
+		((PostShipmentDAO)dao).settLevert(postShipment, levertDate);
+		
+	}
 
 }

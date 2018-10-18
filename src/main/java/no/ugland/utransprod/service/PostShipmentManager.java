@@ -1,5 +1,6 @@
 package no.ugland.utransprod.service;
 
+import java.util.Date;
 import java.util.List;
 
 import no.ugland.utransprod.model.PostShipment;
@@ -72,4 +73,8 @@ public interface PostShipmentManager extends OverviewManager<PostShipment> {
     List<PostShipment> findSentInPeriod(Periode periode,
             String productAreaGroupName);
     PostShipment loadById(Integer postShipmentId);
+
+	void settSentDato(PostShipment transportlistable, Date sentDate);
+
+	void settLevert(PostShipment transportlistable, Date levertDate);
 }

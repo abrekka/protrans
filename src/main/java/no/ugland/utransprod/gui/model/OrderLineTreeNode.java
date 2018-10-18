@@ -46,7 +46,7 @@ public class OrderLineTreeNode extends DefaultMutableTreeTableNode {
 	 * @param aParent
 	 */
 	@SuppressWarnings("unchecked")
-	public OrderLineTreeNode(Object aObject, OrderLineTreeNode aParent) {
+	public OrderLineTreeNode(Object aObject, OrderLineTreeNode aParent, boolean brukOrdrelinjelinjer) {
 
 		object = aObject;
 		parent = aParent;
@@ -54,33 +54,32 @@ public class OrderLineTreeNode extends DefaultMutableTreeTableNode {
 		if (object instanceof List) {
 			List<OrderLine> orderLines = (List<OrderLine>) object;
 			for (OrderLine orderLine : orderLines) {
-				children.add(new OrderLineTreeNode(orderLine, this));
+				children.add(new OrderLineTreeNode(orderLine, this, brukOrdrelinjelinjer));
 			}
 		} else if (object instanceof OrderWrapper) {
 			if (((OrderWrapper) object).getOrderLines() != null) {
-				List<OrderLine> orderLines = ((OrderWrapper) object)
-						.getOrderLines();
+				List<OrderLine> orderLines = ((OrderWrapper) object).getOrderLines();
 				for (OrderLine orderLine : orderLines) {
 					if (orderLine.getOrderLineRef() == null) {
-						children.add(new OrderLineTreeNode(orderLine, this));
+						children.add(new OrderLineTreeNode(orderLine, this, brukOrdrelinjelinjer));
 					}
 				}
 			}
 
 		} else if (object instanceof OrderLine) {
-			if (((OrderLine) object).getOrderLines() != null) {
-				Set<OrderLine> orderLines = ((OrderLine) object)
-						.getOrderLines();
-				for (OrderLine orderLine : orderLines) {
-					children.add(new OrderLineTreeNode(orderLine, this));
+			if (brukOrdrelinjelinjer) {
+				if (((OrderLine) object).getOrderLines() != null) {
+					Set<OrderLine> orderLines = ((OrderLine) object).getOrderLines();
+					for (OrderLine orderLine : orderLines) {
+						children.add(new OrderLineTreeNode(orderLine, this, brukOrdrelinjelinjer));
+					}
 				}
-			}
-			if (((OrderLine) object).getOrderLineAttributes() != null) {
-				Set<OrderLineAttribute> orderLineAttributes = ((OrderLine) object)
-						.getOrderLineAttributes();
-				for (OrderLineAttribute orderLineAttribute : orderLineAttributes) {
-					children
-							.add(new OrderLineTreeNode(orderLineAttribute, this));
+
+				if (((OrderLine) object).getOrderLineAttributes() != null) {
+					Set<OrderLineAttribute> orderLineAttributes = ((OrderLine) object).getOrderLineAttributes();
+					for (OrderLineAttribute orderLineAttribute : orderLineAttributes) {
+						children.add(new OrderLineTreeNode(orderLineAttribute, this, brukOrdrelinjelinjer));
+					}
 				}
 			}
 			// dersom objekt som skal vises i node er attributt for artikkeltype

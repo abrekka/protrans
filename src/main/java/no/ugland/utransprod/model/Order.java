@@ -989,8 +989,8 @@ public class Order extends AbstractTransportable
 		ArrayList<OrderLine> linesNotSent = new ArrayList<OrderLine>();
 		if (orderLines != null) {
 			for (OrderLine line : orderLines) {
-				if (line.hasTopLevelArticle() && line.hasArticle() && (line.getColli() == null
-						|| (line.getPostShipment() != null) && line.getPostShipment().getSent() == null)) {
+				if (line.getPostShipment()==null&&(line.hasTopLevelArticle() && line.hasArticle() && line.getColli() == null)){
+//						|| (line.getPostShipment() != null) && line.getPostShipment().getSent() == null)) {
 					linesNotSent.add(line);
 				}
 			}

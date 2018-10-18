@@ -57,7 +57,7 @@ public class TransportManagerTest {
 		ProductAreaGroupManager productAreaGroupManager = (ProductAreaGroupManager) ModelUtil
 				.getBean("productAreaGroupManager");
 		ProductAreaGroup productAreaGroup = productAreaGroupManager.findByName("Garasje");
-		List<Transport> list = transportManager.findByYearAndWeekAndProductAreaGroup(2014, 3, false);
+		List<Transport> list = transportManager.findByYearAndWeekAndProductAreaGroup(2014, 3, false, null);
 		assertNotNull(list);
 		assertEquals(true, list.size() > 0);
 	}

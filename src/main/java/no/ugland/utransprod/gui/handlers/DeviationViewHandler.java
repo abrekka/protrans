@@ -181,6 +181,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	private Login login;
 	private ManagerRepository managerRepository;
 	private PreventiveActionViewHandler preventiveActionViewHandler;
+	private boolean brukOrdrelinjelinjer;
 
 	/**
 	 * @param aApplicationUser
@@ -197,8 +198,9 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 			PreventiveActionViewHandler aPreventiveActionViewHandler, @Assisted final Order aOrder,
 			@Assisted final boolean doSeAll, @Assisted final boolean forOrderInfo,
 			@Assisted final boolean isForRegisterNew, @Assisted final Deviation notDisplayDeviation,
-			@Assisted final boolean isDeviationTableEditable) {
+			@Assisted final boolean isDeviationTableEditable, boolean brukOrdrelinjelinjer) {
 		super("Avvik", aManagerRepository.getDeviationManager(), aLogin.getUserType(), true);
+		this.brukOrdrelinjelinjer = brukOrdrelinjelinjer;
 		preventiveActionViewHandler = aPreventiveActionViewHandler;
 		login = aLogin;
 		managerRepository = aManagerRepository;
@@ -769,6 +771,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 		radioButton.setName("RadioButtonInternal");
 		return radioButton;
 	}
+
 	public JRadioButton getRadioButtonEntrepenoer(PresentationModel presentationModel) {
 		JRadioButton radioButton = BasicComponentFactory.createRadioButton(
 				presentationModel.getBufferedModel(DeviationModel.PROPERTY_INITIATED_BY), "Entreprenør", "Entreprenør");
@@ -1224,9 +1227,10 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 
 		if (deviationOrder != null) {
 			handleOrderLines(deviation, deviationModel, deviationOrder);
-		}
-		deviation.cacheComments();
-		((DeviationManager) overviewManager).saveDeviation(deviation);
+		} //else {
+			deviation.cacheComments();
+			((DeviationManager) overviewManager).saveDeviation(deviation);
+		//}
 	}
 
 	private void addDeviationToTable(int index, Deviation deviation) {
@@ -1273,6 +1277,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 		if (postShipment != null && orderLines != null && orderLines.size() != 0) {
 			postShipment.setDeviation(deviation);
 			moveOrderLinesToPostShipment(postShipment, orderLines, deviationOrder);
+			deviation.cacheComments();
 			((DeviationManager) overviewManager).saveDeviation(deviation);
 		}
 
@@ -2422,6 +2427,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 		 */
 		public void actionPerformed(ActionEvent arg0) {
+			Util.setWaitCursor(window);
 			if (validationResultModel.hasErrors()) {
 				Util.showErrorDialog(window, "Rett feil", "Rett alle feil før lagring!");
 				return;
@@ -3116,9 +3122,10 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	 * @return hjelpeklasse
 	 */
 	public OrderArticleViewHandler<Deviation, DeviationModel> getOrderArticleViewHandler(
-			PresentationModel aPresentationModel, boolean searching, WindowInterface window) {
+			PresentationModel aPresentationModel, boolean searching, WindowInterface window,
+			boolean brukOrdrelinjelinjer) {
 		OrderArticleViewHandler<Deviation, DeviationModel> orderArticleViewHandler = new OrderArticleViewHandler<Deviation, DeviationModel>(
-				aPresentationModel, searching, login, managerRepository);
+				aPresentationModel, searching, login, managerRepository, brukOrdrelinjelinjer);
 
 		JButton buttonAddArticle = orderArticleViewHandler.getAddArticleButton(window,
 				new ArticleUpdateListener(aPresentationModel, window));
@@ -3203,7 +3210,8 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 				addCost = true;
 			}
 
-			return new EditDeviationView(searching, new DeviationModel(object, false), this, false, addCost);
+			return new EditDeviationView(searching, new DeviationModel(object, false), this, false, addCost,
+					brukOrdrelinjelinjer);
 		}
 		return null;
 	}
@@ -3239,7 +3247,8 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	public JPanel getDeviationPane(WindowInterface window, PresentationModel presentationModel, Deviation deviation) {
 		Order order1 = (Order) presentationModel.getBufferedValue(DeviationModel.PROPERTY_ORDER);
 		deviationViewHandlerOtherDeviations = new DeviationViewHandler(login, managerRepository,
-				preventiveActionViewHandler, order1, true, true, false, deviation, deviationTableEditable);
+				preventiveActionViewHandler, order1, true, true, false, deviation, deviationTableEditable,
+				brukOrdrelinjelinjer);
 
 		DeviationOverviewView deviationOverviewView = new DeviationOverviewView(preventiveActionViewHandler,
 				deviationViewHandlerOtherDeviations, false, order1, true, false, false, currentDeviation, false);

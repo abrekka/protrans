@@ -1157,7 +1157,7 @@ public class Deviation extends AbstractTransportable implements Articleable, IAs
 		this.csId = csId;
 	}
 
-	public Object getLevertBool() {
+	public Boolean getLevertBool() {
 		if (postShipment != null) {
 			return postShipment.getLevertBool();
 		}

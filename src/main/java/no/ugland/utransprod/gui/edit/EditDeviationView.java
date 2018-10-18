@@ -119,6 +119,7 @@ public class EditDeviationView extends AbstractEditView<DeviationModel, Deviatio
 	private JTextField textFieldProjectNr;
 	private JTextField textFieldDateClosed;
 	private JTextField textFieldCsId;
+	private boolean brukOrdrelinjelinjer;
 
 	/**
 	 * @param searchDialog
@@ -129,11 +130,12 @@ public class EditDeviationView extends AbstractEditView<DeviationModel, Deviatio
 	 */
 	public EditDeviationView(final boolean searchDialog, final AbstractModel<Deviation, DeviationModel> object,
 			final AbstractViewHandler<Deviation, DeviationModel> aViewHandler, final boolean onlyOk,
-			final boolean doAddInternalCost) {
+			final boolean doAddInternalCost,boolean brukOrdrelinjelinjer) {
 		super(searchDialog, object, aViewHandler);
 
 		addInternalCost = doAddInternalCost;
 		okOnly = onlyOk;
+		this.brukOrdrelinjelinjer=brukOrdrelinjelinjer;
 
 	}
 
@@ -245,7 +247,7 @@ public class EditDeviationView extends AbstractEditView<DeviationModel, Deviatio
 		CellConstraints cc = new CellConstraints();
 
 		OrderArticleView<Deviation, DeviationModel> orderArticleView = new OrderArticleView<Deviation, DeviationModel>(
-				((DeviationViewHandler) viewHandler).getOrderArticleViewHandler(presentationModel, search, window),
+				((DeviationViewHandler) viewHandler).getOrderArticleViewHandler(presentationModel, search, window,brukOrdrelinjelinjer),
 				true, false);
 
 		builder.addLabel("Artikler:", cc.xy(1, 1));

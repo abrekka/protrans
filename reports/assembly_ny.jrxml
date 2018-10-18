@@ -21,6 +21,8 @@
 	<field name="order.assembly.assemblyWeek" class="java.lang.Integer"/>
 	<field name="bestillingsnrMontering" class="java.lang.Integer"/>
 	<field name="order.assembly.assemblyYear" class="java.lang.Integer"/>
+	<field name="orgnr" class="java.lang.String"/>
+	<field name="firma" class="java.lang.String"/>
 	<group name="kontrollskjema">
 		<groupHeader>
 			<band height="50">
@@ -82,11 +84,11 @@
 					<subreportParameter name="ORDRENR">
 						<subreportParameterExpression><![CDATA[$F{order.orderNr}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="KUNDE">
-						<subreportParameterExpression><![CDATA[$F{order.customer.firstName}+" "+$F{order.customer.lastName}]]></subreportParameterExpression>
-					</subreportParameter>
 					<subreportParameter name="IGLAND_GARASJE_LOGO">
 						<subreportParameterExpression><![CDATA[$P{IGLAND_GARASJE_LOGO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="KUNDE">
+						<subreportParameterExpression><![CDATA[$F{order.customer.firstName}+" "+$F{order.customer.lastName}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportExpression class="java.lang.String"><![CDATA["reports/hms.jasper"]]></subreportExpression>
 				</subreport>
@@ -186,19 +188,6 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{order.telephoneNrFormatted}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement key="staticText-14" x="257" y="0" width="123" height="14"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement>
-					<font fontName="Arial" size="12"/>
-				</textElement>
-				<text><![CDATA[Igland Garasjen AS]]></text>
-			</staticText>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-4" x="345" y="100" width="183" height="14"/>
 				<box>
@@ -368,19 +357,6 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{order.constructionType.name}+" "+$F{order.info}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement key="staticText-15" x="382" y="0" width="170" height="14"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement>
-					<font fontName="Arial" size="12"/>
-				</textElement>
-				<text><![CDATA[Org. Nr: NO 970 953 302 MVA]]></text>
-			</staticText>
 			<image isUsingCache="true">
 				<reportElement key="image-1" mode="Transparent" x="10" y="3" width="153" height="62"/>
 				<box>
@@ -443,6 +419,32 @@
 				</textElement>
 				<text><![CDATA[Monteringsuke:]]></text>
 			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-5" x="382" y="0" width="160" height="14"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{orgnr}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-5" x="257" y="0" width="123" height="14"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{firma}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>

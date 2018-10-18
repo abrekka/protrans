@@ -47,6 +47,7 @@ import no.ugland.utransprod.service.enums.LazyLoadPostShipmentEnum;
 import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.Util;
 
+import org.hibernate.Hibernate;
 import org.jdesktop.swingx.JXTable;
 
 import com.google.inject.Inject;
@@ -72,27 +73,23 @@ public class SentTransportViewHandler implements Closeable {
 
 	List<Transportable> orderUpdatedCollies = new ArrayList<Transportable>();
 
-	
-
 	boolean canceled = false;
 
 	boolean sentTransport = true;
 
-	
-
 	Date sentDate;
-	
+
 	private ManagerRepository managerRepository;
 	private Login login;
 	private DeviationViewHandlerFactory deviationViewHandlerFactory;
+
 	@Inject
-	public SentTransportViewHandler(final Login aLogin,
-			final ManagerRepository aManagerRepository,final DeviationViewHandlerFactory aDeviationViewHandlerFactory,
-			@Assisted List<TransportListable> objects,
-			@Assisted boolean isCollies, @Assisted boolean transportSent,@Assisted Date aSentDate) {
-		deviationViewHandlerFactory=aDeviationViewHandlerFactory;
-		managerRepository=aManagerRepository;
-		login=aLogin;
+	public SentTransportViewHandler(final Login aLogin, final ManagerRepository aManagerRepository,
+			final DeviationViewHandlerFactory aDeviationViewHandlerFactory, @Assisted List<TransportListable> objects,
+			@Assisted boolean isCollies, @Assisted boolean transportSent, @Assisted Date aSentDate) {
+		deviationViewHandlerFactory = aDeviationViewHandlerFactory;
+		managerRepository = aManagerRepository;
+		login = aLogin;
 		sentDate = aSentDate;
 		sentTransport = transportSent;
 		list = objects;
@@ -116,17 +113,14 @@ public class SentTransportViewHandler implements Closeable {
 	@SuppressWarnings("unchecked")
 	private void initList() {
 		if (!isCollies) {
-			OrderManager orderManager = (OrderManager) ModelUtil
-					.getBean("orderManager");
+			OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
 			// List<Transportable> tmpList = new ArrayList<Transportable>(list);
 
 			// for (Transportable transportable : tmpList) {
 			for (TransportListable transportable : list) {
 				if (transportable instanceof Order) {
 					orderManager.lazyLoadOrder((Order) transportable,
-							new LazyLoadOrderEnum[] {
-									LazyLoadOrderEnum.COLLIES,
-									LazyLoadOrderEnum.COMMENTS });
+							new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.COMMENTS });
 				}
 				transportable.setSent(sentDate);
 
@@ -155,8 +149,7 @@ public class SentTransportViewHandler implements Closeable {
 		} else {
 			table.setModel(new TransportOrderTableModel(selectionList));
 		}
-		table.setSelectionModel(new SingleListSelectionAdapter(selectionList
-				.getSelectionIndexHolder()));
+		table.setSelectionModel(new SingleListSelectionAdapter(selectionList.getSelectionIndexHolder()));
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setColumnControlVisible(true);
 
@@ -172,8 +165,7 @@ public class SentTransportViewHandler implements Closeable {
 	 * @return knapp
 	 */
 	public JButton getButtonOk(WindowInterface window) {
-		JButton button = new CancelButton(window, this, true, "Ok",
-				IconEnum.ICON_OK, null, true);
+		JButton button = new CancelButton(window, this, true, "Ok", IconEnum.ICON_OK, null, true);
 		button.setName("ButtonOk");
 		return button;
 	}
@@ -186,15 +178,15 @@ public class SentTransportViewHandler implements Closeable {
 	private class TransportOrderTableModel extends AbstractTableAdapter {
 
 		/**
-         * 
-         */
+		 * 
+		 */
 		private static final long serialVersionUID = 1L;
 
 		/**
 		 * @param listModel
 		 */
 		public TransportOrderTableModel(ListModel listModel) {
-			super(listModel, new String[] { "Ordre", "Sent" });
+			super(listModel, new String[] { "Ordre", "Opplastet" });
 
 		}
 
@@ -271,8 +263,8 @@ public class SentTransportViewHandler implements Closeable {
 	private class TransportColliTableModel extends AbstractTableAdapter {
 
 		/**
-         * 
-         */
+		 * 
+		 */
 		private static final long serialVersionUID = 1L;
 
 		/**
@@ -364,8 +356,7 @@ public class SentTransportViewHandler implements Closeable {
 	 */
 	@SuppressWarnings("unchecked")
 	private void saveObjects(final WindowInterface window) {
-		ColliManager colliManager = (ColliManager) ModelUtil
-				.getBean("colliManager");
+		ColliManager colliManager = (ColliManager) ModelUtil.getBean("colliManager");
 		if (isCollies) {
 			saveCollies(colliManager);
 		} else {
@@ -374,24 +365,33 @@ public class SentTransportViewHandler implements Closeable {
 	}
 
 	private void handleSendingTransportables(final WindowInterface window) {
-		OrderManager orderManager = (OrderManager) ModelUtil
-				.getBean("orderManager");
-		PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil
-				.getBean("postShipmentManager");
-		List<TransportListable> updatedTransportables = new ArrayList<TransportListable>(
-				list);
+		OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
+		PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil.getBean("postShipmentManager");
+		List<TransportListable> updatedTransportables = new ArrayList<TransportListable>(list);
 
 		for (TransportListable transportlistable : updatedTransportables) {
-
+Date transportSendt=transportlistable.getSent();
 			// lazyLoadTransportlistable(orderManager, postShipmentManager,
 			// transportlistable);
-			lazyLoadTree(orderManager, postShipmentManager, transportlistable);
-			transportlistable.setSent(sentDate);
+			// lazyLoadTree(orderManager, postShipmentManager,
+			// transportlistable);
+			// lazyLoad(orderManager, postShipmentManager, transportlistable);
+			if (transportlistable instanceof Order) {
+//				orderManager.saveOrder((Order) transportlistable);
+				orderManager.lazyLoadOrder((Order) transportlistable,
+						new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.COLLIES});
+			} else {
+				postShipmentManager.lazyLoad((PostShipment) transportlistable, new LazyLoadPostShipmentEnum[] {
+						LazyLoadPostShipmentEnum.ORDER_LINES, LazyLoadPostShipmentEnum.COLLIES});
+			}
+			
+			transportlistable.setSent(transportSendt);
+			
+			
 
 			handleCollies(transportlistable);
 			if (checkMissingOrderLines(transportlistable, window)) {
-				saveTransportlistable(window, orderManager,
-						postShipmentManager, transportlistable);
+				settSentDato(window, orderManager, postShipmentManager, transportlistable,transportSendt);
 
 				// lazyLoadTree(orderManager, postShipmentManager,
 				// transportlistable);
@@ -400,9 +400,7 @@ public class SentTransportViewHandler implements Closeable {
 		}
 	}
 
-	private boolean checkMissingOrderLines(
-			final TransportListable transportlistable,
-			final WindowInterface window) {
+	private boolean checkMissingOrderLines(final TransportListable transportlistable, final WindowInterface window) {
 		if (transportlistable.getSentBool()) {
 			ArrayListModel orderLinesNotSent = null;
 			List<OrderLine> notSent = transportlistable.getOrderLinesNotSent();
@@ -410,13 +408,9 @@ public class SentTransportViewHandler implements Closeable {
 				orderLinesNotSent = new ArrayListModel(notSent);
 			}
 			if (orderLinesNotSent != null && orderLinesNotSent.size() != 0) {
-				if (Util
-						.showConfirmDialog(
-								window.getComponent(),
-								"Mangler!",
-								"Det finnes ordrelinjer for ordre "
-										+ transportlistable
-										+ "\n som ikke er sent, dersom den sendes må det registreres et avvik.\nVil du allikevel sende denne?")) {
+				if (Util.showConfirmDialog(window.getComponent(), "Mangler!", "Det finnes ordrelinjer for ordre "
+						+ transportlistable
+						+ "\n som ikke er sent, dersom den sendes må det registreres et avvik.\nVil du allikevel sende denne?")) {
 					registerDeviation(orderLinesNotSent, transportlistable);
 					transportlistable.setSent(sentDate);
 				} else {
@@ -434,8 +428,7 @@ public class SentTransportViewHandler implements Closeable {
 		return true;
 	}
 
-	private void lazyLoadTree(OrderManager orderManager,
-			PostShipmentManager postShipmentManager,
+	private void lazyLoadTree(OrderManager orderManager, PostShipmentManager postShipmentManager,
 			TransportListable transportlistable) {
 		if (transportlistable instanceof Order) {
 			orderManager.lazyLoadTree((Order) transportlistable);
@@ -444,25 +437,40 @@ public class SentTransportViewHandler implements Closeable {
 		}
 	}
 
-	private void saveTransportlistable(final WindowInterface window,
-			OrderManager orderManager, PostShipmentManager postShipmentManager,
+	private void lazyLoad(OrderManager orderManager, PostShipmentManager postShipmentManager,
 			TransportListable transportlistable) {
 		if (transportlistable instanceof Order) {
-			try {
-				orderManager.saveOrder((Order) transportlistable);
-			} catch (ProTransException e) {
-				Util.showErrorDialog(window, "Feil", e.getMessage());
-				e.printStackTrace();
-			}
+			orderManager.lazyLoadOrder((Order) transportlistable,
+					new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.COLLIES,
+							LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES });
 		} else {
 			postShipmentManager
-					.savePostShipment((PostShipment) transportlistable);
+					.lazyLoad((PostShipment) transportlistable,
+							new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_LINES,
+									LazyLoadPostShipmentEnum.COLLIES,
+									LazyLoadPostShipmentEnum.ORDER_LINE_ORDER_LINES });
+		}
+	}
+
+	private void settSentDato(final WindowInterface window, OrderManager orderManager,
+			PostShipmentManager postShipmentManager, TransportListable transportlistable, Date sentDate) {
+		
+		if (transportlistable instanceof Order) {
+			orderManager.settSentDato((Order)transportlistable,sentDate);
+//			try {
+//				orderManager.saveOrder((Order) transportlistable);
+//			} catch (ProTransException e) {
+//				Util.showErrorDialog(window, "Feil", e.getMessage());
+//				e.printStackTrace();
+//			}
+		} else {
+			postShipmentManager.settSentDato((PostShipment) transportlistable,sentDate);
+//			postShipmentManager.savePostShipment((PostShipment) transportlistable);
 		}
 	}
 
 	private void handleCollies(TransportListable transportlistable) {
-		ColliManager colliManager = (ColliManager) ModelUtil
-				.getBean("colliManager");
+		ColliManager colliManager = (ColliManager) ModelUtil.getBean("colliManager");
 		Set<Colli> collies;
 		if (!orderUpdatedCollies.contains(transportlistable)) {
 			collies = transportlistable.getCollies();
@@ -475,20 +483,15 @@ public class SentTransportViewHandler implements Closeable {
 		}
 	}
 
-	private void lazyLoadTransportlistable(OrderManager orderManager,
-			PostShipmentManager postShipmentManager,
+	private void lazyLoadTransportlistable(OrderManager orderManager, PostShipmentManager postShipmentManager,
 			TransportListable transportlistable) {
 		if (transportlistable instanceof Order) {
-			orderManager.lazyLoadOrder((Order) transportlistable,
-					new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES,
-							LazyLoadOrderEnum.COLLIES,
-							LazyLoadOrderEnum.COMMENTS });
+			orderManager.lazyLoadOrder((Order) transportlistable, new LazyLoadOrderEnum[] {
+					LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.COMMENTS });
 		} else {
 			postShipmentManager.lazyLoad((PostShipment) transportlistable,
-					new LazyLoadPostShipmentEnum[] {
-							LazyLoadPostShipmentEnum.ORDER_LINES,
-							LazyLoadPostShipmentEnum.COLLIES,
-							LazyLoadPostShipmentEnum.ORDER_COMMENTS });
+					new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_LINES,
+							LazyLoadPostShipmentEnum.COLLIES, LazyLoadPostShipmentEnum.ORDER_COMMENTS });
 		}
 	}
 
@@ -505,15 +508,19 @@ public class SentTransportViewHandler implements Closeable {
 	 * @param transportlistable
 	 */
 	@SuppressWarnings("unchecked")
-	private void registerDeviation(ArrayListModel orderLines,
-			TransportListable transportlistable) {
+	private void registerDeviation(ArrayListModel orderLines, TransportListable transportlistable) {
 		PostShipment postShipment = new PostShipment();
-		PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil
-				.getBean("postShipmentManager");
+		PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil.getBean("postShipmentManager");
 
-//		DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(transportlistable.getOrder(), false,
-//				false, false, null, true);
-		DeviationViewHandler deviationViewHandler=new DeviationViewHandler(login, managerRepository, null, transportlistable.getOrder(), true, false, true, null, true);
+		// lazyLoad(managerRepository.getOrderManager(), postShipmentManager,
+		// transportlistable);
+
+		// DeviationViewHandler2 deviationViewHandler =
+		// deviationViewHandlerFactory.create(transportlistable.getOrder(),
+		// false,
+		// false, false, null, true);
+		DeviationViewHandler deviationViewHandler = new DeviationViewHandler(login, managerRepository, null,
+				transportlistable.getOrder(), true, false, true, null, true, false);
 
 		Deviation deviation = new Deviation();
 
@@ -523,8 +530,8 @@ public class SentTransportViewHandler implements Closeable {
 		deviationModel.setPostShipment(postShipment);
 		deviationModel.setOrder(transportlistable.getOrder());
 
-		EditDeviationView editDeviationView = new EditDeviationView(false,
-				deviationModel, deviationViewHandler, true, true);
+		EditDeviationView editDeviationView = new EditDeviationView(false, deviationModel, deviationViewHandler, true,
+				true, false);
 
 		JDialog dialog = new JDialog(ProTransMain.PRO_TRANS_MAIN, "Avvik", true);
 		dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -536,26 +543,26 @@ public class SentTransportViewHandler implements Closeable {
 		Util.locateOnScreenCenter(window);
 		window.setVisible(true);
 
-		postShipment = deviation.getPostShipment();
+//		postShipment = deviation.getPostShipment();
 
 		// postShipment.setDeviation(deviation);
-		postShipment.setOrder(transportlistable.getOrder());
-		postShipment.cacheComments();
+//		postShipment.setOrder(transportlistable.getOrder());
+//		postShipment.cacheComments();
 
 		if (transportlistable instanceof PostShipment) {
 			postShipment.setPostShipmentRef((PostShipment) transportlistable);
+			postShipmentManager.savePostShipment(postShipment);
 		}
 
-		postShipmentManager.savePostShipment(postShipment);
+		
 		Colli colli;
 		Iterator<OrderLine> it = orderLines.iterator();
 		while (it.hasNext()) {
 			OrderLine orderLine = it.next();
-			orderLine.setPostShipment(postShipment);
+//			orderLine.setPostShipment(postShipment);
 			colli = orderLine.getColli();
 			if (colli != null) {
-				ColliManager colliManager = (ColliManager) ModelUtil
-						.getBean("colliManager");
+				ColliManager colliManager = (ColliManager) ModelUtil.getBean("colliManager");
 				colli.setPostShipment(postShipment);
 				colli.setOrder(null);
 				colliManager.saveColli(colli);
@@ -580,8 +587,7 @@ public class SentTransportViewHandler implements Closeable {
 	public JButton getButtonShowCollies() {
 		buttonShowCollies = new JButton(new ShowColliesAction());
 		buttonShowCollies.setEnabled(false);
-		selectionList.addPropertyChangeListener(
-				SelectionInList.PROPERTYNAME_SELECTION_INDEX,
+		selectionList.addPropertyChangeListener(SelectionInList.PROPERTYNAME_SELECTION_INDEX,
 				new SelectionPropertyListener());
 		buttonShowCollies.setName("ButtonShowCollies");
 		return buttonShowCollies;
@@ -602,11 +608,9 @@ public class SentTransportViewHandler implements Closeable {
 	 */
 	void enableButtons() {
 		if (!isCollies) {
-			Transportable transportable = (Transportable) selectionList
-					.getSelection();
+			Transportable transportable = (Transportable) selectionList.getSelection();
 
-			if (transportable != null && transportable.getCollies() != null
-					&& transportable.getCollies().size() != 0) {
+			if (transportable != null && transportable.getCollies() != null && transportable.getCollies().size() != 0) {
 				buttonShowCollies.setEnabled(true);
 			} else {
 				buttonShowCollies.setEnabled(false);
@@ -621,13 +625,13 @@ public class SentTransportViewHandler implements Closeable {
 	 */
 	private class ShowColliesAction extends AbstractAction {
 		/**
-         * 
-         */
+		 * 
+		 */
 		private static final long serialVersionUID = 1L;
 
 		/**
-         * 
-         */
+		 * 
+		 */
 		public ShowColliesAction() {
 			super("Kollier...");
 		}
@@ -637,18 +641,15 @@ public class SentTransportViewHandler implements Closeable {
 		 */
 		@SuppressWarnings("unchecked")
 		public void actionPerformed(ActionEvent arg0) {
-			Transportable transportable = (Transportable) selectionList
-					.getSelection();
+			Transportable transportable = (Transportable) selectionList.getSelection();
 
 			if (transportable.getCollies() != null) {
 				orderUpdatedCollies.add(transportable);
-				SentTransportViewHandler sentTransportViewHandler = new SentTransportViewHandler(login,managerRepository,deviationViewHandlerFactory,
-						new ArrayListModel(transportable.getCollies()), true,
-						sentTransport, sentDate);
-				SentTransportView sentTransportView = new SentTransportView(
-						sentTransportViewHandler);
-				WindowInterface dialog = new JDialogAdapter(new JDialog(
-						ProTransMain.PRO_TRANS_MAIN, "Kollier", true));
+				SentTransportViewHandler sentTransportViewHandler = new SentTransportViewHandler(login,
+						managerRepository, deviationViewHandlerFactory, new ArrayListModel(transportable.getCollies()),
+						true, sentTransport, sentDate);
+				SentTransportView sentTransportView = new SentTransportView(sentTransportViewHandler);
+				WindowInterface dialog = new JDialogAdapter(new JDialog(ProTransMain.PRO_TRANS_MAIN, "Kollier", true));
 				dialog.setName("sentTransportView");
 				dialog.add(sentTransportView.buildPanel(dialog));
 				dialog.pack();
@@ -699,18 +700,14 @@ public class SentTransportViewHandler implements Closeable {
 		@SuppressWarnings("unchecked")
 		public boolean canClose(String actionString, WindowInterface window) {
 			canceled = true;
-			List<TransportListable> tmpList = new ArrayList<TransportListable>(
-					list);
+			List<TransportListable> tmpList = new ArrayList<TransportListable>(list);
 
 			if (!isCollies) {
-				OrderManager orderManager = (OrderManager) ModelUtil
-						.getBean("orderManager");
+				OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
 				for (TransportListable transportListable : tmpList) {
 					if (transportListable instanceof Order) {
-						orderManager
-								.lazyLoadOrder(
-										(Order) transportListable,
-										new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES });
+						orderManager.lazyLoadOrder((Order) transportListable,
+								new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES });
 					}
 					transportListable.setSentBool(false);
 

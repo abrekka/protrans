@@ -518,8 +518,10 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 	 * @param buffering
 	 */
 	void fireTransportChange(boolean buffering) {
-		for (PropertyChangeListener listener : transportChangeListeners) {
-			listener.propertyChange(new PropertyChangeEvent(this, null, null, buffering));
+		if (buffering) {
+			for (PropertyChangeListener listener : transportChangeListeners) {
+				listener.propertyChange(new PropertyChangeEvent(this, null, null, buffering));
+			}
 		}
 	}
 
@@ -541,11 +543,12 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 	 * @param productAreaGroup
 	 * @return transportruter
 	 */
-	public final SelectionInList getTransportSelectionList(final YearWeek routeDate1, boolean ikkeTaMedOpplastet) {
+	public final SelectionInList getTransportSelectionList(final YearWeek routeDate1, boolean ikkeTaMedOpplastet,
+			String transportfirma) {
 		transportList.clear();
 
-		List<Transport> transports = managerRepository.getTransportManager()
-				.findByYearAndWeekAndProductAreaGroup(routeDate1.getYear(), routeDate1.getWeek(), ikkeTaMedOpplastet);
+		List<Transport> transports = managerRepository.getTransportManager().findByYearAndWeekAndProductAreaGroup(
+				routeDate1.getYear(), routeDate1.getWeek(), ikkeTaMedOpplastet, transportfirma);
 		Collections.sort(transports, new TransportComparator());
 		transportList.addAll(transports);
 		return transportSelectionList;
@@ -559,8 +562,9 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 	 * @return transportruter
 	 */
 	@SuppressWarnings("unchecked")
-	public final List<Transport> getTransportList(final YearWeek routeDate1, boolean ikkeTaMedOpplastet) {
-		getTransportSelectionList(routeDate1, ikkeTaMedOpplastet);
+	public final List<Transport> getTransportList(final YearWeek routeDate1, boolean ikkeTaMedOpplastet,
+			String transportfirma) {
+		getTransportSelectionList(routeDate1, ikkeTaMedOpplastet, transportfirma);
 		return transportList;
 	}
 
@@ -980,7 +984,7 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 		tableOrdersList.addHighlighter(HighlighterFactory.createAlternateStriping());
 		tableOrdersList.addHighlighter(TransportViewHandler.getStartedPackingHighlighter(tableOrdersList, "Klar"));
 		tableOrdersList.addHighlighter(TransportViewHandler.getReadyHighlighter(tableOrdersList, "Komplett"));
-		tableOrdersList.addHighlighter(TransportViewHandler.getNotSentHighlighter(tableOrdersList, "Ikke sendt"));
+		tableOrdersList.addHighlighter(TransportViewHandler.getNotSentHighlighter(tableOrdersList, "Ikke opplastet"));
 		tableOrdersList.setShowGrid(true);
 		tableOrdersList.setName(TableEnum.TABLETRANSPORTORDERSLIST.getTableName());
 		PrefsUtil.setInvisibleColumns(ProductAreaGroup.UNKNOWN.getProductAreaGroupName(), tableOrdersList.getName(),
@@ -992,8 +996,6 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 	}
 
 	private class ActionTransportSending extends AbstractAction {
-		public static final String SEND_STRING = "Sett sent...";
-		public static final String NOT_SEND_STRING = "Sett ikke sent...";
 		private boolean sending = true;
 		private WindowInterface window;
 

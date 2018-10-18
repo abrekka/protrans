@@ -20,10 +20,11 @@ import com.google.inject.Inject;
 
 /**
  * Håndterer menyvalg Administrer avvik...
+ * 
  * @author atle.brekka
  */
 public class AdminDeviationAction extends AbstractAction {
-    /**
+	/**
 	 * 
 	 */
 	private final MenuBarBuilderInterface menuBarBuilder;
@@ -31,19 +32,23 @@ public class AdminDeviationAction extends AbstractAction {
 	private DeviationOverviewView2 deviationOverviewView;
 
 	@Inject
-    public AdminDeviationAction(final MenuBarBuilderInterface aMenuBarBuilder,DeviationOverviewViewFactory deviationOverviewViewFactory,DeviationViewHandlerFactory deviationViewHandlerFactory) {
-        super("Administrer avvik...");
-        DeviationViewHandler2 deviationViewHandler=deviationViewHandlerFactory.create(null, true, false, true, null, true);
-        deviationOverviewView=deviationOverviewViewFactory.create(deviationViewHandler,true,null,true,false,true,null,true);
-    	
-		this.menuBarBuilder = aMenuBarBuilder;
-		
-    }
+	public AdminDeviationAction(final MenuBarBuilderInterface aMenuBarBuilder,
+			DeviationOverviewViewFactory deviationOverviewViewFactory,
+			DeviationViewHandlerFactory deviationViewHandlerFactory) {
+		super("Administrer avvik...");
+		DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(null, true, false, true, null,
+				true, true);
+		deviationOverviewView = deviationOverviewViewFactory.create(deviationViewHandler, true, null, true, false, true,
+				null, true);
 
-    /**
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
-    public void actionPerformed(final ActionEvent arg0) {
-        this.menuBarBuilder.openFrame(deviationOverviewView);
-    }
+		this.menuBarBuilder = aMenuBarBuilder;
+
+	}
+
+	/**
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void actionPerformed(final ActionEvent arg0) {
+		this.menuBarBuilder.openFrame(deviationOverviewView);
+	}
 }

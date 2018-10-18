@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.swing.Icon;
 
+import org.apache.commons.lang.StringUtils;
+
 import no.ugland.utransprod.gui.IconEnum;
 import no.ugland.utransprod.model.Deviation;
 import no.ugland.utransprod.model.PostShipment;
@@ -24,7 +26,23 @@ public class TextPaneRendererTransport extends TextPaneRenderer<Transportable> {
 	}
 
 	private String getWarning(final Transportable transportable) {
-		return stringHasValue(transportable.getSpecialConcern()) ? transportable.getSpecialConcern() : "";
+		String specialConcern=transportable.getSpecialConcern();
+		String justertTekst="";
+		if(StringUtils.isNotBlank(specialConcern)){
+			if(specialConcern.contains("Stående gavl")){
+				justertTekst+="Stående gavl (over 260cm) ";
+			}
+			if(specialConcern.contains("Stående tak")){
+				justertTekst+="Stående tak ";
+			}
+			if(specialConcern.contains("Høye vegger")){
+				justertTekst+="Høye vegger ";
+			}
+			if(specialConcern.contains("Lange vegger")){
+				justertTekst+="Lange vegger ";
+			}
+		}
+		return justertTekst;
 	}
 
 	private String getComment(final Transportable transportable) {
@@ -44,7 +62,18 @@ public class TextPaneRendererTransport extends TextPaneRenderer<Transportable> {
 	protected List<Icon> getIcons(Transportable transportable) {
 		List<Icon> icons = new ArrayList<Icon>();
 		boolean added = stringHasValue(transportable.getComment()) ? icons.add(IconEnum.ICON_COMMENT.getIcon()) : false;
-		added = stringHasValue(transportable.getSpecialConcern()) ? icons.add(IconEnum.ICON_WARNING.getIcon()) : false;
+		added = StringUtils.isNotBlank(transportable.getSpecialConcern())
+				&& transportable.getSpecialConcern().contains("Stående gavl")
+						? icons.add(IconEnum.ICON_WARNING.getIcon()) : false;
+		added = StringUtils.isNotBlank(transportable.getSpecialConcern())
+				&& transportable.getSpecialConcern().contains("Stående tak")
+						? icons.add(IconEnum.ICON_WARNING_BLUE.getIcon()) : false;
+		added = StringUtils.isNotBlank(transportable.getSpecialConcern())
+				&& transportable.getSpecialConcern().contains("Høye vegger")
+						? icons.add(IconEnum.ICON_WARNING_YELLOW.getIcon()) : false;
+		added = StringUtils.isNotBlank(transportable.getSpecialConcern())
+				&& transportable.getSpecialConcern().contains("Lange vegger")
+						? icons.add(IconEnum.ICON_WARNING_RED.getIcon()) : false;
 		added = isPostShipment(transportable) ? icons.add(IconEnum.ICON_POST_SHIPMENT.getIcon()) : false;
 		return icons;
 	}

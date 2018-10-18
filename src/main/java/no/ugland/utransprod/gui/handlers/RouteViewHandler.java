@@ -58,6 +58,7 @@ import no.ugland.utransprod.gui.model.BudgetType;
 import no.ugland.utransprod.gui.model.ColorEnum;
 import no.ugland.utransprod.gui.model.DeviationModel;
 import no.ugland.utransprod.gui.model.ProductionBudgetModel;
+import no.ugland.utransprod.gui.model.SupplierModel;
 import no.ugland.utransprod.gui.model.TextPaneRendererCustomer;
 import no.ugland.utransprod.gui.model.TransportSumVModel;
 import no.ugland.utransprod.gui.model.Transportable;
@@ -70,6 +71,7 @@ import no.ugland.utransprod.model.OrderComment;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.PostShipment;
 import no.ugland.utransprod.model.ProductAreaGroup;
+import no.ugland.utransprod.model.Supplier;
 import no.ugland.utransprod.model.Transport;
 import no.ugland.utransprod.model.TransportSumV;
 import no.ugland.utransprod.service.ColliManager;
@@ -115,6 +117,7 @@ import com.toedter.calendar.JYearChooser;
 public class RouteViewHandler
 		implements Closeable, Updateable, ListDataListener, ProductAreaGroupProvider, OrderNrProvider {
 	private JComboBox comboBoxWeeks;
+	private JComboBox comboBoxTransportfirma;
 	TransportWeekView transportWeekView;
 
 	JButton buttonSave;
@@ -122,6 +125,7 @@ public class RouteViewHandler
 	TransportWeekViewHandler transportWeekViewHandler;
 
 	final SelectionInList weekSelectionList;
+	final SelectionInList transportfirmaSelectionList;
 
 	boolean internalWeekChange = false;
 
@@ -163,6 +167,7 @@ public class RouteViewHandler
 	private PresentationModel presentationModelBudget;
 
 	private YearWeek yearWeek;
+	private Supplier transportfirma;
 
 	private TransportChangeListener transportChangeListener;
 
@@ -203,6 +208,11 @@ public class RouteViewHandler
 		transportChangeListener = new TransportChangeListener();
 		yearWeek = new YearWeek();
 		weekSelectionList = new SelectionInList(Util.getWeeks());
+		List<Supplier> alleLeverandorer = managerRepository.getSupplierManager().findActiveByTypeName("Transport",
+				"supplierName");
+		alleLeverandorer.add(0, new Supplier(-1, "ingen", null, null, null, null, null, null, null, null, null, null));
+		transportfirmaSelectionList = new SelectionInList(alleLeverandorer);
+
 		orderViewHandlerFactory = aOrderViewHandlerFactory;
 		orderViewHandler = orderViewHandlerFactory.create(true);
 		orderViewHandler.addListDataListener(this);
@@ -243,8 +253,10 @@ public class RouteViewHandler
 		menuItemSetTransportPostShimpment = new JMenuItem("Sett transport...");
 		menuItemSetTransportPostShimpment.setName("MenuItemSetTransportPostShipment");
 		menuItemSetTransportPostShimpment.setEnabled(hasWriteAccess());
-		menuItemShowContent = new JMenuItem("Vis innhold...");
-		menuItemShowContent.setName("MenuItemShowContent");
+		if (menuItemShowContent == null) {
+			menuItemShowContent = new JMenuItem("Vis innhold...");
+			menuItemShowContent.setName("MenuItemShowContent");
+		}
 		menuItemPacklist = new JMenuItem("Pakkliste...");
 		menuItemAddComment = new JMenuItem("Legg til kommentar...");
 		menuItemAddComment.setName("MenuItemAddComment");
@@ -346,6 +358,19 @@ public class RouteViewHandler
 		}
 		comboBoxWeeks.setSelectedItem(Util.getCurrentWeek());
 		return comboBoxWeeks;
+	}
+
+	public JComboBox getComboBoxTransportfirma(WindowInterface window) {
+		if (comboBoxTransportfirma == null) {
+			comboBoxTransportfirma = BasicComponentFactory.createComboBox(transportfirmaSelectionList);
+
+			BeanAdapter transportfirmaAdapter = new BeanAdapter(transportfirma, true);
+			transportfirmaSelectionList
+					.setSelectionHolder(transportfirmaAdapter.getValueModel(SupplierModel.PROPERTY_SUPPLIER_NAME));
+			transportfirmaSelectionList.addValueChangeListener(new TransportfirmaChangeListener(window));
+			comboBoxTransportfirma.setName("ComboBoxTransportfirma");
+		}
+		return comboBoxTransportfirma;
 	}
 
 	/**
@@ -600,8 +625,7 @@ public class RouteViewHandler
 			Util.setWaitCursor(window.getComponent());
 			if (!internalWeekChange) {
 				if (canClose(null, window)) {
-
-					transportWeekView.changeWeek(null, !checkBoxFilter.isSelected());
+					transportWeekView.changeWeek(null, !checkBoxFilter.isSelected(), hentTransportfirma());
 					buttonSave.setEnabled(false);
 					setTransportSum();
 					// checkBoxFilter.setSelected(true);
@@ -613,6 +637,25 @@ public class RouteViewHandler
 				internalWeekChange = false;
 			}
 			Util.setDefaultCursor(window.getComponent());
+		}
+
+	}
+
+	private final class TransportfirmaChangeListener implements PropertyChangeListener {
+		private WindowInterface window;
+
+		/**
+		 * @param aWindow
+		 */
+		public TransportfirmaChangeListener(final WindowInterface aWindow) {
+			window = aWindow;
+		}
+
+		/**
+		 * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+		 */
+		public void propertyChange(final PropertyChangeEvent event) {
+			doRefresh(window);
 		}
 
 	}
@@ -642,7 +685,8 @@ public class RouteViewHandler
 					if (!internalWeekChange) {
 						if (canClose(null, window)) {
 							internalWeekChange = true;
-							transportWeekView.changeWeek((Integer) event.getNewValue(), !checkBoxFilter.isSelected());
+							transportWeekView.changeWeek((Integer) event.getNewValue(), !checkBoxFilter.isSelected(),
+									hentTransportfirma());
 							buttonSave.setEnabled(false);
 							internalWeekChange = false;
 							setTransportSum();
@@ -677,7 +721,7 @@ public class RouteViewHandler
 	 */
 	public void doRefresh(WindowInterface window) {
 		orderViewHandler.initAndGetOrderPanelSelectionList(OrderPanelTypeEnum.NEW_ORDERS);
-		transportWeekView.changeWeek(null, !checkBoxFilter.isSelected());
+		transportWeekView.changeWeek(null, !checkBoxFilter.isSelected(), hentTransportfirma());
 
 		PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil.getBean("postShipmentManager");
 		List<PostShipment> postShipmentLines = postShipmentManager.findAllWithoutTransport();
@@ -685,6 +729,12 @@ public class RouteViewHandler
 		if (postShipmentLines != null) {
 			postShipmentList.addAll(postShipmentLines);
 		}
+	}
+
+	private String hentTransportfirma() {
+		Supplier supplier = (Supplier) comboBoxTransportfirma.getSelectedItem();
+		supplier = supplier == null || supplier.getSupplierName().equals("ingen") ? null : supplier;
+		return supplier == null ? null : supplier.getSupplierName();
 	}
 
 	/**
@@ -783,14 +833,18 @@ public class RouteViewHandler
 	}
 
 	private void setActionListenersForPostShipmentMenus(WindowInterface window) {
-		menuItemAddComment.addActionListener(new AddCommentAction(window));
-		menuItemShowContent.addActionListener(new ShowContentAction(window));
-		menuItemPacklist.addActionListener(new GeneratePacklistAction(window));
-		menuItemSetTransportOrder.addActionListener(new MenuItemListenerOrder(window));
-		menuItemUpdateStatus.addActionListener(new MenuItemListenerOrder(window));
-		menuItemShowTakstolinfo.addActionListener(showTakstolInfoActionFactory.create(this, window));
-		menuItemSetTransportPostShimpment.addActionListener(new MenuItemListenerPostShipment(window));
-		menuItemShowDeviation.addActionListener(new MenuItemListenerShowDeviation(window));
+		if (menuItemShowContent.getActionListeners().length == 0) {
+			menuItemAddComment.addActionListener(new AddCommentAction(window));
+
+			menuItemShowContent.addActionListener(new ShowContentAction(window));
+
+			menuItemPacklist.addActionListener(new GeneratePacklistAction(window));
+			menuItemSetTransportOrder.addActionListener(new MenuItemListenerOrder(window));
+			menuItemUpdateStatus.addActionListener(new MenuItemListenerOrder(window));
+			menuItemShowTakstolinfo.addActionListener(showTakstolInfoActionFactory.create(this, window));
+			menuItemSetTransportPostShimpment.addActionListener(new MenuItemListenerPostShipment(window));
+			menuItemShowDeviation.addActionListener(new MenuItemListenerShowDeviation(window));
+		}
 	}
 
 	private void initPostShipmentList(PostShipmentManager postShipmentManager, List<PostShipment> postShipmentLines) {
@@ -838,7 +892,7 @@ public class RouteViewHandler
 			if (transportable.getTransport() != null) {
 				yearWeek.setYear(transportable.getTransport().getTransportYear());
 				yearWeek.setWeek(transportable.getTransport().getTransportWeek());
-				transportWeekView.changeWeek(yearWeek.getYear(), !checkBoxFilter.isSelected());
+				transportWeekView.changeWeek(yearWeek.getYear(), !checkBoxFilter.isSelected(), hentTransportfirma());
 				transportWeekViewHandler.setSelectedTransportable(transportable.getTransport(), transportable);
 			} else {
 				labelSearchResult.setText("Orderen har ikke transport satt");
@@ -1422,7 +1476,7 @@ public class RouteViewHandler
 		// deviationViewHandlerFactory.create(null, false, false, false, null,
 		// true);
 		DeviationViewHandler deviationViewHandler = new DeviationViewHandler(login, managerRepository, null, null, true,
-				false, true, null, true);
+				false, true, null, true, false);
 
 		DeviationModel deviationModel = new DeviationModel(deviation, true);
 
@@ -1431,7 +1485,7 @@ public class RouteViewHandler
 		}
 
 		EditDeviationView editDeviationView = new EditDeviationView(false, deviationModel, deviationViewHandler, true,
-				true);
+				true, false);
 
 		JDialog dialog = new JDialog(ProTransMain.PRO_TRANS_MAIN, "Avvik", true);
 		WindowInterface window = new JDialogAdapter(dialog);
@@ -1988,7 +2042,7 @@ public class RouteViewHandler
 		// postShipmentSelectionList.getSelection();
 
 		DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(null, true, false, true, null,
-				true);
+				true, false);
 		deviationViewHandler.showDeviation(postShipment.getDeviation(), aWindow);
 	}
 
@@ -1999,7 +2053,7 @@ public class RouteViewHandler
 
 		public void actionPerformed(ActionEvent e) {
 			transportWeekViewHandler.setUseListView(((JCheckBox) e.getSource()).isSelected());
-			transportWeekView.changeWeek(null, !checkBoxFilter.isSelected());
+			transportWeekView.changeWeek(null, !checkBoxFilter.isSelected(), hentTransportfirma());
 		}
 	}
 

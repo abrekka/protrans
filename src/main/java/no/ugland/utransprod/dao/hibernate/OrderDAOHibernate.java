@@ -1437,14 +1437,12 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 				String sql = "SELECT cast(NoInvoAb as numeric(10,2)) as antall,F0100.dbo.ordln.prodtp,"
 						+ "F0100.dbo.txt.txt, " + "F0100.dbo.ordln.prodtp2, " + "F0100.dbo.Unit.descr as enhet"
 						+ ", F0100.dbo.ordln.descr, F0100.dbo.ordln.trinf4,F0100.dbo.prod.inf8,F0100.dbo.prod.prodno,F0100.dbo.prod.PrCatNo2"
-						+ ",F0100.dbo.ordln.purcno,F0100.dbo.ordln.ProdGr"
-						+ ",(select F0100.dbo.stcbal.nrmloc "
-						+ "from F0100.dbo.stcbal " 
-						+ "where F0100.dbo.stcbal.prodno=F0100.dbo.ordln.ProdNo and " 
-						  + "F0100.dbo.stcbal.stcno= case when F0100.dbo.ordln.prodtp =10 then 1 " 
-						     + "                       when F0100.dbo.ordln.prodtp =20 then 3  "
-								+ "					when F0100.dbo.ordln.prodtp =30 then 2  "
-									+ "				when F0100.dbo.ordln.prodtp =35 then 2 end) as lokasjon " 
+						+ ",F0100.dbo.ordln.purcno,F0100.dbo.ordln.ProdGr" + ",(select F0100.dbo.stcbal.nrmloc "
+						+ "from F0100.dbo.stcbal " + "where F0100.dbo.stcbal.prodno=F0100.dbo.ordln.ProdNo and "
+						+ "F0100.dbo.stcbal.stcno= case when F0100.dbo.ordln.prodtp =10 then 1 "
+						+ "                       when F0100.dbo.ordln.prodtp =20 then 3  "
+						+ "					when F0100.dbo.ordln.prodtp =30 then 2  "
+						+ "				when F0100.dbo.ordln.prodtp =35 then 2 end) as lokasjon "
 						+ "FROM F0100.dbo.OrdLn left outer join "
 						+ "F0100.dbo.txt on F0100.dbo.txt.txtno=F0100.dbo.ordln.prodtp2 inner join "
 						+ "F0100.dbo.ord on F0100.dbo.ordln.ordno=F0100.dbo.ord.ordno inner join "
@@ -1529,6 +1527,53 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 			}
 
 		});
+	}
+
+	public void taBortSentOgManglerKolli(final Order order) {
+		getHibernateTemplate().execute(new HibernateCallback() {
+
+			public Object doInHibernate(final Session session) {
+
+				String sql = "update Order o set o.sent=null, o.hasMissingCollies=null where o.orderId=:orderId";
+
+				session.createQuery(sql).setInteger("orderId", order.getOrderId()).executeUpdate();
+				return null;
+			}
+
+		});
+
+	}
+
+	public void settSentDato(final Order order, final Date sentDate) {
+		getHibernateTemplate().execute(new HibernateCallback() {
+
+			public Object doInHibernate(final Session session) {
+
+				String sql = "update Order o set o.sent=:sentDate where o.orderId=:orderId";
+
+				session.createQuery(sql).setDate("sentDate", sentDate).setInteger("orderId", order.getOrderId())
+						.executeUpdate();
+				return null;
+			}
+
+		});
+
+	}
+
+	public void settLevert(final Order order, final Date levertDate) {
+		getHibernateTemplate().execute(new HibernateCallback() {
+
+			public Object doInHibernate(final Session session) {
+
+				String sql = "update Order o set o.levert=:levertDate where o.orderId=:orderId";
+
+				session.createQuery(sql).setDate("levertDate", levertDate).setInteger("orderId", order.getOrderId())
+						.executeUpdate();
+				return null;
+			}
+
+		});
+
 	}
 
 }

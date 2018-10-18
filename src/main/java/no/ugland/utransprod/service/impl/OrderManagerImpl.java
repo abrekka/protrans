@@ -719,4 +719,21 @@ public class OrderManagerImpl extends ManagerImpl<Order> implements OrderManager
 		return ((OrderDAO)dao).finnMonteringsanvisninger(orderNr);
 	}
 
+	public void taBortSentOgManglerKolli(Order order) {
+		 ((OrderDAO)dao).taBortSentOgManglerKolli(order);
+		
+	}
+
+	public void settSentDato(Order order, Date sentDate) {
+		((OrderDAO)dao).settSentDato(order,sentDate);
+		
+	}
+
+	public void settLevert(Order order, Date levertDate) {
+		((OrderDAO)dao).settLevert(order,levertDate);
+		
+	}
+
+	
+
 }

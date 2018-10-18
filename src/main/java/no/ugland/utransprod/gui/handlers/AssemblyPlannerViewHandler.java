@@ -1135,7 +1135,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 				if (order != null) {
 
 					DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(order, true, false,
-							true, null, true);
+							true, null, true, true);
 					deviationViewHandler.registerDeviation(order, window);
 				}
 			} else if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemSetSentBase.getText())) {
@@ -1195,10 +1195,10 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 					// true, null, true);
 
 					DeviationViewHandler deviationViewHandler = new DeviationViewHandler(login, managerRepository, null,
-							order, true, false, true, null, true);
+							order, true, false, true, null, true, true);
 
 					EditDeviationView editDeviationView = new EditDeviationView(false,
-							new DeviationModel(deviation, false), deviationViewHandler, false, false);
+							new DeviationModel(deviation, false), deviationViewHandler, false, false, true);
 
 					JDialog dialog = new JDialog(ProTransMain.PRO_TRANS_MAIN, "Avvik", true);
 					WindowInterface window = new JDialogAdapter(dialog);

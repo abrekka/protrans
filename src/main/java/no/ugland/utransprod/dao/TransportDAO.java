@@ -24,7 +24,8 @@ public interface TransportDAO extends DAO<Transport> {
 
 	List<Transport> findNewTransports();
 
-	List<Transport> findByYearAndWeekAndProductAreaGroup(Integer year, Integer week, boolean ikkeTaMedOpplastet);
+	List<Transport> findByYearAndWeekAndProductAreaGroup(Integer year, Integer week, boolean ikkeTaMedOpplastet,
+			String transportfirma);
 
 	List<Transport> findSentInPeriode(Periode periode);
 

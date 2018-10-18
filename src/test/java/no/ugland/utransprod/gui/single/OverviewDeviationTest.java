@@ -56,7 +56,7 @@ import com.birosoft.liquid.LiquidLookAndFeel;
  * 
  */
 @Category(ManuellTest.class)
-public class OverviewDeviationTest  {
+public class OverviewDeviationTest {
 	static {
 		try {
 
@@ -81,19 +81,19 @@ public class OverviewDeviationTest  {
 		PreventiveActionManager preventiveActionManager = (PreventiveActionManager) ModelUtil
 				.getBean(PreventiveActionManager.MANAGER_NAME);
 		when(managerRepository.getPreventiveActionManager()).thenReturn(preventiveActionManager);
-		JobFunctionManager jobFunctionManager = (JobFunctionManager) ModelUtil
-				.getBean(JobFunctionManager.MANAGER_NAME);
+		JobFunctionManager jobFunctionManager = (JobFunctionManager) ModelUtil.getBean(JobFunctionManager.MANAGER_NAME);
 		when(managerRepository.getJobFunctionManager()).thenReturn(jobFunctionManager);
-		ProductAreaManager productAreaManager=(ProductAreaManager)ModelUtil.getBean(ProductAreaManager.MANAGER_NAME);
+		ProductAreaManager productAreaManager = (ProductAreaManager) ModelUtil.getBean(ProductAreaManager.MANAGER_NAME);
 		when(managerRepository.getProductAreaManager()).thenReturn(productAreaManager);
-		DeviationStatusManager deviationStatusManager=(DeviationStatusManager)ModelUtil.getBean(DeviationStatusManager.MANAGER_NAME);
+		DeviationStatusManager deviationStatusManager = (DeviationStatusManager) ModelUtil
+				.getBean(DeviationStatusManager.MANAGER_NAME);
 		when(managerRepository.getDeviationStatusManager()).thenReturn(deviationStatusManager);
-		ApplicationUserManager applicationUserManager=(ApplicationUserManager)ModelUtil.getBean(ApplicationUserManager.MANAGER_NAME);
+		ApplicationUserManager applicationUserManager = (ApplicationUserManager) ModelUtil
+				.getBean(ApplicationUserManager.MANAGER_NAME);
 		when(managerRepository.getApplicationUserManager()).thenReturn(applicationUserManager);
-		DeviationManager deviationManager=(DeviationManager)ModelUtil.getBean(DeviationManager.MANAGER_NAME);
+		DeviationManager deviationManager = (DeviationManager) ModelUtil.getBean(DeviationManager.MANAGER_NAME);
 		when(managerRepository.getDeviationManager()).thenReturn(deviationManager);
-		OrderManager orderManager = (OrderManager) ModelUtil
-				.getBean(OrderManager.MANAGER_NAME);
+		OrderManager orderManager = (OrderManager) ModelUtil.getBean(OrderManager.MANAGER_NAME);
 		when(managerRepository.getOrderManager()).thenReturn(orderManager);
 		final UserType userType = new UserType();
 		Set<UserTypeAccess> userTypeAccesses = new HashSet<UserTypeAccess>();
@@ -112,21 +112,14 @@ public class OverviewDeviationTest  {
 		applicationUser.setProductArea(productArea);
 		when(login.getApplicationUser()).thenReturn(applicationUser);
 
-		
+		final PreventiveActionViewHandler preventiveActionViewHandler = new PreventiveActionViewHandler(login,
+				managerRepository);
 
-		
+		final DeviationViewHandler deviationViewHandler = new DeviationViewHandler(login, managerRepository,
+				preventiveActionViewHandler, null, true, false, true, null, true, true);
 
-
-		final PreventiveActionViewHandler preventiveActionViewHandler = new PreventiveActionViewHandler(
-				login, managerRepository);
-
-		final DeviationViewHandler deviationViewHandler = new DeviationViewHandler(
-				login, managerRepository, preventiveActionViewHandler, null,
-				true, false, true, null, true);
-
-		final DeviationOverviewView view = new DeviationOverviewView(
-				preventiveActionViewHandler, deviationViewHandler, true, null,
-				true, false, true, null, true);
+		final DeviationOverviewView view = new DeviationOverviewView(preventiveActionViewHandler, deviationViewHandler,
+				true, null, true, false, true, null, true);
 
 		JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
 			protected JDialog executeInEDT() {
@@ -174,7 +167,6 @@ public class OverviewDeviationTest  {
 		dialogFixture.button("RemoveDeviation").requireDisabled();
 	}
 
-
 	@Test
 	public void testPrint() {
 		dialogFixture.show(new Dimension(850, 500));
@@ -183,17 +175,14 @@ public class OverviewDeviationTest  {
 		tableFixture.selectCell(row(0).column(1));
 		tableFixture.cell(row(0).column(1)).doubleClick();
 
-		DialogFixture edit = WindowFinder.findDialog("EditDeviationView")
-				.withTimeout(20000).using(dialogFixture.robot);
+		DialogFixture edit = WindowFinder.findDialog("EditDeviationView").withTimeout(20000).using(dialogFixture.robot);
 
 		edit.button("ButtonPrint").click();
 
-		DialogFixture printer = WindowFinder.findDialog("Avvik").withTimeout(
-				20000).using(dialogFixture.robot);
+		DialogFixture printer = WindowFinder.findDialog("Avvik").withTimeout(20000).using(dialogFixture.robot);
 		printer.button("ButtonCancel").click();
 		assertNotNull(printer);
 	}
-
 
 	@Test
 	public void testSearchOpen() {
@@ -201,8 +190,8 @@ public class OverviewDeviationTest  {
 		dialogFixture.checkBox("CheckBoxFilterOwn").uncheck();
 		dialogFixture.button("SearchDeviation").click();
 
-		DialogFixture editDialog = WindowFinder.findDialog("EditDeviationView")
-				.withTimeout(20000).using(dialogFixture.robot);
+		DialogFixture editDialog = WindowFinder.findDialog("EditDeviationView").withTimeout(20000)
+				.using(dialogFixture.robot);
 
 		editDialog.textBox("TextFieldOrderNr").enterText("34325");
 		editDialog.button("EditSearchDeviation").click();
@@ -214,8 +203,7 @@ public class OverviewDeviationTest  {
 		tableFixture.selectCell(row(0).column(1));
 		tableFixture.cell(row(0).column(1)).doubleClick();
 
-		editDialog = WindowFinder.findDialog("EditDeviationView").withTimeout(
-				20000).using(dialogFixture.robot);
+		editDialog = WindowFinder.findDialog("EditDeviationView").withTimeout(20000).using(dialogFixture.robot);
 	}
 
 	@Test
@@ -229,8 +217,7 @@ public class OverviewDeviationTest  {
 		String content;
 		while (functionNotFound) {
 			row++;
-			content = dialogFixture.table("TableDeviation").cell(
-					row(row).column(8)).value();
+			content = dialogFixture.table("TableDeviation").cell(row(row).column(8)).value();
 			if (content.equalsIgnoreCase("Transport")) {
 				functionNotFound = false;
 			}
@@ -238,8 +225,7 @@ public class OverviewDeviationTest  {
 
 		tableFixture.cell(row(row).column(1)).doubleClick();
 
-		WindowFinder.findDialog("EditDeviationView").withTimeout(60000).using(
-				dialogFixture.robot);
+		WindowFinder.findDialog("EditDeviationView").withTimeout(60000).using(dialogFixture.robot);
 
 	}
 
@@ -253,11 +239,10 @@ public class OverviewDeviationTest  {
 
 		tableFixture.cell(row(1).column(1)).doubleClick();
 
-		DialogFixture editDialog = WindowFinder.findDialog("EditDeviationView")
-				.withTimeout(60000).using(dialogFixture.robot);
+		DialogFixture editDialog = WindowFinder.findDialog("EditDeviationView").withTimeout(60000)
+				.using(dialogFixture.robot);
 
 		editDialog.comboBox("ComboBoxStatus").selectItem("Ferdigbehandlet");
-		editDialog.textBox("TextFieldDateClosed").requireText(
-				Util.getCurrentDateAsDateString());
+		editDialog.textBox("TextFieldDateClosed").requireText(Util.getCurrentDateAsDateString());
 	}
 }
