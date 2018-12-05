@@ -1,5 +1,6 @@
 package no.ugland.utransprod.gui.model;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,7 @@ public abstract class TextPaneRenderer<T> extends JTextPane implements
 
 	private void setBackgrounAndForeground(final JTable table,
 			final boolean isSelected) {
+		setBackground(Color.CYAN);
 		if (isSelected) {
 			setBackground(table.getSelectionBackground());
 			setForeground(table.getSelectionForeground());

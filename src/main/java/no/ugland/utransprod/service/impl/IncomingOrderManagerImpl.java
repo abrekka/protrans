@@ -503,7 +503,7 @@ public class IncomingOrderManagerImpl extends ManagerImpl<Order> implements Inco
 	private void setConstructionTypeAttributes(Order incomingOrder, Ord ord) {
 		ConstructionTypeAttributesConverter converter = ConstructionTypeAttributesConverterSelector
 				.valueOf(StringUtils.upperCase(incomingOrder.getProductAreaGroup().getProductAreaGroupName()))
-				.getConverter(ordlnManager);
+				.getConverter(ordlnManager,costTypeManager,costUnitManager);
 		if (converter != null) {
 			converter.setConstructionTypeAttributes(ord, incomingOrder);
 		}

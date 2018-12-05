@@ -94,5 +94,9 @@ public interface ManagerRepository {
 
 	public abstract DeviationVManager getDeviationVManager();
 
+	public abstract CostTypeManager getCostTypeManager();
+
+	public abstract CostUnitManager getCostUnitManager();
+
 
 }

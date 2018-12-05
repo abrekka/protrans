@@ -22,6 +22,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.swing.AbstractAction;
+import javax.swing.Icon;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -73,6 +74,7 @@ import no.ugland.utransprod.gui.WindowInterface;
 import no.ugland.utransprod.gui.checker.StatusCheckerInterface;
 import no.ugland.utransprod.gui.edit.AbstractEditView;
 import no.ugland.utransprod.gui.model.ColorEnum;
+import no.ugland.utransprod.gui.model.TextPaneRenderer;
 import no.ugland.utransprod.gui.model.TextPaneRendererTransport;
 import no.ugland.utransprod.gui.model.TransportListable;
 import no.ugland.utransprod.gui.model.TransportModel;
@@ -604,8 +606,8 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 			column.setPrefferedWidth(tableOrders);
 		}
 
-		tableOrders.getColumnModel().getColumn(tableOrders.getColumnExt("Levert").getModelIndex())
-		.setCellRenderer(new LevertRenderer());
+		tableOrders.getColumnModel().getColumn(tableOrders.getColumnExt("Ikke levert").getModelIndex())
+				.setCellRenderer(new TextPaneRendererLevert());
 
 		tableOrders.addHighlighter(HighlighterFactory.createAlternateStriping());
 
@@ -1354,7 +1356,9 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		SentTransportViewHandler sentTransportViewHandler = new SentTransportViewHandler(login, managerRepository,
 				deviationViewHandlerFactory, tmpTransportableList, false, sentTransport, sentDate);
 
-		Util.showEditViewable(new SentTransportView(sentTransportViewHandler), window1);
+		// Util.showEditViewable(new
+		// SentTransportView(sentTransportViewHandler), window1);
+		sentTransportViewHandler.saveObjects(window1, sentDate);
 
 		handlingOrders = false;
 		return sentTransportViewHandler.isCanceled();
@@ -2492,15 +2496,17 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		return transportable.getOrderNr();
 	}
 
-	public class LevertRenderer extends DefaultTableCellRenderer  {
+	public class TextPaneRendererLevert extends JTextPane implements TableCellRenderer {
 
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-				int row, int column) {
-			Component c=super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-			c.setBackground(Color.ORANGE);
-			c.setForeground(Color.ORANGE);
-			return c;
+		public Component getTableCellRendererComponent(JTable arg0, Object arg1, boolean arg2, boolean arg3, int arg4,
+				int arg5) {
+			setText((String) arg1);
+			if (getText().contains("!")) {
+				insertIcon(IconEnum.ICON_WARNING.getIcon());
+			}
+			return this;
 		}
 
 	}
+
 }

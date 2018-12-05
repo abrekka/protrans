@@ -1347,6 +1347,7 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 						+ "' and(F0100.dbo.ordln.prodno like 'tak %' or" + " F0100.dbo.ordln.prodno like 'ff%' or"
 						+ " F0100.dbo.prod.PrCatNo2 = 32 or" + " F0100.dbo.prod.PrCatNo2 = 4 or"
 						+ " F0100.dbo.ordln.prodno='OVERSKRIFT' or" + " F0100.dbo.ordln.descr like 'Vegg:%' or"
+						+ " F0100.dbo.ordln.descr like 'Vägg:%' or" + " F0100.dbo.ordln.descr like 'Gavelspets:%' or"
 						+ " F0100.dbo.ordln.descr like 'Gavl:%' or" + " F0100.dbo.prod.PrCatNo2 in(29,30,9) or"
 						+ " (F0100.dbo.prod.PrCatNo = 509600 and F0100.dbo.ordln.purcno>0))";
 

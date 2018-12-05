@@ -7,9 +7,12 @@ import java.util.Date;
 import no.ugland.utransprod.model.Assembly;
 import no.ugland.utransprod.model.Ord;
 import no.ugland.utransprod.model.Order;
+import no.ugland.utransprod.model.OrderCost;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.OrderLineAttribute;
 import no.ugland.utransprod.model.Ordln;
+import no.ugland.utransprod.model.PreventiveActionCommentCommentType;
+import no.ugland.utransprod.model.Ordln.CostLine;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -22,9 +25,13 @@ public class GarasjeConverter implements ConstructionTypeAttributesConverter {
 	private static final String WIDTH_ATTRIBUTE = "Bredde";
 	private static final String LENGTH_ATTRIBUTE = "Lengde";
 	private OrdlnManager ordlnManager;
+	private CostTypeManager costTypeManager;
+	private CostUnitManager costUnitManager;
 
-	public GarasjeConverter(OrdlnManager aOrdlnManager) {
+	public GarasjeConverter(OrdlnManager aOrdlnManager, CostTypeManager costTypeManager,CostUnitManager costUnitManager) {
 		ordlnManager = aOrdlnManager;
+		this.costTypeManager = costTypeManager;
+		this.costUnitManager=costUnitManager;
 	}
 
 	public void setConstructionTypeAttributes(Ord ord, Order order) {
@@ -36,13 +43,9 @@ public class GarasjeConverter implements ConstructionTypeAttributesConverter {
 		}
 
 		if ("Rekke".equalsIgnoreCase(order.getProductArea().getProductArea())) {
-			Assembly assembly = new Assembly();
-			Calendar kal = Calendar.getInstance();
-
-			assembly.setAssemblyYear(kal.get(Calendar.YEAR));
-			assembly.setAssemblyWeek(kal.get(Calendar.WEEK_OF_YEAR));
-			assembly.setAssembliedDate(kal.getTime());
-			order.setAssembly(assembly);
+			OrderCost monteringskostnad=CostLine.MONTERING_VILLA.addCost(costTypeManager,
+					costUnitManager, order, BigDecimal.ZERO);
+			order.addOrderCost(monteringskostnad);
 		}
 		DefaultConverter.setAttributes(garageOrderLine, ordlnManager);
 	}

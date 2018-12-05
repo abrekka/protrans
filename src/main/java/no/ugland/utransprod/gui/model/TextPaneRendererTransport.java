@@ -1,5 +1,6 @@
 package no.ugland.utransprod.gui.model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,6 +91,7 @@ public class TextPaneRendererTransport extends TextPaneRenderer<Transportable> {
 		toolTip.append(getComment(transportable));
 
 		toolTip.append(getWarning(transportable));
+		
 		return toolTip;
 	}
 

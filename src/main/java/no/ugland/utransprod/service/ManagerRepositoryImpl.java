@@ -48,6 +48,8 @@ public class ManagerRepositoryImpl implements ManagerRepository {
     private AssemblyOverdueVManager assemblyOverdueVManager;
     private FrontProductionVManager frontProductionVManager;
     private FakturagrunnlagVManager fakturagrunnlagVManager;
+	private CostTypeManager costTypeManager;
+	private CostUnitManager costUnitManager;
 
     public ManagerRepositoryImpl() {
 
@@ -69,7 +71,9 @@ public class ManagerRepositoryImpl implements ManagerRepository {
 	    SumOrderReadyVManager aSumOrderReadyVManager, DeviationStatusManager aDeviationStatusManager, UdsalesmallManager aUdsalesmallManager,
 	    TransportSumVManager aTransportSumVManager, IntelleVManager aIpkOrdManager, ProductAreaGroupManager aProductAreaGroupManager,
 	    CustTrManager aCustTrManager, AssemblyOverdueVManager aAssemblyOverdueVManager, FrontProductionVManager frontProductionVManager,
-	    FakturagrunnlagVManager fakturagrunnlagVManager,DeviationVManager aDeviationVManager) {
+	    FakturagrunnlagVManager fakturagrunnlagVManager,DeviationVManager aDeviationVManager,CostTypeManager aCostTypeManager,CostUnitManager aCostUnitManager) {
+    	costUnitManager=aCostUnitManager;
+    	costTypeManager=aCostTypeManager;
 	ipkOrdManager = aIpkOrdManager;
 	transportSumVManager = aTransportSumVManager;
 	udsalesmallManager = aUdsalesmallManager;
@@ -398,6 +402,14 @@ public class ManagerRepositoryImpl implements ManagerRepository {
 
 	public DeviationVManager getDeviationVManager() {
 		return deviationVManager;
+	}
+
+	public CostTypeManager getCostTypeManager() {
+		return costTypeManager;
+	}
+
+	public CostUnitManager getCostUnitManager() {
+		return costUnitManager;
 	}
 
 }

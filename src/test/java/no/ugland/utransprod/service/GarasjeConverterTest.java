@@ -30,6 +30,10 @@ public class GarasjeConverterTest {
 
 	@Mock
 	private OrdlnManager ordlnManager;
+	@Mock
+	private CostTypeManager costTypeManager;
+	@Mock
+	private CostUnitManager costUnitManager;
 
 	@Before
 	public void settopp() {
@@ -38,7 +42,8 @@ public class GarasjeConverterTest {
 
 	@Test
 	public void testConvertConstructionType() {
-		ConstructionTypeAttributesConverter garasjeConverter = new GarasjeConverter(ordlnManager);
+		ConstructionTypeAttributesConverter garasjeConverter = new GarasjeConverter(ordlnManager, costTypeManager,
+				costUnitManager);
 		ProductAreaGroup productAreaGroup = new ProductAreaGroup();
 		productAreaGroup.setProductAreaGroupName("Garasje");
 		ProductArea productArea = new ProductArea();
@@ -136,7 +141,8 @@ public class GarasjeConverterTest {
 
 	@Test
 	public void skalLeggePaaMontertDersomRekke() {
-		ConstructionTypeAttributesConverter garasjeConverter = new GarasjeConverter(ordlnManager);
+		ConstructionTypeAttributesConverter garasjeConverter = new GarasjeConverter(ordlnManager, costTypeManager,
+				costUnitManager);
 		ProductAreaGroup productAreaGroup = new ProductAreaGroup();
 		productAreaGroup.setProductAreaGroupName("Garasje");
 		ProductArea productArea = new ProductArea();

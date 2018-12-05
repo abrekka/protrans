@@ -510,10 +510,11 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 		Order order = assembly.getOrder();
 		Deviation deviation = assembly.getDeviation();
 
-		orderViewHandler.setAssemblyInactive(assembly);
+//		orderViewHandler.setAssemblyInactive(assembly);
 		if (order != null) {
 
 			try {
+				managerRepository.getAssemblyManager().removeObject(assembly);
 				orderViewHandler.getOrderManager().saveOrder(order);
 				orderViewHandler.initAndGetOrderPanelSelectionList(OrderPanelTypeEnum.ASSEMBLY_ORDERS);
 			} catch (ProTransException e) {

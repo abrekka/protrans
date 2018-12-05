@@ -344,7 +344,7 @@ public class SentTransportViewHandler implements Closeable {
 	 *      no.ugland.utransprod.gui.WindowInterface)
 	 */
 	public boolean canClose(String actionString, WindowInterface window) {
-		saveObjects(window);
+		saveObjects(window,null);
 
 		return true;
 	}
@@ -355,43 +355,41 @@ public class SentTransportViewHandler implements Closeable {
 	 * @param window
 	 */
 	@SuppressWarnings("unchecked")
-	private void saveObjects(final WindowInterface window) {
+	public void saveObjects(final WindowInterface window,Date sentDate) {
 		ColliManager colliManager = (ColliManager) ModelUtil.getBean("colliManager");
 		if (isCollies) {
 			saveCollies(colliManager);
 		} else {
-			handleSendingTransportables(window);
+			handleSendingTransportables(window,sentDate);
 		}
 	}
 
-	private void handleSendingTransportables(final WindowInterface window) {
+	private void handleSendingTransportables(final WindowInterface window,Date sentDate) {
 		OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
 		PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil.getBean("postShipmentManager");
 		List<TransportListable> updatedTransportables = new ArrayList<TransportListable>(list);
 
 		for (TransportListable transportlistable : updatedTransportables) {
-Date transportSendt=transportlistable.getSent();
+			Date transportSendt = sentDate==null?transportlistable.getSent():sentDate;
 			// lazyLoadTransportlistable(orderManager, postShipmentManager,
 			// transportlistable);
 			// lazyLoadTree(orderManager, postShipmentManager,
 			// transportlistable);
 			// lazyLoad(orderManager, postShipmentManager, transportlistable);
 			if (transportlistable instanceof Order) {
-//				orderManager.saveOrder((Order) transportlistable);
+				// orderManager.saveOrder((Order) transportlistable);
 				orderManager.lazyLoadOrder((Order) transportlistable,
-						new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.COLLIES});
+						new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.COLLIES });
 			} else {
 				postShipmentManager.lazyLoad((PostShipment) transportlistable, new LazyLoadPostShipmentEnum[] {
-						LazyLoadPostShipmentEnum.ORDER_LINES, LazyLoadPostShipmentEnum.COLLIES});
+						LazyLoadPostShipmentEnum.ORDER_LINES, LazyLoadPostShipmentEnum.COLLIES });
 			}
-			
+
 			transportlistable.setSent(transportSendt);
-			
-			
 
 			handleCollies(transportlistable);
 			if (checkMissingOrderLines(transportlistable, window)) {
-				settSentDato(window, orderManager, postShipmentManager, transportlistable,transportSendt);
+				settSentDato(window, orderManager, postShipmentManager, transportlistable, transportSendt);
 
 				// lazyLoadTree(orderManager, postShipmentManager,
 				// transportlistable);
@@ -454,18 +452,19 @@ Date transportSendt=transportlistable.getSent();
 
 	private void settSentDato(final WindowInterface window, OrderManager orderManager,
 			PostShipmentManager postShipmentManager, TransportListable transportlistable, Date sentDate) {
-		
+
 		if (transportlistable instanceof Order) {
-			orderManager.settSentDato((Order)transportlistable,sentDate);
-//			try {
-//				orderManager.saveOrder((Order) transportlistable);
-//			} catch (ProTransException e) {
-//				Util.showErrorDialog(window, "Feil", e.getMessage());
-//				e.printStackTrace();
-//			}
+			orderManager.settSentDato((Order) transportlistable, sentDate);
+			// try {
+			// orderManager.saveOrder((Order) transportlistable);
+			// } catch (ProTransException e) {
+			// Util.showErrorDialog(window, "Feil", e.getMessage());
+			// e.printStackTrace();
+			// }
 		} else {
-			postShipmentManager.settSentDato((PostShipment) transportlistable,sentDate);
-//			postShipmentManager.savePostShipment((PostShipment) transportlistable);
+			postShipmentManager.settSentDato((PostShipment) transportlistable, sentDate);
+			// postShipmentManager.savePostShipment((PostShipment)
+			// transportlistable);
 		}
 	}
 
@@ -543,23 +542,22 @@ Date transportSendt=transportlistable.getSent();
 		Util.locateOnScreenCenter(window);
 		window.setVisible(true);
 
-//		postShipment = deviation.getPostShipment();
+		// postShipment = deviation.getPostShipment();
 
 		// postShipment.setDeviation(deviation);
-//		postShipment.setOrder(transportlistable.getOrder());
-//		postShipment.cacheComments();
+		// postShipment.setOrder(transportlistable.getOrder());
+		// postShipment.cacheComments();
 
 		if (transportlistable instanceof PostShipment) {
 			postShipment.setPostShipmentRef((PostShipment) transportlistable);
 			postShipmentManager.savePostShipment(postShipment);
 		}
 
-		
 		Colli colli;
 		Iterator<OrderLine> it = orderLines.iterator();
 		while (it.hasNext()) {
 			OrderLine orderLine = it.next();
-//			orderLine.setPostShipment(postShipment);
+			// orderLine.setPostShipment(postShipment);
 			colli = orderLine.getColli();
 			if (colli != null) {
 				ColliManager colliManager = (ColliManager) ModelUtil.getBean("colliManager");

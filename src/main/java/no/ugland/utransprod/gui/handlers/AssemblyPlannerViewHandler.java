@@ -162,6 +162,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	JPopupMenu popupMenuAssembly;
 
 	JMenuItem menuItemSetAssembly;
+	JMenuItem menuItemFakturagrunnlag;
 
 	JMenuItem menuItemShowContent;
 	JMenuItem menuItemSetSentBase;
@@ -297,9 +298,12 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		MenuItemListenerAssembly menuItemListenerAssembly = new MenuItemListenerAssembly(window);
 		popupMenuSetAssembly = new JPopupMenu("Sett montering...");
 		menuItemSetAssembly = new JMenuItem("Sett montering...");
+		menuItemFakturagrunnlag = new JMenuItem("Fakturagrunnlag...");
 		menuItemSetAssembly.setEnabled(hasWriteAccess());
 		popupMenuSetAssembly.add(menuItemSetAssembly);
+		popupMenuSetAssembly.add(menuItemFakturagrunnlag);
 		menuItemSetAssembly.addActionListener(menuItemListenerOrder);
+		menuItemFakturagrunnlag.addActionListener(menuItemListenerOrder);
 
 		popupMenuSetAssemblyDeviation = new JPopupMenu("Sett montering...");
 		popupMenuAssembly = new JPopupMenu("Sett montering...");
@@ -392,35 +396,39 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		Assembly assembly = managerRepository.getAssemblyManager().get(assemblyV.getAssemblyId());
 		if (assembly != null) {
 			Order order = assembly.getOrder() == null ? assembly.getDeviation().getOrder() : assembly.getOrder();
-			managerRepository.getOrderManager().lazyLoadOrder(order,
-					new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_COSTS, LazyLoadOrderEnum.COMMENTS });
 
-			// List<Ordln> vismaOrderLines =
-			// managerRepository.getOrdlnManager().findForFakturagrunnlag(assembly.getOrder().getOrderNr());
-
-			Integer orderId = order == null ? assembly.getDeviation().getOrder().getOrderId() : order.getOrderId();
-			List<FakturagrunnlagV> fakturagrunnlag = managerRepository.getFakturagrunnlagVManager()
-					.findFakturagrunnlag(orderId);
-			List<FakturagrunnlagV> filtrertFakturagrunnlag = Lists
-					.newArrayList(Iterables.filter(fakturagrunnlag, ikkeFraktMed001()));
-			// AssemblyReport assemblyReport =
-			// assemblyReportFactory.create(assembly.getOrder(),
-			// vismaOrderLines);
-			final CraningCostManager craningCostManager = (CraningCostManager) ModelUtil
-					.getBean(CraningCostManager.MANAGER_NAME);
-			AssemblyReportNy assemblyReport = new AssemblyReportNy(craningCostManager, order, filtrertFakturagrunnlag);
-
-			String orderNr = order == null ? assembly.getDeviation().getOrderNr() : order.getOrderNr();
-			MailConfig mailConfig = new MailConfig("Fakturagrunnlag", "Fakturagrunnlag", "", "");
-			mailConfig.addToHeading(" for ordrenummer " + orderNr);
-
-			ReportViewer reportViewer = new ReportViewer("Montering", mailConfig);
-			List<AssemblyReportNy> assemblyReportList = Lists.newArrayList();
-			assemblyReportList.add(assemblyReport);
-			reportViewer.generateProtransReportFromBeanAndShow(assemblyReportList, "Montering", ReportEnum.ASSEMBLY_NY,
-					null, null, window, true);
-
+			genererFakturagrunnlagForOrdre(order, assembly, window);
 		}
+	}
+
+	private void genererFakturagrunnlagForOrdre(Order order, Assembly assembly, WindowInterface window) {
+		managerRepository.getOrderManager().lazyLoadOrder(order,
+				new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_COSTS, LazyLoadOrderEnum.COMMENTS });
+
+		// List<Ordln> vismaOrderLines =
+		// managerRepository.getOrdlnManager().findForFakturagrunnlag(assembly.getOrder().getOrderNr());
+
+		Integer orderId = order == null ? assembly.getDeviation().getOrder().getOrderId() : order.getOrderId();
+		List<FakturagrunnlagV> fakturagrunnlag = managerRepository.getFakturagrunnlagVManager()
+				.findFakturagrunnlag(orderId);
+		List<FakturagrunnlagV> filtrertFakturagrunnlag = Lists
+				.newArrayList(Iterables.filter(fakturagrunnlag, ikkeFraktMed001()));
+		// AssemblyReport assemblyReport =
+		// assemblyReportFactory.create(assembly.getOrder(),
+		// vismaOrderLines);
+		final CraningCostManager craningCostManager = (CraningCostManager) ModelUtil
+				.getBean(CraningCostManager.MANAGER_NAME);
+		AssemblyReportNy assemblyReport = new AssemblyReportNy(craningCostManager, order, filtrertFakturagrunnlag);
+
+		String orderNr = order == null ? assembly.getDeviation().getOrderNr() : order.getOrderNr();
+		MailConfig mailConfig = new MailConfig("Fakturagrunnlag", "Fakturagrunnlag", "", "");
+		mailConfig.addToHeading(" for ordrenummer " + orderNr);
+
+		ReportViewer reportViewer = new ReportViewer("Montering", mailConfig);
+		List<AssemblyReportNy> assemblyReportList = Lists.newArrayList();
+		assemblyReportList.add(assemblyReport);
+		reportViewer.generateProtransReportFromBeanAndShow(assemblyReportList, "Montering", ReportEnum.ASSEMBLY_NY,
+				null, null, window, true);
 	}
 
 	private Predicate<FakturagrunnlagV> ikkeFraktMed001() {
@@ -1102,8 +1110,41 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 				deviationManager.lazyLoad(deviation, new LazyLoadDeviationEnum[] { LazyLoadDeviationEnum.ORDER_LINES });
 				showContent(deviation, window);
 
+			} else if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemFakturagrunnlag.getText())) {
+				genererFakturagrunnlag(window);
 			}
 		}
+
+	}
+
+	private void genererFakturagrunnlag(final WindowInterface window) {
+		int index = orderViewHandler.getOrderPanelSelectedOrderIndex();
+		final Order order = getSelectedOrder(index);
+
+		Util.runInThreadWheel(window.getRootPane(), new Threadable() {
+
+			public void enableComponents(boolean enable) {
+			}
+
+			public Object doWork(Object[] params, JLabel labelInfo) {
+				labelInfo.setText("Genererer fakturagrunnlag...");
+				String errorMsg = null;
+				try {
+					genererFakturagrunnlagForOrdre(order,order.getAssembly(),window);
+				} catch (ProTransException e) {
+					errorMsg = e.getMessage();
+					e.printStackTrace();
+				}
+				return errorMsg;
+			}
+
+			public void doWhenFinished(Object object) {
+				if (object != null) {
+					Util.showErrorDialog(window, "Feil", object.toString());
+				}
+			}
+
+		}, null);
 
 	}
 
