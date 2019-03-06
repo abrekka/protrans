@@ -347,7 +347,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[19x148mm]]></text>
+				<text><![CDATA[19x140mm]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="96" width="60" height="13"/>
@@ -369,7 +369,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[19x173mm]]></text>
+				<text><![CDATA[19x73mm]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="96" width="75" height="13"/>
@@ -457,7 +457,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement/>
-				<text><![CDATA[  Halv valm sett]]></text>
+				<text><![CDATA[  Utforing Front over dør]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="460" width="60" height="13"/>
@@ -1583,14 +1583,14 @@
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="122" width="160" height="13"/>
-				<box>
+				<box leftPadding="0">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement/>
-				<text><![CDATA[  Sidefront standart 65x205]]></text>
+				<text><![CDATA[  Søyle 90x90]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="122" width="75" height="13"/>
@@ -1634,7 +1634,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement/>
-				<text><![CDATA[  Sidefront standart 65x230]]></text>
+				<text><![CDATA[  Halv valm sett]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="135" width="75" height="13"/>
@@ -1722,7 +1722,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement/>
-				<text><![CDATA[  Utforing innside F.O.D]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="343" width="75" height="13"/>

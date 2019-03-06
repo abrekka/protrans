@@ -23,6 +23,7 @@ import no.ugland.utransprod.model.Produceable;
 import no.ugland.utransprod.service.IApplyListManager;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.OrderLineManager;
+import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.util.ApplicationParamUtil;
 import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.Tidsforbruk;
@@ -32,8 +33,9 @@ public class FrontProductionApplyList extends ProductionApplyList {
 	private static Logger LOGGER = Logger.getLogger(GavlProductionApplyList.class);
 
 	public FrontProductionApplyList(Login login, IApplyListManager<Produceable> manager, String aColliName,
-			String aWindowName, Integer[] somInvisibleCells, ManagerRepository aManagerRepository) {
-		super(login, manager, aColliName, aWindowName, somInvisibleCells, aManagerRepository, null);
+			String aWindowName, Integer[] somInvisibleCells, ManagerRepository aManagerRepository,
+			VismaFileCreator vismaFileCreator) {
+		super(login, manager, aColliName, aWindowName, somInvisibleCells, aManagerRepository, vismaFileCreator);
 	}
 
 	@Override
@@ -77,7 +79,7 @@ public class FrontProductionApplyList extends ProductionApplyList {
 				}
 				if (orderLine.getOrdNo() != null) {
 					lagFerdigmelding(orderLine.getOrdNo(), orderLine.getLnNo(), !applied);
-				}else{
+				} else {
 					LOGGER.info("Lager ikke ferdigmelding fordi ordrelinje mangler ordnno");
 				}
 			} catch (ProTransException e1) {
@@ -100,7 +102,7 @@ public class FrontProductionApplyList extends ProductionApplyList {
 			fillinjer.add(String.format(OrdchgrHeadV.HEAD_LINE_TMP,
 					ordln.getPurcno() != null ? ordln.getPurcno().toString() : "", ""));
 			List<Ordln> frontlinjer = managerRepository.getOrdlnManager().findOrdLnByOrdNo(ordln.getPurcno());
-			LOGGER.info(String.format("Antall gavllinjer er %s", frontlinjer.size()));
+			LOGGER.info(String.format("Antall frontlinjer er %s", frontlinjer.size()));
 			for (Ordln gavl : frontlinjer) {
 				if (gavl.getNoinvoab() != null && gavl.getNoinvoab().intValue() > 0) {
 					fillinjer.add(lagLinje(gavl, minus));
@@ -112,7 +114,7 @@ public class FrontProductionApplyList extends ProductionApplyList {
 			} catch (IOException e) {
 				throw new RuntimeException("Feilet ved skriving av vismafil", e);
 			}
-		}else{
+		} else {
 			LOGGER.info("Lager ikke ferdigmelding fordi mangler ordln, purcno eller purcno er 0");
 		}
 

@@ -10,6 +10,10 @@ import javax.swing.JDialog;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.inject.internal.Lists;
+
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.gui.JDialogAdapter;
 import no.ugland.utransprod.gui.Login;
@@ -17,6 +21,7 @@ import no.ugland.utransprod.gui.WindowInterface;
 import no.ugland.utransprod.gui.edit.EditPacklistView;
 import no.ugland.utransprod.model.OrdchgrHeadV;
 import no.ugland.utransprod.model.OrdchgrLineV;
+import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.Ordln;
 import no.ugland.utransprod.model.Produceable;
@@ -24,6 +29,7 @@ import no.ugland.utransprod.service.IApplyListManager;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.OrderLineManager;
 import no.ugland.utransprod.service.VismaFileCreator;
+import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.service.impl.SalesReportType;
 import no.ugland.utransprod.util.ApplicationParamUtil;
 import no.ugland.utransprod.util.ModelUtil;
@@ -78,9 +84,23 @@ public class GavlProductionApplyList extends ProductionApplyList {
 					orderLine.setDoneBy(null);
 
 				}
-				if (orderLine.getOrdNo() != null) {
-					lagFerdigmelding(orderLine.getOrdNo(), orderLine.getLnNo(), !applied);
-				}else{
+				Order order = managerRepository.getOrderManager().findByOrderNr(object.getOrderNr());
+				managerRepository.getOrderManager().lazyLoadOrder(order,
+						new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES });
+				List<OrderLine> orderLineList = order.getOrderLineList("Gavl");
+
+				List<OrderLine> ordrelinjerMedOrdNoOgLnno = Lists
+						.newArrayList(Iterables.filter(orderLineList, new Predicate<OrderLine>() {
+
+							public boolean apply(OrderLine input) {
+								return input.getOrdNo() != null && input.getLnNo() != null;
+							}
+						}));
+
+				if (!ordrelinjerMedOrdNoOgLnno.isEmpty()) {
+					lagFerdigmelding(ordrelinjerMedOrdNoOgLnno.get(0).getOrdNo(),
+							ordrelinjerMedOrdNoOgLnno.get(0).getLnNo(), !applied);
+				} else {
 					LOGGER.info("Lager ikke ferdigmelding fordi ordrelinje mangler ordnno");
 				}
 			} catch (ProTransException e1) {
@@ -114,7 +134,7 @@ public class GavlProductionApplyList extends ProductionApplyList {
 			} catch (IOException e) {
 				throw new RuntimeException("Feilet ved skriving av vismafil", e);
 			}
-		}else{
+		} else {
 			LOGGER.info("Lager ikke ferdigmelding fordi mangler ordln, purcno eller purcno er 0");
 		}
 

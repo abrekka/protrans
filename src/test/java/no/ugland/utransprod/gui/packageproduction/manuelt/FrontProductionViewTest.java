@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import com.birosoft.liquid.LiquidLookAndFeel;
+
 @Category(ManuellTest.class)
 public class FrontProductionViewTest extends PackageProductionTest {
 	static {
@@ -47,8 +48,8 @@ public class FrontProductionViewTest extends PackageProductionTest {
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
-		FrontProductionWindow frontProductionWindow = new FrontProductionWindow(
-				login, managerRepository, deviationViewHandlerFactory, null);
+		FrontProductionWindow frontProductionWindow = new FrontProductionWindow(login, managerRepository,
+				deviationViewHandlerFactory, null, null);
 		frontProductionWindow.setLogin(login);
 
 		final ApplyListView<Produceable> productionView = new ApplyListView<Produceable>(
@@ -81,11 +82,9 @@ public class FrontProductionViewTest extends PackageProductionTest {
 		dialogFixture.button("ButtonStart").requireText("Startet produksjon");
 
 		dialogFixture.button("ButtonNotStart").requireDisabled();
-		dialogFixture.button("ButtonNotStart").requireText(
-				"Ikke startet produksjon");
+		dialogFixture.button("ButtonNotStart").requireText("Ikke startet produksjon");
 
-		JTableFixture tableFixture = dialogFixture
-				.table(TableEnum.TABLEPRODUCTIONFRONT.getTableName());
+		JTableFixture tableFixture = dialogFixture.table(TableEnum.TABLEPRODUCTIONFRONT.getTableName());
 
 		assertEquals("Startet", tableFixture.target.getColumnName(8));
 
@@ -117,8 +116,7 @@ public class FrontProductionViewTest extends PackageProductionTest {
 	public void testShowProductionDate() {
 		dialogFixture.show(new Dimension(1000, 500));
 		dialogFixture.comboBox("ComboBoxProductAreaGroup").selectItem("Alle");
-		JTableFixture tableFixture = dialogFixture
-				.table(TableEnum.TABLEPRODUCTIONFRONT.getTableName());
+		JTableFixture tableFixture = dialogFixture.table(TableEnum.TABLEPRODUCTIONFRONT.getTableName());
 
 		assertEquals("Prod.dato", tableFixture.target.getColumnName(2));
 

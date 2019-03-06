@@ -1107,7 +1107,8 @@ public final class Util {
 		addVeggProduction(login, map, deviationViewHandlerFactory, managerRepository, setProductionUnitActionFactory,
 				vismaFileCreator);
 
-		addFrontProduction(login, map, managerRepository, deviationViewHandlerFactory, setProductionUnitActionFactory);
+		addFrontProduction(login, map, managerRepository, deviationViewHandlerFactory, setProductionUnitActionFactory,
+				vismaFileCreator);
 
 		addGavlProduction(login, map, deviationViewHandlerFactory, managerRepository, setProductionUnitActionFactory,
 				vismaFileCreator);
@@ -1193,9 +1194,9 @@ public final class Util {
 	private static void addFrontProduction(final Login login,
 			final Map<String, AbstractProductionPackageViewHandler> map, ManagerRepository managerRepository,
 			DeviationViewHandlerFactory deviationViewHandlerFactory,
-			SetProductionUnitActionFactory setProductionUnitActionFactory) {
+			SetProductionUnitActionFactory setProductionUnitActionFactory, VismaFileCreator vismaFileCreator) {
 		FrontProductionWindow frontProductionWindow = new FrontProductionWindow(login, managerRepository,
-				deviationViewHandlerFactory, setProductionUnitActionFactory);
+				deviationViewHandlerFactory, setProductionUnitActionFactory, vismaFileCreator);
 		frontProductionWindow.setLogin(login);
 		map.put("Front", (AbstractProductionPackageViewHandler) frontProductionWindow.getViewHandler());
 	}

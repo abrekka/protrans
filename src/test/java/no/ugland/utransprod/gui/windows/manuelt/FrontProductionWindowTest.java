@@ -24,8 +24,8 @@ import org.junit.Test;
 public class FrontProductionWindowTest extends WindowTest {
 
 	/**
-     *
-     */
+	 *
+	 */
 	private FrameFixture frameFixture;
 
 	@Before
@@ -33,22 +33,20 @@ public class FrontProductionWindowTest extends WindowTest {
 		super.setUp();
 		FrontProductionVManager frontProductionVManager = (FrontProductionVManager) ModelUtil
 				.getBean(FrontProductionVManager.MANAGER_NAME);
-		when(managerRepository.getFrontProductionVManager()).thenReturn(
-				frontProductionVManager);
-		final FrontProductionWindow frontProductionWindow = new FrontProductionWindow(
-				login, managerRepository, deviationViewHandlerFactory, null);
+		when(managerRepository.getFrontProductionVManager()).thenReturn(frontProductionVManager);
+		final FrontProductionWindow frontProductionWindow = new FrontProductionWindow(login, managerRepository,
+				deviationViewHandlerFactory, null, null);
 		frontProductionWindow.setLogin(login);
 
 		JFrame frame = GuiActionRunner.execute(new GuiQuery<JFrame>() {
 			protected JFrame executeInEDT() {
-				return (JFrame) frontProductionWindow.buildMainWindow(
-						new SystemReadyListener() {
+				return (JFrame) frontProductionWindow.buildMainWindow(new SystemReadyListener() {
 
-							public void systemReady() {
+					public void systemReady() {
 
-							}
+					}
 
-						}, managerRepository);
+				}, managerRepository);
 
 			}
 		});

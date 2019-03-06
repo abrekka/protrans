@@ -8,6 +8,7 @@ import no.ugland.utransprod.gui.model.FrontProductionApplyList;
 import no.ugland.utransprod.model.ArticleType;
 import no.ugland.utransprod.model.Produceable;
 import no.ugland.utransprod.service.ManagerRepository;
+import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.util.ApplicationParamUtil;
 
 import com.google.inject.Inject;
@@ -20,56 +21,62 @@ import com.google.inject.Inject;
  */
 public class FrontProductionWindow extends AbstractProductionPackageWindow<Produceable> {
 
-    private ManagerRepository managerRepository;
-    private DeviationViewHandlerFactory deviationViewHandlerFactory;
-    private SetProductionUnitActionFactory setProductionUnitActionFactory;
+	private ManagerRepository managerRepository;
+	private DeviationViewHandlerFactory deviationViewHandlerFactory;
+	private SetProductionUnitActionFactory setProductionUnitActionFactory;
+	private VismaFileCreator vismaFileCreator;
 
-    @Inject
-    public FrontProductionWindow(Login login, ManagerRepository aManagerRepository, DeviationViewHandlerFactory aDeviationViewHandlerFactory,
-	    SetProductionUnitActionFactory aSetProductionUnitActionFactory) {
-	super(login);
-	setProductionUnitActionFactory = aSetProductionUnitActionFactory;
-	managerRepository = aManagerRepository;
-	deviationViewHandlerFactory = aDeviationViewHandlerFactory;
-    }
+	@Inject
+	public FrontProductionWindow(Login login, ManagerRepository aManagerRepository,
+			DeviationViewHandlerFactory aDeviationViewHandlerFactory,
+			SetProductionUnitActionFactory aSetProductionUnitActionFactory, VismaFileCreator vismaFileCreator) {
+		super(login);
+		setProductionUnitActionFactory = aSetProductionUnitActionFactory;
+		managerRepository = aManagerRepository;
+		deviationViewHandlerFactory = aDeviationViewHandlerFactory;
+		this.vismaFileCreator = vismaFileCreator;
+	}
 
-    /**
-     * @see no.ugland.utransprod.gui.AbstractProductionPackageWindow#getParamArticleName()
-     */
-    @Override
-    protected String getParamArticleName() {
-	return "front_artikkel";
-    }
+	/**
+	 * @see no.ugland.utransprod.gui.AbstractProductionPackageWindow#getParamArticleName()
+	 */
+	@Override
+	protected String getParamArticleName() {
+		return "front_artikkel";
+	}
 
-    /**
-     * @see no.ugland.utransprod.gui.AbstractProductionPackageWindow#getWindowTitle()
-     */
-    @Override
-    protected String getWindowTitle() {
-	return "Produksjon av front";
-    }
+	/**
+	 * @see no.ugland.utransprod.gui.AbstractProductionPackageWindow#getWindowTitle()
+	 */
+	@Override
+	protected String getWindowTitle() {
+		return "Produksjon av front";
+	}
 
-    /**
-     * @see no.ugland.utransprod.gui.AbstractProductionPackageWindow#getViewHandler()
-     */
-    @Override
-    public AbstractProductionPackageViewHandler<Produceable> getViewHandler() {
-	// FrontProductionVManager
-	// frontProductionVManager=(FrontProductionVManager)ModelUtil.getBean("frontProductionVManager");
-	// ArticleTypeManager
-	// articleTypeManager=(ArticleTypeManager)ModelUtil.getBean("articleTypeManager");
-	ArticleType articleType = managerRepository.getArticleTypeManager().findByName(ApplicationParamUtil.findParamByName(getParamArticleName()));
-	return new FrontProductionViewHandler(new FrontProductionApplyList(login, managerRepository.getFrontProductionVManager(), null, "Front",
-		null, managerRepository), "Frontproduksjon", login, articleType, managerRepository, deviationViewHandlerFactory,
-		setProductionUnitActionFactory);
-    }
+	/**
+	 * @see no.ugland.utransprod.gui.AbstractProductionPackageWindow#getViewHandler()
+	 */
+	@Override
+	public AbstractProductionPackageViewHandler<Produceable> getViewHandler() {
+		// FrontProductionVManager
+		// frontProductionVManager=(FrontProductionVManager)ModelUtil.getBean("frontProductionVManager");
+		// ArticleTypeManager
+		// articleTypeManager=(ArticleTypeManager)ModelUtil.getBean("articleTypeManager");
+		ArticleType articleType = managerRepository.getArticleTypeManager()
+				.findByName(ApplicationParamUtil.findParamByName(getParamArticleName()));
+		return new FrontProductionViewHandler(
+				new FrontProductionApplyList(login, managerRepository.getFrontProductionVManager(), null, "Front", null,
+						managerRepository, vismaFileCreator),
+				"Frontproduksjon", login, articleType, managerRepository, deviationViewHandlerFactory,
+				setProductionUnitActionFactory);
+	}
 
-    /**
-     * @see no.ugland.utransprod.gui.AbstractProductionPackageWindow#usePrintButton()
-     */
-    @Override
-    protected boolean usePrintButton() {
-	return false;
-    }
+	/**
+	 * @see no.ugland.utransprod.gui.AbstractProductionPackageWindow#usePrintButton()
+	 */
+	@Override
+	protected boolean usePrintButton() {
+		return false;
+	}
 
 }

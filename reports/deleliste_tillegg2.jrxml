@@ -694,7 +694,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement/>
-				<text><![CDATA[  48x61 ubehandlet]]></text>
+				<text><![CDATA[  48x148 ubehandlet]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="109" y="271" width="75" height="13"/>
@@ -727,7 +727,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement/>
-				<text><![CDATA[  48x61 ubehandlet]]></text>
+				<text><![CDATA[  48x148 ubehandlet]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="109" y="284" width="75" height="13"/>
@@ -1090,7 +1090,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement/>
-				<text><![CDATA[  Søyle 90x90 imp.]]></text>
+				<text><![CDATA[  Gips]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="109" y="427" width="75" height="13"/>
@@ -1123,7 +1123,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement/>
-				<text><![CDATA[  Søyle 90x90 imp.]]></text>
+				<text><![CDATA[  Gips]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="109" y="440" width="75" height="13"/>
@@ -2047,7 +2047,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement/>
-				<text><![CDATA[  19x73]]></text>
+				<text><![CDATA[  19x140]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="474" y="258" width="75" height="13"/>
@@ -2322,7 +2322,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement/>
-				<text><![CDATA[  30x48 ubehandlet]]></text>
+				<text><![CDATA[  36x48 ubehandlet]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="290" y="401" width="109" height="13"/>
@@ -2377,7 +2377,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement/>
-				<text><![CDATA[  30x48 ubehandlet]]></text>
+				<text><![CDATA[  36x48 ubehandlet]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="474" y="401" width="75" height="13"/>
@@ -2425,6 +2425,138 @@
 			</staticText>
 			<staticText>
 				<reportElement x="474" y="427" width="75" height="13"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="492" width="109" height="13"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[  9x36]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="505" width="109" height="13"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[ 19x47]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="492" width="75" height="13"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="184" y="492" width="75" height="13"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="505" width="75" height="13"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="184" y="505" width="75" height="13"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="492" width="109" height="13"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[  42x42 ubehandlet]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="492" width="75" height="13"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="474" y="492" width="75" height="13"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="505" width="109" height="13"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[  42x42 ubehandlet]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="505" width="75" height="13"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="474" y="505" width="75" height="13"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
