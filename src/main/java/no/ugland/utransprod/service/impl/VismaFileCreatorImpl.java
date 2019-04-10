@@ -2,21 +2,27 @@ package no.ugland.utransprod.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.gui.WindowInterface;
+import no.ugland.utransprod.gui.model.GavlProductionApplyList;
 import no.ugland.utransprod.model.Assembly;
 import no.ugland.utransprod.model.FakturagrunnlagV;
 import no.ugland.utransprod.model.OrdchgrHeadV;
 import no.ugland.utransprod.model.OrdchgrLineV;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
+import no.ugland.utransprod.model.Ordln;
 import no.ugland.utransprod.model.Transport;
 import no.ugland.utransprod.model.VismaFile;
 import no.ugland.utransprod.service.FakturagrunnlagVManager;
 import no.ugland.utransprod.service.OrdchgrHeadVManager;
+import no.ugland.utransprod.service.OrdlnManager;
 import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.util.ApplicationParamUtil;
 import no.ugland.utransprod.util.Util;
@@ -24,6 +30,7 @@ import no.ugland.utransprod.util.Util;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -36,6 +43,7 @@ import com.google.inject.internal.Lists;
 import com.google.inject.name.Named;
 
 public class VismaFileCreatorImpl implements VismaFileCreator {
+	private static Logger LOGGER = Logger.getLogger(VismaFileCreatorImpl.class);
 	protected final Log logger = LogFactory.getLog(getClass());
 	private static final String VISMA_OUT_DIR = "visma_out_dir";
 	private static Boolean uniqueFileName = true;
@@ -305,4 +313,15 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 		}
 
 	}
+
+	public static List<String> lagFillinjer(boolean minus, Integer purcno, String gjortAv, String produksjonstype,
+			BigDecimal timer) {
+		List<String> fillinjer = new ArrayList<String>();
+		fillinjer.add(String.format(OrdchgrHeadV.HEAD_LINE, purcno != null ? purcno.toString() : "",
+				gjortAv != null ? gjortAv : "", produksjonstype, timer != null ? timer : ""));
+		return fillinjer;
+	}
+
+	
+
 }

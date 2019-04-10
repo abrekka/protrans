@@ -34,8 +34,9 @@ import no.ugland.utransprod.util.Util;
 public class VeggProductionApplyList extends ProductionApplyList {
 
 	public VeggProductionApplyList(Login login, IApplyListManager<Produceable> manager, String aColliName,
-			String aWindowName, Integer[] somInvisibleCells, ManagerRepository aManagerRepository,VismaFileCreator vismaFileCreator) {
-		super(login, manager, aColliName, aWindowName, somInvisibleCells, aManagerRepository,vismaFileCreator);
+			String aWindowName, Integer[] somInvisibleCells, ManagerRepository aManagerRepository,
+			VismaFileCreator vismaFileCreator) {
+		super(login, manager, aColliName, aWindowName, somInvisibleCells, aManagerRepository, vismaFileCreator);
 	}
 
 	@Override
@@ -83,7 +84,7 @@ public class VeggProductionApplyList extends ProductionApplyList {
 	@Override
 	protected void handleApply(final Produceable object, final boolean applied, final WindowInterface window,
 			final String aColliName) {
-		OrderManager orderManager = (OrderManager) ModelUtil.getBean(OrderManager.MANAGER_NAME);
+		OrderManager orderManager = managerRepository.getOrderManager();
 		Order order = orderManager.findByOrderNr(object.getOrderNr());
 		orderManager.lazyLoadOrder(order, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES });
 		if (order != null) {
@@ -91,13 +92,17 @@ public class VeggProductionApplyList extends ProductionApplyList {
 
 			try {
 				int antall = 0;
-				Integer ordno = null;
-				Integer lnno = null;
+				OrderLine orderLineVegg = null;
+				// Integer ordno = null;
+				// Integer lnno = null;
 				EditPacklistView editPacklistView = null;
+				BigDecimal duration = null;
+				String doneBy = null;
 				for (OrderLine vegg : vegger) {
-					if (vegg.getOrdNo() != null && vegg.getLnNo() != null) {
-						ordno = vegg.getOrdNo();
-						lnno = vegg.getLnNo();
+					if (vegg.getOrdNo() != null && vegg.getOrdNo() != 0 && vegg.getLnNo() != null) {
+						orderLineVegg = vegg;
+						// ordno = vegg.getOrdNo();
+						// lnno = vegg.getLnNo();
 					}
 					antall++;
 					if (applied) {
@@ -111,7 +116,7 @@ public class VeggProductionApplyList extends ProductionApplyList {
 							tidsbruk = Tidsforbruk.beregnTidsforbruk(vegg.getActionStarted(), vegg.getProduced());
 						}
 
-						if (antall == 1) {
+						if (antall == 1 && window != null) {
 							editPacklistView = new EditPacklistView(login, false, tidsbruk, vegg.getDoneBy());
 							JDialog dialog = Util.getDialog(window, "Vegg produsert", true);
 							WindowInterface window1 = new JDialogAdapter(dialog);
@@ -122,19 +127,27 @@ public class VeggProductionApplyList extends ProductionApplyList {
 						}
 
 						if (editPacklistView != null && !editPacklistView.isCanceled()) {
+							duration = editPacklistView.getPacklistDuration();
+							doneBy = editPacklistView.getDoneBy();
 							vegg.setRealProductionHours(editPacklistView.getPacklistDuration());
 							vegg.setDoneBy(editPacklistView.getDoneBy());
 						}
+						vegg.setRealProductionHours(duration);
+						vegg.setDoneBy(doneBy);
 					} else {
 						setProducableUnapplied(vegg);
+						duration = null;
+						doneBy = null;
 						vegg.setRealProductionHours(null);
 						vegg.setDoneBy(null);
 
 					}
 					managerRepository.getOrderLineManager().saveOrderLine(vegg);
 				}
-				if (ordno != null) {
-					lagFerdigmelding(ordno, lnno, !applied);
+				if (orderLineVegg != null) {
+					orderLineVegg.setRealProductionHours(duration);
+					orderLineVegg.setDoneBy(doneBy);
+					lagFerdigmelding(order, orderLineVegg, !applied, "Vegg");
 				}
 			} catch (ProTransException e1) {
 				Util.showErrorDialog(window, "Feil", e1.getMessage());
@@ -143,8 +156,8 @@ public class VeggProductionApplyList extends ProductionApplyList {
 
 			managerRepository.getOrderManager().refreshObject(order);
 			managerRepository.getOrderManager().settStatus(order.getOrderId(), null);
-//			order.setStatus(null);
-//			managerRepository.getOrderManager().saveOrder(order);
+			// order.setStatus(null);
+			// managerRepository.getOrderManager().saveOrder(order);
 			applyListManager.refresh(object);
 		}
 	}
@@ -152,9 +165,10 @@ public class VeggProductionApplyList extends ProductionApplyList {
 	private void lagFerdigmelding(Integer ordno, Integer lnno, boolean minus) {
 		Ordln ordln = managerRepository.getOrdlnManager().findByOrdNoAndLnNo(ordno, lnno);
 
-		if (ordln != null && ordln.getPurcno() != null&&ordln.getPurcno().intValue()!=0) {
+		if (ordln != null && ordln.getPurcno() != null && ordln.getPurcno().intValue() != 0) {
 			List<String> fillinjer = new ArrayList<String>();
-			fillinjer.add(String.format(OrdchgrHeadV.HEAD_LINE_TMP, ordln.getPurcno() != null ? ordln.getPurcno().toString() : "", ""));
+			fillinjer.add(String.format(OrdchgrHeadV.HEAD_LINE_TMP,
+					ordln.getPurcno() != null ? ordln.getPurcno().toString() : "", ""));
 			List<Ordln> vegglinjer = managerRepository.getOrdlnManager().findOrdLnByOrdNo(ordln.getPurcno());
 			for (Ordln vegg : vegglinjer) {
 				if (vegg.getNoinvoab() != null && vegg.getNoinvoab().intValue() > 0) {
@@ -162,8 +176,8 @@ public class VeggProductionApplyList extends ProductionApplyList {
 				}
 			}
 			try {
-				vismaFileCreator.writeFile(ordln.getPurcno().toString(), ApplicationParamUtil.findParamByName("visma_out_dir"),
-						fillinjer, 1);
+				vismaFileCreator.writeFile(ordln.getPurcno().toString(),
+						ApplicationParamUtil.findParamByName("visma_out_dir"), fillinjer, 1);
 			} catch (IOException e) {
 				throw new RuntimeException("Feilet ved skriving av vismafil", e);
 			}

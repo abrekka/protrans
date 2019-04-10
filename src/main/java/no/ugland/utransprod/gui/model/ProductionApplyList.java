@@ -1,7 +1,11 @@
 package no.ugland.utransprod.gui.model;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.ListModel;
 import javax.swing.table.TableModel;
@@ -12,6 +16,7 @@ import no.ugland.utransprod.gui.WindowInterface;
 import no.ugland.utransprod.model.Colli;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
+import no.ugland.utransprod.model.Ordln;
 import no.ugland.utransprod.model.PostShipment;
 import no.ugland.utransprod.model.Produceable;
 import no.ugland.utransprod.model.ProductionUnit;
@@ -25,10 +30,13 @@ import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.service.enums.LazyLoadEnum;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.service.enums.LazyLoadPostShipmentEnum;
+import no.ugland.utransprod.service.impl.VismaFileCreatorImpl;
+import no.ugland.utransprod.util.ApplicationParamUtil;
 import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.UserUtil;
 import no.ugland.utransprod.util.Util;
 
+import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXTable;
 
 import com.jgoodies.binding.list.SelectionInList;
@@ -40,6 +48,7 @@ import com.jgoodies.binding.list.SelectionInList;
  */
 
 public class ProductionApplyList extends AbstractApplyList<Produceable> {
+	private static Logger LOGGER = Logger.getLogger(ProductionApplyList.class);
 	private String colliName;
 
 	private String windowName;
@@ -72,8 +81,8 @@ public class ProductionApplyList extends AbstractApplyList<Produceable> {
 	 */
 	private void doPackage(final OrderLine orderLine, final String aColliName) throws ProTransException {
 		String currentColliName = aColliName != null ? aColliName : colliName;
-		ColliManager colliManager = (ColliManager) ModelUtil.getBean("colliManager");
-		OrderLineManager orderLineManager = (OrderLineManager) ModelUtil.getBean("orderLineManager");
+		ColliManager colliManager = managerRepository.getColliManager();
+		OrderLineManager orderLineManager = managerRepository.getOrderLineManager();
 		Colli colli;
 		if (orderLine.getPostShipment() != null) {
 			colli = colliManager.findByNameAndPostShipment(currentColliName, orderLine.getPostShipment());
@@ -112,7 +121,7 @@ public class ProductionApplyList extends AbstractApplyList<Produceable> {
 		if (colli != null) {
 			Order order = colli.getOrder();
 			if (order != null) {
-				OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
+				OrderManager orderManager = managerRepository.getOrderManager();
 				if (applied) {
 					orderManager.lazyLoadOrder(order, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES,
 							LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES });
@@ -127,8 +136,7 @@ public class ProductionApplyList extends AbstractApplyList<Produceable> {
 			} else {
 				PostShipment postShipment = colli.getPostShipment();
 				if (postShipment != null) {
-					PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil
-							.getBean("postShipmentManager");
+					PostShipmentManager postShipmentManager = managerRepository.getPostShipmentManager();
 					if (applied) {
 						postShipmentManager.lazyLoad(postShipment,
 								new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_LINES });
@@ -338,4 +346,45 @@ public class ProductionApplyList extends AbstractApplyList<Produceable> {
 		}
 	}
 
+	protected void lagFerdigmelding(Order order, OrderLine orderLine, boolean minus, String produksjonstype) {
+		LOGGER.info(String.format("Skal lage ferdigmelding for ordno: %s oglnno: %s", orderLine.getOrdNo(),
+				orderLine.getLnNo()));
+
+		List<OrderLine> ordrelinjer = order.getOrderLineList(produksjonstype);
+
+		List<Ordln> ordlnList = new ArrayList<Ordln>();
+
+		for (OrderLine orderLine2 : ordrelinjer) {
+			if (orderLine.getOrdNo() != null && orderLine2.getLnNo() != null) {
+				ordlnList.add(managerRepository.getOrdlnManager().findByOrdNoAndLnNo(orderLine2.getOrdNo(),
+						orderLine2.getLnNo()));
+			}
+		}
+
+		// List<Ordln> ordrelinjer =
+		// managerRepository.getOrdlnManager().findOrdLnByOrdNo(orderLine.getOrdNo());
+
+		Set<Integer> produksjonslinjer = new HashSet<Integer>();
+		for (Ordln ordln : ordlnList) {
+			if (ordln != null && ordln.getPurcno() != null && ordln.getPurcno() != 0) {
+				produksjonslinjer.add(ordln.getPurcno());
+			}
+		}
+
+		if (produksjonslinjer.isEmpty()) {
+			LOGGER.info("Lager ikke ferdigmelding fordi mangler ordln, purcno eller purcno er 0");
+		}
+
+		for (Integer purcno : produksjonslinjer) {
+			List<String> fillinjer = (VismaFileCreatorImpl.lagFillinjer(minus, purcno, orderLine.getDoneBy(),
+					produksjonstype, orderLine.getRealProductionHours()));
+			try {
+				vismaFileCreator.writeFile(purcno.toString(), ApplicationParamUtil.findParamByName("visma_out_dir"),
+						fillinjer, 1);
+			} catch (IOException e) {
+				throw new RuntimeException("Feilet ved skriving av vismafil", e);
+			}
+		}
+
+	}
 }
