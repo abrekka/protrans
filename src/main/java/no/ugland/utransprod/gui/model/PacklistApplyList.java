@@ -26,79 +26,79 @@ import com.google.inject.Inject;
  */
 public class PacklistApplyList extends AbstractApplyList<PacklistV> {
 
-    /**
-     * @param aUserType
-     * @param manager
-     */
-    @Inject
-    public PacklistApplyList(Login login, PacklistVManager manager) {
-	super(login, manager, null);
-    }
-
-    /**
-     * @param object
-     * @param applied
-     * @param window
-     * @see no.ugland.utransprod.gui.model.ApplyListInterface#setApplied(no.ugland.utransprod.gui.model.Applyable,
-     *      boolean, no.ugland.utransprod.gui.WindowInterface)
-     */
-    public void setApplied(PacklistV object, boolean applied, WindowInterface window) {
-	OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
-
-	Order order = orderManager.findByOrderNr(object.getOrderNr());
-	if (applied) {
-	    Date packlistDate = Util.getDate(window);
-	    order.setPacklistReady(packlistDate);
-	} else {
-	    order.setPacklistReady(null);
+	/**
+	 * @param aUserType
+	 * @param manager
+	 */
+	@Inject
+	public PacklistApplyList(Login login, PacklistVManager manager) {
+		super(login, manager, null);
 	}
-	try {
-	    orderManager.saveOrder(order);
-	} catch (ProTransException e) {
-	    Util.showErrorDialog(window, "Feil", e.getMessage());
-	    e.printStackTrace();
+
+	/**
+	 * @param object
+	 * @param applied
+	 * @param window
+	 * @see no.ugland.utransprod.gui.model.ApplyListInterface#setApplied(no.ugland.utransprod.gui.model.Applyable,
+	 *      boolean, no.ugland.utransprod.gui.WindowInterface)
+	 */
+	public void setApplied(PacklistV object, boolean applied, WindowInterface window) {
+		OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
+
+		Order order = orderManager.findByOrderNr(object.getOrderNr());
+		if (applied) {
+			Date packlistDate = Util.getDate(window);
+			order.setPacklistReady(packlistDate);
+		} else {
+			order.setPacklistReady(null);
+		}
+		try {
+			orderManager.saveOrder(order);
+		} catch (ProTransException e) {
+			Util.showErrorDialog(window, "Feil", e.getMessage());
+			e.printStackTrace();
+		}
+		applyListManager.refresh(object);
+
 	}
-	applyListManager.refresh(object);
 
-    }
-
-    /**
-     * @see no.ugland.utransprod.gui.model.ApplyListInterface#hasWriteAccess()
-     */
-    public boolean hasWriteAccess() {
-	return UserUtil.hasWriteAccess(login.getUserType(), "Pakkliste");
-    }
-
-    /**
-     * @see no.ugland.utransprod.gui.model.AbstractApplyList#sortObjectLines(java.util.List)
-     */
-    @Override
-    protected void sortObjectLines(List<PacklistV> lines) {
-	Collections.sort(lines);
-    }
-
-    /**
-     * @see no.ugland.utransprod.gui.model.ApplyListInterface#getApplyObject(no.ugland.utransprod.gui.model.Transportable)
-     */
-    public PacklistV getApplyObject(Transportable transportable, WindowInterface window) {
-	List<PacklistV> list = applyListManager.findApplyableByOrderNr(transportable.getOrder().getOrderNr());
-	if (list != null && list.size() == 1) {
-	    return list.get(0);
+	/**
+	 * @see no.ugland.utransprod.gui.model.ApplyListInterface#hasWriteAccess()
+	 */
+	public boolean hasWriteAccess() {
+		return UserUtil.hasWriteAccess(login.getUserType(), "Pakkliste");
 	}
-	return null;
-    }
 
-    public void setStarted(PacklistV object, boolean started) {
-    }
+	/**
+	 * @see no.ugland.utransprod.gui.model.AbstractApplyList#sortObjectLines(java.util.List)
+	 */
+	@Override
+	protected void sortObjectLines(List<PacklistV> lines) {
+		Collections.sort(lines);
+	}
 
-    public boolean shouldGenerateVismaFile() {
-	// TODO Auto-generated method stub
-	return false;
-    }
+	/**
+	 * @see no.ugland.utransprod.gui.model.ApplyListInterface#getApplyObject(no.ugland.utransprod.gui.model.Transportable)
+	 */
+	public PacklistV getApplyObject(Transportable transportable, WindowInterface window) {
+		List<PacklistV> list = applyListManager.findApplyableByOrderNr(transportable.getOrder().getOrderNr());
+		if (list != null && list.size() == 1) {
+			return list.get(0);
+		}
+		return null;
+	}
 
-    public void setRealProductionHours(PacklistV object, BigDecimal overstyrtTidsforbruk) {
-	// TODO Auto-generated method stub
+	public void setStarted(PacklistV object, boolean started) {
+	}
 
-    }
+	public boolean shouldGenerateVismaFile() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void setRealProductionHours(PacklistV object, BigDecimal overstyrtTidsforbruk) {
+		// TODO Auto-generated method stub
+
+	}
 
 }

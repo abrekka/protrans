@@ -108,6 +108,11 @@ public class ColliManagerImpl extends ManagerImpl<Colli> implements
 		((ColliDAO) dao).lazyLoadAll(colli);
 	}
 
+	public void oppdaterTransportId(Colli colli, Integer transportId) {
+		((ColliDAO) dao).oppdaterTransportId(colli,transportId);
+		
+	}
+
 	/*
 	 * public void lazyLoad(Colli object, Enum[] enums) { lazyLoadColli(object,
 	 * (LazyLoadColliEnum[])enums);

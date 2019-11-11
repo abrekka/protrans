@@ -91,6 +91,7 @@ import no.ugland.utransprod.service.ProductionUnitManager;
 import no.ugland.utransprod.service.SumOrderReadyVManager;
 import no.ugland.utransprod.service.SupplierManager;
 import no.ugland.utransprod.service.SupplierTypeManager;
+import no.ugland.utransprod.service.SutakPackageVManager;
 import no.ugland.utransprod.service.TaksteinSkarpnesVManager;
 import no.ugland.utransprod.service.TakstolInfoVManager;
 import no.ugland.utransprod.service.TakstolPackageVManager;
@@ -182,6 +183,7 @@ public class ProtransModule extends AbstractModule {
 	bind(FaktureringVManager.class).toInstance((FaktureringVManager) ModelUtil.getBean(FaktureringVManager.MANAGER_NAME));
 	bind(GulvsponPackageVManager.class).toInstance((GulvsponPackageVManager) ModelUtil.getBean(GulvsponPackageVManager.MANAGER_NAME));
 	bind(IgarasjenPackageVManager.class).toInstance((IgarasjenPackageVManager) ModelUtil.getBean(IgarasjenPackageVManager.MANAGER_NAME));
+	bind(SutakPackageVManager.class).toInstance((SutakPackageVManager) ModelUtil.getBean(SutakPackageVManager.MANAGER_NAME));
 	bind(PacklistVManager.class).toInstance((PacklistVManager) ModelUtil.getBean(PacklistVManager.MANAGER_NAME));
 	bind(TakstolInfoVManager.class).toInstance((TakstolInfoVManager) ModelUtil.getBean(TakstolInfoVManager.MANAGER_NAME));
 	bind(ShowTakstolInfoActionFactory.class).toProvider(

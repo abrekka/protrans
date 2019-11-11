@@ -76,7 +76,7 @@ public class MainPackageView implements Viewer {
     // private JComboBox comboBoxProductAreaGroup;
     private JComboBox comboBoxPakketype;
 
-    private JButton buttonUpdateCollies;
+//    private JButton buttonUpdateCollies;
 
     public MainPackageView(MainPackageViewHandler handler) {
 	viewHandler = handler;
@@ -119,7 +119,7 @@ public class MainPackageView implements Viewer {
 	buttonAddComment = viewHandler.getButtonAddComment(window);
 	// comboBoxProductAreaGroup = viewHandler.getComboBoxProductAreaGroup();
 
-	buttonUpdateCollies = viewHandler.getButtonUpdateCollies(window);
+//	buttonUpdateCollies = viewHandler.getButtonUpdateCollies(window);
 
     }
 
@@ -200,7 +200,7 @@ public class MainPackageView implements Viewer {
 	builder.add(labelPackedByPakk, cc.xy(11, 3));
 	builder.addLabel("Pakketype:", cc.xy(13, 1));
 	builder.add(comboBoxPakketype, cc.xy(15, 1));
-	builder.add(buttonUpdateCollies, cc.xy(15, 3));
+//	builder.add(buttonUpdateCollies, cc.xy(15, 3));
 
 	return builder.getPanel();
     }

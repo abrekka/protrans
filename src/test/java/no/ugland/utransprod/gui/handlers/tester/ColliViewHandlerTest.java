@@ -50,7 +50,7 @@ public class ColliViewHandlerTest {
 	userType.setIsAdmin(1);
 	when(login.getUserType()).thenReturn(userType);
 
-	viewHandler = new ColliViewHandler("Kolli", new Colli(), null, login, managerRepository, null, null);
+	viewHandler = new ColliViewHandler("Kolli", new Colli("test"), null, login, managerRepository, null, null);
 
     }
 
@@ -61,7 +61,7 @@ public class ColliViewHandlerTest {
 
     @Test
     public void testSaveObject() throws Exception {
-	colli = new Colli();
+	colli = new Colli("test");
 	colli.setColliName("test");
 	viewHandler.saveObject(new ColliModel(colli), null);
 	assertEquals(2, viewHandler.getObjectSelectionListSize());

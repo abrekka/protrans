@@ -1164,9 +1164,22 @@ public class RouteViewHandler
 		try {
 			OverviewManager<Object> manager = (OverviewManager<Object>) ModelUtil
 					.getBean(transportable.getManagerName());
-			manager.refreshObject(transportable);
+//			manager.refreshObject(transportable);
+			
+			
 			transportable.setTransport(transport);
-			manager.saveObject(transportable);
+			
+			if(Order.class.isInstance(transportable)) {
+//				transport.addOrder((Order)transportable);
+				managerRepository.getOrderManager().oppdaterTransportId((Order)transportable,transport);
+			}else {
+				manager.saveObject(transportable);
+			}
+			managerRepository.getTransportManager().saveTransport(transport);
+//			manager.oppdaterTransportId(transportable,transport.getTransportId());
+//			manager.refreshObject(transportable);
+			
+//			manager.saveObject(transportable);
 			manager.lazyLoad(transportable, new LazyLoadEnum[][] { { LazyLoadEnum.ORDER_COMMENTS, LazyLoadEnum.NONE },
 					{ LazyLoadEnum.COLLIES, LazyLoadEnum.NONE } });
 
@@ -1612,7 +1625,11 @@ public class RouteViewHandler
 								.getTransportOrderTableModelForExcel());
 					}
 
-					Util.runInThreadWheel(window.getRootPane(), new ExcelGenerator(models, window), null);
+//					Util.runInThreadWheel(window.getRootPane(), new ExcelGenerator(models, window), null);
+					
+					ExcelGenerator excelGenerator=new ExcelGenerator(models, window);
+					excelGenerator.doWork(null, null);
+					excelGenerator.doWhenFinished(null);
 				}
 
 			}
@@ -1639,7 +1656,7 @@ public class RouteViewHandler
 	 * 
 	 * @author atle.brekka
 	 */
-	private class ExcelGenerator implements Threadable {
+	private class ExcelGenerator {//implements Threadable {
 		/**
 		 *
 		 */
@@ -1677,7 +1694,7 @@ public class RouteViewHandler
 		 *      javax.swing.JLabel)
 		 */
 		public Object doWork(Object[] params, JLabel labelInfo) {
-			labelInfo.setText("Generer excel for transport...");
+//			labelInfo.setText("Generer excel for transport...");
 			String errorString = null;
 			try {
 				String fileName = "transport_" + Util.getCurrentDateAsDateTimeString() + ".xlsx";

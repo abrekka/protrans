@@ -92,7 +92,7 @@ public class ArticlePackerTest {
 	when(applicationParamManager.findByName("visma_out_dir")).thenReturn("visma");
 	when(applicationParamManager.findByName("not_package")).thenReturn("");
 
-	final Colli colli = new Colli();
+	final Colli colli = new Colli("test");
 	colli.setColliName("Port");
 	orderLine = new OrderLine();
 	orderLine.setOrdNo(1);

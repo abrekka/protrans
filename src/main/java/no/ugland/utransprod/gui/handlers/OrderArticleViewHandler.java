@@ -9,9 +9,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.swing.AbstractAction;
@@ -75,6 +78,8 @@ import no.ugland.utransprod.util.Util;
 import org.apache.commons.lang.StringUtils;
 import org.jdesktop.swingx.JXTreeTable;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
 import com.google.inject.internal.Lists;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.list.ArrayListModel;
@@ -121,8 +126,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	private boolean brukOrdrelinjelinjer;
 
 	/**
-	 * @param a
-	 *            ()PresentationModel
+	 * @param a         ()PresentationModel
 	 * @param search
 	 * @param aUserType
 	 */
@@ -650,8 +654,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	}
 
 	/**
-	 * Kalkulerer attributter dersom det er noen som har formel knyttet opp til
-	 * seg
+	 * Kalkulerer attributter dersom det er noen som har formel knyttet opp til seg
 	 * 
 	 * @param orderLines
 	 */
@@ -1094,6 +1097,23 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 				incomingOrder.getMaxTrossHeight() != null ? String.valueOf(incomingOrder.getMaxTrossHeight()) : null);
 		fireCostChange(incomingOrder);
 		updateArticleButtons();
+
+		sjekkOmLinjerErDobbelt(incomingOrder);
+	}
+
+	private void sjekkOmLinjerErDobbelt(Order incomingOrder) {
+		List<String> ordnoLnnoListe = Lists.newArrayList();
+
+		for (OrderLine orderLine : incomingOrder.getOrderLines()) {
+			if (orderLine.getOrdNo() != null && orderLine.getLnNo() != null) {
+				String ordnoLnno = orderLine.getOrdNo() + ";" + orderLine.getLnNo();
+				if (ordnoLnnoListe.contains(ordnoLnno)) {
+					throw new ProTransException(
+							String.format("Ordre %s inneholder duplikate ordrelinjer", incomingOrder.getOrderNr()));
+				}
+				ordnoLnnoListe.add(ordnoLnno);
+			}
+		}
 
 	}
 

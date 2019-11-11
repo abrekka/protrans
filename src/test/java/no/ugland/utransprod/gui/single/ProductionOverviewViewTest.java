@@ -243,7 +243,7 @@ public class ProductionOverviewViewTest {
 
 		productionOverviewViewHandler = new ProductionOverviewViewHandler(vismaFileCreator, orderViewHandlerFactory,
 				login, managerRepository, deviationViewHandlerFactory, showTakstolInfoActionFactory, articleTypeTakstol,
-				takstolPackageApplyList, takstolProductionApplyList, setProductionUnitActionFactory, null, null);
+				takstolPackageApplyList, takstolProductionApplyList, setProductionUnitActionFactory, null, null,null);
 
 		final ProductionOverviewView viewer = new ProductionOverviewView(productionOverviewViewHandler);
 

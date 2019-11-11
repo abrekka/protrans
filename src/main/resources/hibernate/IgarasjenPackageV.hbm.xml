@@ -72,12 +72,12 @@
         column="INFO"
         length="100"
     />
-<!-- 		<property -->
-<!--         name="constructionTypeName" -->
-<!--         type="java.lang.String" -->
-<!--         column="CONSTRUCTION_TYPE_NAME" -->
-<!--         length="255" -->
-<!--     /> -->
+		<property
+        name="constructionTypeName"
+        type="java.lang.String"
+        column="CONSTRUCTION_TYPE_NAME"
+        length="255"
+    />
 <!-- 	<property -->
 <!--         name="articleName" -->
 <!--         type="java.lang.String" -->

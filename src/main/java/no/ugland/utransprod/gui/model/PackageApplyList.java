@@ -119,10 +119,10 @@ public class PackageApplyList extends AbstractApplyList<PackableListItem> {
 		if (colli == null) {
 			if (orderLine.getPostShipment() != null) {
 				colli = new Colli(null, null, currentColliName, null, null, null, orderLine.getPostShipment(), null,
-						Util.getCurrentDate());
+						Util.getCurrentDate(),"PackageApplyList");
 			} else {
 				colli = new Colli(null, orderLine.getOrder(), currentColliName, null, null, null, null, null,
-						Util.getCurrentDate());
+						Util.getCurrentDate(),"PackageApplyList");
 			}
 		} else {
 			if (!Hibernate.isInitialized(colli.getOrderLines())) {

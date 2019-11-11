@@ -25,6 +25,7 @@ import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.ProductArea;
 import no.ugland.utransprod.model.ProductAreaGroup;
+import no.ugland.utransprod.model.Transport;
 import no.ugland.utransprod.service.OrderManager;
 import no.ugland.utransprod.service.TakstolInfoVManager;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
@@ -731,6 +732,11 @@ public class OrderManagerImpl extends ManagerImpl<Order> implements OrderManager
 
 	public void settLevert(Order order, Date levertDate) {
 		((OrderDAO)dao).settLevert(order,levertDate);
+		
+	}
+
+	public void oppdaterTransportId(Order ordre, Transport transport) {
+		((OrderDAO)dao).oppdaterTransportId(ordre,transport);
 		
 	}
 

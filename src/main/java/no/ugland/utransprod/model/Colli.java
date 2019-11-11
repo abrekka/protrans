@@ -45,16 +45,26 @@ public class Colli extends BaseObject implements Comparable<Colli>, TransportLet
 
 	private Integer width;
 
+	private Integer prodTp;
+	private Integer prCatNo;
+
 	private Date levert;
-	public static final Colli UNKNOWN = new Colli();
-	public static final Colli DEFAULT_TAKSTOL = new Colli("Takstol");
+//	public static final Colli UNKNOWN = new Colli();
+	public static final Colli DEFAULT_TAKSTOL = new Colli("Takstol", "Takstolpakking");
+	private String createdFrom;
 
 	public Colli() {
 		super();
 	}
 
-	public Colli(String aColliName) {
+	public Colli(String createdFrom) {
+		super();
+		this.createdFrom = createdFrom;
+	}
+
+	public Colli(String aColliName, String createdFrom) {
 		colliName = aColliName;
+		this.createdFrom = createdFrom;
 	}
 
 	/**
@@ -69,8 +79,10 @@ public class Colli extends BaseObject implements Comparable<Colli>, TransportLet
 	 * @param packageDate
 	 */
 	public Colli(Integer colliId, Order order, String colliName, Transport transport, Date sent,
-			Set<OrderLine> orderLines, PostShipment postShipment, Integer height, Date packageDate) {
+			Set<OrderLine> orderLines, PostShipment postShipment, Integer height, Date packageDate,
+			String createdFrom) {
 		super();
+		this.createdFrom = createdFrom;
 		this.colliId = colliId;
 		this.order = order;
 		this.colliName = colliName;
@@ -80,6 +92,30 @@ public class Colli extends BaseObject implements Comparable<Colli>, TransportLet
 		this.postShipment = postShipment;
 		this.height = height;
 		this.packageDate = packageDate;
+	}
+
+	public String getCreatedFrom() {
+		return createdFrom;
+	}
+
+	public void setCreatedFrom(String createdFrom) {
+		this.createdFrom = createdFrom;
+	}
+
+	public Integer getPrCatNo() {
+		return prCatNo;
+	}
+
+	public void setPrCatNo(Integer prCatNo) {
+		this.prCatNo = prCatNo;
+	}
+
+	public Integer getProdTp() {
+		return prodTp;
+	}
+
+	public void setProdTp(Integer prodTp) {
+		this.prodTp = prodTp;
 	}
 
 	/**

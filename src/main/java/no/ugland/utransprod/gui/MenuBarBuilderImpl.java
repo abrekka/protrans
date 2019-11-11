@@ -959,7 +959,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 		 */
 		public void actionPerformed(final ActionEvent arg0) {
 			ExcelReportViewHandler excelReportViewHandler = new ExcelReportViewHandler(
-					ExcelReportEnum.PRODUCTIVITY_LIST_NOT_INVOICED, new Dimension(250, 110));
+					ExcelReportEnum.PRODUCTIVITY_LIST_NOT_INVOICED, new Dimension(350, 110));
 			openFrame(new ExcelReportView(excelReportViewHandler, false));
 		}
 	}

@@ -176,6 +176,13 @@
 				autowire="byName" />
 		</property>
 	</bean>
+	<bean id="sutakPackageVDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="no.ugland.utransprod.dao.hibernate.SutakPackageVDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
 	<bean id="gavlProductionVDAO" parent="txProxyTemplate">
 		<property name="target">
 			<bean

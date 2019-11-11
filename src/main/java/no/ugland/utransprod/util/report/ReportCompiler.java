@@ -85,10 +85,10 @@ public final class ReportCompiler {
         try {
 
             JasperCompileManager.compileReportToFile("reports/accident.jrxml",
-                    "src/main/resources/reports/Accident.jasper");
+                    "src/main/resources/reports/accident.jasper");
             
             JasperCompileManager.compileReportToFile("reports/accident_participants.jrxml",
-            "src/main/resources/reports/Accident_participants.jasper");
+            "src/main/resources/reports/accident_participants.jasper");
 
         } catch (JRException e1) {
             e1.printStackTrace();

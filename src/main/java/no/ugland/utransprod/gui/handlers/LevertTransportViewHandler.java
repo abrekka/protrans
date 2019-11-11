@@ -380,12 +380,12 @@ public class LevertTransportViewHandler implements Closeable {
 			
 			transportlistable.setLevert(levertDate);
 			handleCollies(transportlistable);
-			if (checkMissingOrderLines(transportlistable, window)) {
+//			if (checkMissingOrderLines(transportlistable, window)) {
 				settLevert(window, orderManager, postShipmentManager, transportlistable,levertDate);
 
 				// lazyLoadTree(orderManager, postShipmentManager,
 				// transportlistable);
-			}
+//			}
 
 		}
 	}

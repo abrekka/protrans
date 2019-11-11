@@ -83,6 +83,7 @@ import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.service.enums.LazyLoadPostShipmentEnum;
 import no.ugland.utransprod.util.ApplicationParamUtil;
+import no.ugland.utransprod.util.Collicreator;
 import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.PrefsUtil;
 import no.ugland.utransprod.util.Tidsforbruk;
@@ -213,7 +214,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 			final TakstolProductionApplyList takstolProductionApplyList,
 			SetProductionUnitActionFactory aSetProductionUnitActionFactory,
 			@Named("kostnadTypeTakstoler") CostType aCostTypeTross,
-			@Named("kostnadEnhetTakstoler") CostUnit aCostUnitTross) {
+			@Named("kostnadEnhetTakstoler") CostUnit aCostUnitTross, Collicreator collicreator) {
 		userType = aLogin.getUserType();
 		overviewManager = (ProductionOverviewVManager) ModelUtil.getBean(ProductionOverviewVManager.MANAGER_NAME);
 		objectList = new ArrayListModel();
@@ -236,7 +237,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 		productionPackageHandlers = Util.getProductionPackageHandlers(vismaFileCreator, login, orderViewHandlerFactory,
 				managerRepository, deviationViewHandlerFactory, showTakstolInfoActionFactory, aArticleTypeTakstol,
 				takstolPackageApplyList, takstolProductionApplyList, aSetProductionUnitActionFactory, aCostTypeTross,
-				aCostUnitTross);
+				aCostUnitTross, collicreator);
 		// initProductAreaGroup();
 
 	}
@@ -2707,12 +2708,15 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 		Summer summer = new Summer();
 		for (ProductionOverviewV productionOverviewV : produksjonliste) {
 			summer.antallGarasjer++;
-			summer.sumTidVegg = summer.sumTidVegg.add(productionOverviewV.getEstimatedTimeWall() == null
-					? BigDecimal.ZERO : productionOverviewV.getEstimatedTimeWall());
-			summer.sumTidGavl = summer.sumTidGavl.add(productionOverviewV.getEstimatedTimeGavl() == null
-					? BigDecimal.ZERO : productionOverviewV.getEstimatedTimeGavl());
-			summer.sumTidPakk = summer.sumTidPakk.add(productionOverviewV.getEstimatedTimePack() == null
-					? BigDecimal.ZERO : productionOverviewV.getEstimatedTimePack());
+			summer.sumTidVegg = summer.sumTidVegg
+					.add(productionOverviewV.getEstimatedTimeWall() == null ? BigDecimal.ZERO
+							: productionOverviewV.getEstimatedTimeWall());
+			summer.sumTidGavl = summer.sumTidGavl
+					.add(productionOverviewV.getEstimatedTimeGavl() == null ? BigDecimal.ZERO
+							: productionOverviewV.getEstimatedTimeGavl());
+			summer.sumTidPakk = summer.sumTidPakk
+					.add(productionOverviewV.getEstimatedTimePack() == null ? BigDecimal.ZERO
+							: productionOverviewV.getEstimatedTimePack());
 		}
 		return summer;
 	}
@@ -3018,7 +3022,8 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	void openOrderView(Transportable transportable, WindowInterface window) {
 		@SuppressWarnings("unused")
 		boolean success = transportable != null
-				? orderViewHandler.openOrderView(transportable.getOrder(), false, window, false) : false;
+				? orderViewHandler.openOrderView(transportable.getOrder(), false, window, false)
+				: false;
 	}
 
 	/**
@@ -3071,8 +3076,10 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 					.replaceAll(" ", "_").replaceAll("\\.", "_").replaceAll("\\%", "PROCENT");
 			;
 			ProductionColumn productionColumn = ProductionColumn.valueOf(columnHeader);
-			boolean success = transportable != null ? productionColumn.setMenus(transportable, menuItemMap, window,
-					productionPackageHandlers, popupMenuProduction) : false;
+			boolean success = transportable != null
+					? productionColumn.setMenus(transportable, menuItemMap, window, productionPackageHandlers,
+							popupMenuProduction)
+					: false;
 			if (success) {
 				popupMenuProduction.show((JXTable) mouseEvent.getSource(), mouseEvent.getX(), mouseEvent.getY());
 			}
@@ -3905,9 +3912,11 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 		protected List<Icon> getIcons(ProductionOverviewV transportable) {
 			List<Icon> icons = new ArrayList<Icon>();
 			boolean added = StringUtils.isNotBlank(transportable.getComment())
-					? icons.add(IconEnum.ICON_COMMENT.getIcon()) : false;
+					? icons.add(IconEnum.ICON_COMMENT.getIcon())
+					: false;
 			added = StringUtils.isNotBlank(transportable.getSpecialConcern())
-					? icons.add(IconEnum.ICON_WARNING.getIcon()) : false;
+					? icons.add(IconEnum.ICON_WARNING.getIcon())
+					: false;
 			added = transportable.isPostShipment() ? icons.add(IconEnum.ICON_POST_SHIPMENT.getIcon()) : false;
 			return icons;
 		}

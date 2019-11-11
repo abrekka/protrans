@@ -261,7 +261,7 @@ public class TakstolPackageApplyList extends PackageApplyList {
 					objects.addAll(relatedArticles);
 				}
 				for (Applyable item : objects) {
-					item.setColli(Colli.UNKNOWN);
+					item.setColli(new Colli("Takstolpakking"));
 				}
 				applyRelatedArticles(applied, window, objects, orderLines);
 

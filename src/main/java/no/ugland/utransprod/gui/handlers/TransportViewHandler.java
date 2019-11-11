@@ -718,9 +718,17 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		try {
 			OverviewManager<Object> manager = (OverviewManager<Object>) ModelUtil
 					.getBean(transportable.getManagerName());
-			manager.refreshObject(transportable);
+//			manager.refreshObject(transportable);
 			transportable.setTransport(transport);
-			manager.saveObject(transportable);
+
+			if (Order.class.isInstance(transportable)) {
+//				transport.addOrder((Order)transportable);
+				managerRepository.getOrderManager().oppdaterTransportId((Order) transportable, transport);
+			} else {
+				manager.saveObject(transportable);
+			}
+
+//			manager.saveObject(transportable);
 			manager.lazyLoad(transportable, new LazyLoadEnum[][] { { LazyLoadEnum.ORDER_COMMENTS, LazyLoadEnum.NONE },
 					{ LazyLoadEnum.COLLIES, LazyLoadEnum.NONE } });
 
@@ -1677,9 +1685,9 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	}
 
 	/**
-	 * Klasse som håndtere at sent settes på transport. Dersom det settes til
-	 * sent skal det komme opp en dialog med alle ordre som er med på denne
-	 * transporten og det skal være mulig å utelate ordre
+	 * Klasse som håndtere at sent settes på transport. Dersom det settes til sent
+	 * skal det komme opp en dialog med alle ordre som er med på denne transporten
+	 * og det skal være mulig å utelate ordre
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1800,7 +1808,10 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 				try {
 					vismaFileCreator.createVismaFileForTransport(order);
 
-					orderViewHandler.getOrderManager().saveOrder(order);
+//					orderViewHandler.getOrderManager().saveOrder(order);
+
+					managerRepository.getOrderManager().oppdaterTransportId((Order) transportable, null);
+
 				} catch (ProTransException e) {
 					Util.showErrorDialog(window1, "Feil", e.getMessage());
 					e.printStackTrace();
@@ -2324,13 +2335,13 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 				} else if (PostShipment.class.isInstance(transportable)
 						&& (!Hibernate.isInitialized(transportable.getOrderLines())
 								|| !Hibernate.isInitialized(transportable.getCollies())
-				// || !Hibernate.isInitialized(transportable.getOrderComments())
-				)) {
+						// || !Hibernate.isInitialized(transportable.getOrderComments())
+						)) {
 					managerRepository.getPostShipmentManager().lazyLoad((PostShipment) transportable,
 							new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_LINES,
 									LazyLoadPostShipmentEnum.COLLIES
 							// ,LazyLoadPostShipmentEnum.ORDER_COMMENTS
-					});
+							});
 				}
 				// }
 				TransportLetter transportLetter = TransportLetterSelector

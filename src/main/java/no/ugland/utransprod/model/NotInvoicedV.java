@@ -17,37 +17,23 @@ import org.apache.commons.lang.builder.ToStringStyle;
  * 
  */
 public class NotInvoicedV extends BaseObject {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * 
-	 */
 	private Integer orderId;
-
-	/**
-	 * 
-	 */
 	private String orderDetails;
-
-	/**
-	 * 
-	 */
 	private Date sent;
-
-	/**
-	 * 
-	 */
 	private BigDecimal garageValue;
 	private String productArea;
-
-	/**
-	 * 
-	 */
+	private String orderNr;
+	
 	public NotInvoicedV() {
 		super();
+	}
+	
+	public String getOrderNr() {
+		return orderNr;
+	}
+	public void setOrderNr(String orderNr) {
+		this.orderNr = orderNr;
 	}
 
 	/**

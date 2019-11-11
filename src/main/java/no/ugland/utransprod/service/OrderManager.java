@@ -16,6 +16,7 @@ import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.ProductArea;
 import no.ugland.utransprod.model.ProductAreaGroup;
+import no.ugland.utransprod.model.Transport;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.util.Periode;
 import no.ugland.utransprod.util.ReadyCount;
@@ -260,6 +261,8 @@ public interface OrderManager extends OverviewManager<Order>, ExcelManager {
 	void settSentDato(Order transportlistable, Date sentDate);
 
 	void settLevert(Order transportlistable, Date levertDate);
+
+	void oppdaterTransportId(Order transportable, Transport transport);
 
 
 }

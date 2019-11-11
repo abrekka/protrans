@@ -52,8 +52,6 @@ public class Delelisteinfo {
 		this.lokasjon = lokasjon;
 	}
 
-	
-
 	public Integer getPrCatNo2() {
 		return prCatNo2;
 	}
@@ -63,7 +61,8 @@ public class Delelisteinfo {
 	}
 
 	public String getInformasjon() {
-		if (purcno != 0 && (prodgr == 1440 || prodgr == 1430 || prodgr == 3000)) {
+		if (purcno != 0 && (prodgr == 1440 || prodgr == 1430 || prodgr == 3000 || prodgr == 1410 || prodgr == 1415
+				|| prodgr == 1420)) {
 			return informasjon + purcno;
 		}
 		return informasjon;
@@ -116,7 +115,5 @@ public class Delelisteinfo {
 	public Integer getProdtp() {
 		return prodtp;
 	}
-
-	
 
 }

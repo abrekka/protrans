@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -48,6 +49,11 @@ import com.jgoodies.binding.list.ArrayListModel;
 import com.jgoodies.binding.list.SelectionInList;
 import com.toedter.calendar.JDateChooser;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.gui.IconEnum;
 import no.ugland.utransprod.gui.JDialogAdapter;
@@ -878,6 +884,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 			ReportViewer reportViewer = new ReportViewer("Montering", mailConfig);
 			List<AssemblyReportNy> assemblyReportList = Lists.newArrayList();
 			assemblyReportList.add(assemblyReport);
+			
 			reportViewer.generateProtransReportFromBeanAndShow(assemblyReportList, "Montering", ReportEnum.ASSEMBLY_NY,
 					null, null, window, true);
 

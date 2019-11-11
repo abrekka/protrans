@@ -43,7 +43,7 @@ public enum ExcelReportEnum {
      * Produktivitetsdetaljer - ikke fakturert.
      */
     PRODUCTIVITY_LIST_NOT_INVOICED("Produktivitetsdetaljer - ikke fakturert", "Produktivitetsdetaljer_ikke_fakturert", "notInvoicedVManager",
-	    new String[] { "Ordre", "Sent", "Verdi" }, new Integer[] { 2 }, new String[] { "OrderDetails", "SentString", "GarageValue" },
+	    new String[] { "Ordre","Ordrenr", "Sent", "Verdi" }, new Integer[] { 3 }, new String[] { "OrderDetails", "OrderNr","SentString", "GarageValue" },
 	    new Integer[][] { { 0, 15000 }, { 1, 3000 } }, 16, null, new Integer[] {}, null, null, null, false, true, 0, null, true, false, null,
 	    false, false),
 

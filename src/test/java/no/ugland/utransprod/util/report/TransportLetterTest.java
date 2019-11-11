@@ -50,7 +50,7 @@ OrderManager orderManager=(OrderManager)ModelUtil.getBean(OrderManager.MANAGER_N
 		transportable.setConstructionType(constructionType);
 		OrderLine orderLine = new OrderLine();
 		transportable.addOrderLine(orderLine);
-		final Colli colli = new Colli();
+		final Colli colli = new Colli("test");
 		colli.setColliName("test");
 		colli.addOrderLine(orderLine);
 		transportable.addColli(colli);

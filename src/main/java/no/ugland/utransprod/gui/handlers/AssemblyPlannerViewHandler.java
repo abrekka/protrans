@@ -12,10 +12,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -43,6 +43,31 @@ import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.builder.CompareToBuilder;
+import org.jdesktop.swingx.JXTable;
+import org.jdesktop.swingx.decorator.ColorHighlighter;
+import org.jdesktop.swingx.decorator.PatternPredicate;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
+import com.jgoodies.binding.PresentationModel;
+import com.jgoodies.binding.adapter.AbstractTableAdapter;
+import com.jgoodies.binding.adapter.BasicComponentFactory;
+import com.jgoodies.binding.adapter.SingleListSelectionAdapter;
+import com.jgoodies.binding.beans.BeanAdapter;
+import com.jgoodies.binding.list.ArrayListModel;
+import com.jgoodies.binding.list.SelectionInList;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.gui.AssemblyPlannerView;
 import no.ugland.utransprod.gui.Closeable;
@@ -68,7 +93,6 @@ import no.ugland.utransprod.gui.model.DeviationModel;
 import no.ugland.utransprod.gui.model.ReportEnum;
 import no.ugland.utransprod.gui.model.TextPaneRenderer;
 import no.ugland.utransprod.gui.model.TextPaneRendererCustomer;
-import no.ugland.utransprod.gui.model.TextPaneRendererTransport;
 import no.ugland.utransprod.gui.model.Transportable;
 import no.ugland.utransprod.model.Assembly;
 import no.ugland.utransprod.model.AssemblyOverdueV;
@@ -79,7 +103,6 @@ import no.ugland.utransprod.model.FakturagrunnlagV;
 import no.ugland.utransprod.model.IAssembly;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
-import no.ugland.utransprod.model.PostShipment;
 import no.ugland.utransprod.model.ProductArea;
 import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.Supplier;
@@ -104,26 +127,6 @@ import no.ugland.utransprod.util.report.AssemblyReportNy;
 import no.ugland.utransprod.util.report.AssemblyWeekReport;
 import no.ugland.utransprod.util.report.MailConfig;
 import no.ugland.utransprod.util.report.ReportViewer;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.builder.CompareToBuilder;
-import org.jdesktop.swingx.JXTable;
-import org.jdesktop.swingx.decorator.ColorHighlighter;
-import org.jdesktop.swingx.decorator.PatternPredicate;
-
-import com.google.common.base.Predicate;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
-import com.jgoodies.binding.PresentationModel;
-import com.jgoodies.binding.adapter.AbstractTableAdapter;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
-import com.jgoodies.binding.adapter.SingleListSelectionAdapter;
-import com.jgoodies.binding.beans.BeanAdapter;
-import com.jgoodies.binding.list.ArrayListModel;
-import com.jgoodies.binding.list.SelectionInList;
 
 /**
  * Hjelpeklasse for visning og administrasjon av monteringer
@@ -427,6 +430,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		ReportViewer reportViewer = new ReportViewer("Montering", mailConfig);
 		List<AssemblyReportNy> assemblyReportList = Lists.newArrayList();
 		assemblyReportList.add(assemblyReport);
+		
+		
 		reportViewer.generateProtransReportFromBeanAndShow(assemblyReportList, "Montering", ReportEnum.ASSEMBLY_NY,
 				null, null, window, true);
 	}

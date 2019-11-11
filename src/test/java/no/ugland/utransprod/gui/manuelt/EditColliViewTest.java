@@ -47,7 +47,7 @@ public class EditColliViewTest {
     public void setup() {
 	FailOnThreadViolationRepaintManager.install();
 	MockitoAnnotations.initMocks(this);
-	final Colli colli = new Colli();
+	final Colli colli = new Colli("test");
 	final ColliModel colliModel = new ColliModel(colli);
 
 	final Packable packable = null;

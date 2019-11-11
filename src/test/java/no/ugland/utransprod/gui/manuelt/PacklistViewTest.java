@@ -129,7 +129,7 @@ public class PacklistViewTest {
 	final PacklistVManager packlistVManager = (PacklistVManager) ModelUtil.getBean(PacklistVManager.MANAGER_NAME);
 
 	AbstractProductionPackageViewHandler<PacklistV> productionViewHandler = new PacklistViewHandler(login, managerRepository,
-		deviationViewHandlerFactory, orderViewHandlerFactory, new PacklistApplyList(login, packlistVManager), null, null);
+		deviationViewHandlerFactory, orderViewHandlerFactory, new PacklistApplyList(login, packlistVManager), null, null,null);
 
 	final PacklistView packlistView = new PacklistView(productionViewHandler);
 

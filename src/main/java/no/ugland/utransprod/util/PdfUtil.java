@@ -1,6 +1,7 @@
 package no.ugland.utransprod.util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -23,35 +24,46 @@ import no.ugland.utransprod.ProTransException;
 
 public class PdfUtil {
 
-	public static String slaaSammenFiler(String kundenavn, String ordrenummer, List<String> filer)
-			throws IOException, JRException {
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("kundenavn", kundenavn);
-		parameters.put("ordrenummer", ordrenummer);
-		InputStream iconStream = PdfUtil.class.getClassLoader().getResourceAsStream("images/montering_forside.jpg");
-		parameters.put("bakgrunn", iconStream);
+	public static String slaaSammenFiler(String kundenavn, String ordrenummer, List<String> filer) {
+		try {
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put("kundenavn", kundenavn);
+			parameters.put("ordrenummer", ordrenummer);
+			InputStream iconStream = PdfUtil.class.getClassLoader().getResourceAsStream("images/montering_forside.jpg");
+			parameters.put("bakgrunn", iconStream);
 
-		InputStream stream = PdfUtil.class.getClassLoader().getResourceAsStream("reports/montering_forside.jasper");
+			InputStream stream = PdfUtil.class.getClassLoader().getResourceAsStream("reports/montering_forside.jasper");
 
-		if (stream == null) {
-			throw new ProTransException("Fant ikke rapport");
+			if (stream == null) {
+				throw new ProTransException("Fant ikke rapport");
+			}
+
+			String excelDirectory = ApplicationParamUtil.findParamByName("excel_path");
+			JasperPrint jasperPrintReport;
+
+			jasperPrintReport = JasperFillManager.fillReport(stream, parameters);
+
+			JRPdfSaveContributor pdfSaveContrib = new JRPdfSaveContributor(null, null);
+			pdfSaveContrib.save(jasperPrintReport, new File(excelDirectory + "/forside_" + ordrenummer + ".pdf"));
+
+			PDFMergerUtility merger = new PDFMergerUtility();
+			merger.addSource(new File(excelDirectory + "/forside_" + ordrenummer + ".pdf"));
+
+			for (String fil : filer) {
+				merger.addSource(fil);
+			}
+
+			String filnavn = excelDirectory + "/monteringsanvisning_" + ordrenummer + ".pdf";
+			merger.setDestinationFileName(filnavn);
+			merger.mergeDocuments();
+			return filnavn;
+		} catch (JRException e) {
+			throw new ProTransException(e);
+		} catch (FileNotFoundException e) {
+			throw new ProTransException(e);
+		} catch (IOException e) {
+			throw new ProTransException(e);
 		}
-
-		String excelDirectory = ApplicationParamUtil.findParamByName("excel_path");
-		JasperPrint jasperPrintReport = JasperFillManager.fillReport(stream, parameters);
-		JRPdfSaveContributor pdfSaveContrib = new JRPdfSaveContributor(null, null);
-		pdfSaveContrib.save(jasperPrintReport, new File(excelDirectory + "/forside_" + ordrenummer + ".pdf"));
-
-		PDFMergerUtility merger = new PDFMergerUtility();
-		merger.addSource(new File(excelDirectory + "/forside_" + ordrenummer + ".pdf"));
-		for (String fil : filer) {
-			merger.addSource(fil);
-		}
-
-		String filnavn = excelDirectory + "/monteringsanvisning_" + ordrenummer + ".pdf";
-		merger.setDestinationFileName(filnavn);
-		merger.mergeDocuments();
-		return filnavn;
 	}
 
 	public static void lagForside() throws InvalidPasswordException, IOException {

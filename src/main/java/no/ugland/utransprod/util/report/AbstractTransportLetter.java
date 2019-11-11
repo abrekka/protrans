@@ -30,6 +30,7 @@ import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.OrderManager;
 import no.ugland.utransprod.service.PostShipmentManager;
 import no.ugland.utransprod.service.enums.LazyLoadDeviationEnum;
+import no.ugland.utransprod.service.enums.LazyLoadEnum;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.service.enums.LazyLoadOrderLineEnum;
 import no.ugland.utransprod.service.enums.LazyLoadPostShipmentEnum;
@@ -166,8 +167,10 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 		return new Predicate<PostShipment>() {
 
 			public boolean apply(PostShipment ettersending) {
-				return postShipment != null ? !postShipment.getPostShipmentId().equals(ettersending.getPostShipmentId())
-						&& !ettersending.getSentBool() : !ettersending.getSentBool();
+				return postShipment != null
+						? !postShipment.getPostShipmentId().equals(ettersending.getPostShipmentId())
+								&& !ettersending.getSentBool()
+						: !ettersending.getSentBool();
 			}
 		};
 	}
@@ -209,21 +212,15 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 
 		List<Taksteinkolli> taksteinkolliInfo = genererTaksteinInfo(transportable);
 
-		// if (!Hibernate.isInitialized(transportable.getCollies()) &&
-		// Order.class.isInstance(transportable)) {
-		// managerRepository.getOrderManager().lazyLoadOrder((Order)
-		// transportable, new LazyLoadOrderEnum[] {
-		// LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.COLLIES,
-		// LazyLoadOrderEnum.COMMENTS });
-		// } else if (!Hibernate.isInitialized(transportable.getCollies())
-		// && PostShipment.class.isInstance(transportable)) {
-		// managerRepository.getPostShipmentManager().lazyLoad((PostShipment)
-		// transportable,
-		// new LazyLoadPostShipmentEnum[] {
-		// LazyLoadPostShipmentEnum.ORDER_LINES,
-		// LazyLoadPostShipmentEnum.COLLIES,
-		// LazyLoadPostShipmentEnum.ORDER_COMMENTS });
-		// }
+//		if (!Hibernate.isInitialized(transportable.getCollies()) && Order.class.isInstance(transportable)) {
+//			managerRepository.getOrderManager().lazyLoadOrder((Order) transportable, new LazyLoadOrderEnum[] {
+//					LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.COMMENTS });
+//		} else if (!Hibernate.isInitialized(transportable.getCollies())
+//				&& PostShipment.class.isInstance(transportable)) {
+//			managerRepository.getPostShipmentManager().lazyLoad((PostShipment) transportable,
+//					new LazyLoadPostShipmentEnum[] { LazyLoadPostShipmentEnum.ORDER_LINES,
+//							LazyLoadPostShipmentEnum.COLLIES, LazyLoadPostShipmentEnum.ORDER_COMMENTS });
+//		}
 
 		list.addAll(prepareCollies(transportable.getCollies(), i, transportable, customerRef, bestillingsnrFrakt,
 				taksteinkolliInfo, tilleggsordre));
@@ -330,6 +327,10 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 		if (colliList != null) {
 			for (Colli colli : colliList) {
 				if (!"Takstein".equalsIgnoreCase(colli.getColliName())) {
+					if ("Gulvspon".equalsIgnoreCase(colli.getColliName())
+							&& Hibernate.isInitialized(colli.getOrderLines())) {
+						managerRepository.getColliManager().lazyLoadAll(colli);
+					}
 					addColli(pageNumber, transportable, collies, colli, customerRef, bestillingsnrFrakt,
 							taksteinkolliInfo, tilleggsordre);
 				}
@@ -707,6 +708,12 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 			@Override
 			public Object getValue(ReportObject reportObject, Integer colliCount) {
 				TransportLetterObject letterObject = reportObject.getTransportLetterObject();
+				if ("Gulvspon".equalsIgnoreCase(letterObject.getName()) && Colli.class.isInstance(letterObject)) {
+					if (!((Colli) letterObject).getOrderLines().isEmpty()) {
+						return Util.upperFirstLetter(letterObject.getName() + " - "
+								+ ((Colli) letterObject).getOrderLines().iterator().next().getNumberOfItems());// +
+					}
+				}
 				return Util.upperFirstLetter(letterObject.getName());// +
 				// (letterObject.getNumberOf()
 				// != null

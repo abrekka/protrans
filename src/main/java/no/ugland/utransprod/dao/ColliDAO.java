@@ -44,4 +44,6 @@ public interface ColliDAO extends DAO<Colli> {
 	Colli findByNameAndPostShipment(String colliName, PostShipment postShipment);
 
 	void lazyLoadAll(Colli colli);
+
+	void oppdaterTransportId(Colli colli, Integer transportId);
 }

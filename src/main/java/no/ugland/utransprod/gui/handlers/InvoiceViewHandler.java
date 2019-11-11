@@ -10,11 +10,12 @@ import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.ListModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
-import org.apache.commons.lang.StringUtils;
 import org.jdesktop.swingx.decorator.ColorHighlighter;
 import org.jdesktop.swingx.decorator.PatternPredicate;
 
@@ -35,7 +36,6 @@ import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.util.ApplicationParamUtil;
-import no.ugland.utransprod.util.Tidsforbruk;
 import no.ugland.utransprod.util.UserUtil;
 import no.ugland.utransprod.util.Util;
 import no.ugland.utransprod.util.excel.ExcelUtil;
@@ -149,9 +149,15 @@ public class InvoiceViewHandler extends AbstractProductionPackageViewHandlerShor
 	@Override
 	void initColumnWidth() {
 		table.getColumnExt(0).setPreferredWidth(100);
-		table.getColumnExt(1).setPreferredWidth(200);
+		table.getColumnExt(1).setPreferredWidth(150);
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		table.getColumn(1).setCellRenderer(centerRenderer);
 		table.getColumnExt(2).setPreferredWidth(50);
-		table.getColumnExt(3).setPreferredWidth(100);
+		table.getColumn(3).setCellRenderer(centerRenderer);
+		table.getColumn(4).setCellRenderer(centerRenderer);
+		table.getColumnExt(3).setPreferredWidth(150);
+		table.getColumnExt(4).setPreferredWidth(150);
 		table.getColumnExt(5).setPreferredWidth(150);
 	}
 
@@ -266,7 +272,7 @@ public class InvoiceViewHandler extends AbstractProductionPackageViewHandlerShor
 	 */
 	@Override
 	public Dimension getWindowSize() {
-		return new Dimension(720, 420);
+		return new Dimension(900, 500);
 	}
 
 	/**

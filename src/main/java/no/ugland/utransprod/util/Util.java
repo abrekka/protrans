@@ -1098,11 +1098,11 @@ public final class Util {
 			ShowTakstolInfoActionFactory showTakstolInfoActionFactory, ArticleType articleTypeTakstol,
 			TakstolPackageApplyList takstolPackageApplyList, TakstolProductionApplyList takstolProductionApplyList,
 			SetProductionUnitActionFactory setProductionUnitActionFactory, CostType costTypeTross,
-			CostUnit costUnitTross) {
+			CostUnit costUnitTross, Collicreator collicreator) {
 		Map<String, AbstractProductionPackageViewHandler> map = new Hashtable<String, AbstractProductionPackageViewHandler>();
 
 		addPacklist(map, orderViewHandlerFactory, managerRepository, deviationViewHandlerFactory, login, costTypeTross,
-				costUnitTross);
+				costUnitTross, collicreator);
 
 		addVeggProduction(login, map, deviationViewHandlerFactory, managerRepository, setProductionUnitActionFactory,
 				vismaFileCreator);
@@ -1146,11 +1146,9 @@ public final class Util {
 			final Map<String, AbstractProductionPackageViewHandler> map) {
 		OrderLineManager orderLineManager = (OrderLineManager) ModelUtil.getBean("orderLineManager");
 
-		map.put("Takstein",
-				(AbstractProductionPackageViewHandler) new PackageViewHandler(login, managerRepository,
-						deviationViewHandlerFactory,
-						new TaksteinPackageApplyList(login, orderLineManager, managerRepository), "Pakking takstein",
-						TableEnum.TABLETAKSTEIN, ApplicationParamUtil.findParamByName("stein_artikkel")));
+		map.put("Takstein", (AbstractProductionPackageViewHandler) new PackageViewHandler(login, managerRepository,
+				deviationViewHandlerFactory, new TaksteinPackageApplyList(login, orderLineManager, managerRepository),
+				"Pakking takstein", TableEnum.TABLETAKSTEIN, ApplicationParamUtil.findParamByName("stein_artikkel")));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -1217,14 +1215,14 @@ public final class Util {
 	private static void addPacklist(final Map<String, AbstractProductionPackageViewHandler> map,
 			OrderViewHandlerFactory orderViewHandlerFactory, ManagerRepository managerRepository,
 			DeviationViewHandlerFactory deviationViewHandlerFactory, Login login, CostType costTypeTross,
-			CostUnit costUnitTross) {
+			CostUnit costUnitTross, Collicreator collicreator) {
 
 		PacklistVManager packlistVManager = (PacklistVManager) ModelUtil.getBean("packlistVManager");
 
 		map.put("Pakkliste",
 				(AbstractProductionPackageViewHandler) new PacklistViewHandler(login, managerRepository,
 						deviationViewHandlerFactory, orderViewHandlerFactory,
-						new PacklistApplyList(login, packlistVManager), costTypeTross, costUnitTross));
+						new PacklistApplyList(login, packlistVManager), costTypeTross, costUnitTross, collicreator));
 	}
 
 	public static JComboBox getComboBoxProductAreaGroup(final ApplicationUser applicationUser, final UserType userType,

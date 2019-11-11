@@ -203,6 +203,14 @@
             </bean>
         </property>
 		</bean>
+		<bean id="sutakPackageVManager" parent="txProxyTemplate">
+        <property name="target">
+            <bean class="no.ugland.utransprod.service.impl.SutakPackageVManagerImpl">
+                <property name="sutakPackageVDAO" ref="sutakPackageVDAO"/>
+                <property name="orderLineDAO" ref="orderLineDAO"/>
+            </bean>
+        </property>
+		</bean>
 	<bean id="gavlProductionVManager" parent="txProxyTemplate">
         <property name="target">
             <bean class="no.ugland.utransprod.service.impl.GavlProductionVManagerImpl">

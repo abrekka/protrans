@@ -1243,7 +1243,7 @@ public class TransportCostManagerIntegrationTest {
 	private OrderLine setColliPackedAndSent(String colliName,
 			String orderLineArticlePath, PostShipment postShipment)
 			throws ProTransException {
-		Colli colli = new Colli();
+		Colli colli = new Colli("test");
 		colli.setColliName(colliName);
 
 		OrderLine orderLine = order.getOrderLine(orderLineArticlePath);

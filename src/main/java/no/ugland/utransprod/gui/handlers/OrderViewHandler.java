@@ -699,7 +699,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 				if (!object.erLettvekt()) {
 					vismaFileCreator.createVismaFileForProductionWeek(order);
 				}
-				checkCollies(order, window);
+//				checkCollies(order, window);
 			} catch (ProTransException e) {
 				Util.showErrorDialog(window, "Feil", e.getMessage());
 				e.printStackTrace();
@@ -731,7 +731,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 			List<OrderLine> orderLines = order.getOrderLineList();
 			Colli tmpColli;
 
-			tmpColli = new Colli(null, order, null, null, null, null, null, null, null);
+			tmpColli = new Colli(null, order, null, null, null, null, null, null, null,"Ordrevindu");
 			if (collies == null) {
 				collies = new ArrayList<Colli>();
 
@@ -751,7 +751,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 						}
 						if (shouldHaveColli(orderLines, colliSetup.get(colliName), order.getTransportable())) {
 							Colli newColli = new Colli(null, tmpColli.getOrder(), tmpColli.getColliName(), null, null,
-									null, tmpColli.getPostShipment(), null, null);
+									null, tmpColli.getPostShipment(), null, null,"Ordrevindu");
 							order.addColli(newColli);
 
 							if (colliName.equalsIgnoreCase("Takstein")) {

@@ -1002,6 +1002,7 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 			if (!Hibernate.isInitialized(transportable.getOrderLines())
 					|| !Hibernate.isInitialized(transportable.getCollies())
 					|| !Hibernate.isInitialized(transportable.getOrderComments())) {
+				
 				if (transportable instanceof PostShipment) {
 					PostShipmentManager postShipmentManager = (PostShipmentManager) ModelUtil
 							.getBean("postShipmentManager");
@@ -1012,6 +1013,7 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 											LazyLoadPostShipmentEnum.ORDER_COMMENTS });
 				} else {
 					OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
+//					orderManager.refreshObject((Order)transportable);
 
 					orderManager.lazyLoadOrder((Order) transportable, new LazyLoadOrderEnum[] {
 							LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.COMMENTS });

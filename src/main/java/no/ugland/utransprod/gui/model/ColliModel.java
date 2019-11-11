@@ -147,7 +147,7 @@ public class ColliModel extends AbstractModel<Colli, ColliModel> {
 	 */
 	@Override
 	public ColliModel getBufferedObjectModel(PresentationModel presentationModel) {
-		ColliModel colliModel = new ColliModel(new Colli());
+		ColliModel colliModel = new ColliModel(new Colli("ColliModel"));
 		colliModel.setColliName((String) presentationModel.getBufferedValue(PROPERTY_COLLI_NAME));
 		colliModel.setHeight((String) presentationModel.getBufferedValue(PROPERTY_HEIGHT));
 		colliModel.setLenght((String) presentationModel.getBufferedValue(PROPERTY_LENGHT));

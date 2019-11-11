@@ -75,6 +75,7 @@ import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.service.enums.LazyLoadPostShipmentEnum;
 import no.ugland.utransprod.util.ApplicationParamUtil;
+import no.ugland.utransprod.util.Collicreator;
 import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.PrefsUtil;
 import no.ugland.utransprod.util.Tidsforbruk;
@@ -186,7 +187,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 			final TakstolProductionApplyList takstolProductionApplyList,
 			SetProductionUnitActionFactory aSetProductionUnitActionFactory,
 			@Named("kostnadTypeTakstoler") CostType aCostTypeTross,
-			@Named("kostnadEnhetTakstoler") CostUnit aCostUnitTross) {
+			@Named("kostnadEnhetTakstoler") CostUnit aCostUnitTross,Collicreator collicreator) {
 		super("Produksjonsoversikt", aManagerRepository.getOrderManager(), aLogin.getUserType(), true);
 		articleTypeTakstol = aArticleTypeTakstol;
 		setProductionUnitActionFactory = aSetProductionUnitActionFactory;
@@ -205,7 +206,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		productionPackageHandlers = Util.getProductionPackageHandlers(vismaFileCreator, login, orderViewHandlerFactory,
 				managerRepository, deviationViewHandlerFactory, showTakstolInfoActionFactory, aArticleTypeTakstol,
 				takstolPackageApplyList, takstolProductionApplyList, aSetProductionUnitActionFactory, aCostTypeTross,
-				aCostUnitTross);
+				aCostUnitTross,collicreator);
 		initProductAreaGroup();
 
 	}

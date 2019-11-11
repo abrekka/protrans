@@ -69,6 +69,24 @@
         column="LEVERT"
         length="32"
     />
+    <property
+        name="prodTp"
+        type="java.lang.Integer"
+        column="PRODTP"
+        length="32"
+    />
+    <property
+        name="prCatNo"
+        type="java.lang.Integer"
+        column="PRCATNO"
+        length="32"
+    />
+    <property
+        name="createdFrom"
+        type="java.lang.String"
+        column="CREATED_FROM"
+        length="255"
+    />
     
     <!-- Associations -->
     <set

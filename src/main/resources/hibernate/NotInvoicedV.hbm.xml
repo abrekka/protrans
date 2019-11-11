@@ -21,6 +21,12 @@
         column="ORDER_DETAILS"
         length="32"
     />
+    <property
+        name="orderNr"
+        type="java.lang.String"
+        column="ORDER_NR"
+        length="32"
+    />
     
     <property
         name="sent"

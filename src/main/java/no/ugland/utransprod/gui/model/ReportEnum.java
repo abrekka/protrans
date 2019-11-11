@@ -24,7 +24,7 @@ public enum ReportEnum {
 	/**
 	 * 
 	 */
-	MONTERING("Montering_bean.jasper", IconEnum.ICON_IGLAND, "Montering"),
+	MONTERING("montering_bean.jasper", IconEnum.ICON_IGLAND, "Montering"),
 	/**
 	 * 
 	 */
@@ -46,11 +46,11 @@ public enum ReportEnum {
 	/**
 	 * 
 	 */
-	DEVIATION("Deviation_report.jasper", IconEnum.ICON_IGLAND, "Avvik"),
+	DEVIATION("deviation_report.jasper", IconEnum.ICON_IGLAND, "Avvik"),
 	/**
 	 * 
 	 */
-	TRANSPORT_LETTER("Fraktbrev.jasper", IconEnum.ICON_IGLAND, "Fraktbrev"),
+	TRANSPORT_LETTER("fraktbrev.jasper", IconEnum.ICON_IGLAND, "Fraktbrev"),
 	/**
 	 * 
 	 */
@@ -70,7 +70,7 @@ public enum ReportEnum {
 	/**
 	 * 
 	 */
-	ACCIDENT("Accident.jasper", IconEnum.ICON_IGLAND, "Hendelse/ulykke"),
+	ACCIDENT("accident.jasper", IconEnum.ICON_IGLAND, "Hendelse/ulykke"),
 	/**
 	 * 
 	 */

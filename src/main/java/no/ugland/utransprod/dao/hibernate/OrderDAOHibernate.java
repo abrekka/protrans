@@ -21,6 +21,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.Type;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
+import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -40,6 +41,7 @@ import no.ugland.utransprod.model.OrderComment;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.ProductArea;
 import no.ugland.utransprod.model.ProductAreaGroup;
+import no.ugland.utransprod.model.Transport;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.service.enums.LazyLoadOrderLineEnum;
 import no.ugland.utransprod.util.Periode;
@@ -96,14 +98,14 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 					public boolean apply(Order ordre) {
 						List<OrderLine> ordrelinjer = Lists
 								.newArrayList(Iterables.filter(ordre.getOrderLines(), new Predicate<OrderLine>() {
-							public boolean apply(OrderLine orderline) {
-								return orderline.getArticleType() != null
-										&& orderline.getArticleType().getProdCatNo() != null
-										&& orderline.getArticleType().getProdCatNo() == 1330100
-										&& orderline.getArticleType().getProdCatNo2() != null
-										&& orderline.getArticleType().getProdCatNo2() == 0;
-							}
-						}));
+									public boolean apply(OrderLine orderline) {
+										return orderline.getArticleType() != null
+												&& orderline.getArticleType().getProdCatNo() != null
+												&& orderline.getArticleType().getProdCatNo() == 1330100
+												&& orderline.getArticleType().getProdCatNo2() != null
+												&& orderline.getArticleType().getProdCatNo2() == 0;
+									}
+								}));
 						return ordrelinjer.size() == 0;
 					}
 				}));
@@ -482,8 +484,8 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 	}
 
 	/**
-	 * Teller etterleveringer og summerer kostnader for etterleveringer i en
-	 * gitt periode
+	 * Teller etterleveringer og summerer kostnader for etterleveringer i en gitt
+	 * periode
 	 * 
 	 * @param fromString
 	 * @param toString
@@ -1017,10 +1019,10 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 			public Object doInHibernate(final Session session) {
 				String query = "select count(customerOrder.orderId) " + " from Order customerOrder "
 						+ " where customerOrder.packlistReady between :fromDate and :toDate "
-						// +
-						// "and
-						// customerOrder.productArea.productAreaGroup.productAreaGroupName="
-						// + ":groupName"
+				// +
+				// "and
+				// customerOrder.productArea.productAreaGroup.productAreaGroupName="
+				// + ":groupName"
 				;
 				List<Integer> list = session.createQuery(query).setParameter("fromDate", fromDate)
 						.setParameter("toDate", toDate)
@@ -1522,9 +1524,21 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 		return (List<String>) getHibernateTemplate().execute(new HibernateCallback() {
 
 			public Object doInHibernate(final Session session) {
-				String sql = "SELECT Filsti " + "FROM dbo.monteringsanvisning_v " + "where order_nr='" + orderNr + "'";
+				String sql = "SELECT Filsti,Filsti_se,Lang " + "FROM dbo.monteringsanvisning_v " + "where order_nr='"
+						+ orderNr + "'";
 
-				return session.createSQLQuery(sql).list();
+				List<Object[]> resultater = session.createSQLQuery(sql).list();
+
+				return Lists.newArrayList(Iterables.transform(resultater, new Function<Object[], String>() {
+
+					public String apply(Object[] from) {
+						if ((Integer) from[2] == 46) {
+							return (String) from[1];
+						}
+						return (String) from[0];
+					}
+				}));
+
 			}
 
 		});
@@ -1570,6 +1584,28 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 
 				session.createQuery(sql).setDate("levertDate", levertDate).setInteger("orderId", order.getOrderId())
 						.executeUpdate();
+				return null;
+			}
+
+		});
+
+	}
+
+	public void oppdaterTransportId(final Order ordre, final Transport transport) {
+		getHibernateTemplate().execute(new HibernateCallback() {
+
+			public Object doInHibernate(final Session session) {
+
+				String sql = "update Order o set o.transport=:transport where o.orderId=:orderId";
+
+				if (transport == null) {
+					sql = "update Order o set o.transport=null where o.orderId=:orderId";
+					session.createQuery(sql).setInteger("orderId", ordre.getOrderId()).executeUpdate();
+				} else {
+
+					session.createQuery(sql).setEntity("transport", transport).setInteger("orderId", ordre.getOrderId())
+							.executeUpdate();
+				}
 				return null;
 			}
 

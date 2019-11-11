@@ -444,7 +444,7 @@
         name="orderComments"
         lazy="true"
         inverse="true"
-		cascade="all"
+        cascade="all-delete-orphan"
 		order-by="COMMENT_DATE desc"
     >
         <key>

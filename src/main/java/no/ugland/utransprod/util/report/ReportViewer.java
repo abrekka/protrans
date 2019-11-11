@@ -202,7 +202,7 @@ public class ReportViewer extends JDialog implements Closeable {
 			InputStream stream = getClass().getClassLoader().getResourceAsStream(reportFile);
 
 			if (stream == null) {
-				throw new ProTransException("Fant ikke rapport");
+				throw new ProTransException(String.format("Fant ikke rapport %s",reportFile));
 			}
 			jasperPrintReport = JasperFillManager.fillReport(stream, parameters, datasource);
 

@@ -93,7 +93,7 @@ public class ProductionOverviewWindowTest extends WindowTest {
 	};
 	ProductionOverviewViewHandler productionOverviewViewHandler = new ProductionOverviewViewHandler(vismaFileCreator, orderViewHandlerFactory,
 		login, managerRepository, deviationViewHandlerFactory, showTakstolInfoActionFactory, null, null, null, setProductionUnitFactory,
-		null, null);
+		null, null,null);
 	final ProductionOverviewWindow productionOverviewWindow = new ProductionOverviewWindow(productionOverviewViewHandler);
 
 	productionOverviewWindow.setLogin(login);

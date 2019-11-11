@@ -83,7 +83,7 @@ public class ArticlePackageViewTest {
 	final Order order = new Order();
 	order.setOrderNr("1");
 	orderLine.setOrder(order);
-	final Colli colli = new Colli();
+	final Colli colli = new Colli("Test");
 	colli.setColliName("test");
 	orderLine.setColli(colli);
 	when(orderLineManager.findByOrderLineId(anyInt())).thenReturn(orderLine);

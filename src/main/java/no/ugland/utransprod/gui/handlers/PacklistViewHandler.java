@@ -85,6 +85,7 @@ import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.OrderManager;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.util.ApplicationParamUtil;
+import no.ugland.utransprod.util.Collicreator;
 import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.PdfUtil;
 import no.ugland.utransprod.util.Threadable;
@@ -114,12 +115,13 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	private JTextField textFieldWeekTo;
 	private StatusCheckerInterface<Transportable> takstolChecker;
 	private JMenuItem menuItemUpdateStatus;
+	private Collicreator collicreator;
 
 	@Inject
 	public PacklistViewHandler(Login login, ManagerRepository aManagerRepository,
 			DeviationViewHandlerFactory deviationViewHandlerFactory, OrderViewHandlerFactory orderViewHandlerFactory,
 			PacklistApplyList productionInterface, @Named("kostnadTypeTakstoler") CostType aCostTypeTross,
-			@Named("kostnadEnhetTakstoler") CostUnit aCostUnitTross) {
+			@Named("kostnadEnhetTakstoler") CostUnit aCostUnitTross,Collicreator aCollicreator) {
 		super(login, aManagerRepository, deviationViewHandlerFactory, productionInterface, "Pakklister",
 				TableEnum.TABLEPACKLIST);
 		costTypeTross = aCostTypeTross;
@@ -137,6 +139,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 		menuItemUpdateStatus = new JMenuItem("Oppdater status");
 
 		popupMenu.add(menuItemUpdateStatus);
+		collicreator=aCollicreator;
 	}
 
 	/**
@@ -305,6 +308,8 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 				order.setPacklistDuration(editPacklistView.getPacklistDuration());
 				order.setPacklistDoneBy(editPacklistView.getDoneBy());
 				order.setProductionBasis(Integer.valueOf(100));
+				managerRepository.getOrderManager().saveOrder(order);
+				collicreator.opprettKollier(order,"Pakkliste");
 			}
 
 			// Date packlistDate = Util.getDate(window);

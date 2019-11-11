@@ -188,7 +188,7 @@ public class ColliListViewHandler implements ColliListener, Updateable, ColliVie
 		Colli newColli = new Colli(null, packable.getOrder(), // abstractOrderModel.getOrderModelOrder(),
 				null, null, null, null,
 				// abstractOrderModel.getOrderModelPostShipment(),
-				packable.getPostShipment(), null, null);
+				packable.getPostShipment(), null, null,"ColliListView");
 		ColliViewHandler colliViewHandler = new ColliViewHandler("Kolli", newColli,
 				// abstractOrderModel,
 				packable, login, managerRepository, window, vismaFileCreator);
@@ -215,7 +215,7 @@ public class ColliListViewHandler implements ColliListener, Updateable, ColliVie
 			buttonRemoveColli.setEnabled(false);
 			buttonEditColli.setEnabled(false);
 
-			checkCollies(window);
+//			checkCollies(window);
 		} catch (ProTransException e) {
 			e.printStackTrace();
 			Util.showErrorDialog(window, "Feil", e.getMessage());
@@ -249,15 +249,15 @@ public class ColliListViewHandler implements ColliListener, Updateable, ColliVie
 //				packable.setDefaultColliesGenerated(1);
 //				overviewManager.saveObject(packable);
 				// packable = (Packable) overviewManager.merge(packable);
-				if (!Hibernate.isInitialized(packable.getCollies())) {
+				List<Colli> collies = packable.getColliList();if (!Hibernate.isInitialized(packable.getCollies())) {
 					initializePackable(packable);
 				}
-				List<Colli> collies = packable.getColliList();
+				
 				List<OrderLine> orderLines = packable.getOrderLineList();
 				Colli tmpColli;
 
 				tmpColli = new Colli(null, packable.getOrder(), null, null, null, null, packable.getPostShipment(),
-						null, null);
+						null, null,"ColliListView");
 				if (collies == null) {
 					collies = new ArrayList<Colli>();
 
@@ -277,7 +277,7 @@ public class ColliListViewHandler implements ColliListener, Updateable, ColliVie
 							}
 							if (shouldHaveColli(orderLines, colliSetup.get(colliName), packable.getTransportable())) {
 								Colli newColli = new Colli(null, tmpColli.getOrder(), tmpColli.getColliName(), null,
-										null, null, tmpColli.getPostShipment(), null, null);
+										null, null, tmpColli.getPostShipment(), null, null,"ColliListView");
 								packable.addColli(newColli);
 
 								if (colliName.equalsIgnoreCase("Takstein")) {

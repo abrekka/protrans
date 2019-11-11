@@ -92,10 +92,10 @@ public class ProductionApplyList extends AbstractApplyList<Produceable> {
 		if (colli == null) {
 			if (orderLine.getPostShipment() != null) {
 				colli = new Colli(null, null, currentColliName, null, null, null, orderLine.getPostShipment(), null,
-						Util.getCurrentDate());
+						Util.getCurrentDate(),"ProductionApplyList");
 			} else {
 				colli = new Colli(null, orderLine.getOrder(), currentColliName, null, null, null, null, null,
-						Util.getCurrentDate());
+						Util.getCurrentDate(),"ProductionApplyList");
 			}
 		} else {
 			colliManager.lazyLoad(colli, new LazyLoadEnum[][] { { LazyLoadEnum.ORDER_LINES, LazyLoadEnum.NONE } });

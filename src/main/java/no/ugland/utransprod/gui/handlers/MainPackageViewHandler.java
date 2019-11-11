@@ -211,7 +211,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	private JPopupMenu popupMenuPostShipment;
 
 	private JMenuItem menuItemPacklist;
-	private JMenuItem menuItemUpdateColliesPostshipment;
+//	private JMenuItem menuItemUpdateColliesPostshipment;
 
 	final ArrayListModel orderComments;
 
@@ -224,7 +224,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	private JPopupMenu popupMenuOrder;
 
 	private JMenuItem menuItemDeviation;
-	private JMenuItem menuItemUpdateCollies;
+//	private JMenuItem menuItemUpdateCollies;
 
 	// private List<ProductAreaGroup> productAreaGroupList;
 
@@ -287,15 +287,15 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 
 		popupMenuPostShipment = new JPopupMenu("Etterlevering");
 		menuItemPacklist = new JMenuItem("Pakkliste...");
-		menuItemUpdateColliesPostshipment = new JMenuItem("Oppdater kollier");
+//		menuItemUpdateColliesPostshipment = new JMenuItem("Oppdater kollier");
 		popupMenuPostShipment.add(menuItemPacklist);
-		popupMenuPostShipment.add(menuItemUpdateColliesPostshipment);
+//		popupMenuPostShipment.add(menuItemUpdateColliesPostshipment);
 
 		popupMenuOrder = new JPopupMenu();
 		menuItemDeviation = new JMenuItem("Registrer avvik...");
-		menuItemUpdateCollies = new JMenuItem("Oppdater kollier");
+//		menuItemUpdateCollies = new JMenuItem("Oppdater kollier");
 		popupMenuOrder.add(menuItemDeviation);
-		popupMenuOrder.add(menuItemUpdateCollies);
+//		popupMenuOrder.add(menuItemUpdateCollies);
 
 		popupMenuOrderLine = new JPopupMenu();
 		menuItemPack = new JMenuItem("Pakk...");
@@ -387,7 +387,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	 */
 	public JXTable getTableOrders(WindowInterface window) {
 		menuItemDeviation.addActionListener(new MenuItemListenerDeviation(window));
-		menuItemUpdateCollies.addActionListener(new MenuItemListenerDeviation(window));
+//		menuItemUpdateCollies.addActionListener(new MenuItemListenerDeviation(window));
 		tableOrders = new JXTable();
 		packageOrderTableModel = new PackageOrderTableModel(orderSelectionList);
 		tableOrders.setModel(packageOrderTableModel);
@@ -443,7 +443,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 
 		tablePostShipment.addMouseListener(new TableClickHandler());
 		menuItemPacklist.addActionListener(new MenuItemListenerPacklist(window));
-		menuItemUpdateColliesPostshipment.addActionListener(new MenuItemListenerPacklist(window));
+//		menuItemUpdateColliesPostshipment.addActionListener(new MenuItemListenerPacklist(window));
 
 		tablePostShipment.addHighlighter(pattern);
 		tablePostShipment.setRowHeight(40);
@@ -1091,7 +1091,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		AbstractOrderModel abstractOrderModel = (AbstractOrderModel) presentationModelPackable.getBean();
 
 		Colli newColli = new Colli(null, abstractOrderModel.getOrderModelOrder(), null, null, null, null,
-				abstractOrderModel.getOrderModelPostShipment(), null, null);
+				abstractOrderModel.getOrderModelPostShipment(), null, null,"Pakkevindu");
 		ColliViewHandler colliViewHandler = new ColliViewHandler("Kolli", newColli, abstractOrderModel, login,
 				managerRepository, window, vismaFileCreator);
 		colliViewHandler.openEditView(null, false, window, false);
@@ -1445,7 +1445,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 						}
 					}
 				}
-				colliListViewHandler.checkCollies(window);
+//				colliListViewHandler.checkCollies(window);
 				updatePanel();
 			}
 		} catch (ProTransException e) {
@@ -2740,10 +2740,11 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 					tablePostShipment.convertRowIndexToModel(postShipmentSelectionList.getSelectionIndex()));
 			if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemPacklist.getActionCommand())) {
 				Util.runInThreadWheel(window.getRootPane(), new PacklistPrinter(window, postShipment), null);
-			} else if (actionEvent.getActionCommand()
-					.equalsIgnoreCase(menuItemUpdateColliesPostshipment.getActionCommand())) {
-				checkCollies(postShipment);
-			}
+			} 
+//			else if (actionEvent.getActionCommand()
+//					.equalsIgnoreCase(menuItemUpdateColliesPostshipment.getActionCommand())) {
+//				checkCollies(postShipment);
+//			}
 			Util.setDefaultCursor(window);
 		}
 
@@ -2848,9 +2849,10 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 					DeviationViewHandler2 deviationViewHandler = deviationViewHandlerFactory.create(order, true, false,
 							true, null, true, true);
 					deviationViewHandler.registerDeviation(order, window);
-				} else if (action.getActionCommand().equalsIgnoreCase(menuItemUpdateCollies.getActionCommand())) {
-					checkCollies(order);
-				}
+				} 
+//				else if (action.getActionCommand().equalsIgnoreCase(menuItemUpdateCollies.getActionCommand())) {
+//					checkCollies(order);
+//				}
 			}
 			Util.setDefaultCursor(window);
 		}
@@ -3077,7 +3079,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 			Colli tmpColli;
 
 			tmpColli = new Colli(null, packable.getOrder(), null, null, null, null, packable.getPostShipment(), null,
-					null);
+					null,"Pakkevindu");
 			if (collies == null) {
 				collies = new ArrayList<Colli>();
 
@@ -3097,7 +3099,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 						}
 						if (shouldHaveColli(orderLines, colliSetup.get(colliName), packable.getTransportable())) {
 							Colli newColli = new Colli(null, tmpColli.getOrder(), tmpColli.getColliName(), null, null,
-									null, tmpColli.getPostShipment(), null, null);
+									null, tmpColli.getPostShipment(), null, null,"Pakkevindu");
 							packable.addColli(newColli);
 
 							if (colliName.equalsIgnoreCase("Takstein")) {

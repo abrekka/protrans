@@ -14,6 +14,7 @@ import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.ProductArea;
 import no.ugland.utransprod.model.ProductAreaGroup;
+import no.ugland.utransprod.model.Transport;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.util.Periode;
 import no.ugland.utransprod.util.report.SaleReportData;
@@ -261,4 +262,6 @@ public interface OrderDAO extends DAO<Order> {
 	void settSentDato(Order order, Date sentDate);
 
 	void settLevert(Order order, Date levertDate);
+
+	void oppdaterTransportId(Order ordre, Transport transport);
 }
