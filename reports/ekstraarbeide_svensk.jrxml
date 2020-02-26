@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ekstraarbeide_svensk" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<style name="Crosstab Data Text" isDefault="false" hAlign="Center"/>
+	<parameter name="customer.firstName" class="java.lang.String"/>
+	<parameter name="customer.lastName" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+	<noData>
+		<band height="540">
+			<staticText>
+				<reportElement x="12" y="489" width="533" height="31"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Till montör: Dessa tillägg enligt TA-dokumentet är tillägg som är avtalat med Igland Garagen och accepterat av kunden. Dokumentet ska bigogas med fakturan!		
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="24" y="440" width="328" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="10" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Detta är avtalt och accepterat av "+ $P{customer.firstName}+" "+$P{customer.lastName}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="352" y="454" width="205" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="352" y="455" width="31" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Datum]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="442" y="455" width="115" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Kundens signatur]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="8" width="328" height="23"/>
+				<textElement>
+					<font fontName="Arial" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TA dokument för ekstraarbete]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="32" width="533" height="50"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Eventuellt ekstraarbete som uppstär pä grund av fel pä platta-sockel eller andra omständigheter som kund är ansvarlig för ska avtalas med Igland Garagen samt accepteras skriftligen av kunden innan arbete päbörjas
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="86" width="533" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Ekstraarbete faktureras med kr. 750,- per timma inkl. moms
+
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="119" width="191" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Följande arbete ska utföras:
+
+
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="233" y="119" width="72" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Antal timmar
+
+
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="119" width="205" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Extra material kr inkl moms
+
+
+
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="12" y="133" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="12" y="153" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="218" y="133" width="1" height="292"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="323" y="134" width="1" height="291"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="12" y="173" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="12" y="193" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="12" y="233" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="12" y="273" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="12" y="253" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="12" y="213" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="12" y="333" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="12" y="393" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="12" y="313" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="12" y="353" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="12" y="293" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="12" y="373" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="12" y="413" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+		</band>
+	</noData>
+</jasperReport>
