@@ -166,6 +166,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 
 	JMenuItem menuItemSetAssembly;
 	JMenuItem menuItemFakturagrunnlag;
+	JMenuItem menuItemFakturagrunnlagSvensk;
 
 	JMenuItem menuItemShowContent;
 	JMenuItem menuItemSetSentBase;
@@ -173,6 +174,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	JMenuItem menuItemRemoveAssembly;
 	JMenuItem menuItemShowMissing;
 	JMenuItem menuItemAssemblyReport;
+	JMenuItem menuItemAssemblyReportSvensk;
 	JMenuItem menuItemAssemblyDeviation;
 	JMenuItem menuItemDeviation;
 	JMenuItem menuItemSetComment;
@@ -249,8 +251,8 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 	// .getBean("productAreaGroupManager");
 	/*
 	 * productAreaGroupList = new ArrayList<ProductAreaGroup>();
-	 * List<ProductAreaGroup> groups = productAreaGroupManager.findAll(); if
-	 * (groups != null) { productAreaGroupList.addAll(groups); }
+	 * List<ProductAreaGroup> groups = productAreaGroupManager.findAll(); if (groups
+	 * != null) { productAreaGroupList.addAll(groups); }
 	 */
 	// }
 
@@ -302,11 +304,14 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		popupMenuSetAssembly = new JPopupMenu("Sett montering...");
 		menuItemSetAssembly = new JMenuItem("Sett montering...");
 		menuItemFakturagrunnlag = new JMenuItem("Fakturagrunnlag...");
+		menuItemFakturagrunnlagSvensk = new JMenuItem("Fakturagrunnlag svensk...");
 		menuItemSetAssembly.setEnabled(hasWriteAccess());
 		popupMenuSetAssembly.add(menuItemSetAssembly);
 		popupMenuSetAssembly.add(menuItemFakturagrunnlag);
+		popupMenuSetAssembly.add(menuItemFakturagrunnlagSvensk);
 		menuItemSetAssembly.addActionListener(menuItemListenerOrder);
 		menuItemFakturagrunnlag.addActionListener(menuItemListenerOrder);
+		menuItemFakturagrunnlagSvensk.addActionListener(menuItemListenerOrder);
 
 		popupMenuSetAssemblyDeviation = new JPopupMenu("Sett montering...");
 		popupMenuAssembly = new JPopupMenu("Sett montering...");
@@ -333,7 +338,10 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		menuItemSetComment.addActionListener(menuItemListenerAssembly);
 
 		menuItemAssemblyReport = new JMenuItem("Fakturagrunnlag...");
-		menuItemAssemblyReport.addActionListener(new AssemblyReportListener(window));
+		menuItemAssemblyReportSvensk = new JMenuItem("Fakturagrunnlag svensk...");
+		AssemblyReportListener assemblyReportListener=new AssemblyReportListener(window);
+		menuItemAssemblyReport.addActionListener(assemblyReportListener);
+		menuItemAssemblyReportSvensk.addActionListener(assemblyReportListener);
 
 		menuItemAssemblyDeviation = new JMenuItem("Se avvik...");
 		menuItemAssemblyDeviation.addActionListener(menuItemListenerAssembly);
@@ -348,6 +356,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		popupMenuAssembly.add(menuItemRemoveAssembly);
 		popupMenuAssembly.add(menuItemShowMissing);
 		popupMenuAssembly.add(menuItemAssemblyReport);
+		popupMenuAssembly.add(menuItemAssemblyReportSvensk);
 		popupMenuAssembly.add(menuItemDeviation);
 		popupMenuAssembly.add(menuItemSetSentBase);
 		popupMenuAssembly.add(menuItemSetComment);
@@ -362,7 +371,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 			this.window = window;
 		}
 
-		public void actionPerformed(ActionEvent event) {
+		public void actionPerformed(final ActionEvent event) {
 
 			Util.runInThreadWheel(window.getRootPane(), new Threadable() {
 
@@ -373,8 +382,13 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 					labelInfo.setText("Genererer fakturagrunnlag...");
 					String errorMsg = null;
 					try {
+						if (event.getActionCommand().equalsIgnoreCase(menuItemAssemblyReport.getText())) {
+							genererFakturagrunnlag(window, ReportEnum.ASSEMBLY_NY);
+						} else if (event.getActionCommand().equalsIgnoreCase(menuItemAssemblyReportSvensk.getText())) {
+							genererFakturagrunnlag(window, ReportEnum.ASSEMBLY_NY_SVENSK);
+						}
 						// generateAssemblyReport();
-						generateAssemblyReportNy(window);
+//						generateAssemblyReportNy(window);
 					} catch (ProTransException e) {
 						errorMsg = e.getMessage();
 						e.printStackTrace();
@@ -394,17 +408,18 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 
 	}
 
-	void generateAssemblyReportNy(WindowInterface window) throws ProTransException {
+	void generateAssemblyReportNy(WindowInterface window, ReportEnum report) throws ProTransException {
 		AssemblyV assemblyV = (AssemblyV) assemblySelectionList.getSelection();
 		Assembly assembly = managerRepository.getAssemblyManager().get(assemblyV.getAssemblyId());
 		if (assembly != null) {
 			Order order = assembly.getOrder() == null ? assembly.getDeviation().getOrder() : assembly.getOrder();
 
-			genererFakturagrunnlagForOrdre(order, assembly, window);
+			genererFakturagrunnlagForOrdre(order, assembly, window,report);
 		}
 	}
 
-	private void genererFakturagrunnlagForOrdre(Order order, Assembly assembly, WindowInterface window) {
+	private void genererFakturagrunnlagForOrdre(Order order, Assembly assembly, WindowInterface window,
+			ReportEnum rapport) {
 		managerRepository.getOrderManager().lazyLoadOrder(order,
 				new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_COSTS, LazyLoadOrderEnum.COMMENTS });
 
@@ -430,10 +445,9 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		ReportViewer reportViewer = new ReportViewer("Montering", mailConfig);
 		List<AssemblyReportNy> assemblyReportList = Lists.newArrayList();
 		assemblyReportList.add(assemblyReport);
-		
-		
-		reportViewer.generateProtransReportFromBeanAndShow(assemblyReportList, "Montering", ReportEnum.ASSEMBLY_NY,
-				null, null, window, true);
+
+		reportViewer.generateProtransReportFromBeanAndShow(assemblyReportList, "Montering", rapport, null, null, window,
+				true);
 	}
 
 	private Predicate<FakturagrunnlagV> ikkeFraktMed001() {
@@ -1116,13 +1130,15 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 				showContent(deviation, window);
 
 			} else if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemFakturagrunnlag.getText())) {
-				genererFakturagrunnlag(window);
+				genererFakturagrunnlag(window, ReportEnum.ASSEMBLY_NY);
+			} else if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemFakturagrunnlagSvensk.getText())) {
+				genererFakturagrunnlag(window, ReportEnum.ASSEMBLY_NY_SVENSK);
 			}
 		}
 
 	}
 
-	private void genererFakturagrunnlag(final WindowInterface window) {
+	private void genererFakturagrunnlag(final WindowInterface window, final ReportEnum report) {
 		int index = orderViewHandler.getOrderPanelSelectedOrderIndex();
 		final Order order = getSelectedOrder(index);
 
@@ -1135,7 +1151,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 				labelInfo.setText("Genererer fakturagrunnlag...");
 				String errorMsg = null;
 				try {
-					genererFakturagrunnlagForOrdre(order,order.getAssembly(),window);
+					genererFakturagrunnlagForOrdre(order, order.getAssembly(), window, report);
 				} catch (ProTransException e) {
 					errorMsg = e.getMessage();
 					e.printStackTrace();

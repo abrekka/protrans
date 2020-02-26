@@ -67,6 +67,7 @@ public enum ReportEnum {
 	 * 
 	 */
 	ASSEMBLY_NY("assembly_ny.jasper", IconEnum.ICON_IGLAND, "Montering"),
+	ASSEMBLY_NY_SVENSK("assembly_ny_svensk.jasper", IconEnum.ICON_IGLAND_SE, "Montering"),
 	/**
 	 * 
 	 */

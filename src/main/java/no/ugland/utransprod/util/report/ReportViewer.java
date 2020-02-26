@@ -18,6 +18,7 @@ import javax.swing.table.TableModel;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -204,6 +205,10 @@ public class ReportViewer extends JDialog implements Closeable {
 			if (stream == null) {
 				throw new ProTransException(String.format("Fant ikke rapport %s",reportFile));
 			}
+			
+//			InputStream rapport =getClass().getClassLoader().getResourceAsStream("reports/assembly_ny_svensk.jrxml");
+//			String filnavn=JasperCompileManager.compileReportToFile("reports/assembly_ny_svensk.jrxml");
+			
 			jasperPrintReport = JasperFillManager.fillReport(stream, parameters, datasource);
 
 			JRViewerProTrans viewer = new JRViewerProTrans(jasperPrintReport);

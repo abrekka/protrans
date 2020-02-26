@@ -1525,7 +1525,7 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 
 			public Object doInHibernate(final Session session) {
 				String sql = "SELECT Filsti,Filsti_se,Lang " + "FROM dbo.monteringsanvisning_v " + "where order_nr='"
-						+ orderNr + "'";
+						+ orderNr + "' order by Txt1";
 
 				List<Object[]> resultater = session.createSQLQuery(sql).list();
 

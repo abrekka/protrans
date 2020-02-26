@@ -89,10 +89,8 @@ public enum IconEnum {
 	/**
 	 * Ikon advarsel
 	 */
-	ICON_WARNING("images/warning.png"), 
-	ICON_WARNING_YELLOW("images/warning_yellow.png"),
-	ICON_WARNING_BLUE("images/warning_blue.png"),
-	ICON_WARNING_RED("images/warning_red.png"),
+	ICON_WARNING("images/warning.png"), ICON_WARNING_YELLOW("images/warning_yellow.png"),
+	ICON_WARNING_BLUE("images/warning_blue.png"), ICON_WARNING_RED("images/warning_red.png"),
 	/**
 	 * Ikon etterlevering
 	 */
@@ -100,11 +98,11 @@ public enum IconEnum {
 	/**
 	 * Ikon for epost
 	 */
-	ICON_MAIL("images/mail.png"), ICON_CHECKED("images/checked.jpeg"), ICON_UGLAND_TAKSTOL_BYGGELEMENT(
-			"images/takstol_byggelement.jpg"), ICON_UTSTIKKTYPE_1("images/Utstikktype1.jpg"), ICON_UTSTIKKTYPE_2(
-					"images/Utstikktype2.jpg"), ICON_UTSTIKKTYPE_3("images/Utstikktype3.jpg"), ICON_UTSTIKKTYPE_4(
-							"images/Utstikktype4.jpg"), ICON_JATAK("images/Jatak.JPG"), ICON_IGLAND(
-									"images/igland_garasjen.png"),;
+	ICON_MAIL("images/mail.png"), ICON_CHECKED("images/checked.jpeg"),
+	ICON_UGLAND_TAKSTOL_BYGGELEMENT("images/takstol_byggelement.jpg"), ICON_UTSTIKKTYPE_1("images/Utstikktype1.jpg"),
+	ICON_UTSTIKKTYPE_2("images/Utstikktype2.jpg"), ICON_UTSTIKKTYPE_3("images/Utstikktype3.jpg"),
+	ICON_UTSTIKKTYPE_4("images/Utstikktype4.jpg"), ICON_JATAK("images/Jatak.JPG"),
+	ICON_IGLAND("images/igland_garasjen.png"), ICON_IGLAND_SE("images/igland_garagen_se.png");
 
 	/**
 	 * Ikon

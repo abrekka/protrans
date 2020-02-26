@@ -135,6 +135,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 	JMenuItem menuItemShowDeviation;
 
 	JMenuItem menuItemAssemblyReport;
+	JMenuItem menuItemAssemblyReportSvensk;
 
 	private List<String> plannedList;
 
@@ -201,12 +202,14 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 		menuItemShowContent = new JMenuItem("Se innhold...");
 		menuItemDeviation = new JMenuItem("Registrere avvik...");
 		menuItemAssemblyReport = new JMenuItem("Fakturagrunnlag...");
+		menuItemAssemblyReportSvensk = new JMenuItem("Fakturagrunnlag svensk...");
 		menuItemShowDeviation = new JMenuItem("Se avvik...");
 
 		popupMenuEdit.add(menuItemEdit);
 		popupMenuEdit.add(menuItemRemoveAssembly);
 		popupMenuEdit.add(menuItemShowMissing);
 		popupMenuEdit.add(menuItemAssemblyReport);
+		popupMenuEdit.add(menuItemAssemblyReportSvensk);
 	}
 
 	/**
@@ -317,7 +320,9 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 			menuItemShowContent.addActionListener(menuItemListener);
 			menuItemDeviation.addActionListener(menuItemListener);
 			menuItemShowDeviation.addActionListener(menuItemListener);
-			menuItemAssemblyReport.addActionListener(new AssemblyReportListener());
+			AssemblyReportListener assemblyReportListener=new AssemblyReportListener();
+			menuItemAssemblyReport.addActionListener(assemblyReportListener);
+			menuItemAssemblyReportSvensk.addActionListener(new AssemblyReportListener());
 		}
 	}
 
@@ -370,9 +375,11 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 					popupMenuEdit.add(menuItemShowContent);
 					popupMenuEdit.remove(menuItemDeviation);
 					popupMenuEdit.remove(menuItemAssemblyReport);
+					popupMenuEdit.remove(menuItemAssemblyReportSvensk);
 					popupMenuEdit.add(menuItemShowDeviation);
 				} else {
 					popupMenuEdit.add(menuItemAssemblyReport);
+					popupMenuEdit.add(menuItemAssemblyReportSvensk);
 					popupMenuEdit.remove(menuItemShowContent);
 					popupMenuEdit.add(menuItemDeviation);
 					popupMenuEdit.remove(menuItemShowDeviation);
@@ -469,11 +476,9 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 				Assembly assembly = (Assembly) assemblySelectionList
 						.getElementAt(tableOrders.convertRowIndexToModel(assemblySelectionList.getSelectionIndex()));
 				Deviation deviation = assembly.getDeviation();
-				managerRepository.getDeviationManager()
-						.lazyLoad(deviation,
-								new LazyLoadDeviationEnum[] { LazyLoadDeviationEnum.ORDER_COSTS,
-										LazyLoadDeviationEnum.COMMENTS, LazyLoadDeviationEnum.ORDER_LINES,
-										LazyLoadDeviationEnum.ORDER_LINE_ORDER_LINES });
+				managerRepository.getDeviationManager().lazyLoad(deviation,
+						new LazyLoadDeviationEnum[] { LazyLoadDeviationEnum.ORDER_COSTS, LazyLoadDeviationEnum.COMMENTS,
+								LazyLoadDeviationEnum.ORDER_LINES, LazyLoadDeviationEnum.ORDER_LINE_ORDER_LINES });
 				Order order = assembly.getOrder();
 				managerRepository.getOrderManager().lazyLoadTree(order);// LoadOrder(order,
 																		// new
@@ -801,7 +806,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 
 	private class AssemblyReportListener implements ActionListener {
 
-		public void actionPerformed(ActionEvent event) {
+		public void actionPerformed(final ActionEvent event) {
 
 			Util.runInThreadWheel(window.getRootPane(), new Threadable() {
 
@@ -813,7 +818,12 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 					String errorMsg = null;
 					try {
 						// generateAssemblyReport();
-						generateAssemblyReportNy();
+						if (event.getActionCommand().equalsIgnoreCase(menuItemAssemblyReport.getText())) {
+							generateAssemblyReportNy(ReportEnum.ASSEMBLY_NY);
+						} else if (event.getActionCommand().equalsIgnoreCase(menuItemAssemblyReportSvensk.getText())) {
+							generateAssemblyReportNy(ReportEnum.ASSEMBLY_NY_SVENSK);
+						}
+
 					} catch (ProTransException e) {
 						errorMsg = e.getMessage();
 						e.printStackTrace();
@@ -855,7 +865,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 		}
 	}
 
-	void generateAssemblyReportNy() throws ProTransException {
+	void generateAssemblyReportNy(ReportEnum report) throws ProTransException {
 		Assembly assembly = (Assembly) assemblySelectionList
 				.getElementAt(tableOrders.convertRowIndexToModel(assemblySelectionList.getSelectionIndex()));
 		if (assembly != null) {
@@ -884,9 +894,9 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 			ReportViewer reportViewer = new ReportViewer("Montering", mailConfig);
 			List<AssemblyReportNy> assemblyReportList = Lists.newArrayList();
 			assemblyReportList.add(assemblyReport);
-			
-			reportViewer.generateProtransReportFromBeanAndShow(assemblyReportList, "Montering", ReportEnum.ASSEMBLY_NY,
-					null, null, window, true);
+
+			reportViewer.generateProtransReportFromBeanAndShow(assemblyReportList, "Montering", report, null, null,
+					window, true);
 
 		}
 	}

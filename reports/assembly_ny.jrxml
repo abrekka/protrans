@@ -50,7 +50,7 @@
 					<text><![CDATA[Hver montering må merkes med vårt bestillingsnr:]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-7" positionType="Float" x="321" y="22" width="27" height="14"/>
+					<reportElement key="textField-7" positionType="Float" x="321" y="22" width="50" height="14"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -179,7 +179,7 @@
 				<textElement>
 					<font fontName="Arial" size="12"/>
 				</textElement>
-				<text><![CDATA[Grimstad Industrier]]></text>
+				<text><![CDATA[Igland garasjen AS]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-4" x="345" y="100" width="183" height="14"/>

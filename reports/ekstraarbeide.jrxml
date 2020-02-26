@@ -34,7 +34,7 @@
 				<textElement>
 					<font fontName="Arial" size="10" isBold="true" isItalic="false"/>
 				</textElement>
-				<text><![CDATA[De tillegg som det vil bli betalt for,  - er de tillegg som er avtalt med Igland Garasjen AS, og akseptert av kunden. Dette skal følge i signert utgave sammen med fakturaen!		
+				<text><![CDATA[De tillegg som det vil bli betalt for,  - er de tillegg som er avtalt med Grimstad Industrier, og akseptert av kunden. Dette skal følge i signert utgave sammen med fakturaen!		
 ]]></text>
 			</staticText>
 			<textField>
@@ -73,7 +73,7 @@
 				<textElement>
 					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Eventuellt ekstra arbeide som følge av feil med kundens mur, eller andre omstendigheter kunden har skyld i, skal avtales med Igland Garasjen AS, samt aksepteres skriftlig av kunden, før arbeide påbegynnes		
+				<text><![CDATA[Eventuellt ekstra arbeide som følge av feil med kundens mur, eller andre omstendigheter kunden har skyld i, skal avtales med Grimstad Industrier, samt aksepteres skriftlig av kunden, før arbeide påbegynnes		
 ]]></text>
 			</staticText>
 			<staticText>
@@ -81,7 +81,7 @@
 				<textElement>
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Ekstra arbeide fakureres med kr. 550,- pr time inkl. mva
+				<text><![CDATA[Ekstra arbeide fakureres med kr. 460,- pr time inkl. mva
 
 ]]></text>
 			</staticText>

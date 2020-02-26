@@ -38,7 +38,7 @@
 				<textElement>
 					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Eventuellt ekstraarbeide, som følge av feil ved leveransen skal avtales med Igland Garasjen AS pr telefon før arbeidet igansettes							
+				<text><![CDATA[Eventuellt ekstraarbeide, som følge av feil ved leveransen skal avtales med Grimstad Industrier pr telefon før arbeidet igansettes							
 ]]></text>
 			</staticText>
 			<staticText>
@@ -46,7 +46,7 @@
 				<textElement>
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Ekstraarbeide fakureres med kr. 550,- pr time inkl. mva
+				<text><![CDATA[Ekstraarbeide fakureres med kr. 460,- pr time inkl. mva
 
 ]]></text>
 			</staticText>
@@ -164,7 +164,7 @@
 				<textElement>
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Dette er avtalt og akseptert av Igland Garasjen AS
+				<text><![CDATA[Dette er avtalt og akseptert av Grimstad Industrier
 
 
 ]]></text>
@@ -191,7 +191,7 @@
 				<textElement>
 					<font fontName="Arial" size="10" isBold="true" isItalic="false"/>
 				</textElement>
-				<text><![CDATA[De tillegg som det vil bli betalt for,  - er de tillegg som er avtalt med Igland Garasjen AS, og akseptert av kunden. Dette skal følge i signert utgave sammen med fakturaen!							
+				<text><![CDATA[De tillegg som det vil bli betalt for,  - er de tillegg som er avtalt med Grimstad industrier, og akseptert av kunden. Dette skal følge i signert utgave sammen med fakturaen!							
 
 ]]></text>
 			</staticText>
@@ -200,7 +200,7 @@
 				<textElement>
 					<font fontName="Arial" size="12" isBold="true" isItalic="false"/>
 				</textElement>
-				<text><![CDATA[Når du monterer en Igland Garasjen skal du:
+				<text><![CDATA[Når du monterer en Grimstad Garasje skal du:
 
 ]]></text>
 			</staticText>
@@ -252,7 +252,7 @@
 				<textElement>
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[·Melde tilbake til Igland Garasjen AS vedr. mangler ved leveransen, eller hvor det er levert for mye materialer.							
+				<text><![CDATA[·Melde tilbake til Grimstad industrier AS vedr. mangler ved leveransen, eller hvor det er levert for mye materialer.							
 ]]></text>
 			</staticText>
 			<staticText>
