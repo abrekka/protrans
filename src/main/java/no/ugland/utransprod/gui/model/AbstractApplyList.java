@@ -1,138 +1,137 @@
-package no.ugland.utransprod.gui.model;
-
-import java.util.Collection;
-import java.util.List;
-
-import javax.swing.ListModel;
-import javax.swing.table.TableModel;
-
-import no.ugland.utransprod.ProTransException;
-import no.ugland.utransprod.gui.Login;
-import no.ugland.utransprod.gui.WindowInterface;
-import no.ugland.utransprod.model.OrderLine;
-import no.ugland.utransprod.model.ProductAreaGroup;
-import no.ugland.utransprod.model.ProductionUnit;
-import no.ugland.utransprod.service.IApplyListManager;
-import no.ugland.utransprod.service.VismaFileCreator;
-
-import org.jdesktop.swingx.JXTable;
-
-import com.jgoodies.binding.list.SelectionInList;
-
-/**
- * Abstrakt implementasjon av ApplyListInterface
- * 
- * @author atle.brekka
- * @param <T>
- */
-public abstract class AbstractApplyList<T extends Applyable> implements ApplyListInterface<T> {
-
-    protected Login login;
-
-    protected IApplyListManager<T> applyListManager;
-
-    protected VismaFileCreator vismaFileCreator;
-
-    /**
-     * @param aUserType
-     * @param manager
-     */
-    public AbstractApplyList(Login aLogin, IApplyListManager<T> manager, VismaFileCreator aVismaFileCreator) {
-	login = aLogin;
-	applyListManager = manager;
-	vismaFileCreator = aVismaFileCreator;
-
-    }
-
-    /**
-     * @see no.ugland.utransprod.gui.model.ApplyListInterface#getObjectLines()
-     */
-    public Collection<T> getObjectLines() {
-	List<T> lines = applyListManager.findAllApplyable();
-
-	// if (lines != null) {
-	// for (T obj : lines) {
-	// obj.setOrdln(applyListManager.findOrdlnByOrderLine(obj.getOrderLineId()));
-	// }
-	// }
-	sortObjectLines(lines);
-	return lines;
-    }
-
-    /**
-     * @see no.ugland.utransprod.gui.model.ApplyListInterface#doSearch(java.lang.String,
-     *      java.lang.String)
-     */
-    public List<T> doSearch(String orderNr, String customerNr, ProductAreaGroup productAreaGroup) throws ProTransException {
-	if (orderNr != null) {
-	    return applyListManager.findApplyableByOrderNrAndProductAreaGroup(orderNr, null);
-	} else if (customerNr != null) {
-	    try {
-		return applyListManager.findApplyableByCustomerNrAndProductAreaGroup(Integer.valueOf(customerNr), null);
-	    } catch (NumberFormatException e) {
-		e.printStackTrace();
-		throw new ProTransException("Kundenr må være tall");
-	    }
-	}
-	return null;
-    }
-
-    /**
-     * Tom implementasjon
-     * 
-     * @see no.ugland.utransprod.gui.model.ApplyListInterface#getReportEnum()
-     */
-    public ReportEnum getReportEnum() {
-	return null;
-    }
-
-    /**
-     * Tom implementasjon
-     * 
-     * @see no.ugland.utransprod.gui.model.ApplyListInterface#getTableModelReport(javax.swing.ListModel,
-     *      org.jdesktop.swingx.JXTable,
-     *      com.jgoodies.binding.list.SelectionInList)
-     */
-    public TableModel getTableModelReport(ListModel listModel, JXTable table, SelectionInList objectSelectionList) {
-	return null;
-    }
-
-    /**
-     * Tom implementasjon
-     * 
-     * @see no.ugland.utransprod.gui.model.ApplyListInterface#setInvisibleColumns(org.jdesktop.swingx.JXTable)
-     */
-    public void setInvisibleColumns(JXTable table) {
-
-    }
-
-    /**
-     * Sorterer objekter som skal vises Dette er en tom implementasjon som må
-     * implementeres av de klassene som trenger dette
-     * 
-     * @param lines
-     */
-    protected void sortObjectLines(List<T> lines) {
-    }
-
-    /**
-     * @param object
-     * @see no.ugland.utransprod.gui.model.ApplyListInterface#refresh(no.ugland.utransprod.gui.model.Applyable)
-     */
-    public void refresh(T object) {
-	applyListManager.refresh(object);
-    }
-
-    public void setProductionUnit(ProductionUnit productionUnit, T object, WindowInterface window) {
-    }
-
-    protected String createVismaFile(List<OrderLine> orderLines) throws ProTransException {
-	return vismaFileCreator != null ? vismaFileCreator.createVismaFile(orderLines, 1, false) : null;
-
-    }
-
-    protected boolean ignoreVismaFile(OrderLine orderLine, WindowInterface window, boolean isMainArticle) {
-	return !isMainArticle ? true : vismaFileCreator != null ? vismaFileCreator.ignoreVismaFile(orderLine, window) : true;
-    }
-
-}
+/*     */ package no.ugland.utransprod.gui.model;
+/*     */ 
+/*     */ import com.jgoodies.binding.list.SelectionInList;
+/*     */ import java.util.Collection;
+/*     */ import java.util.List;
+/*     */ import javax.swing.ListModel;
+/*     */ import javax.swing.table.TableModel;
+/*     */ import no.ugland.utransprod.ProTransException;
+/*     */ import no.ugland.utransprod.gui.Login;
+/*     */ import no.ugland.utransprod.gui.WindowInterface;
+/*     */ import no.ugland.utransprod.model.OrderLine;
+/*     */ import no.ugland.utransprod.model.ProductAreaGroup;
+/*     */ import no.ugland.utransprod.model.ProductionUnit;
+/*     */ import no.ugland.utransprod.service.IApplyListManager;
+/*     */ import no.ugland.utransprod.service.VismaFileCreator;
+/*     */ import org.jdesktop.swingx.JXTable;
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ public abstract class AbstractApplyList<T extends Applyable> implements ApplyListInterface<T> {
+/*     */    protected Login login;
+/*     */    protected IApplyListManager<T> applyListManager;
+/*     */    protected VismaFileCreator vismaFileCreator;
+/*     */ 
+/*     */    public AbstractApplyList(Login aLogin, IApplyListManager<T> manager, VismaFileCreator aVismaFileCreator) {
+/*  41 */       this.login = aLogin;
+/*  42 */       this.applyListManager = manager;
+/*  43 */       this.vismaFileCreator = aVismaFileCreator;
+/*     */ 
+/*  45 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public Collection<T> getObjectLines() {
+/*  51 */       List<T> lines = this.applyListManager.findAllApplyable();
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*  58 */       this.sortObjectLines(lines);
+/*  59 */       return lines;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public List<T> doSearch(String orderNr, String customerNr, ProductAreaGroup productAreaGroup) throws ProTransException {
+/*  67 */       if (orderNr != null) {
+/*  68 */          return this.applyListManager.findApplyableByOrderNrAndProductAreaGroup(orderNr, (ProductAreaGroup)null);
+/*  69 */       } else if (customerNr != null) {
+/*     */          try {
+/*  71 */             return this.applyListManager.findApplyableByCustomerNrAndProductAreaGroup(Integer.valueOf(customerNr), (ProductAreaGroup)null);
+/*  72 */          } catch (NumberFormatException var5) {
+/*  73 */             var5.printStackTrace();
+/*  74 */             throw new ProTransException("Kundenr mÃ¥ vÃ¦re tall");
+/*     */          }
+/*     */       } else {
+/*  77 */          return null;
+/*     */       }
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public ReportEnum getReportEnum() {
+/*  86 */       return null;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public TableModel getTableModelReport(ListModel listModel, JXTable table, SelectionInList objectSelectionList) {
+/*  97 */       return null;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setInvisibleColumns(JXTable table) {
+/* 107 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    protected void sortObjectLines(List<T> lines) {
+/* 116 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void refresh(T object) {
+/* 123 */       this.applyListManager.refresh(object);
+/* 124 */    }
+/*     */ 
+/*     */    public void setProductionUnit(ProductionUnit productionUnit, T object, WindowInterface window) {
+/* 127 */    }
+/*     */ 
+/*     */    protected String createVismaFile(List<OrderLine> orderLines) throws ProTransException {
+/* 130 */       return this.vismaFileCreator != null ? this.vismaFileCreator.createVismaFile(orderLines, 1, false) : null;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */    protected boolean ignoreVismaFile(OrderLine orderLine, WindowInterface window, boolean isMainArticle) {
+/* 135 */       return !isMainArticle ? true : (this.vismaFileCreator != null ? this.vismaFileCreator.ignoreVismaFile(orderLine, window) : true);
+/*     */    }
+/*     */ }

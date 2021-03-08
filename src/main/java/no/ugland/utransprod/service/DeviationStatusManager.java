@@ -1,34 +1,25 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import java.util.Collection;
 import java.util.List;
-
 import no.ugland.utransprod.model.DeviationStatus;
 
-/**
- * Interface for serviceklasse mot tabell DEVIATION_STATUS
- * @author atle.brekka
- */
-public interface DeviationStatusManager extends
-        OverviewManager<DeviationStatus> {
-    String MANAGER_NAME = "deviationStatusManager";
-	/**
-     * @see no.ugland.utransprod.service.OverviewManager#findAll()
-     */
-    List<DeviationStatus> findAll();
+public interface DeviationStatusManager extends OverviewManager<DeviationStatus> {
+   String MANAGER_NAME = "deviationStatusManager";
 
-    /**
-     * Finner alle som ikke gjelder for ansvarlig
-     * @return avviksstatuser
-     */
-    List<DeviationStatus> findAllNotForManager();
-    Integer countUsedByDeviation(DeviationStatus deviationStatus);
+   List<DeviationStatus> findAll();
 
-	List<DeviationStatus> findAllForDeviation();
+   List<DeviationStatus> findAllNotForManager();
 
-	Collection<DeviationStatus> findAllForAccident();
+   Integer countUsedByDeviation(DeviationStatus var1);
 
-	Collection<DeviationStatus> findAllNotForManagerForAccident();
+   List<DeviationStatus> findAllForDeviation();
 
-	Collection<DeviationStatus> findAllNotForManagerForDeviation();
+   Collection<DeviationStatus> findAllForAccident();
+
+   Collection<DeviationStatus> findAllNotForManagerForAccident();
+
+   Collection<DeviationStatus> findAllNotForManagerForDeviation();
 }

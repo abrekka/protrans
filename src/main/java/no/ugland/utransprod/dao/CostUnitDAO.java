@@ -1,43 +1,14 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.dao;
 
 import java.util.List;
-
 import no.ugland.utransprod.model.CostUnit;
 
-/**
- * Interface for DAO mot tabell COST?UNIT
- * 
- * @author atle.brekka
- * 
- */
 public interface CostUnitDAO extends DAO<CostUnit> {
-	/**
-	 * Finner alle kostnadsenhet
-	 * 
-	 * @return kostnadsenheter
-	 */
-	List<CostUnit> findAll();
+   List<CostUnit> findAll();
 
-	/**
-	 * Oppdaterer objekt
-	 * 
-	 * @param costUnit
-	 */
-	void refreshObject(CostUnit costUnit);
+   void refreshObject(CostUnit var1);
 
-	/**
-	 * Finner kostnadsenhet basert på navn
-	 * 
-	 * @param name
-	 * @return kostnadsenhet
-	 */
-	CostUnit findByName(String name);
-
-	/**
-	 * Lasy laster kostnadsenhet
-	 * 
-	 * @param costUnit
-	 * @param enums
-	 */
-	//void lazyLoad(CostUnit costUnit, LazyLoadCostUnitEnum[] enums);
+   CostUnit findByName(String var1);
 }

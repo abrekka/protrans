@@ -1,531 +1,545 @@
-package no.ugland.utransprod.model;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-
-import no.ugland.utransprod.gui.model.Applyable;
-import no.ugland.utransprod.gui.model.TextRenderable;
-
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
-
-/**
- * Modellklasse for view FRONT_PRODUCTION_V
- * 
- * @author atle.brekka
- */
-public class FrontProductionV extends BaseObject implements TextRenderable, Produceable {
-    private static final long serialVersionUID = 1L;
-
-    private Integer orderLineId;
-
-    private String customerDetails;
-
-    private String orderNr;
-
-    private String address;
-    private String info;
-
-    private String constructionTypeName;
-
-    private String articleName;
-
-    private String attributeInfo;
-
-    private Integer numberOfItems;
-
-    private Date loadingDate;
-
-    private Date produced;
-    private String transportDetails;
-
-    private String comment;
-
-    private Integer transportYear;
-
-    private Integer transportWeek;
-
-    private Integer customerNr;
-
-    private String loadTime;
-
-    private String orderStatus;
-
-    private Integer postShipmentId;
-
-    private String productAreaGroupName;
-    private Date actionStarted;
-    private Date productionDate;
-    private String productionUnitName;
-    /**
-     * Brukes bare for å sette info fra visma
-     */
-    private Ordln ordln;
-
-    private BigDecimal realProductionHours;
-
-    private Integer productionWeek;
-    private String doneBy;
-
-    public FrontProductionV() {
-	super();
-    }
-
-    public FrontProductionV(final Integer aOrderLineId, final String someCustomerDetails, final String aOrderNr, final String aAddress,
-	    final String aInfo, final String aConstructionTypeName, final String aArticleName, final String aAttributeInfo,
-	    final Integer aNumberOfItems, final Date aLoadingDate, final Date producedDate, final String someTransportDetails, final String aComment,
-	    final Integer aTransportYear, final Integer aTransportWeek, final Integer aCustomerNr, final String aLoadTime, final String aOrderStatus,
-	    final Integer aPostShipmentId, final String aProductAreaGroupName, final Date actionStartedDate, final Date aProductionDate,
-	    final String aProductionUnitName) {
-	super();
-	this.orderLineId = aOrderLineId;
-	this.customerDetails = someCustomerDetails;
-	this.orderNr = aOrderNr;
-	this.address = aAddress;
-	this.info = aInfo;
-	this.constructionTypeName = aConstructionTypeName;
-	this.articleName = aArticleName;
-	this.attributeInfo = aAttributeInfo;
-	this.numberOfItems = aNumberOfItems;
-	this.loadingDate = aLoadingDate;
-	this.produced = producedDate;
-	this.transportDetails = someTransportDetails;
-	this.comment = aComment;
-	this.transportYear = aTransportYear;
-	this.transportWeek = aTransportWeek;
-	this.customerNr = aCustomerNr;
-	this.loadTime = aLoadTime;
-	this.orderStatus = aOrderStatus;
-	this.postShipmentId = aPostShipmentId;
-	this.productAreaGroupName = aProductAreaGroupName;
-	this.actionStarted = actionStartedDate;
-	this.productionDate = aProductionDate;
-	this.productionUnitName = aProductionUnitName;
-    }
-
-    /**
-     * @return adresse
-     */
-    public String getAddress() {
-	return address;
-    }
-
-    /**
-     * @param address
-     */
-    public void setAddress(String address) {
-	this.address = address;
-    }
-
-    /**
-     * @return artikkelnavn
-     */
-    public String getArticleName() {
-	return articleName;
-    }
-
-    /**
-     * @param articleName
-     */
-    public void setArticleName(String articleName) {
-	this.articleName = articleName;
-    }
-
-    /**
-     * @see no.ugland.utransprod.model.Produceable#getAttributeInfo()
-     */
-    public String getAttributeInfo() {
-	return attributeInfo;
-    }
-
-    /**
-     * @param attributeInfo
-     */
-    public void setAttributeInfo(String attributeInfo) {
-	this.attributeInfo = attributeInfo;
-    }
-
-    /**
-     * @see no.ugland.utransprod.gui.model.TextRenderable#getComment()
-     */
-    public String getComment() {
-	return comment;
-    }
-
-    /**
-     * @param comment
-     */
-    public void setComment(String comment) {
-	this.comment = comment;
-    }
-
-    /**
-     * @return garasjetype
-     */
-    public String getConstructionTypeName() {
-	return constructionTypeName;
-    }
-
-    /**
-     * @param constructionTypeName
-     */
-    public void setConstructionTypeName(String constructionTypeName) {
-	this.constructionTypeName = constructionTypeName;
-    }
-
-    /**
-     * @return kundedetaljer
-     */
-    public String getCustomerDetails() {
-	return customerDetails;
-    }
-
-    /**
-     * @param customerDetails
-     */
-    public void setCustomerDetails(String customerDetails) {
-	this.customerDetails = customerDetails;
-    }
-
-    /**
-     * @return kundenummer
-     */
-    public Integer getCustomerNr() {
-	return customerNr;
-    }
-
-    /**
-     * @param customerNr
-     */
-    public void setCustomerNr(Integer customerNr) {
-	this.customerNr = customerNr;
-    }
-
-    /**
-     * @return info om bredde og høyde
-     */
-    public String getInfo() {
-	return info;
-    }
-
-    /**
-     * @param info
-     */
-    public void setInfo(String info) {
-	this.info = info;
-    }
-
-    /**
-     * @see no.ugland.utransprod.model.Produceable#getLoadingDate()
-     */
-    public Date getLoadingDate() {
-	return loadingDate;
-    }
-
-    /**
-     * @param loadingDate
-     */
-    public void setLoadingDate(Date loadingDate) {
-	this.loadingDate = loadingDate;
-    }
-
-    /**
-     * @see no.ugland.utransprod.model.Produceable#getNumberOfItems()
-     */
-    public Integer getNumberOfItems() {
-	return numberOfItems;
-    }
-
-    /**
-     * @param numberOfItems
-     */
-    public void setNumberOfItems(Integer numberOfItems) {
-	this.numberOfItems = numberOfItems;
-    }
-
-    /**
-     * @see no.ugland.utransprod.model.Produceable#getOrderLineId()
-     */
-    public Integer getOrderLineId() {
-	return orderLineId;
-    }
-
-    /**
-     * @param orderLineId
-     */
-    public void setOrderLineId(Integer orderLineId) {
-	this.orderLineId = orderLineId;
-    }
-
-    /**
-     * @see no.ugland.utransprod.gui.model.Applyable#getOrderNr()
-     */
-    public String getOrderNr() {
-	return orderNr;
-    }
-
-    /**
-     * @param orderNr
-     */
-    public void setOrderNr(String orderNr) {
-	this.orderNr = orderNr;
-    }
-
-    /**
-     * @see no.ugland.utransprod.model.Produceable#getProduced()
-     */
-    public Date getProduced() {
-	return produced;
-    }
-
-    /**
-     * @param produced
-     */
-    public void setProduced(Date produced) {
-	this.produced = produced;
-    }
-
-    /**
-     * @see no.ugland.utransprod.model.Produceable#getTransportDetails()
-     */
-    public String getTransportDetails() {
-	return transportDetails;
-    }
-
-    /**
-     * @param transportDetails
-     */
-    public void setTransportDetails(String transportDetails) {
-	this.transportDetails = transportDetails;
-    }
-
-    /**
-     * @return transportuke
-     */
-    public Integer getTransportWeek() {
-	return transportWeek;
-    }
-
-    /**
-     * @param transportWeek
-     */
-    public void setTransportWeek(Integer transportWeek) {
-	this.transportWeek = transportWeek;
-    }
-
-    /**
-     * @return transportår
-     */
-    public Integer getTransportYear() {
-	return transportYear;
-    }
-
-    /**
-     * @param transportYear
-     */
-    public void setTransportYear(Integer transportYear) {
-	this.transportYear = transportYear;
-    }
-
-    /**
-     * @see no.ugland.utransprod.model.BaseObject#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(final Object other) {
-	if (!(other instanceof FrontProductionV))
-	    return false;
-	FrontProductionV castOther = (FrontProductionV) other;
-	return new EqualsBuilder().append(orderLineId, castOther.orderLineId).isEquals();
-    }
-
-    /**
-     * @see no.ugland.utransprod.model.BaseObject#hashCode()
-     */
-    @Override
-    public int hashCode() {
-	return new HashCodeBuilder().append(orderLineId).toHashCode();
-    }
-
-    /**
-     * @see no.ugland.utransprod.model.BaseObject#toString()
-     */
-    @Override
-    public String toString() {
-	return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append("orderLineId", orderLineId).toString();
-    }
-
-    /**
-     * @see no.ugland.utransprod.gui.model.TextRenderable#getOrderString()
-     */
-    public String getOrderString() {
-	StringBuffer buffer = new StringBuffer(customerDetails);
-
-	buffer.append(" - ").append(orderNr).append("\n").append(address).append(" ,").append(constructionTypeName).append(",").append(info);
-
-	return buffer.toString();
-    }
-
-    /**
-     * @return opplastingstid
-     */
-    public String getLoadTime() {
-	return loadTime;
-    }
-
-    /**
-     * @param loadTime
-     */
-    public void setLoadTime(String loadTime) {
-	this.loadTime = loadTime;
-    }
-
-    /**
-     * @return ordrestatus
-     */
-    public String getOrderStatus() {
-	return orderStatus;
-    }
-
-    /**
-     * @param orderStatus
-     */
-    public void setOrderStatus(String orderStatus) {
-	this.orderStatus = orderStatus;
-    }
-
-    /**
-     * @return etterleveringid
-     */
-    public Integer getPostShipmentId() {
-	return postShipmentId;
-    }
-
-    /**
-     * @param postShipmentId
-     */
-    public void setPostShipmentId(Integer postShipmentId) {
-	this.postShipmentId = postShipmentId;
-    }
-
-    /**
-     * @see no.ugland.utransprod.gui.model.Applyable#isForPostShipment()
-     */
-    public Boolean isForPostShipment() {
-	if (postShipmentId != null) {
-	    return Boolean.TRUE;
-	}
-	return Boolean.FALSE;
-    }
-
-    /**
-     * @see no.ugland.utransprod.model.Produceable#getProductAreaGroupName()
-     */
-    public String getProductAreaGroupName() {
-	return productAreaGroupName;
-    }
-
-    /**
-     * @param productAreaGroupName
-     */
-    public void setProductAreaGroupName(String productAreaGroupName) {
-	this.productAreaGroupName = productAreaGroupName;
-    }
-
-    public Date getActionStarted() {
-	return actionStarted;
-    }
-
-    public void setActionStarted(Date actionStarted) {
-	this.actionStarted = actionStarted;
-    }
-
-    public Date getProductionDate() {
-	return productionDate;
-    }
-
-    public void setProductionDate(Date productionDate) {
-	this.productionDate = productionDate;
-    }
-
-    public String getProductionUnitName() {
-	return productionUnitName;
-    }
-
-    public void setProductionUnitName(String productionUnitName) {
-	this.productionUnitName = productionUnitName;
-    }
-
-    public Ordln getOrdln() {
-	return ordln;
-    }
-
-    public void setOrdln(Ordln ordln) {
-	this.ordln = ordln;
-    }
-
-    public Colli getColli() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    public List<Applyable> getRelatedArticles() {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    public boolean isRelatedArticlesComplete() {
-	return false;
-    }
-
-    public void setColli(Colli colli) {
-    }
-
-    public void setRelatedArticles(List<Applyable> relatedArticles) {
-    }
-
-    public boolean isRelatedArticlesStarted() {
-	return false;
-    }
-
-    public Date getRelatedStartedDate() {
-	return null;
-    }
-
-    public void setProductionUnit(ProductionUnit productionUnit) {
-    }
-
-    public Integer getProbability() {
-	return null;
-    }
-
-    public String getTrossDrawer() {
-	return null;
-    }
-
-    public BigDecimal getRealProductionHours() {
-	return realProductionHours;
-    }
-
-    public void setRealProductionHours(BigDecimal realProductionHours) {
-	this.realProductionHours = realProductionHours;
-    }
-
-    public Integer getProductionWeek() {
-	return productionWeek;
-    }
-
-    public void setProductionWeek(Integer productionWeek) {
-	this.productionWeek = productionWeek;
-    }
-
-    public String getDoneBy() {
-	return doneBy;
-    }
-
-    public void setDoneBy(String doneBy) {
-	this.doneBy = doneBy;
-    }
-}
+/*     */ package no.ugland.utransprod.model;
+/*     */ 
+/*     */ import java.math.BigDecimal;
+/*     */ import java.util.Date;
+/*     */ import java.util.List;
+/*     */ import no.ugland.utransprod.gui.model.Applyable;
+/*     */ import no.ugland.utransprod.gui.model.TextRenderable;
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ public class FrontProductionV extends Production implements TextRenderable, Produceable {
+/*     */    private static final long serialVersionUID = 1L;
+/*     */    private String orderStatus;
+/*     */    private Ordln ordln;
+/*     */    private BigDecimal realProductionHours;
+/*     */    private Integer productionWeek;
+/*     */    private String doneBy;
+/*     */ 
+/*     */    public FrontProductionV() {
+/*  75 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public FrontProductionV(Integer orderLineId, Integer customerNr, String someCustomerDetails, String orderNr, String address, String someInfo, String constructionTypeName, String articleName, String someAttributeInfo, Integer numberOfItems, Date loadingDate, String someTransportDetails, String comment, Integer transportYear, Integer transportWeek, String loadTime, Integer postShipmentId, String productAreaGroupName, Date dateActionStarted, Date producedDate, Date productionDate, String productionUnitName, String aOrderStatus, Colli aColli) {
+/*  83 */       super(orderLineId, customerNr, someCustomerDetails, orderNr, address, someInfo, constructionTypeName, articleName, someAttributeInfo, numberOfItems, loadingDate, someTransportDetails, comment, transportYear, transportWeek, loadTime, postShipmentId, productAreaGroupName, dateActionStarted, producedDate, productionDate, productionUnitName, aColli);
+/*     */ 
+/*     */ 
+/*     */ 
+/*  87 */       this.orderStatus = aOrderStatus;
+/*  88 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getOrderString() {
+/* 378 */       StringBuffer buffer = new StringBuffer(this.customerDetails);
+/*     */ 
+/* 380 */       buffer.append(" - ").append(this.orderNr).append("\n").append(this.address).append(" ,").append(this.constructionTypeName).append(",").append(this.info);
+/*     */ 
+/* 382 */       return buffer.toString();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getOrderStatus() {
+/* 403 */       return this.orderStatus;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setOrderStatus(String orderStatus) {
+/* 410 */       this.orderStatus = orderStatus;
+/* 411 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public Boolean isForPostShipment() {
+/* 431 */       return this.postShipmentId != null ? Boolean.TRUE : Boolean.FALSE;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getProductAreaGroupName() {
+/* 441 */       return this.productAreaGroupName;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setProductAreaGroupName(String productAreaGroupName) {
+/* 448 */       this.productAreaGroupName = productAreaGroupName;
+/* 449 */    }
+/*     */ 
+/*     */    public Date getActionStarted() {
+/* 452 */       return this.actionStarted;
+/*     */    }
+/*     */ 
+/*     */    public void setActionStarted(Date actionStarted) {
+/* 456 */       this.actionStarted = actionStarted;
+/* 457 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public Ordln getOrdln() {
+/* 476 */       return this.ordln;
+/*     */    }
+/*     */ 
+/*     */    public void setOrdln(Ordln ordln) {
+/* 480 */       this.ordln = ordln;
+/* 481 */    }
+/*     */ 
+/*     */ 
+/*     */    public Colli getColli() {
+/* 485 */       return null;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */    public List<Applyable> getRelatedArticles() {
+/* 490 */       return null;
+/*     */    }
+/*     */ 
+/*     */    public boolean isRelatedArticlesComplete() {
+/* 494 */       return false;
+/*     */    }
+/*     */ 
+/*     */    public void setColli(Colli colli) {
+/* 498 */    }
+/*     */ 
+/*     */    public void setRelatedArticles(List<Applyable> relatedArticles) {
+/* 501 */    }
+/*     */ 
+/*     */    public boolean isRelatedArticlesStarted() {
+/* 504 */       return false;
+/*     */    }
+/*     */ 
+/*     */    public Date getRelatedStartedDate() {
+/* 508 */       return null;
+/*     */    }
+/*     */ 
+/*     */    public void setProductionUnit(ProductionUnit productionUnit) {
+/* 512 */    }
+/*     */ 
+/*     */    public Integer getProbability() {
+/* 515 */       return null;
+/*     */    }
+/*     */ 
+/*     */    public String getTrossDrawer() {
+/* 519 */       return null;
+/*     */    }
+/*     */ 
+/*     */    public BigDecimal getRealProductionHours() {
+/* 523 */       return this.realProductionHours;
+/*     */    }
+/*     */ 
+/*     */    public void setRealProductionHours(BigDecimal realProductionHours) {
+/* 527 */       this.realProductionHours = realProductionHours;
+/* 528 */    }
+/*     */ 
+/*     */    public Integer getProductionWeek() {
+/* 531 */       return this.productionWeek;
+/*     */    }
+/*     */ 
+/*     */    public void setProductionWeek(Integer productionWeek) {
+/* 535 */       this.productionWeek = productionWeek;
+/* 536 */    }
+/*     */ 
+/*     */    public String getDoneBy() {
+/* 539 */       return this.doneBy;
+/*     */    }
+/*     */ 
+/*     */    public void setDoneBy(String doneBy) {
+/* 543 */       this.doneBy = doneBy;
+/* 544 */    }
+/*     */ }

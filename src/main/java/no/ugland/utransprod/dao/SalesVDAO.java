@@ -1,7 +1,8 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.dao;
 
 import java.util.List;
-
 import no.ugland.utransprod.model.ProductArea;
 import no.ugland.utransprod.model.SalesV;
 import no.ugland.utransprod.util.Periode;
@@ -10,16 +11,15 @@ import no.ugland.utransprod.util.report.SaleReportData;
 import no.ugland.utransprod.util.report.SaleReportSum;
 
 public interface SalesVDAO extends DAO<SalesV> {
-    List<SaleReportSum> groupSumCountyByProbabilityProductAreaPeriode(ProbabilityEnum probabilityEnum, ProductArea productArea, Periode periode);
+   List<SaleReportSum> groupSumCountyByProbabilityProductAreaPeriode(ProbabilityEnum var1, ProductArea var2, Periode var3);
 
-    List<SaleReportSum> groupSumSalesmanByProbabilityProductAreaPeriode(ProbabilityEnum probabilityEnum, ProductArea productArea, Periode periode);
+   List<SaleReportSum> groupSumSalesmanByProbabilityProductAreaPeriode(ProbabilityEnum var1, ProductArea var2, Periode var3);
 
-    Integer countByProbabilityProductAreaPeriode(ProbabilityEnum probabilityEnum, ProductArea productArea, Periode periode);
+   Integer countByProbabilityProductAreaPeriode(ProbabilityEnum var1, ProductArea var2, Periode var3);
 
-    List<SaleReportData> getSaleReportByProbabilityProductAreaPeriode(ProbabilityEnum probabilityEnum, ProductArea productArea, Periode periode,
-	    String typeName);
+   List<SaleReportData> getSaleReportByProbabilityProductAreaPeriode(ProbabilityEnum var1, ProductArea var2, Periode var3, String var4);
 
-    List<SaleReportData> getSaleReportByProductAreaPeriode(ProductArea productArea, Periode periode);
+   List<SaleReportData> getSaleReportByProductAreaPeriode(ProductArea var1, Periode var2);
 
-    SaleReportSum getGroupSumByProbabilityProductAreaPeriod(ProbabilityEnum probability, ProductArea productArea, Periode periode);
+   SaleReportSum getGroupSumByProbabilityProductAreaPeriod(ProbabilityEnum var1, ProductArea var2, Periode var3);
 }

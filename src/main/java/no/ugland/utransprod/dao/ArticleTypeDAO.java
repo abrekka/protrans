@@ -1,50 +1,22 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.dao;
 
 import java.util.List;
-
 import no.ugland.utransprod.model.ArticleType;
 import no.ugland.utransprod.model.Attribute;
 import no.ugland.utransprod.service.enums.LazyLoadArticleTypeEnum;
 
-/**
- * Interface for DAO mot tabell ARTICLE_TYPE
- * @author atle.brekka
- */
 public interface ArticleTypeDAO extends DAO<ArticleType> {
-    String DAO_NAME = "articleTypeDAO";
+   String DAO_NAME = "articleTypeDAO";
 
-    /**
-     * Henter artikkel på nytt fra database
-     * @param articleType
-     */
-    void refreshObject(ArticleType articleType);
+   void refreshObject(ArticleType var1);
 
-    /**
-     * Finner artikkel basert på navn
-     * @param name
-     * @return artikkel
-     */
-    ArticleType findByName(String name);
+   ArticleType findByName(String var1);
 
-    /**
-     * Lazy laster artikkeltype
-     * @param articletype
-     * @param enums
-     */
-    void lazyLoad(ArticleType articletype, LazyLoadArticleTypeEnum[] enums);
+   void lazyLoad(ArticleType var1, LazyLoadArticleTypeEnum[] var2);
 
-    /**
-     * Finner alle attributter for garasjetype
-     * @return attributter
-     */
-    List<Attribute> findAllConstructionTypeAttributes();
+   List<Attribute> findAllConstructionTypeAttributes();
 
-    /**
-     * Lazy laster artikkelattributt
-     * @param attribute
-     * @param enums
-     */
-    //void lazyLoadArticleAttribute(ArticleTypeAttribute attribute, LazyLoadArticleTypeAttributeEnum[] enums);
-
-    ArticleType findByProdCatNoAndProdCatNo2(Integer prCatNo, Integer prCatNo2);
+   ArticleType findByProdCatNoAndProdCatNo2(Integer var1, Integer var2);
 }

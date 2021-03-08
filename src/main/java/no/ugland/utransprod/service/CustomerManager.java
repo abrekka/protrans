@@ -1,57 +1,22 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import java.util.List;
-
 import no.ugland.utransprod.model.Customer;
 
-/**
- * Interface for manager for kunder
- * @author atle.brekka
- */
 public interface CustomerManager extends OverviewManager<Customer> {
-    String MANAGER_NAME = "customerManager";
+   String MANAGER_NAME = "customerManager";
 
-    /**
-     * Lagre kunde
-     * @param customer
-     */
-    void saveCustomer(Customer customer);
+   void saveCustomer(Customer var1);
 
-    /**
-     * Finn kundemed kundenr
-     * @param nr
-     * @return kunde eller null dersom det ikke finnes noen
-     */
-    Customer findByCustomerNr(Integer nr);
+   Customer findByCustomerNr(Integer var1);
 
-    /**
-     * Fjern alle kunder
-     */
-    void removeAll();
+   void removeAll();
 
-    /**
-     * Fjern kunde
-     * @param customer
-     */
-    void removeCustomer(Customer customer);
+   void removeCustomer(Customer var1);
 
-    /**
-     * Finn alle kunder
-     * @return kunder
-     */
-    List<Customer> findAll();
+   List<Customer> findAll();
 
-    /**
-     * Finn alle kunder basert på eksempel
-     * @param customer
-     * @return kunder
-     */
-    List<Customer> findByCustomer(Customer customer);
-
-    /**
-     * Lazy laster kunde
-     * @param customer
-     * @param enums
-     */
-    //void lazyLoad(Customer customer, LazyLoadCustomerEnum[] enums);
+   List<Customer> findByCustomer(Customer var1);
 }

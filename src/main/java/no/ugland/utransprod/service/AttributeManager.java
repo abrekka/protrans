@@ -1,44 +1,18 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import java.util.List;
-
 import no.ugland.utransprod.model.Attribute;
 
-/**
- * Interface for manager som håndterer attributter
- * @author atle.brekka
- */
 public interface AttributeManager extends OverviewManager<Attribute> {
-    public static final String MANAGER_NAME="attributeManager";
-    /**
-     * Lagrer attributt
-     * @param attribute
-     */
-    void saveAttribute(Attribute attribute);
+   String MANAGER_NAME = "attributeManager";
 
-    /**
-     * fjerner attributt
-     * @param attribute
-     */
-    void removeAttribute(Attribute attribute);
+   void saveAttribute(Attribute var1);
 
-    /**
-     * Finner basert på navn
-     * @param name
-     * @return attributt
-     */
-    Attribute findByName(String name);
+   void removeAttribute(Attribute var1);
 
-    /**
-     * Finner alle
-     * @return alle attributter
-     */
-    List<Attribute> findAll();
+   Attribute findByName(String var1);
 
-    /**
-     * Lazy laster attributt
-     * @param battribute
-     * @param enums
-     */
-    //void lazyLoad(Attribute battribute, LazyLoadAttributeEnum[] enums);
+   List<Attribute> findAll();
 }

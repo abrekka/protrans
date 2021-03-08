@@ -1,102 +1,99 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
-import no.ugland.utransprod.model.Deviation;
-
 public interface ManagerRepository {
+   ArticleTypeManager getArticleTypeManager();
 
-    public abstract ArticleTypeManager getArticleTypeManager();
+   ExternalOrderManager getExternalOrderManager();
 
-    public abstract ExternalOrderManager getExternalOrderManager();
+   AttributeManager getAttributeManager();
 
-    public abstract AttributeManager getAttributeManager();
+   AttributeChoiceManager getAttributeChoiceManager();
 
-    public abstract AttributeChoiceManager getAttributeChoiceManager();
+   ExternalOrderLineManager getExternalOrderLineManager();
 
-    public abstract ExternalOrderLineManager getExternalOrderLineManager();
+   EmployeeManager getEmployeeManager();
 
-    public abstract EmployeeManager getEmployeeManager();
+   EmployeeTypeManager getEmployeeTypeManager();
 
-    public abstract EmployeeTypeManager getEmployeeTypeManager();
+   PreventiveActionManager getPreventiveActionManager();
 
-    public abstract PreventiveActionManager getPreventiveActionManager();
+   DeviationManager getDeviationManager();
 
-    public abstract DeviationManager getDeviationManager();
+   OrderManager getOrderManager();
 
-    public abstract OrderManager getOrderManager();
+   AccidentManager getAccidentManager();
 
-    public abstract AccidentManager getAccidentManager();
+   JobFunctionManager getJobFunctionManager();
 
-    public abstract JobFunctionManager getJobFunctionManager();
+   OrderLineManager getOrderLineManager();
 
-    public abstract OrderLineManager getOrderLineManager();
+   ColliManager getColliManager();
 
-    public abstract ColliManager getColliManager();
+   ProcentDoneManager getProcentDoneManager();
 
-    public abstract ProcentDoneManager getProcentDoneManager();
+   TransportManager getTransportManager();
 
-    public abstract TransportManager getTransportManager();
+   ConstructionTypeManager getConstructionTypeManager();
 
-    public abstract ConstructionTypeManager getConstructionTypeManager();
+   AssemblyManager getAssemblyManager();
 
-    public abstract AssemblyManager getAssemblyManager();
+   SupplierManager getSupplierManager();
 
-    public abstract SupplierManager getSupplierManager();
+   ApplicationUserManager getApplicationUserManager();
 
-    public abstract ApplicationUserManager getApplicationUserManager();
+   TakstolInfoVManager getTakstolInfoVManager();
 
-    public abstract TakstolInfoVManager getTakstolInfoVManager();
+   OrdlnManager getOrdlnManager();
 
-    public abstract OrdlnManager getOrdlnManager();
+   IncomingOrderManager getIncomingOrderManager();
 
-    public abstract IncomingOrderManager getIncomingOrderManager();
+   ProductionUnitManager getProductionUnitManager();
 
-    public abstract ProductionUnitManager getProductionUnitManager();
+   TakstolProductionVManager getTakstolProductionVManager();
 
-    public abstract TakstolProductionVManager getTakstolProductionVManager();
+   TakstolPackageVManager getTakstolPackageVManager();
 
-    public abstract TakstolPackageVManager getTakstolPackageVManager();
+   ProductAreaManager getProductAreaManager();
 
-    public abstract ProductAreaManager getProductAreaManager();
+   ArticleTypeAttributeManager getArticleTypeAttributeManager();
 
-    public abstract ArticleTypeAttributeManager getArticleTypeAttributeManager();
+   PostShipmentManager getPostShipmentManager();
 
-    public abstract PostShipmentManager getPostShipmentManager();
+   PacklistVManager getPacklistVManager();
 
-    public abstract PacklistVManager getPacklistVManager();
+   TransportCostManager getTransportCostManager();
 
-    public abstract TransportCostManager getTransportCostManager();
+   FaktureringVManager getFaktureringVManager();
 
-    public abstract FaktureringVManager getFaktureringVManager();
+   MainPackageVManager getMainPackageVManager();
 
-    public abstract MainPackageVManager getMainPackageVManager();
+   SumOrderReadyVManager getSumOrderReadyVManager();
 
-    public abstract SumOrderReadyVManager getSumOrderReadyVManager();
+   BudgetManager getBudgetManager();
 
-    public abstract BudgetManager getBudgetManager();
+   DeviationStatusManager getDeviationStatusManager();
 
-    public abstract DeviationStatusManager getDeviationStatusManager();
+   UdsalesmallManager getUdsalesmallManager();
 
-    public abstract UdsalesmallManager getUdsalesmallManager();
+   TransportSumVManager getTransportSumVManager();
 
-    public abstract TransportSumVManager getTransportSumVManager();
+   IntelleVManager getIntelleVManager();
 
-    public abstract IntelleVManager getIntelleVManager();
+   ProductAreaGroupManager getProductAreaGroupManager();
 
-    public abstract ProductAreaGroupManager getProductAreaGroupManager();
+   CustTrManager getCustTrManager();
 
-    public abstract CustTrManager getCustTrManager();
+   AssemblyOverdueVManager getAssemblyOverdueVManager();
 
-    public abstract AssemblyOverdueVManager getAssemblyOverdueVManager();
+   FrontProductionVManager getFrontProductionVManager();
 
-    public abstract FrontProductionVManager getFrontProductionVManager();
+   FakturagrunnlagVManager getFakturagrunnlagVManager();
 
-    public abstract FakturagrunnlagVManager getFakturagrunnlagVManager();
+   DeviationVManager getDeviationVManager();
 
-	public abstract DeviationVManager getDeviationVManager();
+   CostTypeManager getCostTypeManager();
 
-	public abstract CostTypeManager getCostTypeManager();
-
-	public abstract CostUnitManager getCostUnitManager();
-
-
+   CostUnitManager getCostUnitManager();
 }

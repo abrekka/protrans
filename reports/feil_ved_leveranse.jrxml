@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 3.5.2  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="feil_ved_leveranse" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<background>
 		<band splitType="Stretch"/>
@@ -28,25 +29,25 @@
 		<band height="552">
 			<staticText>
 				<reportElement x="0" y="2" width="328" height="23"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="18" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Feil ved leveransen]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="26" width="533" height="31"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Eventuellt ekstraarbeide, som følge av feil ved leveransen skal avtales med Grimstad Industrier pr telefon før arbeidet igansettes							
+				<text><![CDATA[Eventuellt ekstraarbeide, som følge av feil ved leveransen skal avtales med Igland Garasjen AS pr telefon før arbeidet igansettes							
 ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="61" width="533" height="14"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Ekstraarbeide fakureres med kr. 460,- pr time inkl. mva
+				<text><![CDATA[Ekstraarbeide fakureres med kr. 625,- pr time inkl. mva
 
 ]]></text>
 			</staticText>
@@ -64,7 +65,7 @@
 			</line>
 			<staticText>
 				<reportElement x="225" y="89" width="72" height="14"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Antall timer
@@ -98,7 +99,7 @@
 			</line>
 			<staticText>
 				<reportElement x="4" y="89" width="191" height="14"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Følgende arbeide er avtalt utført:
@@ -108,7 +109,7 @@
 			</staticText>
 			<staticText>
 				<reportElement x="332" y="89" width="205" height="14"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Ekstra materiell i kr. Inkl mva
@@ -161,10 +162,10 @@
 			</line>
 			<staticText>
 				<reportElement x="0" y="308" width="533" height="14"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Dette er avtalt og akseptert av Grimstad Industrier
+				<text><![CDATA[Dette er avtalt og akseptert av Igland Garasjen AS
 
 
 ]]></text>
@@ -174,39 +175,39 @@
 			</line>
 			<staticText>
 				<reportElement x="322" y="322" width="31" height="14"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10"/>
 				</textElement>
 				<text><![CDATA[Dato]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="412" y="322" width="115" height="14"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10"/>
 				</textElement>
 				<text><![CDATA[Navn]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="339" width="533" height="31"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="true" isItalic="false"/>
 				</textElement>
-				<text><![CDATA[De tillegg som det vil bli betalt for,  - er de tillegg som er avtalt med Grimstad industrier, og akseptert av kunden. Dette skal følge i signert utgave sammen med fakturaen!							
+				<text><![CDATA[De tillegg som det vil bli betalt for,  - er de tillegg som er avtalt med Igland Garasjen AS, og akseptert av kunden. Dette skal følge i signert utgave sammen med fakturaen!							
 
 ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="376" width="533" height="17"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="12" isBold="true" isItalic="false"/>
 				</textElement>
-				<text><![CDATA[Når du monterer en Grimstad Garasje skal du:
+				<text><![CDATA[Når du monterer en Igland Garasjen AS skal du:
 
 ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="394" width="533" height="14"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Opptre profesjonelt, gjennom høflig og hyggelig opptreden, derav:
@@ -217,7 +218,7 @@
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="408" width="533" height="14"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[·Gi kunden beskjed på forhånd om evt. forsinkelser hvis dette oppstår.							
@@ -225,7 +226,7 @@
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="422" width="533" height="14"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[·Holde arbeidsplassen ryddig under oppføring.							
@@ -233,7 +234,7 @@
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="436" width="555" height="14"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[·Rydde og ta med seg resterende materialer etter ferdigstilling.							
@@ -241,7 +242,7 @@
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="450" width="555" height="24"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[·Gi beskjed om evt. avvik som kunden evt. må betale ekstra for på en hyggelig måte, samt be om attestasjon for dette,  på vedlagte skjema.							
@@ -249,15 +250,15 @@
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="474" width="533" height="14"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[·Melde tilbake til Grimstad industrier AS vedr. mangler ved leveransen, eller hvor det er levert for mye materialer.							
+				<text><![CDATA[·Melde tilbake til Igland Garasjen AS vedr. mangler ved leveransen, eller hvor det er levert for mye materialer.							
 ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="-2" y="488" width="557" height="14"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[·Ha med seg reservemateriell på bilen slik at mindre mangler kan rettes omgående.(ihht. liste i montør mappe)							
@@ -265,7 +266,7 @@
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="523" width="557" height="26"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Alle summer er ink MVA. Vedlegg til denne arbeidsorderen er tegning, deleliste og ordre. Kopi av signert arbeidsordre, sammen med kontrollskjema for montering underskrevet av montør, skal følge med faktura.							

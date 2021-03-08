@@ -1,57 +1,20 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import java.util.List;
-
 import no.ugland.utransprod.ProTransException;
-import no.ugland.utransprod.gui.model.Transportable;
 
-/**
- * Interface for manger som skal brukes i visning av objekter
- * 
- * @author atle.brekka
- * @param <E>
- */
 public interface OverviewManager<E> extends Manager<E> {
-	/**
-	 * Hent alle
-	 * 
-	 * @return objekter
-	 */
-	List<E> findAll();
+   List<E> findAll();
 
-	/**
-	 * Finn basert på eksempel
-	 * 
-	 * @param object
-	 * @return objekter
-	 */
-	List<E> findByObject(E object);
+   List<E> findByObject(E var1);
 
-	/**
-	 * Fjern objekt
-	 * 
-	 * @param object
-	 */
-	void removeObject(E object);
+   void removeObject(E var1);
 
-	/**
-	 * Lagre objekt
-	 * 
-	 * @param object
-	 * @throws ProTransException
-	 */
-	void saveObject(E object) throws ProTransException;
+   void saveObject(E var1) throws ProTransException;
 
-	/**
-	 * Oppdaterer objekt
-	 * 
-	 * @param object
-	 */
-	void refreshObject(E object);
+   void refreshObject(E var1);
 
-	// void lazyLoad(Object object,Enum[] enums);
-
-	E merge(E object);
-
-	
+   E merge(E var1);
 }

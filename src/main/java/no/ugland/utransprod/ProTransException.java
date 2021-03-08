@@ -1,35 +1,35 @@
-package no.ugland.utransprod;
-
-/**
- * Dette er systemets hoved exception, alle andre exception som blir kastet i
- * systemet vil bli konvertert om til denne
- * 
- * @author atb
- * 
- */
-public class ProTransException extends RuntimeException {
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * Konstruktør
-     * 
-     * @param msg
-     *            feilmelding
-     */
-    public ProTransException(String msg) {
-        super(msg);
-    }
-
-    /**
-     * Konstruktør
-     * 
-     * @param exception
-     *            opprinnelig exception
-     */
-    public ProTransException(Throwable exception) {
-        super(exception);
-    }
-}
+/*    */ package no.ugland.utransprod;
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ public class ProTransException extends RuntimeException {
+/*    */    private static final long serialVersionUID = 1L;
+/*    */ 
+/*    */    public ProTransException(String msg) {
+/* 23 */       super(msg);
+/* 24 */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public ProTransException(Throwable exception) {
+/* 33 */       super(exception);
+/* 34 */    }
+/*    */ }

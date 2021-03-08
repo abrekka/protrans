@@ -1,58 +1,22 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.gui.model;
 
+import com.jgoodies.binding.PresentationModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
 import no.ugland.utransprod.gui.WindowInterface;
 
-import com.jgoodies.binding.PresentationModel;
-
-/**
- * Interface for klasser som håndterer kommentarer
- * 
- * @author atle.brekka
- * 
- */
 public interface ICommentViewHandler {
-	/**
-	 * Lager tekstfelt for brukernavn
-	 * 
-	 * @param presentationModel
-	 * @return tekstfelt
-	 */
-	JTextField getTextFieldUserName(PresentationModel presentationModel);
+   JTextField getTextFieldUserName(PresentationModel var1);
 
-	/**
-	 * Lager tekstområde for kommentar
-	 * 
-	 * @param presentationModel
-	 * @return tekstområde
-	 */
-	JTextArea getTextAreaComment(PresentationModel presentationModel);
+   JTextArea getTextAreaComment(PresentationModel var1);
 
-	/**
-	 * Lager avbrytknapp
-	 * 
-	 * @param window
-	 * @return knapp
-	 */
-	JButton getButtonCancel(WindowInterface window);
+   JButton getButtonCancel(WindowInterface var1);
 
-	/**
-	 * Lager ok-knapp
-	 * 
-	 * @param window
-	 * @return knapp
-	 */
-	JButton getButtonOk(WindowInterface window);
+   JButton getButtonOk(WindowInterface var1);
 
-	/**
-	 * Lager sjekkboks for transport
-	 * 
-	 * @param presentationModel
-	 * @return sjekkboks
-	 */
-	JCheckBox getCheckBoxTransport(PresentationModel presentationModel);
+   JCheckBox getCheckBoxTransport(PresentationModel var1);
 }

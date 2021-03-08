@@ -1,43 +1,21 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.dao;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
 import no.ugland.utransprod.model.Assembly;
 import no.ugland.utransprod.model.Supplier;
 
-/**
- * Interface for DAO mot tabell ASSEMBLY
- * 
- * @author atle.brekka
- */
 public interface AssemblyDAO extends DAO<Assembly> {
-    /**
-     * Sletter
-     * 
-     * @param assemblies
-     */
-    void deleteAssemblies(Set<Assembly> assemblies);
+   void deleteAssemblies(Set<Assembly> var1);
 
-    /**
-     * Oppdaterer objekt
-     * 
-     * @param assembly
-     */
-    void refreshObject(Assembly assembly);
+   void refreshObject(Assembly var1);
 
-    /**
-     * Finner montering basert på team,år og uke
-     * 
-     * @param supplier
-     * @param year
-     * @param week
-     * @return monteringer
-     */
-    List<Assembly> findBySupplierYearWeek(Supplier supplier, Integer year, Integer week);
+   List<Assembly> findBySupplierYearWeek(Supplier var1, Integer var2, Integer var3);
 
-    List<Assembly> findByYear(Integer year);
+   List<Assembly> findByYear(Integer var1);
 
-	void oppdaterMontering(Integer assemblyId, Date assembliedDate, String planned);
+   void oppdaterMontering(Integer var1, Date var2, String var3);
 }

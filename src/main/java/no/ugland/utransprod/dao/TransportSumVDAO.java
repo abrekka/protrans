@@ -1,32 +1,12 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.dao;
 
 import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.TransportSumV;
 
-/**
- * Interface for dao mot view TRANSPORT_SUM_V
- * 
- * @author atle.brekka
- * 
- */
 public interface TransportSumVDAO extends DAO<TransportSumV> {
-	/**
-	 * Finner sum for år og uke
-	 * 
-	 * @param currentYear
-	 * @param currentWeek
-	 * @return sum
-	 */
-	TransportSumV findYearAndWeek(Integer currentYear, Integer currentWeek);
+   TransportSumV findYearAndWeek(Integer var1, Integer var2);
 
-	/**
-	 * Finner sum for år,uke og produktområdegruppe
-	 * 
-	 * @param currentYear
-	 * @param currentWeek
-	 * @param productAreaGroup
-	 * @return sum
-	 */
-	TransportSumV findYearAndWeekByProductAreaGroup(Integer currentYear,
-			Integer currentWeek, ProductAreaGroup productAreaGroup);
+   TransportSumV findYearAndWeekByProductAreaGroup(Integer var1, Integer var2, ProductAreaGroup var3);
 }

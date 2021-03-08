@@ -1,13 +1,7 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.gui.model;
 
-/**
- * Interface for klassesom vil lytte p[ flushevent
- * @author atle.brekka
- *
- */
 public interface FlushListener {
-	/**
-	 * @param flushing
-	 */
-	void flushChanged(boolean flushing);
+   void flushChanged(boolean var1);
 }

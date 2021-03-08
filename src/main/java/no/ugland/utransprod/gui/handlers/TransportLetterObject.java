@@ -1,62 +1,28 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.gui.handlers;
 
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.PostShipment;
 
-/**
- * Interface for objekter som skal være med i fax
- * 
- * @author atle.brekka
- * 
- */
 public interface TransportLetterObject {
-    /**
-     * Henter ordre
-     * 
-     * @return ordre
-     */
-    Order getLetterOrder();
+   Order getLetterOrder();
 
-    /**
-     * Henter navn på objekt
-     * 
-     * @return navn
-     */
-    String getName();
+   String getName();
 
-    /**
-     * Henter detaljer
-     * 
-     * @return detaljer
-     */
-    String getDetails();
+   String getDetails();
 
-    /**
-     * Henter typenavn
-     * 
-     * @return typenavn
-     */
-    String getTypeName();
+   String getTypeName();
 
-    /**
-     * Sjekker om objekt er etterlevering
-     * 
-     * @return true derosm etterlevering
-     */
-    Boolean isNotPostShipment();
+   Boolean isNotPostShipment();
 
-    /**
-     * Henter etterlevering
-     * 
-     * @return etterlevering
-     */
-    PostShipment getPostShipment();
+   PostShipment getPostShipment();
 
-    Integer getNumberOf();
+   Integer getNumberOf();
 
-    Integer getLenght();
+   Integer getLenght();
 
-    Integer getWidht();
+   Integer getWidht();
 
-    Integer getHeight();
+   Integer getHeight();
 }

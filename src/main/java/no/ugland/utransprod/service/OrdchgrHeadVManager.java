@@ -1,18 +1,17 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import java.util.List;
-
 import no.ugland.utransprod.model.OrdchgrHeadV;
 import no.ugland.utransprod.model.OrdchgrLineV;
 
 public interface OrdchgrHeadVManager {
+   String MANAGER_NAME = "ordchgrHeadVManager";
 
-    String MANAGER_NAME = "ordchgrHeadVManager";
+   OrdchgrHeadV getHead(Integer var1);
 
-    OrdchgrHeadV getHead(Integer ordNo);
+   OrdchgrLineV getLine(Integer var1, Integer var2);
 
-    OrdchgrLineV getLine(Integer ordNo, Integer lnNo);
-
-    List<OrdchgrLineV> getLines(Integer ordNo, List<Integer> lnNos);
-
+   List<OrdchgrLineV> getLines(Integer var1, List<Integer> var2);
 }

@@ -1,39 +1,22 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import java.util.Date;
 import java.util.List;
-
 import no.ugland.utransprod.model.Assembly;
 import no.ugland.utransprod.model.Supplier;
 
-/**
- * Interface for serviceklasse mot tabell ASSEMBLY
- * 
- * @author atle.brekka
- */
 public interface AssemblyManager extends OverviewManager<Assembly> {
-    String MANAGER_NAME = "assemblyManager";
+   String MANAGER_NAME = "assemblyManager";
 
-    /**
-     * Finner monteringer for gitt team,år og uke
-     * 
-     * @param supplier
-     * @param year
-     * @param week
-     * @return monteringer
-     */
-    List<Assembly> findBySupplierYearWeek(Supplier supplier, Integer year, Integer week);
+   List<Assembly> findBySupplierYearWeek(Supplier var1, Integer var2, Integer var3);
 
-    /**
-     * Lagrer montering
-     * 
-     * @param assembly
-     */
-    void saveAssembly(Assembly assembly);
+   void saveAssembly(Assembly var1);
 
-    List<Assembly> findByYear(Integer year);
+   List<Assembly> findByYear(Integer var1);
 
-    Assembly get(Integer assemblyId);
+   Assembly get(Integer var1);
 
-	void oppdaterMontering(Integer assemblyId, Date assembliedDate, String planned);
+   void oppdaterMontering(Integer var1, Date var2, String var3);
 }

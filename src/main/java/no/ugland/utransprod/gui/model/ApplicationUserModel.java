@@ -1,353 +1,353 @@
-package no.ugland.utransprod.gui.model;
-
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import no.ugland.utransprod.model.ApplicationUser;
-import no.ugland.utransprod.model.JobFunction;
-import no.ugland.utransprod.model.Packagetype;
-import no.ugland.utransprod.model.ProductArea;
-import no.ugland.utransprod.model.UserProductAreaGroup;
-import no.ugland.utransprod.model.UserRole;
-
-import com.jgoodies.binding.PresentationModel;
-
-/**
- * GUI-modell for bruker
- * 
- * @author atle.brekka
- * 
- */
-public class ApplicationUserModel extends AbstractModel<ApplicationUser, ApplicationUserModel> {
-    /**
-	 * 
-	 */
-    private static final long serialVersionUID = 1L;
-
-    /**
-	 * 
-	 */
-    public static final String PROPERTY_FIRST_NAME = "firstName";
-
-    /**
-	 * 
-	 */
-    public static final String PROPERTY_GROUP_USER = "groupUser";
-
-    /**
-	 * 
-	 */
-    public static final String PROPERTY_LAST_NAME = "lastName";
-
-    /**
-	 * 
-	 */
-    public static final String PROPERTY_PASSWORD = "password";
-
-    /**
-	 * 
-	 */
-    public static final String PROPERTY_USER_NAME = "userName";
-
-    /**
-	 * 
-	 */
-    public static final String PROPERTY_USER_ROLE_LIST = "userRoleList";
-
-    /**
-	 * 
-	 */
-    public static final String PROPERTY_JOB_FUNCTION = "jobFunction";
-
-    /**
-	 * 
-	 */
-    public static final String PROPERTY_PRODUCT_AREA = "productArea";
-    public static final String PROPERTY_PACKAGE_TYPE = "packageType";
-
-    /**
-	 * 
-	 */
-    public static final String PROPERTY_USER_PRODUCT_AREA_GROUP_LIST = "userProductAreaGroupList";
-
-    /**
-	 * 
-	 */
-    private List<UserRole> userRoleList;
-
-    /**
-	 * 
-	 */
-    private List<UserProductAreaGroup> userProductAreaGroupList;
-
-    /**
-     * @param object
-     */
-    public ApplicationUserModel(ApplicationUser object) {
-	super(object);
-
-	userRoleList = new ArrayList<UserRole>();
-
-	if (object.getUserRoles() != null) {
-	    userRoleList.addAll(object.getUserRoles());
-	}
-
-	userProductAreaGroupList = new ArrayList<UserProductAreaGroup>();
-
-	if (object.getUserProductAreaGroups() != null) {
-	    userProductAreaGroupList.addAll(object.getUserProductAreaGroups());
-	}
-    }
-
-    /**
-     * @return fornavn
-     */
-    public String getFirstName() {
-	return object.getFirstName();
-    }
-
-    /**
-     * @param firstName
-     */
-    public void setFirstName(String firstName) {
-	String oldName = getFirstName();
-	object.setFirstName(firstName);
-	firePropertyChange(PROPERTY_FIRST_NAME, oldName, firstName);
-    }
-
-    /**
-     * @return gruppebruker
-     */
-    public String getGroupUser() {
-	return object.getGroupUser();
-    }
-
-    /**
-     * @param groupUser
-     */
-    public void setGroupUser(String groupUser) {
-	String oldGroup = getGroupUser();
-	object.setGroupUser(groupUser);
-	firePropertyChange(PROPERTY_GROUP_USER, oldGroup, groupUser);
-    }
-
-    /**
-     * @return etternavn
-     */
-    public String getLastName() {
-	return object.getLastName();
-    }
-
-    /**
-     * @param lastName
-     */
-    public void setLastName(String lastName) {
-	String oldName = getLastName();
-	object.setLastName(lastName);
-	firePropertyChange(PROPERTY_LAST_NAME, oldName, lastName);
-    }
-
-    /**
-     * @return passord
-     */
-    public String getPassword() {
-	return object.getPassword();
-    }
-
-    /**
-     * @param password
-     */
-    public void setPassword(String password) {
-	String oldPass = getPassword();
-	object.setPassword(password);
-	firePropertyChange(PROPERTY_PASSWORD, oldPass, password);
-    }
-
-    /**
-     * @return brukernavn
-     */
-    public String getUserName() {
-	return object.getUserName();
-    }
-
-    /**
-     * @param userName
-     */
-    public void setUserName(String userName) {
-	String oldName = getUserName();
-	object.setUserName(userName);
-	firePropertyChange(PROPERTY_USER_NAME, oldName, userName);
-    }
-
-    /**
-     * @see no.ugland.utransprod.gui.model.AbstractModel#addBufferChangeListener(java.beans.PropertyChangeListener,
-     *      com.jgoodies.binding.PresentationModel)
-     */
-    @Override
-    public void addBufferChangeListener(PropertyChangeListener listener, PresentationModel presentationModel) {
-	presentationModel.getBufferedModel(PROPERTY_FIRST_NAME).addValueChangeListener(listener);
-	presentationModel.getBufferedModel(PROPERTY_GROUP_USER).addValueChangeListener(listener);
-	presentationModel.getBufferedModel(PROPERTY_LAST_NAME).addValueChangeListener(listener);
-	presentationModel.getBufferedModel(PROPERTY_PASSWORD).addValueChangeListener(listener);
-	presentationModel.getBufferedModel(PROPERTY_USER_NAME).addValueChangeListener(listener);
-	presentationModel.getBufferedModel(PROPERTY_USER_ROLE_LIST).addValueChangeListener(listener);
-	presentationModel.getBufferedModel(PROPERTY_JOB_FUNCTION).addValueChangeListener(listener);
-	presentationModel.getBufferedModel(PROPERTY_PRODUCT_AREA).addValueChangeListener(listener);
-	presentationModel.getBufferedModel(PROPERTY_PACKAGE_TYPE).addValueChangeListener(listener);
-	presentationModel.getBufferedModel(PROPERTY_USER_PRODUCT_AREA_GROUP_LIST).addValueChangeListener(listener);
-    }
-
-    /**
-     * @see no.ugland.utransprod.gui.model.AbstractModel#getBufferedObjectModel(com.jgoodies.binding.PresentationModel)
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public ApplicationUserModel getBufferedObjectModel(PresentationModel presentationModel) {
-	ApplicationUserModel model = new ApplicationUserModel(new ApplicationUser());
-	model.setFirstName((String) presentationModel.getBufferedValue(PROPERTY_FIRST_NAME));
-	model.setGroupUser((String) presentationModel.getBufferedValue(PROPERTY_GROUP_USER));
-	model.setLastName((String) presentationModel.getBufferedValue(PROPERTY_LAST_NAME));
-	model.setPassword((String) presentationModel.getBufferedValue(PROPERTY_PASSWORD));
-	model.setUserName((String) presentationModel.getBufferedValue(PROPERTY_USER_NAME));
-	model.setUserRoleList((List<UserRole>) presentationModel.getBufferedValue(PROPERTY_USER_ROLE_LIST));
-	model.setJobFunction((JobFunction) presentationModel.getBufferedValue(PROPERTY_JOB_FUNCTION));
-	model.setProductArea((ProductArea) presentationModel.getBufferedValue(PROPERTY_PRODUCT_AREA));
-	model.setPackageType((Packagetype) presentationModel.getBufferedValue(PROPERTY_PACKAGE_TYPE));
-	model.setUserProductAreaGroupList((List<UserProductAreaGroup>) presentationModel.getBufferedValue(PROPERTY_USER_PRODUCT_AREA_GROUP_LIST));
-	return model;
-    }
-
-    /**
-     * @return brukerrolleliste
-     */
-    public List<UserRole> getUserRoleList() {
-	return new ArrayList<UserRole>(userRoleList);
-    }
-
-    /**
-     * @param userRoleList
-     */
-    public void setUserRoleList(List<UserRole> userRoleList) {
-	List<UserRole> oldRoles = getUserRoleList();
-	if (userRoleList != null) {
-	    this.userRoleList = new ArrayList<UserRole>(userRoleList);
-	} else {
-	    this.userRoleList.clear();
-	}
-	firePropertyChange(PROPERTY_USER_ROLE_LIST, oldRoles, userRoleList);
-    }
-
-    /**
-     * @return produktområder
-     */
-    public List<UserProductAreaGroup> getUserProductAreaGroupList() {
-	return new ArrayList<UserProductAreaGroup>(userProductAreaGroupList);
-    }
-
-    /**
-     * @param userProductAreaGroupList
-     */
-    public void setUserProductAreaGroupList(List<UserProductAreaGroup> userProductAreaGroupList) {
-	List<UserProductAreaGroup> oldGroups = getUserProductAreaGroupList();
-	if (userProductAreaGroupList != null) {
-	    this.userProductAreaGroupList = new ArrayList<UserProductAreaGroup>(userProductAreaGroupList);
-	} else {
-	    this.userProductAreaGroupList.clear();
-	}
-	firePropertyChange(PROPERTY_USER_PRODUCT_AREA_GROUP_LIST, oldGroups, userProductAreaGroupList);
-    }
-
-    /**
-     * @see no.ugland.utransprod.gui.model.AbstractModel#viewToModel()
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public void viewToModel() {
-	if (userRoleList != null) {
-	    Set<UserRole> userRoles = object.getUserRoles();
-	    if (userRoles == null) {
-		userRoles = new HashSet<UserRole>();
-	    }
-	    userRoles.clear();
-	    userRoles.addAll(userRoleList);
-	    object.setUserRoles(userRoles);
-	}
-
-	if (userProductAreaGroupList != null) {
-	    Set<UserProductAreaGroup> groups = object.getUserProductAreaGroups();
-	    if (groups == null) {
-		groups = new HashSet<UserProductAreaGroup>();
-	    }
-	    groups.clear();
-	    groups.addAll(userProductAreaGroupList);
-	    object.setUserProductAreaGroups(groups);
-	}
-    }
-
-    /**
-     * @see no.ugland.utransprod.gui.model.AbstractModel#modelToView()
-     */
-    @Override
-    public void modelToView() {
-	if (object.getUserRoles() != null) {
-	    userRoleList.clear();
-	    userRoleList.addAll(object.getUserRoles());
-	}
-	if (object.getUserProductAreaGroups() != null) {
-	    userProductAreaGroupList.clear();
-	    userProductAreaGroupList.addAll(object.getUserProductAreaGroups());
-	}
-    }
-
-    /**
-     * @return funksjon
-     */
-    public JobFunction getJobFunction() {
-	return object.getJobFunction();
-    }
-
-    /**
-     * @param jobFunction
-     */
-    public void setJobFunction(JobFunction jobFunction) {
-	JobFunction oldFunction = getJobFunction();
-	object.setJobFunction(jobFunction);
-	firePropertyChange(PROPERTY_JOB_FUNCTION, oldFunction, jobFunction);
-    }
-
-    /**
-     * @return produktområde
-     */
-    public ProductArea getProductArea() {
-	return object.getProductArea();
-    }
-
-    /**
-     * @param productArea
-     */
-    public void setProductArea(ProductArea productArea) {
-	ProductArea oldArea = getProductArea();
-	object.setProductArea(productArea);
-	firePropertyChange(PROPERTY_PRODUCT_AREA, oldArea, productArea);
-    }
-
-    public Packagetype getPackageType() {
-	return Packagetype.getPackageType(object.getPackageType());
-    }
-
-    public void setPackageType(Packagetype packagetype) {
-	Packagetype oldPackagetype = getPackageType();
-	object.setPackageType(Packagetype.ALLE.equals(packagetype) ? null : packagetype.getVerdi());
-	firePropertyChange(PROPERTY_PACKAGE_TYPE, oldPackagetype, packagetype);
-    }
-
-    /**
-     * Fyrer event om at flere attributter har endret seg
-     */
-    public void firePropertyChanged() {
-	this.fireMultiplePropertiesChanged();
-    }
-}
+/*     */ package no.ugland.utransprod.gui.model;
+/*     */ 
+/*     */ import com.jgoodies.binding.PresentationModel;
+/*     */ import java.beans.PropertyChangeListener;
+/*     */ import java.util.ArrayList;
+/*     */ import java.util.HashSet;
+/*     */ import java.util.List;
+/*     */ import java.util.Set;
+/*     */ import no.ugland.utransprod.model.ApplicationUser;
+/*     */ import no.ugland.utransprod.model.JobFunction;
+/*     */ import no.ugland.utransprod.model.Packagetype;
+/*     */ import no.ugland.utransprod.model.ProductArea;
+/*     */ import no.ugland.utransprod.model.UserProductAreaGroup;
+/*     */ import no.ugland.utransprod.model.UserRole;
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ public class ApplicationUserModel extends AbstractModel<ApplicationUser, ApplicationUserModel> {
+/*     */    private static final long serialVersionUID = 1L;
+/*     */    public static final String PROPERTY_FIRST_NAME = "firstName";
+/*     */    public static final String PROPERTY_GROUP_USER = "groupUser";
+/*     */    public static final String PROPERTY_LAST_NAME = "lastName";
+/*     */    public static final String PROPERTY_PASSWORD = "password";
+/*     */    public static final String PROPERTY_USER_NAME = "userName";
+/*     */    public static final String PROPERTY_USER_ROLE_LIST = "userRoleList";
+/*     */    public static final String PROPERTY_JOB_FUNCTION = "jobFunction";
+/*     */    public static final String PROPERTY_PRODUCT_AREA = "productArea";
+/*     */    public static final String PROPERTY_PACKAGE_TYPE = "packageType";
+/*     */    public static final String PROPERTY_USER_PRODUCT_AREA_GROUP_LIST = "userProductAreaGroupList";
+/*     */    private List<UserRole> userRoleList = new ArrayList();
+/*     */    private List<UserProductAreaGroup> userProductAreaGroupList;
+/*     */ 
+/*     */    public ApplicationUserModel(ApplicationUser object) {
+/*  90 */       super(object);
+/*     */ 
+/*     */ 
+/*     */ 
+/*  94 */       if (object.getUserRoles() != null) {
+/*  95 */          this.userRoleList.addAll(object.getUserRoles());
+/*     */       }
+/*     */ 
+/*  98 */       this.userProductAreaGroupList = new ArrayList();
+/*     */ 
+/* 100 */       if (object.getUserProductAreaGroups() != null) {
+/* 101 */          this.userProductAreaGroupList.addAll(object.getUserProductAreaGroups());
+/*     */       }
+/* 103 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getFirstName() {
+/* 109 */       return ((ApplicationUser)this.object).getFirstName();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setFirstName(String firstName) {
+/* 116 */       String oldName = this.getFirstName();
+/* 117 */       ((ApplicationUser)this.object).setFirstName(firstName);
+/* 118 */       this.firePropertyChange("firstName", oldName, firstName);
+/* 119 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getGroupUser() {
+/* 125 */       return ((ApplicationUser)this.object).getGroupUser();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setGroupUser(String groupUser) {
+/* 132 */       String oldGroup = this.getGroupUser();
+/* 133 */       ((ApplicationUser)this.object).setGroupUser(groupUser);
+/* 134 */       this.firePropertyChange("groupUser", oldGroup, groupUser);
+/* 135 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getLastName() {
+/* 141 */       return ((ApplicationUser)this.object).getLastName();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setLastName(String lastName) {
+/* 148 */       String oldName = this.getLastName();
+/* 149 */       ((ApplicationUser)this.object).setLastName(lastName);
+/* 150 */       this.firePropertyChange("lastName", oldName, lastName);
+/* 151 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getPassword() {
+/* 157 */       return ((ApplicationUser)this.object).getPassword();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setPassword(String password) {
+/* 164 */       String oldPass = this.getPassword();
+/* 165 */       ((ApplicationUser)this.object).setPassword(password);
+/* 166 */       this.firePropertyChange("password", oldPass, password);
+/* 167 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getUserName() {
+/* 173 */       return ((ApplicationUser)this.object).getUserName();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setUserName(String userName) {
+/* 180 */       String oldName = this.getUserName();
+/* 181 */       ((ApplicationUser)this.object).setUserName(userName);
+/* 182 */       this.firePropertyChange("userName", oldName, userName);
+/* 183 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void addBufferChangeListener(PropertyChangeListener listener, PresentationModel presentationModel) {
+/* 191 */       presentationModel.getBufferedModel("firstName").addValueChangeListener(listener);
+/* 192 */       presentationModel.getBufferedModel("groupUser").addValueChangeListener(listener);
+/* 193 */       presentationModel.getBufferedModel("lastName").addValueChangeListener(listener);
+/* 194 */       presentationModel.getBufferedModel("password").addValueChangeListener(listener);
+/* 195 */       presentationModel.getBufferedModel("userName").addValueChangeListener(listener);
+/* 196 */       presentationModel.getBufferedModel("userRoleList").addValueChangeListener(listener);
+/* 197 */       presentationModel.getBufferedModel("jobFunction").addValueChangeListener(listener);
+/* 198 */       presentationModel.getBufferedModel("productArea").addValueChangeListener(listener);
+/* 199 */       presentationModel.getBufferedModel("packageType").addValueChangeListener(listener);
+/* 200 */       presentationModel.getBufferedModel("userProductAreaGroupList").addValueChangeListener(listener);
+/* 201 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public ApplicationUserModel getBufferedObjectModel(PresentationModel presentationModel) {
+/* 209 */       ApplicationUserModel model = new ApplicationUserModel(new ApplicationUser());
+/* 210 */       model.setFirstName((String)presentationModel.getBufferedValue("firstName"));
+/* 211 */       model.setGroupUser((String)presentationModel.getBufferedValue("groupUser"));
+/* 212 */       model.setLastName((String)presentationModel.getBufferedValue("lastName"));
+/* 213 */       model.setPassword((String)presentationModel.getBufferedValue("password"));
+/* 214 */       model.setUserName((String)presentationModel.getBufferedValue("userName"));
+/* 215 */       model.setUserRoleList((List)presentationModel.getBufferedValue("userRoleList"));
+/* 216 */       model.setJobFunction((JobFunction)presentationModel.getBufferedValue("jobFunction"));
+/* 217 */       model.setProductArea((ProductArea)presentationModel.getBufferedValue("productArea"));
+/* 218 */       model.setPackageType((Packagetype)presentationModel.getBufferedValue("packageType"));
+/* 219 */       model.setUserProductAreaGroupList((List)presentationModel.getBufferedValue("userProductAreaGroupList"));
+/* 220 */       return model;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public List<UserRole> getUserRoleList() {
+/* 227 */       return new ArrayList(this.userRoleList);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setUserRoleList(List<UserRole> userRoleList) {
+/* 234 */       List<UserRole> oldRoles = this.getUserRoleList();
+/* 235 */       if (userRoleList != null) {
+/* 236 */          this.userRoleList = new ArrayList(userRoleList);
+/*     */       } else {
+/* 238 */          this.userRoleList.clear();
+/*     */       }
+/* 240 */       this.firePropertyChange("userRoleList", oldRoles, userRoleList);
+/* 241 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public List<UserProductAreaGroup> getUserProductAreaGroupList() {
+/* 247 */       return new ArrayList(this.userProductAreaGroupList);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setUserProductAreaGroupList(List<UserProductAreaGroup> userProductAreaGroupList) {
+/* 254 */       List<UserProductAreaGroup> oldGroups = this.getUserProductAreaGroupList();
+/* 255 */       if (userProductAreaGroupList != null) {
+/* 256 */          this.userProductAreaGroupList = new ArrayList(userProductAreaGroupList);
+/*     */       } else {
+/* 258 */          this.userProductAreaGroupList.clear();
+/*     */       }
+/* 260 */       this.firePropertyChange("userProductAreaGroupList", oldGroups, userProductAreaGroupList);
+/* 261 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void viewToModel() {
+/*     */       Object groups;
+/* 269 */       if (this.userRoleList != null) {
+/* 270 */          groups = ((ApplicationUser)this.object).getUserRoles();
+/* 271 */          if (groups == null) {
+/* 272 */             groups = new HashSet();
+/*     */          }
+/* 274 */          ((Set)groups).clear();
+/* 275 */          ((Set)groups).addAll(this.userRoleList);
+/* 276 */          ((ApplicationUser)this.object).setUserRoles((Set)groups);
+/*     */       }
+/*     */ 
+/* 279 */       if (this.userProductAreaGroupList != null) {
+/* 280 */          groups = ((ApplicationUser)this.object).getUserProductAreaGroups();
+/* 281 */          if (groups == null) {
+/* 282 */             groups = new HashSet();
+/*     */          }
+/* 284 */          ((Set)groups).clear();
+/* 285 */          ((Set)groups).addAll(this.userProductAreaGroupList);
+/* 286 */          ((ApplicationUser)this.object).setUserProductAreaGroups((Set)groups);
+/*     */       }
+/* 288 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void modelToView() {
+/* 295 */       if (((ApplicationUser)this.object).getUserRoles() != null) {
+/* 296 */          this.userRoleList.clear();
+/* 297 */          this.userRoleList.addAll(((ApplicationUser)this.object).getUserRoles());
+/*     */       }
+/* 299 */       if (((ApplicationUser)this.object).getUserProductAreaGroups() != null) {
+/* 300 */          this.userProductAreaGroupList.clear();
+/* 301 */          this.userProductAreaGroupList.addAll(((ApplicationUser)this.object).getUserProductAreaGroups());
+/*     */       }
+/* 303 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public JobFunction getJobFunction() {
+/* 309 */       return ((ApplicationUser)this.object).getJobFunction();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setJobFunction(JobFunction jobFunction) {
+/* 316 */       JobFunction oldFunction = this.getJobFunction();
+/* 317 */       ((ApplicationUser)this.object).setJobFunction(jobFunction);
+/* 318 */       this.firePropertyChange("jobFunction", oldFunction, jobFunction);
+/* 319 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public ProductArea getProductArea() {
+/* 325 */       return ((ApplicationUser)this.object).getProductArea();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setProductArea(ProductArea productArea) {
+/* 332 */       ProductArea oldArea = this.getProductArea();
+/* 333 */       ((ApplicationUser)this.object).setProductArea(productArea);
+/* 334 */       this.firePropertyChange("productArea", oldArea, productArea);
+/* 335 */    }
+/*     */ 
+/*     */    public Packagetype getPackageType() {
+/* 338 */       return Packagetype.getPackageType(((ApplicationUser)this.object).getPackageType());
+/*     */    }
+/*     */ 
+/*     */    public void setPackageType(Packagetype packagetype) {
+/* 342 */       Packagetype oldPackagetype = this.getPackageType();
+/* 343 */       ((ApplicationUser)this.object).setPackageType(Packagetype.ALLE.equals(packagetype) ? null : packagetype.getVerdi());
+/* 344 */       this.firePropertyChange("packageType", oldPackagetype, packagetype);
+/* 345 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void firePropertyChanged() {
+/* 351 */       this.fireMultiplePropertiesChanged();
+/* 352 */    }
+/*     */ }

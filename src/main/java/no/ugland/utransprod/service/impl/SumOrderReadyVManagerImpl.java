@@ -1,56 +1,55 @@
-package no.ugland.utransprod.service.impl;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import no.ugland.utransprod.dao.SumOrderReadyVDAO;
-import no.ugland.utransprod.model.SumOrderReadyV;
-import no.ugland.utransprod.service.SumOrderReadyVManager;
-
-/**
- * Implementasjon av serviceklasse for view SUM_ORDER_READY_V.
- * 
- * @author atle.brekka
- */
-public class SumOrderReadyVManagerImpl implements SumOrderReadyVManager {
-    private SumOrderReadyVDAO dao;
-
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
-
-    public final void setSumOrderReadyVDAO(final SumOrderReadyVDAO aDao) {
-	this.dao = aDao;
-    }
-
-    /**
-     * @see no.ugland.utransprod.service.SumOrderReadyVManager#findByDate(java.util.Date)
-     */
-    public final SumOrderReadyV findByDate(final Date date) {
-	return dao.findByDate(DATE_FORMAT.format(date));
-    }
-
-    /**
-     * @see no.ugland.utransprod.service.SumOrderReadyVManager#findSumByWeek(java.lang.Integer,
-     *      java.lang.Integer)
-     */
-    public final SumOrderReadyV findSumByWeek(final Integer year, final Integer week) {
-	return dao.findSumByWeek(year, week);
-    }
-
-    /**
-     * @see no.ugland.utransprod.service.SumOrderReadyVManager#
-     *      findByDateAndProductAreaGroupName(java.util.Date, java.lang.String)
-     */
-    public final SumOrderReadyV findByDateAndProductAreaGroupName(final Date date) {
-	return findByDate(date);
-    }
-
-    /**
-     * @see no.ugland.utransprod.service.SumOrderReadyVManager#
-     *      findSumByWeekAndProductAreaGroupName(java.lang.Integer,
-     *      java.lang.Integer, java.lang.String)
-     */
-    public final SumOrderReadyV findSumByWeekAndProductAreaGroupName(final Integer year, final Integer week) {
-	return findSumByWeek(year, week);
-    }
-
-}
+/*    */ package no.ugland.utransprod.service.impl;
+/*    */ 
+/*    */ import java.text.SimpleDateFormat;
+/*    */ import java.util.Date;
+/*    */ import no.ugland.utransprod.dao.SumOrderReadyVDAO;
+/*    */ import no.ugland.utransprod.model.SumOrderReadyV;
+/*    */ import no.ugland.utransprod.service.SumOrderReadyVManager;
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ public class SumOrderReadyVManagerImpl implements SumOrderReadyVManager {
+/*    */    private SumOrderReadyVDAO dao;
+/*    */    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
+/*    */ 
+/*    */    public final void setSumOrderReadyVDAO(SumOrderReadyVDAO aDao) {
+/* 21 */       this.dao = aDao;
+/* 22 */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public final SumOrderReadyV findByDate(Date date) {
+/* 28 */       return this.dao.findByDate(DATE_FORMAT.format(date));
+/*    */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public final SumOrderReadyV findSumByWeek(Integer year, Integer week) {
+/* 36 */       return this.dao.findSumByWeek(year, week);
+/*    */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public final SumOrderReadyV findByDateAndProductAreaGroupName(Date date) {
+/* 44 */       return this.findByDate(date);
+/*    */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public final SumOrderReadyV findSumByWeekAndProductAreaGroupName(Integer year, Integer week) {
+/* 53 */       return this.findSumByWeek(year, week);
+/*    */    }
+/*    */ }

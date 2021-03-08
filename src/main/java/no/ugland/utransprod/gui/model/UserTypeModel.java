@@ -1,202 +1,201 @@
-package no.ugland.utransprod.gui.model;
-
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import no.ugland.utransprod.gui.StartWindowEnum;
-import no.ugland.utransprod.model.UserType;
-import no.ugland.utransprod.model.UserTypeAccess;
-import no.ugland.utransprod.util.Util;
-
-import com.jgoodies.binding.PresentationModel;
-
-/**
- * GUI-modell for brukertype
- * 
- * @author atle.brekka
- * 
- */
-public class UserTypeModel extends AbstractModel<UserType, UserTypeModel> {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_DESCRIPTION = "description";
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_STARTUP_WINDOW = "startupWindow";
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_IS_ADMIN_BOOLEAN = "isAdminBoolean";
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_USER_TYPE_ACCESS_LIST = "userTypeAccessList";
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_STARTUP_WINDOW_ENUM = "startupWindowEnum";
-
-	/**
-	 * 
-	 */
-	private List<UserTypeAccess> userTypeAccessList;
-
-	/**
-	 * @param object
-	 */
-	public UserTypeModel(UserType object) {
-		super(object);
-
-		userTypeAccessList = new ArrayList<UserTypeAccess>();
-		if (object.getUserTypeAccesses() != null) {
-			userTypeAccessList.addAll(object.getUserTypeAccesses());
-		}
-	}
-
-	/**
-	 * @return beskrivelse
-	 */
-	public String getDescription() {
-		return object.getDescription();
-	}
-
-	/**
-	 * @param description
-	 */
-	public void setDescription(String description) {
-		String oldDesc = getDescription();
-		object.setDescription(description);
-		firePropertyChange(PROPERTY_DESCRIPTION, oldDesc, description);
-	}
-
-	/**
-	 * @return oppstartsvindu
-	 */
-	public String getStartupWindow() {
-		return object.getStartupWindow();
-	}
-
-	/**
-	 * @param startupWindow
-	 */
-	public void setStartupWindow(String startupWindow) {
-		String oldWin = getStartupWindow();
-		object.setStartupWindow(startupWindow);
-		firePropertyChange(PROPERTY_STARTUP_WINDOW, oldWin, startupWindow);
-	}
-
-	/**
-	 * @return enum for oppstartsvindu
-	 */
-	public StartWindowEnum getStartupWindowEnum() {
-		return object.getStartupWindowEnum();
-	}
-
-	/**
-	 * @param startupWindowEnum
-	 */
-	public void setStartupWindowEnum(StartWindowEnum startupWindowEnum) {
-		StartWindowEnum oldWin = getStartupWindowEnum();
-		object.setStartupWindowEnum(startupWindowEnum);
-		firePropertyChange(PROPERTY_STARTUP_WINDOW_ENUM, oldWin,
-				startupWindowEnum);
-	}
-
-	/**
-	 * @return true dersom administrator
-	 */
-	public Boolean getIsAdminBoolean() {
-		return Util.convertNumberToBoolean(object.getIsAdmin());
-	}
-
-	/**
-	 * @param isAdmin
-	 */
-	public void setIsAdminBoolean(Boolean isAdmin) {
-		Boolean oldAdmin = getIsAdminBoolean();
-		object.setIsAdmin(Util.convertBooleanToNumber(isAdmin));
-		firePropertyChange(PROPERTY_IS_ADMIN_BOOLEAN, oldAdmin, isAdmin);
-	}
-
-	/**
-	 * @return akksessliste
-	 */
-	public List<UserTypeAccess> getUserTypeAccessList() {
-		return new ArrayList<UserTypeAccess>(userTypeAccessList);
-	}
-
-	/**
-	 * @param list
-	 */
-	public void setUserTypeAccessList(List<UserTypeAccess> list) {
-		userTypeAccessList.clear();
-		userTypeAccessList.addAll(list);
-		firePropertyChange(PROPERTY_USER_TYPE_ACCESS_LIST, list, list);
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.model.AbstractModel#addBufferChangeListener(java.beans.PropertyChangeListener,
-	 *      com.jgoodies.binding.PresentationModel)
-	 */
-	@Override
-	public void addBufferChangeListener(PropertyChangeListener listener,
-			PresentationModel presentationModel) {
-		presentationModel.getBufferedModel(PROPERTY_DESCRIPTION)
-				.addValueChangeListener(listener);
-		presentationModel.getBufferedModel(PROPERTY_STARTUP_WINDOW)
-				.addValueChangeListener(listener);
-		presentationModel.getBufferedModel(PROPERTY_USER_TYPE_ACCESS_LIST)
-				.addValueChangeListener(listener);
-		presentationModel.getBufferedModel(PROPERTY_STARTUP_WINDOW_ENUM)
-				.addValueChangeListener(listener);
-
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.model.AbstractModel#getBufferedObjectModel(com.jgoodies.binding.PresentationModel)
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public UserTypeModel getBufferedObjectModel(
-			PresentationModel presentationModel) {
-		UserTypeModel model = new UserTypeModel(new UserType());
-		model.setDescription((String) presentationModel
-				.getBufferedValue(PROPERTY_DESCRIPTION));
-		model.setStartupWindow((String) presentationModel
-				.getBufferedValue(PROPERTY_STARTUP_WINDOW));
-		model.setUserTypeAccessList((List<UserTypeAccess>) presentationModel
-				.getBufferedValue(PROPERTY_USER_TYPE_ACCESS_LIST));
-		model.setStartupWindowEnum((StartWindowEnum) presentationModel
-				.getBufferedValue(PROPERTY_STARTUP_WINDOW_ENUM));
-		return model;
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.model.AbstractModel#viewToModel()
-	 */
-	@Override
-	public void viewToModel() {
-		Set<UserTypeAccess> userTypeAccesses = object.getUserTypeAccesses();
-		if (userTypeAccesses == null) {
-			userTypeAccesses = new HashSet<UserTypeAccess>();
-		}
-		userTypeAccesses.clear();
-		userTypeAccesses.addAll(userTypeAccessList);
-		object.setUserTypeAccesses(userTypeAccesses);
-	}
-
-}
+/*     */ package no.ugland.utransprod.gui.model;
+/*     */ 
+/*     */ import com.jgoodies.binding.PresentationModel;
+/*     */ import java.beans.PropertyChangeListener;
+/*     */ import java.util.ArrayList;
+/*     */ import java.util.HashSet;
+/*     */ import java.util.List;
+/*     */ import java.util.Set;
+/*     */ import no.ugland.utransprod.gui.StartWindowEnum;
+/*     */ import no.ugland.utransprod.model.UserType;
+/*     */ import no.ugland.utransprod.model.UserTypeAccess;
+/*     */ import no.ugland.utransprod.util.Util;
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ public class UserTypeModel extends AbstractModel<UserType, UserTypeModel> {
+/*     */    private static final long serialVersionUID = 1L;
+/*     */    public static final String PROPERTY_DESCRIPTION = "description";
+/*     */    public static final String PROPERTY_STARTUP_WINDOW = "startupWindow";
+/*     */    public static final String PROPERTY_IS_ADMIN_BOOLEAN = "isAdminBoolean";
+/*     */    public static final String PROPERTY_USER_TYPE_ACCESS_LIST = "userTypeAccessList";
+/*     */    public static final String PROPERTY_STARTUP_WINDOW_ENUM = "startupWindowEnum";
+/*     */    private List<UserTypeAccess> userTypeAccessList = new ArrayList();
+/*     */ 
+/*     */    public UserTypeModel(UserType object) {
+/*  62 */       super(object);
+/*     */ 
+/*     */ 
+/*  65 */       if (object.getUserTypeAccesses() != null) {
+/*  66 */          this.userTypeAccessList.addAll(object.getUserTypeAccesses());
+/*     */       }
+/*  68 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getDescription() {
+/*  74 */       return ((UserType)this.object).getDescription();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setDescription(String description) {
+/*  81 */       String oldDesc = this.getDescription();
+/*  82 */       ((UserType)this.object).setDescription(description);
+/*  83 */       this.firePropertyChange("description", oldDesc, description);
+/*  84 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getStartupWindow() {
+/*  90 */       return ((UserType)this.object).getStartupWindow();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setStartupWindow(String startupWindow) {
+/*  97 */       String oldWin = this.getStartupWindow();
+/*  98 */       ((UserType)this.object).setStartupWindow(startupWindow);
+/*  99 */       this.firePropertyChange("startupWindow", oldWin, startupWindow);
+/* 100 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public StartWindowEnum getStartupWindowEnum() {
+/* 106 */       return ((UserType)this.object).getStartupWindowEnum();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setStartupWindowEnum(StartWindowEnum startupWindowEnum) {
+/* 113 */       StartWindowEnum oldWin = this.getStartupWindowEnum();
+/* 114 */       ((UserType)this.object).setStartupWindowEnum(startupWindowEnum);
+/* 115 */       this.firePropertyChange("startupWindowEnum", oldWin, startupWindowEnum);
+/*     */ 
+/* 117 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public Boolean getIsAdminBoolean() {
+/* 123 */       return Util.convertNumberToBoolean(((UserType)this.object).getIsAdmin());
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setIsAdminBoolean(Boolean isAdmin) {
+/* 130 */       Boolean oldAdmin = this.getIsAdminBoolean();
+/* 131 */       ((UserType)this.object).setIsAdmin(Util.convertBooleanToNumber(isAdmin));
+/* 132 */       this.firePropertyChange("isAdminBoolean", oldAdmin, isAdmin);
+/* 133 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public List<UserTypeAccess> getUserTypeAccessList() {
+/* 139 */       return new ArrayList(this.userTypeAccessList);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setUserTypeAccessList(List<UserTypeAccess> list) {
+/* 146 */       this.userTypeAccessList.clear();
+/* 147 */       this.userTypeAccessList.addAll(list);
+/* 148 */       this.firePropertyChange("userTypeAccessList", list, list);
+/* 149 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void addBufferChangeListener(PropertyChangeListener listener, PresentationModel presentationModel) {
+/* 158 */       presentationModel.getBufferedModel("description").addValueChangeListener(listener);
+/*     */ 
+/* 160 */       presentationModel.getBufferedModel("startupWindow").addValueChangeListener(listener);
+/*     */ 
+/* 162 */       presentationModel.getBufferedModel("userTypeAccessList").addValueChangeListener(listener);
+/*     */ 
+/* 164 */       presentationModel.getBufferedModel("startupWindowEnum").addValueChangeListener(listener);
+/*     */ 
+/*     */ 
+/* 167 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public UserTypeModel getBufferedObjectModel(PresentationModel presentationModel) {
+/* 176 */       UserTypeModel model = new UserTypeModel(new UserType());
+/* 177 */       model.setDescription((String)presentationModel.getBufferedValue("description"));
+/*     */ 
+/* 179 */       model.setStartupWindow((String)presentationModel.getBufferedValue("startupWindow"));
+/*     */ 
+/* 181 */       model.setUserTypeAccessList((List)presentationModel.getBufferedValue("userTypeAccessList"));
+/*     */ 
+/* 183 */       model.setStartupWindowEnum((StartWindowEnum)presentationModel.getBufferedValue("startupWindowEnum"));
+/*     */ 
+/* 185 */       return model;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void viewToModel() {
+/* 193 */       Set<UserTypeAccess> userTypeAccesses = ((UserType)this.object).getUserTypeAccesses();
+/* 194 */       if (userTypeAccesses == null) {
+/* 195 */          userTypeAccesses = new HashSet();
+/*     */       }
+/* 197 */       ((Set)userTypeAccesses).clear();
+/* 198 */       ((Set)userTypeAccesses).addAll(this.userTypeAccessList);
+/* 199 */       ((UserType)this.object).setUserTypeAccesses((Set)userTypeAccesses);
+/* 200 */    }
+/*     */ }

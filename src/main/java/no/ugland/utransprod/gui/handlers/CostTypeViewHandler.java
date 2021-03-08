@@ -1,202 +1,199 @@
-package no.ugland.utransprod.gui.handlers;
-
-import java.awt.Dimension;
-
-import javax.swing.JTextField;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
-
-import no.ugland.utransprod.gui.Login;
-import no.ugland.utransprod.gui.WindowInterface;
-import no.ugland.utransprod.gui.edit.AbstractEditView;
-import no.ugland.utransprod.gui.edit.EditCostTypeView;
-import no.ugland.utransprod.gui.model.CostTypeModel;
-import no.ugland.utransprod.model.CostType;
-import no.ugland.utransprod.service.CostTypeManager;
-import no.ugland.utransprod.util.UserUtil;
-
-import org.jdesktop.swingx.JXTable;
-
-import com.jgoodies.binding.PresentationModel;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
-
-/**
- * Hjelpeklasse for visning av kostnadstype
- * 
- * @author atle.brekka
- * 
- */
-public class CostTypeViewHandler extends
-DefaultAbstractViewHandler<CostType, CostTypeModel> {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * @param userType
-	 */
-	public CostTypeViewHandler(Login login,CostTypeManager costTypeManager) {
-		super("Kostnadstyper", costTypeManager, login.getUserType(), true);
-	}
-
-	/**
-	 * Lager tekstfelt for navn
-	 * 
-	 * @param presentationModel
-	 * @return tekstfelt
-	 */
-	public JTextField getTextFieldName(PresentationModel presentationModel) {
-		JTextField textField = BasicComponentFactory
-				.createTextField(presentationModel
-						.getBufferedModel(CostTypeModel.PROPERTY_COST_TYPE_NAME));
-		textField.setName("CostTypeName");
-		textField.setEnabled(hasWriteAccess());
-		return textField;
-	}
-
-	/**
-	 * Lager tekstfelt for beskrivelse
-	 * 
-	 * @param presentationModel
-	 * @return tekstfelt
-	 */
-	public JTextField getTextFieldDescription(
-			PresentationModel presentationModel) {
-		JTextField textField = BasicComponentFactory
-				.createTextField(presentationModel
-						.getBufferedModel(CostTypeModel.PROPERTY_COST_TYPE_DESCRIPTION));
-		textField.setName("Description");
-		textField.setEnabled(hasWriteAccess());
-		return textField;
-	}
-
-	/**
-	 * @param object
-	 * @return feil
-	 * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#checkDeleteObject(java.lang.Object)
-	 */
-	@Override
-	public CheckObject checkDeleteObject(CostType object) {
-		if (object.getOrderCosts() != null
-				&& object.getOrderCosts().size() != 0) {
-			return new CheckObject("Kan ikke slette kostnadstype som brukes av ordre",false);
-		}
-		return null;
-	}
-
-	/**
-	 * @param object
-	 * @param presentationModel
-	 * @param window
-	 * @return feilmelding
-	 * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#checkSaveObject(java.lang.Object,
-	 *      com.jgoodies.binding.PresentationModel,
-	 *      no.ugland.utransprod.gui.WindowInterface)
-	 */
-	@Override
-	public CheckObject checkSaveObject(CostTypeModel object,
-			PresentationModel presentationModel, WindowInterface window) {
-		return null;
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getAddRemoveString()
-	 */
-	@Override
-	public String getAddRemoveString() {
-		return "kostnadstype";
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getClassName()
-	 */
-	@Override
-	public String getClassName() {
-		return "CostType";
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getNewObject()
-	 */
-	@Override
-	public CostType getNewObject() {
-		return new CostType();
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getTableModel(no.ugland.utransprod.gui.WindowInterface)
-	 */
-	@Override
-	public TableModel getTableModel(WindowInterface window) {
-		return new CostTypeTableModel(objectSelectionList);
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getTableWidth()
-	 */
-	@Override
-	public String getTableWidth() {
-		return "140dlu";
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getTitle()
-	 */
-	@Override
-	public String getTitle() {
-		return "Kostnadstyper";
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getWindowSize()
-	 */
-	@Override
-	public Dimension getWindowSize() {
-		return new Dimension(420, 260);
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#setColumnWidth(org.jdesktop.swingx.JXTable)
-	 */
-	@Override
-	public void setColumnWidth(JXTable table) {
-		if(table.getColumnCount()>0){
-		// Navn
-		TableColumn col = table.getColumnModel().getColumn(0);
-		col.setPreferredWidth(80);
-
-		// Beskrivelse
-		col = table.getColumnModel().getColumn(1);
-		col.setPreferredWidth(150);
-		}
-
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#hasWriteAccess()
-	 */
-	@Override
-	public Boolean hasWriteAccess() {
-		return UserUtil.hasWriteAccess(userType, "Kostnadstyper");
-	}
-
-	/**
-	 * @param handler
-	 * @param object
-	 * @param searching
-	 * @return view
-	 * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getEditView(no.ugland.utransprod.gui.handlers.AbstractViewHandler,
-	 *      java.lang.Object, boolean)
-	 */
-	@Override
-	protected AbstractEditView<CostTypeModel, CostType> getEditView(
-			AbstractViewHandler<CostType, CostTypeModel> handler,
-			CostType object, boolean searching) {
-		return new EditCostTypeView(this, object, searching);
-	}
-
-    
-
-}
+/*     */ package no.ugland.utransprod.gui.handlers;
+/*     */ 
+/*     */ import com.jgoodies.binding.PresentationModel;
+/*     */ import com.jgoodies.binding.adapter.BasicComponentFactory;
+/*     */ import java.awt.Dimension;
+/*     */ import javax.swing.JTextField;
+/*     */ import javax.swing.table.TableColumn;
+/*     */ import javax.swing.table.TableModel;
+/*     */ import no.ugland.utransprod.gui.Login;
+/*     */ import no.ugland.utransprod.gui.WindowInterface;
+/*     */ import no.ugland.utransprod.gui.edit.AbstractEditView;
+/*     */ import no.ugland.utransprod.gui.edit.EditCostTypeView;
+/*     */ import no.ugland.utransprod.gui.model.CostTypeModel;
+/*     */ import no.ugland.utransprod.model.CostType;
+/*     */ import no.ugland.utransprod.service.CostTypeManager;
+/*     */ import no.ugland.utransprod.util.UserUtil;
+/*     */ import org.jdesktop.swingx.JXTable;
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ public class CostTypeViewHandler extends DefaultAbstractViewHandler<CostType, CostTypeModel> {
+/*     */    private static final long serialVersionUID = 1L;
+/*     */ 
+/*     */    public CostTypeViewHandler(Login login, CostTypeManager costTypeManager) {
+/*  41 */       super("Kostnadstyper", costTypeManager, login.getUserType(), true);
+/*  42 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public JTextField getTextFieldName(PresentationModel presentationModel) {
+/*  51 */       JTextField textField = BasicComponentFactory.createTextField(presentationModel.getBufferedModel("costTypeName"));
+/*     */ 
+/*     */ 
+/*  54 */       textField.setName("CostTypeName");
+/*  55 */       textField.setEnabled(this.hasWriteAccess());
+/*  56 */       return textField;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public JTextField getTextFieldDescription(PresentationModel presentationModel) {
+/*  67 */       JTextField textField = BasicComponentFactory.createTextField(presentationModel.getBufferedModel("description"));
+/*     */ 
+/*     */ 
+/*  70 */       textField.setName("Description");
+/*  71 */       textField.setEnabled(this.hasWriteAccess());
+/*  72 */       return textField;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public CheckObject checkDeleteObject(CostType object) {
+/*  82 */       return object.getOrderCosts() != null && object.getOrderCosts().size() != 0 ? new CheckObject("Kan ikke slette kostnadstype som brukes av ordre", false) : null;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public CheckObject checkSaveObject(CostTypeModel object, PresentationModel presentationModel, WindowInterface window) {
+/* 101 */       return null;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getAddRemoveString() {
+/* 109 */       return "kostnadstype";
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getClassName() {
+/* 117 */       return "CostType";
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public CostType getNewObject() {
+/* 125 */       return new CostType();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public TableModel getTableModel(WindowInterface window) {
+/* 133 */       return new CostTypeTableModel(this.objectSelectionList);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getTableWidth() {
+/* 141 */       return "140dlu";
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getTitle() {
+/* 149 */       return "Kostnadstyper";
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public Dimension getWindowSize() {
+/* 157 */       return new Dimension(420, 260);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setColumnWidth(JXTable table) {
+/* 165 */       if (table.getColumnCount() > 0) {
+/*     */ 
+/* 167 */          TableColumn col = table.getColumnModel().getColumn(0);
+/* 168 */          col.setPreferredWidth(80);
+/*     */ 
+/*     */ 
+/* 171 */          col = table.getColumnModel().getColumn(1);
+/* 172 */          col.setPreferredWidth(150);
+/*     */       }
+/*     */ 
+/* 175 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public Boolean hasWriteAccess() {
+/* 182 */       return UserUtil.hasWriteAccess(this.userType, "Kostnadstyper");
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    protected AbstractEditView<CostTypeModel, CostType> getEditView(AbstractViewHandler<CostType, CostTypeModel> handler, CostType object, boolean searching) {
+/* 197 */       return new EditCostTypeView(this, object, searching);
+/*     */    }
+/*     */ }

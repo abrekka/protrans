@@ -1,50 +1,15 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.dao;
 
 import no.ugland.utransprod.model.SumOrderReadyV;
 
-/**
- * Interface for DAO mot view SUM_ORDER_V
- * 
- * @author atle.brekka
- * 
- */
 public interface SumOrderReadyVDAO extends DAO<SumOrderReadyV> {
-	/**
-	 * Finner pakket verdi for gitt dato
-	 * 
-	 * @param dateString
-	 * @return pakket verdi
-	 */
-	SumOrderReadyV findByDate(String dateString);
+   SumOrderReadyV findByDate(String var1);
 
-	/**
-	 * Finner pakket verdi for gitt uke
-	 * 
-	 * @param year
-	 * 
-	 * @param week
-	 * @return pakket verdi
-	 */
-	SumOrderReadyV findSumByWeek(Integer year, Integer week);
+   SumOrderReadyV findSumByWeek(Integer var1, Integer var2);
 
-	/**
-	 * Finner pakket verdi for gitt dato og produktområdegruppe
-	 * 
-	 * @param dateString
-	 * @param productAreaGroupName
-	 * @return pakket verdi
-	 */
-	SumOrderReadyV findByDateAndProductAreaGroupName(String dateString,
-			String productAreaGroupName);
+   SumOrderReadyV findByDateAndProductAreaGroupName(String var1, String var2);
 
-	/**
-	 * Finner pakket verdi for gitt uke og produktområdegruppe
-	 * 
-	 * @param year
-	 * @param week
-	 * @param productAreaGroupName
-	 * @return pakket verdi
-	 */
-	SumOrderReadyV findSumByWeekAndProductAreaGroupName(Integer year,
-			Integer week, String productAreaGroupName);
+   SumOrderReadyV findSumByWeekAndProductAreaGroupName(Integer var1, Integer var2, String var3);
 }

@@ -1,16 +1,16 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
 import no.ugland.utransprod.ProTransException;
-import no.ugland.utransprod.gui.handlers.ReportConstraintViewHandler.TransportConstraintEnum;
 import no.ugland.utransprod.gui.handlers.ReportDataTransport;
+import no.ugland.utransprod.gui.handlers.ReportConstraintViewHandler.TransportConstraintEnum;
 import no.ugland.utransprod.gui.model.Delelisteinfo;
 import no.ugland.utransprod.gui.model.Ordreinfo;
 import no.ugland.utransprod.gui.model.Ordrelinjeinfo;
-import no.ugland.utransprod.gui.model.Transportable;
 import no.ugland.utransprod.model.Assembly;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
@@ -24,245 +24,104 @@ import no.ugland.utransprod.util.excel.ExcelManager;
 import no.ugland.utransprod.util.report.SaleReportData;
 import no.ugland.utransprod.util.report.SaleReportSum;
 
-/**
- * Manager for ordre
- * 
- * @author atle.brekka
- */
 public interface OrderManager extends OverviewManager<Order>, ExcelManager {
-	public final static String MANAGER_NAME = "orderManager";
+   String MANAGER_NAME = "orderManager";
 
-	/**
-	 * Fjern alle.
-	 */
-	void removeAll();
+   void removeAll();
 
-	/**
-	 * Hent alle nye ordre.
-	 * 
-	 * @return ordre
-	 */
-	List<Order> getAllNewOrders();
+   List<Order> getAllNewOrders();
 
-	/**
-	 * Lagrer ordre.
-	 * 
-	 * @param order
-	 * @throws ProTransException
-	 */
-	void saveOrder(Order order) throws ProTransException;
+   void saveOrder(Order var1) throws ProTransException;
 
-	/**
-	 * Finn ordre basert på nummer.
-	 * 
-	 * @param orderNr
-	 * @return ordre
-	 */
-	Order findByOrderNr(String orderNr);
+   Order findByOrderNr(String var1);
 
-	/**
-	 * @see no.ugland.utransprod.service.OverviewManager#findAll()
-	 */
-	List<Order> findAll();
+   List<Order> findAll();
 
-	/**
-	 * Finn ordre basert på eksempel.
-	 * 
-	 * @param order
-	 * @return ordre
-	 */
-	List<Order> findByOrder(Order order);
+   List<Order> findByOrder(Order var1);
 
-	/**
-	 * Fjern ordre.
-	 * 
-	 * @param order
-	 */
-	void removeOrder(Order order);
+   void removeOrder(Order var1);
 
-	/**
-	 * Lazy laster ordre.
-	 * 
-	 * @param order
-	 * @param enums
-	 */
-	void lazyLoadOrder(Order order, LazyLoadOrderEnum[] enums);
+   void lazyLoadOrder(Order var1, LazyLoadOrderEnum[] var2);
 
-	/**
-	 * Finner alle ordre som skal monteres.
-	 * 
-	 * @return ordre
-	 */
-	List<Order> getAllAssemblyOrders();
+   List<Order> getAllAssemblyOrders();
 
-	/**
-	 * Lazy laster ordretre.
-	 * 
-	 * @param order
-	 */
-	void lazyLoadTree(Order order);
+   void lazyLoadTree(Order var1);
 
-	/**
-	 * Teller antall ordre og summererer kostnad.
-	 * 
-	 * @param fromString
-	 * @param toString
-	 * @param transportConstraintEnum
-	 * @param productArea
-	 * @return antall ordre og summert kostnad
-	 */
-	List<ReportDataTransport> countOrderAndCosts(String fromString, String toString,
-			TransportConstraintEnum transportConstraintEnum, ProductArea productArea);
+   List<ReportDataTransport> countOrderAndCosts(String var1, String var2, TransportConstraintEnum var3, ProductArea var4);
 
-	/**
-	 * Finner ordre som ikke er sendt.
-	 * 
-	 * @return ordre
-	 */
-	Set<Order> findNotSent();
+   Set<Order> findNotSent();
 
-	/**
-	 * Lazy laster ordrelinjer og kollier.
-	 * 
-	 * @param orderId
-	 * @return ordre
-	 */
-	Order lazyLoadOrderLineAndCollies(Integer orderId);
+   Order lazyLoadOrderLineAndCollies(Integer var1);
 
-	/**
-	 * Finner alle ordrelinjer for avvik.
-	 * 
-	 * @return ordrelinjer
-	 */
-	List<OrderLine> getAllDeviationOrderLines();
+   List<OrderLine> getAllDeviationOrderLines();
 
-	/**
-	 * Finner alle klare for fakturering.
-	 * 
-	 * @return ordre
-	 */
-	List<Order> findReadyForInvoice();
+   List<Order> findReadyForInvoice();
 
-	/**
-	 * Finner alle klare for fakturering basert på ordrenummer.
-	 * 
-	 * @param orderNr
-	 * @return ordre
-	 */
-	List<Order> findReadyForInvoice(String orderNr);
+   List<Order> findReadyForInvoice(String var1);
 
-	/**
-	 * Finner alle klare for fakturering basert på kundenummer.
-	 * 
-	 * @param customerNr
-	 * @return ordre
-	 */
-	List<Order> findReadyForInvoiceCustomerNr(Integer customerNr);
+   List<Order> findReadyForInvoiceCustomerNr(Integer var1);
 
-	/**
-	 * Finner alle som ikke er sendt.
-	 * 
-	 * @return ordre
-	 */
-	List<Order> findAllNotSent();
+   List<Order> findAllNotSent();
 
-	/**
-	 * Finner alle som ikke er sendt basert på ordrenummer.
-	 * 
-	 * @param orderNr
-	 * @return ordre
-	 */
-	List<Order> findNotSentByOrderNr(String orderNr);
+   List<Order> findNotSentByOrderNr(String var1);
 
-	/**
-	 * Finner alle som ikke er sendt basert på kundenummer.
-	 * 
-	 * @param customerNr
-	 * @return ordre
-	 */
-	List<Order> findNotSentByCustomerNr(Integer customerNr);
+   List<Order> findNotSentByCustomerNr(Integer var1);
 
-	/**
-	 * Finner alle ordre og kostnader for gitt periode.
-	 * 
-	 * @param fromString
-	 * @param toString
-	 * @param transportConstraintEnum
-	 * @param productArea
-	 * @return ordre og kostnader
-	 */
-	List<ReportDataTransport> getOrdersAndCosts(String fromString, String toString,
-			TransportConstraintEnum transportConstraintEnum, ProductArea productArea);
+   List<ReportDataTransport> getOrdersAndCosts(String var1, String var2, TransportConstraintEnum var3, ProductArea var4);
 
-	/**
-	 * Teller antall pakklister for periode.
-	 * 
-	 * @param fromDate
-	 * @param toDate
-	 * @return antall pakklister
-	 */
-	Integer getPacklistCountForWeek(Date fromDate, Date toDate);
+   Integer getPacklistCountForWeek(Date var1, Date var2);
 
-	/**
-	 * Henter antall pakklister for periode og produktområdegruppe.
-	 * 
-	 * @param fromDate
-	 * @param toDate
-	 * @param group
-	 * @return antall
-	 */
-	Integer getPacklistCountForWeekByProductAreaGroupName(Date fromDate, Date toDate);
+   Integer getPacklistCountForWeekByProductAreaGroupName(Date var1, Date var2);
 
-	List<Order> findSentInPeriod(Periode periode, String productAreaGroupName);
+   List<Order> findSentInPeriod(Periode var1, String var2);
 
-	List<Order> findByConfirmWeekProductArea(Integer year, Integer weekFrom, Integer weekTo, String productAreaName);
+   List<Order> findByConfirmWeekProductArea(Integer var1, Integer var2, Integer var3, String var4);
 
-	List<SaleReportSum> groupSumCountyByProductAreaConfirmPeriode(ProductArea productArea, Periode periode);
+   List<SaleReportSum> groupSumCountyByProductAreaConfirmPeriode(ProductArea var1, Periode var2);
 
-	List<SaleReportSum> groupSumSalesmanByProductAreaConfirmPeriode(ProductArea productArea, Periode periode);
+   List<SaleReportSum> groupSumSalesmanByProductAreaConfirmPeriode(ProductArea var1, Periode var2);
 
-	Integer countByProductAreaPeriode(ProductArea productArea, Periode periode);
+   Integer countByProductAreaPeriode(ProductArea var1, Periode var2);
 
-	List<SaleReportData> getSaleReportByProductAreaPeriode(ProductArea productArea, Periode periode);
+   List<SaleReportData> getSaleReportByProductAreaPeriode(ProductArea var1, Periode var2);
 
-	List<Order> findByConfirmWeekProductAreaGroup(Integer year, Integer weekFrom, Integer weekTo,
-			ProductAreaGroup productAreaName);
+   List<Order> findByConfirmWeekProductAreaGroup(Integer var1, Integer var2, Integer var3, ProductAreaGroup var4);
 
-	void saveOrder(Order incomingOrder, boolean allowEmptyArticles) throws ProTransException;
+   void saveOrder(Order var1, boolean var2) throws ProTransException;
 
-	List<SaleReportSum> sumByProductAreaConfirmPeriode(ProductArea productArea, Periode periode);
+   List<SaleReportSum> sumByProductAreaConfirmPeriode(ProductArea var1, Periode var2);
 
-	List<ReadyCount> findReadyCountByProductArea(final ProductArea productArea);
+   List<ReadyCount> findReadyCountByProductArea(ProductArea var1);
 
-	SaleReportSum groupSumByProductAreaConfirmPeriode(ProductArea productArea, Periode periode);
+   SaleReportSum groupSumByProductAreaConfirmPeriode(ProductArea var1, Periode var2);
 
-	List<Ordreinfo> finnOrdreinfo(String orderNr);
+   List<Ordreinfo> finnOrdreinfo(String var1);
 
-	List<Ordrelinjeinfo> finnOrdrelinjeinfo(Integer orderId);
+   List<Ordrelinjeinfo> finnOrdrelinjeinfo(Integer var1);
 
-	void fjernOrdreKomplett(String ordrenr);
+   void fjernOrdreKomplett(String var1);
 
-	void settOrdreKomplett(String orderNr, Date currentDate);
+   void settOrdreKomplett(String var1, Date var2);
 
-	void settStatus(Integer orderId, String status);
+   void settStatus(Integer var1, String var2);
 
-	List<Delelisteinfo> finnDeleliste(String orderNr, String kundenavn, String sted, String garsjetype);
+   List<Delelisteinfo> finnDeleliste(String var1, String var2, String var3, String var4);
 
-	void settMontering(Integer orderId, Assembly assembly);
+   void settMontering(Integer var1, Assembly var2);
 
-	void settMontering(Integer orderId, boolean b);
+   void settMontering(Integer var1, boolean var2);
 
-	Order getOrderWithOrderLinesAndCollies(String orderNr);
+   Order getOrderWithOrderLinesAndCollies(String var1);
 
-	List<String> finnMonteringsanvisninger(String orderNr);
+   List<String> finnMonteringsanvisninger(String var1);
 
-	void taBortSentOgManglerKolli(Order transportable);
+   void taBortSentOgManglerKolli(Order var1);
 
-	void settSentDato(Order transportlistable, Date sentDate);
+   void settSentDato(Order var1, Date var2);
 
-	void settLevert(Order transportlistable, Date levertDate);
+   void settLevert(Order var1, Date var2);
 
-	void oppdaterTransportId(Order transportable, Transport transport);
+   void oppdaterTransportId(Order var1, Transport var2);
 
-
+   void oppdaterStatus(Order var1, String var2);
 }

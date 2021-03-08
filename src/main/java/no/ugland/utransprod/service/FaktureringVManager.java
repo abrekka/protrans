@@ -1,38 +1,21 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import java.util.List;
-
 import no.ugland.utransprod.model.FaktureringV;
 import no.ugland.utransprod.util.excel.ExcelManager;
 
-/**
- * Interface for derviceklasse mot view FAKTURERING_V
- * @author atle.brekka
- */
-public interface FaktureringVManager extends ExcelManager,
-        IApplyListManager<FaktureringV> {
-    String MANAGER_NAME = "faktureringVManager";
+public interface FaktureringVManager extends ExcelManager, IApplyListManager<FaktureringV> {
+   String MANAGER_NAME = "faktureringVManager";
 
-	/**
-     * @see no.ugland.utransprod.service.IApplyListManager#findAllApplyable()
-     */
-    List<FaktureringV> findAllApplyable();
+   List<FaktureringV> findAllApplyable();
 
-    /**
-     * @see no.ugland.utransprod.service.IApplyListManager#findApplyableByOrderNr(java.lang.String)
-     */
-    List<FaktureringV> findApplyableByOrderNr(String orderNr);
+   List<FaktureringV> findApplyableByOrderNr(String var1);
 
-    /**
-     * @see no.ugland.utransprod.service.IApplyListManager#findApplyableByCustomerNr(java.lang.Integer)
-     */
-    List<FaktureringV> findApplyableByCustomerNr(Integer customerNr);
+   List<FaktureringV> findApplyableByCustomerNr(Integer var1);
 
-    /**
-     * @param faktureringV
-     * @see no.ugland.utransprod.service.IApplyListManager#refresh(java.lang.Object)
-     */
-    void refresh(FaktureringV faktureringV);
+   void refresh(FaktureringV var1);
 
-	FaktureringV findByOrderNr(String orderNr);
+   FaktureringV findByOrderNr(String var1);
 }

@@ -1,51 +1,24 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.dao;
 
 import java.util.List;
-
 import no.ugland.utransprod.model.PackableListItem;
 import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.TakstolPackageV;
 
-/**
- * Interface for DAO mot view TAKSTOL_PACKAGEW_V
- * 
- * @author atle.brekka
- * 
- */
 public interface TakstolPackageVDAO extends DAO<TakstolPackageV> {
-    /**
-     * Finner alle takstoler som skal pakkes
-     * 
-     * @return vegger
-     */
-    List<PackableListItem> findAll();
+   List<PackableListItem> findAll();
 
-    /**
-     * Finner takstoler som skal pakkes basert op ordrenummer
-     * 
-     * @param orderNr
-     * @return vegg
-     */
-    List<PackableListItem> findByOrderNr(String orderNr);
+   List<PackableListItem> findByOrderNr(String var1);
 
-    /**
-     * Oppdater objekt
-     * 
-     * @param takstolPackageV
-     */
-    void refresh(TakstolPackageV takstolPackageV);
+   void refresh(TakstolPackageV var1);
 
-    /**
-     * Finn basert på kundenummer
-     * 
-     * @param customerNr
-     * @return takstol
-     */
-    List<PackableListItem> findByCustomerNr(Integer customerNr);
+   List<PackableListItem> findByCustomerNr(Integer var1);
 
-    List<PackableListItem> findApplyableByOrderNrAndArticleName(String orderNr, String mainArticleName);
+   List<PackableListItem> findApplyableByOrderNrAndArticleName(String var1, String var2);
 
-    List<PackableListItem> findByOrderNrAndProductAreaGroup(String orderNr, ProductAreaGroup productAreaGroup);
+   List<PackableListItem> findByOrderNrAndProductAreaGroup(String var1, ProductAreaGroup var2);
 
-    List<PackableListItem> findByCustomerNrAndProductAreaGroup(Integer customerNr, ProductAreaGroup productAreaGroup);
+   List<PackableListItem> findByCustomerNrAndProductAreaGroup(Integer var1, ProductAreaGroup var2);
 }

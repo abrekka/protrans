@@ -1,354 +1,342 @@
-package no.ugland.utransprod.gui.handlers;
+/*     */ package no.ugland.utransprod.gui.handlers;
 
-import java.awt.Font;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.plaf.FontUIResource;
-
-import no.ugland.utransprod.gui.TextTicker;
-import no.ugland.utransprod.gui.model.NokkelProduksjonVModel;
-import no.ugland.utransprod.model.NokkelProduksjonV;
-import no.ugland.utransprod.service.InfoManager;
-import no.ugland.utransprod.service.NokkelProduksjonVManager;
-import no.ugland.utransprod.util.ApplicationParamUtil;
-import no.ugland.utransprod.util.ModelUtil;
-import no.ugland.utransprod.util.Util;
-import no.ugland.utransprod.util.YearWeek;
-
-import com.jgoodies.binding.PresentationModel;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
+/*     */
+/*     */ import com.jgoodies.binding.PresentationModel;
+/*     */ import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.beans.Model;
 
-/**
- * Hjelpeklasse for visning av standalone vindu med produksjonstall og info
- * 
- * @author atle.brekka
- * 
- */
-public class PackageProductionViewHandler {
-	/**
-	 * 
-	 */
-	private NokkelProduksjonVManager nokkelProduksjonVManager;
+/*     */ import java.awt.Font;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+/*     */ import java.math.BigDecimal;
+import java.util.ArrayList;
+/*     */ import java.util.List;
+/*     */ import javax.swing.BorderFactory;
+/*     */ import javax.swing.JLabel;
+/*     */ import javax.swing.JPanel;
+/*     */ import javax.swing.plaf.FontUIResource;
+/*     */ import no.ugland.utransprod.gui.TextTicker;
+/*     */ import no.ugland.utransprod.gui.handlers.PackageProductionViewHandler.InfoChangeListener;
+/*     */ import no.ugland.utransprod.gui.handlers.PackageProductionViewHandler.InfoHolder;
+/*     */ import no.ugland.utransprod.gui.model.NokkelProduksjonVModel;
+/*     */ import no.ugland.utransprod.model.NokkelProduksjonV;
+/*     */ import no.ugland.utransprod.model.NokkelProduksjonVPK;
+/*     */ import no.ugland.utransprod.service.InfoManager;
+/*     */ import no.ugland.utransprod.service.NokkelProduksjonVManager;
+/*     */ import no.ugland.utransprod.util.ApplicationParamUtil;
+/*     */ import no.ugland.utransprod.util.ModelUtil;
+/*     */ import no.ugland.utransprod.util.Util;
+/*     */ import no.ugland.utransprod.util.YearWeek;
 
-	/**
-	 * 
-	 */
-	private InfoManager infoManager;
+/*     */
+/*     */ public class PackageProductionViewHandler {
+	/*     */ private NokkelProduksjonVManager nokkelProduksjonVManager;
+	/*     */ private InfoManager infoManager;
+	/*     */ private PresentationModel presentationModelProduksjon;
+	/*     */ private PresentationModel presentationModelSumProduksjon;
+	/*     */ PresentationModel presentationModelInfo;
+	/*     */ private Integer currentYear;
+	/*     */ private Integer currentWeek;
+	/*     */ private Font font;
+	/*     */ private Font fontInfo;
+	/*     */ TextTicker textTicker;
 
-	/**
-	 * 
-	 */
-	private PresentationModel presentationModelProduksjon;
-
-	/**
-	 * 
-	 */
-	private PresentationModel presentationModelSumProduksjon;
-
-	/**
-	 * 
-	 */
-	PresentationModel presentationModelInfo;
-
-	/**
-	 * 
-	 */
-	private Integer currentYear;
-
-	/**
-	 * 
-	 */
-	private Integer currentWeek;
-
-	/**
-	 * 
-	 */
-	private Font font;
-
-	/**
-	 * 
-	 */
-	private Font fontInfo;
-
-	/**
-	 * 
-	 */
-	TextTicker textTicker;
-
-	/**
-	 * 
-	 */
-	public PackageProductionViewHandler() {
-		String prodFrontParam = ApplicationParamUtil
-				.findParamByName("prod_font");
-		String infoFrontParam = ApplicationParamUtil
-				.findParamByName("info_font");
-
-		font = new FontUIResource("Arial", Font.BOLD, Integer
-				.valueOf(prodFrontParam));
-		fontInfo = new FontUIResource("Arial", Font.BOLD, Integer
-				.valueOf(infoFrontParam));
-
-		currentYear = Util.getCurrentYear();
-		currentWeek = Util.getCurrentWeek();
-		nokkelProduksjonVManager = (NokkelProduksjonVManager) ModelUtil
+	/*     */
+	/*     */ public PackageProductionViewHandler() {
+		/* 91 */ String prodFrontParam = ApplicationParamUtil.findParamByName("prod_font");
+		/*     */
+		/* 93 */ String infoFrontParam = ApplicationParamUtil.findParamByName("info_font");
+		/*     */
+		/*     */
+		/* 96 */ this.font = new FontUIResource("Arial", 1, Integer.valueOf(prodFrontParam));
+		/*     */
+		/* 98 */ this.fontInfo = new FontUIResource("Arial", 1, Integer.valueOf(infoFrontParam));
+		/*     */
+		/*     */
+		/* 101 */ this.currentYear = Util.getCurrentYear();
+		/* 102 */ this.currentWeek = Util.getCurrentWeek();
+		/* 103 */ this.nokkelProduksjonVManager = (NokkelProduksjonVManager) ModelUtil
 				.getBean("nokkelProduksjonVManager");
-		infoManager = (InfoManager) ModelUtil.getBean("infoManager");
+		/*     */
+		/* 105 */ this.infoManager = (InfoManager) ModelUtil.getBean("infoManager");
+		/*     */
+		/* 107 */ this.refresh();
+		/*     */
+		/* 109 */ }
 
-		refresh();
-
-	}
-
-	/**
-	 * Oppdaterer info
-	 */
-	public void refresh() {
-		NokkelProduksjonV nokkelProduksjonV = nokkelProduksjonVManager
-				.findByWeek(currentYear, currentWeek);
-		if (nokkelProduksjonV == null) {
-			nokkelProduksjonV = new NokkelProduksjonV(null, 0, BigDecimal
-					.valueOf(0), 0, null, BigDecimal.valueOf(0), BigDecimal
-					.valueOf(0), BigDecimal.valueOf(0));
-		}
-		if (presentationModelProduksjon == null) {
-			presentationModelProduksjon = new PresentationModel(
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */ public void refresh() {
+		/* 115 */ NokkelProduksjonV nokkelProduksjonV = this.nokkelProduksjonVManager.findByWeek(this.currentYear,
+				this.currentWeek);
+		/*     */
+		/* 117 */ if (nokkelProduksjonV == null) {
+			/* 118 */ nokkelProduksjonV = new NokkelProduksjonV((NokkelProduksjonVPK) null, 0, BigDecimal.valueOf(0L),
+					0, (BigDecimal) null, BigDecimal.valueOf(0L), BigDecimal.valueOf(0L), BigDecimal.valueOf(0L));
+			/*     */
+			/*     */ }
+		/*     */
+		/* 122 */ if (this.presentationModelProduksjon == null) {
+			/* 123 */ this.presentationModelProduksjon = new PresentationModel(
 					new NokkelProduksjonVModel(nokkelProduksjonV));
-		} else {
-			presentationModelProduksjon.setBean(new NokkelProduksjonVModel(
-					nokkelProduksjonV));
-		}
-
-		NokkelProduksjonV sumNokkelProduksjonV = nokkelProduksjonVManager
-				.aggreagateYearWeek(new YearWeek(currentYear, currentWeek),"Garasje villa");
-		if (sumNokkelProduksjonV == null) {
-			sumNokkelProduksjonV = new NokkelProduksjonV(null, 0, BigDecimal
-					.valueOf(0), 0, null, BigDecimal.valueOf(0), BigDecimal
-					.valueOf(0), BigDecimal.valueOf(0));
-		}
-		if (presentationModelSumProduksjon == null) {
-			presentationModelSumProduksjon = new PresentationModel(
+			/*     */
+			/*     */ } else {
+			/* 126 */ this.presentationModelProduksjon.setBean(new NokkelProduksjonVModel(nokkelProduksjonV));
+			/*     */
+			/*     */ }
+		/*     */
+		/* 130 */ NokkelProduksjonV sumNokkelProduksjonV = (NokkelProduksjonV) this.nokkelProduksjonVManager
+				.aggreagateYearWeek(new YearWeek(this.currentYear, this.currentWeek), "Garasje villa");
+		/*     */
+		/* 132 */ if (sumNokkelProduksjonV == null) {
+			/* 133 */ sumNokkelProduksjonV = new NokkelProduksjonV((NokkelProduksjonVPK) null, 0,
+					BigDecimal.valueOf(0L), 0, (BigDecimal) null, BigDecimal.valueOf(0L), BigDecimal.valueOf(0L),
+					BigDecimal.valueOf(0L));
+			/*     */
+			/*     */ }
+		/*     */
+		/* 137 */ if (this.presentationModelSumProduksjon == null) {
+			/* 138 */ this.presentationModelSumProduksjon = new PresentationModel(
 					new NokkelProduksjonVModel(sumNokkelProduksjonV));
-		} else {
-			presentationModelSumProduksjon.setBean(new NokkelProduksjonVModel(
-					sumNokkelProduksjonV));
-		}
+			/*     */
+			/*     */ } else {
+			/* 141 */ this.presentationModelSumProduksjon.setBean(new NokkelProduksjonVModel(sumNokkelProduksjonV));
+			/*     */
+			/*     */ }
+		/*     */
+		/* 145 */ List<String> textInfo = this.infoManager.findListByDate(Util.getCurrentDate());
+		/*     */
+		/* 147 */ if (this.presentationModelInfo == null) {
+			/* 148 */ this.presentationModelInfo = new PresentationModel(new InfoHolder());
+			/*     */ }
+		/* 150 */ this.presentationModelInfo.setValue("texts", textInfo);
+		/*     */
+		/* 152 */ }
 
-		List<String> textInfo = infoManager.findListByDate(Util
-				.getCurrentDate());
-		if (presentationModelInfo == null) {
-			presentationModelInfo = new PresentationModel(new InfoHolder());
-		}
-		presentationModelInfo.setValue(InfoHolder.PROPERTY_TEXTS, textInfo);
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */ public TextTicker getTextTicker() {
+		/* 161 */ this.presentationModelInfo.addBeanPropertyChangeListener("texts", new InfoChangeListener());
+		/*     */
+		/* 163 */ this.textTicker = new TextTicker((List) this.presentationModelInfo.getValue("texts"), this.fontInfo);
+		/*     */
+		/* 165 */ return this.textTicker;
+		/*     */ }
 
-	}
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */ public JLabel getLabelBudget() {
+		/* 174 */ JPanel panel = new JPanel();
+		/* 175 */ panel.setBorder(BorderFactory.createEtchedBorder());
+		/* 176 */ JLabel label = new JLabel("Budsjett");
+		/* 177 */ label.setFont(this.font);
+		/* 178 */ panel.add(label);
+		/* 179 */ return label;
+		/*     */ }
 
-	/**
-	 * Lager textticker for informasjon som skal vises i vindu
-	 * 
-	 * @return textticker
-	 */
-	@SuppressWarnings("unchecked")
-	public TextTicker getTextTicker() {
-		presentationModelInfo.addBeanPropertyChangeListener(
-				InfoHolder.PROPERTY_TEXTS, new InfoChangeListener());
-		textTicker = new TextTicker((List<String>) presentationModelInfo
-				.getValue(InfoHolder.PROPERTY_TEXTS), fontInfo);
-		return textTicker;
-	}
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */ public JLabel getLabelReal() {
+		/* 188 */ JPanel panel = new JPanel();
+		/* 189 */ panel.setBorder(BorderFactory.createEtchedBorder());
+		/* 190 */ JLabel label = new JLabel("Reelt");
+		/* 191 */ label.setFont(this.font);
+		/* 192 */ panel.add(label);
+		/* 193 */ return label;
+		/*     */ }
 
-	/**
-	 * Lager label for budsjett
-	 * 
-	 * @return label
-	 */
-	public JLabel getLabelBudget() {
-		JPanel panel = new JPanel();
-		panel.setBorder(BorderFactory.createEtchedBorder());
-		JLabel label = new JLabel("Budsjett");
-		label.setFont(font);
-		panel.add(label);
-		return label;
-	}
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */ public JLabel getLabelDeviation() {
+		/* 202 */ JLabel label = new JLabel("Avvik(kr)");
+		/* 203 */ label.setFont(this.font);
+		/* 204 */ return label;
+		/*     */ }
 
-	/**
-	 * Lager label for virkelig produksjon
-	 * 
-	 * @return label
-	 */
-	public JLabel getLabelReal() {
-		JPanel panel = new JPanel();
-		panel.setBorder(BorderFactory.createEtchedBorder());
-		JLabel label = new JLabel("Reelt");
-		label.setFont(font);
-		panel.add(label);
-		return label;
-	}
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */ public JLabel getLabelDeviationProcent() {
+		/* 213 */ JLabel label = new JLabel("Avvik(%)");
+		/* 214 */ label.setFont(this.font);
+		/* 215 */ return label;
+		/*     */ }
 
-	/**
-	 * Lager label for avvik
-	 * 
-	 * @return label
-	 */
-	public JLabel getLabelDeviation() {
-		JLabel label = new JLabel("Avvik(kr)");
-		label.setFont(font);
-		return label;
-	}
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */ public JLabel getLabelSum() {
+		/* 224 */ JLabel label = new JLabel("Akkumulert:");
+		/* 225 */ label.setFont(this.font);
+		/* 226 */ return label;
+		/*     */ }
 
-	/**
-	 * Lager label for avvik i prosent
-	 * 
-	 * @return label
-	 */
-	public JLabel getLabelDeviationProcent() {
-		JLabel label = new JLabel("Avvik(%)");
-		label.setFont(font);
-		return label;
-	}
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */ public JLabel getLabelWeek() {
+		/* 235 */ JLabel label = new JLabel("Uke " + String.valueOf(this.currentWeek) + ":");
+		/* 236 */ label.setFont(this.font);
+		/* 237 */ return label;
+		/*     */ }
 
-	/**
-	 * Lager label for akkumulert
-	 * 
-	 * @return label
-	 */
-	public JLabel getLabelSum() {
-		JLabel label = new JLabel("Akkumulert:");
-		label.setFont(font);
-		return label;
-	}
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */ public JLabel getLabelDeviationKr() {
+		/* 246 */ JLabel label = BasicComponentFactory
+				.createLabel(this.presentationModelProduksjon.getModel("budgetDeviationString"));
+		/*     */
+		/*     */
+		/* 249 */ label.setFont(this.font);
+		/* 250 */ label.setHorizontalAlignment(4);
+		/* 251 */ return label;
+		/*     */ }
 
-	/**
-	 * Lager label for uke
-	 * 
-	 * @return label
-	 */
-	public JLabel getLabelWeek() {
-		JLabel label = new JLabel("Uke " + String.valueOf(currentWeek) + ":");
-		label.setFont(font);
-		return label;
-	}
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */ public JLabel getLabelDeviationProc() {
+		/* 260 */ JLabel label = BasicComponentFactory
+				.createLabel(this.presentationModelProduksjon.getModel("budgetDeviationProcString"));
+		/*     */
+		/*     */
+		/* 263 */ label.setFont(this.font);
+		/* 264 */ label.setHorizontalAlignment(4);
+		/* 265 */ return label;
+		/*     */ }
 
-	/**
-	 * Lager label for avvik i kroner
-	 * 
-	 * @return label
-	 */
-	public JLabel getLabelDeviationKr() {
-		JLabel label = BasicComponentFactory
-				.createLabel(presentationModelProduksjon
-						.getModel(NokkelProduksjonVModel.PROPERTY_BUDGET_DEVIATION_STRING));
-		label.setFont(font);
-		label.setHorizontalAlignment(SwingConstants.RIGHT);
-		return label;
-	}
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */ public JLabel getLabelAggregateDeviationKr() {
+		/* 274 */ JLabel label = BasicComponentFactory
+				.createLabel(this.presentationModelSumProduksjon.getModel("budgetDeviationString"));
+		/*     */
+		/*     */
+		/* 277 */ label.setFont(this.font);
+		/* 278 */ label.setHorizontalAlignment(4);
+		/* 279 */ return label;
+		/*     */ }
 
-	/**
-	 * Lager label for avvik i prosent
-	 * 
-	 * @return label
-	 */
-	public JLabel getLabelDeviationProc() {
-		JLabel label = BasicComponentFactory
-				.createLabel(presentationModelProduksjon
-						.getModel(NokkelProduksjonVModel.PROPERTY_BUDGET_DEVIATION_PROC_STRING));
-		label.setFont(font);
-		label.setHorizontalAlignment(SwingConstants.RIGHT);
-		return label;
-	}
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */ public JLabel getLabelAggregateDeviationProc() {
+		/* 288 */ JLabel label = BasicComponentFactory
+				.createLabel(this.presentationModelSumProduksjon.getModel("budgetDeviationProcString"));
+		/*     */
+		/*     */
+		/* 291 */ label.setFont(this.font);
+		/* 292 */ label.setHorizontalAlignment(4);
+		/* 293 */ return label;
+		/*     */ }
 
-	/**
-	 * Lager label for aggregert avvik i kroner
-	 * 
-	 * @return label
-	 */
-	public JLabel getLabelAggregateDeviationKr() {
-		JLabel label = BasicComponentFactory
-				.createLabel(presentationModelSumProduksjon
-						.getModel(NokkelProduksjonVModel.PROPERTY_BUDGET_DEVIATION_STRING));
-		label.setFont(font);
-		label.setHorizontalAlignment(SwingConstants.RIGHT);
-		return label;
-	}
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */ public JLabel getLabelRealWeek() {
+		/* 303 */ JLabel label = BasicComponentFactory
+				.createLabel(this.presentationModelProduksjon.getModel("packageSumWeekString"));
+		/*     */
+		/*     */
+		/* 306 */ label.setFont(this.font);
+		/* 307 */ label.setHorizontalAlignment(4);
+		/* 308 */ return label;
+		/*     */ }
 
-	/**
-	 * Lager label for aggregert avvik i prosent
-	 * 
-	 * @return label
-	 */
-	public JLabel getLabelAggregateDeviationProc() {
-		JLabel label = BasicComponentFactory
-				.createLabel(presentationModelSumProduksjon
-						.getModel(NokkelProduksjonVModel.PROPERTY_BUDGET_DEVIATION_PROC_STRING));
-		label.setFont(font);
-		label.setHorizontalAlignment(SwingConstants.RIGHT);
-		return label;
-	}
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */ public JLabel getLabelAggregateReal() {
+		/* 317 */ JLabel label = BasicComponentFactory
+				.createLabel(this.presentationModelSumProduksjon.getModel("packageSumWeekString"));
+		/*     */
+		/*     */
+		/* 320 */ label.setFont(this.font);
+		/* 321 */ label.setHorizontalAlignment(4);
+		/* 322 */ return label;
+		/*     */ }
 
-	/**
-	 * Lager label for virkelig produksjon for gjeldende uke
-	 * 
-	 * @return label
-	 */
-	public JLabel getLabelRealWeek() {
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */ public JLabel getLabelBudgetWeek() {
+		/* 331 */ JLabel label = BasicComponentFactory
+				.createLabel(this.presentationModelProduksjon.getModel("budgetValueString"));
+		/*     */
+		/*     */
+		/* 334 */ label.setFont(this.font);
+		/* 335 */ label.setHorizontalAlignment(4);
+		/* 336 */ return label;
+		/*     */ }
 
-		JLabel label = BasicComponentFactory
-				.createLabel(presentationModelProduksjon
-						.getModel(NokkelProduksjonVModel.PROPERTY_PACKAGE_SUM_WEEK_STRING));
-		label.setFont(font);
-		label.setHorizontalAlignment(SwingConstants.RIGHT);
-		return label;
-	}
-
-	/**
-	 * Lager label for aggregert virkelig tall
-	 * 
-	 * @return label
-	 */
-	public JLabel getLabelAggregateReal() {
-		JLabel label = BasicComponentFactory
-				.createLabel(presentationModelSumProduksjon
-						.getModel(NokkelProduksjonVModel.PROPERTY_PACKAGE_SUM_WEEK_STRING));
-		label.setFont(font);
-		label.setHorizontalAlignment(SwingConstants.RIGHT);
-		return label;
-	}
-
-	/**
-	 * Lager label for ukesbudsjett
-	 * 
-	 * @return label
-	 */
-	public JLabel getLabelBudgetWeek() {
-		JLabel label = BasicComponentFactory
-				.createLabel(presentationModelProduksjon
-						.getModel(NokkelProduksjonVModel.PROPERTY_BUDGET_VALUE_STRING));
-		label.setFont(font);
-		label.setHorizontalAlignment(SwingConstants.RIGHT);
-		return label;
-	}
-
-	/**
-	 * Lager label for aggregert budsjett
-	 * 
-	 * @return label
-	 */
-	public JLabel getLabelAggregateBudget() {
-		JLabel label = BasicComponentFactory
-				.createLabel(presentationModelSumProduksjon
-						.getModel(NokkelProduksjonVModel.PROPERTY_BUDGET_VALUE_STRING));
-		label.setFont(font);
-		label.setHorizontalAlignment(SwingConstants.RIGHT);
-		return label;
-	}
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */
+	/*     */ public JLabel getLabelAggregateBudget() {
+		/* 345 */ JLabel label = BasicComponentFactory
+				.createLabel(this.presentationModelSumProduksjon.getModel("budgetValueString"));
+		/*     */
+		/*     */
+		/* 348 */ label.setFont(this.font);
+		/* 349 */ label.setHorizontalAlignment(4);
+		/* 350 */ return label;
+		/*     */ }
+	/*     */
 
 	/**
 	 * Klasse som holder info som skal vises i vindu
@@ -406,8 +394,7 @@ public class PackageProductionViewHandler {
 		 */
 		@SuppressWarnings("unchecked")
 		public void propertyChange(PropertyChangeEvent arg0) {
-			textTicker.setTexts((List<String>) presentationModelInfo
-					.getValue(InfoHolder.PROPERTY_TEXTS));
+			textTicker.setTexts((List<String>) presentationModelInfo.getValue(InfoHolder.PROPERTY_TEXTS));
 
 		}
 

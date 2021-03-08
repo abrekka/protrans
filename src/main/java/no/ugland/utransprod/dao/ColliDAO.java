@@ -1,49 +1,19 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.dao;
 
 import no.ugland.utransprod.model.Colli;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.PostShipment;
 
-/**
- * Interface for DAO mot tabell COLLI
- * 
- * @author atle.brekka
- * 
- */
 public interface ColliDAO extends DAO<Colli> {
-	/**
-	 * Finner kolli basert på navn og ordre
-	 * 
-	 * @param colliName
-	 * @param order
-	 * @return kolli
-	 */
-	Colli findByNameAndOrder(String colliName, Order order);
+   Colli findByNameAndOrder(String var1, Order var2);
 
-	/**
-	 * Oppdaterer objekt
-	 * 
-	 * @param colli
-	 */
-	void refreshObject(Colli colli);
+   void refreshObject(Colli var1);
 
-	/**
-	 * Lazy loader kolli
-	 * 
-	 * @param colli
-	 * @param enums
-	 */
-	// void lazyLoadColli(Colli colli, LazyLoadColliEnum[] enums);
-	/**
-	 * Finner basert på etterlevering
-	 * 
-	 * @param colliName
-	 * @param postShipment
-	 * @return kolli
-	 */
-	Colli findByNameAndPostShipment(String colliName, PostShipment postShipment);
+   Colli findByNameAndPostShipment(String var1, PostShipment var2);
 
-	void lazyLoadAll(Colli colli);
+   void lazyLoadAll(Colli var1);
 
-	void oppdaterTransportId(Colli colli, Integer transportId);
+   void oppdaterTransportId(Colli var1, Integer var2);
 }

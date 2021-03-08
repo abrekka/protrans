@@ -1,74 +1,73 @@
-package no.ugland.utransprod.gui.handlers;
-
-import java.awt.Dimension;
-
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
-
-import no.ugland.utransprod.gui.WindowInterface;
-import no.ugland.utransprod.util.excel.ExcelReportEnum;
-import no.ugland.utransprod.util.excel.ExcelReportSettingSales;
-
-import com.jgoodies.binding.PresentationModel;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.debug.FormDebugPanel;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
-public class ExcelReportViewHandlerSales extends ExcelReportViewHandler {
-    private JCheckBox checkBoxSalesMan;
-    public ExcelReportViewHandlerSales(ExcelReportEnum excelReportType) {
-        super(excelReportType,new Dimension(320, 130));
-        presentationModel = new PresentationModel(new ExcelReportSettingSales(excelReportType));
-    }
-    
-    public JPanel buildConstraintPanel(WindowInterface window,boolean addEmpty) {
-       initComponents(window,addEmpty);
-        FormLayout layout = new FormLayout(
-                "p,3dlu,30dlu,3dlu,p:grow,3dlu,30dlu,3dlu,p,3dlu,30dlu,10dlu",
-                "p,3dlu,p,3dlu,p");
-        PanelBuilder builder = new PanelBuilder(layout);
-        // PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
-        CellConstraints cc = new CellConstraints();
-
-        if (excelReportEnum.useFrom()) {
-            builder.addLabel("År:", cc.xy(1, 1));
-            builder.add(yearChooser, cc.xy(3, 1));
-            if (excelReportEnum.useTo()) {
-                builder.addLabel("Fra uke:", cc.xy(5, 1));
-                builder.addLabel("Til uke:", cc.xy(9, 1));
-                builder.add(comboBoxWeekTo, cc.xy(11, 1));
-            } else {
-                builder.addLabel("Uke:", cc.xy(5, 1));
-            }
-            builder.add(comboBoxWeekFrom, cc.xy(7, 1));
-        }
-
-        if (comboBoxReportType != null) {
-            builder.addLabel("Rapport:", cc.xyw(1, 3, 3));
-            builder.add(comboBoxReportType, cc.xyw(5, 3, 7));
-        }
-        if (excelReportEnum.useProductArea()) {
-        builder.addLabel("Produktområde:", cc.xyw(1, 5, 5));
-        builder.add(comboBoxProductArea, cc.xyw(6, 5, 4));
-        }
-        builder.add(checkBoxSalesMan,cc.xyw(11, 5,2));
-
-        return builder.getPanel();
-    }
-
-    @Override
-    protected void initComponents(WindowInterface window,boolean addEmpty) {
-        super.initComponents(window,addEmpty);
-        checkBoxSalesMan = getCheckBoxSalesman();
-    }
-
-    private JCheckBox getCheckBoxSalesman() {
-        JCheckBox checkBox=BasicComponentFactory.createCheckBox(presentationModel
-                .getModel(ExcelReportSettingSales.PROPERTY_SALESMAN), "Selger");
-        checkBox.setName("CheckBoxSalesman");
-        return checkBox;
-    }
-
-}
+/*    */ package no.ugland.utransprod.gui.handlers;
+/*    */ 
+/*    */ import com.jgoodies.binding.PresentationModel;
+/*    */ import com.jgoodies.binding.adapter.BasicComponentFactory;
+/*    */ import com.jgoodies.forms.builder.PanelBuilder;
+/*    */ import com.jgoodies.forms.layout.CellConstraints;
+/*    */ import com.jgoodies.forms.layout.FormLayout;
+/*    */ import java.awt.Dimension;
+/*    */ import javax.swing.JCheckBox;
+/*    */ import javax.swing.JPanel;
+/*    */ import no.ugland.utransprod.gui.WindowInterface;
+/*    */ import no.ugland.utransprod.util.excel.ExcelReportEnum;
+/*    */ import no.ugland.utransprod.util.excel.ExcelReportSettingSales;
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ public class ExcelReportViewHandlerSales extends ExcelReportViewHandler {
+/*    */    private JCheckBox checkBoxSalesMan;
+/*    */ 
+/*    */    public ExcelReportViewHandlerSales(ExcelReportEnum excelReportType) {
+/* 22 */       super(excelReportType, new Dimension(320, 130));
+/* 23 */       this.presentationModel = new PresentationModel(new ExcelReportSettingSales(excelReportType));
+/* 24 */    }
+/*    */ 
+/*    */    public JPanel buildConstraintPanel(WindowInterface window, boolean addEmpty) {
+/* 27 */       this.initComponents(window, addEmpty);
+/* 28 */       FormLayout layout = new FormLayout("p,3dlu,30dlu,3dlu,p:grow,3dlu,30dlu,3dlu,p,3dlu,30dlu,10dlu", "p,3dlu,p,3dlu,p");
+/*    */ 
+/*    */ 
+/* 31 */       PanelBuilder builder = new PanelBuilder(layout);
+/*    */ 
+/* 33 */       CellConstraints cc = new CellConstraints();
+/*    */ 
+/* 35 */       if (this.excelReportEnum.useFrom()) {
+/* 36 */          builder.addLabel("Ã…r:", cc.xy(1, 1));
+/* 37 */          builder.add(this.yearChooser, cc.xy(3, 1));
+/* 38 */          if (this.excelReportEnum.useTo()) {
+/* 39 */             builder.addLabel("Fra uke:", cc.xy(5, 1));
+/* 40 */             builder.addLabel("Til uke:", cc.xy(9, 1));
+/* 41 */             builder.add(this.comboBoxWeekTo, cc.xy(11, 1));
+/*    */          } else {
+/* 43 */             builder.addLabel("Uke:", cc.xy(5, 1));
+/*    */          }
+/* 45 */          builder.add(this.comboBoxWeekFrom, cc.xy(7, 1));
+/*    */       }
+/*    */ 
+/* 48 */       if (this.comboBoxReportType != null) {
+/* 49 */          builder.addLabel("Rapport:", cc.xyw(1, 3, 3));
+/* 50 */          builder.add(this.comboBoxReportType, cc.xyw(5, 3, 7));
+/*    */       }
+/* 52 */       if (this.excelReportEnum.useProductArea()) {
+/* 53 */          builder.addLabel("ProduktomrÃ¥de:", cc.xyw(1, 5, 5));
+/* 54 */          builder.add(this.comboBoxProductArea, cc.xyw(6, 5, 4));
+/*    */       }
+/* 56 */       builder.add(this.checkBoxSalesMan, cc.xyw(11, 5, 2));
+/*    */ 
+/* 58 */       return builder.getPanel();
+/*    */    }
+/*    */ 
+/*    */ 
+/*    */    protected void initComponents(WindowInterface window, boolean addEmpty) {
+/* 63 */       super.initComponents(window, addEmpty);
+/* 64 */       this.checkBoxSalesMan = this.getCheckBoxSalesman();
+/* 65 */    }
+/*    */ 
+/*    */    private JCheckBox getCheckBoxSalesman() {
+/* 68 */       JCheckBox checkBox = BasicComponentFactory.createCheckBox(this.presentationModel.getModel("salesman"), "Selger");
+/*    */ 
+/* 70 */       checkBox.setName("CheckBoxSalesman");
+/* 71 */       return checkBox;
+/*    */    }
+/*    */ }

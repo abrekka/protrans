@@ -1,26 +1,15 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import java.util.List;
-
 import no.ugland.utransprod.model.Employee;
 import no.ugland.utransprod.model.Supplier;
 
-/**
- * Interface for serviceklasse mot tabell EMPLOYEE
- * @author atle.brekka
- */
 public interface EmployeeManager extends OverviewManager<Employee> {
-    String MANAGER_NAME = "employeeManager";
+   String MANAGER_NAME = "employeeManager";
 
-	/**
-     * @see no.ugland.utransprod.service.OverviewManager#findAll()
-     */
-    List<Employee> findAll();
+   List<Employee> findAll();
 
-    /**
-     * Finner for gitt levernadør
-     * @param supplier
-     * @return ansatte
-     */
-    List<Employee> findBySupplier(Supplier supplier);
+   List<Employee> findBySupplier(Supplier var1);
 }

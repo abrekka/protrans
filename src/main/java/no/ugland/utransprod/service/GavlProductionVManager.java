@@ -1,34 +1,16 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import java.util.List;
-
 import no.ugland.utransprod.model.Produceable;
 
-/**
- * Interface for serviceklasse mot view GAVL_PRODUCTION_V
- * @author atle.brekka
- */
 public interface GavlProductionVManager extends IApplyListManager<Produceable> {
+   List<Produceable> findAllApplyable();
 
-    /**
-     * @see no.ugland.utransprod.service.IApplyListManager#findAllApplyable()
-     */
-    List<Produceable> findAllApplyable();
+   List<Produceable> findApplyableByOrderNr(String var1);
 
-    /**
-     * @see no.ugland.utransprod.service.IApplyListManager#findApplyableByOrderNr(java.lang.String)
-     */
-    List<Produceable> findApplyableByOrderNr(String orderNr);
+   void refresh(Produceable var1);
 
-    /**
-     * @param productionV
-     * @see no.ugland.utransprod.service.IApplyListManager#refresh(java.lang.Object)
-     */
-    void refresh(Produceable productionV);
-
-    /**
-     * @see no.ugland.utransprod.service.IApplyListManager#findApplyableByCustomerNr(java.lang.Integer)
-     */
-    List<Produceable> findApplyableByCustomerNr(Integer customerNr);
-
+   List<Produceable> findApplyableByCustomerNr(Integer var1);
 }

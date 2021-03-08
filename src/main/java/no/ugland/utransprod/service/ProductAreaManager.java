@@ -1,41 +1,24 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import java.util.List;
-
 import no.ugland.utransprod.model.ProductArea;
 
-/**
- * Interface for serviceklasse mot tabell PRODUCT_AREA
- * @author atle.brekka
- */
 public interface ProductAreaManager {
-    String MANAGER_NAME = "productAreaManager";
-    /**
-     * Finner alle
-     * @return produktområder
-     */
-    List<ProductArea> findAll();
+   String MANAGER_NAME = "productAreaManager";
 
-    /**
-     * Finn basert på navn
-     * @param name
-     * @return produktområde
-     */
-    ProductArea findByName(String name);
+   List<ProductArea> findAll();
 
-    /**
-     * Sletter produktområde
-     * @param productArea
-     */
-    void removeProductArea(ProductArea productArea);
+   ProductArea findByName(String var1);
 
-    /**
-     * Lagrer produktområde
-     * @param productArea
-     */
-    void saveProductArea(ProductArea productArea);
-    ProductArea getProductAreaForProductAreaNr(Integer productAreaNr,boolean initCache);
-    List<Integer> getProductAreaNrListFromAreaName(String productAreaName);
+   void removeProductArea(ProductArea var1);
 
-	List<String> getAllNames();
+   void saveProductArea(ProductArea var1);
+
+   ProductArea getProductAreaForProductAreaNr(Integer var1, boolean var2);
+
+   List<Integer> getProductAreaNrListFromAreaName(String var1);
+
+   List<String> getAllNames();
 }

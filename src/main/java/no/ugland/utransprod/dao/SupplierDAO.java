@@ -1,23 +1,18 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.dao;
 
 import java.util.List;
-
 import no.ugland.utransprod.model.Supplier;
 
-/**
- * Interface for DAO ot tabell SUPPLIER
- * 
- * @author atle.brekka
- * 
- */
 public interface SupplierDAO extends DAO<Supplier> {
-    void refreshObject(Supplier supplier);
+   void refreshObject(Supplier var1);
 
-    List<Supplier> findByTypeName(String typeString, String orderBy);
+   List<Supplier> findByTypeName(String var1, String var2);
 
-    Supplier findByName(String name);
+   Supplier findByName(String var1);
 
-    List<Supplier> findActiveByTypeName(String typeString, String orderBy);
+   List<Supplier> findActiveByTypeName(String var1, String var2);
 
-    List<Supplier> findHavingAssembly(Integer year, Integer fromWeek, Integer toWeek);
+   List<Supplier> findHavingAssembly(Integer var1, Integer var2, Integer var3);
 }

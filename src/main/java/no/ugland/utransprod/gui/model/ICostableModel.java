@@ -1,94 +1,37 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.gui.model;
 
+import com.jgoodies.binding.list.ArrayListModel;
 import java.util.List;
-
 import no.ugland.utransprod.model.ArticleType;
 import no.ugland.utransprod.model.Deviation;
 import no.ugland.utransprod.model.Order;
 
-import com.jgoodies.binding.list.ArrayListModel;
-
-/**
- * Interface for klasser som har kostnad
- * 
- * @author atle.brekka
- * 
- * @param <T>
- * @param <E>
- */
 public interface ICostableModel<T, E> extends ModelInterface<E> {
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_COSTS = "costList";
+   String PROPERTY_COSTS = "costList";
+   String PROPERTY_ORDER = "order";
+   String PROPERTY_DEVIATION = "deviation";
+   String PROPERTY_ORDER_LINE_ARRAY_LIST_MODEL = "orderLineArrayListModel";
+   String PROPERTY_ARTICLES = "articles";
 
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_ORDER = "order";
+   ArrayListModel getCostList();
 
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_DEVIATION = "deviation";
+   Order getOrder();
 
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_ORDER_LINE_ARRAY_LIST_MODEL = "orderLineArrayListModel";
+   Deviation getDeviation();
 
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_ARTICLES = "articles";
+   ArrayListModel getOrderLineArrayListModel();
 
-	/**
-	 * @return kostnader
-	 */
-	ArrayListModel getCostList();
+   List<ArticleType> getArticles();
 
-	/**
-	 * @return ordre
-	 */
-	Order getOrder();
+   String getCustomerFirstName();
 
-	/**
-	 * @return avvik
-	 */
-	Deviation getDeviation();
+   String getCustomerLastName();
 
-	/**
-	 * @return ordrelinjer
-	 */
-	ArrayListModel getOrderLineArrayListModel();
+   String getDeliveryAddress();
 
-	/**
-	 * @return artikler
-	 */
-	List<ArticleType> getArticles();
+   String getPostalCode();
 
-	/**
-	 * @return fornavn til kunde
-	 */
-	String getCustomerFirstName();
-
-	/**
-	 * @return etternavn til kunde
-	 */
-	String getCustomerLastName();
-
-	/**
-	 * @return leveringsadresse
-	 */
-	String getDeliveryAddress();
-
-	/**
-	 * @return postnummer
-	 */
-	String getPostalCode();
-
-	/**
-	 * @return poststed
-	 */
-	String getPostOffice();
+   String getPostOffice();
 }

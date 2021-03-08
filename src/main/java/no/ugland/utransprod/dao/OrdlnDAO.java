@@ -1,35 +1,36 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.dao;
 
 import java.math.BigDecimal;
 import java.util.List;
-
 import no.ugland.utransprod.model.Ord;
 import no.ugland.utransprod.model.Ordln;
 
 public interface OrdlnDAO extends DAO<Ordln> {
-    List<Ordln> findByOrderNr(String orderNr);
+   List<Ordln> findByOrderNr(String var1);
 
-    Ordln findByOrdNoAndLnNo(Integer ordNo, Integer lnNo);
+   Ordln findByOrdNoAndLnNo(Integer var1, Integer var2);
 
-    BigDecimal getSumCstpr(final String orderNr, final Integer prCatNo);
+   BigDecimal getSumCstpr(String var1, Integer var2);
 
-    Ordln findByOrderNrProdCatNo(String orderNr, Integer prodCatNo, Integer prodCatNo2);
+   Ordln findByOrderNrProdCatNo(String var1, Integer var2, Integer var3);
 
-    BigDecimal getSumCcstpr(String orderNr, Integer prodCatNo);
+   BigDecimal getSumCcstpr(String var1, Integer var2);
 
-    Integer isOrderLineInStorage(Integer ordNo, Integer lnNo);
+   Integer isOrderLineInStorage(Integer var1, Integer var2);
 
-    Ord findOrdByOrderNr(String orderNr);
+   Ord findOrdByOrderNr(String var1);
 
-    Ordln findByOrdnoAndPrCatNo2(Integer ordno, Integer garageTypeLine);
+   Ordln findByOrdnoAndPrCatNo2(Integer var1, Integer var2);
 
-    List<Ordln> findCostLines(String orderNr);
+   List<Ordln> findCostLines(String var1);
 
-    List<Ordln> findForFakturagrunnlag(String orderNr);
+   List<Ordln> findForFakturagrunnlag(String var1);
 
-    Ord findByOrdNo(Integer ordNo);
+   Ord findByOrdNo(Integer var1);
 
-    List<Ordln> findTaksteinInfo(String orderNr);
+   List<Ordln> findTaksteinInfo(String var1);
 
-	List<Ordln> findOrdLnByOrdNo(Integer ordno);
+   List<Ordln> findOrdLnByOrdNo(Integer var1);
 }

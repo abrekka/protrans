@@ -1,13 +1,11 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.gui.model;
 
-/**
- * Interface for kommentarmodeller.
- * @author atle.brekka
- */
 public interface ICommentModel {
-    public static final String PROPERTY_USER_NAME = "userName";
-    public static final String PROPERTY_COMMENT = "comment";
-    int MAX_COMMENT_LENGTH = 1000;
+   String PROPERTY_USER_NAME = "userName";
+   String PROPERTY_COMMENT = "comment";
+   int MAX_COMMENT_LENGTH = 1000;
 
-    String getComment();
+   String getComment();
 }

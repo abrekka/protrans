@@ -1,31 +1,12 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.gui.model;
 
+import com.jgoodies.binding.PresentationModel;
 import java.beans.PropertyChangeListener;
 
-import com.jgoodies.binding.PresentationModel;
-
-/**
- * Interface for GUI-modeller
- * 
- * @author atle.brekka
- * 
- * @param <E>
- */
 public interface ModelInterface<E> {
-	/**
-	 * Henter bufferobjekt
-	 * 
-	 * @param presentationModel
-	 * @return bufferobjekt
-	 */
-	E getBufferedObjectModel(PresentationModel presentationModel);
+   E getBufferedObjectModel(PresentationModel var1);
 
-	/**
-	 * Legger til lytter på buffering
-	 * 
-	 * @param listener
-	 * @param presentationModel
-	 */
-	void addBufferChangeListener(PropertyChangeListener listener,
-			PresentationModel presentationModel);
+   void addBufferChangeListener(PropertyChangeListener var1, PresentationModel var2);
 }

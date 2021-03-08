@@ -1,143 +1,142 @@
-package no.ugland.utransprod.service.impl;
-
-import java.io.Serializable;
-import java.util.List;
-
-import no.ugland.utransprod.dao.DeviationDAO;
-import no.ugland.utransprod.model.ApplicationUser;
-import no.ugland.utransprod.model.Deviation;
-import no.ugland.utransprod.model.JobFunction;
-import no.ugland.utransprod.model.Order;
-import no.ugland.utransprod.service.DeviationManager;
-import no.ugland.utransprod.service.enums.LazyLoadDeviationEnum;
-
-/**
- * Implementasjon av manager for tabell DEVIATION.
- * 
- * @author atle.brekka
- */
-public class DeviationManagerImpl extends ManagerImpl<Deviation> implements DeviationManager {
-
-	/**
-	 * @see no.ugland.utransprod.service.OverviewManager#findAll()
-	 */
-	public final List<Deviation> findAll() {
-		return dao.getObjects();
-	}
-
-	/**
-	 * @param object
-	 * @return avvik
-	 * @see no.ugland.utransprod.service.OverviewManager#findByObject(java.lang.Object)
-	 */
-	public final List<Deviation> findByObject(final Deviation object) {
-		return ((DeviationDAO) dao).findByDeviation(object);
-	}
-
-	/**
-	 * @param object
-	 * @see no.ugland.utransprod.service.OverviewManager#refreshObject(java.lang.Object)
-	 */
-	public final void refreshObject(final Deviation object) {
-		((DeviationDAO) dao).refreshObject(object);
-
-	}
-
-	/**
-	 * Sletter avvik.
-	 * 
-	 * @param deviation
-	 */
-	public final void removeDeviation(final Deviation deviation) {
-		if (deviation.getDeviationId() != null) {
-			dao.removeObject(deviation.getDeviationId());
-		}
-
-	}
-
-	/**
-	 * @param object
-	 * @see no.ugland.utransprod.service.OverviewManager#removeObject(java.lang.Object)
-	 */
-	public final void removeObject(final Deviation object) {
-		removeDeviation(object);
-
-	}
-
-	/**
-	 * Lagrer avvik.
-	 * 
-	 * @param deviation
-	 */
-	public final void saveDeviation(final Deviation deviation) {
-		dao.saveObject(deviation);
-
-	}
-
-	/**
-	 * @param object
-	 * @see no.ugland.utransprod.service.OverviewManager#saveObject(java.lang.Object)
-	 */
-	public final void saveObject(final Deviation object) {
-		saveDeviation(object);
-
-	}
-
-	/**
-	 * @see no.ugland.utransprod.service.DeviationManager#
-	 *      findByJobFunction(no.ugland.utransprod.model.JobFunction)
-	 */
-	public final List<Deviation> findByJobFunction(final JobFunction jobFunction) {
-		return ((DeviationDAO) dao).findByJobFunction(jobFunction);
-	}
-
-	/**
-	 * @see no.ugland.utransprod.service.DeviationManager#lazyLoad(no.ugland.utransprod.model.Deviation,
-	 *      no.ugland.utransprod.service.enums.LazyLoadDeviationEnum[])
-	 */
-	public final void lazyLoad(final Deviation deviation, final LazyLoadDeviationEnum[] enums) {
-		((DeviationDAO) dao).lazyLoad(deviation, enums);
-
-	}
-
-	/**
-	 * @see no.ugland.utransprod.service.DeviationManager#
-	 *      findByManager(no.ugland.utransprod.model.ApplicationUser)
-	 */
-	public final List<Deviation> findByManager(final ApplicationUser applicationUser) {
-		return ((DeviationDAO) dao).findByManager(applicationUser);
-	}
-
-	/**
-	 * @see no.ugland.utransprod.service.DeviationManager#findByOrder(no.ugland.utransprod.model.Order)
-	 */
-	public final List<Deviation> findByOrder(final Order order) {
-		return ((DeviationDAO) dao).findByOrder(order);
-	}
-
-	/**
-	 * @see no.ugland.utransprod.service.DeviationManager#findAllAssembly()
-	 */
-	public final List<Deviation> findAllAssembly() {
-		return ((DeviationDAO) dao).findAllAssembly();
-	}
-
-	public void lazyLoad(Deviation object, Enum[] enums) {
-		lazyLoad(object, (LazyLoadDeviationEnum[]) enums);
-
-	}
-
-	@Override
-	protected Serializable getObjectId(Deviation object) {
-		return object.getDeviationId();
-	}
-
-	public List<Deviation> findByResponsible(ApplicationUser applicationUser) {
-		return ((DeviationDAO) dao).findByResponsible(applicationUser);
-	}
-
-	public Deviation findById(Integer deviationId) {
-		return ((DeviationDAO)dao).findById(deviationId);
-	}
-
-}
+/*     */ package no.ugland.utransprod.service.impl;
+/*     */ 
+/*     */ import java.io.Serializable;
+/*     */ import java.util.List;
+/*     */ import no.ugland.utransprod.dao.DeviationDAO;
+/*     */ import no.ugland.utransprod.model.ApplicationUser;
+/*     */ import no.ugland.utransprod.model.Deviation;
+/*     */ import no.ugland.utransprod.model.JobFunction;
+/*     */ import no.ugland.utransprod.model.Order;
+/*     */ import no.ugland.utransprod.service.DeviationManager;
+/*     */ import no.ugland.utransprod.service.enums.LazyLoadDeviationEnum;
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ public class DeviationManagerImpl extends ManagerImpl<Deviation> implements DeviationManager {
+/*     */    public final List<Deviation> findAll() {
+/*  25 */       return this.dao.getObjects();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final List<Deviation> findByObject(Deviation object) {
+/*  34 */       return ((DeviationDAO)this.dao).findByDeviation(object);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void refreshObject(Deviation object) {
+/*  42 */       ((DeviationDAO)this.dao).refreshObject(object);
+/*     */ 
+/*  44 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void removeDeviation(Deviation deviation) {
+/*  52 */       if (deviation.getDeviationId() != null) {
+/*  53 */          this.dao.removeObject(deviation.getDeviationId());
+/*     */       }
+/*     */ 
+/*  56 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void removeObject(Deviation object) {
+/*  63 */       this.removeDeviation(object);
+/*     */ 
+/*  65 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void saveDeviation(Deviation deviation) {
+/*  73 */       this.dao.saveObject(deviation);
+/*     */ 
+/*  75 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void saveObject(Deviation object) {
+/*  82 */       this.saveDeviation(object);
+/*     */ 
+/*  84 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final List<Deviation> findByJobFunction(JobFunction jobFunction) {
+/*  91 */       return ((DeviationDAO)this.dao).findByJobFunction(jobFunction);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void lazyLoad(Deviation deviation, LazyLoadDeviationEnum[] enums) {
+/*  99 */       ((DeviationDAO)this.dao).lazyLoad(deviation, enums);
+/*     */ 
+/* 101 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final List<Deviation> findByManager(ApplicationUser applicationUser) {
+/* 108 */       return ((DeviationDAO)this.dao).findByManager(applicationUser);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final List<Deviation> findByOrder(Order order) {
+/* 115 */       return ((DeviationDAO)this.dao).findByOrder(order);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final List<Deviation> findAllAssembly() {
+/* 122 */       return ((DeviationDAO)this.dao).findAllAssembly();
+/*     */    }
+/*     */ 
+/*     */    public void lazyLoad(Deviation object, Enum[] enums) {
+/* 126 */       this.lazyLoad(object, (LazyLoadDeviationEnum[])((LazyLoadDeviationEnum[])enums));
+/*     */ 
+/* 128 */    }
+/*     */ 
+/*     */ 
+/*     */    protected Serializable getObjectId(Deviation object) {
+/* 132 */       return object.getDeviationId();
+/*     */    }
+/*     */ 
+/*     */    public List<Deviation> findByResponsible(ApplicationUser applicationUser) {
+/* 136 */       return ((DeviationDAO)this.dao).findByResponsible(applicationUser);
+/*     */    }
+/*     */ 
+/*     */    public Deviation findById(Integer deviationId) {
+/* 140 */       return ((DeviationDAO)this.dao).findById(deviationId);
+/*     */    }
+/*     */ }

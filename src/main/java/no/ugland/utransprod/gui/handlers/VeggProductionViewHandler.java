@@ -1,274 +1,448 @@
-package no.ugland.utransprod.gui.handlers;
-
+/*     */ package no.ugland.utransprod.gui.handlers;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.Map;
 
 import javax.swing.ListModel;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableModel;
-
-import no.ugland.utransprod.ProTransException;
-import no.ugland.utransprod.gui.Login;
-import no.ugland.utransprod.gui.WindowInterface;
-import no.ugland.utransprod.gui.action.SetProductionUnitActionFactory;
-import no.ugland.utransprod.gui.checker.StatusCheckerInterface;
-import no.ugland.utransprod.gui.model.ApplyListInterface;
-import no.ugland.utransprod.gui.model.Transportable;
-import no.ugland.utransprod.model.ArticleType;
-import no.ugland.utransprod.model.Order;
-import no.ugland.utransprod.model.Produceable;
-import no.ugland.utransprod.model.VeggProductionV;
-import no.ugland.utransprod.service.ManagerRepository;
-import no.ugland.utransprod.service.enums.LazyLoadEnum;
-import no.ugland.utransprod.util.Tidsforbruk;
-import no.ugland.utransprod.util.Util;
+/*     */ 
+/*     */ import javax.swing.table.DefaultTableCellRenderer;
+/*     */ import javax.swing.table.TableModel;
 
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 
+import no.ugland.utransprod.ProTransException;
+/*     */ import no.ugland.utransprod.gui.Login;
+/*     */ import no.ugland.utransprod.gui.WindowInterface;
+/*     */ import no.ugland.utransprod.gui.action.SetProductionUnitActionFactory;
+import no.ugland.utransprod.gui.checker.StatusCheckerInterface;
+/*     */ import no.ugland.utransprod.gui.handlers.VeggProductionViewHandler.VeggProductionTableModel;
+/*     */ import no.ugland.utransprod.gui.model.ApplyListInterface;
+import no.ugland.utransprod.gui.model.Transportable;
+/*     */ import no.ugland.utransprod.model.ArticleType;
+import no.ugland.utransprod.model.Order;
+/*     */ import no.ugland.utransprod.model.Produceable;
+import no.ugland.utransprod.model.VeggProductionV;
+/*     */ import no.ugland.utransprod.service.ManagerRepository;
+import no.ugland.utransprod.service.enums.LazyLoadEnum;
+import no.ugland.utransprod.util.Tidsforbruk;
+import no.ugland.utransprod.util.Util;
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ public class VeggProductionViewHandler extends ProductionViewHandler {
+/*     */    public VeggProductionViewHandler(ApplyListInterface<Produceable> productionInterface, String title, Login login, ArticleType articleType, ManagerRepository managerRepository, DeviationViewHandlerFactory deviationViewHandlerFactory, SetProductionUnitActionFactory aSetProductionUnitActionFactory) {
+/*  50 */       super(productionInterface, title, login, (String)null, "produksjon", TableEnum.TABLEPRODUCTIONVEGG, articleType, managerRepository, deviationViewHandlerFactory, aSetProductionUnitActionFactory);
+/*     */ 
+/*  52 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    protected Integer getApplyColumn() {
+/*  59 */       return 4;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    protected TableModel getTableModel(WindowInterface window) {
+/*  67 */       return new VeggProductionTableModel(this.getObjectSelectionList(), window);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    protected void initColumnWidthExt() {
+/*  76 */       this.table.getColumnExt(this.table.getModel().getColumnName(0)).setPreferredWidth(100);
+/*     */ 
+/*  78 */       this.table.getColumnExt(this.table.getModel().getColumnName(1)).setPreferredWidth(200);
+/*     */ 
+/*  80 */       DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
+/*  81 */       tableCellRenderer.setHorizontalAlignment(0);
+/*  82 */       this.table.getColumnExt(this.table.getModel().getColumnName(2)).setCellRenderer(tableCellRenderer);
+/*  83 */       this.table.getColumnExt(this.table.getModel().getColumnName(2)).setPreferredWidth(70);
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*  91 */       this.table.getColumnExt(this.table.getModel().getColumnName(3)).setPreferredWidth(70);
+/*     */ 
+/*  93 */       this.table.getColumnExt(this.table.getModel().getColumnName(4)).setPreferredWidth(100);
+/*     */ 
+/*  95 */       this.table.getColumnExt(this.table.getModel().getColumnName(7)).setPreferredWidth(100);
+/*     */ 
+/*     */ 
+/*     */ 
+/*  99 */       tableCellRenderer.setHorizontalAlignment(0);
+/* 100 */       this.table.getColumnExt(this.table.getModel().getColumnName(8)).setCellRenderer(tableCellRenderer);
+/* 101 */       this.table.getColumnExt(this.table.getModel().getColumnName(8)).setPreferredWidth(120);
+/* 102 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    protected int getProductAreaColumn() {
+/* 266 */       return 5;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */    protected Integer getStartColumn() {
+/* 271 */       return 7;
+/*     */    }
+
 /**
- * Hjlepeklasse for veggproduksjon
+ * Tabellmodell for veggproduksjon
  * 
  * @author atle.brekka
  * 
  */
-public class VeggProductionViewHandler extends ProductionViewHandler {
+final class VeggProductionTableModel extends AbstractTableAdapter {
+	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @param productionInterface
-	 * @param title
-	 * @param deviationViewHandlerFactory
-	 * @param userType
-	 * @param applicationUser
-	 */
-	public VeggProductionViewHandler(ApplyListInterface<Produceable> productionInterface, String title, Login login,
-			ArticleType articleType, ManagerRepository managerRepository,
-			DeviationViewHandlerFactory deviationViewHandlerFactory,
-			SetProductionUnitActionFactory aSetProductionUnitActionFactory) {
-		super(productionInterface, title, login, null, "produksjon", TableEnum.TABLEPRODUCTIONVEGG, articleType,
-				managerRepository, deviationViewHandlerFactory, aSetProductionUnitActionFactory);
+	private StatusCheckerInterface<Transportable> frontChecker;
+
+	private WindowInterface window;
+
+	public VeggProductionTableModel(ListModel listModel, WindowInterface aWindow) {
+		super(listModel,
+				new String[] { "Transport", "Ordre", "Prod. uke",
+						// "Antall", "Spesifikasjon",
+						// "Front",
+						"Opplasting", "Produsert", "Produktområde", "Prod.enhet", "Startet", "Reell tidsforbruk",
+						"Gjort av" });
+		frontChecker = Util.getFrontChecker();
+		window = aWindow;
+		// initStatus(listModel);
 	}
 
-	/**
-	 * @see no.ugland.utransprod.gui.handlers.ProductionViewHandler#getApplyColumn()
-	 */
-	@Override
-	protected Integer getApplyColumn() {
-		return 4;
-	}
+	private void initStatus(ListModel list) {
+		if (list != null) {
+			Map<String, String> statusMap;
+			String status;
+			int rowCount = getRowCount();
 
-	/**
-	 * @see no.ugland.utransprod.gui.handlers.ProductionViewHandler#getTableModel(no.ugland.utransprod.gui.WindowInterface)
-	 */
-	@Override
-	protected TableModel getTableModel(WindowInterface window) {
-		return new VeggProductionTableModel(getObjectSelectionList(), window);
-	}
+			VeggProductionV prod;
+			for (int i = 0; i < rowCount; i++) {
+				prod = (VeggProductionV) getRow(i);
+				statusMap = Util.createStatusMap(prod.getOrderStatus());
+				status = statusMap.get(frontChecker.getArticleName());
 
-	/**
-	 * @see no.ugland.utransprod.gui.handlers.AbstractProductionPackageViewHandler#initColumnWidth()
-	 */
-	@Override
-	protected void initColumnWidthExt() {
-		// Transportdato
-		table.getColumnExt(table.getModel().getColumnName(0)).setPreferredWidth(100);
-		// Ordre
-		table.getColumnExt(table.getModel().getColumnName(1)).setPreferredWidth(200);
-		// Prod.dato
-		DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
-		tableCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-		table.getColumnExt(table.getModel().getColumnName(2)).setCellRenderer(tableCellRenderer);
-		table.getColumnExt(table.getModel().getColumnName(2)).setPreferredWidth(70);
-		// Antall
-		// table.getColumnExt(table.getModel().getColumnName(3)).setPreferredWidth(50);
-		// // spesifikasjon
-		// table.getColumnExt(table.getModel().getColumnName(4)).setPreferredWidth(200);
-		// front
-		// table.getColumnExt(table.getModel().getColumnName(3)).setPreferredWidth(50);
-		// opplasting
-		table.getColumnExt(table.getModel().getColumnName(3)).setPreferredWidth(70);
-		// produsert
-		table.getColumnExt(table.getModel().getColumnName(4)).setPreferredWidth(100);
-		// startet
-		table.getColumnExt(table.getModel().getColumnName(7)).setPreferredWidth(100);
-		// reell tidsforbruk
-		// DefaultTableCellRenderer tableCellRenderer = new
-		// DefaultTableCellRenderer();
-		tableCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-		table.getColumnExt(table.getModel().getColumnName(8)).setCellRenderer(tableCellRenderer);
-		table.getColumnExt(table.getModel().getColumnName(8)).setPreferredWidth(120);
-	}
-
-	/**
-	 * Tabellmodell for veggproduksjon
-	 * 
-	 * @author atle.brekka
-	 * 
-	 */
-	final class VeggProductionTableModel extends AbstractTableAdapter {
-		private static final long serialVersionUID = 1L;
-
-		private StatusCheckerInterface<Transportable> frontChecker;
-
-		private WindowInterface window;
-
-		public VeggProductionTableModel(ListModel listModel, WindowInterface aWindow) {
-			super(listModel,
-					new String[] { "Transport", "Ordre", "Prod. uke",
-							// "Antall", "Spesifikasjon",
-							// "Front",
-							"Opplasting", "Produsert", "Produktområde", "Prod.enhet", "Startet", "Reell tidsforbruk",
-							"Gjort av" });
-			frontChecker = Util.getFrontChecker();
-			window = aWindow;
-			// initStatus(listModel);
-		}
-
-		private void initStatus(ListModel list) {
-			if (list != null) {
-				Map<String, String> statusMap;
-				String status;
-				int rowCount = getRowCount();
-
-				VeggProductionV prod;
-				for (int i = 0; i < rowCount; i++) {
-					prod = (VeggProductionV) getRow(i);
-					statusMap = Util.createStatusMap(prod.getOrderStatus());
-					status = statusMap.get(frontChecker.getArticleName());
-
-					if (status == null) {
-						Order order = managerRepository.getOrderManager().findByOrderNr(prod.getOrderNr());
-						if (order != null) {
-							managerRepository.getOrderManager().lazyLoad(order, new LazyLoadEnum[][] {
-									{ LazyLoadEnum.ORDER_LINES, LazyLoadEnum.ORDER_LINE_ATTRIBUTES } });
-							status = frontChecker.getArticleStatus(order);
-							statusMap.put(frontChecker.getArticleName(), status);
-							order.setStatus(Util.statusMapToString(statusMap));
-							try {
-								managerRepository.getOrderManager().saveOrder(order);
-							} catch (ProTransException e) {
-								Util.showErrorDialog(window, "Feil", e.getMessage());
-								e.printStackTrace();
-							}
-							applyListInterface.refresh(prod);
+				if (status == null) {
+					Order order = managerRepository.getOrderManager().findByOrderNr(prod.getOrderNr());
+					if (order != null) {
+						managerRepository.getOrderManager().lazyLoad(order, new LazyLoadEnum[][] {
+								{ LazyLoadEnum.ORDER_LINES, LazyLoadEnum.ORDER_LINE_ATTRIBUTES } });
+						status = frontChecker.getArticleStatus(order);
+						statusMap.put(frontChecker.getArticleName(), status);
+						order.setStatus(Util.statusMapToString(statusMap));
+						try {
+							managerRepository.getOrderManager().saveOrder(order);
+						} catch (ProTransException e) {
+							Util.showErrorDialog(window, "Feil", e.getMessage());
+							e.printStackTrace();
 						}
+						applyListInterface.refresh(prod);
 					}
 				}
 			}
-
 		}
 
-		public Object getValueAt(int rowIndex, int columnIndex) {
-			VeggProductionV veggProductionV = (VeggProductionV) getRow(rowIndex);
-			DecimalFormat decimalFormat = new DecimalFormat();
-			decimalFormat.setDecimalSeparatorAlwaysShown(false);
-			decimalFormat.setParseIntegerOnly(true);
-			// Map<String, String> statusMap =
-			// Util.createStatusMap(veggProductionV.getOrderStatus());
+	}
 
-			switch (columnIndex) {
-			case 0:
-				return veggProductionV.getTransportDetails();
-			case 1:
-				return veggProductionV;
-			case 2:
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		VeggProductionV veggProductionV = (VeggProductionV) getRow(rowIndex);
+		DecimalFormat decimalFormat = new DecimalFormat();
+		decimalFormat.setDecimalSeparatorAlwaysShown(false);
+		decimalFormat.setParseIntegerOnly(true);
+		// Map<String, String> statusMap =
+		// Util.createStatusMap(veggProductionV.getOrderStatus());
 
-				return veggProductionV.getProductionWeek();
-			// case 3:
-			// if (veggProductionV.getNumberOfItems() != null) {
-			// return
-			// decimalFormat.format(veggProductionV.getNumberOfItems());
-			// }
-			// return "";
+		switch (columnIndex) {
+		case 0:
+			return veggProductionV.getTransportDetails();
+		case 1:
+			return veggProductionV;
+		case 2:
 
-			// case 4:
-			// if (veggProductionV.getOrdln() != null) {
-			// return veggProductionV.getOrdln().getDescription();
-			// }
-			// return
-			// Util.removeNoAttributes(veggProductionV.getAttributeInfo());
-			// case 3:
-			// return statusMap.get(frontChecker.getArticleName());
-			case 3:
-				Date loadingDate = veggProductionV.getLoadingDate();
-				if (loadingDate != null) {
-					return Util.SHORT_DATE_FORMAT.format(loadingDate);
-				}
-				return null;
+			return veggProductionV.getProductionWeek();
+		// case 3:
+		// if (veggProductionV.getNumberOfItems() != null) {
+		// return
+		// decimalFormat.format(veggProductionV.getNumberOfItems());
+		// }
+		// return "";
 
-			case 4:
-				if (veggProductionV.getProduced() != null) {
-					return Util.SHORT_DATE_TIME_FORMAT.format(veggProductionV.getProduced());
-				}
-				return "---";
-			case 5:
-				if (veggProductionV.getProductAreaGroupName() != null) {
-					return veggProductionV.getProductAreaGroupName();
-				}
-				return "";
-			case 6:
-				return veggProductionV.getProductionUnitName();
-			case 7:
-				if (veggProductionV.getActionStarted() != null) {
-					return Util.SHORT_DATE_TIME_FORMAT.format(veggProductionV.getActionStarted());
-				}
-				return "---";
-			case 8:
-				return veggProductionV.getRealProductionHours() == null ? Tidsforbruk
-						.beregnTidsforbruk(veggProductionV.getActionStarted(), veggProductionV.getProduced())
-						: veggProductionV.getRealProductionHours();
-			case 9:
-				return veggProductionV.getDoneBy();
-			default:
-				throw new IllegalStateException("Unknown column");
+		// case 4:
+		// if (veggProductionV.getOrdln() != null) {
+		// return veggProductionV.getOrdln().getDescription();
+		// }
+		// return
+		// Util.removeNoAttributes(veggProductionV.getAttributeInfo());
+		// case 3:
+		// return statusMap.get(frontChecker.getArticleName());
+		case 3:
+			Date loadingDate = veggProductionV.getLoadingDate();
+			if (loadingDate != null) {
+				return Util.SHORT_DATE_FORMAT.format(loadingDate);
 			}
+			return null;
 
-		}
-
-		/**
-		 * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
-		 */
-		@Override
-		public Class<?> getColumnClass(int columnIndex) {
-
-			switch (columnIndex) {
-			case 0:
-
-				// case 3:
-			case 3:
-			case 4:
-			case 5:
-			case 6:
-			case 7:
-			case 8:
-			case 9:
-			case 11:
-				return String.class;
-			case 2:
-				return Integer.class;
-			case 1:
-				return VeggProductionV.class;
-			case 10:
-				return BigDecimal.class;
-			default:
-				throw new IllegalStateException("Unknown column");
+		case 4:
+			if (veggProductionV.getProduced() != null) {
+				return Util.SHORT_DATE_TIME_FORMAT.format(veggProductionV.getProduced());
 			}
+			return "---";
+		case 5:
+			if (veggProductionV.getProductAreaGroupName() != null) {
+				return veggProductionV.getProductAreaGroupName();
+			}
+			return "";
+		case 6:
+			return veggProductionV.getProductionUnitName();
+		case 7:
+			if (veggProductionV.getActionStarted() != null) {
+				return Util.SHORT_DATE_TIME_FORMAT.format(veggProductionV.getActionStarted());
+			}
+			return "---";
+		case 8:
+			return veggProductionV.getRealProductionHours() == null ? Tidsforbruk
+					.beregnTidsforbruk(veggProductionV.getActionStarted(), veggProductionV.getProduced())
+					: veggProductionV.getRealProductionHours();
+		case 9:
+			return veggProductionV.getDoneBy();
+		default:
+			throw new IllegalStateException("Unknown column");
 		}
+
 	}
 
 	/**
-	 * @see no.ugland.utransprod.gui.handlers.ProductionViewHandler#getProductAreaColumn()
+	 * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
 	 */
 	@Override
-	protected int getProductAreaColumn() {
-		return 5;
-	}
+	public Class<?> getColumnClass(int columnIndex) {
 
-	@Override
-	protected Integer getStartColumn() {
-		return 7;
-	}
+		switch (columnIndex) {
+		case 0:
 
+			// case 3:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+		case 7:
+		case 8:
+		case 9:
+		case 11:
+			return String.class;
+		case 2:
+			return Integer.class;
+		case 1:
+			return VeggProductionV.class;
+		case 10:
+			return BigDecimal.class;
+		default:
+			throw new IllegalStateException("Unknown column");
+		}
+	}
 }
+
+/*     */ }

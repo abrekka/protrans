@@ -1,11 +1,10 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.gui.model;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import no.ugland.utransprod.model.Assembly;
 import no.ugland.utransprod.model.Colli;
 import no.ugland.utransprod.model.ConstructionType;
@@ -21,485 +20,159 @@ import no.ugland.utransprod.model.ProcentDone;
 import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.Transport;
 
-/**
- * Interface for klasser som kan transporteres
- * 
- * @author atle.brekka
- */
 public interface Transportable {
-    String getStatus();
 
-    Integer getDoAssembly();
+   String getStatus();
 
-    Transport getTransport();
+   Integer getDoAssembly();
 
-    Boolean getSentBool();
+   Transport getTransport();
 
-    Date getOrderReady();
+   Boolean getSentBool();
 
-    void setOrderReady(Date orderReady);
+   Date getOrderReady();
 
-    Date getOrderComplete();
+   void setOrderReady(Date var1);
 
-    void setOrderComplete(Date date);
+   Date getOrderComplete();
 
-    Date getPackageStarted();
+   void setOrderComplete(Date var1);
 
-    void setPackageStarted(Date date);
+   Date getPackageStarted();
 
-    String getTransportString();
+   void setPackageStarted(Date var1);
 
-    String getComment();
+   String getTransportString();
 
-    void setStatus(String status);
+   String getComment();
 
-    void setSentBool(Boolean isSent);
+   void setStatus(String var1);
 
-    void setTransport(Transport transport);
+   void setSentBool(Boolean var1);
 
-    String getSpecialConcern();
+   void setTransport(Transport var1);
 
-    Date getSent();
+   String getSpecialConcern();
 
-    void setSent(Date sentDate);
+   Date getSent();
 
-    Set<Colli> getCollies();
+   void setSent(Date var1);
 
-    List<OrderLine> getOrderLinesNotSent();
+   Set<Colli> getCollies();
 
-    Order getOrder();
+   List<OrderLine> getOrderLinesNotSent();
 
-    Set<OrderLine> getOrderLines();
+   Order getOrder();
 
-    void setOrderLines(Set<OrderLine> orderLines);
+   Set<OrderLine> getOrderLines();
 
-    Set<PostShipment> getPostShipments();
+   void setOrderLines(Set<OrderLine> var1);
 
-    PostShipment getPostShipment();
+   Set<PostShipment> getPostShipments();
 
-    List<OrderLine> getMissingCollies();
+   PostShipment getPostShipment();
 
-    String getTransportReportString();
+   List<OrderLine> getMissingCollies();
 
-    ConstructionType getConstructionType();
+   String getTransportReportString();
 
-    Date getPaidDate();
+   ConstructionType getConstructionType();
 
-    String getTransportComments();
+   Date getPaidDate();
 
-    Integer getGarageColliHeight();
+   String getTransportComments();
 
-    void cacheComments();
+   Integer getGarageColliHeight();
 
-    void cacheGarageColliHeight();
+   void cacheComments();
 
-    String getAssemblyTeamName();
+   void cacheGarageColliHeight();
 
-    Date getPacklistReady();
+   String getAssemblyTeamName();
 
-    ProductAreaGroup getProductAreaGroup();
+   Date getPacklistReady();
 
-    OrderLine getOrderLine(String articlePath);
+   ProductAreaGroup getProductAreaGroup();
 
-    boolean hasTransportCostBasis();
+   OrderLine getOrderLine(String var1);
 
-    Customer getCustomer();
+   boolean hasTransportCostBasis();
 
-    Assembly getAssembly();
+   Customer getCustomer();
 
-    void setCustTrs(List<CustTr> custTrs);
+   Assembly getAssembly();
 
-    List<CustTr> getCustTrs();
+   void setCustTrs(List<CustTr> var1);
 
-    boolean isPaid();
+   List<CustTr> getCustTrs();
 
-    Date getProductionDate();
+   boolean isPaid();
 
-    ProcentDone getLastProcentDone();
+   Date getProductionDate();
 
-    Deviation getDeviation();
+   ProcentDone getLastProcentDone();
 
-    String getOrderNr();
+   Deviation getDeviation();
 
-    void setOrderNr(String orderNr);
+   String getOrderNr();
 
-    String getPackedBy();
+   void setOrderNr(String var1);
 
-    String getPackedByTross();
+   String getPackedBy();
 
-    String getPackedByPack();
+   String getPackedByTross();
 
-    void setPackedBy(String packedBy);
+   String getPackedByPack();
 
-    void setPackedByTross(String packedBy);
+   void setPackedBy(String var1);
 
-    void setPackedByPack(String packedBy);
+   void setPackedByTross(String var1);
 
-    Set<OrderComment> getOrderComments();
+   void setPackedByPack(String var1);
 
-    void setGarageColliHeight(Integer garageColliHeight);
+   Set<OrderComment> getOrderComments();
 
-    Integer getColliesDone();
+   void setGarageColliHeight(Integer var1);
 
-    void setColliesDone(Integer done);
+   Integer getColliesDone();
 
-    Boolean isDonePackage();
+   void setColliesDone(Integer var1);
 
-    Integer getTakstolHeight();
+   Boolean isDonePackage();
 
-    String getManagerName();
+   Integer getTakstolHeight();
 
-    void cacheTakstolHeight();
+   String getManagerName();
 
-    public static final Transportable UNKNOWN = new Transportable() {
+   void cacheTakstolHeight();
 
-	public void cacheComments() {
-	}
+   List<OrderLine> getOrderLineList(String var1);
 
-	public void cacheGarageColliHeight() {
-	}
+   Integer getProbability();
 
-	public Assembly getAssembly() {
-	    return Assembly.UNKNOWN;
-	}
+   String getTrossDrawer();
 
-	public String getAssemblyTeamName() {
-	    return "";
-	}
+   Integer getMaxTrossHeight();
 
-	public Set<Colli> getCollies() {
-	    return new HashSet<Colli>();
-	}
+   Integer getProductionWeek();
 
-	public Integer getColliesDone() {
-	    return 0;
-	}
+   Date getOrderReadyWall();
 
-	public String getComment() {
-	    return "";
-	}
+   void setOrderReadyWall(Date var1);
 
-	public ConstructionType getConstructionType() {
-	    return ConstructionType.UNKNOWN;
-	}
+   Date getOrderReadyTross();
 
-	public List<CustTr> getCustTrs() {
-	    return new ArrayList<CustTr>();
-	}
+   Date getOrderReadyPack();
 
-	public Customer getCustomer() {
-	    return Customer.UNKNOWN;
-	}
+   void setOrderReadyTross(Date var1);
 
-	public Deviation getDeviation() {
-	    return Deviation.UNKNOWN;
-	}
+   void setOrderReadyPack(Date var1);
 
-	public Integer getDoAssembly() {
-	    return 0;
-	}
+   void setTakstolKjopOrd(Ord var1);
 
-	public Integer getGarageColliHeight() {
-	    return 0;
-	}
+   Ord getTakstolKjopOrd();
 
-	public ProcentDone getLastProcentDone() {
-	    return ProcentDone.UNKNOWN;
-	}
+   Boolean getLevertBool();
 
-	public List<OrderLine> getMissingCollies() {
-	    return new ArrayList<OrderLine>();
-	}
-
-	public Order getOrder() {
-	    return Order.UNKNOWN;
-	}
-
-	public Set<OrderComment> getOrderComments() {
-	    return new HashSet<OrderComment>();
-	}
-
-	public Date getOrderComplete() {
-	    return null;
-	}
-
-	public OrderLine getOrderLine(String articlePath) {
-	    return OrderLine.UNKNOWN;
-	}
-
-	public Set<OrderLine> getOrderLines() {
-	    return new HashSet<OrderLine>();
-	}
-
-	public List<OrderLine> getOrderLinesNotSent() {
-	    return new ArrayList<OrderLine>();
-	}
-
-	public String getOrderNr() {
-	    return "";
-	}
-
-	public Date getOrderReady() {
-	    return null;
-	}
-
-	public Date getPackageStarted() {
-	    return null;
-	}
-
-	public String getPackedBy() {
-	    return "";
-	}
-
-	public Date getPacklistReady() {
-	    return null;
-	}
-
-	public Date getPaidDate() {
-	    return null;
-	}
-
-	public PostShipment getPostShipment() {
-	    return PostShipment.UNKNOWN;
-	}
-
-	public Set<PostShipment> getPostShipments() {
-	    return new HashSet<PostShipment>();
-	}
-
-	public ProductAreaGroup getProductAreaGroup() {
-	    return ProductAreaGroup.UNKNOWN;
-	}
-
-	public Date getProductionDate() {
-	    return null;
-	}
-
-	public Date getSent() {
-	    return null;
-	}
-
-	public Boolean getSentBool() {
-	    return Boolean.FALSE;
-	}
-
-	public String getSpecialConcern() {
-	    return "";
-	}
-
-	public String getStatus() {
-	    return "";
-	}
-
-	public Transport getTransport() {
-	    return Transport.UNKNOWN;
-	}
-
-	public String getTransportComments() {
-	    return "";
-	}
-
-	public String getTransportReportString() {
-	    return "";
-	}
-
-	public String getTransportString() {
-	    return "";
-	}
-
-	public boolean hasTransportCostBasis() {
-	    return false;
-	}
-
-	public Boolean isDonePackage() {
-	    return Boolean.FALSE;
-	}
-
-	public boolean isPaid() {
-	    return false;
-	}
-
-	public void setColliesDone(Integer done) {
-	}
-
-	public void setCustTrs(List<CustTr> custTr) {
-	}
-
-	public void setGarageColliHeight(Integer garageColliHeight) {
-	}
-
-	public void setOrderComplete(Date date) {
-	}
-
-	public void setOrderLines(Set<OrderLine> orderLines) {
-	}
-
-	public void setOrderNr(String orderNr) {
-	}
-
-	public void setOrderReady(Date orderReady) {
-	}
-
-	public void setPackageStarted(Date date) {
-	}
-
-	public void setPackedBy(String packedBy) {
-	}
-
-	public void setSent(Date sentDate) {
-	}
-
-	public void setSentBool(Boolean isSent) {
-	}
-
-	public void setStatus(String status) {
-	}
-
-	public void setTransport(Transport transport) {
-	}
-
-	public Integer getTakstolHeight() {
-	    return Integer.valueOf(0);
-	}
-
-	public String getManagerName() {
-	    return "";
-	}
-
-	public void cacheTakstolHeight() {
-	}
-
-	public List<OrderLine> getOrderLineList(String articleTypeName) {
-	    return null;
-	}
-
-	public Integer getProbability() {
-	    return null;
-	}
-
-	public String getTrossDrawer() {
-	    return null;
-	}
-
-	public Integer getMaxTrossHeight() {
-	    return null;
-	}
-
-	public Date getActionStarted() {
-	    // TODO Auto-generated method stub
-	    return null;
-	}
-
-	public Date getProduced() {
-	    // TODO Auto-generated method stub
-	    return null;
-	}
-
-	public Integer getProductionWeek() {
-	    // TODO Auto-generated method stub
-	    return null;
-	}
-
-	public Date getOrderReadyWall() {
-	    // TODO Auto-generated method stub
-	    return null;
-	}
-
-	public void setOrderReadyWall(Date orderReady) {
-	    // TODO Auto-generated method stub
-
-	}
-
-	public Date getOrderReadyTross() {
-	    // TODO Auto-generated method stub
-	    return null;
-	}
-
-	public void setOrderReadyTross(Date orderReady) {
-	    // TODO Auto-generated method stub
-
-	}
-
-	public String getPackedByTross() {
-	    // TODO Auto-generated method stub
-	    return null;
-	}
-
-	public void setPackedByTross(String packedBy) {
-	    // TODO Auto-generated method stub
-
-	}
-
-	public Date getOrderReadyPack() {
-	    // TODO Auto-generated method stub
-	    return null;
-	}
-
-	public void setOrderReadyPack(Date orderReady) {
-	    // TODO Auto-generated method stub
-
-	}
-
-	public String getPackedByPack() {
-	    // TODO Auto-generated method stub
-	    return null;
-	}
-
-	public void setPackedByPack(String packedBy) {
-	    // TODO Auto-generated method stub
-
-	}
-
-	public void setTakstolKjopOrd(Ord ord) {
-	    // TODO Auto-generated method stub
-
-	}
-
-	public Ord getTakstolKjopOrd() {
-	    // TODO Auto-generated method stub
-	    return null;
-	}
-
-	public Boolean getLevertBool() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setLevert(Date levertDate) {
-		// TODO Auto-generated method stub
-		
-	}
-
-    };
-
-    List<OrderLine> getOrderLineList(String articleTypeName);
-
-    Integer getProbability();
-
-    String getTrossDrawer();
-
-    Integer getMaxTrossHeight();
-
-    Integer getProductionWeek();
-
-    Date getOrderReadyWall();
-
-    void setOrderReadyWall(Date orderReady);
-
-    Date getOrderReadyTross();
-
-    Date getOrderReadyPack();
-
-    void setOrderReadyTross(Date orderReady);
-
-    void setOrderReadyPack(Date orderReady);
-
-    void setTakstolKjopOrd(Ord ord);
-
-    Ord getTakstolKjopOrd();
-
-	Boolean getLevertBool();
-
-	void setLevert(Date levertDate);
-
+   void setLevert(Date var1);
 }

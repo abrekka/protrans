@@ -1,25 +1,10 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service.enums;
 
-/**
- * Lazy lasting av avvik.
- * @author atle.brekka
- */
 public enum LazyLoadDeviationEnum {
-
-    /**
-     * Kommentarer.
-     */
-    COMMENTS,
-    /**
-     * Ordrelinjer.
-     */
-    ORDER_LINES,
-    /**
-     * Kostnader.
-     */
-    ORDER_COSTS,
-    /**
-     * Ordrelinjer til ordrelinjer.
-     */
-    ORDER_LINE_ORDER_LINES
+   COMMENTS,
+   ORDER_LINES,
+   ORDER_COSTS,
+   ORDER_LINE_ORDER_LINES;
 }

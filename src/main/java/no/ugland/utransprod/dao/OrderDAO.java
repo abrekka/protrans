@@ -264,4 +264,5 @@ public interface OrderDAO extends DAO<Order> {
 	void settLevert(Order order, Date levertDate);
 
 	void oppdaterTransportId(Order ordre, Transport transport);
+	void oppdaterStatus(Order var1, String var2);
 }

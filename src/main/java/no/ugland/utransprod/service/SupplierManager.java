@@ -1,26 +1,22 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import java.util.List;
-
 import no.ugland.utransprod.model.Supplier;
 
-/**
- * Interface for serviceklasse mot tabell SUPPLIER
- * 
- * @author atle.brekka
- */
 public interface SupplierManager extends OverviewManager<Supplier> {
-    public static final String MANAGER_NAME = "supplierManager";
+   String MANAGER_NAME = "supplierManager";
 
-    List<Supplier> findAll();
+   List<Supplier> findAll();
 
-    List<Supplier> findByTypeName(String typeString, String orderBy);
+   List<Supplier> findByTypeName(String var1, String var2);
 
-    Supplier findByName(String name);
+   Supplier findByName(String var1);
 
-    List<Supplier> findActiveByTypeName(String typeString, String orderBy);
+   List<Supplier> findActiveByTypeName(String var1, String var2);
 
-    List<Supplier> findHavingAssembly(Integer year, Integer fromWeek, Integer toWeek);
+   List<Supplier> findHavingAssembly(Integer var1, Integer var2, Integer var3);
 
-    Boolean hasOrderCosts(Supplier supplier);
+   Boolean hasOrderCosts(Supplier var1);
 }

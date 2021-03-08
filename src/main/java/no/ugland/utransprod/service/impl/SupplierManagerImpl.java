@@ -1,130 +1,129 @@
-package no.ugland.utransprod.service.impl;
-
-import java.io.Serializable;
-import java.util.List;
-
-import no.ugland.utransprod.dao.OrderCostDAO;
-import no.ugland.utransprod.dao.SupplierDAO;
-import no.ugland.utransprod.model.OrderCost;
-import no.ugland.utransprod.model.Supplier;
-import no.ugland.utransprod.service.SupplierManager;
-
-/**
- * Implementasjon av serviceklasse for tabell SUPPLIER.
- * 
- * @author atle.brekka
- */
-public class SupplierManagerImpl extends ManagerImpl<Supplier> implements SupplierManager {
-    private OrderCostDAO orderCostDAO;
-
-    public final void setOrderCostDAO(final OrderCostDAO aDao) {
-	this.orderCostDAO = aDao;
-    }
-
-    /**
-     * @see no.ugland.utransprod.service.SupplierManager#findAll()
-     */
-    public final List<Supplier> findAll() {
-	return dao.getObjects("supplierName");
-    }
-
-    /**
-     * Finner basert på eksempel.
-     * 
-     * @param supplier
-     * @return leverandører
-     */
-    public final List<Supplier> findBySupplier(final Supplier supplier) {
-	return dao.findByExampleLike(supplier);
-    }
-
-    /**
-     * @param object
-     * @return leverandører
-     * @see no.ugland.utransprod.service.OverviewManager#findByObject(java.lang.Object)
-     */
-    public final List<Supplier> findByObject(final Supplier object) {
-	return findBySupplier(object);
-    }
-
-    /**
-     * @param object
-     * @see no.ugland.utransprod.service.OverviewManager#refreshObject(java.lang.Object)
-     */
-    public final void refreshObject(final Supplier object) {
-	((SupplierDAO) dao).refreshObject(object);
-
-    }
-
-    /**
-     * Fjerner leverandør.
-     * 
-     * @param supplier
-     */
-    public final void removeSupplier(final Supplier supplier) {
-	dao.removeObject(supplier.getSupplierId());
-
-    }
-
-    /**
-     * @param object
-     * @see no.ugland.utransprod.service.OverviewManager#removeObject(java.lang.Object)
-     */
-    public final void removeObject(final Supplier object) {
-	removeSupplier(object);
-
-    }
-
-    /**
-     * Lagrer leverandør.
-     * 
-     * @param supplier
-     */
-    public final void saveSupplier(final Supplier supplier) {
-	dao.saveObject(supplier);
-
-    }
-
-    /**
-     * @param object
-     * @see no.ugland.utransprod.service.OverviewManager#saveObject(java.lang.Object)
-     */
-    public final void saveObject(final Supplier object) {
-	saveSupplier(object);
-
-    }
-
-    /**
-     * @see no.ugland.utransprod.service.SupplierManager#findByTypeString(java.lang.String,
-     *      java.lang.String)
-     */
-    public final List<Supplier> findByTypeName(final String typeString, final String orderBy) {
-	return ((SupplierDAO) dao).findByTypeName(typeString, orderBy);
-    }
-
-    public final Supplier findByName(final String name) {
-	return ((SupplierDAO) dao).findByName(name);
-    }
-
-    public List<Supplier> findActiveByTypeName(String typeString, String orderBy) {
-	return ((SupplierDAO) dao).findActiveByTypeName(typeString, orderBy);
-    }
-
-    public List<Supplier> findHavingAssembly(Integer year, Integer fromWeek, Integer toWeek) {
-	return ((SupplierDAO) dao).findHavingAssembly(year, fromWeek, toWeek);
-    }
-
-    public Boolean hasOrderCosts(Supplier supplier) {
-	List<OrderCost> orderCosts = orderCostDAO.findBySupplier(supplier);
-	if (orderCosts != null && orderCosts.size() != 0) {
-	    return true;
-	}
-	return false;
-    }
-
-    @Override
-    protected Serializable getObjectId(Supplier object) {
-	return object.getSupplierId();
-    }
-
-}
+/*     */ package no.ugland.utransprod.service.impl;
+/*     */ 
+/*     */ import java.io.Serializable;
+/*     */ import java.util.List;
+/*     */ import no.ugland.utransprod.dao.OrderCostDAO;
+/*     */ import no.ugland.utransprod.dao.SupplierDAO;
+/*     */ import no.ugland.utransprod.model.OrderCost;
+/*     */ import no.ugland.utransprod.model.Supplier;
+/*     */ import no.ugland.utransprod.service.SupplierManager;
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ public class SupplierManagerImpl extends ManagerImpl<Supplier> implements SupplierManager {
+/*     */    private OrderCostDAO orderCostDAO;
+/*     */ 
+/*     */    public final void setOrderCostDAO(OrderCostDAO aDao) {
+/*  21 */       this.orderCostDAO = aDao;
+/*  22 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final List<Supplier> findAll() {
+/*  28 */       return this.dao.getObjects("supplierName");
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final List<Supplier> findBySupplier(Supplier supplier) {
+/*  38 */       return this.dao.findByExampleLike(supplier);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final List<Supplier> findByObject(Supplier object) {
+/*  47 */       return this.findBySupplier(object);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void refreshObject(Supplier object) {
+/*  55 */       ((SupplierDAO)this.dao).refreshObject(object);
+/*     */ 
+/*  57 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void removeSupplier(Supplier supplier) {
+/*  65 */       this.dao.removeObject(supplier.getSupplierId());
+/*     */ 
+/*  67 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void removeObject(Supplier object) {
+/*  74 */       this.removeSupplier(object);
+/*     */ 
+/*  76 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void saveSupplier(Supplier supplier) {
+/*  84 */       this.dao.saveObject(supplier);
+/*     */ 
+/*  86 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void saveObject(Supplier object) {
+/*  93 */       this.saveSupplier(object);
+/*     */ 
+/*  95 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final List<Supplier> findByTypeName(String typeString, String orderBy) {
+/* 102 */       return ((SupplierDAO)this.dao).findByTypeName(typeString, orderBy);
+/*     */    }
+/*     */ 
+/*     */    public final Supplier findByName(String name) {
+/* 106 */       return ((SupplierDAO)this.dao).findByName(name);
+/*     */    }
+/*     */ 
+/*     */    public List<Supplier> findActiveByTypeName(String typeString, String orderBy) {
+/* 110 */       return ((SupplierDAO)this.dao).findActiveByTypeName(typeString, orderBy);
+/*     */    }
+/*     */ 
+/*     */    public List<Supplier> findHavingAssembly(Integer year, Integer fromWeek, Integer toWeek) {
+/* 114 */       return ((SupplierDAO)this.dao).findHavingAssembly(year, fromWeek, toWeek);
+/*     */    }
+/*     */ 
+/*     */    public Boolean hasOrderCosts(Supplier supplier) {
+/* 118 */       List<OrderCost> orderCosts = this.orderCostDAO.findBySupplier(supplier);
+/* 119 */       return orderCosts != null && orderCosts.size() != 0 ? true : false;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    protected Serializable getObjectId(Supplier object) {
+/* 127 */       return object.getSupplierId();
+/*     */    }
+/*     */ }

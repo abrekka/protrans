@@ -1,94 +1,93 @@
-package no.ugland.utransprod.service.impl;
-
-import java.io.Serializable;
-import java.util.List;
-
-import no.ugland.utransprod.dao.UserTypeDAO;
-import no.ugland.utransprod.model.UserType;
-import no.ugland.utransprod.service.UserTypeManager;
-
-/**
- * Implementasjon av serviceklasse for tabell USER_TYPE.
- * @author atle.brekka
- */
-public class UserTypeManagerImpl extends ManagerImpl<UserType>implements UserTypeManager {
-    /**
-     * @see no.ugland.utransprod.service.OverviewManager#findAll()
-     */
-    public final List<UserType> findAll() {
-        return dao.getObjects("description");
-    }
-
-    /**
-     * @see no.ugland.utransprod.service.UserTypeManager#
-     * getNumberOfUsers(no.ugland.utransprod.model.UserType)
-     */
-    public final int getNumberOfUsers(final UserType userType) {
-        return ((UserTypeDAO)dao).getNumberOfUsers(userType);
-    }
-
-    /**
-     * Finner basert på eksempel.
-     * @param userType
-     * @return brukertyper
-     */
-    public final List<UserType> findByUserType(final UserType userType) {
-        return dao.findByExample(userType);
-    }
-
-    /**
-     * @param object
-     * @return brukertyper
-     * @see no.ugland.utransprod.service.OverviewManager#findByObject(java.lang.Object)
-     */
-    public final List<UserType> findByObject(final UserType object) {
-        return findByUserType(object);
-    }
-
-    /**
-     * @param userType
-     * @see no.ugland.utransprod.service.OverviewManager#refreshObject(java.lang.Object)
-     */
-    public final void refreshObject(final UserType userType) {
-        ((UserTypeDAO)dao).refresh(userType);
-
-    }
-
-    /**
-     * Fjerner brukertype.
-     * @param userType
-     */
-    public final void removeUserType(final UserType userType) {
-        dao.removeObject(userType.getUserTypeId());
-
-    }
-
-    /**
-     * @param object
-     * @see no.ugland.utransprod.service.OverviewManager#removeObject(java.lang.Object)
-     */
-    public final void removeObject(final UserType object) {
-        removeUserType(object);
-
-    }
-
-    /**
-     * @param object
-     * @see no.ugland.utransprod.service.OverviewManager#saveObject(java.lang.Object)
-     */
-    public final void saveObject(final UserType object) {
-        dao.saveObject(object);
-
-    }
-
-    /*public void lazyLoad(UserType object, Enum[] enums) {
-        lazyLoad(object,(LazyLoadUserTypeEnum[]) enums);
-        
-    }*/
-
-    @Override
-    protected Serializable getObjectId(UserType object) {
-        return object.getUserTypeId();
-    }
-
-}
+/*    */ package no.ugland.utransprod.service.impl;
+/*    */ 
+/*    */ import java.io.Serializable;
+/*    */ import java.util.List;
+/*    */ import no.ugland.utransprod.dao.UserTypeDAO;
+/*    */ import no.ugland.utransprod.model.UserType;
+/*    */ import no.ugland.utransprod.service.UserTypeManager;
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ public class UserTypeManagerImpl extends ManagerImpl<UserType> implements UserTypeManager {
+/*    */    public final List<UserType> findAll() {
+/* 19 */       return this.dao.getObjects("description");
+/*    */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public final int getNumberOfUsers(UserType userType) {
+/* 27 */       return ((UserTypeDAO)this.dao).getNumberOfUsers(userType);
+/*    */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public final List<UserType> findByUserType(UserType userType) {
+/* 36 */       return this.dao.findByExample(userType);
+/*    */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public final List<UserType> findByObject(UserType object) {
+/* 45 */       return this.findByUserType(object);
+/*    */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public final void refreshObject(UserType userType) {
+/* 53 */       ((UserTypeDAO)this.dao).refresh(userType);
+/*    */ 
+/* 55 */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public final void removeUserType(UserType userType) {
+/* 62 */       this.dao.removeObject(userType.getUserTypeId());
+/*    */ 
+/* 64 */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public final void removeObject(UserType object) {
+/* 71 */       this.removeUserType(object);
+/*    */ 
+/* 73 */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public final void saveObject(UserType object) {
+/* 80 */       this.dao.saveObject(object);
+/*    */ 
+/* 82 */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    protected Serializable getObjectId(UserType object) {
+/* 91 */       return object.getUserTypeId();
+/*    */    }
+/*    */ }

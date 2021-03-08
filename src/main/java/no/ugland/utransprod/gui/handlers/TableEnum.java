@@ -1,100 +1,57 @@
-package no.ugland.utransprod.gui.handlers;
-
-import java.util.Arrays;
-import java.util.List;
-
-public enum TableEnum {
-    //Transportdialog
-    TABLEORDERS("TableOrders", new String[] {"Produktområde","Sannsynlighet"}), 
-    //Transportdialog
-    TABLEPOSTSHIPMENTS("TablePostShipments", new String[] {"Produktområde"}), 
-    //Transportdialog
-    TABLETRANSPORTORDERS("TableTransportOrders", new String[] {"Transport","Ikke sendt", "Komplett", "Klar", "Produktområde","Sannsynlighet"}),
-  //Transportdialog
-    TABLETRANSPORTORDERSLIST("TableTransportOrdersList", new String[] {"Ikke sendt", "Komplett", "Klar", "Produktområde","Sannsynlighet"}),
-    //Produksjon gavl
-    TABLEPRODUCTIONGAVL("TableProductionGavl", new String[] {"Produktområde"}),
-    //Produksjon takstol
-    TABLEPRODUCTIONTAKSTOL("TableProductionTakstol", new String[] {"Produktområde","Sannsynlighet"}),
-    //Produksjon front
-    TABLEPRODUCTIONFRONT("TableProductionFront", new String[] {"Produktområde"}),
-    //Fakturering
-    TABLEINVOICE("TableInvoice", new String[] {"Produktområde"}),
-    //Pakkliste
-    TABLEPACKLIST("TablePacklist",new String[] {"Produktområde"}),
-    //Pakking gulvspon
-    TABLEPACKAGEGULVSPON("TablePackageGulvspon",new String[] {"Produktområde"}),
-  //Pakking gulvspon
-    TABLEPACKAGEIGARASJEN("TablePackageIgarasjen",new String[] {"Produktområde"}),
-    TABLEPACKAGESUTAK("TablePackageSutak",new String[] {"Produktområde"}),
-    //Forhåndsbetaling
-    TABLEPAID("TablePaid", new String[] {"Produktområde"}),
-    //Takstein
-    TABLETAKSTEIN("TableTakstein", new String[] {"Produktområde"}),
-    //Produksjon vegg
-    TABLEPRODUCTIONVEGG("TableProductionVegg", new String[] {"Produktområde"}),
-    //Pakking stakstol
-    TABLEPACKAGETAKSTOL("TablePackageTakstol", new String[] {"Produktområde","Artikkel","Komplett","Sannsynlighet"}),
-    //Produksjonsoversikt
-    TABLEPRODUCTIONOVERVIEW("TableProductionOverview", new String[] {"Komplett", "Klar", "Produktområde"});
-    private List<String> invisibleColumns;
-
-    private String tableName;
-
-    private TableEnum(final String aTableName,
-            final String[] invisibleColumnArray) {
-        tableName = aTableName;
-        invisibleColumns = Arrays.asList(invisibleColumnArray);
-    }
-
-    public List<String> getInvisibleColumns() {
-        return invisibleColumns;
-    }
-
-    public String getTableName() {
-        return tableName;
-    }
-
-    /*public static List<Integer> getInvisibleColumns(final String aTableName) {
-        if (aTableName.equalsIgnoreCase(TABLE_ORDERS.getTableName())) {
-            return TABLE_ORDERS.getInvisibleColumns();
-        } else if (aTableName.equalsIgnoreCase(TABLE_POST_SHIPMENTS
-                .getTableName())) {
-            return TABLE_POST_SHIPMENTS.getInvisibleColumns();
-        } else if (aTableName.equalsIgnoreCase(TABLE_TRANSPORT_ORDERS
-                .getTableName())) {
-            return TABLE_TRANSPORT_ORDERS.getInvisibleColumns();
-        } else if (aTableName.equalsIgnoreCase(TABLE_PRODUCTION_GAVL
-                .getTableName())) {
-            return TABLE_PRODUCTION_GAVL.getInvisibleColumns();
-        } else if (aTableName.equalsIgnoreCase(TABLE_PRODUCTION_TAKSTOL
-                .getTableName())) {
-            return TABLE_PRODUCTION_TAKSTOL.getInvisibleColumns();
-        } else if (aTableName.equalsIgnoreCase(TABLE_PRODUCTION_FRONT
-                .getTableName())) {
-            return TABLE_PRODUCTION_FRONT.getInvisibleColumns();
-        } else if (aTableName.equalsIgnoreCase(TABLE_INVOICE.getTableName())) {
-            return TABLE_INVOICE.getInvisibleColumns();
-        } else if (aTableName.equalsIgnoreCase(TABLE_PACKLIST.getTableName())) {
-            return TABLE_PACKLIST.getInvisibleColumns();
-        } else if (aTableName.equalsIgnoreCase(TABLE_PACKAGE_GULVSPON
-                .getTableName())) {
-            return TABLE_PACKAGE_GULVSPON.getInvisibleColumns();
-        } else if (aTableName.equalsIgnoreCase(TABLE_PAID.getTableName())) {
-            return TABLE_PAID.getInvisibleColumns();
-        } else if (aTableName.equalsIgnoreCase(TABLE_TAKSTEIN.getTableName())) {
-            return TABLE_TAKSTEIN.getInvisibleColumns();
-        } else if (aTableName.equalsIgnoreCase(TABLE_PRODUCTION_VEGG
-                .getTableName())) {
-            return TABLE_PRODUCTION_VEGG.getInvisibleColumns();
-        } else if (aTableName.equalsIgnoreCase(TABLE_PACKAGE_TAKSTOL
-                .getTableName())) {
-            return TABLE_PACKAGE_TAKSTOL.getInvisibleColumns();
-        } else if (aTableName.equalsIgnoreCase(TABLE_PRODUCTION_OVERVIEW
-                .getTableName())) {
-            return TABLE_PRODUCTION_OVERVIEW.getInvisibleColumns();
-        }
-
-        return null;
-    }*/
-}
+/*    */ package no.ugland.utransprod.gui.handlers;
+/*    */ 
+/*    */ import java.util.Arrays;
+/*    */ import java.util.List;
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ public enum TableEnum {
+/*    */    TABLEORDERS("TableOrders", new String[]{"ProduktomrÃ¥de", "Sannsynlighet"}),
+/*    */    TABLEPOSTSHIPMENTS("TablePostShipments", new String[]{"ProduktomrÃ¥de"}),
+/*    */    TABLETRANSPORTORDERS("TableTransportOrders", new String[]{"Transport", "Ikke sendt", "Komplett", "Klar", "ProduktomrÃ¥de", "Sannsynlighet"}),
+/*    */    TABLETRANSPORTORDERSLIST("TableTransportOrdersList", new String[]{"Ikke sendt", "Komplett", "Klar", "ProduktomrÃ¥de", "Sannsynlighet"}),
+/*    */    TABLEPRODUCTIONGAVL("TableProductionGavl", new String[]{"ProduktomrÃ¥de"}),
+/*    */    TABLEPRODUCTIONTAKSTOL("TableProductionTakstol", new String[]{"ProduktomrÃ¥de", "Sannsynlighet"}),
+/*    */    TABLEPRODUCTIONFRONT("TableProductionFront", new String[]{"ProduktomrÃ¥de"}),
+/*    */    TABLEINVOICE("TableInvoice", new String[]{"ProduktomrÃ¥de"}),
+/*    */    TABLEPACKLIST("TablePacklist", new String[]{"ProduktomrÃ¥de"}),
+/*    */    TABLEPACKAGEGULVSPON("TablePackageGulvspon", new String[]{"ProduktomrÃ¥de"}),
+/*    */    TABLEPACKAGEIGARASJEN("TablePackageIgarasjen", new String[]{"ProduktomrÃ¥de"}),
+/*    */    TABLEPACKAGESUTAK("TablePackageSutak", new String[]{"ProduktomrÃ¥de"}),
+/*    */    TABLEPAID("TablePaid", new String[]{"ProduktomrÃ¥de"}),
+/*    */    TABLETAKSTEIN("TableTakstein", new String[]{"ProduktomrÃ¥de"}),
+/*    */    TABLEPRODUCTIONVEGG("TableProductionVegg", new String[]{"ProduktomrÃ¥de"}),
+/*    */    TABLEPACKAGETAKSTOL("TablePackageTakstol", new String[]{"ProduktomrÃ¥de", "Artikkel", "Komplett", "Sannsynlighet"}),
+/*    */    TABLEPRODUCTIONOVERVIEW("TableProductionOverview", new String[]{"Komplett", "Klar", "ProduktomrÃ¥de"});
+/*    */ 
+/*    */    private List<String> invisibleColumns;
+/*    */    private String tableName;
+/*    */ 
+/*    */    private TableEnum(String aTableName, String[] invisibleColumnArray) {
+/* 46 */       this.tableName = aTableName;
+/* 47 */       this.invisibleColumns = Arrays.asList(invisibleColumnArray);
+/* 48 */    }
+/*    */ 
+/*    */    public List<String> getInvisibleColumns() {
+/* 51 */       return this.invisibleColumns;
+/*    */    }
+/*    */ 
+/*    */    public String getTableName() {
+/* 55 */       return this.tableName;
+/*    */    }
+/*    */ }

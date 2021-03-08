@@ -1,124 +1,124 @@
-package no.ugland.utransprod.gui.handlers;
-
-import java.awt.Dimension;
-
-import javax.swing.table.TableModel;
-
-import no.ugland.utransprod.gui.WindowInterface;
-import no.ugland.utransprod.model.AccidentParticipant;
-import no.ugland.utransprod.model.UserType;
-import no.ugland.utransprod.service.OverviewManager;
-
-import org.jdesktop.swingx.JXTable;
-
-import com.jgoodies.binding.PresentationModel;
-
-/**
- * AbstractViewHandler som har implementert en del av metodene slik at klasser
- * som arver ikke trenger å ha masse metoder som er tomme
- * @author atle.brekka
- * @param <T>
- * @param <E>
- */
-public abstract class AbstractViewHandlerShort<T, E> extends
-        AbstractViewHandler<T, E> {
-
-    /**
-     * @param aHeading
-     * @param managerName
-     * @param oneObject
-     * @param aUserType
-     * @param useDisposeOnClose
-     */
-    public AbstractViewHandlerShort(final String aHeading, final OverviewManager<T> aOverviewManager,
-            final boolean oneObject, final UserType aUserType, final boolean useDisposeOnClose) {
-        super(aHeading, aOverviewManager, oneObject, aUserType, useDisposeOnClose);
-    }
-
-   
-
-    /**
-     * Tom implementasjon
-     * @param object
-     * @param presentationModel
-     * @param window1
-     * @return feilmelding
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#checkSaveObject(java.lang.Object,
-     *      com.jgoodies.binding.PresentationModel,
-     *      no.ugland.utransprod.gui.WindowInterface)
-     */
-    @Override
-    public final CheckObject checkSaveObject(final E object,
-            final PresentationModel presentationModel, final WindowInterface window1) {
-        return null;
-    }
-
-
-
-    /**
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getNewObject()
-     */
-    @Override
-    public final T getNewObject() {
-        return null;
-    }
-
-    @Override
-    public final TableModel getTableModel(WindowInterface window1) {
-        return null;
-    }
-
-    /**
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getTableWidth()
-     */
-    @Override
-    public final String getTableWidth() {
-        return null;
-    }
-
-    /**
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getTitle()
-     */
-    @Override
-    public final String getTitle() {
-        return null;
-    }
-
-    /**
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#getWindowSize()
-     */
-    @Override
-    public final Dimension getWindowSize() {
-        return null;
-    }
-
-    /**
-     * @see no.ugland.utransprod.gui.handlers.AbstractViewHandler#setColumnWidth(org.jdesktop.swingx.JXTable)
-     */
-    @Override
-    public final void setColumnWidth(final JXTable table) {
-    }
-
-    @Override
-    String getAddString() {
-        return null;
-    }
-    
-    @Override
-    public String getAddRemoveString() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String getClassName() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    void afterSaveObject(T object, WindowInterface window) {
-        // TODO Auto-generated method stub
-        
-    }
-}
+/*     */ package no.ugland.utransprod.gui.handlers;
+/*     */ 
+/*     */ import com.jgoodies.binding.PresentationModel;
+/*     */ import java.awt.Dimension;
+/*     */ import javax.swing.table.TableModel;
+/*     */ import no.ugland.utransprod.gui.WindowInterface;
+/*     */ import no.ugland.utransprod.model.UserType;
+/*     */ import no.ugland.utransprod.service.OverviewManager;
+/*     */ import org.jdesktop.swingx.JXTable;
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ public abstract class AbstractViewHandlerShort<T, E> extends AbstractViewHandler<T, E> {
+/*     */    public AbstractViewHandlerShort(String aHeading, OverviewManager<T> aOverviewManager, boolean oneObject, UserType aUserType, boolean useDisposeOnClose) {
+/*  35 */       super(aHeading, aOverviewManager, oneObject, aUserType, useDisposeOnClose);
+/*  36 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final CheckObject checkSaveObject(E object, PresentationModel presentationModel, WindowInterface window1) {
+/*  53 */       return null;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final T getNewObject() {
+/*  63 */       return null;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */    public final TableModel getTableModel(WindowInterface window1) {
+/*  68 */       return null;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final String getTableWidth() {
+/*  76 */       return null;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final String getTitle() {
+/*  84 */       return null;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final Dimension getWindowSize() {
+/*  92 */       return null;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void setColumnWidth(JXTable table) {
+/* 100 */    }
+/*     */ 
+/*     */ 
+/*     */    String getAddString() {
+/* 104 */       return null;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getAddRemoveString() {
+/* 110 */       return null;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getClassName() {
+/* 116 */       return null;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    void afterSaveObject(T object, WindowInterface window) {
+/* 123 */    }
+/*     */ }

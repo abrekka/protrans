@@ -1,50 +1,23 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.dao;
 
 import java.util.List;
-
 import no.ugland.utransprod.model.PacklistV;
 import no.ugland.utransprod.model.ProductAreaGroup;
 
-/**
- * Interface for DAO mot view PACKLIST_V
- * 
- * @author atle.brekka
- * 
- */
 public interface PacklistVDAO extends DAO<PacklistV> {
-    String DAO_NAME = "packlistVDAO";
+   String DAO_NAME = "packlistVDAO";
 
-    /**
-     * Finner alle
-     * 
-     * @return vegger
-     */
-    List<PacklistV> findAll();
+   List<PacklistV> findAll();
 
-    /**
-     * Finner basert på ordrenummer
-     * 
-     * @param orderNr
-     * @return ordre
-     */
-    List<PacklistV> findByOrderNr(String orderNr);
+   List<PacklistV> findByOrderNr(String var1);
 
-    /**
-     * Oppdater objekt
-     * 
-     * @param productionV
-     */
-    void refresh(PacklistV productionV);
+   void refresh(PacklistV var1);
 
-    /**
-     * Finner basert på kundenummer
-     * 
-     * @param customerNr
-     * @return ordre
-     */
-    List<PacklistV> findByCustomerNr(Integer customerNr);
+   List<PacklistV> findByCustomerNr(Integer var1);
 
-    List<PacklistV> findByCustomerNrAndProductAreaGroup(Integer customerNr, ProductAreaGroup productAreaGroup);
+   List<PacklistV> findByCustomerNrAndProductAreaGroup(Integer var1, ProductAreaGroup var2);
 
-    List<PacklistV> findByOrderNrAndProductAreaGroup(String orderNr, ProductAreaGroup productAreaGroup);
+   List<PacklistV> findByOrderNrAndProductAreaGroup(String var1, ProductAreaGroup var2);
 }

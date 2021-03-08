@@ -1,11 +1,11 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import no.ugland.utransprod.model.Udsalesmall;
 
 public interface UdsalesmallManager {
+   String MANAGER_NAME = "udsalesmallManager";
 
-	String MANAGER_NAME = "udsalesmallManager";
-
-	Udsalesmall findByOrderNr(String orderNr);
-
+   Udsalesmall findByOrderNr(String var1);
 }

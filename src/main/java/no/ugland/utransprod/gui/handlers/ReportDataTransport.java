@@ -1,314 +1,313 @@
-/**
- * 
- */
-package no.ugland.utransprod.gui.handlers;
-
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
-/**
- * Holder på rapportdata
- * 
- * @author atle.brekka
- * 
- */
-public class ReportDataTransport {
-    private Integer numberOf;
-
-    private Integer year;
-
-    private Integer week;
-
-    private Map<String, BigDecimal> costs;
-
-    private static Set<String> costHeadings = new HashSet<String>();
-
-    private Integer orderId;
-
-    private String orderNr;
-
-    private Integer customerNr;
-
-    private String customerName;
-
-    private String deliveryAddress;
-
-    private String postalCode;
-
-    private String transportName;
-
-    private Boolean isPostShipment;
-    private Integer productionWeek;
-
-    /**
-     * @param numberOf
-     * @param year
-     * @param week
-     * @param costs
-     * @param orderId
-     * @param orderNr
-     * @param customerNr
-     * @param customerName
-     * @param deliveryAddress
-     * @param postalCode
-     * @param transportName
-     * @param isPostShipment
-     */
-    public ReportDataTransport(Integer numberOf, Integer year, Integer week, Map<String, BigDecimal> costs, Integer orderId, String orderNr,
-	    Integer customerNr, String customerName, String deliveryAddress, String postalCode, String transportName, Boolean isPostShipment,
-	    Integer productionWeek) {
-	super();
-	this.numberOf = numberOf;
-	this.year = year;
-	this.week = week;
-	this.costs = costs;
-	this.orderId = orderId;
-	this.orderNr = orderNr;
-	this.customerNr = customerNr;
-	this.customerName = customerName;
-	this.deliveryAddress = deliveryAddress;
-	this.postalCode = postalCode;
-	this.transportName = transportName;
-	this.isPostShipment = isPostShipment;
-	this.productionWeek = productionWeek;
-
-    }
-
-    /**
-     * @param numberOf
-     * @param aYear
-     * @param aWeek
-     * @param costs
-     */
-    public ReportDataTransport(Integer numberOf, Integer aYear, Integer aWeek, Map<String, BigDecimal> costs) {
-	super();
-	this.numberOf = numberOf;
-	this.year = aYear;
-	this.week = aWeek;
-	this.costs = costs;
-
-    }
-
-    /**
-	 * 
-	 */
-    public ReportDataTransport() {
-	super();
-    }
-
-    /**
-     * @return kostnader
-     */
-    public Map<String, BigDecimal> getCosts() {
-	return costs;
-    }
-
-    /**
-     * @param costs
-     */
-    public void setCosts(Map<String, BigDecimal> costs) {
-	this.costs = costs;
-    }
-
-    /**
-     * @return antall
-     */
-    public Integer getNumberOf() {
-	return numberOf;
-    }
-
-    /**
-     * @param numberOf
-     */
-    public void setCounter(Integer numberOf) {
-	this.numberOf = numberOf;
-    }
-
-    /**
-     * @return uke
-     */
-    public Integer getWeek() {
-	return week;
-    }
-
-    /**
-     * @param week
-     */
-    public void setWeek(Integer week) {
-	this.week = week;
-    }
-
-    /**
-     * @return år
-     */
-    public Integer getYear() {
-	return year;
-    }
-
-    /**
-     * @param year
-     */
-    public void setYear(Integer year) {
-	this.year = year;
-    }
-
-    /**
-     * @param numberOf
-     */
-    public void setNumberOf(Integer numberOf) {
-	this.numberOf = numberOf;
-    }
-
-    /**
-     * Legger til kostnadsoverskrift
-     * 
-     * @param costHeading
-     */
-    public static void addCostHeading(String costHeading) {
-	costHeadings.add(costHeading);
-    }
-
-    /**
-     * @return kostnadsoverskrifter
-     */
-    public Set<String> getCostHeadings() {
-	return costHeadings;
-    }
-
-    /**
-     * Rensker kostnadsoverskrifter
-     */
-    public static void clearCostHeading() {
-	costHeadings.clear();
-    }
-
-    /**
-     * @return kundenummer
-     */
-    public Integer getCustomerNr() {
-	return customerNr;
-    }
-
-    /**
-     * @param customerNr
-     */
-    public void setCustomerNr(Integer customerNr) {
-	this.customerNr = customerNr;
-    }
-
-    /**
-     * @return adresse
-     */
-    public String getDeliveryAddress() {
-	return deliveryAddress;
-    }
-
-    /**
-     * @param deliveryAddress
-     */
-    public void setDeliveryAddress(String deliveryAddress) {
-	this.deliveryAddress = deliveryAddress;
-    }
-
-    /**
-     * @return ordreid
-     */
-    public Integer getOrderId() {
-	return orderId;
-    }
-
-    /**
-     * @param orderId
-     */
-    public void setOrderId(Integer orderId) {
-	this.orderId = orderId;
-    }
-
-    /**
-     * @return ordrenummer
-     */
-    public String getOrderNr() {
-	return orderNr;
-    }
-
-    /**
-     * @param orderNr
-     */
-    public void setOrderNr(String orderNr) {
-	this.orderNr = orderNr;
-    }
-
-    /**
-     * @return postnummer
-     */
-    public String getPostalCode() {
-	return postalCode;
-    }
-
-    /**
-     * @param postalCode
-     */
-    public void setPostalCode(String postalCode) {
-	this.postalCode = postalCode;
-    }
-
-    /**
-     * @return transportnavn
-     */
-    public String getTransportName() {
-	return transportName;
-    }
-
-    /**
-     * @param transportName
-     */
-    public void setTransportName(String transportName) {
-	this.transportName = transportName;
-    }
-
-    /**
-     * @param costHeadings
-     */
-    public static void setCostHeadings(Set<String> costHeadings) {
-	ReportDataTransport.costHeadings = costHeadings;
-    }
-
-    /**
-     * @return kundenavn
-     */
-    public String getCustomerName() {
-	return customerName;
-    }
-
-    /**
-     * @param customerName
-     */
-    public void setCustomerName(String customerName) {
-	this.customerName = customerName;
-    }
-
-    /**
-     * @return true dersom etterlevering
-     */
-    public Boolean isPostShipment() {
-	return isPostShipment;
-    }
-
-    /**
-     * @param postShipment
-     */
-    public void setIsPostShipment(Boolean postShipment) {
-	this.isPostShipment = postShipment;
-    }
-
-    public Integer getProductionWeek() {
-	return productionWeek;
-    }
-
-    public void setProductionWeek(Integer productionWeek) {
-	this.productionWeek = productionWeek;
-    }
-
-}
+/*     */ package no.ugland.utransprod.gui.handlers;
+/*     */ 
+/*     */ import java.math.BigDecimal;
+/*     */ import java.util.HashSet;
+/*     */ import java.util.Map;
+/*     */ import java.util.Set;
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ public class ReportDataTransport {
+/*     */    private Integer numberOf;
+/*     */    private Integer year;
+/*     */    private Integer week;
+/*     */    private Map<String, BigDecimal> costs;
+/*     */    private static Set<String> costHeadings = new HashSet();
+/*     */    private Integer orderId;
+/*     */    private String orderNr;
+/*     */    private Integer customerNr;
+/*     */    private String customerName;
+/*     */    private String deliveryAddress;
+/*     */    private String postalCode;
+/*     */    private String transportName;
+/*     */    private Boolean isPostShipment;
+/*     */    private Integer productionWeek;
+/*     */ 
+/*     */    public ReportDataTransport(Integer numberOf, Integer year, Integer week, Map<String, BigDecimal> costs, Integer orderId, String orderNr, Integer customerNr, String customerName, String deliveryAddress, String postalCode, String transportName, Boolean isPostShipment, Integer productionWeek) {
+/*  63 */       this.numberOf = numberOf;
+/*  64 */       this.year = year;
+/*  65 */       this.week = week;
+/*  66 */       this.costs = costs;
+/*  67 */       this.orderId = orderId;
+/*  68 */       this.orderNr = orderNr;
+/*  69 */       this.customerNr = customerNr;
+/*  70 */       this.customerName = customerName;
+/*  71 */       this.deliveryAddress = deliveryAddress;
+/*  72 */       this.postalCode = postalCode;
+/*  73 */       this.transportName = transportName;
+/*  74 */       this.isPostShipment = isPostShipment;
+/*  75 */       this.productionWeek = productionWeek;
+/*     */ 
+/*  77 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public ReportDataTransport(Integer numberOf, Integer aYear, Integer aWeek, Map<String, BigDecimal> costs) {
+/*  87 */       this.numberOf = numberOf;
+/*  88 */       this.year = aYear;
+/*  89 */       this.week = aWeek;
+/*  90 */       this.costs = costs;
+/*     */ 
+/*  92 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public ReportDataTransport() {
+/*  99 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public Map<String, BigDecimal> getCosts() {
+/* 105 */       return this.costs;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setCosts(Map<String, BigDecimal> costs) {
+/* 112 */       this.costs = costs;
+/* 113 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public Integer getNumberOf() {
+/* 119 */       return this.numberOf;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setCounter(Integer numberOf) {
+/* 126 */       this.numberOf = numberOf;
+/* 127 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public Integer getWeek() {
+/* 133 */       return this.week;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setWeek(Integer week) {
+/* 140 */       this.week = week;
+/* 141 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public Integer getYear() {
+/* 147 */       return this.year;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setYear(Integer year) {
+/* 154 */       this.year = year;
+/* 155 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setNumberOf(Integer numberOf) {
+/* 161 */       this.numberOf = numberOf;
+/* 162 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public static void addCostHeading(String costHeading) {
+/* 170 */       costHeadings.add(costHeading);
+/* 171 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public Set<String> getCostHeadings() {
+/* 177 */       return costHeadings;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public static void clearCostHeading() {
+/* 184 */       costHeadings.clear();
+/* 185 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public Integer getCustomerNr() {
+/* 191 */       return this.customerNr;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setCustomerNr(Integer customerNr) {
+/* 198 */       this.customerNr = customerNr;
+/* 199 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getDeliveryAddress() {
+/* 205 */       return this.deliveryAddress;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setDeliveryAddress(String deliveryAddress) {
+/* 212 */       this.deliveryAddress = deliveryAddress;
+/* 213 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public Integer getOrderId() {
+/* 219 */       return this.orderId;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setOrderId(Integer orderId) {
+/* 226 */       this.orderId = orderId;
+/* 227 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getOrderNr() {
+/* 233 */       return this.orderNr;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setOrderNr(String orderNr) {
+/* 240 */       this.orderNr = orderNr;
+/* 241 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getPostalCode() {
+/* 247 */       return this.postalCode;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setPostalCode(String postalCode) {
+/* 254 */       this.postalCode = postalCode;
+/* 255 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getTransportName() {
+/* 261 */       return this.transportName;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setTransportName(String transportName) {
+/* 268 */       this.transportName = transportName;
+/* 269 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public static void setCostHeadings(Set<String> costHeadings) {
+/* 275 */       costHeadings = costHeadings;
+/* 276 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getCustomerName() {
+/* 282 */       return this.customerName;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setCustomerName(String customerName) {
+/* 289 */       this.customerName = customerName;
+/* 290 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public Boolean isPostShipment() {
+/* 296 */       return this.isPostShipment;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setIsPostShipment(Boolean postShipment) {
+/* 303 */       this.isPostShipment = postShipment;
+/* 304 */    }
+/*     */ 
+/*     */    public Integer getProductionWeek() {
+/* 307 */       return this.productionWeek;
+/*     */    }
+/*     */ 
+/*     */    public void setProductionWeek(Integer productionWeek) {
+/* 311 */       this.productionWeek = productionWeek;
+/* 312 */    }
+/*     */ }

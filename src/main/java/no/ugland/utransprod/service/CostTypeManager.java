@@ -1,18 +1,11 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import no.ugland.utransprod.model.CostType;
 
-/**
- * Interface for manger for kostnadstype
- * @author atle.brekka
- */
 public interface CostTypeManager extends OverviewManager<CostType> {
-    String MANAGER_NAME = "costTypeManager";
+   String MANAGER_NAME = "costTypeManager";
 
-	/**
-     * Finner basert på navn
-     * @param name
-     * @return kostnadstype
-     */
-    CostType findByName(String name);
+   CostType findByName(String var1);
 }

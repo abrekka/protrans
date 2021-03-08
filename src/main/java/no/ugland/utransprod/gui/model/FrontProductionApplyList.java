@@ -1,176 +1,254 @@
-package no.ugland.utransprod.gui.model;
-
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.swing.JDialog;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-
-import com.google.common.collect.Iterables;
-
-import no.ugland.utransprod.ProTransException;
-import no.ugland.utransprod.gui.JDialogAdapter;
-import no.ugland.utransprod.gui.Login;
-import no.ugland.utransprod.gui.WindowInterface;
-import no.ugland.utransprod.gui.edit.EditPacklistView;
-import no.ugland.utransprod.model.OrdchgrHeadV;
-import no.ugland.utransprod.model.OrdchgrLineV;
-import no.ugland.utransprod.model.Order;
-import no.ugland.utransprod.model.OrderLine;
-import no.ugland.utransprod.model.Ordln;
-import no.ugland.utransprod.model.Produceable;
-import no.ugland.utransprod.service.IApplyListManager;
-import no.ugland.utransprod.service.ManagerRepository;
-import no.ugland.utransprod.service.OrderLineManager;
-import no.ugland.utransprod.service.VismaFileCreator;
-import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
-import no.ugland.utransprod.service.impl.VismaFileCreatorImpl;
-import no.ugland.utransprod.util.ApplicationParamUtil;
-import no.ugland.utransprod.util.ModelUtil;
-import no.ugland.utransprod.util.Tidsforbruk;
-import no.ugland.utransprod.util.Util;
-
-public class FrontProductionApplyList extends ProductionApplyList {
-	private static Logger LOGGER = Logger.getLogger(GavlProductionApplyList.class);
-
-	public FrontProductionApplyList(Login login, IApplyListManager<Produceable> manager, String aColliName,
-			String aWindowName, Integer[] somInvisibleCells, ManagerRepository aManagerRepository,
-			VismaFileCreator vismaFileCreator) {
-		super(login, manager, aColliName, aWindowName, somInvisibleCells, aManagerRepository, vismaFileCreator);
-	}
-
-	@Override
-	protected void handleApply(final Produceable object, final boolean applied, final WindowInterface window,
-			final String aColliName) {
-		// Order order =
-		// managerRepository.getOrderManager().findByOrderNr(object.getOrderNr());
-
-		OrderLineManager orderLineManager = managerRepository.getOrderLineManager();
-		OrderLine orderLine = orderLineManager.findByOrderLineId(object.getOrderLineId());
-		if (orderLine != null) {
-
-			try {
-				Order order = managerRepository.getOrderManager().findByOrderNr(object.getOrderNr());
-				managerRepository.getOrderManager().lazyLoadOrder(order,
-						new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES });
-				List<OrderLine> orderLineList = order.getOrderLineList("Front");
-
-				OrderLine orderLineFront = null;
-				int antall = 0;
-				BigDecimal duration = null;
-				String doneBy = null;
-				for (OrderLine front : orderLineList) {
-					if (front.getOrdNo() != null && front.getOrdNo() != 0 && front.getLnNo() != null) {
-						orderLineFront = front;
-					}
-					antall++;
-					if (applied) {
-						orderLineFront.setProduced(object.getProduced());
-						setProducableApplied(orderLineFront, aColliName);
-
-						BigDecimal tidsbruk = orderLineFront.getRealProductionHours();
-
-						if (tidsbruk == null) {
-							tidsbruk = Tidsforbruk.beregnTidsforbruk(orderLineFront.getActionStarted(),
-									orderLineFront.getProduced());
-						}
-						orderLineFront.setRealProductionHours(tidsbruk);
-
-						if (antall == 1 && window != null) {
-							EditPacklistView editPacklistView = new EditPacklistView(login, false, tidsbruk,
-									orderLineFront.getDoneBy());
-
-							JDialog dialog = Util.getDialog(window, "Front produsert", true);
-							WindowInterface window1 = new JDialogAdapter(dialog);
-							window1.add(editPacklistView.buildPanel(window1));
-							window1.pack();
-							Util.locateOnScreenCenter(window1);
-							window1.setVisible(true);
-
-							if (!editPacklistView.isCanceled()) {
-								duration = editPacklistView.getPacklistDuration();
-								doneBy = editPacklistView.getDoneBy();
-							}
-						}
-						orderLineFront.setRealProductionHours(duration);
-						orderLineFront.setDoneBy(doneBy);
-
-					} else {
-						setProducableUnapplied(orderLineFront);
-						duration = null;
-						doneBy = null;
-						orderLineFront.setRealProductionHours(null);
-						orderLineFront.setDoneBy(null);
-
-					}
-					managerRepository.getOrderLineManager().saveOrderLine(orderLineFront);
-				}
-				if (orderLineFront.getOrdNo() != null) {
-
-					lagFerdigmelding(order, orderLineFront, !applied, "Front");
-				} else {
-					LOGGER.info("Lager ikke ferdigmelding fordi ordrelinje mangler ordnno");
-				}
-			} catch (ProTransException e1) {
-				Util.showErrorDialog(window, "Feil", e1.getMessage());
-				e1.printStackTrace();
-			}
-			managerRepository.getOrderManager().settStatus(orderLine.getOrder().getOrderId(), null);
-			// refreshAndSaveOrder(window, orderLine);
-			applyListManager.refresh(object);
-		}
-	}
-
-	// protected void lagFerdigmelding(OrderLine orderLine, boolean minus) {
-	// LOGGER.info(String.format("Skal lage ferdigmelding for ordno: %s og lnno:
-	// %s", orderLine.getOrdNo(),
-	// orderLine.getLnNo()));
-	// List<Ordln> ordrelinjer =
-	// managerRepository.getOrdlnManager().findOrdLnByOrdNo(orderLine.getOrdNo());
-	//
-	// Set<Integer> produksjonslinjer = new HashSet<Integer>();
-	// for (Ordln ordln : ordrelinjer) {
-	// if (ordln.getPurcno() != null) {
-	// produksjonslinjer.add(ordln.getPurcno());
-	// }
-	// }
-	//
-	// if (produksjonslinjer.isEmpty()) {
-	// LOGGER.info("Lager ikke ferdigmelding fordi mangler ordln, purcno eller
-	// purcno er 0");
-	// }
-	//
-	// for (Integer purcno : produksjonslinjer) {
-	// List<String> fillinjer = (VismaFileCreatorImpl.lagFillinjer(minus,
-	// purcno, orderLine.getDoneBy(), "Front",
-	// orderLine.getRealProductionHours()));
-	// try {
-	// vismaFileCreator.writeFile(purcno.toString(),
-	// ApplicationParamUtil.findParamByName("visma_out_dir"),
-	// fillinjer, 1);
-	// } catch (IOException e) {
-	// throw new RuntimeException("Feilet ved skriving av vismafil", e);
-	// }
-	// }
-	//
-	// }
-
-	// private String lagLinje(Ordln vegg, boolean minus) {
-	// StringBuilder stringBuilder = new StringBuilder();
-	// stringBuilder.append(OrdchgrLineV.HEAD_START)
-	// .append(StringUtils.leftPad("", OrdchgrLineV.NUMBER_OF_SEMICOLONS,
-	// ";")).append(OrdchgrLineV.HEAD_END);
-	// String lineString = StringUtils.replaceOnce(stringBuilder.toString(),
-	// OrdchgrLineV.LN_NO_STRING,
-	// vegg.getLnno() != null ? vegg.getLnno().toString() : "");
-	// return StringUtils.replaceOnce(lineString,
-	// OrdchgrLineV.LINE_STATUS_STRING,
-	// (minus ? "-" : "") + vegg.getNoinvoab().toString());
-	// }
-}
+/*     */ package no.ugland.utransprod.gui.model;
+/*     */ 
+/*     */ import java.math.BigDecimal;
+/*     */ import java.util.Date;
+/*     */ import java.util.Iterator;
+/*     */ import java.util.List;
+/*     */ import javax.swing.JDialog;
+/*     */ import no.ugland.utransprod.ProTransException;
+/*     */ import no.ugland.utransprod.gui.JDialogAdapter;
+/*     */ import no.ugland.utransprod.gui.Login;
+/*     */ import no.ugland.utransprod.gui.WindowInterface;
+/*     */ import no.ugland.utransprod.gui.edit.EditPacklistView;
+/*     */ import no.ugland.utransprod.model.Order;
+/*     */ import no.ugland.utransprod.model.OrderLine;
+/*     */ import no.ugland.utransprod.model.Produceable;
+/*     */ import no.ugland.utransprod.service.IApplyListManager;
+/*     */ import no.ugland.utransprod.service.ManagerRepository;
+/*     */ import no.ugland.utransprod.service.OrderManager;
+/*     */ import no.ugland.utransprod.service.VismaFileCreator;
+/*     */ import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
+/*     */ import no.ugland.utransprod.util.ModelUtil;
+/*     */ import no.ugland.utransprod.util.Tidsforbruk;
+/*     */ import no.ugland.utransprod.util.Util;
+/*     */ import org.apache.log4j.Logger;
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ public class FrontProductionApplyList extends ProductionApplyList {
+/*     */    private static Logger LOGGER = Logger.getLogger(GavlProductionApplyList.class);
+/*     */ 
+/*     */    public FrontProductionApplyList(Login login, IApplyListManager<Produceable> manager, String aColliName, String aWindowName, Integer[] somInvisibleCells, ManagerRepository aManagerRepository, VismaFileCreator vismaFileCreator) {
+/*  47 */       super(login, manager, aColliName, aWindowName, somInvisibleCells, aManagerRepository, vismaFileCreator);
+/*  48 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    protected void handleApply(Produceable object, boolean applied, WindowInterface window, String aColliName) {
+/*  53 */       OrderManager orderManager = this.managerRepository.getOrderManager();
+/*  54 */       Order order = orderManager.findByOrderNr(object.getOrderNr());
+/*  55 */       orderManager.lazyLoadOrder(order, new LazyLoadOrderEnum[]{LazyLoadOrderEnum.ORDER_LINES});
+/*  56 */       if (order != null) {
+/*  57 */          List fronter = order.getOrderLineList("Front");
+/*     */ 
+/*     */          try {
+/*  60 */             int antall = 0;
+/*  61 */             OrderLine orderLineFront = null;
+/*     */ 
+/*     */ 
+/*  64 */             EditPacklistView editPacklistView = null;
+/*  65 */             BigDecimal duration = null;
+/*  66 */             String doneBy = null;            OrderLine front;
+/*  67 */             for(Iterator var13 = fronter.iterator(); var13.hasNext(); this.managerRepository.getOrderLineManager().saveOrderLine(front)) {               front = (OrderLine)var13.next();
+/*  68 */                if (front.getOrdNo() != null && front.getOrdNo() != 0 && front.getLnNo() != null) {
+/*  69 */                   orderLineFront = front;
+/*     */ 
+/*     */                }
+/*     */ 
+/*  73 */                ++antall;
+/*  74 */                if (applied) {
+/*     */ 
+/*  76 */                   front.setProduced(object.getProduced());
+/*  77 */                   this.setProducableApplied(front, aColliName);
+/*     */ 
+/*  79 */                   BigDecimal tidsbruk = front.getRealProductionHours();
+/*     */ 
+/*  81 */                   if (tidsbruk == null) {
+/*  82 */                      tidsbruk = Tidsforbruk.beregnTidsforbruk(front.getActionStarted(), front.getProduced());
+/*     */                   }
+/*     */ 
+/*  85 */                   if (antall == 1 && window != null) {
+/*  86 */                      editPacklistView = new EditPacklistView(this.login, false, tidsbruk, front.getDoneBy());
+/*  87 */                      JDialog dialog = Util.getDialog(window, "Front produsert", true);
+/*  88 */                      WindowInterface window1 = new JDialogAdapter(dialog);
+/*  89 */                      window1.add(editPacklistView.buildPanel(window1));
+/*  90 */                      window1.pack();
+/*  91 */                      Util.locateOnScreenCenter(window1);
+/*  92 */                      window1.setVisible(true);
+/*     */                   }
+/*     */ 
+/*  95 */                   if (editPacklistView != null && !editPacklistView.isCanceled()) {
+/*  96 */                      duration = editPacklistView.getPacklistDuration();
+/*  97 */                      doneBy = editPacklistView.getDoneBy();
+/*  98 */                      front.setRealProductionHours(editPacklistView.getPacklistDuration());
+/*  99 */                      front.setDoneBy(editPacklistView.getDoneBy());
+/*     */                   }
+/* 101 */                   front.setRealProductionHours(duration);
+/* 102 */                   front.setDoneBy(doneBy);
+/*     */                } else {
+/* 104 */                   this.setProducableUnapplied(front);
+/* 105 */                   duration = null;
+/* 106 */                   doneBy = null;
+/* 107 */                   front.setRealProductionHours((BigDecimal)null);
+/* 108 */                   front.setDoneBy((String)null);
+/*     */ 
+/*     */                }
+/*     */             }
+/*     */ 
+/* 113 */             if (orderLineFront != null) {
+/* 114 */                orderLineFront.setRealProductionHours(duration);
+/* 115 */                orderLineFront.setDoneBy(doneBy);
+/* 116 */                this.lagFerdigmelding(order, orderLineFront, !applied, "Front");
+/*     */             }
+/* 118 */          } catch (ProTransException var18) {
+/* 119 */             Util.showErrorDialog(window, "Feil", var18.getMessage());
+/* 120 */             var18.printStackTrace();
+/*     */          }
+/*     */ 
+/* 123 */          this.managerRepository.getOrderManager().refreshObject(order);
+/* 124 */          this.managerRepository.getOrderManager().settStatus(order.getOrderId(), (String)null);
+/*     */ 
+/*     */ 
+/* 127 */          this.applyListManager.refresh(object);
+/*     */       }
+/* 129 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setStarted(Produceable object, boolean started) {
+/* 215 */       if (object != null) {
+/* 216 */          OrderManager orderManager = (OrderManager)ModelUtil.getBean("orderManager");
+/*     */ 
+/*     */ 
+/* 219 */          Order order = orderManager.findByOrderNr(object.getOrderNr());
+/* 220 */          orderManager.lazyLoadOrder(order, new LazyLoadOrderEnum[]{LazyLoadOrderEnum.ORDER_LINES});
+/*     */ 
+/*     */ 
+/*     */ 
+/* 224 */          if (order != null) {
+/* 225 */             List<OrderLine> vegger = order.getOrderLineList("Front");
+/* 226 */             int antall = 0;
+/* 227 */             String gjortAv = "";
+/* 228 */             Date startedDate = Util.getCurrentDate();
+/* 229 */             Iterator var9 = vegger.iterator();            while(var9.hasNext()) {               OrderLine vegg = (OrderLine)var9.next();
+/* 230 */                ++antall;
+/* 231 */                if (vegg != null) {
+/* 232 */                   if (started) {
+/* 233 */                      vegg.setActionStarted(startedDate);
+/* 234 */                      if (antall == 1) {
+/* 235 */                         gjortAv = Util.showInputDialogWithdefaultValue((WindowInterface)null, "Gjøres av", "Gjøres av", this.login.getApplicationUser().getFullName());
+/*     */                      }
+/*     */ 
+/* 238 */                      vegg.setDoneBy(gjortAv);
+/*     */                   } else {
+/* 240 */                      vegg.setActionStarted((Date)null);
+/* 241 */                      vegg.setDoneBy((String)null);
+/*     */                   }
+/* 243 */                   this.managerRepository.getOrderLineManager().saveOrderLine(vegg);
+/*     */ 
+/*     */ 
+/*     */                }
+/*     */             }
+/*     */ 
+/* 249 */             this.managerRepository.getOrderManager().refreshObject(order);
+/*     */          }
+/* 251 */          this.applyListManager.refresh(object);
+/*     */       }
+/* 253 */    }
+/*     */ }

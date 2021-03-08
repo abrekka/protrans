@@ -1,95 +1,94 @@
-package no.ugland.utransprod.service.impl;
-
-import java.io.Serializable;
-import java.util.List;
-
-import no.ugland.utransprod.dao.SupplierTypeDAO;
-import no.ugland.utransprod.model.SupplierType;
-import no.ugland.utransprod.service.SupplierTypeManager;
-
-/**
- * Implementasjon av serviceklasse for tabell SUPPLIER_TYPE.
- * @author atle.brekka
- */
-public class SupplierTypeManagerImpl extends ManagerImpl<SupplierType>implements SupplierTypeManager {
-    /**
-     * @see no.ugland.utransprod.service.OverviewManager#findAll()
-     */
-    public final List<SupplierType> findAll() {
-        return dao.getObjects("supplierTypeName");
-    }
-
-    /**
-     * Finner basert på eksempel.
-     * @param supplierType
-     * @return leverandørtyper
-     */
-    public final List<SupplierType> findBySupplierType(final SupplierType supplierType) {
-        return dao.findByExampleLike(supplierType);
-    }
-
-    /**
-     * @param object
-     * @return leverandørtyper
-     * @see no.ugland.utransprod.service.OverviewManager#findByObject(java.lang.Object)
-     */
-    public final List<SupplierType> findByObject(final SupplierType object) {
-        return findBySupplierType(object);
-    }
-
-    /**
-     * @param object
-     * @see no.ugland.utransprod.service.OverviewManager#refreshObject(java.lang.Object)
-     */
-    public final void refreshObject(final SupplierType object) {
-        ((SupplierTypeDAO)dao).refreshObject(object);
-
-    }
-
-    /**
-     * Fjerner leverandørtype.
-     * @param supplierType
-     */
-    public final void removeSupplierType(final SupplierType supplierType) {
-        dao.removeObject(supplierType.getSupplierTypeId());
-
-    }
-
-    /**
-     * @param object
-     * @see no.ugland.utransprod.service.OverviewManager#removeObject(java.lang.Object)
-     */
-    public final void removeObject(final SupplierType object) {
-        removeSupplierType(object);
-
-    }
-
-    /**
-     * Lagrer leverandørtype.
-     * @param supplierType
-     */
-    public final void saveSupplierType(final SupplierType supplierType) {
-        dao.saveObject(supplierType);
-
-    }
-
-    /**
-     * @param object
-     * @see no.ugland.utransprod.service.OverviewManager#saveObject(java.lang.Object)
-     */
-    public final void saveObject(final SupplierType object) {
-        saveSupplierType(object);
-
-    }
-
-    public void lazyLoad(SupplierType object, Enum[] enums) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    protected Serializable getObjectId(SupplierType object) {
-        return object.getSupplierTypeId();
-    }
-
-}
+/*    */ package no.ugland.utransprod.service.impl;
+/*    */ 
+/*    */ import java.io.Serializable;
+/*    */ import java.util.List;
+/*    */ import no.ugland.utransprod.dao.SupplierTypeDAO;
+/*    */ import no.ugland.utransprod.model.SupplierType;
+/*    */ import no.ugland.utransprod.service.SupplierTypeManager;
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ public class SupplierTypeManagerImpl extends ManagerImpl<SupplierType> implements SupplierTypeManager {
+/*    */    public final List<SupplierType> findAll() {
+/* 19 */       return this.dao.getObjects("supplierTypeName");
+/*    */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public final List<SupplierType> findBySupplierType(SupplierType supplierType) {
+/* 28 */       return this.dao.findByExampleLike(supplierType);
+/*    */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public final List<SupplierType> findByObject(SupplierType object) {
+/* 37 */       return this.findBySupplierType(object);
+/*    */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public final void refreshObject(SupplierType object) {
+/* 45 */       ((SupplierTypeDAO)this.dao).refreshObject(object);
+/*    */ 
+/* 47 */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public final void removeSupplierType(SupplierType supplierType) {
+/* 54 */       this.dao.removeObject(supplierType.getSupplierTypeId());
+/*    */ 
+/* 56 */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public final void removeObject(SupplierType object) {
+/* 63 */       this.removeSupplierType(object);
+/*    */ 
+/* 65 */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public final void saveSupplierType(SupplierType supplierType) {
+/* 72 */       this.dao.saveObject(supplierType);
+/*    */ 
+/* 74 */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public final void saveObject(SupplierType object) {
+/* 81 */       this.saveSupplierType(object);
+/*    */ 
+/* 83 */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public void lazyLoad(SupplierType object, Enum[] enums) {
+/* 88 */    }
+/*    */ 
+/*    */ 
+/*    */    protected Serializable getObjectId(SupplierType object) {
+/* 92 */       return object.getSupplierTypeId();
+/*    */    }
+/*    */ }

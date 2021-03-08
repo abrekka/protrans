@@ -1,30 +1,14 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.TransportSumV;
 
-/**
- * Interface for serviceklasse mot view TRANSPORT_SUM_V
- * @author atle.brekka
- */
 public interface TransportSumVManager {
-    String MANAGER_NAME = "transportSumVManager";
+   String MANAGER_NAME = "transportSumVManager";
 
-	/**
-     * Finner sum for gjeldende uke
-     * @param currentYear
-     * @param currentWeek
-     * @return transportsum
-     */
-    TransportSumV findYearAndWeek(Integer currentYear, Integer currentWeek);
+   TransportSumV findYearAndWeek(Integer var1, Integer var2);
 
-    /**
-     * Finner sum for uke og produktområdegruppe
-     * @param currentYear
-     * @param currentWeek
-     * @param productAreaGroup
-     * @return transportsum
-     */
-    TransportSumV findYearAndWeekByProductAreaGroup(Integer currentYear,
-            Integer currentWeek, ProductAreaGroup productAreaGroup);
+   TransportSumV findYearAndWeekByProductAreaGroup(Integer var1, Integer var2, ProductAreaGroup var3);
 }

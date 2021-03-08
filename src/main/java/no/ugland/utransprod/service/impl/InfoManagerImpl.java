@@ -1,123 +1,122 @@
-package no.ugland.utransprod.service.impl;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import no.ugland.utransprod.dao.InfoDAO;
-import no.ugland.utransprod.model.Info;
-import no.ugland.utransprod.service.InfoManager;
-
-/**
- * Implementasjons av serviceklasse for tabell INFO.
- * @author atle.brekka
- */
-public class InfoManagerImpl extends ManagerImpl<Info>implements InfoManager {
-    /**
-     * @see no.ugland.utransprod.service.OverviewManager#findAll()
-     */
-    public final List<Info> findAll() {
-        return ((InfoDAO)dao).findAll();
-    }
-
-    /**
-     * Finner basert på info.
-     * @param info
-     * @return liste med info
-     */
-    public final List<Info> findByInfo(final Info info) {
-        return dao.findByExampleLike(info);
-    }
-
-    /**
-     * @param object
-     * @return info
-     * @see no.ugland.utransprod.service.OverviewManager#findByObject(java.lang.Object)
-     */
-    public final List<Info> findByObject(final Info object) {
-        return findByInfo(object);
-    }
-
-    /**
-     * @param object
-     * @see no.ugland.utransprod.service.OverviewManager#refreshObject(java.lang.Object)
-     */
-    public final void refreshObject(final Info object) {
-        ((InfoDAO)dao).refreshObject(object);
-
-    }
-
-    /**
-     * Fjerner info.
-     * @param info
-     */
-    public final void removeInfo(final Info info) {
-        dao.removeObject(info.getInfoId());
-
-    }
-
-    /**
-     * @param object
-     * @see no.ugland.utransprod.service.OverviewManager#removeObject(java.lang.Object)
-     */
-    public final void removeObject(final Info object) {
-        removeInfo(object);
-
-    }
-
-    /**
-     * Lagrer info.
-     * @param info
-     */
-    public final void saveInfo(final Info info) {
-        dao.saveObject(info);
-
-    }
-
-    /**
-     * @param object
-     * @see no.ugland.utransprod.service.OverviewManager#saveObject(java.lang.Object)
-     */
-    public final void saveObject(final Info object) {
-        saveInfo(object);
-
-    }
-
-    /**
-     * @see no.ugland.utransprod.service.InfoManager#findByDate(java.util.Date)
-     */
-    public final Info findByDate(final Date date) {
-        List<Info> list = ((InfoDAO)dao).findByDate(date);
-        StringBuffer buffer = new StringBuffer();
-        List<String> texts = new ArrayList<String>();
-        if (list != null) {
-            for (Info info : list) {
-                buffer.append(info.getInfoText()).append("\n");
-                texts.add(info.getInfoText());
-            }
-        }
-        return new Info(null, buffer.toString(), null, null);
-    }
-
-    /**
-     * @see no.ugland.utransprod.service.InfoManager#findListByDate(java.util.Date)
-     */
-    public final List<String> findListByDate(final Date date) {
-        List<Info> list = ((InfoDAO)dao).findByDate(date);
-        List<String> texts = new ArrayList<String>();
-        if (list != null) {
-            for (Info info : list) {
-                texts.add(info.getInfoText());
-            }
-        }
-        return texts;
-    }
-
- 
-    @Override
-    protected Serializable getObjectId(Info object) {
-        return object.getInfoId();
-    }
-
-}
+/*     */ package no.ugland.utransprod.service.impl;
+/*     */ 
+/*     */ import java.io.Serializable;
+/*     */ import java.util.ArrayList;
+/*     */ import java.util.Date;
+/*     */ import java.util.Iterator;
+/*     */ import java.util.List;
+/*     */ import no.ugland.utransprod.dao.InfoDAO;
+/*     */ import no.ugland.utransprod.model.Info;
+/*     */ import no.ugland.utransprod.service.InfoManager;
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ public class InfoManagerImpl extends ManagerImpl<Info> implements InfoManager {
+/*     */    public final List<Info> findAll() {
+/*  21 */       return ((InfoDAO)this.dao).findAll();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final List<Info> findByInfo(Info info) {
+/*  30 */       return this.dao.findByExampleLike(info);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final List<Info> findByObject(Info object) {
+/*  39 */       return this.findByInfo(object);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void refreshObject(Info object) {
+/*  47 */       ((InfoDAO)this.dao).refreshObject(object);
+/*     */ 
+/*  49 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void removeInfo(Info info) {
+/*  56 */       this.dao.removeObject(info.getInfoId());
+/*     */ 
+/*  58 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void removeObject(Info object) {
+/*  65 */       this.removeInfo(object);
+/*     */ 
+/*  67 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void saveInfo(Info info) {
+/*  74 */       this.dao.saveObject(info);
+/*     */ 
+/*  76 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void saveObject(Info object) {
+/*  83 */       this.saveInfo(object);
+/*     */ 
+/*  85 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final Info findByDate(Date date) {
+/*  91 */       List<Info> list = ((InfoDAO)this.dao).findByDate(date);
+/*  92 */       StringBuffer buffer = new StringBuffer();
+/*  93 */       List<String> texts = new ArrayList();
+/*  94 */       if (list != null) {
+/*  95 */          Iterator var5 = list.iterator();         while(var5.hasNext()) {            Info info = (Info)var5.next();
+/*  96 */             buffer.append(info.getInfoText()).append("\n");
+/*  97 */             texts.add(info.getInfoText());
+/*     */          }      }
+/*     */ 
+/* 100 */       return new Info((Integer)null, buffer.toString(), (Date)null, (Date)null);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final List<String> findListByDate(Date date) {
+/* 107 */       List<Info> list = ((InfoDAO)this.dao).findByDate(date);
+/* 108 */       List<String> texts = new ArrayList();
+/* 109 */       if (list != null) {
+/* 110 */          Iterator var4 = list.iterator();         while(var4.hasNext()) {            Info info = (Info)var4.next();
+/* 111 */             texts.add(info.getInfoText());
+/*     */          }      }
+/*     */ 
+/* 114 */       return texts;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    protected Serializable getObjectId(Info object) {
+/* 120 */       return object.getInfoId();
+/*     */    }
+/*     */ }

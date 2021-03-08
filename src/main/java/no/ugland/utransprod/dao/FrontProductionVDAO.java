@@ -1,49 +1,22 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.dao;
 
 import java.util.List;
-
 import no.ugland.utransprod.model.FrontProductionV;
 import no.ugland.utransprod.model.Produceable;
 import no.ugland.utransprod.model.ProductAreaGroup;
 
-/**
- * Interface for DAO mot view FRONT_PRODUCTION_V
- * 
- * @author atle.brekka
- * 
- */
 public interface FrontProductionVDAO extends DAO<FrontProductionV> {
-    /**
-     * Finner alle fronter til produksjon
-     * 
-     * @return fronter
-     */
-    List<Produceable> findAll();
+   List<Produceable> findAll();
 
-    /**
-     * Finner front som skal produseres basert på ordrenummer
-     * 
-     * @param orderNr
-     * @return front
-     */
-    List<Produceable> findByOrderNr(String orderNr);
+   List<Produceable> findByOrderNr(String var1);
 
-    /**
-     * Oppdaterer
-     * 
-     * @param frontProductionV
-     */
-    void refresh(Produceable frontProductionV);
+   void refresh(Produceable var1);
 
-    /**
-     * Finner basert på kunde
-     * 
-     * @param customerNr
-     * @return frontproduksjon
-     */
-    List<Produceable> findByCustomerNr(Integer customerNr);
+   List<Produceable> findByCustomerNr(Integer var1);
 
-    List<Produceable> findByCustomerNrProductAreaGroup(Integer customerNr, ProductAreaGroup productAreaGroup);
+   List<Produceable> findByCustomerNrProductAreaGroup(Integer var1, ProductAreaGroup var2);
 
-    List<Produceable> findByOrderNrAndProductAreaGroup(String orderNr, ProductAreaGroup productAreaGroup);
+   List<Produceable> findByOrderNrAndProductAreaGroup(String var1, ProductAreaGroup var2);
 }

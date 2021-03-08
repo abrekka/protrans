@@ -1613,4 +1613,26 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 
 	}
 
+	public void oppdaterStatus(final Order ordre, final String status) {
+		getHibernateTemplate().execute(new HibernateCallback() {
+
+			public Object doInHibernate(final Session session) {
+
+				String sql = "update Order o set o.status=:status where o.orderId=:orderId";
+
+				if (status == null) {
+					sql = "update Order o set o.status=null where o.orderId=:orderId";
+					session.createQuery(sql).setInteger("orderId", ordre.getOrderId()).executeUpdate();
+				} else {
+
+					session.createQuery(sql).setEntity("status", status) .setInteger("orderId", ordre.getOrderId())
+							.executeUpdate();
+				}
+				return null;
+			}
+
+		});
+
+	}
+
 }

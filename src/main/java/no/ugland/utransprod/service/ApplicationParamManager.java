@@ -1,60 +1,23 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
+import com.google.common.collect.Multimap;
 import java.util.List;
-
-import no.ugland.utransprod.ProTransRuntimeException;
 import no.ugland.utransprod.model.ApplicationParam;
 
-import com.google.common.collect.Multimap;
-
-/**
- * Interface for serviceklasse mot tabell APPLICTION_PARAM.
- * 
- * @author atle.brekka
- */
 public interface ApplicationParamManager extends OverviewManager<ApplicationParam> {
-    String MANAGER_NAME = "applicationParamManager";
+   String MANAGER_NAME = "applicationParamManager";
 
-    /**
-     * Finner parameter med gitt navn.
-     * 
-     * @param paramName
-     * @return parameter
-     * @throws ProTransRuntimeException
-     *             dersom parameter ikke finnes
-     */
-    String findByName(String paramName);
+   String findByName(String var1);
 
-    /**
-     * Finner parameter med gitt navn, og gir ikke feilmelding dersom parameter
-     * ikke finnes bare en null verdi.
-     * 
-     * @param paramName
-     * @return parameter
-     */
-    String findByNameSilent(String paramName);
+   String findByNameSilent(String var1);
 
-    /**
-     * Finner parametre med oppsett av kollier.
-     * 
-     * @return oppsett av kollier
-     */
-    Multimap<String, String> getColliSetup();
+   Multimap<String, String> getColliSetup();
 
-    /**
-     * Finner paramatre basert på eksempel.
-     * 
-     * @param param
-     * @return parametre
-     */
-    List<ApplicationParam> findByExampleLike(ApplicationParam param);
+   List<ApplicationParam> findByExampleLike(ApplicationParam var1);
 
-    /**
-     * Lagrer parameter.
-     * 
-     * @param param
-     */
-    void saveApplicationParam(ApplicationParam param);
+   void saveApplicationParam(ApplicationParam var1);
 
-    ApplicationParam findParam(String paramName);
+   ApplicationParam findParam(String var1);
 }

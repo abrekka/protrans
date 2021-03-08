@@ -1,53 +1,52 @@
-package no.ugland.utransprod.service.impl;
-
-import java.util.Hashtable;
-import java.util.Map;
-
-import no.ugland.utransprod.ProTransException;
-import no.ugland.utransprod.model.TransportCostAddition;
-import no.ugland.utransprod.service.ITransportCostAddition;
-
-public final class TransportCostAdditionImplFacory {
-	private static Map<String, ITransportCostAddition> transportCostAdditionImplInstances = new Hashtable<String, ITransportCostAddition>();
-
-	private TransportCostAdditionImplFacory() {
-
-	}
-
-	public static ITransportCostAddition getTransportCostAdditionImpl(
-			final TransportCostAddition addition) throws ProTransException {
-		ITransportCostAddition transportCostAdditionImpl = transportCostAdditionImplInstances
-				.get(addition.getDescription());
-		if (transportCostAdditionImpl == null) {
-			transportCostAdditionImpl = createTransportCostAdditionImpl(
-					addition.getDescription(), addition);
-			transportCostAdditionImplInstances.put(addition.getDescription(),
-					transportCostAdditionImpl);
-		}
-
-		return transportCostAdditionImpl;
-	}
-
-	private static ITransportCostAddition createTransportCostAdditionImpl(
-			final String description, final TransportCostAddition addition)
-			throws ProTransException {
-		if (description.equalsIgnoreCase("BreddeX2+høydeX2")) {
-			return new AdditionWidhtHeight(addition, null, "Lang garasje");
-		} else if (description.equalsIgnoreCase("Takstein")) {
-			return new AdditionTiles(addition, "Takstein", "Takstein");
-		} else if (description.equalsIgnoreCase("Takstol")) {
-			return new AdditionTruss(addition, "Takstoler", "Takstol");
-		} else if (description.equalsIgnoreCase("Stående tak")) {
-			return new AdditionStandingRoof(addition, null, "Stående tak");
-		} else if (description.equalsIgnoreCase("Gulvspon")) {
-			return new AdditionGulvspon(addition, "Gulvspon", "Gulvspon");
-		} else if (description.equalsIgnoreCase("Innredning")) {
-			return new AdditionInnredning(addition, "iGarasjen innredning", "Innredning");
-		}else if (description.equalsIgnoreCase("MaxBreddeX2+høydeX2")) {
-			return new AdditionWidhtHeightMax(addition, null, "Ekstra lang garasje");
-		}		else {
-			throw new ProTransException("Ikke definert klasse for tillegg "
-					+ addition.getDescription());
-		}
-	}
-}
+/*    */ package no.ugland.utransprod.service.impl;
+/*    */ 
+/*    */ import java.util.Hashtable;
+/*    */ import java.util.Map;
+/*    */ import no.ugland.utransprod.ProTransException;
+/*    */ import no.ugland.utransprod.model.TransportCostAddition;
+/*    */ import no.ugland.utransprod.service.ITransportCostAddition;
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ public final class TransportCostAdditionImplFacory {
+/*    */    private static Map<String, ITransportCostAddition> transportCostAdditionImplInstances = new Hashtable();
+/*    */ 
+/*    */    public static ITransportCostAddition getTransportCostAdditionImpl(TransportCostAddition addition) throws ProTransException {
+/* 19 */       ITransportCostAddition transportCostAdditionImpl = (ITransportCostAddition)transportCostAdditionImplInstances.get(addition.getDescription());
+/*    */ 
+/* 21 */       if (transportCostAdditionImpl == null) {
+/* 22 */          transportCostAdditionImpl = createTransportCostAdditionImpl(addition.getDescription(), addition);
+/*    */ 
+/* 24 */          transportCostAdditionImplInstances.put(addition.getDescription(), transportCostAdditionImpl);
+/*    */ 
+/*    */       }
+/*    */ 
+/* 28 */       return transportCostAdditionImpl;
+/*    */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    private static ITransportCostAddition createTransportCostAdditionImpl(String description, TransportCostAddition addition) throws ProTransException {
+/* 34 */       if (description.equalsIgnoreCase("BreddeX2+hÃ¸ydeX2")) {
+/* 35 */          return new AdditionWidhtHeight(addition, (String)null, "Lang garasje");
+/* 36 */       } else if (description.equalsIgnoreCase("Takstein")) {
+/* 37 */          return new AdditionTiles(addition, "Takstein", "Takstein");
+/* 38 */       } else if (description.equalsIgnoreCase("Takstol")) {
+/* 39 */          return new AdditionTruss(addition, "Takstoler", "Takstol");
+/* 40 */       } else if (description.equalsIgnoreCase("StÃ¥ende tak")) {
+/* 41 */          return new AdditionStandingRoof(addition, (String)null, "StÃ¥ende tak");
+/* 42 */       } else if (description.equalsIgnoreCase("Gulvspon")) {
+/* 43 */          return new AdditionGulvspon(addition, "Gulvspon", "Gulvspon");
+/* 44 */       } else if (description.equalsIgnoreCase("Innredning")) {
+/* 45 */          return new AdditionInnredning(addition, "iGarasjen innredning", "Innredning");
+/* 46 */       } else if (description.equalsIgnoreCase("MaxBreddeX2+hÃ¸ydeX2")) {
+/* 47 */          return new AdditionWidhtHeightMax(addition, (String)null, "Ekstra lang garasje");
+/*    */       } else {
+/* 49 */          throw new ProTransException("Ikke definert klasse for tillegg " + addition.getDescription());
+/*    */       }
+/*    */    }
+/*    */ }

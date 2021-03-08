@@ -1,12 +1,7 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service.enums;
 
-/**
- * Lazy lasting av konstruksjinstypeattributter.
- * @author atle.brekka
- */
 public enum LazyLoadConstructionTypeAttributeEnum {
-    /**
-     * Ordrelinjeattributter.
-     */
-    ORDER_LINE_ATTRIBUTE
+   ORDER_LINE_ATTRIBUTE;
 }

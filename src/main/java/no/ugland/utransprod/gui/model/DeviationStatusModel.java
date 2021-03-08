@@ -1,188 +1,187 @@
-package no.ugland.utransprod.gui.model;
-
-import java.beans.PropertyChangeListener;
-
-import no.ugland.utransprod.model.DeviationStatus;
-import no.ugland.utransprod.util.Util;
-
-import com.jgoodies.binding.PresentationModel;
-
-/**
- * GUI-modell for avviksstatus
- * 
- * @author atle.brekka
- * 
- */
-public class DeviationStatusModel extends
-		AbstractModel<DeviationStatus, DeviationStatusModel> {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_DEVIATION_STATUS_DESCRIPTION = "deviationStatusDescription";
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_DEVIATION_STATUS_NAME = "deviationStatusName";
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_FOR_MANAGER_BOOL = "forManagerBool";
-    public static final String PROPERTY_DEVIATION_DONE_BOOL = "deviationDoneBool";
-
-	public static final String PROPERTY_FOR_DEVIATION_BOOL = "forDeviationBool";
-
-	public static final String PROPERTY_FOR_ACCIDENT_BOOL = "forAccidentBool";
-
-	/**
-	 * @param object
-	 */
-	public DeviationStatusModel(DeviationStatus object) {
-		super(object);
-	}
-
-	/**
-	 * @return beskrivelse
-	 */
-	public String getDeviationStatusDescription() {
-		return object.getDeviationStatusDescription();
-	}
-
-	/**
-	 * @param deviationStatusDescription
-	 */
-	public void setDeviationStatusDescription(String deviationStatusDescription) {
-		String oldDesc = getDeviationStatusDescription();
-		object.setDeviationStatusDescription(deviationStatusDescription);
-		firePropertyChange(PROPERTY_DEVIATION_STATUS_DESCRIPTION, oldDesc,
-				deviationStatusDescription);
-	}
-
-	/**
-	 * @return navn
-	 */
-	public String getDeviationStatusName() {
-		return object.getDeviationStatusName();
-	}
-
-	/**
-	 * @param deviationStatusName
-	 */
-	public void setDeviationStatusName(String deviationStatusName) {
-		String oldName = getDeviationStatusName();
-		object.setDeviationStatusName(deviationStatusName);
-		firePropertyChange(PROPERTY_DEVIATION_STATUS_NAME, oldName,
-				deviationStatusName);
-	}
-	/**
-	 * 
-	 * @return true dersom status er for leder
-	 */
-	public Boolean getForManagerBool() {
-		return Util.convertNumberToBoolean(object.getForManager());
-	}
-
-	/**
-	 * @param forManager
-	 */
-	public void setForManagerBool(Boolean forManager) {
-		Boolean oldManager = getForManagerBool();
-		object.setForManager(Util.convertBooleanToNumber(forManager));
-		firePropertyChange(PROPERTY_FOR_MANAGER_BOOL, oldManager ,
-				forManager);
-	}
-    
-    public Boolean getDeviationDoneBool() {
-        return Util.convertNumberToBoolean(object.getDeviationDone());
-    }
-
-    /**
-     * @param forManager
-     */
-    public void setDeviationDoneBool(Boolean deviationDone) {
-        Boolean oldDone = getDeviationDoneBool();
-        object.setDeviationDone(Util.convertBooleanToNumber(deviationDone));
-        firePropertyChange(PROPERTY_DEVIATION_DONE_BOOL, oldDone ,
-                deviationDone);
-    }
-    
-    public Boolean getForDeviationBool() {
-        return Util.convertNumberToBoolean(object.getForDeviation());
-    }
-
-    /**
-     * @param forManager
-     */
-    public void setForDeviationBool(Boolean forDeviation) {
-        Boolean oldforDeviation = getForDeviationBool();
-        object.setForDeviation(Util.convertBooleanToNumber(forDeviation));
-        firePropertyChange(PROPERTY_FOR_DEVIATION_BOOL, oldforDeviation,
-                forDeviation);
-    }
-    public Boolean getForAccidentBool() {
-        return Util.convertNumberToBoolean(object.getForAccident());
-    }
-
-    /**
-     * @param forManager
-     */
-    public void setForAccidentBool(Boolean forAccident) {
-        Boolean oldForAccidnet = getForAccidentBool();
-        object.setForAccident(Util.convertBooleanToNumber(forAccident));
-        firePropertyChange(PROPERTY_FOR_DEVIATION_BOOL, oldForAccidnet,
-                forAccident);
-    }
-
-	/**
-	 * @see no.ugland.utransprod.gui.model.AbstractModel#addBufferChangeListener(java.beans.PropertyChangeListener,
-	 *      com.jgoodies.binding.PresentationModel)
-	 */
-	@Override
-	public void addBufferChangeListener(PropertyChangeListener listener,
-			PresentationModel presentationModel) {
-		presentationModel.getBufferedModel(
-				PROPERTY_DEVIATION_STATUS_DESCRIPTION).addValueChangeListener(
-				listener);
-		presentationModel.getBufferedModel(PROPERTY_DEVIATION_STATUS_NAME)
-				.addValueChangeListener(listener);
-		presentationModel.getBufferedModel(PROPERTY_FOR_MANAGER_BOOL)
-		.addValueChangeListener(listener);
-        presentationModel.getBufferedModel(PROPERTY_DEVIATION_DONE_BOOL)
-        .addValueChangeListener(listener);
-        presentationModel.getBufferedModel(PROPERTY_FOR_DEVIATION_BOOL)
-        .addValueChangeListener(listener);
-        presentationModel.getBufferedModel(PROPERTY_FOR_ACCIDENT_BOOL)
-        .addValueChangeListener(listener);
-
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.model.AbstractModel#getBufferedObjectModel(com.jgoodies.binding.PresentationModel)
-	 */
-	@Override
-	public DeviationStatusModel getBufferedObjectModel(
-			PresentationModel presentationModel) {
-
-		DeviationStatusModel model = new DeviationStatusModel(
-				new DeviationStatus());
-		model.setDeviationStatusDescription((String) presentationModel
-				.getBufferedValue(PROPERTY_DEVIATION_STATUS_DESCRIPTION));
-		model.setDeviationStatusName((String) presentationModel
-				.getBufferedValue(PROPERTY_DEVIATION_STATUS_NAME));
-		model.setForManagerBool((Boolean) presentationModel
-				.getBufferedValue(PROPERTY_FOR_MANAGER_BOOL));
-        model.setDeviationDoneBool((Boolean) presentationModel
-                .getBufferedValue(PROPERTY_DEVIATION_DONE_BOOL));
-        model.setForDeviationBool((Boolean) presentationModel
-                .getBufferedValue(PROPERTY_FOR_DEVIATION_BOOL));
-        model.setForAccidentBool((Boolean) presentationModel
-                .getBufferedValue(PROPERTY_FOR_ACCIDENT_BOOL));
-		return model;
-	}
-
-}
+/*     */ package no.ugland.utransprod.gui.model;
+/*     */ 
+/*     */ import com.jgoodies.binding.PresentationModel;
+/*     */ import java.beans.PropertyChangeListener;
+/*     */ import no.ugland.utransprod.model.DeviationStatus;
+/*     */ import no.ugland.utransprod.util.Util;
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ public class DeviationStatusModel extends AbstractModel<DeviationStatus, DeviationStatusModel> {
+/*     */    private static final long serialVersionUID = 1L;
+/*     */    public static final String PROPERTY_DEVIATION_STATUS_DESCRIPTION = "deviationStatusDescription";
+/*     */    public static final String PROPERTY_DEVIATION_STATUS_NAME = "deviationStatusName";
+/*     */    public static final String PROPERTY_FOR_MANAGER_BOOL = "forManagerBool";
+/*     */    public static final String PROPERTY_DEVIATION_DONE_BOOL = "deviationDoneBool";
+/*     */    public static final String PROPERTY_FOR_DEVIATION_BOOL = "forDeviationBool";
+/*     */    public static final String PROPERTY_FOR_ACCIDENT_BOOL = "forAccidentBool";
+/*     */ 
+/*     */    public DeviationStatusModel(DeviationStatus object) {
+/*  46 */       super(object);
+/*  47 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getDeviationStatusDescription() {
+/*  53 */       return ((DeviationStatus)this.object).getDeviationStatusDescription();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setDeviationStatusDescription(String deviationStatusDescription) {
+/*  60 */       String oldDesc = this.getDeviationStatusDescription();
+/*  61 */       ((DeviationStatus)this.object).setDeviationStatusDescription(deviationStatusDescription);
+/*  62 */       this.firePropertyChange("deviationStatusDescription", oldDesc, deviationStatusDescription);
+/*     */ 
+/*  64 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getDeviationStatusName() {
+/*  70 */       return ((DeviationStatus)this.object).getDeviationStatusName();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setDeviationStatusName(String deviationStatusName) {
+/*  77 */       String oldName = this.getDeviationStatusName();
+/*  78 */       ((DeviationStatus)this.object).setDeviationStatusName(deviationStatusName);
+/*  79 */       this.firePropertyChange("deviationStatusName", oldName, deviationStatusName);
+/*     */ 
+/*  81 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public Boolean getForManagerBool() {
+/*  87 */       return Util.convertNumberToBoolean(((DeviationStatus)this.object).getForManager());
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setForManagerBool(Boolean forManager) {
+/*  94 */       Boolean oldManager = this.getForManagerBool();
+/*  95 */       ((DeviationStatus)this.object).setForManager(Util.convertBooleanToNumber(forManager));
+/*  96 */       this.firePropertyChange("forManagerBool", oldManager, forManager);
+/*     */ 
+/*  98 */    }
+/*     */ 
+/*     */    public Boolean getDeviationDoneBool() {
+/* 101 */       return Util.convertNumberToBoolean(((DeviationStatus)this.object).getDeviationDone());
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setDeviationDoneBool(Boolean deviationDone) {
+/* 108 */       Boolean oldDone = this.getDeviationDoneBool();
+/* 109 */       ((DeviationStatus)this.object).setDeviationDone(Util.convertBooleanToNumber(deviationDone));
+/* 110 */       this.firePropertyChange("deviationDoneBool", oldDone, deviationDone);
+/*     */ 
+/* 112 */    }
+/*     */ 
+/*     */    public Boolean getForDeviationBool() {
+/* 115 */       return Util.convertNumberToBoolean(((DeviationStatus)this.object).getForDeviation());
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setForDeviationBool(Boolean forDeviation) {
+/* 122 */       Boolean oldforDeviation = this.getForDeviationBool();
+/* 123 */       ((DeviationStatus)this.object).setForDeviation(Util.convertBooleanToNumber(forDeviation));
+/* 124 */       this.firePropertyChange("forDeviationBool", oldforDeviation, forDeviation);
+/*     */ 
+/* 126 */    }
+/*     */    public Boolean getForAccidentBool() {
+/* 128 */       return Util.convertNumberToBoolean(((DeviationStatus)this.object).getForAccident());
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setForAccidentBool(Boolean forAccident) {
+/* 135 */       Boolean oldForAccidnet = this.getForAccidentBool();
+/* 136 */       ((DeviationStatus)this.object).setForAccident(Util.convertBooleanToNumber(forAccident));
+/* 137 */       this.firePropertyChange("forDeviationBool", oldForAccidnet, forAccident);
+/*     */ 
+/* 139 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void addBufferChangeListener(PropertyChangeListener listener, PresentationModel presentationModel) {
+/* 148 */       presentationModel.getBufferedModel("deviationStatusDescription").addValueChangeListener(listener);
+/*     */ 
+/*     */ 
+/* 151 */       presentationModel.getBufferedModel("deviationStatusName").addValueChangeListener(listener);
+/*     */ 
+/* 153 */       presentationModel.getBufferedModel("forManagerBool").addValueChangeListener(listener);
+/*     */ 
+/* 155 */       presentationModel.getBufferedModel("deviationDoneBool").addValueChangeListener(listener);
+/*     */ 
+/* 157 */       presentationModel.getBufferedModel("forDeviationBool").addValueChangeListener(listener);
+/*     */ 
+/* 159 */       presentationModel.getBufferedModel("forAccidentBool").addValueChangeListener(listener);
+/*     */ 
+/*     */ 
+/* 162 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public DeviationStatusModel getBufferedObjectModel(PresentationModel presentationModel) {
+/* 171 */       DeviationStatusModel model = new DeviationStatusModel(new DeviationStatus());
+/*     */ 
+/* 173 */       model.setDeviationStatusDescription((String)presentationModel.getBufferedValue("deviationStatusDescription"));
+/*     */ 
+/* 175 */       model.setDeviationStatusName((String)presentationModel.getBufferedValue("deviationStatusName"));
+/*     */ 
+/* 177 */       model.setForManagerBool((Boolean)presentationModel.getBufferedValue("forManagerBool"));
+/*     */ 
+/* 179 */       model.setDeviationDoneBool((Boolean)presentationModel.getBufferedValue("deviationDoneBool"));
+/*     */ 
+/* 181 */       model.setForDeviationBool((Boolean)presentationModel.getBufferedValue("forDeviationBool"));
+/*     */ 
+/* 183 */       model.setForAccidentBool((Boolean)presentationModel.getBufferedValue("forAccidentBool"));
+/*     */ 
+/* 185 */       return model;
+/*     */    }
+/*     */ }

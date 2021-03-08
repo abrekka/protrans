@@ -1,80 +1,42 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import java.util.List;
-
 import javax.swing.JLabel;
-
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.gui.model.BudgetType;
 import no.ugland.utransprod.model.Budget;
 import no.ugland.utransprod.model.ProductArea;
 import no.ugland.utransprod.util.Periode;
 
-/**
- * Interface for serviceklasse mot tabell PRODUCTION_BUDGET
- * 
- * @author atle.brekka
- */
 public interface BudgetManager extends OverviewManager<Budget> {
-    public String FILE_HEADER_IMPORT_BUDGET = "Uke;Budsjettall;Timer;Avdeling;År;";
-    public static final String FILE_HEADER_IMPORT_BUDGET_SALESMAN = "Selger;Salgsmål ordre;Avdeling;År;Salgsmål tilbud;";
+   String FILE_HEADER_IMPORT_BUDGET = "Uke;Budsjettall;Timer;Avdeling;Ã…r;";
+   String FILE_HEADER_IMPORT_BUDGET_SALESMAN = "Selger;SalgsmÃ¥l ordre;Avdeling;Ã…r;SalgsmÃ¥l tilbud;";
+   int COLUMN_WEEK = 0;
+   int COLUMN_BUDGET = 1;
+   int COLUMN_HOURS = 2;
+   int COLUMN_PRODUCT_AREA = 3;
+   int COLUMN_PRODUCT_AREA_BUDGET_SALESMAN = 2;
+   int COLUMN_BUDGET_OFFER = 4;
+   int COLUMN_SALESMAN = 0;
+   String MANAGER_NAME = "budgetManager";
 
-    public static final int COLUMN_WEEK = 0;
+   List<Budget> findByYearAndWeek(Integer var1, Integer var2, Integer var3, ProductArea var4, BudgetType var5);
 
-    public static final int COLUMN_BUDGET = 1;
-    public static final int COLUMN_HOURS = 2;
+   Budget findByYearAndWeekPrProductAreaGroup(Integer var1, Integer var2, BudgetType var3);
 
-    public static final int COLUMN_PRODUCT_AREA = 3;
-    public static final int COLUMN_PRODUCT_AREA_BUDGET_SALESMAN = 2;
+   List<Budget> findByYear(Integer var1, ProductArea var2, BudgetType var3);
 
-    public static final int COLUMN_BUDGET_OFFER = 4;
-    public static final int COLUMN_SALESMAN = 0;
+   void removeForYearProductArea(Integer var1, ProductArea var2, BudgetType var3);
 
-    String MANAGER_NAME = "budgetManager";
+   void setLabelInfo(JLabel var1);
 
-    /**
-     * Finner basert på år, uke, ikke id og produktområde
-     * 
-     * @param year
-     * @param week
-     * @param notId
-     * @param productArea
-     * @return budsjett
-     */
-    List<Budget> findByYearAndWeek(Integer year, Integer week, Integer notId, ProductArea productArea, BudgetType budgetType);
+   Budget findByYearAndWeek(Integer var1, Integer var2, ProductArea var3, BudgetType var4);
 
-    /**
-     * Finner basert på år, uke og produktområde
-     * 
-     * @param year
-     * @param week
-     * @param productArea
-     * @return budsjett
-     */
-    // Budget findByYearAndWeek(Integer year, Integer week,ProductArea
-    // productArea);
+   void importBudget(String var1, BudgetType var2) throws ProTransException;
 
-    /**
-     * Finner basert på år,uke og produktområdegruppe
-     * 
-     * @param year
-     * @param week
-     * @param productAreaGroup
-     * @return budsjett
-     */
-    Budget findByYearAndWeekPrProductAreaGroup(Integer year, Integer week, BudgetType budgetType);
+   Budget findSumPrProductAreaAndPeriode(Periode var1, ProductArea var2, BudgetType var3);
 
-    List<Budget> findByYear(Integer year, ProductArea productArea, BudgetType budgetType);
-
-    void removeForYearProductArea(Integer year, ProductArea productArea, BudgetType budgetType);
-
-    void setLabelInfo(JLabel aLabel);
-
-    Budget findByYearAndWeek(Integer year, Integer week, ProductArea productArea, BudgetType budgetType);
-
-    void importBudget(String file, BudgetType budgetType) throws ProTransException;
-
-    Budget findSumPrProductAreaAndPeriode(Periode periode, ProductArea productArea, BudgetType sale);
-
-    Budget findByYearAndSalesman(final Integer year, final String salesman, final ProductArea productArea, final BudgetType budgetType);
+   Budget findByYearAndSalesman(Integer var1, String var2, ProductArea var3, BudgetType var4);
 }

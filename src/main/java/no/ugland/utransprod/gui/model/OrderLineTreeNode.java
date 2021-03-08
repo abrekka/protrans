@@ -1,161 +1,157 @@
-package no.ugland.utransprod.gui.model;
-
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Set;
-
-import javax.swing.tree.TreeNode;
-
-import no.ugland.utransprod.model.OrderLine;
-import no.ugland.utransprod.model.OrderLineAttribute;
-
-import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
-import org.jdesktop.swingx.treetable.MutableTreeTableNode;
-import org.jdesktop.swingx.treetable.TreeTableNode;
-
-/**
- * Node i tretabell for ordrelinjer
- * 
- * @author atle.brekka
- * 
- */
-public class OrderLineTreeNode extends DefaultMutableTreeTableNode {
-	/**
-	 * Objekt som skal vises i noden
-	 */
-	private Object object;
-
-	/**
-	 * Foreldrenode
-	 */
-	private OrderLineTreeNode parent;
-
-	/**
-	 * Barn
-	 */
-	private List<TreeTableNode> children = new ArrayList<TreeTableNode>();
-
-	/**
-	 * Forteller om node er siste ledd i trepathen
-	 */
-	private boolean leaf = false;
-
-	/**
-	 * @param aObject
-	 * @param aParent
-	 */
-	@SuppressWarnings("unchecked")
-	public OrderLineTreeNode(Object aObject, OrderLineTreeNode aParent, boolean brukOrdrelinjelinjer) {
-
-		object = aObject;
-		parent = aParent;
-
-		if (object instanceof List) {
-			List<OrderLine> orderLines = (List<OrderLine>) object;
-			for (OrderLine orderLine : orderLines) {
-				children.add(new OrderLineTreeNode(orderLine, this, brukOrdrelinjelinjer));
-			}
-		} else if (object instanceof OrderWrapper) {
-			if (((OrderWrapper) object).getOrderLines() != null) {
-				List<OrderLine> orderLines = ((OrderWrapper) object).getOrderLines();
-				for (OrderLine orderLine : orderLines) {
-					if (orderLine.getOrderLineRef() == null) {
-						children.add(new OrderLineTreeNode(orderLine, this, brukOrdrelinjelinjer));
-					}
-				}
-			}
-
-		} else if (object instanceof OrderLine) {
-			if (brukOrdrelinjelinjer) {
-				if (((OrderLine) object).getOrderLines() != null) {
-					Set<OrderLine> orderLines = ((OrderLine) object).getOrderLines();
-					for (OrderLine orderLine : orderLines) {
-						children.add(new OrderLineTreeNode(orderLine, this, brukOrdrelinjelinjer));
-					}
-				}
-
-				if (((OrderLine) object).getOrderLineAttributes() != null) {
-					Set<OrderLineAttribute> orderLineAttributes = ((OrderLine) object).getOrderLineAttributes();
-					for (OrderLineAttribute orderLineAttribute : orderLineAttributes) {
-						children.add(new OrderLineTreeNode(orderLineAttribute, this, brukOrdrelinjelinjer));
-					}
-				}
-			}
-			// dersom objekt som skal vises i node er attributt for artikkeltype
-		} else {
-
-			leaf = true;
-		}
-	}
-
-	/**
-	 * Henter objekt i noden
-	 * 
-	 * @return objekt
-	 */
-	public Object getObject() {
-		return object;
-	}
-
-	/**
-	 * @see javax.swing.tree.TreeNode#children()
-	 */
-	public Enumeration<MutableTreeTableNode> children() {
-		return new IteratorEnumeration<MutableTreeTableNode>(children.iterator());
-	}
-
-	/**
-	 * @see javax.swing.tree.TreeNode#getAllowsChildren()
-	 */
-	public boolean getAllowsChildren() {
-		return true;
-	}
-
-	/**
-	 * @see javax.swing.tree.TreeNode#getChildAt(int)
-	 */
-	public TreeTableNode getChildAt(int aIndex) {
-		return children.get(aIndex);
-	}
-
-	/**
-	 * @see javax.swing.tree.TreeNode#getChildCount()
-	 */
-	public int getChildCount() {
-		return children.size();
-	}
-
-	/**
-	 * @see javax.swing.tree.TreeNode#getIndex(javax.swing.tree.TreeNode)
-	 */
-	public int getIndex(TreeNode aNode) {
-		return children.indexOf(aNode);
-	}
-
-	/**
-	 * @see javax.swing.tree.TreeNode#getParent()
-	 */
-	public OrderLineTreeNode getParent() {
-		return parent;
-	}
-
-	/**
-	 * @see javax.swing.tree.TreeNode#isLeaf()
-	 */
-	public boolean isLeaf() {
-		return leaf;
-	}
-
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		if (object != null) {
-			return object.toString();
-		}
-		return "";
-	}
-
-}
+/*     */ package no.ugland.utransprod.gui.model;
+/*     */ 
+/*     */ import java.util.ArrayList;
+/*     */ import java.util.Enumeration;
+/*     */ import java.util.Iterator;
+/*     */ import java.util.List;
+/*     */ import java.util.Set;
+/*     */ import javax.swing.tree.TreeNode;
+/*     */ import no.ugland.utransprod.model.OrderLine;
+/*     */ import no.ugland.utransprod.model.OrderLineAttribute;
+/*     */ import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
+/*     */ import org.jdesktop.swingx.treetable.MutableTreeTableNode;
+/*     */ import org.jdesktop.swingx.treetable.TreeTableNode;
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ public class OrderLineTreeNode extends DefaultMutableTreeTableNode {
+/*     */    private Object object;
+/*     */    private OrderLineTreeNode parent;
+/*     */    private List<TreeTableNode> children = new ArrayList();
+/*     */    private boolean leaf = false;
+/*     */ 
+/*     */    public OrderLineTreeNode(Object aObject, OrderLineTreeNode aParent, boolean brukOrdrelinjelinjer) {
+/*  51 */       this.object = aObject;
+/*  52 */       this.parent = aParent;
+/*     */       List orderLines;      Iterator var5;      OrderLine orderLine;
+/*  54 */       if (this.object instanceof List) {
+/*  55 */          orderLines = (List)this.object;
+/*  56 */          var5 = orderLines.iterator();         while(var5.hasNext()) {            orderLine = (OrderLine)var5.next();
+/*  57 */             this.children.add(new OrderLineTreeNode(orderLine, this, brukOrdrelinjelinjer));
+/*     */          }
+/*  59 */       } else if (this.object instanceof OrderWrapper) {
+/*  60 */          if (((OrderWrapper)this.object).getOrderLines() != null) {
+/*  61 */             orderLines = ((OrderWrapper)this.object).getOrderLines();
+/*  62 */             var5 = orderLines.iterator();            while(var5.hasNext()) {               orderLine = (OrderLine)var5.next();
+/*  63 */                if (orderLine.getOrderLineRef() == null) {
+/*  64 */                   this.children.add(new OrderLineTreeNode(orderLine, this, brukOrdrelinjelinjer));
+/*     */ 
+/*     */                }
+/*     */             }
+/*     */          }
+/*  69 */       } else if (this.object instanceof OrderLine) {
+/*  70 */          if (brukOrdrelinjelinjer) {            Set orderLineAttributes;
+/*  71 */             if (((OrderLine)this.object).getOrderLines() != null) {
+/*  72 */                orderLineAttributes = ((OrderLine)this.object).getOrderLines();               var5 = orderLineAttributes.iterator();
+/*  73 */                while(var5.hasNext()) {                  orderLine = (OrderLine)var5.next();
+/*  74 */                   this.children.add(new OrderLineTreeNode(orderLine, this, brukOrdrelinjelinjer));
+/*     */                }
+/*     */             }
+/*     */ 
+/*  78 */             if (((OrderLine)this.object).getOrderLineAttributes() != null) {
+/*  79 */                orderLineAttributes = ((OrderLine)this.object).getOrderLineAttributes();
+/*  80 */                var5 = orderLineAttributes.iterator();               while(var5.hasNext()) {                  OrderLineAttribute orderLineAttribute = (OrderLineAttribute)var5.next();
+/*  81 */                   this.children.add(new OrderLineTreeNode(orderLineAttribute, this, brukOrdrelinjelinjer));
+/*     */ 
+/*     */ 
+/*     */                }
+/*     */             }
+/*     */          }
+/*     */       } else {
+/*  88 */          this.leaf = true;
+/*     */       }
+/*  90 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public Object getObject() {
+/*  98 */       return this.object;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public Enumeration<MutableTreeTableNode> children() {
+/* 105 */       return new IteratorEnumeration(this.children.iterator());
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public boolean getAllowsChildren() {
+/* 112 */       return true;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public TreeTableNode getChildAt(int aIndex) {
+/* 119 */       return (TreeTableNode)this.children.get(aIndex);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public int getChildCount() {
+/* 126 */       return this.children.size();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public int getIndex(TreeNode aNode) {
+/* 133 */       return this.children.indexOf(aNode);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public OrderLineTreeNode getParent() {
+/* 140 */       return this.parent;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public boolean isLeaf() {
+/* 147 */       return this.leaf;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String toString() {
+/* 155 */       return this.object != null ? this.object.toString() : "";
+/*     */    }
+/*     */ }

@@ -1,87 +1,35 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.dao;
 
 import java.util.Date;
 import java.util.List;
-
 import no.ugland.utransprod.model.PostShipment;
 import no.ugland.utransprod.service.enums.LazyLoadPostShipmentEnum;
 import no.ugland.utransprod.util.Periode;
 
-/**
- * Interface for DAO mot tabell POST_SHIPMENT
- * 
- * @author atle.brekka
- * 
- */
 public interface PostShipmentDAO extends DAO<PostShipment> {
-	/**
-	 * Finner alle uten transport
-	 * 
-	 * @return etterleveringer
-	 */
-	List<PostShipment> findAllWithoutTransport();
+   List<PostShipment> findAllWithoutTransport();
 
-	/**
-	 * Finner alle som ikke er sent
-	 * 
-	 * @return etterleveringer
-	 */
-	List<PostShipment> findAllNotSent();
+   List<PostShipment> findAllNotSent();
 
-	/**
-	 * Lazy laster
-	 * 
-	 * @param postShipment
-	 * @param enums
-	 */
-	void lazyLoad(PostShipment postShipment, LazyLoadPostShipmentEnum[] enums);
+   void lazyLoad(PostShipment var1, LazyLoadPostShipmentEnum[] var2);
 
-	/**
-	 * Oppdaterer
-	 * 
-	 * @param postShipment
-	 */
-	void refreshPostShipment(PostShipment postShipment);
+   void refreshPostShipment(PostShipment var1);
 
-	/**
-	 * Finner alle
-	 * 
-	 * @return etterleveringer
-	 */
-	List<PostShipment> findAll();
+   List<PostShipment> findAll();
 
-	/**
-	 * Lazy laster tre
-	 * 
-	 * @param postShipment
-	 */
-	void lazyLoadTree(PostShipment postShipment);
+   void lazyLoadTree(PostShipment var1);
 
-	/**
-	 * Finner basert på ordrenummer
-	 * 
-	 * @param orderNr
-	 * @return etterleveringer
-	 */
-	List<PostShipment> findByOrderNr(String orderNr);
+   List<PostShipment> findByOrderNr(String var1);
 
-	/**
-	 * Finner basert på kundenummer
-	 * 
-	 * @param customerNr
-	 * @return etterleveringer
-	 */
-	List<PostShipment> findByCustomerNr(Integer customerNr);
+   List<PostShipment> findByCustomerNr(Integer var1);
 
-	/**
-	 * Laster etterlevering
-	 * 
-	 * @param postShipment
-	 */
-	void load(PostShipment postShipment);
-    List<PostShipment> findSentInPeriod(Periode periode,String productAreraGroupName) ;
+   void load(PostShipment var1);
 
-	void settSentDato(PostShipment postShipment, Date sentDate);
+   List<PostShipment> findSentInPeriod(Periode var1, String var2);
 
-	void settLevert(PostShipment postShipment, Date levertDate);
+   void settSentDato(PostShipment var1, Date var2);
+
+   void settLevert(PostShipment var1, Date var2);
 }

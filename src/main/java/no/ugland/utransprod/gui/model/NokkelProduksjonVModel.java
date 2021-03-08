@@ -1,175 +1,174 @@
-package no.ugland.utransprod.gui.model;
-
-import java.beans.PropertyChangeListener;
-import java.math.BigDecimal;
-
-import no.ugland.utransprod.model.NokkelProduksjonV;
-
-import com.jgoodies.binding.PresentationModel;
-
-/**
- * GUI-modell for nøkkelproduksjon
- * 
- * @author atle.brekka
- * 
- */
-public class NokkelProduksjonVModel extends
-		AbstractModel<NokkelProduksjonV, NokkelProduksjonVModel> {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_BUDGET_VALUE_STRING = "budgetValueString";
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_BUDGET_DEVIATION_STRING = "budgetDeviationString";
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_BUDGET_DEVIATION_PROC_STRING = "budgetDeviationProcString";
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_PACKAGE_SUM_WEEK_STRING = "packageSumWeekString";
-
-	/**
-	 * @param object
-	 */
-	public NokkelProduksjonVModel(NokkelProduksjonV object) {
-		super(object);
-	}
-
-	/**
-	 * @return budsjettverdi som streng
-	 */
-	public String getBudgetValueString() {
-		return String.format("%1$.0f", object.getBudgetValue());
-	}
-
-	/**
-	 * @param budgetValue
-	 */
-	public void setBudgetValueString(String budgetValue) {
-		String oldValue = getBudgetValueString();
-		if (budgetValue != null) {
-			object.setBudgetValue(BigDecimal.valueOf(Double
-					.valueOf(budgetValue)));
-		} else {
-			object.setBudgetValue(null);
-		}
-		firePropertyChange(PROPERTY_BUDGET_VALUE_STRING, oldValue, budgetValue);
-	}
-
-	/**
-	 * @return pakkesum som streng
-	 */
-	public String getPackageSumWeekString() {
-		return String.format("%1$.0f", object.getPackageSumWeek());
-	}
-
-	/**
-	 * @param packageSumWeekString
-	 */
-	public void setPackageSumWeekString(String packageSumWeekString) {
-		String oldValue = getPackageSumWeekString();
-		if (packageSumWeekString != null) {
-			object.setPackageSumWeek(BigDecimal.valueOf(Double
-					.valueOf(packageSumWeekString)));
-		} else {
-			object.setPackageSumWeek(null);
-		}
-		firePropertyChange(PROPERTY_PACKAGE_SUM_WEEK_STRING, oldValue,
-				packageSumWeekString);
-	}
-
-	/**
-	 * @return budsjettavvik som tekst
-	 */
-	public String getBudgetDeviationString() {
-		return String.format("%1$.0f", object.getBudgetDeviation());
-	}
-
-	/**
-	 * @param budgetDeviation
-	 */
-	public void setBudgetDeviationString(String budgetDeviation) {
-		String oldValue = getBudgetDeviationString();
-		if (budgetDeviation != null) {
-			object.setBudgetDeviation(BigDecimal.valueOf(Double
-					.valueOf(budgetDeviation)));
-		} else {
-			object.setBudgetDeviation(null);
-		}
-		firePropertyChange(PROPERTY_BUDGET_DEVIATION_STRING, oldValue,
-				budgetDeviation);
-	}
-
-	/**
-	 * @return budsjettavviksprosent som tekst
-	 */
-	public String getBudgetDeviationProcString() {
-		return String.format("%1$.1f", object.getBudgetDeviationProc());
-	}
-
-	/**
-	 * @param budgetDeviationProc
-	 */
-	public void setBudgetDeviationProcString(String budgetDeviationProc) {
-		String oldValue = getBudgetDeviationProcString();
-		if (budgetDeviationProc != null) {
-			object.setBudgetDeviationProc(BigDecimal.valueOf(Double
-					.valueOf(budgetDeviationProc)));
-		} else {
-			object.setBudgetDeviationProc(null);
-		}
-		firePropertyChange(PROPERTY_BUDGET_DEVIATION_PROC_STRING, oldValue,
-				budgetDeviationProc);
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.model.AbstractModel#addBufferChangeListener(java.beans.PropertyChangeListener,
-	 *      com.jgoodies.binding.PresentationModel)
-	 */
-	@Override
-	public void addBufferChangeListener(PropertyChangeListener listener,
-			PresentationModel presentationModel) {
-		presentationModel.getBufferedModel(
-				PROPERTY_BUDGET_DEVIATION_PROC_STRING).addValueChangeListener(
-				listener);
-		presentationModel.getBufferedModel(PROPERTY_BUDGET_DEVIATION_STRING)
-				.addValueChangeListener(listener);
-		presentationModel.getBufferedModel(PROPERTY_BUDGET_VALUE_STRING)
-				.addValueChangeListener(listener);
-		presentationModel.getBufferedModel(PROPERTY_PACKAGE_SUM_WEEK_STRING)
-				.addValueChangeListener(listener);
-
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.model.AbstractModel#getBufferedObjectModel(com.jgoodies.binding.PresentationModel)
-	 */
-	@Override
-	public NokkelProduksjonVModel getBufferedObjectModel(
-			PresentationModel presentationModel) {
-		NokkelProduksjonVModel model = new NokkelProduksjonVModel(
-				new NokkelProduksjonV());
-		model.setBudgetDeviationProcString((String) presentationModel
-				.getBufferedValue(PROPERTY_BUDGET_DEVIATION_PROC_STRING));
-		model.setBudgetDeviationString((String) presentationModel
-				.getBufferedValue(PROPERTY_BUDGET_DEVIATION_STRING));
-		model.setBudgetValueString((String) presentationModel
-				.getBufferedValue(PROPERTY_BUDGET_VALUE_STRING));
-		model.setPackageSumWeekString((String) presentationModel
-				.getBufferedValue(PROPERTY_PACKAGE_SUM_WEEK_STRING));
-		return model;
-	}
-
-}
+/*     */ package no.ugland.utransprod.gui.model;
+/*     */ 
+/*     */ import com.jgoodies.binding.PresentationModel;
+/*     */ import java.beans.PropertyChangeListener;
+/*     */ import java.math.BigDecimal;
+/*     */ import no.ugland.utransprod.model.NokkelProduksjonV;
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ public class NokkelProduksjonVModel extends AbstractModel<NokkelProduksjonV, NokkelProduksjonVModel> {
+/*     */    private static final long serialVersionUID = 1L;
+/*     */    public static final String PROPERTY_BUDGET_VALUE_STRING = "budgetValueString";
+/*     */    public static final String PROPERTY_BUDGET_DEVIATION_STRING = "budgetDeviationString";
+/*     */    public static final String PROPERTY_BUDGET_DEVIATION_PROC_STRING = "budgetDeviationProcString";
+/*     */    public static final String PROPERTY_PACKAGE_SUM_WEEK_STRING = "packageSumWeekString";
+/*     */ 
+/*     */    public NokkelProduksjonVModel(NokkelProduksjonV object) {
+/*  47 */       super(object);
+/*  48 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getBudgetValueString() {
+/*  54 */       return String.format("%1$.0f", ((NokkelProduksjonV)this.object).getBudgetValue());
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setBudgetValueString(String budgetValue) {
+/*  61 */       String oldValue = this.getBudgetValueString();
+/*  62 */       if (budgetValue != null) {
+/*  63 */          ((NokkelProduksjonV)this.object).setBudgetValue(BigDecimal.valueOf(Double.valueOf(budgetValue)));
+/*     */ 
+/*     */       } else {
+/*  66 */          ((NokkelProduksjonV)this.object).setBudgetValue((BigDecimal)null);
+/*     */       }
+/*  68 */       this.firePropertyChange("budgetValueString", oldValue, budgetValue);
+/*  69 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getPackageSumWeekString() {
+/*  75 */       return String.format("%1$.0f", ((NokkelProduksjonV)this.object).getPackageSumWeek());
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setPackageSumWeekString(String packageSumWeekString) {
+/*  82 */       String oldValue = this.getPackageSumWeekString();
+/*  83 */       if (packageSumWeekString != null) {
+/*  84 */          ((NokkelProduksjonV)this.object).setPackageSumWeek(BigDecimal.valueOf(Double.valueOf(packageSumWeekString)));
+/*     */ 
+/*     */       } else {
+/*  87 */          ((NokkelProduksjonV)this.object).setPackageSumWeek((BigDecimal)null);
+/*     */       }
+/*  89 */       this.firePropertyChange("packageSumWeekString", oldValue, packageSumWeekString);
+/*     */ 
+/*  91 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getBudgetDeviationString() {
+/*  97 */       return String.format("%1$.0f", ((NokkelProduksjonV)this.object).getBudgetDeviation());
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setBudgetDeviationString(String budgetDeviation) {
+/* 104 */       String oldValue = this.getBudgetDeviationString();
+/* 105 */       if (budgetDeviation != null) {
+/* 106 */          ((NokkelProduksjonV)this.object).setBudgetDeviation(BigDecimal.valueOf(Double.valueOf(budgetDeviation)));
+/*     */ 
+/*     */       } else {
+/* 109 */          ((NokkelProduksjonV)this.object).setBudgetDeviation((BigDecimal)null);
+/*     */       }
+/* 111 */       this.firePropertyChange("budgetDeviationString", oldValue, budgetDeviation);
+/*     */ 
+/* 113 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getBudgetDeviationProcString() {
+/* 119 */       return String.format("%1$.1f", ((NokkelProduksjonV)this.object).getBudgetDeviationProc());
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setBudgetDeviationProcString(String budgetDeviationProc) {
+/* 126 */       String oldValue = this.getBudgetDeviationProcString();
+/* 127 */       if (budgetDeviationProc != null) {
+/* 128 */          ((NokkelProduksjonV)this.object).setBudgetDeviationProc(BigDecimal.valueOf(Double.valueOf(budgetDeviationProc)));
+/*     */ 
+/*     */       } else {
+/* 131 */          ((NokkelProduksjonV)this.object).setBudgetDeviationProc((BigDecimal)null);
+/*     */       }
+/* 133 */       this.firePropertyChange("budgetDeviationProcString", oldValue, budgetDeviationProc);
+/*     */ 
+/* 135 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void addBufferChangeListener(PropertyChangeListener listener, PresentationModel presentationModel) {
+/* 144 */       presentationModel.getBufferedModel("budgetDeviationProcString").addValueChangeListener(listener);
+/*     */ 
+/*     */ 
+/* 147 */       presentationModel.getBufferedModel("budgetDeviationString").addValueChangeListener(listener);
+/*     */ 
+/* 149 */       presentationModel.getBufferedModel("budgetValueString").addValueChangeListener(listener);
+/*     */ 
+/* 151 */       presentationModel.getBufferedModel("packageSumWeekString").addValueChangeListener(listener);
+/*     */ 
+/*     */ 
+/* 154 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public NokkelProduksjonVModel getBufferedObjectModel(PresentationModel presentationModel) {
+/* 162 */       NokkelProduksjonVModel model = new NokkelProduksjonVModel(new NokkelProduksjonV());
+/*     */ 
+/* 164 */       model.setBudgetDeviationProcString((String)presentationModel.getBufferedValue("budgetDeviationProcString"));
+/*     */ 
+/* 166 */       model.setBudgetDeviationString((String)presentationModel.getBufferedValue("budgetDeviationString"));
+/*     */ 
+/* 168 */       model.setBudgetValueString((String)presentationModel.getBufferedValue("budgetValueString"));
+/*     */ 
+/* 170 */       model.setPackageSumWeekString((String)presentationModel.getBufferedValue("packageSumWeekString"));
+/*     */ 
+/* 172 */       return model;
+/*     */    }
+/*     */ }

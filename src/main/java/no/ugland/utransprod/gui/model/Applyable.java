@@ -1,51 +1,45 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.gui.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-
 import no.ugland.utransprod.model.Colli;
 import no.ugland.utransprod.model.Ordln;
 
-/**
- * Interface for klasser som skal kunne brukes i produksjon og pakking
- * 
- * @author atle.brekka
- * 
- */
 public interface Applyable {
-    String getOrderNr();
+   String getOrderNr();
 
-    Boolean isForPostShipment();
+   Boolean isForPostShipment();
 
-    Integer getOrderLineId();
+   Integer getOrderLineId();
 
-    void setOrdln(Ordln ordln);
+   void setOrdln(Ordln var1);
 
-    Ordln getOrdln();
+   Ordln getOrdln();
 
-    String getArticleName();
+   String getArticleName();
 
-    Colli getColli();
+   Colli getColli();
 
-    void setProduced(Date produced);
+   void setProduced(Date var1);
 
-    Date getProduced();
+   Date getProduced();
 
-    void setColli(Colli colli);
+   void setColli(Colli var1);
 
-    List<Applyable> getRelatedArticles();
+   List<Applyable> getRelatedArticles();
 
-    void setRelatedArticles(List<Applyable> relatedArticles);
+   void setRelatedArticles(List<Applyable> var1);
 
-    boolean isRelatedArticlesComplete();
+   boolean isRelatedArticlesComplete();
 
-    Integer getNumberOfItems();
+   Integer getNumberOfItems();
 
-    String getProductionUnitName();
+   String getProductionUnitName();
 
-    BigDecimal getRealProductionHours();
+   BigDecimal getRealProductionHours();
 
-    Date getActionStarted();
-
+   Date getActionStarted();
 }

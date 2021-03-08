@@ -1,112 +1,41 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.gui.model;
 
+import com.jgoodies.binding.list.SelectionInList;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
-
 import javax.swing.ListModel;
 import javax.swing.table.TableModel;
-
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.gui.WindowInterface;
 import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.ProductionUnit;
-
 import org.jdesktop.swingx.JXTable;
 
-import com.jgoodies.binding.list.SelectionInList;
-
-/**
- * Interface for klasser som skal vise lister av ting som skal settes
- * 
- * @author atle.brekka
- * 
- * @param <T>
- */
 public interface ApplyListInterface<T extends Applyable> {
+   Collection<T> getObjectLines();
 
-    /**
-     * Henter objekter som er satt eller skal settes
-     * 
-     * @return objekter
-     */
-    Collection<T> getObjectLines();
+   void setApplied(T var1, boolean var2, WindowInterface var3);
 
-    /**
-     * Søker etter objekt med ordrenummer eller kundenummer
-     * 
-     * @param orderNr
-     * @param customerNr
-     * @return objekter
-     * @throws ProTransException
-     */
-    // List<T> doSearch(String orderNr, String customerNr)throws
-    // ProTransException;
+   boolean hasWriteAccess();
 
-    /**
-     * Setter tilordnet
-     * 
-     * @param object
-     * @param applied
-     * @param window
-     */
-    void setApplied(T object, boolean applied, WindowInterface window);
+   ReportEnum getReportEnum();
 
-    // void setApplied(T object, boolean applied, WindowInterface window,List<T>
-    // relatedArticles);
+   TableModel getTableModelReport(ListModel var1, JXTable var2, SelectionInList var3);
 
-    /**
-     * Sjekker om bruker har skriveakksess
-     * 
-     * @return true dersom skriveakksess
-     */
-    boolean hasWriteAccess();
+   void setInvisibleColumns(JXTable var1);
 
-    /**
-     * Henter rapportdefinisjon
-     * 
-     * @return rapportdefinisjon
-     */
-    ReportEnum getReportEnum();
+   void refresh(T var1);
 
-    /**
-     * Henter tabelmodell for rapport
-     * 
-     * @param listModel
-     * @param table
-     * @param objectSelectionList
-     * @return tabellmodell
-     */
-    TableModel getTableModelReport(ListModel listModel, JXTable table, SelectionInList objectSelectionList);
+   T getApplyObject(Transportable var1, WindowInterface var2);
 
-    /**
-     * Setter kolonner som ikke skal vises
-     * 
-     * @param table
-     */
-    void setInvisibleColumns(JXTable table);
+   void setStarted(T var1, boolean var2);
 
-    /**
-     * Oppdaterer objekt
-     * 
-     * @param object
-     */
-    void refresh(T object);
+   void setRealProductionHours(T var1, BigDecimal var2);
 
-    /**
-     * Henter objekt som skal settes
-     * 
-     * @param transportable
-     * @return objekt som skal settes
-     */
-    T getApplyObject(Transportable transportable, WindowInterface window);
+   void setProductionUnit(ProductionUnit var1, T var2, WindowInterface var3);
 
-    void setStarted(T object, boolean started);
-
-    void setRealProductionHours(T object, BigDecimal overstyrtTidsforbruk);
-
-    void setProductionUnit(ProductionUnit productionUnit, T object, WindowInterface window);
-
-    List<T> doSearch(String orderNr, String customerNr, ProductAreaGroup productAreaGroup) throws ProTransException;
-
+   List<T> doSearch(String var1, String var2, ProductAreaGroup var3) throws ProTransException;
 }

@@ -1,332 +1,332 @@
-package no.ugland.utransprod.gui.model;
-
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import no.ugland.utransprod.model.FunctionCategory;
-import no.ugland.utransprod.model.JobFunction;
-import no.ugland.utransprod.model.PreventiveAction;
-import no.ugland.utransprod.model.PreventiveActionComment;
-import no.ugland.utransprod.util.Util;
-
-import com.jgoodies.binding.PresentationModel;
-
-/**
- * GUI-modell for prevantivt tiltak
- * 
- * @author atle.brekka
- * 
- */
-public class PreventiveActionModel extends
-		AbstractModel<PreventiveAction, PreventiveActionModel> {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_PREVENTIVE_ACTION_ID = "preventiveActionId";
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_MANAGER = "manager";
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_JOB_FUNCTION = "jobFunction";
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_FUNCTION_CATEGORY = "functionCategory";
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_DESCRIPTION = "description";
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_EXPECTED_OUTCOME = "expectedOutcome";
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_COMMENTS = "comments";
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_PROJECT_CLOSED_BOOLEAN = "projectClosedBoolean";
-
-	/**
-	 * 
-	 */
-	public static final String PROPERTY_PREVENTIVE_ACTION_NAME = "preventiveActionName";
-
-	/**
-	 * 
-	 */
-	private final List<PreventiveActionComment> commentList;
-
-	/**
-	 * @param object
-	 */
-	public PreventiveActionModel(PreventiveAction object) {
-		super(object);
-		commentList = new ArrayList<PreventiveActionComment>();
-		if (object.getPreventiveActionComments() != null) {
-			commentList.addAll(object.getPreventiveActionComments());
-		}
-	}
-
-	/**
-	 * @return prosjektnummer
-	 */
-	public String getPreventiveActionId() {
-		if(object.getPreventiveActionId()!=null){
-		return String.valueOf(object.getPreventiveActionId());
-		}
-		return null;
-	}
-
-	/**
-	 * @param preventiveActionId
-	 */
-	public void setPreventiveActionId(String preventiveActionId) {
-		String oldPreventiveActionId = getPreventiveActionId();
-		if(preventiveActionId!=null){
-		object.setPreventiveActionId(Integer.valueOf(preventiveActionId));
-		}else{
-			object.setPreventiveActionId(null);
-		}
-		firePropertyChange(PROPERTY_PREVENTIVE_ACTION_ID,
-				oldPreventiveActionId, preventiveActionId);
-	}
-
-	/**
-	 * @return prosjektleder
-	 */
-	public String getManager() {
-		return object.getManager();
-	}
-
-	/**
-	 * @param manager
-	 */
-	public void setManager(String manager) {
-		String oldManager = getManager();
-		object.setManager(manager);
-		firePropertyChange(PROPERTY_MANAGER, oldManager, manager);
-	}
-
-	/**
-	 * @return funksjon
-	 */
-	public JobFunction getJobFunction() {
-		return object.getJobFunction();
-	}
-
-	/**
-	 * @param jobFunction
-	 */
-	public void setJobFunction(JobFunction jobFunction) {
-		JobFunction oldFunction = getJobFunction();
-		object.setJobFunction(jobFunction);
-		firePropertyChange(PROPERTY_JOB_FUNCTION, oldFunction, jobFunction);
-	}
-
-	/**
-	 * @return kategori
-	 */
-	public FunctionCategory getFunctionCategory() {
-		return object.getFunctionCategory();
-	}
-
-	/**
-	 * @param functionCategory
-	 */
-	public void setFunctionCategory(FunctionCategory functionCategory) {
-		FunctionCategory oldCategory = getFunctionCategory();
-		object.setFunctionCategory(functionCategory);
-		firePropertyChange(PROPERTY_FUNCTION_CATEGORY, oldCategory,
-				functionCategory);
-	}
-
-	/**
-	 * @return beskrivelse
-	 */
-	public String getDescription() {
-		return object.getDescription();
-	}
-
-	/**
-	 * @param desc
-	 */
-	public void setDescription(String desc) {
-		String oldDesc = getDescription();
-		object.setDescription(desc);
-		firePropertyChange(PROPERTY_DESCRIPTION, oldDesc, desc);
-	}
-
-	/**
-	 * @return forventet resultat
-	 */
-	public String getExpectedOutcome() {
-		return object.getExpectedOutcome();
-	}
-
-	/**
-	 * @param outcome
-	 */
-	public void setExpectedOutcome(String outcome) {
-		String oldOutcome = getExpectedOutcome();
-		object.setExpectedOutcome(outcome);
-		firePropertyChange(PROPERTY_EXPECTED_OUTCOME, oldOutcome, outcome);
-	}
-
-	/**
-	 * @return kommentarer
-	 */
-	public List<PreventiveActionComment> getComments() {
-		return new ArrayList<PreventiveActionComment>(commentList);
-	}
-
-	/**
-	 * @param comments
-	 */
-	public void setComments(List<PreventiveActionComment> comments) {
-		List<PreventiveActionComment> oldList = new ArrayList<PreventiveActionComment>(
-				commentList);
-		commentList.clear();
-		commentList.addAll(comments);
-		firePropertyChange(PROPERTY_COMMENTS, oldList, comments);
-	}
-
-	/**
-	 * @param comment
-	 */
-	public void addComment(PreventiveActionComment comment) {
-		if (comment != null) {
-			comment.setPreventiveAction(object);
-
-			List<PreventiveActionComment> oldList = new ArrayList<PreventiveActionComment>(
-					commentList);
-			commentList.add(comment);
-			firePropertyChange(PROPERTY_COMMENTS, oldList, commentList);
-		}
-	}
-
-	/**
-	 * @return true dersom lukket
-	 */
-	public Boolean getProjectClosedBoolean() {
-		if(object.getClosedDate()!=null)
-			return Boolean.TRUE;
-		return Boolean.FALSE;
-	}
-
-	/**
-	 * @param closed
-	 */
-	public void setProjectClosedBoolean(Boolean closed) {
-		Boolean oldClosed = getProjectClosedBoolean();
-		if(closed){
-			object.setClosedDate(Util.getCurrentDate());
-		}else{
-			object.setClosedDate(null);
-		}
-		
-		firePropertyChange(PROPERTY_PROJECT_CLOSED_BOOLEAN, oldClosed, closed);
-	}
-
-	/**
-	 * @return prosjektnavn
-	 */
-	public String getPreventiveActionName() {
-		return object.getPreventiveActionName();
-	}
-
-	/**
-	 * @param name
-	 */
-	public void setPreventiveActionName(String name) {
-		String oldName = getPreventiveActionName();
-		object.setPreventiveActionName(name);
-		firePropertyChange(PROPERTY_PREVENTIVE_ACTION_NAME, oldName, name);
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.model.AbstractModel#addBufferChangeListener(java.beans.PropertyChangeListener,
-	 *      com.jgoodies.binding.PresentationModel)
-	 */
-	@Override
-	public void addBufferChangeListener(PropertyChangeListener listener,
-			PresentationModel presentationModel) {
-		presentationModel.getBufferedModel(PROPERTY_PREVENTIVE_ACTION_ID).addValueChangeListener(listener);
-		presentationModel.getBufferedModel(PROPERTY_MANAGER)
-				.addValueChangeListener(listener);
-		presentationModel.getBufferedModel(PROPERTY_JOB_FUNCTION)
-				.addValueChangeListener(listener);
-		presentationModel.getBufferedModel(PROPERTY_FUNCTION_CATEGORY)
-				.addValueChangeListener(listener);
-		presentationModel.getBufferedModel(PROPERTY_DESCRIPTION)
-				.addValueChangeListener(listener);
-		presentationModel.getBufferedModel(PROPERTY_EXPECTED_OUTCOME)
-				.addValueChangeListener(listener);
-		presentationModel.getBufferedModel(PROPERTY_PROJECT_CLOSED_BOOLEAN)
-				.addValueChangeListener(listener);
-		presentationModel.getBufferedModel(PROPERTY_PREVENTIVE_ACTION_NAME)
-				.addValueChangeListener(listener);
-
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.model.AbstractModel#getBufferedObjectModel(com.jgoodies.binding.PresentationModel)
-	 */
-	@Override
-	public PreventiveActionModel getBufferedObjectModel(
-			PresentationModel presentationModel) {
-		PreventiveActionModel model = new PreventiveActionModel(
-				new PreventiveAction());
-		model.setPreventiveActionId((String) presentationModel.getBufferedValue(PROPERTY_PREVENTIVE_ACTION_ID));
-		model.setManager((String) presentationModel
-				.getBufferedValue(PROPERTY_MANAGER));
-		model.setJobFunction((JobFunction) presentationModel
-				.getBufferedValue(PROPERTY_JOB_FUNCTION));
-		model.setFunctionCategory((FunctionCategory) presentationModel
-				.getBufferedValue(PROPERTY_FUNCTION_CATEGORY));
-		model.setDescription((String) presentationModel
-				.getBufferedValue(PROPERTY_DESCRIPTION));
-		model.setExpectedOutcome((String) presentationModel
-				.getBufferedValue(PROPERTY_EXPECTED_OUTCOME));
-		model.setProjectClosedBoolean((Boolean) presentationModel
-				.getBufferedValue(PROPERTY_PROJECT_CLOSED_BOOLEAN));
-		model.setPreventiveActionName((String) presentationModel
-				.getBufferedValue(PROPERTY_PREVENTIVE_ACTION_NAME));
-		return model;
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.model.AbstractModel#viewToModel()
-	 */
-	@Override
-	public void viewToModel() {
-		Set<PreventiveActionComment> comments = object
-				.getPreventiveActionComments();
-		if (comments == null) {
-			comments = new HashSet<PreventiveActionComment>();
-		}
-		comments.clear();
-		comments.addAll(commentList);
-		object.setPreventiveActionComments(comments);
-	}
-}
+/*     */ package no.ugland.utransprod.gui.model;
+/*     */ 
+/*     */ import com.jgoodies.binding.PresentationModel;
+/*     */ import java.beans.PropertyChangeListener;
+/*     */ import java.util.ArrayList;
+/*     */ import java.util.Date;
+/*     */ import java.util.HashSet;
+/*     */ import java.util.List;
+/*     */ import java.util.Set;
+/*     */ import no.ugland.utransprod.model.FunctionCategory;
+/*     */ import no.ugland.utransprod.model.JobFunction;
+/*     */ import no.ugland.utransprod.model.PreventiveAction;
+/*     */ import no.ugland.utransprod.model.PreventiveActionComment;
+/*     */ import no.ugland.utransprod.util.Util;
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ public class PreventiveActionModel extends AbstractModel<PreventiveAction, PreventiveActionModel> {
+/*     */    private static final long serialVersionUID = 1L;
+/*     */    public static final String PROPERTY_PREVENTIVE_ACTION_ID = "preventiveActionId";
+/*     */    public static final String PROPERTY_MANAGER = "manager";
+/*     */    public static final String PROPERTY_JOB_FUNCTION = "jobFunction";
+/*     */    public static final String PROPERTY_FUNCTION_CATEGORY = "functionCategory";
+/*     */    public static final String PROPERTY_DESCRIPTION = "description";
+/*     */    public static final String PROPERTY_EXPECTED_OUTCOME = "expectedOutcome";
+/*     */    public static final String PROPERTY_COMMENTS = "comments";
+/*     */    public static final String PROPERTY_PROJECT_CLOSED_BOOLEAN = "projectClosedBoolean";
+/*     */    public static final String PROPERTY_PREVENTIVE_ACTION_NAME = "preventiveActionName";
+/*     */    private final List<PreventiveActionComment> commentList = new ArrayList();
+/*     */ 
+/*     */    public PreventiveActionModel(PreventiveAction object) {
+/*  84 */       super(object);
+/*     */ 
+/*  86 */       if (object.getPreventiveActionComments() != null) {
+/*  87 */          this.commentList.addAll(object.getPreventiveActionComments());
+/*     */       }
+/*  89 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getPreventiveActionId() {
+/*  95 */       return ((PreventiveAction)this.object).getPreventiveActionId() != null ? String.valueOf(((PreventiveAction)this.object).getPreventiveActionId()) : null;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setPreventiveActionId(String preventiveActionId) {
+/* 105 */       String oldPreventiveActionId = this.getPreventiveActionId();
+/* 106 */       if (preventiveActionId != null) {
+/* 107 */          ((PreventiveAction)this.object).setPreventiveActionId(Integer.valueOf(preventiveActionId));
+/*     */       } else {
+/* 109 */          ((PreventiveAction)this.object).setPreventiveActionId((Integer)null);
+/*     */       }
+/* 111 */       this.firePropertyChange("preventiveActionId", oldPreventiveActionId, preventiveActionId);
+/*     */ 
+/* 113 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getManager() {
+/* 119 */       return ((PreventiveAction)this.object).getManager();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setManager(String manager) {
+/* 126 */       String oldManager = this.getManager();
+/* 127 */       ((PreventiveAction)this.object).setManager(manager);
+/* 128 */       this.firePropertyChange("manager", oldManager, manager);
+/* 129 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public JobFunction getJobFunction() {
+/* 135 */       return ((PreventiveAction)this.object).getJobFunction();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setJobFunction(JobFunction jobFunction) {
+/* 142 */       JobFunction oldFunction = this.getJobFunction();
+/* 143 */       ((PreventiveAction)this.object).setJobFunction(jobFunction);
+/* 144 */       this.firePropertyChange("jobFunction", oldFunction, jobFunction);
+/* 145 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public FunctionCategory getFunctionCategory() {
+/* 151 */       return ((PreventiveAction)this.object).getFunctionCategory();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setFunctionCategory(FunctionCategory functionCategory) {
+/* 158 */       FunctionCategory oldCategory = this.getFunctionCategory();
+/* 159 */       ((PreventiveAction)this.object).setFunctionCategory(functionCategory);
+/* 160 */       this.firePropertyChange("functionCategory", oldCategory, functionCategory);
+/*     */ 
+/* 162 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getDescription() {
+/* 168 */       return ((PreventiveAction)this.object).getDescription();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setDescription(String desc) {
+/* 175 */       String oldDesc = this.getDescription();
+/* 176 */       ((PreventiveAction)this.object).setDescription(desc);
+/* 177 */       this.firePropertyChange("description", oldDesc, desc);
+/* 178 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getExpectedOutcome() {
+/* 184 */       return ((PreventiveAction)this.object).getExpectedOutcome();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setExpectedOutcome(String outcome) {
+/* 191 */       String oldOutcome = this.getExpectedOutcome();
+/* 192 */       ((PreventiveAction)this.object).setExpectedOutcome(outcome);
+/* 193 */       this.firePropertyChange("expectedOutcome", oldOutcome, outcome);
+/* 194 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public List<PreventiveActionComment> getComments() {
+/* 200 */       return new ArrayList(this.commentList);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setComments(List<PreventiveActionComment> comments) {
+/* 207 */       List<PreventiveActionComment> oldList = new ArrayList(this.commentList);
+/*     */ 
+/* 209 */       this.commentList.clear();
+/* 210 */       this.commentList.addAll(comments);
+/* 211 */       this.firePropertyChange("comments", oldList, comments);
+/* 212 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void addComment(PreventiveActionComment comment) {
+/* 218 */       if (comment != null) {
+/* 219 */          comment.setPreventiveAction((PreventiveAction)this.object);
+/*     */ 
+/* 221 */          List<PreventiveActionComment> oldList = new ArrayList(this.commentList);
+/*     */ 
+/* 223 */          this.commentList.add(comment);
+/* 224 */          this.firePropertyChange("comments", oldList, this.commentList);
+/*     */       }
+/* 226 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public Boolean getProjectClosedBoolean() {
+/* 232 */       return ((PreventiveAction)this.object).getClosedDate() != null ? Boolean.TRUE : Boolean.FALSE;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setProjectClosedBoolean(Boolean closed) {
+/* 241 */       Boolean oldClosed = this.getProjectClosedBoolean();
+/* 242 */       if (closed) {
+/* 243 */          ((PreventiveAction)this.object).setClosedDate(Util.getCurrentDate());
+/*     */       } else {
+/* 245 */          ((PreventiveAction)this.object).setClosedDate((Date)null);
+/*     */       }
+/*     */ 
+/* 248 */       this.firePropertyChange("projectClosedBoolean", oldClosed, closed);
+/* 249 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getPreventiveActionName() {
+/* 255 */       return ((PreventiveAction)this.object).getPreventiveActionName();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setPreventiveActionName(String name) {
+/* 262 */       String oldName = this.getPreventiveActionName();
+/* 263 */       ((PreventiveAction)this.object).setPreventiveActionName(name);
+/* 264 */       this.firePropertyChange("preventiveActionName", oldName, name);
+/* 265 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void addBufferChangeListener(PropertyChangeListener listener, PresentationModel presentationModel) {
+/* 274 */       presentationModel.getBufferedModel("preventiveActionId").addValueChangeListener(listener);
+/* 275 */       presentationModel.getBufferedModel("manager").addValueChangeListener(listener);
+/*     */ 
+/* 277 */       presentationModel.getBufferedModel("jobFunction").addValueChangeListener(listener);
+/*     */ 
+/* 279 */       presentationModel.getBufferedModel("functionCategory").addValueChangeListener(listener);
+/*     */ 
+/* 281 */       presentationModel.getBufferedModel("description").addValueChangeListener(listener);
+/*     */ 
+/* 283 */       presentationModel.getBufferedModel("expectedOutcome").addValueChangeListener(listener);
+/*     */ 
+/* 285 */       presentationModel.getBufferedModel("projectClosedBoolean").addValueChangeListener(listener);
+/*     */ 
+/* 287 */       presentationModel.getBufferedModel("preventiveActionName").addValueChangeListener(listener);
+/*     */ 
+/*     */ 
+/* 290 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public PreventiveActionModel getBufferedObjectModel(PresentationModel presentationModel) {
+/* 298 */       PreventiveActionModel model = new PreventiveActionModel(new PreventiveAction());
+/*     */ 
+/* 300 */       model.setPreventiveActionId((String)presentationModel.getBufferedValue("preventiveActionId"));
+/* 301 */       model.setManager((String)presentationModel.getBufferedValue("manager"));
+/*     */ 
+/* 303 */       model.setJobFunction((JobFunction)presentationModel.getBufferedValue("jobFunction"));
+/*     */ 
+/* 305 */       model.setFunctionCategory((FunctionCategory)presentationModel.getBufferedValue("functionCategory"));
+/*     */ 
+/* 307 */       model.setDescription((String)presentationModel.getBufferedValue("description"));
+/*     */ 
+/* 309 */       model.setExpectedOutcome((String)presentationModel.getBufferedValue("expectedOutcome"));
+/*     */ 
+/* 311 */       model.setProjectClosedBoolean((Boolean)presentationModel.getBufferedValue("projectClosedBoolean"));
+/*     */ 
+/* 313 */       model.setPreventiveActionName((String)presentationModel.getBufferedValue("preventiveActionName"));
+/*     */ 
+/* 315 */       return model;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void viewToModel() {
+/* 323 */       Set<PreventiveActionComment> comments = ((PreventiveAction)this.object).getPreventiveActionComments();
+/*     */ 
+/* 325 */       if (comments == null) {
+/* 326 */          comments = new HashSet();
+/*     */       }
+/* 328 */       ((Set)comments).clear();
+/* 329 */       ((Set)comments).addAll(this.commentList);
+/* 330 */       ((PreventiveAction)this.object).setPreventiveActionComments((Set)comments);
+/* 331 */    }
+/*     */ }

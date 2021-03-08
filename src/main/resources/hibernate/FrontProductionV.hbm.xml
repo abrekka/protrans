@@ -9,45 +9,44 @@
     name="no.ugland.utransprod.model.FrontProductionV" 
     table="FRONT_PRODUCTION_V"
 >
-<id name="orderLineId" type="java.lang.Integer" column="ORDER_LINE_ID">
+<id name="orderNr" type="java.lang.String" column="ORDER_NR">
         <generator class="assigned"/>
         </id>
-<property
+        <property
         name="doneBy"
         type="java.lang.String"
         column="DONE_BY"
         length="500"
     />
-<property
+
+    <property
         name="realProductionHours"
         type="java.math.BigDecimal"
         column="REAL_PRODUCTION_HOURS"
         length="32"
-    />    
-    
-    <property
+    />
+
+ <property
         name="productionWeek"
         type="java.lang.Integer"
         column="PRODUCTION_WEEK"
         length="32"
     />
-
 	<property
         name="customerDetails"
         type="java.lang.String"
         column="CUSTOMER_DETAILS"
         length="255"
     />
-    
 
 	
     
-    <property
-        name="orderNr"
-        type="java.lang.String"
-        column="ORDER_NR"
-        length="32"
-    />
+<!--     <property -->
+<!--         name="orderNr" -->
+<!--         type="java.lang.String" -->
+<!--         column="ORDER_NR" -->
+<!--         length="32" -->
+<!--     /> -->
     
 	
 	
@@ -77,18 +76,18 @@
         column="ARTICLE_NAME"
         length="255"
     />
-	<property
-        name="attributeInfo"
-        type="java.lang.String"
-        column="ATTRIBUTE_INFO"
-        length="255"
-    />
-	<property
-        name="numberOfItems"
-        type="java.lang.Integer"
-        column="NUMBER_OF_ITEMS"
-        length="32"
-    />
+<!-- 	<property -->
+<!--         name="attributeInfo" -->
+<!--         type="java.lang.String" -->
+<!--         column="ATTRIBUTE_INFO" -->
+<!--         length="255" -->
+<!--     /> -->
+<!-- 	<property -->
+<!--         name="numberOfItems" -->
+<!--         type="java.lang.Integer" -->
+<!--         column="NUMBER_OF_ITEMS" -->
+<!--         length="32" -->
+<!--     /> -->
 	<property
         name="loadingDate"
         type="java.util.Date"
@@ -156,7 +155,8 @@
         column="PRODUCT_AREA_GROUP_NAME"
         length="32"
     />
-	<property
+    
+    <property
         name="actionStarted"
         type="java.util.Date"
         column="ACTION_STARTED"
@@ -168,12 +168,13 @@
         column="PRODUCTION_DATE"
         length="32"
     />
-	<property
+    <property
         name="productionUnitName"
         type="java.lang.String"
         column="PRODUCTION_UNIT_NAME"
         length="100"
     />
+    
 
 </class>
 </hibernate-mapping>

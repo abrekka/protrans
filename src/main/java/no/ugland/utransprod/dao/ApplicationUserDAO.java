@@ -1,53 +1,18 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.dao;
 
 import java.util.List;
-
 import no.ugland.utransprod.model.ApplicationUser;
 
-/**
- * Interface for DAO klasse mot tabell APPLICATION_USER
- * 
- * @author atle.brekka
- */
 public interface ApplicationUserDAO extends DAO<ApplicationUser> {
-    /**
-     * Finner alle brukere som ikke er grupperbruker
-     * 
-     * @return brukere
-     */
-    List<ApplicationUser> findAllNotGroup();
+   List<ApplicationUser> findAllNotGroup();
 
-    /**
-     * Oppdaterer objekt
-     * 
-     * @param applicationUser
-     */
-    void refreshObject(ApplicationUser applicationUser);
+   void refreshObject(ApplicationUser var1);
 
-    /**
-     * Finner bruker basert på brukernavn og passord
-     * 
-     * @param userName
-     * @param password
-     * @return brukere
-     */
-    List<ApplicationUser> findByUserNameAndPassword(String userName, String password);
+   List<ApplicationUser> findByUserNameAndPassword(String var1, String var2);
 
-    /**
-     * Finner initialer til alle pakkere
-     * 
-     * @return initialer
-     */
-    List<String> findAllPackers();
+   List<String> findAllPackers();
 
-    ApplicationUser findByFullName(String fullName);
-
-    /**
-     * Lazy laster bruker
-     * 
-     * @param applicationUser
-     * @param enums
-     */
-    // void lazyLoad(ApplicationUser applicationUser,
-    // LazyLoadApplicationUserEnum[] enums);
+   ApplicationUser findByFullName(String var1);
 }

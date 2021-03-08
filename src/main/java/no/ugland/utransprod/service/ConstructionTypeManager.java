@@ -1,9 +1,10 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-
 import no.ugland.utransprod.model.ConstructionType;
 import no.ugland.utransprod.model.ConstructionTypeArticle;
 import no.ugland.utransprod.model.ConstructionTypeAttribute;
@@ -15,100 +16,36 @@ import no.ugland.utransprod.service.enums.LazyLoadConstructionTypeArticleEnum;
 import no.ugland.utransprod.service.enums.LazyLoadConstructionTypeAttributeEnum;
 import no.ugland.utransprod.service.enums.LazyLoadConstructionTypeEnum;
 
-/**
- * Manager for garasjetype
- * @author atle.brekka
- */
-public interface ConstructionTypeManager extends
-        OverviewManager<ConstructionType> {
-    String MANAGER_NAME = "constructionTypeManager";
+public interface ConstructionTypeManager extends OverviewManager<ConstructionType> {
+   String MANAGER_NAME = "constructionTypeManager";
 
-    /**
-     * Lagrer garasjetype
-     * @param constructionType
-     */
-    void saveConstructionType(ConstructionType constructionType);
+   void saveConstructionType(ConstructionType var1);
 
-    /**
-     * Fjern alle
-     */
-    void removeAll();
+   void removeAll();
 
-    /**
-     * Hent alle
-     * @return garasjetyper
-     */
-    List<ConstructionType> findAll();
+   List<ConstructionType> findAll();
 
-    /**
-     * Finner basert på navn
-     * @param aName
-     * @return garasjetype
-     */
-    ConstructionType findByName(String aName);
+   ConstructionType findByName(String var1);
 
-    /**
-     * Fjerner garasjetype
-     * @param constructionType
-     */
-    void removeConstructionType(ConstructionType constructionType);
+   void removeConstructionType(ConstructionType var1);
 
-    /**
-     * Finner master for gitt produktområde
-     * @param productArea
-     * @return konstruksjonstype
-     */
-    ConstructionType findMaster(ProductArea productArea);
+   ConstructionType findMaster(ProductArea var1);
 
-    /**
-     * Lazy laster konstruksjonstype
-     * @param constructionType
-     * @param enums
-     */
-    void lazyLoad(ConstructionType constructionType,
-            LazyLoadConstructionTypeEnum[] enums);
+   void lazyLoad(ConstructionType var1, LazyLoadConstructionTypeEnum[] var2);
 
-    /**
-     * Lazy laster attributt
-     * @param constructionTypeAttribute
-     * @param enums
-     */
-    void lazyLoadAttribute(ConstructionTypeAttribute constructionTypeAttribute,
-            LazyLoadConstructionTypeAttributeEnum[] enums);
+   void lazyLoadAttribute(ConstructionTypeAttribute var1, LazyLoadConstructionTypeAttributeEnum[] var2);
 
-    /**
-     * Lazy laster artikkel
-     * @param article
-     * @param enums
-     */
-    void lazyLoadArticle(ConstructionTypeArticle article,
-            LazyLoadConstructionTypeArticleEnum[] enums);
+   void lazyLoadArticle(ConstructionTypeArticle var1, LazyLoadConstructionTypeArticleEnum[] var2);
 
-    /**
-     * Lazy laster alt for konstruksjonstype
-     * @param constructionType
-     */
-    void lazyLoadTree(ConstructionType constructionType);
+   void lazyLoadTree(ConstructionType var1);
 
-    /**
-     * Finner alle
-     * @return konstruksjonstyper
-     */
-    List<ConstructionType> findAllIncludeMaster();
+   List<ConstructionType> findAllIncludeMaster();
 
-    /**
-     * Finner alle for gitt produktområde
-     * @param productArea
-     * @return konstruksjonstyper
-     */
-    List<ConstructionType> findByProductArea(ProductArea productArea);
+   List<ConstructionType> findByProductArea(ProductArea var1);
 
-    /**
-     * Finner alle mastere
-     * @return kontruksjonstyper
-     */
-    List<ConstructionType> findAllMasters();
-    Set<OrderLine> getOrderLinesForNewConstructionType(Collection<OrderLine> originalOrderLines,ConstructionType newConstructionType,Order order,Deviation deviation);
-    Set<OrderLine> updateOrderLinesFromVisma(
-			Set<OrderLine> orderLines, Collection<OrderLine> vismaOrderLines);
+   List<ConstructionType> findAllMasters();
+
+   Set<OrderLine> getOrderLinesForNewConstructionType(Collection<OrderLine> var1, ConstructionType var2, Order var3, Deviation var4);
+
+   Set<OrderLine> updateOrderLinesFromVisma(Set<OrderLine> var1, Collection<OrderLine> var2);
 }

@@ -1,26 +1,24 @@
-package no.ugland.utransprod.service.impl;
-
-import no.ugland.utransprod.dao.AssemblyOverdueVDAO;
-import no.ugland.utransprod.model.AssemblyOverdueV;
-import no.ugland.utransprod.service.AssemblyOverdueVManager;
-
-/**
- * Implementasjon av serviceklasse for view ASSEMBLY_OVERDUE_V.
- * @author atle.brekka
- */
-public class AssemblyOverdueVManagerImpl implements AssemblyOverdueVManager {
-    private AssemblyOverdueVDAO dao;
-
-    public final void setAssemblyOverdueVDAO(final AssemblyOverdueVDAO aDao) {
-        this.dao = aDao;
-    }
-
-    /**
-     * @see no.ugland.utransprod.service.AssemblyOverdueVManager#getAssemblyOverdueV()
-     */
-    public final AssemblyOverdueV getAssemblyOverdueV() {
-        return dao.getOldest();
-
-    }
-
-}
+/*    */ package no.ugland.utransprod.service.impl;
+/*    */ 
+/*    */ import no.ugland.utransprod.dao.AssemblyOverdueVDAO;
+/*    */ import no.ugland.utransprod.model.AssemblyOverdueV;
+/*    */ import no.ugland.utransprod.service.AssemblyOverdueVManager;
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ public class AssemblyOverdueVManagerImpl implements AssemblyOverdueVManager {
+/*    */    private AssemblyOverdueVDAO dao;
+/*    */ 
+/*    */    public final void setAssemblyOverdueVDAO(AssemblyOverdueVDAO aDao) {
+/* 15 */       this.dao = aDao;
+/* 16 */    }
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */ 
+/*    */    public final AssemblyOverdueV getAssemblyOverdueV() {
+/* 22 */       return this.dao.getOldest();
+/*    */    }
+/*    */ }

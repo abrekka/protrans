@@ -1,163 +1,162 @@
-package no.ugland.utransprod.gui.model;
-
-import java.beans.PropertyChangeListener;
-import java.util.List;
-
-import no.ugland.utransprod.model.Colli;
-import no.ugland.utransprod.model.OrderLine;
-
-import org.apache.commons.lang.StringUtils;
-
-import com.jgoodies.binding.PresentationModel;
-import com.jgoodies.binding.list.ArrayListModel;
-import com.jgoodies.validation.util.ValidationUtils;
-
-/**
- * GUI-modell for kolli
- * 
- * @author atle.brekka
- * 
- */
-public class ColliModel extends AbstractModel<Colli, ColliModel> {
-	private static final long serialVersionUID = 1L;
-
-	public static final String PROPERTY_COLLI_NAME = "colliName";
-	public static final String PROPERTY_HEIGHT = "height";
-	public static final String PROPERTY_LENGHT = "lenght";
-	public static final String PROPERTY_WIDHT = "widht";
-
-	public static final String PROPERTY_ORDER_LINES = "orderLines";
-
-	public static final String PROPERTY_NUMBER_OF_COLLIES = "numberOfCollies";
-	public static final String PROPERTY_COLLI_NAME_AND_NUMBER = "colliNameAndNumber";
-	public static final String PROPERTY_COLLI_HEIGHT = "colliHeightWidhtLenght";
-
-	private final ArrayListModel orderLineList;
-
-	/**
-	 * @param colli
-	 */
-	public ColliModel(Colli colli) {
-		super(colli);
-
-		orderLineList = new ArrayListModel();
-		if (object.getOrderLines() != null) {
-			orderLineList.addAll(object.getOrderLines());
-		}
-
-	}
-
-	public String getColliName() {
-		return object.getColliName();
-	}
-
-	public void setColliName(String colliName) {
-		String oldName = getColliName();
-		object.setColliName(colliName);
-		firePropertyChange(PROPERTY_COLLI_NAME, oldName, colliName);
-	}
-
-	public String getHeight() {
-		return object.getHeight() == null ? null : object.getHeight().toString();
-	}
-
-	public void setHeight(String height) {
-		String oldHeight = getHeight();
-		object.setHeight(StringUtils.isEmpty(height) ? null : Integer.valueOf(StringUtils.trim(height)));
-		firePropertyChange(PROPERTY_HEIGHT, oldHeight, height);
-	}
-
-	public String getWidht() {
-		return object.getWidht() == null ? null : object.getWidht().toString();
-	}
-
-	public void setWidht(String widht) {
-		if (!ValidationUtils.isNumeric(widht)) {
-			widht = "0";
-		}
-		String oldWidht = getWidht();
-		object.setWidht(StringUtils.isEmpty(widht) ? null : Integer.valueOf(StringUtils.trim(widht)));
-		firePropertyChange(PROPERTY_WIDHT, oldWidht, widht);
-	}
-
-	public String getLenght() {
-		return object.getLenght() == null ? null : object.getLenght().toString();
-	}
-
-	public void setLenght(String lenght) {
-		if (!ValidationUtils.isNumeric(lenght)) {
-			lenght = "0";
-		}
-		String oldLenght = getLenght();
-
-		object.setLenght(StringUtils.isEmpty(lenght) ? null : Integer.valueOf(StringUtils.trim(lenght)));
-		firePropertyChange(PROPERTY_LENGHT, oldLenght, lenght);
-	}
-
-	public String getColliNameAndNumber() {
-		return object.getColliName() + (object.getNumberOfCollies() != null ? " - " + object.getNumberOfCollies() : "");
-	}
-
-	public String getColliHeightWidhtLenght() {
-		return "L:" + (object.getLenght() == null ? "0" : object.getLenght()) + " B:"
-				+ (object.getWidht() == null ? "0" : object.getWidht()) + " H:"
-				+ (object.getHeight() == null ? "0" : object.getHeight());
-	}
-
-	public String getNumberOfCollies() {
-		return object.getNumberOfCollies() != null ? String.valueOf(object.getNumberOfCollies()) : null;
-	}
-
-	/**
-	 * @param colliName
-	 */
-	public void setNumberOfCollies(String numberOfCollies) {
-		if (!ValidationUtils.isNumeric(numberOfCollies)) {
-			numberOfCollies = "0";
-		}
-		String oldNumber = getNumberOfCollies();
-		object.setNumberOfCollies(!StringUtils.isEmpty(numberOfCollies) ? Integer.valueOf(numberOfCollies) : null);
-		firePropertyChange(PROPERTY_NUMBER_OF_COLLIES, oldNumber, numberOfCollies);
-	}
-
-	/**
-	 * @return ordrelinjer
-	 */
-	@SuppressWarnings("unchecked")
-	public List<OrderLine> getOrderLines() {
-		return orderLineList;
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.model.AbstractModel#addBufferChangeListener(java.beans.PropertyChangeListener,
-	 *      com.jgoodies.binding.PresentationModel)
-	 */
-	@Override
-	public void addBufferChangeListener(PropertyChangeListener listener, PresentationModel presentationModel) {
-		presentationModel.getBufferedModel(PROPERTY_COLLI_NAME).addValueChangeListener(listener);
-		presentationModel.getBufferedModel(PROPERTY_ORDER_LINES).addValueChangeListener(listener);
-		presentationModel.getBufferedModel(PROPERTY_HEIGHT).addValueChangeListener(listener);
-		presentationModel.getBufferedModel(PROPERTY_LENGHT).addValueChangeListener(listener);
-		presentationModel.getBufferedModel(PROPERTY_WIDHT).addValueChangeListener(listener);
-
-	}
-
-	/**
-	 * @see no.ugland.utransprod.gui.model.AbstractModel#getBufferedObjectModel(com.jgoodies.binding.PresentationModel)
-	 */
-	@Override
-	public ColliModel getBufferedObjectModel(PresentationModel presentationModel) {
-		ColliModel colliModel = new ColliModel(new Colli("ColliModel"));
-		colliModel.setColliName((String) presentationModel.getBufferedValue(PROPERTY_COLLI_NAME));
-		colliModel.setHeight((String) presentationModel.getBufferedValue(PROPERTY_HEIGHT));
-		colliModel.setLenght((String) presentationModel.getBufferedValue(PROPERTY_LENGHT));
-		colliModel.setWidht((String) presentationModel.getBufferedValue(PROPERTY_WIDHT));
-		return colliModel;
-	}
-
-	public void firePropertyChanged(String propertyName) {
-		firePropertyChange(propertyName, null, getColliNameAndNumber());
-
-	}
-
-}
+/*     */ package no.ugland.utransprod.gui.model;
+/*     */ 
+/*     */ import com.jgoodies.binding.PresentationModel;
+/*     */ import com.jgoodies.binding.list.ArrayListModel;
+/*     */ import com.jgoodies.validation.util.ValidationUtils;
+/*     */ import java.beans.PropertyChangeListener;
+/*     */ import java.util.List;
+/*     */ import no.ugland.utransprod.model.Colli;
+/*     */ import no.ugland.utransprod.model.OrderLine;
+/*     */ import org.apache.commons.lang.StringUtils;
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ public class ColliModel extends AbstractModel<Colli, ColliModel> {
+/*     */    private static final long serialVersionUID = 1L;
+/*     */    public static final String PROPERTY_COLLI_NAME = "colliName";
+/*     */    public static final String PROPERTY_HEIGHT = "height";
+/*     */    public static final String PROPERTY_LENGHT = "lenght";
+/*     */    public static final String PROPERTY_WIDHT = "widht";
+/*     */    public static final String PROPERTY_ORDER_LINES = "orderLines";
+/*     */    public static final String PROPERTY_NUMBER_OF_COLLIES = "numberOfCollies";
+/*     */    public static final String PROPERTY_COLLI_NAME_AND_NUMBER = "colliNameAndNumber";
+/*     */    public static final String PROPERTY_COLLI_HEIGHT = "colliHeightWidhtLenght";
+/*     */    private final ArrayListModel orderLineList = new ArrayListModel();
+/*     */ 
+/*     */    public ColliModel(Colli colli) {
+/*  41 */       super(colli);
+/*     */ 
+/*     */ 
+/*  44 */       if (((Colli)this.object).getOrderLines() != null) {
+/*  45 */          this.orderLineList.addAll(((Colli)this.object).getOrderLines());
+/*     */       }
+/*     */ 
+/*  48 */    }
+/*     */ 
+/*     */    public String getColliName() {
+/*  51 */       return ((Colli)this.object).getColliName();
+/*     */    }
+/*     */ 
+/*     */    public void setColliName(String colliName) {
+/*  55 */       String oldName = this.getColliName();
+/*  56 */       ((Colli)this.object).setColliName(colliName);
+/*  57 */       this.firePropertyChange("colliName", oldName, colliName);
+/*  58 */    }
+/*     */ 
+/*     */    public String getHeight() {
+/*  61 */       return ((Colli)this.object).getHeight() == null ? null : ((Colli)this.object).getHeight().toString();
+/*     */    }
+/*     */ 
+/*     */    public void setHeight(String height) {
+/*  65 */       String oldHeight = this.getHeight();
+/*  66 */       ((Colli)this.object).setHeight(StringUtils.isEmpty(height) ? null : Integer.valueOf(StringUtils.trim(height)));
+/*  67 */       this.firePropertyChange("height", oldHeight, height);
+/*  68 */    }
+/*     */ 
+/*     */    public String getWidht() {
+/*  71 */       return ((Colli)this.object).getWidht() == null ? null : ((Colli)this.object).getWidht().toString();
+/*     */    }
+/*     */ 
+/*     */    public void setWidht(String widht) {
+/*  75 */       if (!ValidationUtils.isNumeric(widht)) {
+/*  76 */          widht = "0";
+/*     */       }
+/*  78 */       String oldWidht = this.getWidht();
+/*  79 */       ((Colli)this.object).setWidht(StringUtils.isEmpty(widht) ? null : Integer.valueOf(StringUtils.trim(widht)));
+/*  80 */       this.firePropertyChange("widht", oldWidht, widht);
+/*  81 */    }
+/*     */ 
+/*     */    public String getLenght() {
+/*  84 */       return ((Colli)this.object).getLenght() == null ? null : ((Colli)this.object).getLenght().toString();
+/*     */    }
+/*     */ 
+/*     */    public void setLenght(String lenght) {
+/*  88 */       if (!ValidationUtils.isNumeric(lenght)) {
+/*  89 */          lenght = "0";
+/*     */       }
+/*  91 */       String oldLenght = this.getLenght();
+/*     */ 
+/*  93 */       ((Colli)this.object).setLenght(StringUtils.isEmpty(lenght) ? null : Integer.valueOf(StringUtils.trim(lenght)));
+/*  94 */       this.firePropertyChange("lenght", oldLenght, lenght);
+/*  95 */    }
+/*     */ 
+/*     */    public String getColliNameAndNumber() {
+/*  98 */       return ((Colli)this.object).getColliName() + (((Colli)this.object).getNumberOfCollies() != null ? " - " + ((Colli)this.object).getNumberOfCollies() : "");
+/*     */    }
+/*     */ 
+/*     */    public String getColliHeightWidhtLenght() {
+/* 102 */       return "L:" + (((Colli)this.object).getLenght() == null ? "0" : ((Colli)this.object).getLenght()) + " B:" + (((Colli)this.object).getWidht() == null ? "0" : ((Colli)this.object).getWidht()) + " H:" + (((Colli)this.object).getHeight() == null ? "0" : ((Colli)this.object).getHeight());
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public String getNumberOfCollies() {
+/* 108 */       return ((Colli)this.object).getNumberOfCollies() != null ? String.valueOf(((Colli)this.object).getNumberOfCollies()) : null;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void setNumberOfCollies(String numberOfCollies) {
+/* 115 */       if (!ValidationUtils.isNumeric(numberOfCollies)) {
+/* 116 */          numberOfCollies = "0";
+/*     */       }
+/* 118 */       String oldNumber = this.getNumberOfCollies();
+/* 119 */       ((Colli)this.object).setNumberOfCollies(!StringUtils.isEmpty(numberOfCollies) ? Integer.valueOf(numberOfCollies) : null);
+/* 120 */       this.firePropertyChange("numberOfCollies", oldNumber, numberOfCollies);
+/* 121 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public List<OrderLine> getOrderLines() {
+/* 128 */       return this.orderLineList;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void addBufferChangeListener(PropertyChangeListener listener, PresentationModel presentationModel) {
+/* 137 */       presentationModel.getBufferedModel("colliName").addValueChangeListener(listener);
+/* 138 */       presentationModel.getBufferedModel("orderLines").addValueChangeListener(listener);
+/* 139 */       presentationModel.getBufferedModel("height").addValueChangeListener(listener);
+/* 140 */       presentationModel.getBufferedModel("lenght").addValueChangeListener(listener);
+/* 141 */       presentationModel.getBufferedModel("widht").addValueChangeListener(listener);
+/*     */ 
+/* 143 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public ColliModel getBufferedObjectModel(PresentationModel presentationModel) {
+/* 150 */       ColliModel colliModel = new ColliModel(new Colli("ColliModel"));
+/* 151 */       colliModel.setColliName((String)presentationModel.getBufferedValue("colliName"));
+/* 152 */       colliModel.setHeight((String)presentationModel.getBufferedValue("height"));
+/* 153 */       colliModel.setLenght((String)presentationModel.getBufferedValue("lenght"));
+/* 154 */       colliModel.setWidht((String)presentationModel.getBufferedValue("widht"));
+/* 155 */       return colliModel;
+/*     */    }
+/*     */ 
+/*     */    public void firePropertyChanged(String propertyName) {
+/* 159 */       this.firePropertyChange(propertyName, (Object)null, this.getColliNameAndNumber());
+/*     */ 
+/* 161 */    }
+/*     */ }

@@ -1,11 +1,11 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import no.ugland.utransprod.model.IntelleV;
 
 public interface IntelleVManager {
+   String MANAGER_NAME = "intelleVManager";
 
-	public static final String MANAGER_NAME = "intelleVManager";
-
-	IntelleV findByOrdreNr(String orderNr);
-
+   IntelleV findByOrdreNr(String var1);
 }

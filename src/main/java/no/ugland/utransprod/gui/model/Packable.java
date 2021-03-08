@@ -1,83 +1,51 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.gui.model;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
 import no.ugland.utransprod.model.Colli;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderLine;
 import no.ugland.utransprod.model.PostShipment;
 
-/**
- * Interface for objekter som kan pakkes
- * 
- * @author atle.brekka
- * 
- */
 public interface Packable {
-    /**
-     * @return kollier
-     */
-    List<Colli> getColliList();
+   List<Colli> getColliList();
 
-    /**
-     * @return ordrelinjer
-     */
-    List<OrderLine> getOrderLineList();
+   List<OrderLine> getOrderLineList();
 
-    /**
-     * Legger til kolli
-     * 
-     * @param colli
-     */
-    void addColli(Colli colli);
+   void addColli(Colli var1);
 
-    /**
-     * Setter kollier klare
-     * 
-     * @param colliesDone
-     */
-    void setColliesDone(Integer colliesDone);
+   void setColliesDone(Integer var1);
 
-    /**
-     * @return dato for klargjort
-     */
-    Date getOrderReady();
+   Date getOrderReady();
 
-    Date getOrderReadyTross();
+   Date getOrderReadyTross();
 
-    Date getOrderReadyPack();
+   Date getOrderReadyPack();
 
-    Date getOrderReadyWall();
+   Date getOrderReadyWall();
 
-    /**
-     * @return dato for komplett
-     */
-    Date getOrderComplete();
+   Date getOrderComplete();
 
-    /**
-     * Fjerner kolli
-     * 
-     * @param colli
-     */
-    boolean removeColli(Colli colli);
+   boolean removeColli(Colli var1);
 
-    Transportable getTransportable();
+   Transportable getTransportable();
 
-    List<OrderLine> getOwnOrderLines();
+   List<OrderLine> getOwnOrderLines();
 
-    Integer getProbability();
+   Integer getProbability();
 
-    Order getOrder();
+   Order getOrder();
 
-    PostShipment getPostShipment();
+   PostShipment getPostShipment();
 
-    void setDefaultColliesGenerated(Integer i);
+   void setDefaultColliesGenerated(Integer var1);
 
-    String getManagerName();
+   String getManagerName();
 
-    Integer getDefaultColliesGenerated();
+   Integer getDefaultColliesGenerated();
 
-    Set<Colli> getCollies();
+   Set<Colli> getCollies();
 }

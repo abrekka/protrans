@@ -1,7 +1,7 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.gui.handlers;
 
-import com.google.inject.assistedinject.Assisted;
-
 public interface ConstructionTypeViewHandlerFactory {
-	ConstructionTypeViewHandler create(boolean isMasterDialog,boolean masterOverview);
+   ConstructionTypeViewHandler create(boolean var1, boolean var2);
 }

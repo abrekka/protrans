@@ -1,88 +1,31 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.dao;
 
 import java.io.Serializable;
 import java.util.List;
-
 import no.ugland.utransprod.service.enums.LazyLoadEnum;
 
-/**
- * Data Access Object (DAO) interface. This is an interface used to tag our DAO
- * classes and to provide common methods to all DAOs.
- * 
- * <p>
- * <a href="DAO.java.html"><i>View Source</i></a>
- * </p>
- * 
- * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
- * @param <E>
- */
 public interface DAO<E> {
+   List<E> getObjects();
 
-    /**
-     * Generic method used to get all objects of a particular type. This is the
-     * same as lookup up all rows in a table.
-     * 
-     * @return List of populated objects
-     */
-    List<E> getObjects();
+   List<E> getObjects(String var1);
 
-    /**
-     * Henter alle objekter med sortering
-     * 
-     * @param orderBy
-     * @return objekter
-     */
-    List<E> getObjects(String orderBy);
+   E getObject(Serializable var1);
 
-    /**
-     * Generic method to get an object based on class and identifier. An
-     * ObjectRetrievalFailureException Runtime Exception is thrown if nothing is
-     * found.
-     * 
-     * @param objectId
-     *            the identifier (primary key) of the class
-     * @return a populated object
-     */
-    E getObject(Serializable objectId);
+   void saveObject(E var1);
 
-    /**
-     * Generic method to save an object - handles both update and insert.
-     * 
-     * @param object
-     *            the object to save
-     */
-    void saveObject(E object);
+   void removeObject(Serializable var1);
 
-    /**
-     * Generic method to delete an object based on class and id
-     * 
-     * @param objectId
-     *            the identifier (primary key) of the class
-     */
-    void removeObject(Serializable objectId);
+   List<E> findByExample(E var1);
 
-    /**
-     * Finner objekter ved hjelp av eksempel
-     * 
-     * @param example
-     * @return objekter
-     */
-    List<E> findByExample(E example);
+   List<E> findByExampleLike(E var1);
 
-    /**
-     * finner objekter ved hjelp av eksempel og bruk av like
-     * 
-     * @param example
-     * @return objekter
-     */
-    List<E> findByExampleLike(E example);
+   void removeAll();
 
-    void removeAll();
+   void refreshObject(Object var1, Serializable var2);
 
-    void refreshObject(Object object, Serializable id);
+   void lazyLoad(Object var1, Serializable var2, LazyLoadEnum[][] var3);
 
-    void lazyLoad(Object object, Serializable id, LazyLoadEnum[][] enums);
-
-    E merge(E object);
-
+   E merge(E var1);
 }

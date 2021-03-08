@@ -1055,6 +1055,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 		}
 
 		public void actionPerformed(ActionEvent e) {
+			buttonImportOrderLines.setEnabled(false);
 			Order order = ((OrderModel) presentationModel.getBean()).getObject();
 			if (order.getPacklistReady() != null) {
 				Util.showErrorDialog(window, "Pakkliste er ferdig",

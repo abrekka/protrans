@@ -1,32 +1,15 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.dao;
 
 import java.util.Date;
 import java.util.List;
-
 import no.ugland.utransprod.model.Info;
 
-/**
- * Interface for DAO mot tabell INFO
- * @author atle.brekka
- *
- */
 public interface InfoDAO extends DAO<Info> {
-	/**
-	 * Finner alle
-	 * @return info
-	 */
-	List<Info> findAll();
+   List<Info> findAll();
 
-	/**
-	 * Oppdater objekt
-	 * @param info
-	 */
-	void refreshObject(Info info);
+   void refreshObject(Info var1);
 
-	/**
-	 * Finner info for gitt dato
-	 * @param date
-	 * @return info
-	 */
-	List<Info> findByDate(Date date);
+   List<Info> findByDate(Date var1);
 }

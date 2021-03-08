@@ -1,68 +1,30 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import java.util.List;
-
 import no.ugland.utransprod.model.ApplicationUser;
 import no.ugland.utransprod.model.Deviation;
 import no.ugland.utransprod.model.JobFunction;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.service.enums.LazyLoadDeviationEnum;
 
-/**
- * Interface for manager mor tabell DEVIATION
- * 
- * @author atle.brekka
- */
 public interface DeviationManager extends OverviewManager<Deviation> {
-    public static final String MANAGER_NAME = "deviationManager";
+   String MANAGER_NAME = "deviationManager";
 
-    /**
-     * Finner alle avvik for en gitt funksjon
-     * 
-     * @param jobFunction
-     * @return avvik
-     */
-    List<Deviation> findByJobFunction(JobFunction jobFunction);
+   List<Deviation> findByJobFunction(JobFunction var1);
 
-    /**
-     * Lazy laster avvik
-     * 
-     * @param deviation
-     * @param enums
-     */
-    void lazyLoad(Deviation deviation, LazyLoadDeviationEnum[] enums);
+   void lazyLoad(Deviation var1, LazyLoadDeviationEnum[] var2);
 
-    /**
-     * Finner alle avvik for en gitt leder
-     * 
-     * @param applicationUser
-     * @return avvik
-     */
-    List<Deviation> findByManager(ApplicationUser applicationUser);
+   List<Deviation> findByManager(ApplicationUser var1);
 
-    /**
-     * Finner avvik for gitt ordre
-     * 
-     * @param order
-     * @return avvik
-     */
-    List<Deviation> findByOrder(Order order);
+   List<Deviation> findByOrder(Order var1);
 
-    /**
-     * Finner alle avvik med montering
-     * 
-     * @return avvik
-     */
-    List<Deviation> findAllAssembly();
+   List<Deviation> findAllAssembly();
 
-    /**
-     * Lagrer avvik
-     * 
-     * @param deviation
-     */
-    void saveDeviation(Deviation deviation);
+   void saveDeviation(Deviation var1);
 
-    List<Deviation> findByResponsible(ApplicationUser applicationUser);
-    
-    Deviation findById(Integer deviationId);
+   List<Deviation> findByResponsible(ApplicationUser var1);
+
+   Deviation findById(Integer var1);
 }

@@ -1,32 +1,14 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import java.util.List;
-
 import no.ugland.utransprod.model.FunctionCategory;
 import no.ugland.utransprod.model.JobFunction;
 import no.ugland.utransprod.model.PreventiveAction;
 
-/**
- * Interface for serviceklasse mot tabell PREVENTIVE_ACTION
- * @author atle.brekka
- */
-public interface PreventiveActionManager extends
-        OverviewManager<PreventiveAction> {
-    /**
-     * Lazy laster prevantiv handling
-     * @param preventiveAction
-     * @param enums
-     */
-    //void lazyLoad(PreventiveAction preventiveAction,LazyLoadPreventiveActionEnum[] enums);
+public interface PreventiveActionManager extends OverviewManager<PreventiveAction> {
+   String MANAGER_NAME = "preventiveActionManager";
 
-    String MANAGER_NAME = "preventiveActionManager";
-
-	/**
-     * Finner alle basert på funksjon og kategori
-     * @param jobFunction
-     * @param functionCategory
-     * @return prevantive handlinger
-     */
-    List<PreventiveAction> findAllOpenByFunctionAndCategory(
-            JobFunction jobFunction, FunctionCategory functionCategory);
+   List<PreventiveAction> findAllOpenByFunctionAndCategory(JobFunction var1, FunctionCategory var2);
 }

@@ -1,36 +1,19 @@
+
+// Warning: No line numbers available in class file
 package no.ugland.utransprod.service;
 
 import java.util.List;
-
 import no.ugland.utransprod.model.GulvsponPackageV;
 import no.ugland.utransprod.model.PackableListItem;
 
-/**
- * Interface for serviceklasse mot view GULVSPON_PACKAGE_V
- * @author atle.brekka
- */
-public interface GulvsponPackageVManager extends
-        IApplyListManager<PackableListItem> {
-    String MANAGER_NAME = "gulvsponPackageVManager";
+public interface GulvsponPackageVManager extends IApplyListManager<PackableListItem> {
+   String MANAGER_NAME = "gulvsponPackageVManager";
 
-	/**
-     * @see no.ugland.utransprod.service.IApplyListManager#findAllApplyable()
-     */
-    List<PackableListItem> findAllApplyable();
+   List<PackableListItem> findAllApplyable();
 
-    /**
-     * @see no.ugland.utransprod.service.IApplyListManager#findApplyableByOrderNr(java.lang.String)
-     */
-    List<PackableListItem> findApplyableByOrderNr(String orderNr);
+   List<PackableListItem> findApplyableByOrderNr(String var1);
 
-    /**
-     * Oppdaterer view
-     * @param gulvsponPackageV
-     */
-    void refresh(GulvsponPackageV gulvsponPackageV);
+   void refresh(GulvsponPackageV var1);
 
-    /**
-     * @see no.ugland.utransprod.service.IApplyListManager#findApplyableByCustomerNr(java.lang.Integer)
-     */
-    List<PackableListItem> findApplyableByCustomerNr(Integer customerNr);
+   List<PackableListItem> findApplyableByCustomerNr(Integer var1);
 }

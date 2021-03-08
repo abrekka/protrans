@@ -685,61 +685,63 @@ public class OrderManagerImpl extends ManagerImpl<Order> implements OrderManager
 
 	public void fjernOrdreKomplett(String ordrenr) {
 		((OrderDAO) dao).fjernOrdreKomplett(ordrenr);
-		
+
 	}
 
-	public void settOrdreKomplett(String orderNr,Date dato) {
-		((OrderDAO) dao).setOrdreKomplett(orderNr,dato);
-		
+	public void settOrdreKomplett(String orderNr, Date dato) {
+		((OrderDAO) dao).setOrdreKomplett(orderNr, dato);
+
 	}
 
-	public void settStatus(Integer orderId,String status) {
-		((OrderDAO) dao).setStatus(orderId,status);
-		
+	public void settStatus(Integer orderId, String status) {
+		((OrderDAO) dao).setStatus(orderId, status);
+
 	}
 
-	public List<Delelisteinfo> finnDeleliste(String ordrenr,String kundenavn,String sted,String garasjetype) {
-		return ((OrderDAO) dao).finnDeleliste(ordrenr,kundenavn,sted,garasjetype);
+	public List<Delelisteinfo> finnDeleliste(String ordrenr, String kundenavn, String sted, String garasjetype) {
+		return ((OrderDAO) dao).finnDeleliste(ordrenr, kundenavn, sted, garasjetype);
 	}
 
 	public void settMontering(Integer orderId, Assembly assembly) {
-		((OrderDAO) dao).settMontering(orderId,assembly);
-		
+		((OrderDAO) dao).settMontering(orderId, assembly);
+
 	}
 
 	public void settMontering(Integer orderId, boolean montering) {
-		((OrderDAO) dao).settMontering(orderId,montering);
-		
+		((OrderDAO) dao).settMontering(orderId, montering);
+
 	}
 
 	public Order getOrderWithOrderLinesAndCollies(String orderNr) {
-		return ((OrderDAO)dao).getOrderWithOrderLinesAbdCollies(orderNr);
+		return ((OrderDAO) dao).getOrderWithOrderLinesAbdCollies(orderNr);
 	}
 
 	public List<String> finnMonteringsanvisninger(String orderNr) {
-		return ((OrderDAO)dao).finnMonteringsanvisninger(orderNr);
+		return ((OrderDAO) dao).finnMonteringsanvisninger(orderNr);
 	}
 
 	public void taBortSentOgManglerKolli(Order order) {
-		 ((OrderDAO)dao).taBortSentOgManglerKolli(order);
-		
+		((OrderDAO) dao).taBortSentOgManglerKolli(order);
+
 	}
 
 	public void settSentDato(Order order, Date sentDate) {
-		((OrderDAO)dao).settSentDato(order,sentDate);
-		
+		((OrderDAO) dao).settSentDato(order, sentDate);
+
 	}
 
 	public void settLevert(Order order, Date levertDate) {
-		((OrderDAO)dao).settLevert(order,levertDate);
-		
+		((OrderDAO) dao).settLevert(order, levertDate);
+
 	}
 
 	public void oppdaterTransportId(Order ordre, Transport transport) {
-		((OrderDAO)dao).oppdaterTransportId(ordre,transport);
-		
+		((OrderDAO) dao).oppdaterTransportId(ordre, transport);
+
 	}
 
-	
+	public void oppdaterStatus(Order ordre, String status) {
+		((OrderDAO) this.dao).oppdaterStatus(ordre, status);
+	}
 
 }

@@ -1,141 +1,140 @@
-package no.ugland.utransprod.service.impl;
-
-import java.io.Serializable;
-import java.util.List;
-
-import no.ugland.utransprod.dao.ArticleTypeDAO;
-import no.ugland.utransprod.model.ArticleType;
-import no.ugland.utransprod.model.Attribute;
-import no.ugland.utransprod.service.ArticleTypeManager;
-import no.ugland.utransprod.service.enums.LazyLoadArticleTypeEnum;
-
-/**
- * Implementasjon av manager for artikkeltype.
- * 
- * @author atle.brekka
- */
-public class ArticleTypeManagerImpl extends ManagerImpl<ArticleType> implements ArticleTypeManager {
-    /**
-     * @see no.ugland.utransprod.service.ArticleTypeManager#findByName(java.lang.String)
-     */
-    public final ArticleType findByName(final String name) {
-	ArticleType articleType = ((ArticleTypeDAO) dao).findByName(name);
-
-	return articleType;
-    }
-
-    /**
-     * @see no.ugland.utransprod.service.ArticleTypeManager#
-     *      saveArticleType(no.ugland.utransprod.model.ArticleType)
-     */
-    public final void saveArticleType(final ArticleType articleType) {
-	dao.saveObject(articleType);
-
-    }
-
-    /**
-     * @see no.ugland.utransprod.service.ArticleTypeManager#
-     *      removeArticleType(no.ugland.utransprod.model.ArticleType)
-     */
-    public final void removeArticleType(final ArticleType articleType) {
-	dao.removeObject(articleType.getArticleTypeId());
-
-    }
-
-    /**
-     * @see no.ugland.utransprod.service.OverviewManager#findAll()
-     */
-    public final List<ArticleType> findAll() {
-	return dao.getObjects("articleTypeName");
-    }
-
-    /**
-     * @param object
-     * @return artikkeltyper
-     * @see no.ugland.utransprod.service.OverviewManager#findByObject(java.lang.Object)
-     */
-    public final List<ArticleType> findByObject(final ArticleType object) {
-	return dao.findByExampleLike(object);
-    }
-
-    /**
-     * @param object
-     * @see no.ugland.utransprod.service.OverviewManager#removeObject(java.lang.Object)
-     */
-    public final void removeObject(final ArticleType object) {
-	removeArticleType(object);
-
-    }
-
-    /**
-     * @param object
-     * @see no.ugland.utransprod.service.OverviewManager#saveObject(java.lang.Object)
-     */
-    public final void saveObject(final ArticleType object) {
-	saveArticleType(object);
-
-    }
-
-    /**
-     * @param articleType
-     * @see no.ugland.utransprod.service.OverviewManager#refreshObject(java.lang.Object)
-     */
-    public final void refreshObject(final ArticleType articleType) {
-	((ArticleTypeDAO) dao).refreshObject(articleType);
-
-    }
-
-    /**
-     * @see no.ugland.utransprod.service.ArticleTypeManager#lazyLoad(no.ugland.utransprod.model.ArticleType,
-     *      no.ugland.utransprod.service.enums.LazyLoadArticleTypeEnum[])
-     */
-    public final void lazyLoad(final ArticleType articletype, final LazyLoadArticleTypeEnum[] enums) {
-	((ArticleTypeDAO) dao).lazyLoad(articletype, enums);
-
-    }
-
-    /**
-     * @see no.ugland.utransprod.service.ArticleTypeManager#findAllConstructionTypeAttributes()
-     */
-    public final List<Attribute> findAllConstructionTypeAttributes() {
-	return ((ArticleTypeDAO) dao).findAllConstructionTypeAttributes();
-    }
-
-    /**
-     * @see no.ugland.utransprod.service.ArticleTypeManager#findAllTopLevel()
-     */
-    public final List<ArticleType> findAllTopLevel() {
-	ArticleType example = new ArticleType();
-	example.setTopLevel(1);
-
-	return dao.findByExample(example);
-    }
-
-    /**
-     * @see no.ugland.utransprod.service.ArticleTypeManager#
-     *      lazyLoadArticleAttribute(no.ugland.utransprod.model.ArticleTypeAttribute,
-     *      no.ugland.utransprod.service.enums.LazyLoadArticleTypeAttributeEnum[])
-     */
-    /*
-     * public final void lazyLoadArticleAttribute(final ArticleTypeAttribute
-     * attribute, final LazyLoadArticleTypeAttributeEnum[] enums) {
-     * ((ArticleTypeDAO)dao).lazyLoadArticleAttribute(attribute, enums);
-     * 
-     * }
-     */
-
-    public void lazyLoad(ArticleType object, Enum[] enums) {
-	lazyLoad(object, (LazyLoadArticleTypeEnum[]) enums);
-
-    }
-
-    @Override
-    protected Serializable getObjectId(ArticleType object) {
-	return object.getArticleTypeId();
-    }
-
-    public ArticleType merge(ArticleType object) {
-	return dao.merge(object);
-    }
-
-}
+/*     */ package no.ugland.utransprod.service.impl;
+/*     */ 
+/*     */ import java.io.Serializable;
+/*     */ import java.util.List;
+/*     */ import no.ugland.utransprod.dao.ArticleTypeDAO;
+/*     */ import no.ugland.utransprod.model.ArticleType;
+/*     */ import no.ugland.utransprod.model.Attribute;
+/*     */ import no.ugland.utransprod.service.ArticleTypeManager;
+/*     */ import no.ugland.utransprod.service.enums.LazyLoadArticleTypeEnum;
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ public class ArticleTypeManagerImpl extends ManagerImpl<ArticleType> implements ArticleTypeManager {
+/*     */    public final ArticleType findByName(String name) {
+/*  22 */       ArticleType articleType = ((ArticleTypeDAO)this.dao).findByName(name);
+/*     */ 
+/*  24 */       return articleType;
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void saveArticleType(ArticleType articleType) {
+/*  32 */       this.dao.saveObject(articleType);
+/*     */ 
+/*  34 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void removeArticleType(ArticleType articleType) {
+/*  41 */       this.dao.removeObject(articleType.getArticleTypeId());
+/*     */ 
+/*  43 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final List<ArticleType> findAll() {
+/*  49 */       return this.dao.getObjects("articleTypeName");
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final List<ArticleType> findByObject(ArticleType object) {
+/*  58 */       return this.dao.findByExampleLike(object);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void removeObject(ArticleType object) {
+/*  66 */       this.removeArticleType(object);
+/*     */ 
+/*  68 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void saveObject(ArticleType object) {
+/*  75 */       this.saveArticleType(object);
+/*     */ 
+/*  77 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void refreshObject(ArticleType articleType) {
+/*  84 */       ((ArticleTypeDAO)this.dao).refreshObject(articleType);
+/*     */ 
+/*  86 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final void lazyLoad(ArticleType articletype, LazyLoadArticleTypeEnum[] enums) {
+/*  93 */       ((ArticleTypeDAO)this.dao).lazyLoad(articletype, enums);
+/*     */ 
+/*  95 */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final List<Attribute> findAllConstructionTypeAttributes() {
+/* 101 */       return ((ArticleTypeDAO)this.dao).findAllConstructionTypeAttributes();
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public final List<ArticleType> findAllTopLevel() {
+/* 108 */       ArticleType example = new ArticleType();
+/* 109 */       example.setTopLevel(1);
+/*     */ 
+/* 111 */       return this.dao.findByExample(example);
+/*     */    }
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */    public void lazyLoad(ArticleType object, Enum[] enums) {
+/* 128 */       this.lazyLoad(object, (LazyLoadArticleTypeEnum[])((LazyLoadArticleTypeEnum[])enums));
+/*     */ 
+/* 130 */    }
+/*     */ 
+/*     */ 
+/*     */    protected Serializable getObjectId(ArticleType object) {
+/* 134 */       return object.getArticleTypeId();
+/*     */    }
+/*     */ 
+/*     */    public ArticleType merge(ArticleType object) {
+/* 138 */       return (ArticleType)this.dao.merge(object);
+/*     */    }
+/*     */ }
