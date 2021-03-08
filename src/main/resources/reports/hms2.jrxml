@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 3.5.2  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="hms2" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true">
+	<parameter name="KUNDE" class="java.lang.String"/>
+	<parameter name="IGLAND_GARASJE_LOGO" class="java.io.InputStream"/>
+	<parameter name="ORDRENR" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+	<noData>
+		<band height="599">
+			<rectangle>
+				<reportElement x="0" y="576" width="567" height="23"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="579" width="350" height="20"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Calibri" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SJA – Signatur/Utført dato:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="465" width="567" height="71"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="466" width="350" height="20"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Calibri" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Eksisterende tiltak:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="378" width="567" height="86"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="379" width="350" height="20"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Calibri" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Korrigerende tiltak:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="292" width="567" height="86"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="294" width="350" height="20"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Calibri" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Risikomomenter (hva kan gå galt):]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="537" width="567" height="40"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="538" width="350" height="20"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Calibri" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tidsfrist korrigerende tiltak:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="181" width="568" height="110" backcolor="#CCCCCC"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="182" width="350" height="20"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Calibri" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kritiske delaktiviteter:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="52" width="568" height="128" backcolor="#CCCCCC"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="54" width="350" height="20"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Calibri" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Beskrivelse av arbeidsoppgave:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="32" width="567" height="20" backcolor="#CC0000"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<text><![CDATA[SIKKER JOBBANALYSE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="2" width="350" height="20"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Kartlegging av risiko ved montasjearbeid, og korrigerende tiltak.]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

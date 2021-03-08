@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 3.5.2  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="feil_ved_leveranse_svensk" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+	<noData>
+		<band height="549">
+			<staticText>
+				<reportElement x="0" y="2" width="328" height="23"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fel vid leveras]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="26" width="533" height="31"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Eventuellt ekstra arbete som följer av feil i leveransen ska avtalas med Igland Garagen före arbetet fortlöper.
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="61" width="533" height="14"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Ekstra arbeten faktureras med kr. 450 kr/tim ex moms + 50 kr/mil vid extra körning
+
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="4" y="103" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="4" y="163" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="225" y="89" width="72" height="14"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Antal timmar
+
+
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="4" y="243" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="4" y="283" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="4" y="143" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="4" y="303" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="4" y="89" width="191" height="14"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Följande avtalt arbete är avtalt utfört:
+
+
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="332" y="89" width="205" height="14"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Ekstra material i kr ex moms
+
+
+
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="4" y="223" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="4" y="203" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="4" y="183" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="210" y="103" width="1" height="200"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="4" y="263" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="315" y="104" width="1" height="200"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="4" y="123" width="533" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="308" width="533" height="14"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Detta är avtalt och accepterat av Igland Garagen Filial
+
+
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="322" y="321" width="205" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="322" y="322" width="31" height="14"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Datum]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="412" y="322" width="115" height="14"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Namn]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="339" width="533" height="31"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Tillägg som är avtalade med Igland Garagen och är accepterate av kunden ska vara med som  bilaga vid fakturering.							
+
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="376" width="533" height="17"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Att tänka på när ni monterar ett Igland Garage:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="394" width="533" height="14"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Profesionellt och hövligt:
+
+
+
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="408" width="533" height="14"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[·Ge kunden besked i förhand om ankomst, föseningar osv.							
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="422" width="533" height="14"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[·Städa och lämna kundens garage ock mark uppstädad och renplockad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="436" width="555" height="14"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[· Ge besked till kund om ev avvik och be om attest på TA-dokument]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="451" width="533" height="14"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[- Ta ansvar för återkoppling till Igland Garagen vid fel på leveransen]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

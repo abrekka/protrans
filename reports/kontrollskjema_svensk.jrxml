@@ -1,0 +1,1035 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 3.5.2  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="kontrollskjema_svensk" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+	<noData>
+		<band height="611">
+			<staticText>
+				<reportElement x="0" y="0" width="385" height="20"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kontrolldokument för montage av garage]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="26" width="100" height="14"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Datum]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="172" y="26" width="100" height="14"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Kontrollerat av:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="46" width="568" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="6" y="53" width="127" height="20"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kontroll]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="418" y="53" width="25" height="14"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ok]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="465" y="53" width="31" height="18"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="506" y="53" width="55" height="14"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Åtgärdat]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="75" width="568" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<rectangle>
+				<reportElement x="424" y="94" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="2" y="78" width="25" height="14"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1.0]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="78" width="51" height="14"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sockel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="94" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[1.1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="94" width="377" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Sockel kontrolleras, alla mått, höjd, diagonal, öppningar och kvalité]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="94" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="529" y="94" width="10" height="10"/>
+			</rectangle>
+			<line>
+				<reportElement x="42" y="107" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="12" y="109" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[1.2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="109" width="336" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Sockelpapp korrekt monterat]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="424" y="109" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="475" y="109" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="529" y="109" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="12" y="123" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[1.3]]></text>
+			</staticText>
+			<line>
+				<reportElement x="42" y="121" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="42" y="123" width="336" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Använt korrekt infästning (leca/betong]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="123" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="424" y="123" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="529" y="123" width="10" height="10"/>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="46" width="1" height="92"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="1" y="137" width="568" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="567" y="46" width="1" height="92"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="41" y="183" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="41" y="169" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="12" y="157" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[2.1]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="529" y="157" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="2" y="143" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2.0]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="529" y="171" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="12" y="171" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[2.2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="171" width="336" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Infästning till sockel]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="171" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="475" y="185" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="424" y="157" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="12" y="185" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[2.3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="143" width="51" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Väggar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="185" width="336" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Hörnfoder och skarvlister]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="424" y="171" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="424" y="185" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="475" y="157" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="41" y="157" width="336" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Leverans/transportskador/annat fel]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="529" y="185" width="10" height="10"/>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="268" width="568" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="142" width="568" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="41" y="199" width="336" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Panel, yttre skador]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="529" y="199" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="424" y="199" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="475" y="199" width="10" height="10"/>
+			</rectangle>
+			<line>
+				<reportElement x="41" y="197" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="12" y="199" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[2.4]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="529" y="213" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="12" y="213" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[2.5]]></text>
+			</staticText>
+			<line>
+				<reportElement x="41" y="211" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<rectangle>
+				<reportElement x="424" y="213" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="41" y="213" width="336" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Foder]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="213" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="529" y="227" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="12" y="227" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[2.6]]></text>
+			</staticText>
+			<line>
+				<reportElement x="41" y="225" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<rectangle>
+				<reportElement x="424" y="227" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="41" y="227" width="336" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Fronter, över och sidor]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="227" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="529" y="241" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="12" y="241" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[2.7]]></text>
+			</staticText>
+			<line>
+				<reportElement x="41" y="239" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<rectangle>
+				<reportElement x="424" y="241" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="41" y="241" width="336" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Fönster]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="241" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="529" y="255" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="12" y="255" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[2.8]]></text>
+			</staticText>
+			<line>
+				<reportElement x="41" y="253" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<rectangle>
+				<reportElement x="424" y="255" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="41" y="255" width="336" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Takrännor]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="255" width="10" height="10"/>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="142" width="1" height="126"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="567" y="143" width="1" height="126"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="41" y="275" width="80" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Port & dörr]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="289" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[3.1]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="529" y="289" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="424" y="289" width="10" height="10"/>
+			</rectangle>
+			<line>
+				<reportElement x="41" y="301" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="2" y="275" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[3.0]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="289" width="336" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Transportskador/fel]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="289" width="10" height="10"/>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="273" width="568" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<rectangle>
+				<reportElement x="529" y="303" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="12" y="303" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[3.2]]></text>
+			</staticText>
+			<line>
+				<reportElement x="41" y="315" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="41" y="303" width="336" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Porten är utan skaodor och korrekt monterat enl monteringsanvisning]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="303" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="424" y="303" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="529" y="317" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="12" y="317" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[3.3]]></text>
+			</staticText>
+			<line>
+				<reportElement x="41" y="329" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="41" y="317" width="336" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Dörr är monterat enligt monteringsanvisning]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="317" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="424" y="317" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="529" y="331" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="12" y="331" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[3.4]]></text>
+			</staticText>
+			<line>
+				<reportElement x="41" y="343" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="41" y="331" width="336" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Foder]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="331" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="424" y="331" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="529" y="345" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="12" y="345" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[3.5]]></text>
+			</staticText>
+			<line>
+				<reportElement x="41" y="357" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="41" y="345" width="336" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Funktion]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="345" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="424" y="345" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="529" y="359" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="12" y="359" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[3.6]]></text>
+			</staticText>
+			<line>
+				<reportElement x="41" y="371" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="41" y="359" width="336" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Avväxling över port]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="359" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="424" y="359" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="529" y="373" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="12" y="373" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[3.7]]></text>
+			</staticText>
+			<line>
+				<reportElement x="41" y="385" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="41" y="373" width="336" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Port, portöppnare, frikopplingslås är korrekt monterat och testat]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="373" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="424" y="373" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="475" y="387" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="12" y="387" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[3.8]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="387" width="336" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Fjärrkontroller och inv. brytare är programmerat och testat]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="529" y="387" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="424" y="387" width="10" height="10"/>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="273" width="1" height="129"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="568" y="273" width="1" height="129"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="401" width="568" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<rectangle>
+				<reportElement x="529" y="420" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="12" y="420" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[4.1]]></text>
+			</staticText>
+			<line>
+				<reportElement x="41" y="432" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="41" y="420" width="353" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Takstolar, placering och i lod, förankringsjärn är monterade på varannan takstol]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="407" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[4.0]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="420" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="424" y="420" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="41" y="407" width="80" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tak]]></text>
+			</staticText>
+			<line>
+				<reportElement x="294" y="599" width="235" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="406" width="568" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="568" y="407" width="1" height="96"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="407" width="1" height="96"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="42" y="446" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="12" y="434" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[4.2]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="434" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="529" y="434" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="41" y="434" width="353" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Undertak (ex Sutak el råspont)]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="424" y="434" width="10" height="10"/>
+			</rectangle>
+			<line>
+				<reportElement x="41" y="460" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="12" y="448" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[4.3]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="448" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="529" y="448" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="41" y="448" width="353" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Rätat alla takstolar och gavelspetsar före undertak är spikat]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="424" y="448" width="10" height="10"/>
+			</rectangle>
+			<line>
+				<reportElement x="41" y="474" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="12" y="462" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[4.4]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="462" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="529" y="462" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="41" y="462" width="353" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tak och nockpannor]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="424" y="462" width="10" height="10"/>
+			</rectangle>
+			<line>
+				<reportElement x="41" y="488" width="525" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="12" y="476" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[4.5]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="476" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="529" y="476" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="41" y="476" width="353" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Vattbräda & vindskivor]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="424" y="476" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="12" y="490" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[4.6]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="490" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="529" y="490" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="41" y="490" width="353" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Takrännor är monterade med fall till stuprör]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="424" y="490" width="10" height="10"/>
+			</rectangle>
+			<line>
+				<reportElement x="0" y="502" width="568" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="507" width="568" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="41" y="508" width="80" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Generellt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="508" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[5.0]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="521" width="25" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[5.1]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="475" y="521" width="10" height="10"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="529" y="521" width="10" height="10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="41" y="521" width="353" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Snyggt och prydligt i och utanför garaget]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="424" y="521" width="10" height="10"/>
+			</rectangle>
+			<line>
+				<reportElement x="569" y="506" width="1" height="29"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="534" width="568" height="1"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="506" width="1" height="29"/>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="10" y="539" width="330" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kontrollen genomförs visuellt samt mot orderbeskrivningen i orden]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="588" width="284" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Garaget är färdigmonterat och utan synliga fel.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="385" y="599" width="140" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Datum & kundens underskrift]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="1" y="551" width="568" height="35"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="224" y="551" width="140" height="12"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[kommentar/övrigt]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>
