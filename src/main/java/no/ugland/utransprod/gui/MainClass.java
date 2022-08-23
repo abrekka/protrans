@@ -2,6 +2,7 @@ package no.ugland.utransprod.gui;
 
 import java.awt.Component;
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -81,6 +82,7 @@ public final class MainClass {
 	@Inject
 	private MainClass(final LoginImpl aLogin) {
 		login = aLogin;
+		Locale.setDefault(new Locale("nb"));
 	}
 
 	private static void initDesktopDll() {

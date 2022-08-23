@@ -251,7 +251,7 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 				for (Ordln ordln : taksteinInfo) {
 					taksteinkolliList.add(new Taksteinkolli().medLeveresFraLager(leveresFraLager)
 							.medOverordnetBeskrivelse(takstein.getDetailsWithoutNoAttributes())
-							.medBeskrivelse(ordln.getDescription()).medAntall(ordln.getNoinvoab())
+							.medBeskrivelse(ordln.getDescription()).medAntall(ordln.getNoinvoab().add(ordln.getNofin()))
 							.antallPrPall(hentAntallPrPall(ordln)).antallPrPakke(hentAntallPrPakke(ordln))
 							.erTakstein(ordln.getProd() != null && ordln.getProd().getPrCatNo3() == 1));
 				}

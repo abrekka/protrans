@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 3.5.2  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="assembly_ny_svensk" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<import value="net.sf.jasperreports.engine.data.*"/>
 	<parameter name="ugland_logo" class="java.io.InputStream" isForPrompting="false"/>
@@ -20,44 +21,57 @@
 	<field name="order.assembly.assemblyWeek" class="java.lang.Integer"/>
 	<field name="bestillingsnrMontering" class="java.lang.Integer"/>
 	<field name="order.assembly.assemblyYear" class="java.lang.Integer"/>
+	<group name="hms">
+		<groupFooter>
+			<band height="38">
+				<break>
+					<reportElement x="0" y="11" width="99" height="1"/>
+				</break>
+				<subreport>
+					<reportElement positionType="Float" x="5" y="11" width="553" height="18"/>
+					<subreportExpression class="java.lang.String"><![CDATA["reports/hms2_svensk.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupFooter>
+	</group>
 	<group name="kontrollskjema">
 		<groupHeader>
 			<band height="50">
 				<staticText>
-					<reportElement key="staticText-20" positionType="Float" x="133" y="6" width="286" height="14"/>
+					<reportElement key="staticText-20" positionType="Float" x="133" y="6" width="389" height="14"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Top">
+					<textElement verticalAlignment="Top" lineSpacing="Single">
 						<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
 					</textElement>
-					<text><![CDATA[Ta kontakt med kunde og si i fra når du kommer!]]></text>
+					<text><![CDATA[Ta kontakt med kunden veckan innan och tala om när ni kommer]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-20" positionType="Float" x="27" y="22" width="292" height="14"/>
+					<reportElement key="staticText-20" positionType="Float" x="27" y="22" width="333" height="14"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Top">
+					<textElement verticalAlignment="Top" lineSpacing="Single">
 						<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
 					</textElement>
-					<text><![CDATA[Hver montering må merkes med vårt bestillingsnr:]]></text>
+					<text><![CDATA[Vid fakturering ska fakturan märkas med kundens namn]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-7" positionType="Float" x="321" y="22" width="50" height="14"/>
+					<reportElement key="textField-7" positionType="Float" x="374" y="22" width="126" height="14"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement verticalAlignment="Top">
+					<textElement verticalAlignment="Top" lineSpacing="Single">
 						<font fontName="Arial" size="12" isItalic="false"/>
 					</textElement>
 					<textFieldExpression class="java.lang.Integer"><![CDATA[$F{bestillingsnrMontering}]]></textFieldExpression>
@@ -65,10 +79,10 @@
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="50">
+			<band height="39">
 				<subreport>
 					<reportElement positionType="Float" x="0" y="15" width="553" height="18"/>
-					<subreportExpression class="java.lang.String"><![CDATA["reports/kontrollskjema.jasper"]]></subreportExpression>
+					<subreportExpression class="java.lang.String"><![CDATA["reports/kontrollskjema_svensk.jasper"]]></subreportExpression>
 				</subreport>
 				<break>
 					<reportElement x="0" y="7" width="100" height="1"/>
@@ -100,7 +114,7 @@
 			<band height="50">
 				<subreport>
 					<reportElement x="3" y="16" width="549" height="24"/>
-					<subreportExpression class="java.lang.String"><![CDATA["reports/feil_ved_leveranse.jasper"]]></subreportExpression>
+					<subreportExpression class="java.lang.String"><![CDATA["reports/feil_ved_leveranse_svensk.jasper"]]></subreportExpression>
 				</subreport>
 				<break>
 					<reportElement x="0" y="6" width="100" height="1"/>
@@ -124,7 +138,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{order.orderNr}]]></textFieldExpression>
@@ -137,7 +151,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{order.customer.firstName}+" "+$F{order.customer.lastName}]]></textFieldExpression>
@@ -150,7 +164,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Top">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Arial" size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Garagetyp:]]></text>
@@ -163,7 +177,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{order.telephoneNrFormatted}]]></textFieldExpression>
@@ -176,7 +190,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<text><![CDATA[Igland Garagen Filial]]></text>
@@ -189,7 +203,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{order.customer.customerNr}]]></textFieldExpression>
@@ -202,7 +216,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<text><![CDATA[Frölunda Smedjegatan 4]]></text>
@@ -215,7 +229,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Telefon:]]></text>
@@ -228,7 +242,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<text><![CDATA[Tlf: 031-7070710]]></text>
@@ -241,7 +255,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Top">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Arial" size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Montör:]]></text>
@@ -254,7 +268,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<text><![CDATA[42132  Västre Frölunda]]></text>
@@ -267,7 +281,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{order.postOffice}]]></textFieldExpression>
@@ -280,7 +294,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{order.postalCode}]]></textFieldExpression>
@@ -293,10 +307,10 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<text><![CDATA[Ordrenummer:]]></text>
+				<text><![CDATA[Ordernummer:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-7" positionType="Float" x="109" y="151" width="271" height="17"/>
@@ -306,7 +320,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Top">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Arial" size="14"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{order.assembly.supplier.supplierName}]]></textFieldExpression>
@@ -319,7 +333,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Kundnummer:]]></text>
@@ -332,7 +346,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Top">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Arial" size="14"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{order.constructionType.name}+" "+$F{order.info}]]></textFieldExpression>
@@ -345,7 +359,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<text><![CDATA[Org. Nr: 516411-1139]]></text>
@@ -368,7 +382,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{order.deliveryAddress}]]></textFieldExpression>
@@ -381,33 +395,33 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="16" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Montage:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-7" positionType="Float" x="503" y="152" width="50" height="17"/>
+				<reportElement key="textField-7" positionType="Float" x="500" y="152" width="70" height="17"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Top">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Arial" size="14"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{order.assembly.assemblyWeek}+" - "+$F{order.assembly.assemblyYear}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-19" positionType="Float" x="382" y="152" width="120" height="17"/>
+				<reportElement key="staticText-19" positionType="Float" x="378" y="152" width="120" height="17"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Top">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Arial" size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Monteringsvecka:]]></text>
@@ -422,7 +436,7 @@
 			<subreport isUsingCache="true" runToBottom="false">
 				<reportElement key="subreport-1" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="1" y="10" width="512" height="16"/>
 				<dataSourceExpression><![CDATA[new JRBeanCollectionDataSource($F{fakturagrunnlag})]]></dataSourceExpression>
-				<subreportExpression class="java.lang.String"><![CDATA["reports/fakturagrunnlag.jasper"]]></subreportExpression>
+				<subreportExpression class="java.lang.String"><![CDATA["reports/fakturagrunnlag_svensk.jasper"]]></subreportExpression>
 			</subreport>
 			<textField pattern="##0.00" isBlankWhenNull="true">
 				<reportElement key="textField-10" positionType="Float" x="478" y="92" width="52" height="12"/>
@@ -432,7 +446,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" lineSpacing="Single">
 					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{totalSumInklTillegg}]]></textFieldExpression>
@@ -445,7 +459,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" lineSpacing="Single">
 					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{totalSum}]]></textFieldExpression>
@@ -461,10 +475,10 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Top">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<text><![CDATA[Totalsum inkl. tillegg (eks. mva.):]]></text>
+				<text><![CDATA[Totalsumma:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement key="staticText-21" positionType="Float" x="24" y="50" width="498" height="12"/>
@@ -474,10 +488,10 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Top">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<text><![CDATA[Tillegg som faktureres på egne linjer:]]></text>
+				<text><![CDATA[Tillägg:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement key="staticText-22" positionType="Float" x="24" y="63" width="147" height="12"/>
@@ -487,10 +501,10 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Top">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<text><![CDATA[Faktureres GI montering:]]></text>
+				<text><![CDATA[Montage av garage:]]></text>
 			</staticText>
 			<textField pattern="##0.00" isBlankWhenNull="true">
 				<reportElement key="textField-11" positionType="Float" x="478" y="76" width="52" height="12"/>
@@ -500,7 +514,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" lineSpacing="Single">
 					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{craningCost}]]></textFieldExpression>
@@ -513,7 +527,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Top">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[Montering med kranbil:]]></text>
@@ -529,10 +543,10 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Top">
+				<textElement verticalAlignment="Top" lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
-				<text><![CDATA[Fakturagrunnlag - alle linjer må spesifiseres på faktura. Ekstraarbeid må sendes på egen faktura.]]></text>
+				<text><![CDATA[Fakturaunderlag. TA-arbete specifiseras på er faktura.]]></text>
 			</staticText>
 		</band>
 	</detail>

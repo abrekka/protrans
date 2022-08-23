@@ -119,7 +119,7 @@
 				<textElement lineSpacing="Single">
 					<font fontName="Calibri" size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Beskrivning av arbetsuppgift]]></text>
+				<text><![CDATA[Beskrivning av arbetsuppgift:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="0" y="32" width="567" height="20" backcolor="#CC0000"/>
@@ -133,7 +133,7 @@
 				<textElement lineSpacing="Single">
 					<font fontName="Times New Roman" size="12"/>
 				</textElement>
-				<text><![CDATA[Kartläggning av risker vid montage och korrigerande arbete]]></text>
+				<text><![CDATA[Kartläggning av risker vid montage och korrigerande TA-arbete]]></text>
 			</staticText>
 		</band>
 	</noData>

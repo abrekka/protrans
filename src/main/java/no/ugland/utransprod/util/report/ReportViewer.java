@@ -59,8 +59,6 @@ public class ReportViewer extends JDialog implements Closeable {
 
 	private JButton buttonMail;
 
-	// private boolean useMailButton = false;
-
 	JasperPrint jasperPrintReport;
 
 	String fileName;
@@ -206,8 +204,11 @@ public class ReportViewer extends JDialog implements Closeable {
 				throw new ProTransException(String.format("Fant ikke rapport %s",reportFile));
 			}
 			
-//			InputStream rapport =getClass().getClassLoader().getResourceAsStream("reports/assembly_ny_svensk.jrxml");
-//			String filnavn=JasperCompileManager.compileReportToFile("reports/feil_ved_leveranse.jrxml");
+			//Brukes for å kompilere rapporter laget i JasperSoft Studio
+//			InputStream rapport =getClass().getClassLoader().getResourceAsStream("reports/assembly_ny.jrxml");
+//			String filnavn=JasperCompileManager.compileReportToFile("reports/kontrollskjema_ny.jrxml");
+//			String filnavn2=JasperCompileManager.compileReportToFile("reports/assembly_ny.jrxml");
+//			String filnavn3=JasperCompileManager.compileReportToFile("reports/sjekkliste.jrxml");
 			
 			jasperPrintReport = JasperFillManager.fillReport(stream, parameters, datasource);
 

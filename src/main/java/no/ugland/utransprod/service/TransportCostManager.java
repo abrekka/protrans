@@ -37,8 +37,8 @@ public interface TransportCostManager {
    int COLUMN_AREA_SNOWLOAD_MAX = 4;
    int COLUMN_AREA_SNOWLOAD_COMMENT = 5;
    String FILE_HEADER_IMPORT = "Postnummer;Sted;Kommunenr;";
-   String FILE_HEADER_ZONE_ADDITION_ASSEMBLY_IMPORT = "Postnummer;Sted;MontÃ¸rtillegg;";
-   String FILE_HEADER_UPDATE = "Fra;Til;Pris;Max tillegg;PÃ¥slag;Tillegg:;Beskrivelse;Grunnlag;Til;Tillegg;Enhet;Transportgrunnlag;Max tillegg;";
+   String FILE_HEADER_ZONE_ADDITION_ASSEMBLY_IMPORT = "Postnummer;Sted;Montørtillegg;";
+   String FILE_HEADER_UPDATE = "Fra;Til;Pris;Max tillegg;Påslag;Tillegg:;Beskrivelse;Grunnlag;Til;Tillegg;Enhet;Transportgrunnlag;Max tillegg;";
    String FILE_HEADER_IMPORT_AREA = "Kommunenr;Kommunenavn;";
    String FILE_HEADER_IMPORT_COUNTY = "Fylkesnr;Fylke;";
    String FILE_HEADER_IMPORT_SNOW_LOAD = "Area_code;Snowload_basic_value;Height_limit;delta_snowload;Snowload_max;Comment;";

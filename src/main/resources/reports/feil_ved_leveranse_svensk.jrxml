@@ -39,7 +39,7 @@
 				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Eventuellt ekstra arbete som följer av feil i leveransen ska avtalas med Igland Garagen före arbetet fortlöper.
+				<text><![CDATA[Eventuellt ekstra arbete som följer av fel i leveransen ska avtalas med Igland Garagen före arbetet fortlöper.
 ]]></text>
 			</staticText>
 			<staticText>
@@ -47,7 +47,7 @@
 				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Ekstra arbeten faktureras med kr. 450 kr/tim ex moms + 50 kr/mil vid extra körning
+				<text><![CDATA[Ekstra arbeten faktureras med kr. 450 kr/tim ex moms + 50 kr/mil vid extra resa.
 
 ]]></text>
 			</staticText>
@@ -98,11 +98,11 @@
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="4" y="89" width="191" height="14"/>
+				<reportElement x="4" y="89" width="206" height="14"/>
 				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Följande avtalt arbete är avtalt utfört:
+				<text><![CDATA[Följande avtalt arbete är avtalt att utföra:
 
 
 ]]></text>
@@ -165,7 +165,7 @@
 				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Detta är avtalt och accepterat av Igland Garagen Filial
+				<text><![CDATA[Detta är avtalat och accepterat av Igland Garagen Filial
 
 
 ]]></text>
@@ -208,7 +208,7 @@
 				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Profesionellt och hövligt:
+				<text><![CDATA[Professionellt och hövligt:
 
 
 
@@ -234,14 +234,14 @@
 				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[· Ge besked till kund om ev avvik och be om attest på TA-dokument]]></text>
+				<text><![CDATA[·Ge besked till kund om ev avvik och be om attest på TA-dokument]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="451" width="533" height="14"/>
 				<textElement lineSpacing="Single">
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
-				<text><![CDATA[- Ta ansvar för återkoppling till Igland Garagen vid fel på leveransen]]></text>
+				<text><![CDATA[·Ta ansvar för återkoppling till Igland Garagen vid fel på leveransen]]></text>
 			</staticText>
 		</band>
 	</noData>

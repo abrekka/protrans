@@ -566,7 +566,9 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 
 		// supplierMap.putAll(ProductAreaGroup.UNKNOWN,
 		// CollectionUtils.union(suppliersHavingAssembly,suppliers));
-		return Lists.newArrayList(CollectionUtils.union(suppliersHavingAssembly, suppliers));
+		List<Supplier> allSuppliers=Lists.newArrayList(CollectionUtils.union(suppliersHavingAssembly, suppliers));
+		Collections.sort(allSuppliers, new SupplierComparator());
+		return allSuppliers;
 	}
 
 	/**

@@ -56,6 +56,7 @@ import no.ugland.utransprod.model.ArticleType;
 import no.ugland.utransprod.model.ArticleTypeArticleType;
 import no.ugland.utransprod.model.ArticleTypeAttribute;
 import no.ugland.utransprod.model.Articleable;
+import no.ugland.utransprod.model.Colli;
 import no.ugland.utransprod.model.ConstructionType;
 import no.ugland.utransprod.model.ConstructionTypeArticle;
 import no.ugland.utransprod.model.ConstructionTypeArticleAttribute;
@@ -72,6 +73,7 @@ import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.enums.LazyLoadArticleTypeEnum;
 import no.ugland.utransprod.service.enums.LazyLoadConstructionTypeArticleEnum;
 import no.ugland.utransprod.service.enums.LazyLoadConstructionTypeEnum;
+import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
 import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.Util;
 
@@ -1136,26 +1138,43 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	private void removeOrderLines(Order incomingOrder) throws ProTransException {
 		Set<OrderLine> orderLines = incomingOrder.getOrderLines();
 		List<OrderLine> ordrelinjerSomKanFjernes = Lists.newArrayList();
+		List<Colli> kollierSomKanFjernes = new ArrayList<Colli>();
 		boolean inneholderOrdrelinjeSomErPakket = false;
 		if (orderLines != null) {
 			for (OrderLine orderLine : orderLines) {
 				if (orderLine.getColli() == null) {
 					ordrelinjerSomKanFjernes.add(orderLine);
 				} else {
-					inneholderOrdrelinjeSomErPakket = true;
+					if (orderLine.getArticleName().equalsIgnoreCase("Takstein")) {
+						Colli colli = orderLine.getColli();
+//						orderLine.setColli(null);
+						kollierSomKanFjernes.add(colli);
+						ordrelinjerSomKanFjernes.add(orderLine);
+					} else {
+						inneholderOrdrelinjeSomErPakket = true;
+					}
 				}
 			}
 			// orderLines.clear();
 		}
 		for (OrderLine orderLine : ordrelinjerSomKanFjernes) {
 			orderLines.remove(orderLine);
+			orderLine.setColli(null);
 		}
 
 		managerRepository.getOrderManager().saveOrder(incomingOrder, true);
+
+		for (Colli colli : kollierSomKanFjernes) {
+			managerRepository.getColliManager().removeObject(colli);
+		}
+
 		if (inneholderOrdrelinjeSomErPakket) {
 			Util.showMsgDialog(null, "Allerede pakket",
 					"Noen ordrelinjer er allerede pakket og vil ikke bli importert på nytt");
 		}
+		managerRepository.getOrderManager().refreshObject(incomingOrder);
+		managerRepository.getOrderManager().lazyLoadOrder(incomingOrder, new LazyLoadOrderEnum[] {
+				LazyLoadOrderEnum.ORDER_COSTS, LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.ORDER_LINES });
 	}
 
 	@SuppressWarnings("unchecked")

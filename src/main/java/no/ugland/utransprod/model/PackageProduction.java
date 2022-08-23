@@ -57,14 +57,14 @@ public abstract class PackageProduction extends BaseObject  {
 			return false;
 		PackageProduction castOther = (PackageProduction) other;
 		return new EqualsBuilder().append(orderLineId, castOther.orderLineId)
-				.append(customerNr, castOther.customerNr)
+				.append(customerNr, castOther.customerNr).append(orderNr, castOther.orderNr)
 				.isEquals();
 	}
 
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder().append(orderLineId)
-		.append(customerNr)
+		.append(customerNr).append(orderNr)
 				.toHashCode();
 	}
 

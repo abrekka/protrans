@@ -122,7 +122,7 @@ public final class Util {
 
 	public static final SimpleDateFormat SHORT_DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
 
-	public static final SimpleDateFormat SHORT_DATE_TIME_FORMAT = new SimpleDateFormat("yyyy.MM.dd HH:MM");
+	public static final SimpleDateFormat SHORT_DATE_TIME_FORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 
 	public static final SimpleDateFormat DATE_FORMAT_YYMMDD = new SimpleDateFormat("yyMMdd");
 

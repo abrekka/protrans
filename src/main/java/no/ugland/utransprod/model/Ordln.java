@@ -47,6 +47,7 @@ public class Ordln extends BaseObject {
 	private Integer purcno;
 
 	private BigDecimal noinvoab;
+	private BigDecimal nofin;
 
 	private Integer prodTp2;
 
@@ -327,7 +328,7 @@ public class Ordln extends BaseObject {
 	}
 
 	public BigDecimal getNoinvoab() {
-		return noinvoab;
+		return noinvoab == null ? BigDecimal.ZERO : noinvoab;
 	}
 
 	public void setNoinvoab(BigDecimal noinvoab) {
@@ -348,5 +349,13 @@ public class Ordln extends BaseObject {
 
 	public void setTrInf3(String trInf3) {
 		this.trInf3 = trInf3;
+	}
+
+	public BigDecimal getNofin() {
+		return nofin == null ? BigDecimal.ZERO : nofin;
+	}
+
+	public void setNofin(BigDecimal nofin) {
+		this.nofin = nofin;
 	}
 }

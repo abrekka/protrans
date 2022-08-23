@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.AbstractAction;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -142,6 +143,14 @@ deviationStatusList.add(0, null);
 		textField.setName("TextFieldAbsentDays");
 		return textField;
 	}
+	
+	public JTextField getTextFieldNumberOfOwnEmployees(PresentationModel presentationModel) {
+		JTextField textField = BasicComponentFactory
+				.createTextField(presentationModel
+						.getBufferedModel(AccidentModel.PROPERTY_NUMBER_OF_OWN_EMPLOYEES_STRING));
+		textField.setName("TextFieldNumberOfOwnEmployees");
+		return textField;
+	}
 
 	public JTextArea getTextAreaDescription(PresentationModel presentationModel) {
 		JTextArea textArea = BasicComponentFactory
@@ -175,8 +184,19 @@ deviationStatusList.add(0, null);
 				.createCheckBox(
 						presentationModel
 								.getBufferedModel(AccidentModel.PROPERTY_REPORTED_POLICE_BOOL),
-						"Meldt til arbeidstilsynet/politi");
+						"Meldt til politi");
 		checkBox.setName("CheckBoxPolice");
+		return checkBox;
+
+	}
+	
+	public JCheckBox getCheckBoxArbeidstilsynet(PresentationModel presentationModel) {
+		JCheckBox checkBox = BasicComponentFactory
+				.createCheckBox(
+						presentationModel
+								.getBufferedModel(AccidentModel.PROPERTY_REPORTED_ARBEIDSTILSYNET_BOOL),
+						"Meldt til arbeidstilsynet");
+		checkBox.setName("CheckBoxArbeidstilsynet");
 		return checkBox;
 
 	}
@@ -299,24 +319,46 @@ deviationStatusList.add(0, null);
 		return comboBox;
 	}
 
-	public JRadioButton getRadioButtonPersonalInjury(
+	public JRadioButton getRadioButtonPersonalInjuryOver24(
 			PresentationModel presentationModel) {
 		JRadioButton radioButton = BasicComponentFactory
 				.createRadioButton(
 						presentationModel
-								.getBufferedModel(AccidentModel.PROPERTY_PERSONAL_INJURY),
-						1, "Ulykke med personskade");
-		radioButton.setName("RadioButtonPersonalInjury");
+								.getBufferedModel(AccidentModel.PROPERTY_PERSONAL_INJURY_OVER_24),
+						1, "TF1: Personskader med fravær over 24t");
+		radioButton.setName("RadioButtonPersonalInjuryOver24");
 		return radioButton;
 	}
 
+	public JRadioButton getRadioButtonPersonalInjuryUnder24(
+			PresentationModel presentationModel) {
+		JRadioButton radioButton = BasicComponentFactory
+				.createRadioButton(
+						presentationModel
+								.getBufferedModel(AccidentModel.PROPERTY_PERSONAL_INJURY_UNDER_24),
+						1, "TF2:Personskader med fravær under 24t");
+		radioButton.setName("RadioButtonPersonalInjuryUnder24");
+		return radioButton;
+	}
+	
+	public JRadioButton getRadioButtonPersonalInjuryNotAbsent(
+			PresentationModel presentationModel) {
+		JRadioButton radioButton = BasicComponentFactory
+				.createRadioButton(
+						presentationModel
+								.getBufferedModel(AccidentModel.PROPERTY_PERSONAL_INJURY_NOT_ABSENT),
+						1, "TF3: Personskader uten fravær");
+		radioButton.setName("RadioButtonPersonalInjuryNotAbsent");
+		return radioButton;
+	}
+	
 	public JRadioButton getRadioButtonNotPersonalInjury(
 			PresentationModel presentationModel) {
 		JRadioButton radioButton = BasicComponentFactory
 				.createRadioButton(
 						presentationModel
-								.getBufferedModel(AccidentModel.PROPERTY_PERSONAL_INJURY),
-						0, "Nestenulykke/hendelse uten personskade");
+								.getBufferedModel(AccidentModel.PROPERTY_NOT_PERSONAL_INJURY),
+						1, "TF4:Materielle skader, nestenulykke, farlig forhold");
 		radioButton.setName("RadioButtonNotPersonalInjury");
 		return radioButton;
 	}
@@ -376,7 +418,7 @@ deviationStatusList.add(0, null);
 
 	@Override
 	public final Dimension getWindowSize() {
-		return new Dimension(860, 400);
+		return new Dimension(1200, 600);
 	}
 
 	@Override
@@ -392,20 +434,28 @@ deviationStatusList.add(0, null);
 		table.getColumnExt(1).setPreferredWidth(80);
 		// avdeling
 		table.getColumnExt(2).setPreferredWidth(80);
-		// personskade
-		table.getColumnExt(3).setPreferredWidth(90);
+		// personskade over 24
+		table.getColumnExt(3).setPreferredWidth(50);
+		// personskade under 24
+				table.getColumnExt(4).setPreferredWidth(50);
+				// personskade uten fravær
+				table.getColumnExt(5).setPreferredWidth(50);
+				// ikke personskde
+				table.getColumnExt(6).setPreferredWidth(50);
 		// dato hendelse
-		table.getColumnExt(4).setPreferredWidth(110);
+		table.getColumnExt(7).setPreferredWidth(110);
 		// leder
-		table.getColumnExt(5).setPreferredWidth(50);
+		table.getColumnExt(8).setPreferredWidth(50);
 		// arb.tilsynet
-		table.getColumnExt(6).setPreferredWidth(80);
+		table.getColumnExt(9).setPreferredWidth(80);
 		// trygdekontoret
-		table.getColumnExt(7).setPreferredWidth(100);
+		table.getColumnExt(10).setPreferredWidth(100);
+		// arbeidstilsynet
+				table.getColumnExt(11).setPreferredWidth(100);
 	}
 
 	public Dimension getRegisterWindowSize() {
-		return new Dimension(580, 760);
+		return new Dimension(620, 800);
 	}
 
 	private class AddParticipantAction extends AbstractAction {
@@ -626,8 +676,8 @@ deviationStatusList.add(0, null);
 		private static final long serialVersionUID = 1L;
 
 		private static final String[] COLUMNS = { "Registert av", "Dato",
-				"Avdeling", "Personskade", "Dato hendelse", "Leder",
-				"Arb.tilsynet", "Trygdekontor" };
+				"Avdeling", "TF1","TF2","TF3","TF4", "Dato hendelse", "Leder",
+				"Politiet", "Trygdekontor","Arbeidstilsynet","Antall egne ansatte" };
 
 		/**
 		 * @param listModel
@@ -655,15 +705,25 @@ deviationStatusList.add(0, null);
 			case 2:
 				return accident.getJobFunction();
 			case 3:
-				return accident.getPersonalInjuryBool();
+				return accident.getPersonalInjuryOver24Bool();
 			case 4:
-				return accident.getAccidentDateAndTime();
+				return accident.getPersonalInjuryUnder24Bool();
 			case 5:
-				return accident.getReportedLeaderBool();
+				return accident.getPersonalInjuryNotAbsentBool();
 			case 6:
-				return accident.getReportedPoliceBool();
+				return accident.getNotPersonalInjuryBool();
 			case 7:
+				return accident.getAccidentDateAndTime();
+			case 8:
+				return accident.getReportedLeaderBool();
+			case 9:
+				return accident.getReportedPoliceBool();
+			case 10:
 				return accident.getReportedSocialSecurityBool();
+			case 11:
+				return accident.getReportedArbeidstilsynetBool();
+			case 12:
+				return accident.getNumberOfOwnEmployees();
 			default:
 				throw new IllegalStateException("Unknown column");
 			}
@@ -677,16 +737,22 @@ deviationStatusList.add(0, null);
 		public Class<?> getColumnClass(int columnIndex) {
 			switch (columnIndex) {
 			case 0:
-			case 4:
+			case 7:
 			case 1:
 				return String.class;
 			case 2:
 				return JobFunction.class;
 			case 3:
+			case 4:
 			case 5:
 			case 6:
-			case 7:
+			case 8:
+			case 9:
+			case 10:
+			case 11:
 				return Boolean.class;
+			case 12:
+				return Integer.class;
 			default:
 				throw new IllegalStateException("Unknown column");
 			}

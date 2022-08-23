@@ -17,6 +17,7 @@ import no.ugland.utransprod.dao.ImportOrderVDAO;
 import no.ugland.utransprod.dao.OrdlnDAO;
 import no.ugland.utransprod.dao.UdsalesmallDAO;
 import no.ugland.utransprod.model.ArticleType;
+import no.ugland.utransprod.model.Colli;
 import no.ugland.utransprod.model.ConstructionType;
 import no.ugland.utransprod.model.Contact;
 import no.ugland.utransprod.model.CostType;
@@ -477,8 +478,18 @@ public class IncomingOrderManagerImpl extends ManagerImpl<Order> implements Inco
 			setGavlVinkelOgBredde(incomingOrder);
 		}
 
-		for (OrderLine orderLine : incomingOrder.getOrderLines()) {
-			orderLine.calculateAttributes();
+		if (incomingOrder.getOrderLines() != null) {
+			for (OrderLine orderLine : incomingOrder.getOrderLines()) {
+				orderLine.calculateAttributes();
+
+				if (orderLine.getArticleName().equalsIgnoreCase("Takstein")) {
+					Colli newColli = new Colli(null, incomingOrder, "Takstein", null, null, null, null, null, null,
+							"Import");
+					incomingOrder.addColli(newColli);
+					newColli.addOrderLine(orderLine);
+//				managerRepository.getColliManager().saveColli(newColli);
+				}
+			}
 		}
 	}
 
@@ -503,7 +514,7 @@ public class IncomingOrderManagerImpl extends ManagerImpl<Order> implements Inco
 	private void setConstructionTypeAttributes(Order incomingOrder, Ord ord) {
 		ConstructionTypeAttributesConverter converter = ConstructionTypeAttributesConverterSelector
 				.valueOf(StringUtils.upperCase(incomingOrder.getProductAreaGroup().getProductAreaGroupName()))
-				.getConverter(ordlnManager,costTypeManager,costUnitManager);
+				.getConverter(ordlnManager, costTypeManager, costUnitManager);
 		if (converter != null) {
 			converter.setConstructionTypeAttributes(ord, incomingOrder);
 		}

@@ -161,7 +161,7 @@ public class EditAccidentViewTest {
 	assertEquals("Transport", accident.getJobFunction().getJobFunctionName());
 	assertEquals("testbeskrivelse", accident.getAccidentDescription());
 	assertEquals("testårsak", accident.getAccidentCause());
-	assertEquals(Integer.valueOf(1), accident.getPersonalInjury());
+	assertEquals(Integer.valueOf(1), accident.getPersonalInjuryOver24());
 	assertEquals(Integer.valueOf(1), accident.getReportedLeader());
 	assertEquals(Integer.valueOf(1), accident.getReportedPolice());
 	assertEquals(Integer.valueOf(1), accident.getReportedSocialSecurity());
@@ -408,7 +408,7 @@ public class EditAccidentViewTest {
 	assertEquals("tiltaksbeskrivelse", accident.getPreventiveActionComment());
 	assertEquals("testbeskrivelse", accident.getAccidentDescription());
 	assertEquals("testårsak", accident.getAccidentCause());
-	assertEquals(Integer.valueOf(1), accident.getPersonalInjury());
+	assertEquals(Integer.valueOf(1), accident.getPersonalInjuryOver24());
 	assertEquals(Integer.valueOf(1), accident.getReportedLeader());
 	assertEquals(Integer.valueOf(1), accident.getReportedPolice());
 	assertEquals(Integer.valueOf(1), accident.getReportedSocialSecurity());

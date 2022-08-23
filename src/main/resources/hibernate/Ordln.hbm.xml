@@ -61,6 +61,12 @@
         column="NOINVOAB"
         length="32"
     />
+     <property
+        name="nofin"
+        type="java.math.BigDecimal"
+        column="NOFIN"
+        length="32"
+    />
 	<property
         name="discount"
         type="java.math.BigDecimal"

@@ -35,9 +35,27 @@
         length="32"
     />
 	<property
-        name="personalInjury"
+        name="personalInjuryOver24"
         type="java.lang.Integer"
-        column="PERSONAL_INJURY"
+        column="PERSONAL_INJURY_OVER_24"
+        length="32"
+    />
+    <property
+        name="personalInjuryUnder24"
+        type="java.lang.Integer"
+        column="PERSONAL_INJURY_UNDER_24"
+        length="32"
+    />
+    <property
+        name="personalInjuryNotAbsent"
+        type="java.lang.Integer"
+        column="PERSONAL_INJURY_NOT_ABSENT"
+        length="32"
+    />
+    <property
+        name="notPersonalInjury"
+        type="java.lang.Integer"
+        column="NOT_PERSONAL_INJURY"
         length="32"
     />
 	<property
@@ -76,6 +94,12 @@
         column="REPORTED_POLICE"
         length="32"
     />
+    <property
+        name="reportedArbeidstilsynet"
+        type="java.lang.Integer"
+        column="REPORTED_ARBEIDSTILSYNET"
+        length="32"
+    />
 	<property
         name="reportedSocialSecurity"
         type="java.lang.Integer"
@@ -104,6 +128,12 @@
         name="doneDate"
         type="java.util.Date"
         column="DONE_DATE"
+        length="32"
+    />
+    <property
+        name="numberOfOwnEmployees"
+        type="java.lang.Integer"
+        column="NUMBER_OF_OWN_EMPLOYEES"
         length="32"
     />
     

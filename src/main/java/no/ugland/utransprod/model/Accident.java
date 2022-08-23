@@ -20,7 +20,7 @@ public class Accident extends BaseObject {
 
     private JobFunction jobFunction;
 
-    private Integer personalInjury;
+//    private Integer personalInjury;
 
     private Date accidentDate;
 
@@ -31,6 +31,7 @@ public class Accident extends BaseObject {
     private Integer reportedLeader;
 
     private Integer reportedPolice;
+    private Integer reportedArbeidstilsynet;
 
     private Integer reportedSocialSecurity;
 
@@ -46,6 +47,12 @@ public class Accident extends BaseObject {
 	private Date doneDate;
 
 	private DeviationStatus deviationStatus;
+	
+	private Integer personalInjuryOver24;
+	private Integer personalInjuryUnder24;
+	private Integer personalInjuryNotAbsent;
+	private Integer notPersonalInjury;
+	private Integer numberOfOwnEmployees;
 
     public Accident() {
         super();
@@ -53,7 +60,8 @@ public class Accident extends BaseObject {
 
     public Accident(final Integer aAccidentId, final String isRegisteredBy,
             final Date aRegistrationDate, final JobFunction aJobFunction,
-            final Integer hasPersonalDamage, final Date aAccidentDate,
+//            final Integer hasPersonalDamage,
+            final Date aAccidentDate,
             final String aAccidentDescription, final String aAccidentCause,
             final Integer isReportedLeader, final Integer isReportedPolice,
             final Integer isReportedSocialService,
@@ -63,7 +71,7 @@ public class Accident extends BaseObject {
         this.registeredBy = isRegisteredBy;
         this.registrationDate = aRegistrationDate;
         this.jobFunction = aJobFunction;
-        this.personalInjury = hasPersonalDamage;
+//        this.personalInjury = hasPersonalDamage;
         this.accidentDate = aAccidentDate;
         this.accidentDescription = aAccidentDescription;
         this.accidentCause = aAccidentCause;
@@ -73,8 +81,48 @@ public class Accident extends BaseObject {
         this.accidentParticipants = hasAccidentPartisipants;
         this.accidentTime=aTime;
     }
+    
+    public Integer getNumberOfOwnEmployees() {
+		return numberOfOwnEmployees;
+	}
+    public void setNumberOfOwnEmployees(Integer numberOfOwnEmployees) {
+		this.numberOfOwnEmployees = numberOfOwnEmployees;
+	}
+    
 
-    public final String getAccidentCause() {
+    public Integer getPersonalInjuryOver24() {
+		return personalInjuryOver24;
+	}
+
+	public void setPersonalInjuryOver24(Integer personalInjuryOver24) {
+		this.personalInjuryOver24 = personalInjuryOver24;
+	}
+
+	public Integer getPersonalInjuryUnder24() {
+		return personalInjuryUnder24;
+	}
+
+	public void setPersonalInjuryUnder24(Integer personalInjuryUnder24) {
+		this.personalInjuryUnder24 = personalInjuryUnder24;
+	}
+
+	public Integer getPersonalInjuryNotAbsent() {
+		return personalInjuryNotAbsent;
+	}
+
+	public void setPersonalInjuryNotAbsent(Integer personalInjuryNotAbsent) {
+		this.personalInjuryNotAbsent = personalInjuryNotAbsent;
+	}
+
+	public Integer getNotPersonalInjury() {
+		return notPersonalInjury;
+	}
+
+	public void setNotPersonalInjury(Integer notPersonalInjury) {
+		this.notPersonalInjury = notPersonalInjury;
+	}
+
+	public final String getAccidentCause() {
         return accidentCause;
     }
 
@@ -123,13 +171,13 @@ public class Accident extends BaseObject {
         this.jobFunction = aJobFunction;
     }
 
-    public final Integer getPersonalInjury() {
-        return personalInjury;
-    }
-
-    public final void setPersonalInjury(final Integer wasPersonalInjury) {
-        this.personalInjury = wasPersonalInjury;
-    }
+//    public final Integer getPersonalInjury() {
+//        return personalInjury;
+//    }
+//
+//    public final void setPersonalInjury(final Integer wasPersonalInjury) {
+//        this.personalInjury = wasPersonalInjury;
+//    }
 
     public final String getRegisteredBy() {
         return registeredBy;
@@ -162,6 +210,13 @@ public class Accident extends BaseObject {
     public final void setReportedPolice(final Integer isReportedPolice) {
         this.reportedPolice = isReportedPolice;
     }
+    
+    public Integer getReportedArbeidstilsynet() {
+		return reportedArbeidstilsynet;
+	}
+    public void setReportedArbeidstilsynet(Integer reportedArbeidstilsynet) {
+		this.reportedArbeidstilsynet = reportedArbeidstilsynet;
+	}
 
     public final Integer getReportedSocialSecurity() {
         return reportedSocialSecurity;
@@ -180,7 +235,14 @@ public class Accident extends BaseObject {
         return new EqualsBuilder().append(registeredBy, castOther.registeredBy)
                 .append(registrationDate, castOther.registrationDate).append(
                         jobFunction, castOther.jobFunction).append(
-                        personalInjury, castOther.personalInjury).append(
+                        personalInjuryOver24, castOther.personalInjuryOver24)
+                .append(
+                        personalInjuryUnder24, castOther.personalInjuryUnder24)
+                .append(
+                        personalInjuryNotAbsent, castOther.personalInjuryNotAbsent)
+                .append(
+                        notPersonalInjury, castOther.notPersonalInjury).
+                append(
                         accidentDate, castOther.accidentDate).append(
                         accidentDescription, castOther.accidentDescription)
                 .append(accidentCause, castOther.accidentCause).append(
@@ -193,7 +255,8 @@ public class Accident extends BaseObject {
     @Override
     public final int hashCode() {
         return new HashCodeBuilder().append(registeredBy).append(
-                registrationDate).append(jobFunction).append(personalInjury)
+                registrationDate).append(jobFunction).append(personalInjuryOver24)
+        		.append(personalInjuryUnder24).append(personalInjuryNotAbsent).append(notPersonalInjury)
                 .append(accidentDate).append(accidentDescription).append(
                         accidentCause).append(reportedLeader).append(
                         reportedPolice).append(reportedSocialSecurity)
@@ -206,7 +269,7 @@ public class Accident extends BaseObject {
                 "accidentId", accidentId).append("registeredBy", registeredBy)
                 .append("registrationDate", registrationDate).append(
                         "jobFunction", jobFunction).append("personalDamage",
-                        personalInjury).append("accidentDate", accidentDate)
+                        personalInjuryOver24).append("accidentDate", accidentDate)
                 .append("accidentDescription", accidentDescription).append(
                         "accidentCause", accidentCause).append(
                         "reportedLeader", reportedLeader).append(
@@ -224,8 +287,21 @@ public class Accident extends BaseObject {
         this.accidentTime = time;
     }
     
-    public Boolean getPersonalInjuryBool(){
-        return Util.convertNumberToBoolean(personalInjury);
+//    public Boolean getPersonalInjuryBool(){
+//        return Util.convertNumberToBoolean(personalInjury);
+//    }
+    
+    public Boolean getPersonalInjuryOver24Bool(){
+        return Util.convertNumberToBoolean(personalInjuryOver24);
+    }
+    public Boolean getPersonalInjuryUnder24Bool(){
+        return Util.convertNumberToBoolean(personalInjuryUnder24);
+    }
+    public Boolean getPersonalInjuryNotAbsentBool(){
+        return Util.convertNumberToBoolean(personalInjuryNotAbsent);
+    }
+    public Boolean getNotPersonalInjuryBool(){
+        return Util.convertNumberToBoolean(notPersonalInjury);
     }
     public String getAccidentDateAndTime(){
         if(accidentDate!=null){
@@ -243,6 +319,9 @@ public class Accident extends BaseObject {
     }
     public Boolean getReportedPoliceBool(){
         return Util.convertNumberToBoolean(reportedPolice);
+    }
+    public Boolean getReportedArbeidstilsynetBool(){
+        return Util.convertNumberToBoolean(reportedArbeidstilsynet);
     }
     public Boolean getReportedSocialSecurityBool(){
         return Util.convertNumberToBoolean(reportedSocialSecurity);

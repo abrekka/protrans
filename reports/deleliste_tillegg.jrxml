@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 3.5.2  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="deleliste_tillegg" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<parameter name="ugland_logo" class="java.io.InputStream" isForPrompting="false"/>
 	<parameter name="produksjonstype" class="java.lang.String"/>
@@ -27,7 +28,7 @@
 			</image>
 			<staticText>
 				<reportElement x="0" y="48" width="55" height="20"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Ordrenr:]]></text>
@@ -36,14 +37,14 @@
 				<reportElement x="55" y="48" width="279" height="20">
 					<printWhenExpression><![CDATA[new Boolean($F{ordrenummer}!=null)]]></printWhenExpression>
 				</reportElement>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{ordrenummer}+" - "+ $F{navn}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement mode="Opaque" x="0" y="75" width="310" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
-				<textElement>
+				<textElement lineSpacing="Single">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Kappliste detaljert - Igland garasjen:	]]></text>
@@ -60,7 +61,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[Antall]]></text>
 			</staticText>
 			<staticText>
@@ -71,7 +72,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Kappliste - standard]]></text>
 			</staticText>
 			<staticText>
@@ -82,7 +83,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[Dimensjon]]></text>
 			</staticText>
 			<staticText>
@@ -93,7 +94,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[Mål]]></text>
 			</staticText>
 			<staticText>
@@ -104,7 +105,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -115,7 +116,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -126,7 +127,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -137,7 +138,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Kappliste - spesial]]></text>
 			</staticText>
 			<staticText>
@@ -148,7 +149,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -159,7 +160,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -170,7 +171,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -181,7 +182,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Avstandslekte avstivning gavl]]></text>
 			</staticText>
 			<staticText>
@@ -192,7 +193,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[48x48]]></text>
 			</staticText>
 			<staticText>
@@ -203,7 +204,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -214,7 +215,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -225,7 +226,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Utfôring innside - F.O.P.]]></text>
 			</staticText>
 			<staticText>
@@ -236,7 +237,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -247,7 +248,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[22x148]]></text>
 			</staticText>
 			<staticText>
@@ -258,7 +259,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -269,7 +270,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -280,7 +281,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -291,7 +292,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Belistning F.O.P.]]></text>
 			</staticText>
 			<staticText>
@@ -302,7 +303,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[19x73]]></text>
 			</staticText>
 			<staticText>
@@ -313,7 +314,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Vasshelle - F.O.P.]]></text>
 			</staticText>
 			<staticText>
@@ -324,7 +325,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -335,7 +336,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -346,7 +347,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[36x48]]></text>
 			</staticText>
 			<staticText>
@@ -357,7 +358,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -368,7 +369,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -379,7 +380,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -390,7 +391,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Utforing - drager]]></text>
 			</staticText>
 			<staticText>
@@ -401,7 +402,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -412,7 +413,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -423,7 +424,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Feste for portskinne]]></text>
 			</staticText>
 			<staticText>
@@ -434,7 +435,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -445,7 +446,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[19x148]]></text>
 			</staticText>
 			<staticText>
@@ -456,7 +457,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Belistning drager]]></text>
 			</staticText>
 			<staticText>
@@ -467,7 +468,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -478,7 +479,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -489,7 +490,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[19x123]]></text>
 			</staticText>
 			<staticText>
@@ -500,7 +501,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -511,7 +512,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -522,7 +523,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Belistning drager]]></text>
 			</staticText>
 			<staticText>
@@ -533,7 +534,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -544,7 +545,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Belistning drager]]></text>
 			</staticText>
 			<staticText>
@@ -555,7 +556,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -566,7 +567,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[19x73]]></text>
 			</staticText>
 			<staticText>
@@ -577,7 +578,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -588,7 +589,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -599,8 +600,8 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
-				<text><![CDATA[  Til belistnint drager]]></text>
+				<textElement lineSpacing="Single"/>
+				<text><![CDATA[  Belistning drager]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="161" width="75" height="13"/>
@@ -610,7 +611,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[19x25]]></text>
 			</staticText>
 			<staticText>
@@ -621,8 +622,8 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[19x123]]></text>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
+				<text><![CDATA[19x13,0]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="174" width="60" height="13"/>
@@ -632,7 +633,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -643,7 +644,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -654,8 +655,8 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
-				<text><![CDATA[  Kledning drager]]></text>
+				<textElement lineSpacing="Single"/>
+				<text><![CDATA[  Kledning drager i bunn -d-fals rett]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="187" width="60" height="13"/>
@@ -665,7 +666,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -676,8 +677,8 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[]]></text>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
+				<text><![CDATA[19x13,0]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="187" width="75" height="13"/>
@@ -687,7 +688,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -698,8 +699,8 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
-				<text><![CDATA[  Kledning drager i topp]]></text>
+				<textElement lineSpacing="Single"/>
+				<text><![CDATA[  Kledning drager i topp -d-fals rett]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="200" width="160" height="13"/>
@@ -709,8 +710,8 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
-				<text><![CDATA[  Klending drager - D-fals tett]]></text>
+				<textElement lineSpacing="Single"/>
+				<text><![CDATA[  Klending drager - d-fals rett]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="200" width="60" height="13"/>
@@ -720,7 +721,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -731,7 +732,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[19x148]]></text>
 			</staticText>
 			<staticText>
@@ -742,7 +743,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -753,7 +754,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -764,7 +765,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -775,7 +776,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -786,8 +787,8 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
-				<text><![CDATA[  Kledning drager i topp - D-fals tett]]></text>
+				<textElement lineSpacing="Single"/>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="226" width="75" height="13"/>
@@ -797,7 +798,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -808,7 +809,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -819,7 +820,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -830,7 +831,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Spikerslag for kledning/ drager]]></text>
 			</staticText>
 			<staticText>
@@ -841,7 +842,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -852,8 +853,8 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[36x48]]></text>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="239" width="60" height="13"/>
@@ -863,7 +864,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -874,8 +875,8 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
-				<text><![CDATA[  Vasshelle drager]]></text>
+				<textElement lineSpacing="Single"/>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="252" width="75" height="13"/>
@@ -885,7 +886,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[19x98]]></text>
 			</staticText>
 			<staticText>
@@ -896,7 +897,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -907,7 +908,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -918,7 +919,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Belistning - hjørner]]></text>
 			</staticText>
 			<staticText>
@@ -929,7 +930,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Belistning - hjørner]]></text>
 			</staticText>
 			<staticText>
@@ -940,7 +941,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[19x123]]></text>
 			</staticText>
 			<staticText>
@@ -951,7 +952,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -962,7 +963,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -973,7 +974,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Belistning - hjørner]]></text>
 			</staticText>
 			<staticText>
@@ -984,7 +985,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[19x148]]></text>
 			</staticText>
 			<staticText>
@@ -995,7 +996,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1006,7 +1007,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1017,7 +1018,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Skjøt/ vegger]]></text>
 			</staticText>
 			<staticText>
@@ -1028,7 +1029,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[19x98]]></text>
 			</staticText>
 			<staticText>
@@ -1039,7 +1040,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1050,7 +1051,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1061,7 +1062,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Belistning - opplett/raft/gavl]]></text>
 			</staticText>
 			<staticText>
@@ -1072,7 +1073,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[19x98]]></text>
 			</staticText>
 			<staticText>
@@ -1083,7 +1084,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1094,7 +1095,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1105,7 +1106,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Belistning - opplett/raft/gavl]]></text>
 			</staticText>
 			<staticText>
@@ -1116,7 +1117,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[19x123]]></text>
 			</staticText>
 			<staticText>
@@ -1127,7 +1128,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1138,7 +1139,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1149,7 +1150,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Belistning]]></text>
 			</staticText>
 			<staticText>
@@ -1160,7 +1161,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1171,7 +1172,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1182,7 +1183,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1193,7 +1194,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Belistning  dør/ stå.]]></text>
 			</staticText>
 			<staticText>
@@ -1204,7 +1205,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[19x98]]></text>
 			</staticText>
 			<staticText>
@@ -1215,7 +1216,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1226,7 +1227,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1237,7 +1238,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Belistning dør ligg.]]></text>
 			</staticText>
 			<staticText>
@@ -1248,7 +1249,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[19x98]]></text>
 			</staticText>
 			<staticText>
@@ -1259,7 +1260,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1270,7 +1271,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1281,7 +1282,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Losholt]]></text>
 			</staticText>
 			<staticText>
@@ -1292,7 +1293,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1303,7 +1304,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[48x98]]></text>
 			</staticText>
 			<staticText>
@@ -1314,7 +1315,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1325,7 +1326,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Vasshelle over vindu og dør]]></text>
 			</staticText>
 			<staticText>
@@ -1336,7 +1337,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1347,7 +1348,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[36x48]]></text>
 			</staticText>
 			<staticText>
@@ -1358,7 +1359,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1369,7 +1370,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Veksling trapp]]></text>
 			</staticText>
 			<staticText>
@@ -1380,7 +1381,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1391,7 +1392,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[36x198]]></text>
 			</staticText>
 			<staticText>
@@ -1402,7 +1403,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1413,7 +1414,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Veksling horisontale krefter]]></text>
 			</staticText>
 			<staticText>
@@ -1424,7 +1425,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1435,7 +1436,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[36x198]]></text>
 			</staticText>
 			<staticText>
@@ -1446,7 +1447,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1457,7 +1458,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Gesimsbord - fremskutt front]]></text>
 			</staticText>
 			<staticText>
@@ -1468,7 +1469,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1479,7 +1480,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[d-fals - tett]]></text>
 			</staticText>
 			<staticText>
@@ -1490,7 +1491,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1501,7 +1502,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Spikerslag - fremskutt front]]></text>
 			</staticText>
 			<staticText>
@@ -1512,7 +1513,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1523,7 +1524,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[36x98]]></text>
 			</staticText>
 			<staticText>
@@ -1534,7 +1535,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1545,7 +1546,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Spikerslag portåpner]]></text>
 			</staticText>
 			<staticText>
@@ -1556,7 +1557,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1567,7 +1568,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[36x98]]></text>
 			</staticText>
 			<staticText>
@@ -1578,7 +1579,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1589,7 +1590,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Skrålist]]></text>
 			</staticText>
 			<staticText>
@@ -1600,7 +1601,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[48x48]]></text>
 			</staticText>
 			<staticText>
@@ -1611,7 +1612,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1622,7 +1623,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1633,7 +1634,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Grunnmurspapp]]></text>
 			</staticText>
 			<staticText>
@@ -1644,7 +1645,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1655,7 +1656,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1666,7 +1667,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1677,7 +1678,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Utlekting kvist/ opplett]]></text>
 			</staticText>
 			<staticText>
@@ -1688,7 +1689,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[23x36]]></text>
 			</staticText>
 			<staticText>
@@ -1699,7 +1700,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1710,7 +1711,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1721,7 +1722,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Reisverk kvist/ opplett]]></text>
 			</staticText>
 			<staticText>
@@ -1732,7 +1733,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[36x98]]></text>
 			</staticText>
 			<staticText>
@@ -1743,7 +1744,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1754,7 +1755,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1765,7 +1766,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Kledning kvist/ opplett]]></text>
 			</staticText>
 			<staticText>
@@ -1776,7 +1777,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1787,7 +1788,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1798,7 +1799,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1809,7 +1810,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[  Vindski i topp]]></text>
 			</staticText>
 			<staticText>
@@ -1820,7 +1821,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1831,7 +1832,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1842,7 +1843,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1853,7 +1854,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[36x98]]></text>
 			</staticText>
 			<staticText>
@@ -1864,7 +1865,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
@@ -1875,7 +1876,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement/>
+				<textElement lineSpacing="Single"/>
 				<text><![CDATA[Støtte/ Takutstikk]]></text>
 			</staticText>
 			<staticText>
@@ -1886,7 +1887,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center" lineSpacing="Single"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 		</band>

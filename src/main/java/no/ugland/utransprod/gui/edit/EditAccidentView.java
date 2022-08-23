@@ -25,6 +25,7 @@ import no.ugland.utransprod.util.InternalFrameBuilder;
 
 import com.jgoodies.forms.builder.ButtonStackBuilder;
 import com.jgoodies.forms.builder.PanelBuilder;
+import com.jgoodies.forms.debug.FormDebugPanel;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
@@ -32,16 +33,17 @@ import com.jgoodies.validation.Validator;
 import com.jgoodies.validation.view.ValidationComponentUtils;
 import com.toedter.calendar.JDateChooser;
 
-public class EditAccidentView extends AbstractEditView<AccidentModel, Accident>
-		implements Viewer {
+public class EditAccidentView extends AbstractEditView<AccidentModel, Accident> implements Viewer {
 	private JTextField textFieldRegisteredBy;
 
 	private JDateChooser dateChooserRegistrationDate;
 
 	private JComboBox comboBoxJobFunction;
 
-	private JRadioButton radioButtonPersonalInjury;
+	private JRadioButton radioButtonPersonalInjuryOver24;
 
+	private JRadioButton radioButtonPersonalInjuryUnder24;
+	private JRadioButton radioButtonPersonalInjuryNotAbsent;
 	private JRadioButton radioButtonNotPersonalInjury;
 
 	private JButton buttonAddParticipant;
@@ -61,6 +63,7 @@ public class EditAccidentView extends AbstractEditView<AccidentModel, Accident>
 	private JCheckBox checkBoxLeader;
 
 	private JCheckBox checkBoxPolice;
+	private JCheckBox checkBoxArbeidstilsynet;
 
 	private JCheckBox checkBoxSocialSecurity;
 
@@ -73,20 +76,19 @@ public class EditAccidentView extends AbstractEditView<AccidentModel, Accident>
 	private JComboBox comboBoxResponsible;
 
 	private JTextField textFieldAbsentDays;
+	private JTextField textFieldNumberOfOwnEmployess;
 
 	private JDateChooser dateChooserDoneDate;
 
 	private JComboBox comboBoxStatus;
 
-	public EditAccidentView(final boolean searchDialog,
-			final AccidentModel accidentModel,
+	public EditAccidentView(final boolean searchDialog, final AccidentModel accidentModel,
 			final AccidentViewHandler accidentViewHandler) {
 		super(searchDialog, accidentModel, accidentViewHandler);
 	}
 
 	private JPanel buildDetailPanel() {
-		FormLayout layout = new FormLayout("p,3dlu,70dlu,3dlu,p,3dlu,60dlu",
-				"p,3dlu,p");
+		FormLayout layout = new FormLayout("p,3dlu,70dlu,3dlu,p,3dlu,60dlu", "p,3dlu,p");
 		PanelBuilder builder = new PanelBuilder(layout);
 		// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
 		CellConstraints cc = new CellConstraints();
@@ -102,14 +104,12 @@ public class EditAccidentView extends AbstractEditView<AccidentModel, Accident>
 	}
 
 	private JPanel buildDateTimePanel() {
-		FormLayout layout = new FormLayout(
-				"60dlu,3dlu,p,3dlu,40dlu,10dlu,3dlu,p,3dlu,p", "p,3dlu,p");
+		FormLayout layout = new FormLayout("60dlu,3dlu,p,3dlu,40dlu,10dlu,3dlu,p,3dlu,p", "p,3dlu,p");
 		PanelBuilder builder = new PanelBuilder(layout);
 		// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
 		CellConstraints cc = new CellConstraints();
 
-		builder.addLabel("Dato/klokkeslett for hendelse/ulykke:",
-				cc.xyw(1, 1, 6));
+		builder.addLabel("Dato/klokkeslett for hendelse/ulykke:", cc.xyw(1, 1, 6));
 		builder.addLabel("Ferdig dato", cc.xy(8, 1));
 		builder.addLabel("Status", cc.xy(10, 1));
 		builder.add(dateChooserAccidentDate, cc.xy(1, 3));
@@ -123,8 +123,7 @@ public class EditAccidentView extends AbstractEditView<AccidentModel, Accident>
 	}
 
 	private JPanel buildCheckBoxPanel() {
-		FormLayout layout = new FormLayout("p,3dlu,fill:70dlu",
-				"p,3dlu,p,3dlu,p");
+		FormLayout layout = new FormLayout("p,3dlu,fill:70dlu", "p,3dlu,p,3dlu,p,3dlu,p");
 		PanelBuilder builder = new PanelBuilder(layout);
 		// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
 		CellConstraints cc = new CellConstraints();
@@ -136,6 +135,7 @@ public class EditAccidentView extends AbstractEditView<AccidentModel, Accident>
 		if (!search) {
 			builder.add(labelLink, cc.xy(3, 5));
 		}
+		builder.add(checkBoxArbeidstilsynet, cc.xy(1, 7));
 
 		return builder.getPanel();
 	}
@@ -154,9 +154,8 @@ public class EditAccidentView extends AbstractEditView<AccidentModel, Accident>
 
 	@Override
 	protected final JComponent buildEditPanel(final WindowInterface window) {
-		FormLayout layout = new FormLayout(
-				"10dlu,300dlu:grow,10dlu",
-				"10dlu,p,3dlu,p,3dlu,fill:p:grow,3dlu,p,3dlu,p,3dlu,fill:50dlu:grow,3dlu,p,3dlu,fill:50dlu:grow,3dlu,p,3dlu,fill:50dlu:grow,3dlu,p,3dlu,p,5dlu,"
+		FormLayout layout = new FormLayout("10dlu,300dlu:grow,10dlu",
+				"10dlu,p,3dlu,p,3dlu,fill:p:grow,3dlu,p,3dlu,p,3dlu,fill:40dlu:grow,3dlu,p,3dlu,fill:40dlu:grow,3dlu,p,3dlu,fill:40dlu:grow,3dlu,p,3dlu,p,5dlu,"
 						+ "p");
 		PanelBuilder builder = new PanelBuilder(layout);
 		// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
@@ -178,43 +177,42 @@ public class EditAccidentView extends AbstractEditView<AccidentModel, Accident>
 		builder.add(new JScrollPane(textAreaCause), cc.xy(2, 16));
 
 		builder.addLabel("Beskrivelse av tiltak:", cc.xy(2, 18));
-		builder.add(new JScrollPane(textAreaPreventiveActionComment),
-				cc.xy(2, 20));
+		builder.add(new JScrollPane(textAreaPreventiveActionComment), cc.xy(2, 20));
 
 		builder.add(buildResponsiblePanel(), cc.xy(2, 22));
 
 		builder.add(buildCheckBoxPanel(), cc.xy(2, 24));
 
 		if (search) {
-			builder.add(
-					ButtonBarFactory.buildCenteredBar(buttonSave, buttonCancel),
-					cc.xy(2, 26));
+			builder.add(ButtonBarFactory.buildCenteredBar(buttonSave, buttonCancel), cc.xy(2, 26));
 		} else {
-			builder.add(ButtonBarFactory.buildCenteredBar(buttonPrint,
-					buttonSave, buttonCancel), cc.xy(2, 26));
+			builder.add(ButtonBarFactory.buildCenteredBar(buttonPrint, buttonSave, buttonCancel), cc.xy(2, 26));
 		}
 
 		return new IconFeedbackPanel(validationResultModel, builder.getPanel());
 	}
 
 	private JPanel buildAccidentTypePanel() {
-		FormLayout layout = new FormLayout("p,40dlu,p,3dlu,30dlu", "p,3dlu,p");
+		FormLayout layout = new FormLayout("p,10dlu,p,3dlu,40dlu", "p,1dlu,p,1dlu,p,1dlu,p");
 
 		PanelBuilder builder = new PanelBuilder(layout);
-		// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
+//		 PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
 		CellConstraints cc = new CellConstraints();
 
-		builder.add(radioButtonPersonalInjury, cc.xy(1, 1));
+		builder.add(radioButtonPersonalInjuryOver24, cc.xy(1, 1));
 		builder.addLabel("Antall fraværsdager:", cc.xy(3, 1));
+		builder.addLabel("Antall fast ansatte som er skadet:", cc.xy(3, 3));
 		builder.add(textFieldAbsentDays, cc.xy(5, 1));
-		builder.add(radioButtonNotPersonalInjury, cc.xy(1, 3));
+		builder.add(textFieldNumberOfOwnEmployess, cc.xy(5, 3));
+		builder.add(radioButtonPersonalInjuryUnder24, cc.xy(1, 3));
+		builder.add(radioButtonPersonalInjuryNotAbsent, cc.xy(1, 5));
+		builder.add(radioButtonNotPersonalInjury, cc.xy(1, 7));
 
 		return builder.getPanel();
 	}
 
 	private JPanel buildParticipantsPanel() {
-		FormLayout layout = new FormLayout("100dlu:grow,3dlu,p",
-				"p,3dlu,40dlu:grow");
+		FormLayout layout = new FormLayout("100dlu:grow,3dlu,p", "p,3dlu,30dlu:grow");
 		PanelBuilder builder = new PanelBuilder(layout);
 		CellConstraints cc = new CellConstraints();
 
@@ -234,37 +232,29 @@ public class EditAccidentView extends AbstractEditView<AccidentModel, Accident>
 	}
 
 	@Override
-	protected final Validator getValidator(final AccidentModel object,
-			boolean search) {
+	protected final Validator getValidator(final AccidentModel object, boolean search) {
 		return new AccidentValidator(object);
 	}
 
 	@Override
 	protected final void initComponentAnnotations() {
 		ValidationComponentUtils.setMandatory(textFieldRegisteredBy, true);
-		ValidationComponentUtils.setMessageKey(textFieldRegisteredBy,
-				"Ulykke.registert av");
+		ValidationComponentUtils.setMessageKey(textFieldRegisteredBy, "Ulykke.registert av");
 
-		ValidationComponentUtils
-				.setMandatory(dateChooserRegistrationDate, true);
-		ValidationComponentUtils.setMessageKey(dateChooserRegistrationDate,
-				"Ulykke.registreringsdato");
+		ValidationComponentUtils.setMandatory(dateChooserRegistrationDate, true);
+		ValidationComponentUtils.setMessageKey(dateChooserRegistrationDate, "Ulykke.registreringsdato");
 
 		ValidationComponentUtils.setMandatory(comboBoxJobFunction, true);
-		ValidationComponentUtils.setMessageKey(comboBoxJobFunction,
-				"Ulykke.funksjon");
+		ValidationComponentUtils.setMessageKey(comboBoxJobFunction, "Ulykke.funksjon");
 
-		ValidationComponentUtils.setMandatory(radioButtonPersonalInjury, true);
-		ValidationComponentUtils.setMessageKey(radioButtonPersonalInjury,
-				"Ulykke.type");
+		ValidationComponentUtils.setMandatory(radioButtonPersonalInjuryOver24, true);
+		ValidationComponentUtils.setMessageKey(radioButtonPersonalInjuryOver24, "Ulykke.type");
 
 		ValidationComponentUtils.setMandatory(dateChooserAccidentDate, true);
-		ValidationComponentUtils.setMessageKey(dateChooserAccidentDate,
-				"Ulykke.ulykkesdato");
+		ValidationComponentUtils.setMessageKey(dateChooserAccidentDate, "Ulykke.ulykkesdato");
 
 		ValidationComponentUtils.setMandatory(textAreaDescription, true);
-		ValidationComponentUtils.setMessageKey(textAreaDescription,
-				"Ulykke.beskrivelse");
+		ValidationComponentUtils.setMessageKey(textAreaDescription, "Ulykke.beskrivelse");
 
 		ValidationComponentUtils.setMandatory(textAreaCause, true);
 		ValidationComponentUtils.setMessageKey(textAreaCause, "Ulykke.årsak");
@@ -273,49 +263,39 @@ public class EditAccidentView extends AbstractEditView<AccidentModel, Accident>
 
 	@Override
 	protected final void initEditComponents(final WindowInterface aWindow) {
-		textFieldRegisteredBy = ((AccidentViewHandler) viewHandler)
-				.getTextFieldRegisteredBy(presentationModel, search);
+		textFieldRegisteredBy = ((AccidentViewHandler) viewHandler).getTextFieldRegisteredBy(presentationModel, search);
 		dateChooserRegistrationDate = ((AccidentViewHandler) viewHandler)
 				.getDateChooserRegistrationDate(presentationModel, search);
-		comboBoxJobFunction = ((AccidentViewHandler) viewHandler)
-				.getComboBoxJobFunction(presentationModel);
-		radioButtonPersonalInjury = ((AccidentViewHandler) viewHandler)
-				.getRadioButtonPersonalInjury(presentationModel);
+		comboBoxJobFunction = ((AccidentViewHandler) viewHandler).getComboBoxJobFunction(presentationModel);
+		radioButtonPersonalInjuryOver24 = ((AccidentViewHandler) viewHandler)
+				.getRadioButtonPersonalInjuryOver24(presentationModel);
+		radioButtonPersonalInjuryUnder24 = ((AccidentViewHandler) viewHandler)
+				.getRadioButtonPersonalInjuryUnder24(presentationModel);
+		radioButtonPersonalInjuryNotAbsent = ((AccidentViewHandler) viewHandler)
+				.getRadioButtonPersonalInjuryNotAbsent(presentationModel);
 		radioButtonNotPersonalInjury = ((AccidentViewHandler) viewHandler)
 				.getRadioButtonNotPersonalInjury(presentationModel);
-		buttonAddParticipant = ((AccidentViewHandler) viewHandler)
-				.getButtonAddParticipant(aWindow, presentationModel);
-		buttonDeleteParticipant = ((AccidentViewHandler) viewHandler)
-				.getButtonDeleteParticipant(aWindow, presentationModel);
-		listParticipants = ((AccidentViewHandler) viewHandler)
-				.getListParticipants(presentationModel);
-		dateChooserAccidentDate = ((AccidentViewHandler) viewHandler)
-				.getDateChooserAccidentDate(presentationModel);
-		textFieldTime = ((AccidentViewHandler) viewHandler)
-				.getTextFieldTime(presentationModel);
-		textAreaDescription = ((AccidentViewHandler) viewHandler)
-				.getTextAreaDescription(presentationModel);
-		textAreaCause = ((AccidentViewHandler) viewHandler)
-				.getTextAreaCause(presentationModel);
-		checkBoxLeader = ((AccidentViewHandler) viewHandler)
-				.getCheckBoxLeader(presentationModel);
-		checkBoxPolice = ((AccidentViewHandler) viewHandler)
-				.getCheckBoxPolice(presentationModel);
-		checkBoxSocialSecurity = ((AccidentViewHandler) viewHandler)
-				.getCheckBoxSocialSecurity(presentationModel);
+		buttonAddParticipant = ((AccidentViewHandler) viewHandler).getButtonAddParticipant(aWindow, presentationModel);
+		buttonDeleteParticipant = ((AccidentViewHandler) viewHandler).getButtonDeleteParticipant(aWindow,
+				presentationModel);
+		listParticipants = ((AccidentViewHandler) viewHandler).getListParticipants(presentationModel);
+		dateChooserAccidentDate = ((AccidentViewHandler) viewHandler).getDateChooserAccidentDate(presentationModel);
+		textFieldTime = ((AccidentViewHandler) viewHandler).getTextFieldTime(presentationModel);
+		textAreaDescription = ((AccidentViewHandler) viewHandler).getTextAreaDescription(presentationModel);
+		textAreaCause = ((AccidentViewHandler) viewHandler).getTextAreaCause(presentationModel);
+		checkBoxLeader = ((AccidentViewHandler) viewHandler).getCheckBoxLeader(presentationModel);
+		checkBoxPolice = ((AccidentViewHandler) viewHandler).getCheckBoxPolice(presentationModel);
+		checkBoxArbeidstilsynet = ((AccidentViewHandler) viewHandler).getCheckBoxArbeidstilsynet(presentationModel);
+		checkBoxSocialSecurity = ((AccidentViewHandler) viewHandler).getCheckBoxSocialSecurity(presentationModel);
 		labelLink = ((AccidentViewHandler) viewHandler).getLabelLink(aWindow);
-		buttonPrint = ((AccidentViewHandler) viewHandler).getButtonPrint(
-				aWindow, presentationModel);
+		buttonPrint = ((AccidentViewHandler) viewHandler).getButtonPrint(aWindow, presentationModel);
 		textAreaPreventiveActionComment = ((AccidentViewHandler) viewHandler)
 				.getTextAreaPreventiveActionComment(presentationModel);
-		comboBoxResponsible = ((AccidentViewHandler) viewHandler)
-				.getComboBoxResponsible(presentationModel);
-		textFieldAbsentDays = ((AccidentViewHandler) viewHandler)
-				.getTextFieldAbsentDays(presentationModel);
-		dateChooserDoneDate = ((AccidentViewHandler) viewHandler)
-				.getDateChooserDoneDate(presentationModel);
-		comboBoxStatus = ((AccidentViewHandler) viewHandler)
-				.getComboBoxStatus(presentationModel);
+		comboBoxResponsible = ((AccidentViewHandler) viewHandler).getComboBoxResponsible(presentationModel);
+		textFieldAbsentDays = ((AccidentViewHandler) viewHandler).getTextFieldAbsentDays(presentationModel);
+		textFieldNumberOfOwnEmployess = ((AccidentViewHandler) viewHandler).getTextFieldNumberOfOwnEmployees(presentationModel);
+		dateChooserDoneDate = ((AccidentViewHandler) viewHandler).getDateChooserDoneDate(presentationModel);
+		comboBoxStatus = ((AccidentViewHandler) viewHandler).getComboBoxStatus(presentationModel);
 	}
 
 	public final String getDialogName() {
@@ -327,10 +307,8 @@ public class EditAccidentView extends AbstractEditView<AccidentModel, Accident>
 	}
 
 	public WindowInterface buildWindow() {
-		WindowInterface windowDialog = InternalFrameBuilder.buildInternalFrame(
-				"Registrere ulykke/hendelse",
-				((AccidentViewHandler) viewHandler).getRegisterWindowSize(),
-				false);
+		WindowInterface windowDialog = InternalFrameBuilder.buildInternalFrame("Registrere ulykke/hendelse",
+				((AccidentViewHandler) viewHandler).getRegisterWindowSize(), false);
 		windowDialog.add(buildPanel(windowDialog), BorderLayout.CENTER);
 		return windowDialog;
 	}
