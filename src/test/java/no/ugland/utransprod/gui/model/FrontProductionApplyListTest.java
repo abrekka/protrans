@@ -3,6 +3,7 @@ package no.ugland.utransprod.gui.model;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.fest.assertions.Assertions;
@@ -68,7 +69,7 @@ public class FrontProductionApplyListTest {
 		Mockito.when(managerRepository.getColliManager()).thenReturn(colliManager);
 
 		frontProductionApplyList = new FrontProductionApplyList(null, applyListManager, null, null, null,
-				managerRepository, vismaFileCreator);
+				managerRepository, vismaFileCreator,Arrays.asList("Front"));
 
 	}
 

@@ -1105,7 +1105,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		Collection<OrderLine> orderLines = iAssembly.getAssemblyOrderLines();
 		if (orderLines != null) {
 			List<OrderLineWrapper> missingList = Util.getOrderLineWrapperList(orderLines);
-			Util.showOptionsDialog(window, missingList, "Innhold", false, false);
+			Util.showOptionsDialog(window, missingList, "Innhold", false, false, false);
 		}
 	}
 
@@ -1297,7 +1297,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 			}
 
 			if (missing != null) {
-				Util.showOptionsDialog(window, missing, "Mangler", false, false);
+				Util.showOptionsDialog(window, missing, "Mangler", false, false, false);
 			}
 		}
 	}
@@ -1542,7 +1542,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		@SuppressWarnings("unchecked")
 		public void actionPerformed(ActionEvent arg0) {
 			Collection<Supplier> selectedTeams = (Collection<Supplier>) Util.showOptionsDialog(window,
-					getSuppliers(yearWeek), "Monteringslag", true, true);
+					getSuppliers(yearWeek), "Monteringslag", true, true, false);
 			if (selectedTeams != null && selectedTeams.size() != 0) {
 				Util.runInThreadWheel(window.getRootPane(), new Printer(window, new ArrayListModel(selectedTeams)),
 						null);
@@ -1634,6 +1634,7 @@ public class AssemblyPlannerViewHandler implements Closeable, Updateable, ListDa
 		public void propertyChange(PropertyChangeEvent arg0) {
 			initOverdue();
 			initDeviationList();
+			doRefresh(null);
 		}
 
 	}

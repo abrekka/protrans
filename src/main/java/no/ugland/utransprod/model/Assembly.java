@@ -41,6 +41,7 @@ public class Assembly extends BaseObject implements Comparable<Assembly> {
     private String sentBase = "0";
 
     private String assemblyComment;
+    private Integer assemblyWeekTo;
 
     public static final Assembly UNKNOWN = new Assembly() {
 
@@ -107,6 +108,14 @@ public class Assembly extends BaseObject implements Comparable<Assembly> {
 		// aComment,
 		plannedDay, firstPlannedDay, aAssembliedDate, null, isInactive);
     }
+    
+    public Integer getAssemblyWeekTo() {
+		return assemblyWeekTo;
+	}
+    
+    public void setAssemblyWeekTo(Integer assemblyWeekTo) {
+		this.assemblyWeekTo = assemblyWeekTo;
+	}
 
     /**
      * @return uke

@@ -78,6 +78,18 @@
         column="INACTIVE"
         length="32"
     />
+    <property
+        name="holidayFrom"
+        type="java.lang.Integer"
+        column="HOLIDAY_FROM"
+        length="32"
+    />
+    <property
+        name="holidayTo"
+        type="java.lang.Integer"
+        column="HOLIDAY_TO"
+        length="32"
+    />
     
     <!-- Associations -->
     <many-to-one

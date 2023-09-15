@@ -1625,9 +1625,25 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 					session.createQuery(sql).setInteger("orderId", ordre.getOrderId()).executeUpdate();
 				} else {
 
-					session.createQuery(sql).setEntity("status", status) .setInteger("orderId", ordre.getOrderId())
+					session.createQuery(sql).setEntity("status", status).setInteger("orderId", ordre.getOrderId())
 							.executeUpdate();
 				}
+				return null;
+			}
+
+		});
+
+	}
+
+	public void settFakturert(final String orderNr, final Date invoicedDate) {
+		getHibernateTemplate().execute(new HibernateCallback() {
+
+			public Object doInHibernate(final Session session) {
+
+				String sql = "update Order o set o.invoiceDate=:invoiceDate where o.orderNr=:orderNr";
+
+				session.createQuery(sql).setDate("invoiceDate", invoicedDate).setString("orderNr", orderNr)
+						.executeUpdate();
 				return null;
 			}
 

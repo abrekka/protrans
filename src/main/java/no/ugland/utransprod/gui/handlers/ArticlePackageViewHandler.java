@@ -173,10 +173,10 @@ public class ArticlePackageViewHandler implements Closeable, ProduceableProvider
 			if (colli == null) {
 				if (orderLine.getPostShipment() != null) {
 					colli = new Colli(null, null, colliName, null, null, null, orderLine.getPostShipment(), null,
-							Util.getCurrentDate(),"ArticlePackage");
+							Util.getCurrentDate(), "ArticlePackage");
 				} else {
 					colli = new Colli(null, orderLine.getOrder(), colliName, null, null, null, null, null,
-							Util.getCurrentDate(),"ArticlePackage");
+							Util.getCurrentDate(), "ArticlePackage");
 				}
 			} else {
 				managerRepository.getColliManager().lazyLoad(colli,
@@ -467,7 +467,7 @@ public class ArticlePackageViewHandler implements Closeable, ProduceableProvider
 		public void actionPerformed(ActionEvent e) {
 			Produceable produceable = getSelectedProduceable();
 			if (produceable != null) {
-				produceable.setProduced(Util.getDate(window));
+				produceable.setProduced(Util.getDate(window, null));
 			}
 
 		}

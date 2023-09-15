@@ -14,6 +14,8 @@ import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.util.ApplicationParamUtil;
 import no.ugland.utransprod.util.ModelUtil;
 
+import java.util.Arrays;
+
 import com.google.inject.Inject;
 
 /**
@@ -68,7 +70,7 @@ public class GavlProductionWindow extends AbstractProductionPackageWindow<Produc
 				.findByName(ApplicationParamUtil.findParamByName(getParamArticleName()));
 		return new GavlProductionViewHandler(
 				new GavlProductionApplyList(login, gavlProductionVManager, "Takstol", "Gavl", null, managerRepository,
-						vismaFileCreator),
+						vismaFileCreator,Arrays.asList("Gavl")),
 				"Gavlproduksjon", login, articleType, managerRepository, deviationViewHandlerFactory,
 				setProductionUnitActionFactory);
 	}

@@ -122,8 +122,12 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 	private YearWeek currentYearWeek;
 
 	JPopupMenu popupMenuEdit;
+	JPopupMenu popupMenuHoliday;
+	
 
 	JMenuItem menuItemEdit;
+	JMenuItem menuItemHoliday;
+	JMenuItem menuItemRemoveHoliday;
 
 	JMenuItem menuItemRemoveAssembly;
 
@@ -136,6 +140,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 
 	JMenuItem menuItemAssemblyReport;
 	JMenuItem menuItemAssemblyReportSvensk;
+	JMenuItem menuItemAddWeek;
 
 	private List<String> plannedList;
 
@@ -194,6 +199,9 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 
 	private void initMenus() {
 		popupMenuEdit = new JPopupMenu("Editer...");
+		popupMenuHoliday = new JPopupMenu("Sett ferie...");
+		menuItemHoliday = new JMenuItem("Sett ferie...");
+		menuItemRemoveHoliday = new JMenuItem("Fjern ferie...");
 		menuItemEdit = new JMenuItem("Editer...");
 		menuItemEdit.setEnabled(hasWriteAccess());
 		menuItemRemoveAssembly = new JMenuItem("Fjern montering...");
@@ -204,12 +212,17 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 		menuItemAssemblyReport = new JMenuItem("Fakturagrunnlag...");
 		menuItemAssemblyReportSvensk = new JMenuItem("Fakturagrunnlag svensk...");
 		menuItemShowDeviation = new JMenuItem("Se avvik...");
+		menuItemAddWeek = new JMenuItem("Legg til monteringsuke...");
 
 		popupMenuEdit.add(menuItemEdit);
 		popupMenuEdit.add(menuItemRemoveAssembly);
 		popupMenuEdit.add(menuItemShowMissing);
 		popupMenuEdit.add(menuItemAssemblyReport);
 		popupMenuEdit.add(menuItemAssemblyReportSvensk);
+		popupMenuEdit.add(menuItemAddWeek);
+
+		popupMenuHoliday.add(menuItemHoliday);
+		popupMenuHoliday.add(menuItemRemoveHoliday);
 	}
 
 	/**
@@ -246,6 +259,17 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 				}
 				assemblyList.addAll(assemblies);
 			}
+
+			if (currentSupplier.getHolidayFrom() != null
+					&& currentYearWeek.getWeek() >= currentSupplier.getHolidayFrom()
+					&& currentYearWeek.getWeek() <= currentSupplier.getHolidayTo()) {
+
+				Assembly ferie = new Assembly(null, currentSupplier, null, currentYearWeek.getYear(),
+						currentYearWeek.getWeek(), null, null, null, null, null);
+				ferie.setAssemblyComment("FERIE");
+				ferie.setFirstPlanned("FERIE");
+				assemblyList.add(ferie);
+			}
 		}
 
 	}
@@ -266,6 +290,8 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 				ColorEnum.YELLOW.getColor(), null);
 		ColorHighlighter overdueHighlighter = new ColorHighlighter(new PatternPredicate("1", 5),
 				ColorEnum.RED.getColor(), null);
+		ColorHighlighter ferieHighlighter = new ColorHighlighter(new PatternPredicate("FERIE", 9),
+				ColorEnum.BLUE.getColor(), null);
 
 		tableOrders = new JXTable();
 		tableOrders.setModel(getTableModel(aWindow));
@@ -286,6 +312,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 		tableOrders.addHighlighter(assembliedHighlighter);
 		tableOrders.addHighlighter(missingHighlighter);
 		tableOrders.addHighlighter(overdueHighlighter);
+		tableOrders.addHighlighter(ferieHighlighter);
 
 		tableOrders.getColumnExt(5).setVisible(false);
 		tableOrders.getColumnExt(5).setVisible(false);
@@ -320,7 +347,10 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 			menuItemShowContent.addActionListener(menuItemListener);
 			menuItemDeviation.addActionListener(menuItemListener);
 			menuItemShowDeviation.addActionListener(menuItemListener);
-			AssemblyReportListener assemblyReportListener=new AssemblyReportListener();
+			menuItemAddWeek.addActionListener(menuItemListener);
+			menuItemHoliday.addActionListener(menuItemListener);
+			menuItemRemoveHoliday.addActionListener(menuItemListener);
+			AssemblyReportListener assemblyReportListener = new AssemblyReportListener();
 			menuItemAssemblyReport.addActionListener(assemblyReportListener);
 			menuItemAssemblyReportSvensk.addActionListener(new AssemblyReportListener());
 		}
@@ -384,9 +414,16 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 					popupMenuEdit.add(menuItemDeviation);
 					popupMenuEdit.remove(menuItemShowDeviation);
 				}
-				popupMenuEdit.show((JXTable) e.getSource(), e.getX(), e.getY());
+				if (assembly.getAssemblyComment() == null || !assembly.getAssemblyComment().equalsIgnoreCase("FERIE")) {
+					popupMenuEdit.show((JXTable) e.getSource(), e.getX(), e.getY());
+				} else {
+					popupMenuHoliday.show((JXTable) e.getSource(), e.getX(), e.getY());
+				}
+			} else if (SwingUtilities.isRightMouseButton(e)) {
+				popupMenuHoliday.show((JXTable) e.getSource(), e.getX(), e.getY());
 			}
 		}
+
 	}
 
 	/**
@@ -412,7 +449,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 		Collection<OrderLine> orderLines = iAssembly.getAssemblyOrderLines();
 		if (orderLines != null) {
 			List<OrderLineWrapper> missingList = Util.getOrderLineWrapperList(orderLines);
-			Util.showOptionsDialog(window, missingList, "Innhold", false, false);
+			Util.showOptionsDialog(window, missingList, "Innhold", false, false, false);
 		}
 	}
 
@@ -503,7 +540,36 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 				window.pack();
 				Util.locateOnScreenCenter(window);
 				window.setVisible(true);
+			} else if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemAddWeek.getText())) {
+
+				Assembly assembly = (Assembly) assemblySelectionList
+						.getElementAt(tableOrders.convertRowIndexToModel(assemblySelectionList.getSelectionIndex()));
+
+				String tilUke = Util.showInputDialog(window, "Monteringsuke", "Til uke");
+
+				assembly.setAssemblyWeekTo(Integer.valueOf(tilUke));
+
+				managerRepository.getAssemblyManager().saveAssembly(assembly);
+				fireAsesemblyChanged();
+			} else if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemHoliday.getText())) {
+
+				String fraUke = Util.showInputDialog(window, "Ferieuke", "Fra uke");
+				String tilUke = Util.showInputDialog(window, "Ferieuke", "Til uke");
+
+				currentSupplier.setHolidayFrom(Integer.valueOf(fraUke));
+				currentSupplier.setHolidayTo(Integer.valueOf(tilUke));
+
+				managerRepository.getSupplierManager().saveObject(currentSupplier);
+				fireAsesemblyChanged();
+			} else if (actionEvent.getActionCommand().equalsIgnoreCase(menuItemRemoveHoliday.getText())) {
+
+				currentSupplier.setHolidayFrom(null);
+				currentSupplier.setHolidayTo(null);
+
+				managerRepository.getSupplierManager().saveObject(currentSupplier);
+				fireAsesemblyChanged();
 			}
+			
 
 		}
 
@@ -541,6 +607,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 		}
 
 		assemblyList.remove(index);
+		fireAsesemblyChanged();
 	}
 
 	/**
@@ -785,7 +852,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 			}
 
 			if (missing != null) {
-				Util.showOptionsDialog(window, missing, "Mangler", false, false);
+				Util.showOptionsDialog(window, missing, "Mangler", false, false, false);
 			}
 		}
 	}

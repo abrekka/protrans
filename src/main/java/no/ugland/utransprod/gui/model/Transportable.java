@@ -146,7 +146,7 @@ public interface Transportable {
 
    void cacheTakstolHeight();
 
-   List<OrderLine> getOrderLineList(String var1);
+   List<OrderLine> getOrderLineList(List<String> articlePaths);
 
    Integer getProbability();
 

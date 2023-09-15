@@ -1,267 +1,89 @@
-/*     */ package no.ugland.utransprod.gui.handlers;
+package no.ugland.utransprod.gui.handlers;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.ListModel;
-/*     */
-/*     */ import javax.swing.table.DefaultTableCellRenderer;
-/*     */ import javax.swing.table.TableModel;
 
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableModel;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.inject.internal.Lists;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 
 import no.ugland.utransprod.ProTransException;
-/*     */ import no.ugland.utransprod.gui.Login;
-/*     */ import no.ugland.utransprod.gui.WindowInterface;
-/*     */ import no.ugland.utransprod.gui.action.SetProductionUnitActionFactory;
+import no.ugland.utransprod.gui.Login;
+import no.ugland.utransprod.gui.WindowInterface;
+import no.ugland.utransprod.gui.action.SetProductionUnitActionFactory;
 import no.ugland.utransprod.gui.checker.StatusCheckerInterface;
-/*     */ import no.ugland.utransprod.gui.handlers.VeggProductionViewHandler.VeggProductionTableModel;
-/*     */ import no.ugland.utransprod.gui.model.ApplyListInterface;
+import no.ugland.utransprod.gui.handlers.VeggProductionViewHandler.VeggProductionTableModel;
+import no.ugland.utransprod.gui.model.ApplyListInterface;
 import no.ugland.utransprod.gui.model.Transportable;
-/*     */ import no.ugland.utransprod.model.ArticleType;
+import no.ugland.utransprod.model.ArticleType;
 import no.ugland.utransprod.model.Order;
-/*     */ import no.ugland.utransprod.model.Produceable;
+import no.ugland.utransprod.model.Produceable;
+import no.ugland.utransprod.model.ProductionTime;
 import no.ugland.utransprod.model.VeggProductionV;
-/*     */ import no.ugland.utransprod.service.ManagerRepository;
+import no.ugland.utransprod.service.ManagerRepository;
+import no.ugland.utransprod.service.ProductionTimeManager;
 import no.ugland.utransprod.service.enums.LazyLoadEnum;
+import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.Tidsforbruk;
 import no.ugland.utransprod.util.Util;
 
 public class VeggProductionViewHandler extends ProductionViewHandler {
+	private ProductionTimeManager productionTimeManager;
 	public VeggProductionViewHandler(ApplyListInterface<Produceable> productionInterface, String title, Login login,
 			ArticleType articleType, ManagerRepository managerRepository,
 			DeviationViewHandlerFactory deviationViewHandlerFactory,
 			SetProductionUnitActionFactory aSetProductionUnitActionFactory) {
 		super(productionInterface, title, login, (String) null, "produksjon", TableEnum.TABLEPRODUCTIONVEGG,
 				articleType, managerRepository, deviationViewHandlerFactory, aSetProductionUnitActionFactory);
+		productionTimeManager = (ProductionTimeManager) ModelUtil
+				.getBean(ProductionTimeManager.MANAGER_NAME);
 	}
 
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */ protected Integer getApplyColumn() {
-		/* 59 */ return 4;
-		/*     */ }
+	protected Integer getApplyColumn() {
+		return 4;
+	}
 
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */ protected TableModel getTableModel(WindowInterface window) {
-		/* 67 */ return new VeggProductionTableModel(this.getObjectSelectionList(), window);
-		/*     */ }
+	protected TableModel getTableModel(WindowInterface window) {
+		return new VeggProductionTableModel(this.getObjectSelectionList(), window);
+	}
 
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */ protected void initColumnWidthExt() {
-		/* 76 */ this.table.getColumnExt(this.table.getModel().getColumnName(0)).setPreferredWidth(100);
-		/*     */
-		/* 78 */ this.table.getColumnExt(this.table.getModel().getColumnName(1)).setPreferredWidth(200);
-		/*     */
-		/* 80 */ DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
-		/* 81 */ tableCellRenderer.setHorizontalAlignment(0);
-		/* 82 */ this.table.getColumnExt(this.table.getModel().getColumnName(2)).setCellRenderer(tableCellRenderer);
-		/* 83 */ this.table.getColumnExt(this.table.getModel().getColumnName(2)).setPreferredWidth(70);
-		/*     */
-		/*     */
-		/*     */
-		/*     */
-		/*     */
-		/*     */
-		/*     */
-		/* 91 */ this.table.getColumnExt(this.table.getModel().getColumnName(3)).setPreferredWidth(70);
-		/*     */
-		/* 93 */ this.table.getColumnExt(this.table.getModel().getColumnName(4)).setPreferredWidth(100);
-		/*     */
-		/* 95 */ this.table.getColumnExt(this.table.getModel().getColumnName(7)).setPreferredWidth(100);
-		/*     */
-		/*     */
-		/*     */
-		/* 99 */ tableCellRenderer.setHorizontalAlignment(0);
-		/* 100 */ this.table.getColumnExt(this.table.getModel().getColumnName(8)).setCellRenderer(tableCellRenderer);
-		/* 101 */ this.table.getColumnExt(this.table.getModel().getColumnName(8)).setPreferredWidth(120);
-		/* 102 */ }
+	protected void initColumnWidthExt() {
+		this.table.getColumnExt(this.table.getModel().getColumnName(0)).setPreferredWidth(100);
 
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */
-	/*     */ protected int getProductAreaColumn() {
-		/* 266 */ return 5;
-		/*     */ }
+		this.table.getColumnExt(this.table.getModel().getColumnName(1)).setPreferredWidth(200);
 
-	/*     */
-	/*     */
-	/*     */ protected Integer getStartColumn() {
-		/* 271 */ return 7;
-		/*     */ }
+		DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
+		tableCellRenderer.setHorizontalAlignment(0);
+		this.table.getColumnExt(this.table.getModel().getColumnName(2)).setCellRenderer(tableCellRenderer);
+		this.table.getColumnExt(this.table.getModel().getColumnName(2)).setPreferredWidth(70);
+
+		this.table.getColumnExt(this.table.getModel().getColumnName(3)).setPreferredWidth(70);
+
+		this.table.getColumnExt(this.table.getModel().getColumnName(4)).setPreferredWidth(100);
+
+		this.table.getColumnExt(this.table.getModel().getColumnName(7)).setPreferredWidth(100);
+
+		tableCellRenderer.setHorizontalAlignment(0);
+		this.table.getColumnExt(this.table.getModel().getColumnName(8)).setCellRenderer(tableCellRenderer);
+		this.table.getColumnExt(this.table.getModel().getColumnName(8)).setPreferredWidth(120);
+	}
+
+	protected int getProductAreaColumn() {
+		return 5;
+	}
+
+	protected Integer getStartColumn() {
+		return 7;
+	}
 
 	/**
 	 * Tabellmodell for veggproduksjon
@@ -372,15 +194,29 @@ public class VeggProductionViewHandler extends ProductionViewHandler {
 			case 6:
 				return veggProductionV.getProductionUnitName();
 			case 7:
+//				List<ProductionTime> produksjonstider = productionTimeManager.findByOrderNrAndProductionname(veggProductionV.getOrderNr(),"Vegg");
+//				
+//				List<ProductionTime> tiderForBruker = Lists.newArrayList(Iterables.filter(produksjonstider, new Predicate<ProductionTime>() {
+//
+//					public boolean apply(ProductionTime input) {
+//						return input.getUsername().equalsIgnoreCase(login.getApplicationUser().getUserName());
+//					}
+//				}));
+//				
+//				if(!tiderForBruker.isEmpty()) {
+//					return Util.SHORT_DATE_TIME_FORMAT.format(tiderForBruker.get(0).getStarted());
+//				}
+				
 				if (veggProductionV.getActionStarted() != null) {
 					return Util.SHORT_DATE_TIME_FORMAT.format(veggProductionV.getActionStarted());
 				}
 				return "---";
 			case 8:
-				return veggProductionV.getRealProductionHours() == null
-						? Tidsforbruk.beregnTidsforbruk(veggProductionV.getActionStarted(),
-								veggProductionV.getProduced())
-						: veggProductionV.getRealProductionHours();
+				return veggProductionV.getRealProductionHours();
+//						veggProductionV.getRealProductionHours() == null
+//						? Tidsforbruk.beregnTidsforbruk(veggProductionV.getActionStarted(),
+//								veggProductionV.getProduced())
+//						: veggProductionV.getRealProductionHours();
 			case 9:
 				return veggProductionV.getDoneBy();
 			default:

@@ -1,6 +1,7 @@
 package no.ugland.utransprod.gui.action;
 
 import java.awt.event.ActionEvent;
+import java.util.Arrays;
 
 import javax.swing.AbstractAction;
 
@@ -67,7 +68,7 @@ public class TaksteinAction extends AbstractAction {
 		AbstractProductionPackageViewHandler<Produceable> productionViewHandler = new TaksteinSkarpnesViewHandler(
 				new ProductionApplyList(login, taksteinSkarpnesVManager,
 						"Takstein", "Takstein", new Integer[] { 2 },
-						managerRepository,null), login, managerRepository,
+						managerRepository,null,Arrays.asList("Takstein")), login, managerRepository,
 				deviationViewHandlerFactory,setProductionUnitActionFactory,articleTypeTakstein);
 
 		menuBarBuilder.openFrame(new ApplyListView<Produceable>(

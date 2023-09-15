@@ -1,118 +1,143 @@
 package no.ugland.utransprod.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 public class Ord extends BaseObject {
-    private Integer ordno;
+	private Integer ordno;
 
-    private String inf6;
+	private String inf6;
 
-    private String inf;
+	private String inf;
 
-    private String free1;
+	private String free1;
 
-    private String free2;
+	private String free2;
 
-    private String yrRef;
-    private Integer deldt;
-    private Integer cfdeldt;
+	private String yrRef;
+	private Integer deldt;
+	private Integer cfdeldt;
+	private Integer lstInvDt;
 
-    public Ord() {
-	super();
-    }
-
-    public Ord(final Integer aOrdno, final String aInf6) {
-	super();
-	this.ordno = aOrdno;
-	this.inf6 = aInf6;
-    }
-
-    public final String getInf6() {
-	return inf6;
-    }
-
-    public final void setInf6(final String aInf6) {
-	this.inf6 = aInf6;
-    }
-
-    public final Integer getOrdno() {
-	return ordno;
-    }
-
-    public final void setOrdno(final Integer aOrdno) {
-	this.ordno = aOrdno;
-    }
-
-    @Override
-    public final boolean equals(final Object other) {
-	if (!(other instanceof Ord)) {
-	    return false;
+	public Ord() {
+		super();
 	}
-	Ord castOther = (Ord) other;
-	return new EqualsBuilder().append(ordno, castOther.ordno).isEquals();
-    }
 
-    @Override
-    public final int hashCode() {
-	return new HashCodeBuilder().append(ordno).toHashCode();
-    }
+	public Ord(final Integer aOrdno, final String aInf6) {
+		super();
+		this.ordno = aOrdno;
+		this.inf6 = aInf6;
+	}
 
-    @Override
-    public final String toString() {
-	return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append("ordno", ordno).append("inf6", inf6).toString();
-    }
+	public final String getInf6() {
+		return inf6;
+	}
 
-    public String getInf() {
-	return inf;
-    }
+	public final void setInf6(final String aInf6) {
+		this.inf6 = aInf6;
+	}
 
-    public void setInf(String aInf) {
-	inf = aInf;
+	public final Integer getOrdno() {
+		return ordno;
+	}
 
-    }
+	public final void setOrdno(final Integer aOrdno) {
+		this.ordno = aOrdno;
+	}
 
-    public String getFree1() {
-	return free1;
-    }
+	@Override
+	public final boolean equals(final Object other) {
+		if (!(other instanceof Ord)) {
+			return false;
+		}
+		Ord castOther = (Ord) other;
+		return new EqualsBuilder().append(ordno, castOther.ordno).isEquals();
+	}
 
-    public void setFree1(String string) {
-	free1 = string;
+	@Override
+	public final int hashCode() {
+		return new HashCodeBuilder().append(ordno).toHashCode();
+	}
 
-    }
+	@Override
+	public final String toString() {
+		return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append("ordno", ordno).append("inf6", inf6)
+				.toString();
+	}
 
-    public String getFree2() {
-	return free2;
-    }
+	public String getInf() {
+		return inf;
+	}
 
-    public void setFree2(String string) {
-	free2 = string;
+	public void setInf(String aInf) {
+		inf = aInf;
 
-    }
+	}
 
-    public String getYrRef() {
-	return yrRef;
-    }
+	public String getFree1() {
+		return free1;
+	}
 
-    public void setYrRef(String yrRef) {
-	this.yrRef = yrRef;
-    }
+	public void setFree1(String string) {
+		free1 = string;
 
-    public Integer getDeldt() {
-	return deldt;
-    }
+	}
 
-    public void setDeldt(Integer deldt) {
-	this.deldt = deldt;
-    }
+	public String getFree2() {
+		return free2;
+	}
 
-    public Integer getCfdeldt() {
-	return cfdeldt;
-    }
+	public void setFree2(String string) {
+		free2 = string;
 
-    public void setCfdeldt(Integer cfdeldt) {
-	this.cfdeldt = cfdeldt;
-    }
+	}
+
+	public String getYrRef() {
+		return yrRef;
+	}
+
+	public void setYrRef(String yrRef) {
+		this.yrRef = yrRef;
+	}
+
+	public Integer getDeldt() {
+		return deldt;
+	}
+
+	public void setDeldt(Integer deldt) {
+		this.deldt = deldt;
+	}
+
+	public Integer getCfdeldt() {
+		return cfdeldt;
+	}
+
+	public void setCfdeldt(Integer cfdeldt) {
+		this.cfdeldt = cfdeldt;
+	}
+
+	public Integer getLstInvDt() {
+		return lstInvDt;
+	}
+
+	public void setLstInvDt(Integer lstInvDt) {
+		this.lstInvDt = lstInvDt;
+	}
+
+	public Date getInvoicedDate() {
+		try {
+			return (lstInvDt != null && lstInvDt > 0) ? new SimpleDateFormat("yyyyMMdd").parse(String.valueOf(lstInvDt))
+					: null;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

@@ -18,6 +18,7 @@ public interface ApplyListInterface<T extends Applyable> {
    Collection<T> getObjectLines();
 
    void setApplied(T var1, boolean var2, WindowInterface var3);
+   void setPause(T var1, boolean var2);
 
    boolean hasWriteAccess();
 

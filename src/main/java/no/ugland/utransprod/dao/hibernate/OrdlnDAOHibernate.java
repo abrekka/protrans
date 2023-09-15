@@ -281,4 +281,14 @@ public class OrdlnDAOHibernate extends BaseDAOHibernate<Ordln> implements OrdlnD
 		});
 	}
 
+	public List<Ord> findInvoicedOrdByOrdernr(final List<String> ordernr) {
+		return (List<Ord>) getHibernateTemplate().execute(new HibernateCallback() {
+
+			@SuppressWarnings("unchecked")
+			public Object doInHibernate(Session session) {
+				return session.createCriteria(Ord.class).add(Restrictions.in("inf6", ordernr)).add(Restrictions.isNotNull("lstInvDt")).list();
+			}
+		});
+	}
+
 }

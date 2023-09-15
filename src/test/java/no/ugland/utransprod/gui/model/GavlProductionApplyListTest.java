@@ -3,6 +3,7 @@ package no.ugland.utransprod.gui.model;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -57,7 +58,7 @@ public class GavlProductionApplyListTest {
 		Mockito.when(managerRepository.getColliManager()).thenReturn(colliManager);
 
 		gavlProductionApplyList = new GavlProductionApplyList(null, applyListManager, null, null, null,
-				managerRepository, vismaFileCreator);
+				managerRepository, vismaFileCreator,Arrays.asList("Gavl"));
 
 	}
 

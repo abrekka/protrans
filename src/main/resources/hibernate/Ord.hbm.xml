@@ -59,6 +59,12 @@
         column="YRREF"
         length="50"
     />
+    <property
+        name="lstInvDt"
+        type="java.lang.Integer"
+        column="LSTINVDT"
+        length="10"
+    />
   
 
 </class>

@@ -1,5 +1,6 @@
 package no.ugland.utransprod.gui.checker;
 
+import java.util.Arrays;
 import java.util.List;
 
 import no.ugland.utransprod.gui.model.Transportable;
@@ -54,8 +55,8 @@ public class TakstolStatusChecker implements
 	public final String getArticleStatus(final Transportable transportable) {
 		StringBuffer returnBuffer = new StringBuffer();
 
-		List<OrderLine> orderLines = transportable.getOrderLineList(checkType
-				.getArticleTypeName());
+		List<OrderLine> orderLines = transportable.getOrderLineList(Arrays.asList(checkType
+				.getArticleTypeName()));
 		boolean articleFound = false;
 		for (OrderLine orderLine : orderLines) {
 			returnBuffer = articleFound ? returnBuffer.append("/")

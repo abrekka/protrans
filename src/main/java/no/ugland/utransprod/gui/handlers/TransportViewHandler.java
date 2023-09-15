@@ -75,6 +75,7 @@ import no.ugland.utransprod.gui.checker.StatusCheckerInterface;
 import no.ugland.utransprod.gui.edit.AbstractEditView;
 import no.ugland.utransprod.gui.model.ColorEnum;
 import no.ugland.utransprod.gui.model.TextPaneRenderer;
+import no.ugland.utransprod.gui.model.TextPaneRendererCustomer;
 import no.ugland.utransprod.gui.model.TextPaneRendererTransport;
 import no.ugland.utransprod.gui.model.TransportListable;
 import no.ugland.utransprod.gui.model.TransportModel;
@@ -605,6 +606,9 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 			column.setCellRenderer(tableOrders);
 			column.setPrefferedWidth(tableOrders);
 		}
+		
+		tableOrders.getColumnModel().getColumn(tableOrders.getColumnExt("Ordre").getModelIndex())
+		.setCellRenderer(new TextPaneRendererTransport());
 
 		tableOrders.getColumnModel().getColumn(tableOrders.getColumnExt("Ikke levert").getModelIndex())
 				.setCellRenderer(new TextPaneRendererLevert());
@@ -2219,7 +2223,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 			List<OrderLine> missing = transportable.getMissingCollies();
 			if (missing != null) {
 				List<OrderLineWrapper> missingList = Util.getOrderLineWrapperList(missing);
-				Util.showOptionsDialog(window, missingList, "Mangler", false, false);
+				Util.showOptionsDialog(window, missingList, "Mangler", false, false, false);
 			}
 
 		}

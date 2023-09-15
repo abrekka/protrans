@@ -474,6 +474,12 @@ public class PackageViewHandler extends AbstractProductionPackageViewHandler<Pac
 	applyListInterface.setStarted(object, started);
 
     }
+    
+    @Override
+    protected void setPause(PackableListItem object, boolean started) {
+	applyListInterface.setPause(object, started);
+
+    }
 
     @Override
     protected boolean getButtonStartEnabled(PackableListItem packable) {
@@ -509,5 +515,10 @@ public class PackageViewHandler extends AbstractProductionPackageViewHandler<Pac
 	// TODO Auto-generated method stub
 
     }
+
+	@Override
+	public boolean isProductionWindow() {
+		return false;
+	}
 
 }

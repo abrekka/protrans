@@ -744,4 +744,9 @@ public class OrderManagerImpl extends ManagerImpl<Order> implements OrderManager
 		((OrderDAO) this.dao).oppdaterStatus(ordre, status);
 	}
 
+	public void settFakturert(String orderNr, Date invoicedDate) {
+		((OrderDAO) this.dao).settFakturert(orderNr, invoicedDate);
+		
+	}
+
 }

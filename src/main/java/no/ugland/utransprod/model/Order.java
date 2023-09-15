@@ -3,6 +3,7 @@ package no.ugland.utransprod.model;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
@@ -989,7 +990,8 @@ public class Order extends AbstractTransportable
 		ArrayList<OrderLine> linesNotSent = new ArrayList<OrderLine>();
 		if (orderLines != null) {
 			for (OrderLine line : orderLines) {
-				if (line.getPostShipment()==null&&(line.hasTopLevelArticle() && line.hasArticle() && line.getColli() == null)){
+				if (line.getPostShipment() == null
+						&& (line.hasTopLevelArticle() && line.hasArticle() && line.getColli() == null)) {
 //						|| (line.getPostShipment() != null) && line.getPostShipment().getSent() == null)) {
 					linesNotSent.add(line);
 				}
@@ -1477,7 +1479,7 @@ public class Order extends AbstractTransportable
 	}
 
 	public final OrderLine getOrderLine(final String articlePath) {
-		List<OrderLine> lines = getOrderLineList(articlePath);
+		List<OrderLine> lines = getOrderLineList(Arrays.asList(articlePath));
 		Collections.sort(lines, new OrderLine.OrderLineNumberComparator());
 		return lines != null && lines.size() != 0 ? lines.get(0) : OrderLine.UNKNOWN;
 	}
@@ -1486,11 +1488,11 @@ public class Order extends AbstractTransportable
 	 * @param articlePath
 	 * @return
 	 */
-	public final List<OrderLine> getOrderLineList(final String articlePath) {
+	public final List<OrderLine> getOrderLineList(final List<String> articlePath) {
 		List<OrderLine> orderLineList = new ArrayList<OrderLine>();
 		if (orderLines != null) {
 			for (OrderLine orderLine : orderLines) {
-				if (orderLine.getArticlePath().equalsIgnoreCase(articlePath)) {
+				if (articlePath.contains(orderLine.getArticlePath())) {
 					orderLineList.add(orderLine);
 				}
 			}
@@ -1926,6 +1928,7 @@ public class Order extends AbstractTransportable
 	public Boolean getLevertBool() {
 		return levert != null;
 	}
+
 	public Date getLevert() {
 		return levert;
 	}

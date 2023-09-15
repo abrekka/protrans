@@ -14,6 +14,8 @@ import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.util.ApplicationParamUtil;
 import no.ugland.utransprod.util.ModelUtil;
 
+import java.util.Arrays;
+
 import com.google.inject.Inject;
 
 /**
@@ -67,7 +69,7 @@ public class VeggProductionWindow extends AbstractProductionPackageWindow<Produc
 		ArticleType articleType = articleTypeManager
 				.findByName(ApplicationParamUtil.findParamByName(getParamArticleName()));
 		return new VeggProductionViewHandler(
-				new VeggProductionApplyList(login, veggProductionVManager, null, "Vegg", null, managerRepository,vismaFileCreator),
+				new VeggProductionApplyList(login, veggProductionVManager, null, "Vegg", null, managerRepository,vismaFileCreator,Arrays.asList("Vegg")),
 				"Veggproduksjon", login, articleType, managerRepository, deviationViewHandlerFactory,
 				setProductionUnitActionFactory);
 	}

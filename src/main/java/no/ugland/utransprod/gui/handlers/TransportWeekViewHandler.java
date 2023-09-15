@@ -54,6 +54,8 @@ import no.ugland.utransprod.gui.buttons.DeleteButton;
 import no.ugland.utransprod.gui.buttons.NewButton;
 import no.ugland.utransprod.gui.edit.EditTransportView;
 import no.ugland.utransprod.gui.handlers.TransportViewHandler.TableClickHandler;
+import no.ugland.utransprod.gui.model.TextPaneRendererCustomer;
+import no.ugland.utransprod.gui.model.TextPaneRendererTransport;
 import no.ugland.utransprod.gui.model.TransportListable;
 import no.ugland.utransprod.gui.model.TransportModel;
 import no.ugland.utransprod.gui.model.TransportSelectionListener;
@@ -477,7 +479,7 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 			List<OrderLine> missing = transportable.getMissingCollies();
 			if (missing != null) {
 				List<OrderLineWrapper> missingList = Util.getOrderLineWrapperList(missing);
-				Util.showOptionsDialog(window, missingList, "Mangler", false, false);
+				Util.showOptionsDialog(window, missingList, "Mangler", false, false, false);
 			}
 
 		}
@@ -980,6 +982,9 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 			column.setCellRenderer(tableOrdersList);
 			column.setPrefferedWidth(tableOrdersList);
 		}
+		
+		tableOrdersList.getColumnModel().getColumn(tableOrdersList.getColumnExt("Ordre").getModelIndex())
+		.setCellRenderer(new TextPaneRendererTransport());
 
 		tableOrdersList.addHighlighter(HighlighterFactory.createAlternateStriping());
 		tableOrdersList.addHighlighter(TransportViewHandler.getStartedPackingHighlighter(tableOrdersList, "Klar"));

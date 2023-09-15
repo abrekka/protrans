@@ -80,6 +80,8 @@
 /*    */ 
 /*    */    public void setStarted(FaktureringV object, boolean started) {
 /* 82 */    }
+public void setPause(FaktureringV object, boolean started) {
+/* 82 */    }
 /*    */ 
 /*    */ 
 /*    */    public boolean shouldGenerateVismaFile() {

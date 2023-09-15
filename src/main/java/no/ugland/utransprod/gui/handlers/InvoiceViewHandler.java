@@ -19,8 +19,13 @@ import javax.swing.table.TableModel;
 import org.jdesktop.swingx.decorator.ColorHighlighter;
 import org.jdesktop.swingx.decorator.PatternPredicate;
 
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
+import com.google.inject.internal.Lists;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
+import com.jgoodies.binding.list.SelectionInList;
 
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.gui.IconEnum;
@@ -32,6 +37,7 @@ import no.ugland.utransprod.gui.model.InvoiceApplyList;
 import no.ugland.utransprod.gui.model.TextPaneRendererOrder;
 import no.ugland.utransprod.gui.model.Transportable;
 import no.ugland.utransprod.model.FaktureringV;
+import no.ugland.utransprod.model.Ord;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.service.ManagerRepository;
@@ -143,6 +149,33 @@ public class InvoiceViewHandler extends AbstractProductionPackageViewHandlerShor
 	 */
 	@Override
 	protected TableModel getTableModel(WindowInterface window) {
+		List<FaktureringV> faktureringsliste = managerRepository.getFaktureringVManager().findAllApplyable();
+
+		List<FaktureringV> ufakturerte = Lists
+				.newArrayList(Iterables.filter(faktureringsliste, new Predicate<FaktureringV>() {
+
+					public boolean apply(FaktureringV input) {
+						return input.getInvoiceDate() == null;
+					}
+				}));
+
+		if (!ufakturerte.isEmpty()) {
+			List<String> ordernr = Lists
+					.newArrayList(Iterables.transform(ufakturerte, new Function<FaktureringV, String>() {
+
+						public String apply(FaktureringV from) {
+							return from.getOrderNr();
+						}
+					}));
+			List<Ord> fakturerteOrdre = managerRepository.getOrdlnManager().findInvoicedOrdByOrdernr(ordernr);
+			
+			if(!fakturerteOrdre.isEmpty()) {
+				for(Ord ordre:fakturerteOrdre) {
+					managerRepository.getOrderManager().settFakturert(ordre.getInf6(),ordre.getInvoicedDate());
+				}
+			}
+		}
+
 		return new InvoiceTableModel(getObjectSelectionList());
 	}
 
@@ -151,7 +184,7 @@ public class InvoiceViewHandler extends AbstractProductionPackageViewHandlerShor
 		table.getColumnExt(0).setPreferredWidth(100);
 		table.getColumnExt(1).setPreferredWidth(150);
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 		table.getColumn(1).setCellRenderer(centerRenderer);
 		table.getColumnExt(2).setPreferredWidth(50);
 		table.getColumn(3).setCellRenderer(centerRenderer);
@@ -415,10 +448,10 @@ public class InvoiceViewHandler extends AbstractProductionPackageViewHandlerShor
 	@Override
 	protected void buttonsEnabled(final FaktureringV object, final boolean hasSelection) {
 		if (hasSelection) {
-			if(object.getSentMail()==null){
-			buttonSendtMail.setEnabled(true);
-			buttonIkkeSendtMail.setEnabled(false);
-			}else{
+			if (object.getSentMail() == null) {
+				buttonSendtMail.setEnabled(true);
+				buttonIkkeSendtMail.setEnabled(false);
+			} else {
 				buttonSendtMail.setEnabled(false);
 				buttonIkkeSendtMail.setEnabled(true);
 			}
@@ -512,5 +545,10 @@ public class InvoiceViewHandler extends AbstractProductionPackageViewHandlerShor
 		ExcelUtil.showTableDataInExcel(excelDirectory, fileName, null, "Fakturering", table, null, null, 16, false);
 		// ExcelUtil.showDataInExcelInThread(window, fileName, getTitle(),
 		// getExcelTable(), null, null, 16, false);
+	}
+
+	@Override
+	public boolean isProductionWindow() {
+		return false;
 	}
 }

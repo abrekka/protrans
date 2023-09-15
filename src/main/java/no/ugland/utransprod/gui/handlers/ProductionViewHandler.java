@@ -23,12 +23,19 @@ import no.ugland.utransprod.gui.model.Transportable;
 import no.ugland.utransprod.model.ArticleType;
 import no.ugland.utransprod.model.Produceable;
 import no.ugland.utransprod.model.ProductAreaGroup;
+import no.ugland.utransprod.model.ProductionTime;
 import no.ugland.utransprod.model.ProductionUnit;
+import no.ugland.utransprod.service.Dokumentlager;
 import no.ugland.utransprod.service.ManagerRepository;
+import no.ugland.utransprod.service.ProductionTimeManager;
+import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.Util;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.inject.internal.Lists;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 
 /**
@@ -47,6 +54,7 @@ public class ProductionViewHandler extends AbstractProductionPackageViewHandler<
 	ArticleType articleType;
 	private Produceable produceable;
 	protected SetProductionUnitActionFactory setProductionUnitActionFactory;
+	private ProductionTimeManager productionTimeManager;
 
 	public ProductionViewHandler(final ApplyListInterface<Produceable> productionInterface, final String title,
 			final Login login, final String aApplyText, final String aStartText, final TableEnum tableEnum,
@@ -56,6 +64,7 @@ public class ProductionViewHandler extends AbstractProductionPackageViewHandler<
 		super(login, managerRepository, deviationViewHandlerFactory, productionInterface, title, tableEnum);
 		articleType = aArticleType;
 		setProductionUnitActionFactory = aSetProductionUnitActionFactory;
+		productionTimeManager = (ProductionTimeManager) ModelUtil.getBean(ProductionTimeManager.MANAGER_NAME);
 
 		if (aApplyText != null) {
 			applyText = aApplyText;
@@ -405,7 +414,7 @@ public class ProductionViewHandler extends AbstractProductionPackageViewHandler<
 	@Override
 	protected String getStartText() {
 		if (startText != null) {
-			return "Startet " + startText;
+			return "Start " + startText;
 		}
 		return null;
 	}
@@ -420,6 +429,15 @@ public class ProductionViewHandler extends AbstractProductionPackageViewHandler<
 	}
 
 	@Override
+	protected void setPause(final Produceable object, final boolean started) {
+		applyListInterface.setPause(object, started);
+		// if (object.getOrderLineId() == null) {
+		// doRefresh(null);
+		// }
+
+	}
+
+	@Override
 	protected void setRealProductionHours(Produceable object, BigDecimal overstyrtTidsforbruk) {
 		applyListInterface.setRealProductionHours(object, overstyrtTidsforbruk);
 
@@ -427,10 +445,27 @@ public class ProductionViewHandler extends AbstractProductionPackageViewHandler<
 
 	@Override
 	protected boolean getButtonStartEnabled(Produceable produceable) {
-		if (produceable != null && produceable.getActionStarted() == null
+		List<ProductionTime> produksjonstider = productionTimeManager
+				.findByOrderNrAndProductionname(produceable.getOrderNr(), articleType.getArticleTypeName());
+
+		List<ProductionTime> tiderForBruker = Lists
+				.newArrayList(Iterables.filter(produksjonstider, new Predicate<ProductionTime>() {
+
+					public boolean apply(ProductionTime input) {
+						return input.getUsername().equalsIgnoreCase(login.getApplicationUser().getUserName())
+								&& input.getStopped() == null;
+					}
+				}));
+
+		if (produceable != null && tiderForBruker.isEmpty()
 				&& (produceable.getProbability() == null || produceable.getProbability() != 90)) {
 			return true;
 		}
+
+//		if (produceable != null && produceable.getActionStarted() == null
+//				&& (produceable.getProbability() == null || produceable.getProbability() != 90)) {
+//			return true;
+//		}
 		return false;
 	}
 
@@ -463,6 +498,11 @@ public class ProductionViewHandler extends AbstractProductionPackageViewHandler<
 	public void clearApplyObject() {
 		produceable = null;
 
+	}
+
+	@Override
+	public boolean isProductionWindow() {
+		return true;
 	}
 
 }

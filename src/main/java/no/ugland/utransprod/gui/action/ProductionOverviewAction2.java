@@ -15,29 +15,30 @@ import com.google.inject.Inject;
  * @author atle.brekka
  */
 public class ProductionOverviewAction2 extends AbstractAction {
-    /**
-     * 
-     */
-    private final MenuBarBuilderInterface menuBarBuilder;
-    private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private final MenuBarBuilderInterface menuBarBuilder;
+	private static final long serialVersionUID = 1L;
 
-    private ProductionOverviewView2 productionOverviewView;
+	private ProductionOverviewView2 productionOverviewView;
 
-    @Inject
-    public ProductionOverviewAction2(final MenuBarBuilderInterface aMenuBarBuilderInterface, final ProductionOverviewView2 aProductionOverviewView) {
-	super("Produksjonsoversikt...");
-	productionOverviewView = aProductionOverviewView;
-	this.menuBarBuilder = aMenuBarBuilderInterface;
+	@Inject
+	public ProductionOverviewAction2(final MenuBarBuilderInterface aMenuBarBuilderInterface,
+			final ProductionOverviewView2 aProductionOverviewView) {
+		super("Produksjonsoversikt...");
+		productionOverviewView = aProductionOverviewView;
+		this.menuBarBuilder = aMenuBarBuilderInterface;
 
-    }
+	}
 
-    /**
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
-    public void actionPerformed(final ActionEvent arg0) {
-	// OrderViewHandler orderViewHandler = new OrderViewHandler(true,
-	// login,orderManager);
-	menuBarBuilder.openFrame(productionOverviewView);
+	/**
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void actionPerformed(final ActionEvent arg0) {
+		// OrderViewHandler orderViewHandler = new OrderViewHandler(true,
+		// login,orderManager);
+		menuBarBuilder.openFrame(productionOverviewView);
 
-    }
+	}
 }

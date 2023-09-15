@@ -694,11 +694,11 @@ public class PostShipment extends AbstractTransportable implements TextRenderabl
 		return OrderLine.UNKNOWN;
 	}
 
-	public final List<OrderLine> getOrderLineList(final String articlePath) {
+	public final List<OrderLine> getOrderLineList(final List<String> articlePath) {
 		List<OrderLine> orderLineList = new ArrayList<OrderLine>();
 		if (orderLines != null) {
 			for (OrderLine orderLine : orderLines) {
-				if (orderLine.getArticlePath().equalsIgnoreCase(articlePath)) {
+				if (articlePath.contains(orderLine.getArticlePath())) {
 					orderLineList.add(orderLine);
 				}
 			}

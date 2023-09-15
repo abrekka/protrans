@@ -2,6 +2,7 @@ package no.ugland.utransprod.gui.handlers;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -1193,7 +1194,6 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	 */
 	@Override
 	public Dimension getWindowSize() {
-
 		return new Dimension(1000, 810);
 
 	}
@@ -1205,7 +1205,8 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	 */
 
 	public Dimension getRegisterWindowSize() {
-		return new Dimension(710, 810);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		return new Dimension(710, (int)(screenSize.getHeight()-100));
 	}
 
 	public boolean saveObjectExt(AbstractModel<Deviation, DeviationModel> object, WindowInterface currentWindow) {

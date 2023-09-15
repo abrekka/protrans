@@ -12,9 +12,11 @@ import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +69,7 @@ import no.ugland.utransprod.model.Assembly;
 import no.ugland.utransprod.model.AssemblyV;
 import no.ugland.utransprod.model.CostType;
 import no.ugland.utransprod.model.CostUnit;
+import no.ugland.utransprod.model.DokumentV;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.PostShipment;
 import no.ugland.utransprod.model.ProcentDone;
@@ -75,8 +78,11 @@ import no.ugland.utransprod.model.ProductAreaGroup;
 import no.ugland.utransprod.model.ProductionOverviewV;
 import no.ugland.utransprod.model.UserType;
 import no.ugland.utransprod.service.AssemblyManager;
+import no.ugland.utransprod.service.DokumentVManager;
+import no.ugland.utransprod.service.Dokumentlager;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.OrderManager;
+import no.ugland.utransprod.service.OrdlnManager;
 import no.ugland.utransprod.service.PostShipmentManager;
 import no.ugland.utransprod.service.ProductionOverviewVManager;
 import no.ugland.utransprod.service.VismaFileCreator;
@@ -129,7 +135,6 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	private boolean loaded = false;
 	private UserType userType;
 	private SelectionInList objectSelectionList;
-	// private WindowInterface window;
 	private JButton buttonCancel;
 	private JLabel labelAntallGarasjer;
 	private JLabel labelSumTidVegg;
@@ -153,6 +158,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	JMenuItem menuItemShowMissing;
 	JMenuItem menuItemSetComment;
 	JMenuItem menuItemSetAntallStandardvegger;
+	JMenuItem menuItemShowDocument;
 
 	JMenuItem menuItemShowContent;
 
@@ -182,10 +188,6 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	private TableModel productionOverviewTableModel;
 
 	Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers;
-
-	// private List<ProductAreaGroup> productAreaGroupList;
-
-	// PresentationModel productAreaGroupModel;
 
 	JCheckBox checkBoxFilter;
 	private VismaFileCreator vismaFileCreator;
@@ -343,38 +345,23 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 
 		menuItemSetAntallStandardvegger = new JMenuItem("Sett antall standardvegger...");
 		popupMenuProduction.add(menuItemSetAntallStandardvegger);
+
+		menuItemShowDocument = new JMenuItem("Se dokument...");
+		popupMenuProduction.add(menuItemShowDocument);
 	}
 
-	// private void initProductAreaGroup() {
-	// productAreaGroupModel = new PresentationModel(new
-	// ProductAreaGroupModel(ProductAreaGroup.UNKNOWN));
-	// productAreaGroupModel.addBeanPropertyChangeListener(new
-	// FilterPropertyChangeListener());
-	// ProductAreaGroupManager productAreaGroupManager =
-	// (ProductAreaGroupManager) ModelUtil.getBean("productAreaGroupManager");
-	// productAreaGroupList = new ArrayList<ProductAreaGroup>();
-	// List<ProductAreaGroup> groups = productAreaGroupManager.findAll();
-	// if (groups != null) {
-	// productAreaGroupList.addAll(groups);
-	// }
-	// }
-
-	// @Override
 	public TableModel getTableModel(WindowInterface window) {
 		return productionOverviewTableModel;
 	}
 
-	// @Override
 	public String getTitle() {
 		return "Produksjonsoversikt";
 	}
 
-	// @Override
 	public Dimension getWindowSize() {
 		return new Dimension(930, 600);
 	}
 
-	// @Override
 	public Boolean hasWriteAccess() {
 		return UserUtil.hasWriteAccess(userType, "Produksjonsoversikt");
 	}
@@ -1108,10 +1095,11 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 			}
 
 			private BigDecimal calculateTimeWall(ProductionOverviewV productionOverviewV) {
-				return productionOverviewV.getWallRealProductionHours() == null
-						? Tidsforbruk.beregnTidsforbruk(productionOverviewV.getWallActionStarted(),
-								productionOverviewV.getWallProduced())
-						: productionOverviewV.getWallRealProductionHours();
+				return productionOverviewV.getWallRealProductionHours();
+//						== null
+//						? Tidsforbruk.beregnTidsforbruk(productionOverviewV.getWallActionStarted(),
+//								productionOverviewV.getWallProduced())
+//						: productionOverviewV.getWallRealProductionHours();
 			}
 
 			@Override
@@ -1217,10 +1205,11 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 			}
 
 			private BigDecimal calculateTimeGavl(ProductionOverviewV productionOverviewV) {
-				return productionOverviewV.getGavlRealProductionHours() == null
-						? Tidsforbruk.beregnTidsforbruk(productionOverviewV.getGavlActionStarted(),
-								productionOverviewV.getGavlProduced())
-						: productionOverviewV.getGavlRealProductionHours();
+				return productionOverviewV.getGavlRealProductionHours();
+//						== null
+//						? Tidsforbruk.beregnTidsforbruk(productionOverviewV.getGavlActionStarted(),
+//								productionOverviewV.getGavlProduced())
+//						: productionOverviewV.getGavlRealProductionHours();
 			}
 
 			@Override
@@ -2957,6 +2946,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 		menuItemMap.put(ProductionColumn.TAKSTOL.getColumnName() + "Takstolinfo", menuItemShowTakstolInfo);
 
 		menuItemUpdate.addActionListener(new MenuItemUpdate(window));
+		menuItemShowDocument.addActionListener(new MenuItemListenerShowDocument(window));
 	}
 
 	class MenuItemListenerSetComment implements ActionListener {
@@ -3000,6 +2990,33 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 				order.setAntallStandardvegger(value);
 				managerRepository.getOrderManager().saveOrder(order);
 				doRefresh(window);
+			}
+		}
+	}
+
+	class MenuItemListenerShowDocument implements ActionListener {
+
+		private WindowInterface window;
+
+		public MenuItemListenerShowDocument(WindowInterface aWindow) {
+			window = aWindow;
+		}
+
+		public void actionPerformed(ActionEvent actionEvent) {
+			Transportable transportable = getSelectedTransportable();
+			DokumentVManager dokumentVManager = (DokumentVManager) ModelUtil.getBean(DokumentVManager.MANAGER_NAME);
+			List<DokumentV> dokumenter = dokumentVManager.finnDokumenter(transportable.getOrderNr());
+//			List<DokumentV> dokumenter = Arrays.asList(new DokumentV(1, "123", "123 - Test Tstesen - MODELL",
+//					"BFL - Endelig ordrebekreftelse for produksjon dette fblir en mye lengre teskt", "Ordre: SO-123 (PDF)", new Date()));
+			
+			Collection<?> valgteDokumenter = Util.showOptionsDialog(window, dokumenter, "Velg dokument", true, false,
+					true);
+
+			if (valgteDokumenter != null && !valgteDokumenter.isEmpty()) {
+				DokumentV valgtDokument = (DokumentV) valgteDokumenter.iterator().next();
+				if (valgtDokument != null) {
+					Dokumentlager.aapneDokument(valgtDokument.getProjectNumber(), valgtDokument.getType());
+				}
 			}
 		}
 	}

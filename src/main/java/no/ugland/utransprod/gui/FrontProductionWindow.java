@@ -11,6 +11,8 @@ import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.VismaFileCreator;
 import no.ugland.utransprod.util.ApplicationParamUtil;
 
+import java.util.Arrays;
+
 import com.google.inject.Inject;
 
 /**
@@ -66,7 +68,8 @@ public class FrontProductionWindow extends AbstractProductionPackageWindow<Produ
 				.findByName(ApplicationParamUtil.findParamByName(getParamArticleName()));
 		return new FrontProductionViewHandler(
 				new FrontProductionApplyList(login, managerRepository.getFrontProductionVManager(), null, "Front", null,
-						managerRepository, vismaFileCreator),
+						managerRepository, vismaFileCreator,
+						Arrays.asList("Front", "Belistning", "Gesimsbord gavl pk", "Vannbord", "Vindski")),
 				"Frontproduksjon", login, articleType, managerRepository, deviationViewHandlerFactory,
 				setProductionUnitActionFactory);
 	}

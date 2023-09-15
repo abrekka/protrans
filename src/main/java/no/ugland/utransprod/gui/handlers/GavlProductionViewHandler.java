@@ -29,6 +29,7 @@ import no.ugland.utransprod.model.GavlProductionV;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.Produceable;
 import no.ugland.utransprod.model.ProductAreaGroup;
+import no.ugland.utransprod.service.Dokumentlager;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.enums.LazyLoadEnum;
 import no.ugland.utransprod.util.PrefsUtil;

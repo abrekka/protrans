@@ -10,6 +10,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -55,9 +56,12 @@ import no.ugland.utransprod.gui.model.ProductAreaGroupModel;
 import no.ugland.utransprod.gui.model.ReportEnum;
 import no.ugland.utransprod.gui.model.Transportable;
 import no.ugland.utransprod.model.Accident;
+import no.ugland.utransprod.model.DokumentV;
 import no.ugland.utransprod.model.Order;
 import no.ugland.utransprod.model.OrderComment;
 import no.ugland.utransprod.model.ProductAreaGroup;
+import no.ugland.utransprod.service.DokumentVManager;
+import no.ugland.utransprod.service.Dokumentlager;
 import no.ugland.utransprod.service.ManagerRepository;
 import no.ugland.utransprod.service.OrderManager;
 import no.ugland.utransprod.service.enums.LazyLoadOrderEnum;
@@ -101,6 +105,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	JXTable table;
 
 	private JButton buttonApply;
+	private JButton buttonPause;
 
 	JButton buttonUnapply;
 
@@ -116,6 +121,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 
 	private JMenuItem menuItemDeviation;
 	private JMenuItem menuItemAccident;
+	private JMenuItem menuItemDocument;
 
 	private JMenuItem menuItemComment;
 
@@ -162,6 +168,11 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 		menuItemAccident = new JMenuItem("Registrer hendelse...");
 		menuItemAccident.setName("MenuItemAccident");
 		popupMenu.add(menuItemAccident);
+
+		menuItemDocument = new JMenuItem("Se dokument...");
+		menuItemDocument.setName("MenuItemDocument");
+		popupMenu.add(menuItemDocument);
+
 		initProductAreaGroup();
 	}
 
@@ -208,6 +219,8 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	protected abstract void setRealProductionHours(T object, BigDecimal overstyrtTidsforbruk);
 
 	protected abstract void setStarted(T object, boolean started);
+
+	protected abstract void setPause(T object, boolean started);
 
 	/**
 	 * Henter tekst som skal stå på filter
@@ -380,6 +393,14 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 		return buttonApply;
 	}
 
+	public final JButton getButtonPause(final WindowInterface window) {
+		buttonPause = new JButton(new PauseAction("Stopp produksjon", true, window));
+		buttonPause.setEnabled(false);
+		buttonPause.setName("ButtonPause");
+
+		return buttonPause;
+	}
+
 	public final JButton getButtonStart() {
 		String startText = getStartText();
 		if (startText != null) {
@@ -450,6 +471,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 		menuItemDeviation.addActionListener(new MenuItemListener(window));
 		menuItemComment.addActionListener(new MenuItemCommentListener(window));
 		menuItemAccident.addActionListener(new AddAccidentAction(window));
+		menuItemDocument.addActionListener(new GetDocumentAction(window));
 		table = new JXTable();
 
 		table.setModel(getTableModel(window));
@@ -525,6 +547,16 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 		T object = getSelectedObject();
 
 		setStarted(object, started);
+		objectSelectionList.clearSelection();
+
+		initColumnWidth();
+		table.updateUI();
+	}
+
+	final void setPause(final boolean started) {
+		T object = getSelectedObject();
+
+		setPause(object, started);
 		objectSelectionList.clearSelection();
 
 		initColumnWidth();
@@ -613,6 +645,33 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 		}
 	}
 
+	private class PauseAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+
+		private boolean isApplied = true;
+
+		private WindowInterface window;
+
+		/**
+		 * @param buttonText
+		 * @param applied
+		 * @param aWindow
+		 */
+		public PauseAction(final String buttonText, final boolean applied, final WindowInterface aWindow) {
+			super(buttonText);
+			window = aWindow;
+			isApplied = applied;
+		}
+
+		/**
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
+		public void actionPerformed(final ActionEvent arg0) {
+			setPause(isApplied);
+
+		}
+	}
+
 	private class StartAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;
 
@@ -690,6 +749,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	final void enableComponents() {
 		buttonApply.setEnabled(false);
 		buttonUnapply.setEnabled(false);
+		buttonPause.setEnabled(false);
 		if (buttonStart != null) {
 			buttonStart.setEnabled(false);
 			buttonNotStart.setEnabled(false);
@@ -711,6 +771,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 						boolean started = getButtonStartEnabled(object);
 						buttonApply.setEnabled(applied);
 						buttonUnapply.setEnabled(!applied);
+						buttonPause.setEnabled(!started);
 
 						if (buttonStart != null && applied) {
 							buttonStart.setEnabled(started);
@@ -985,6 +1046,55 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 		}
 	}
 
+	private class GetDocumentAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+
+		private WindowInterface window;
+
+		/**
+		 * @param aWindow
+		 */
+		public GetDocumentAction(final WindowInterface aWindow) {
+			super("Se dokument...");
+			window = aWindow;
+
+		}
+
+		/**
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
+		public void actionPerformed(final ActionEvent arg0) {
+			int selectionIndex = objectSelectionList.getSelectionIndex();
+			if (selectionIndex < 0) {
+				return;
+			}
+			Util.setWaitCursor(window.getComponent());
+
+			Applyable applyable = (Applyable) objectSelectionList
+					.getElementAt(table.convertRowIndexToModel(objectSelectionList.getSelectionIndex()));
+
+			DokumentVManager dokumentVManager = (DokumentVManager) ModelUtil.getBean(DokumentVManager.MANAGER_NAME);
+			List<DokumentV> dokumenter = dokumentVManager.finnDokumenter(applyable.getOrderNr());
+
+//			List<DokumentV> dokumenter = Arrays.asList(
+//					new DokumentV().medType("BFL - Endelig ordrebekreftelse for produksjon")
+//							.medHeader("Ordre: SO-188553 (PDF)"),
+//					new DokumentV().medType("BFL - Oppdatert tegning").medHeader("188553 prodtegn"),
+//					new DokumentV().medType("BFL - Oppdatert tegning").medHeader("188553 drager"));
+
+			Collection<?> valgteDokumenter = Util.showOptionsDialog(window, dokumenter, "Velg dokument", true, false,
+					true);
+
+			if (valgteDokumenter != null && !valgteDokumenter.isEmpty()) {
+				DokumentV valgtDokument = (DokumentV) valgteDokumenter.iterator().next();
+				if (valgtDokument != null) {
+					Dokumentlager.aapneDokument(valgtDokument.getProjectNumber(), valgtDokument.getType());
+				}
+			}
+			Util.setDefaultCursor(window.getComponent());
+		}
+	}
+
 	/**
 	 * Henter tabellmodell for rapport
 	 * 
@@ -1231,7 +1341,10 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 		 */
 		@Override
 		public void mouseClicked(final MouseEvent e) {
-
+			int selectionIndex = objectSelectionList.getSelectionIndex();
+			if (selectionIndex < 0) {
+				return;
+			}
 			if (SwingUtilities.isRightMouseButton(e)) {
 				popupMenu.show((JXTable) e.getSource(), e.getX(), e.getY());
 			}
@@ -1268,4 +1381,6 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 		PrefsUtil.putUserInvisibleColumns(table,
 				(ProductAreaGroup) productAreaGroupModel.getValue(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP));
 	}
+
+	public abstract boolean isProductionWindow();
 }

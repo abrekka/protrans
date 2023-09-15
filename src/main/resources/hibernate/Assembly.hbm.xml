@@ -40,6 +40,12 @@
         column="ASSEMBLY_WEEK"
         length="32"
     />
+    <property
+        name="assemblyWeekTo"
+        type="java.lang.Integer"
+        column="ASSEMBLY_WEEK_TO"
+        length="32"
+    />
     <!--property
         name="invoiced"
         type="java.lang.Integer"

@@ -94,6 +94,9 @@
 /*     */ 
 /*     */    protected final void setStarted(T object, boolean started) {
 /*  96 */    }
+
+protected final void setPause(T object, boolean started) {
+/*  96 */    }
 /*     */ 
 /*     */ 
 /*     */    protected final boolean getButtonStartEnabled(T object) {

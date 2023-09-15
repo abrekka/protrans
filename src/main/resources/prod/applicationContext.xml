@@ -16,6 +16,7 @@
 
 		<property name="mappingResources">
 			<list>
+				<value>hibernate/DokumentV.hbm.xml</value>
 				<value>hibernate/Order.hbm.xml</value>
 				<value>hibernate/ConstructionType.hbm.xml</value>
 				<value>hibernate/Transport.hbm.xml</value>
@@ -56,9 +57,9 @@
 				<value>hibernate/SupplierType.hbm.xml</value>
 				<value>hibernate/EmployeeType.hbm.xml</value>
 				<value>hibernate/Employee.hbm.xml</value>
-<!-- 				<value>hibernate/ExternalOrder.hbm.xml</value> -->
-<!-- 				<value>hibernate/ExternalOrderLine.hbm.xml</value> -->
-<!-- 				<value>hibernate/ExternalOrderLineAttribute.hbm.xml</value> -->
+				<!-- <value>hibernate/ExternalOrder.hbm.xml</value> -->
+				<!-- <value>hibernate/ExternalOrderLine.hbm.xml</value> -->
+				<!-- <value>hibernate/ExternalOrderLineAttribute.hbm.xml</value> -->
 				<value>hibernate/AssemblyOverdueV.hbm.xml</value>
 				<value>hibernate/PacklistV.hbm.xml</value>
 				<value>hibernate/WindowAccess.hbm.xml</value>
@@ -127,6 +128,7 @@
 				<value>hibernate/ProductionoverviewV.hbm.xml</value>
 				<value>hibernate/AssemblyV.hbm.xml</value>
 				<value>hibernate/OrderSegmentNoV.hbm.xml</value>
+				<value>hibernate/ProductionTime.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -181,10 +183,8 @@
 	</bean>
 
 
-	<!--
-		Transaction manager for a single Hibernate SessionFactory (alternative
-		to JTA)
-	-->
+	<!-- Transaction manager for a single Hibernate SessionFactory (alternative 
+		to JTA) -->
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory">
@@ -207,10 +207,7 @@
 
 
 
-	<!--
-		Transaction template for Managers, from:
-		http://blog.exis.com/colin/archives/2004/07/31/concise-transaction-definitions-spring-11/
-	-->
+	<!-- Transaction template for Managers, from: http://blog.exis.com/colin/archives/2004/07/31/concise-transaction-definitions-spring-11/ -->
 	<bean id="txProxyTemplate" abstract="true"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
 		lazy-init="false">
@@ -249,10 +246,8 @@
 		</property>
 	</bean>
 
-	<!--
-		============================== CACHE =============================
-	-->
+	<!-- ============================== CACHE ============================= -->
 
 
-	
+
 </beans>

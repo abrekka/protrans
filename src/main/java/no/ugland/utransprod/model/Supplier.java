@@ -18,280 +18,299 @@ import com.google.inject.internal.Lists;
  * @author atle.brekka
  */
 public class Supplier extends BaseObject {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private Integer supplierId;
+	private Integer supplierId;
 
-    private String supplierName;
+	private String supplierName;
 
-    private String supplierDescription;
+	private String supplierDescription;
 
-    private String phone;
+	private String phone;
 
-    private SupplierType supplierType;
+	private SupplierType supplierType;
 
-    private String address;
+	private String address;
 
-    private String postalCode;
+	private String postalCode;
 
-    private String postOffice;
+	private String postOffice;
 
-    private String fax;
+	private String fax;
 
-    private Set<Employee> employees;
+	private Set<Employee> employees;
 
-    private Set<Assembly> assemblies;
-    private Integer inactive;
-    private Set<SupplierProductAreaGroup> supplierProductAreaGroups;
+	private Set<Assembly> assemblies;
+	private Integer inactive;
+	private Set<SupplierProductAreaGroup> supplierProductAreaGroups;
 
-    private String supplierNr;
+	private String supplierNr;
+	private Integer holidayFrom;
+	private Integer holidayTo;
 
-    /**
-     * 
-     */
-    public Supplier() {
-	super();
-    }
+	/**
+	 * 
+	 */
+	public Supplier() {
+		super();
+	}
 
-    /**
-     * @param supplierId
-     * @param supplierName
-     * @param supplierDescription
-     * @param phone
-     * @param supplierType
-     * @param address
-     * @param postalCode
-     * @param postOffice
-     * @param fax
-     * @param employees
-     */
-    public Supplier(Integer supplierId, String supplierName, String supplierDescription, String phone, SupplierType supplierType, String address,
-	    String postalCode, String postOffice, String fax, Set<Employee> employees, final Set<Assembly> someAssemblies, final Integer isInactive) {
-	super();
-	this.supplierId = supplierId;
-	this.supplierName = supplierName;
-	this.supplierDescription = supplierDescription;
-	this.phone = phone;
-	this.supplierType = supplierType;
-	this.address = address;
-	this.postalCode = postalCode;
-	this.postOffice = postOffice;
-	this.fax = fax;
-	this.employees = employees;
-	this.assemblies = someAssemblies;
-	this.inactive = isInactive;
-    }
+	/**
+	 * @param supplierId
+	 * @param supplierName
+	 * @param supplierDescription
+	 * @param phone
+	 * @param supplierType
+	 * @param address
+	 * @param postalCode
+	 * @param postOffice
+	 * @param fax
+	 * @param employees
+	 */
+	public Supplier(Integer supplierId, String supplierName, String supplierDescription, String phone,
+			SupplierType supplierType, String address, String postalCode, String postOffice, String fax,
+			Set<Employee> employees, final Set<Assembly> someAssemblies, final Integer isInactive) {
+		super();
+		this.supplierId = supplierId;
+		this.supplierName = supplierName;
+		this.supplierDescription = supplierDescription;
+		this.phone = phone;
+		this.supplierType = supplierType;
+		this.address = address;
+		this.postalCode = postalCode;
+		this.postOffice = postOffice;
+		this.fax = fax;
+		this.employees = employees;
+		this.assemblies = someAssemblies;
+		this.inactive = isInactive;
+	}
 
-    /**
-     * @return beskrivelse
-     */
-    public String getSupplierDescription() {
-	return supplierDescription;
-    }
+	public Integer getHolidayFrom() {
+		return holidayFrom;
+	}
 
-    /**
-     * @param supplierDescription
-     */
-    public void setSupplierDescription(String supplierDescription) {
-	this.supplierDescription = supplierDescription;
-    }
+	public Integer getHolidayTo() {
+		return holidayTo;
+	}
 
-    /**
-     * @return id
-     */
-    public Integer getSupplierId() {
-	return supplierId;
-    }
+	public void setHolidayFrom(Integer holidayFrom) {
+		this.holidayFrom = holidayFrom;
+	}
 
-    /**
-     * @param supplierId
-     */
-    public void setSupplierId(Integer supplierId) {
-	this.supplierId = supplierId;
-    }
+	public void setHolidayTo(Integer holidayTo) {
+		this.holidayTo = holidayTo;
+	}
 
-    /**
-     * @return navn
-     */
-    public String getSupplierName() {
-	return supplierName;
-    }
+	/**
+	 * @return beskrivelse
+	 */
+	public String getSupplierDescription() {
+		return supplierDescription;
+	}
 
-    /**
-     * @param supplierName
-     */
-    public void setSupplierName(String supplierName) {
-	this.supplierName = supplierName;
-    }
+	/**
+	 * @param supplierDescription
+	 */
+	public void setSupplierDescription(String supplierDescription) {
+		this.supplierDescription = supplierDescription;
+	}
 
-    /**
-     * @see no.ugland.utransprod.model.BaseObject#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(final Object other) {
-	if (!(other instanceof Supplier))
-	    return false;
-	Supplier castOther = (Supplier) other;
-	return new EqualsBuilder().append(supplierName, castOther.supplierName).isEquals();
-    }
+	/**
+	 * @return id
+	 */
+	public Integer getSupplierId() {
+		return supplierId;
+	}
 
-    /**
-     * @see no.ugland.utransprod.model.BaseObject#hashCode()
-     */
-    @Override
-    public int hashCode() {
-	return new HashCodeBuilder().append(supplierName).toHashCode();
-    }
+	/**
+	 * @param supplierId
+	 */
+	public void setSupplierId(Integer supplierId) {
+		this.supplierId = supplierId;
+	}
 
-    /**
-     * @see no.ugland.utransprod.model.BaseObject#toString()
-     */
-    @Override
-    public String toString() {
-	return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append("supplierName", supplierName).toString();
-    }
+	/**
+	 * @return navn
+	 */
+	public String getSupplierName() {
+		return supplierName;
+	}
 
-    /**
-     * @return telefonnummer
-     */
-    public String getPhone() {
-	return phone;
-    }
+	/**
+	 * @param supplierName
+	 */
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
+	}
 
-    /**
-     * @param phone
-     */
-    public void setPhone(String phone) {
-	this.phone = phone;
-    }
+	/**
+	 * @see no.ugland.utransprod.model.BaseObject#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object other) {
+		if (!(other instanceof Supplier))
+			return false;
+		Supplier castOther = (Supplier) other;
+		return new EqualsBuilder().append(supplierName, castOther.supplierName).isEquals();
+	}
 
-    /**
-     * @return type
-     */
-    public SupplierType getSupplierType() {
-	return supplierType;
-    }
+	/**
+	 * @see no.ugland.utransprod.model.BaseObject#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(supplierName).toHashCode();
+	}
 
-    /**
-     * @param supplierType
-     */
-    public void setSupplierType(SupplierType supplierType) {
-	this.supplierType = supplierType;
-    }
+	/**
+	 * @see no.ugland.utransprod.model.BaseObject#toString()
+	 */
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append("supplierName", supplierName).toString();
+	}
 
-    /**
-     * @return adresse
-     */
-    public String getAddress() {
-	return address;
-    }
+	/**
+	 * @return telefonnummer
+	 */
+	public String getPhone() {
+		return phone;
+	}
 
-    /**
-     * @param address
-     */
-    public void setAddress(String address) {
-	this.address = address;
-    }
+	/**
+	 * @param phone
+	 */
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
-    /**
-     * @return postnummer
-     */
-    public String getPostalCode() {
-	return postalCode;
-    }
+	/**
+	 * @return type
+	 */
+	public SupplierType getSupplierType() {
+		return supplierType;
+	}
 
-    /**
-     * @param postalCode
-     */
-    public void setPostalCode(String postalCode) {
-	this.postalCode = postalCode;
-    }
+	/**
+	 * @param supplierType
+	 */
+	public void setSupplierType(SupplierType supplierType) {
+		this.supplierType = supplierType;
+	}
 
-    /**
-     * @return poststed
-     */
-    public String getPostOffice() {
-	return postOffice;
-    }
+	/**
+	 * @return adresse
+	 */
+	public String getAddress() {
+		return address;
+	}
 
-    /**
-     * @param postOffice
-     */
-    public void setPostOffice(String postOffice) {
-	this.postOffice = postOffice;
-    }
+	/**
+	 * @param address
+	 */
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-    /**
-     * @return fax
-     */
-    public String getFax() {
-	return fax;
-    }
+	/**
+	 * @return postnummer
+	 */
+	public String getPostalCode() {
+		return postalCode;
+	}
 
-    /**
-     * @param fax
-     */
-    public void setFax(String fax) {
-	this.fax = fax;
-    }
+	/**
+	 * @param postalCode
+	 */
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
 
-    /**
-     * @return ansatte
-     */
-    public Set<Employee> getEmployees() {
-	return employees;
-    }
+	/**
+	 * @return poststed
+	 */
+	public String getPostOffice() {
+		return postOffice;
+	}
 
-    /**
-     * @param employees
-     */
-    public void setEmployees(Set<Employee> employees) {
-	this.employees = employees;
-    }
+	/**
+	 * @param postOffice
+	 */
+	public void setPostOffice(String postOffice) {
+		this.postOffice = postOffice;
+	}
 
-    public Set<Assembly> getAssemblies() {
-	return assemblies;
-    }
+	/**
+	 * @return fax
+	 */
+	public String getFax() {
+		return fax;
+	}
 
-    public void setAssemblies(Set<Assembly> assemblies) {
-	this.assemblies = assemblies;
-    }
+	/**
+	 * @param fax
+	 */
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
 
-    public final Integer getInactive() {
-	return inactive;
-    }
+	/**
+	 * @return ansatte
+	 */
+	public Set<Employee> getEmployees() {
+		return employees;
+	}
 
-    public final void setInactive(final Integer isInactive) {
-	this.inactive = isInactive;
-    }
+	/**
+	 * @param employees
+	 */
+	public void setEmployees(Set<Employee> employees) {
+		this.employees = employees;
+	}
 
-    public Set<SupplierProductAreaGroup> getSupplierProductAreaGroups() {
-	return supplierProductAreaGroups;
-    }
+	public Set<Assembly> getAssemblies() {
+		return assemblies;
+	}
 
-    public void setSupplierProductAreaGroups(Set<SupplierProductAreaGroup> productAreaGroups) {
-	this.supplierProductAreaGroups = productAreaGroups;
-    }
+	public void setAssemblies(Set<Assembly> assemblies) {
+		this.assemblies = assemblies;
+	}
 
-    public Collection<Employee> getActiveEmployees() {
-	return Lists.newArrayList(Iterables.filter(employees, aktive()));
-    }
+	public final Integer getInactive() {
+		return inactive;
+	}
 
-    private Predicate<Employee> aktive() {
-	return new Predicate<Employee>() {
+	public final void setInactive(final Integer isInactive) {
+		this.inactive = isInactive;
+	}
 
-	    public boolean apply(Employee employee) {
-		return !employee.erInaktiv();
-	    }
-	};
-    }
+	public Set<SupplierProductAreaGroup> getSupplierProductAreaGroups() {
+		return supplierProductAreaGroups;
+	}
 
-    public String getSupplierNr() {
-	return supplierNr;
-    }
+	public void setSupplierProductAreaGroups(Set<SupplierProductAreaGroup> productAreaGroups) {
+		this.supplierProductAreaGroups = productAreaGroups;
+	}
 
-    public void setSupplierNr(String supplierNr) {
-	this.supplierNr = supplierNr;
-    }
+	public Collection<Employee> getActiveEmployees() {
+		return Lists.newArrayList(Iterables.filter(employees, aktive()));
+	}
+
+	private Predicate<Employee> aktive() {
+		return new Predicate<Employee>() {
+
+			public boolean apply(Employee employee) {
+				return !employee.erInaktiv();
+			}
+		};
+	}
+
+	public String getSupplierNr() {
+		return supplierNr;
+	}
+
+	public void setSupplierNr(String supplierNr) {
+		this.supplierNr = supplierNr;
+	}
 
 }

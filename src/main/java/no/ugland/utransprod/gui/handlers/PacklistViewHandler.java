@@ -1656,4 +1656,9 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 
 	}
 
+	@Override
+	public boolean isProductionWindow() {
+		return false;
+	}
+
 }

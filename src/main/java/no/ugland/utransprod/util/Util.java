@@ -263,7 +263,9 @@ public final class Util {
 	}
 
 	public static void setWaitCursor(final WindowInterface window) {
-		setWaitCursor(window.getComponent());
+		if (window != null) {
+			setWaitCursor(window.getComponent());
+		}
 	}
 
 	/**
@@ -635,14 +637,14 @@ public final class Util {
 
 	public static String showInputDialog(final WindowInterface window, final String heading, final String labelText) {
 		OptionsPaneView optionsPaneView = new OptionsPaneView(null, true, false, false, null, labelText, true, null,
-				null);
+				null, false);
 		showOptionsPane(window, heading, optionsPaneView);
 		return optionsPaneView.getInputText();
 	}
 
 	public static Date showInputDialogDate(final WindowInterface window, final String heading, final String labelText) {
 		OptionsPaneView optionsPaneView = new OptionsPaneView(null, true, false, false, null, null, true, null,
-				labelText);
+				labelText, false);
 		showOptionsPane(window, heading, optionsPaneView);
 		return optionsPaneView.getInputDate();
 	}
@@ -650,7 +652,7 @@ public final class Util {
 	public static String showInputDialogWithdefaultValue(final WindowInterface window, final String heading,
 			final String labelText, final String defaultValue) {
 		OptionsPaneView optionsPaneView = new OptionsPaneView(null, true, false, false, null, labelText, true,
-				defaultValue, null);
+				defaultValue, null, false);
 		showOptionsPane(window, heading, optionsPaneView);
 		return optionsPaneView.getInputText();
 	}
@@ -674,9 +676,9 @@ public final class Util {
 	}
 
 	public static Collection<?> showOptionsDialog(final WindowInterface window, final Collection<?> objects,
-			final String heading, final boolean useOkButton, final boolean checkBoxAll) {
+			final String heading, final boolean useOkButton, final boolean checkBoxAll, boolean useSingleSelection) {
 		OptionsPaneView optionsPaneView = new OptionsPaneView(objects, useOkButton, checkBoxAll, false, null, null,
-				false, null, null);
+				false, null, null, useSingleSelection);
 		showOptionsPane(window, heading, optionsPaneView);
 		return optionsPaneView.getSelectedObjects();
 	}
@@ -684,7 +686,7 @@ public final class Util {
 	public static Object showOptionsDialogCombo(final WindowInterface window, final Collection<?> objects,
 			final String heading, final boolean useOkButton, final Object defaultObject) {
 		OptionsPaneView optionsPaneView = new OptionsPaneView(objects, useOkButton, false, true, defaultObject, null,
-				false, null, null);
+				false, null, null, false);
 		showOptionsPane(window, heading, optionsPaneView);
 		return optionsPaneView.getSelectedObject();
 	}
@@ -714,6 +716,10 @@ public final class Util {
 	}
 
 	public static Date getDate(final WindowInterface window) {
+		return getDate(window, null);
+	}
+
+	public static Date getDate(final WindowInterface window, Date defaultDate) {
 		JDialog dialog = null;
 
 		if (window instanceof JFrameAdapter) {
@@ -728,7 +734,7 @@ public final class Util {
 			WindowInterface dialogWindow = new JDialogAdapter(dialog);
 
 			DateView dateView = new DateView();
-			dialog.add(dateView.buildPanel(dialogWindow));
+			dialog.add(dateView.buildPanel(dialogWindow, defaultDate));
 			dialog.pack();
 			locateOnScreenCenter(dialog);
 			dialog.setVisible(true);

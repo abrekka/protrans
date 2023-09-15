@@ -20,65 +20,68 @@ import com.toedter.calendar.JDateChooser;
 
 /**
  * Klasse som brukes for å vise en dialog for valg av dato.
+ * 
  * @author atle.brekka
  */
 public class DateView implements Closeable, CancelListener {
-    private JDateChooser dateChooser;
+	private JDateChooser dateChooser;
 
-    private JButton buttonOk;
+	private JButton buttonOk;
 
-    /**
-     * Initierer vinduskomponenter.
-     * @param window
-     */
-    private void initComponents(final WindowInterface window) {
-        window.setName("DateView");
-        dateChooser = new JDateChooser(Calendar.getInstance().getTime());
-        buttonOk = new CancelButton(window, this, false, "Ok",
-                IconEnum.ICON_OK, this, true);
-        buttonOk.setName("ButtonOk");
-    }
+	/**
+	 * Initierer vinduskomponenter.
+	 * 
+	 * @param window
+	 */
+	private void initComponents(final WindowInterface window, Date date) {
+		window.setName("DateView");
+		Date defaultDate = date == null ? Calendar.getInstance().getTime() : date;
+		dateChooser = new JDateChooser(defaultDate);
+		buttonOk = new CancelButton(window, this, false, "Ok", IconEnum.ICON_OK, this, true);
+		buttonOk.setName("ButtonOk");
+	}
 
-    /**
-     * Bygger vinduspanel.
-     * @param window
-     * @return panel
-     */
-    public final JPanel buildPanel(final WindowInterface window) {
+	/**
+	 * Bygger vinduspanel.
+	 * 
+	 * @param window
+	 * @return panel
+	 */
+	public final JPanel buildPanel(final WindowInterface window, Date defaultDate) {
 
-        initComponents(window);
-        FormLayout layout = new FormLayout("10dlu,p,3dlu,55dlu,10dlu",
-                "10dlu,p,3dlu,p,3dlu");
-        PanelBuilder builder = new PanelBuilder(layout);
-        CellConstraints cc = new CellConstraints();
-        builder.addLabel("Velg dato:", cc.xy(2, 2));
-        builder.add(dateChooser, cc.xy(4, 2));
-        builder.add(ButtonBarFactory.buildCenteredBar(buttonOk), cc
-                .xyw(2, 4, 3));
-        return builder.getPanel();
-    }
+		initComponents(window, defaultDate);
+		FormLayout layout = new FormLayout("10dlu,p,3dlu,55dlu,10dlu", "10dlu,p,3dlu,p,3dlu");
+		PanelBuilder builder = new PanelBuilder(layout);
+		CellConstraints cc = new CellConstraints();
+		builder.addLabel("Velg dato:", cc.xy(2, 2));
+		builder.add(dateChooser, cc.xy(4, 2));
+		builder.add(ButtonBarFactory.buildCenteredBar(buttonOk), cc.xyw(2, 4, 3));
+		return builder.getPanel();
+	}
 
-    /**
-     * Henter dato.
-     * @return dato
-     */
-    public final Date getDate() {
-        return dateChooser.getDate();
-    }
+	/**
+	 * Henter dato.
+	 * 
+	 * @return dato
+	 */
+	public final Date getDate() {
+		return dateChooser.getDate();
+	}
 
-    /**
-     * @see no.ugland.utransprod.gui.Closeable#canClose(java.lang.String,
-     *      no.ugland.utransprod.gui.WindowInterface)
-     */
-    public final boolean canClose(final String actionString, final WindowInterface window) {
-        return true;
-    }
+	/**
+	 * @see no.ugland.utransprod.gui.Closeable#canClose(java.lang.String,
+	 *      no.ugland.utransprod.gui.WindowInterface)
+	 */
+	public final boolean canClose(final String actionString, final WindowInterface window) {
+		return true;
+	}
 
-    /**
-     * Gjør ingenting.
-     * @see no.ugland.utransprod.gui.buttons.CancelListener#canceled()
-     */
-    public void canceled() {
+	/**
+	 * Gjør ingenting.
+	 * 
+	 * @see no.ugland.utransprod.gui.buttons.CancelListener#canceled()
+	 */
+	public void canceled() {
 
-    }
+	}
 }

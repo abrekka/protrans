@@ -468,4 +468,9 @@ public class PaidViewHandler extends AbstractProductionPackageViewHandlerShort<P
 
     }
 
+	@Override
+	public boolean isProductionWindow() {
+		return false;
+	}
+
 }

@@ -3,6 +3,8 @@ package no.ugland.utransprod.gui.packageproduction.manuelt;
 import static junit.framework.Assert.assertEquals;
 import static org.fest.swing.data.TableCell.row;
 
+import java.util.Arrays;
+
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -68,11 +70,9 @@ public class TaksteinPackageApplyListTest extends PackageProductionTest {
 
 		SetProductionUnitActionFactory setProductionUnitActionFactory = new SetProductionUnitActionFactory() {
 
-			public SetProductionUnitAction create(ArticleType aArticleType,
-					ProduceableProvider aProduceableProvider,
+			public SetProductionUnitAction create(ArticleType aArticleType, ProduceableProvider aProduceableProvider,
 					WindowInterface aWindow) {
-				return new SetProductionUnitAction(managerRepository,
-						aArticleType, aProduceableProvider, aWindow);
+				return new SetProductionUnitAction(managerRepository, aArticleType, aProduceableProvider, aWindow);
 			}
 		};
 
@@ -80,14 +80,12 @@ public class TaksteinPackageApplyListTest extends PackageProductionTest {
 				.getBean(ProductionUnitManager.MANAGER_NAME);
 
 		AbstractProductionPackageViewHandler<Produceable> productionViewHandler = new ProductionViewHandler(
-				new ProductionApplyList(login, taksteinSkarpnesVManager,
-						"Takstein", "Takstein", null, managerRepository,null), "Takstein", login,
-				"bestilt", null, TableEnum.TABLETAKSTEIN, null,
-				managerRepository, deviationViewHandlerFactory,
-				setProductionUnitActionFactory);
+				new ProductionApplyList(login, taksteinSkarpnesVManager, "Takstein", "Takstein", null,
+						managerRepository, null,Arrays.asList("Takstein")),
+				"Takstein", login, "bestilt", null, TableEnum.TABLETAKSTEIN, null, managerRepository,
+				deviationViewHandlerFactory, setProductionUnitActionFactory);
 
-		final ApplyListView<Produceable> productionView = new ApplyListView<Produceable>(
-				productionViewHandler, false);
+		final ApplyListView<Produceable> productionView = new ApplyListView<Produceable>(productionViewHandler, false);
 
 		JDialog dialog = GuiActionRunner.execute(new GuiQuery<JDialog>() {
 			protected JDialog executeInEDT() {
@@ -103,7 +101,6 @@ public class TaksteinPackageApplyListTest extends PackageProductionTest {
 
 	}
 
-	
 	@After
 	public void tearDown() throws Exception {
 		dialogFixture.cleanUp();
@@ -117,8 +114,7 @@ public class TaksteinPackageApplyListTest extends PackageProductionTest {
 		dialogFixture.button("ButtonApply").requireText("Sett bestilt");
 		dialogFixture.button("ButtonUnapply").requireText("Sett ikke bestilt");
 
-		JTableFixture tableFixture = dialogFixture
-				.table(TableEnum.TABLETAKSTEIN.getTableName());
+		JTableFixture tableFixture = dialogFixture.table(TableEnum.TABLETAKSTEIN.getTableName());
 
 		assertEquals("Bestilt", tableFixture.target.getColumnName(6));
 	}
@@ -127,8 +123,7 @@ public class TaksteinPackageApplyListTest extends PackageProductionTest {
 	public void testSetApplied() {
 		dialogFixture.checkBox("CheckBoxFilter").uncheck();
 
-		JTableFixture tableFixture = dialogFixture
-				.table(TableEnum.TABLETAKSTEIN.getTableName());
+		JTableFixture tableFixture = dialogFixture.table(TableEnum.TABLETAKSTEIN.getTableName());
 
 		tableFixture.cell(row(0).column(1)).click();
 

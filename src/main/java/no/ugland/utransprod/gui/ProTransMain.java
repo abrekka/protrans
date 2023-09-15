@@ -81,9 +81,11 @@ public class ProTransMain extends JFrame implements MainWindow {
 
 		setJMenuBar(menuBarBuilder.buildMenuBar(this, login.getApplicationUser(), login.getUserType()));
 		currentMenuWindow = menuBarBuilder.getMenuWindow();
-		setExtendedState(Frame.MAXIMIZED_BOTH);
+		this.setVisible(true);
+//		setExtendedState(Frame.MAXIMIZED_BOTH);
 		this.setResizable(true);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		this.setSize(500, 500);
 
 		try {
 			panelMain = new PanelMain();
@@ -94,7 +96,7 @@ public class ProTransMain extends JFrame implements MainWindow {
 			e.printStackTrace();
 		}
 
-		setMaximizedBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
+//		setMaximizedBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
 		setVisible(true);
 		return this;
 	}

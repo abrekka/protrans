@@ -32,6 +32,7 @@ public class ApplyListView<T extends Applyable> implements Viewer {
 	JButton buttonCancel;
 
 	JButton buttonApplied;
+	JButton buttonPause;
 
 	AbstractProductionPackageViewHandler<T> viewHandler;
 
@@ -75,6 +76,7 @@ public class ApplyListView<T extends Applyable> implements Viewer {
 		tableAppList = viewHandler.getTable(window);
 		buttonCancel = viewHandler.getButtonCancel(window);
 		buttonApplied = viewHandler.getButtonApply(window);
+		buttonPause = viewHandler.getButtonPause(window);
 		buttonRefresh = viewHandler.getButtonRefresh(window);
 
 		buttonNotApplied = viewHandler.getButtonUnapply(window);
@@ -124,6 +126,10 @@ public class ApplyListView<T extends Applyable> implements Viewer {
 			builder.addRelatedGap();
 			builder.addGridded(buttonNotStart);
 
+			builder.addRelatedGap();
+		}
+		if (viewHandler.isProductionWindow()) {
+			builder.addGridded(buttonPause);
 			builder.addRelatedGap();
 		}
 		builder.addGridded(buttonApplied);

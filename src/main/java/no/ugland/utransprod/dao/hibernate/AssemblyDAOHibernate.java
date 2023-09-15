@@ -68,7 +68,7 @@ public class AssemblyDAOHibernate extends BaseDAOHibernate<Assembly> implements 
 						+ "                         assembly.assembliedDate,"
 						+ "                         assembly.inactive) " + "from Assembly assembly "
 						+ "where assembly.supplier=:supplier and " + "      assembly.assemblyYear=:year and "
-						+ "      assembly.assemblyWeek=:week and " + "      assembly.order.doAssembly=1 and "
+						+ "      :week between assembly.assemblyWeek and isnull(assembly_Week_To,assembly_Week) and " + "      assembly.order.doAssembly=1 and "
 						+ "     (assembly.inactive is null or " + "      assembly.inactive=0) ";
 
 				assemblies = session.createQuery(query).setParameter("supplier", supplier).setParameter("year", year)

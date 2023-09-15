@@ -2,6 +2,8 @@ package no.ugland.utransprod.gui.edit;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -16,6 +18,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 import no.ugland.utransprod.ProTransException;
 import no.ugland.utransprod.gui.OrderArticleView;
@@ -130,12 +133,12 @@ public class EditDeviationView extends AbstractEditView<DeviationModel, Deviatio
 	 */
 	public EditDeviationView(final boolean searchDialog, final AbstractModel<Deviation, DeviationModel> object,
 			final AbstractViewHandler<Deviation, DeviationModel> aViewHandler, final boolean onlyOk,
-			final boolean doAddInternalCost,boolean brukOrdrelinjelinjer) {
+			final boolean doAddInternalCost, boolean brukOrdrelinjelinjer) {
 		super(searchDialog, object, aViewHandler);
 
 		addInternalCost = doAddInternalCost;
 		okOnly = onlyOk;
-		this.brukOrdrelinjelinjer=brukOrdrelinjelinjer;
+		this.brukOrdrelinjelinjer = brukOrdrelinjelinjer;
 
 	}
 
@@ -247,7 +250,8 @@ public class EditDeviationView extends AbstractEditView<DeviationModel, Deviatio
 		CellConstraints cc = new CellConstraints();
 
 		OrderArticleView<Deviation, DeviationModel> orderArticleView = new OrderArticleView<Deviation, DeviationModel>(
-				((DeviationViewHandler) viewHandler).getOrderArticleViewHandler(presentationModel, search, window,brukOrdrelinjelinjer),
+				((DeviationViewHandler) viewHandler).getOrderArticleViewHandler(presentationModel, search, window,
+						brukOrdrelinjelinjer),
 				true, false);
 
 		builder.addLabel("Artikler:", cc.xy(1, 1));
@@ -259,7 +263,7 @@ public class EditDeviationView extends AbstractEditView<DeviationModel, Deviatio
 	protected final JComponent buildEditPanel(final WindowInterface window) {
 		FormLayout layout = new FormLayout("10dlu,fill:p,10dlu", "10dlu,p,3dlu,top:p,3dlu,fill:50dlu:grow,5dlu,p");
 		PanelBuilder builder = new PanelBuilder(layout);
-		// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
+//		 PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
 		CellConstraints cc = new CellConstraints();
 
 		builder.add(buildDetailsPanel(), cc.xy(2, 2));
@@ -271,6 +275,13 @@ public class EditDeviationView extends AbstractEditView<DeviationModel, Deviatio
 		}
 
 		builder.add(buildButtonPanel(), cc.xy(2, 8));
+
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+		if (screenSize.getHeight() < 860) {
+			return new JScrollPane(new IconFeedbackPanel(validationResultModel, builder.getPanel()),
+					ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		}
 
 		return new IconFeedbackPanel(validationResultModel, builder.getPanel());
 	}

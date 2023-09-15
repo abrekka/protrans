@@ -1612,7 +1612,7 @@ public class RouteViewHandler
 				List<ListTransport> listTransports = getListTransports(sortedTransport);
 
 				Collection<ListTransport> selectedTransports = (Collection<ListTransport>) Util
-						.showOptionsDialog(window, listTransports, "Velg", true, true);
+						.showOptionsDialog(window, listTransports, "Velg", true, true, false);
 				if (selectedTransports != null && selectedTransports.size() != 0) {
 					for (ListTransport listTransport : selectedTransports) {
 						/*
@@ -1822,7 +1822,7 @@ public class RouteViewHandler
 			Set<OrderLine> content = postShipment.getOrderLines();
 			if (content != null) {
 				List<OrderLineWrapper> orderLineList = Util.getOrderLineWrapperList(content);
-				Util.showOptionsDialog(window, orderLineList, "Innhold", false, false);
+				Util.showOptionsDialog(window, orderLineList, "Innhold", false, false, false);
 			}
 		}
 	}
