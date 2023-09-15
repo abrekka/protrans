@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 3.5.2  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sjekkliste" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+	<noData>
+		<band height="611">
+			<line>
+				<reportElement x="0" y="50" width="520" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#266930"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="72" y="53" width="512" height="32"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sjekkliste for overtakelse av garasje]]></text>
+			</staticText>
+			<line>
+				<reportElement x="72" y="85" width="520" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid" lineColor="#266930"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="41" y="166" width="510" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#266930"/>
+				</graphicElement>
+			</line>
+			<rectangle>
+				<reportElement x="526" y="141" width="25" height="25"/>
+				<graphicElement>
+					<pen lineColor="#266930"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="41" y="185" width="336" height="25"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="18" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Se etter skader på Garasjen]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="140" width="383" height="25"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="18" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Pass på at alt er rengjort som det skal]]></text>
+			</staticText>
+			<line>
+				<reportElement x="41" y="480" width="200" height="1"/>
+				<graphicElement>
+					<pen lineColor="#266930"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="58" y="480" width="40" height="18"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Dato]]></text>
+			</staticText>
+			<line>
+				<reportElement x="41" y="211" width="510" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#266930"/>
+				</graphicElement>
+			</line>
+			<rectangle>
+				<reportElement x="526" y="186" width="25" height="25"/>
+				<graphicElement>
+					<pen lineColor="#266930"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement x="41" y="256" width="510" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#266930"/>
+				</graphicElement>
+			</line>
+			<rectangle>
+				<reportElement x="526" y="231" width="25" height="25"/>
+				<graphicElement>
+					<pen lineColor="#266930"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="41" y="275" width="336" height="25"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="18" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Funksjonstest/demonstrasjon av port/port åpner]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="230" width="383" height="25"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="18" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Sjekk tekniske installasjoner (dør, port, vinduer)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="41" y="301" width="510" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#266930"/>
+				</graphicElement>
+			</line>
+			<rectangle>
+				<reportElement x="526" y="276" width="25" height="25"/>
+				<graphicElement>
+					<pen lineColor="#266930"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement x="41" y="346" width="510" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#266930"/>
+				</graphicElement>
+			</line>
+			<rectangle>
+				<reportElement x="526" y="321" width="25" height="25"/>
+				<graphicElement>
+					<pen lineColor="#266930"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="41" y="365" width="336" height="25"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="18" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Skriv under overtakelsesprotokoll ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="320" width="383" height="25"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="18" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Motta nøkler/fjernkontroller]]></text>
+			</staticText>
+			<line>
+				<reportElement x="41" y="391" width="510" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#266930"/>
+				</graphicElement>
+			</line>
+			<rectangle>
+				<reportElement x="526" y="366" width="25" height="25"/>
+				<graphicElement>
+					<pen lineColor="#266930"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="180" y="480" width="45" height="18"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Kunde]]></text>
+			</staticText>
+			<line>
+				<reportElement x="344" y="480" width="200" height="1"/>
+				<graphicElement>
+					<pen lineColor="#266930"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="361" y="480" width="40" height="18"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Dato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="483" y="480" width="45" height="18"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Montør]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>
