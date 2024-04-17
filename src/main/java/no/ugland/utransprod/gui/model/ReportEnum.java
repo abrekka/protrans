@@ -93,7 +93,7 @@
 /*     */    PACKLIST("Pakkliste.jasper", IconEnum.ICON_IGLAND, "Pakkliste"),
 /*     */    TRANSPORT_COST("Transport_cost.jasper", IconEnum.ICON_IGLAND, "Transportkostnad"),
 /*     */    ASSEMBLY("Assembly.jasper", IconEnum.ICON_IGLAND, "Montering"),
-/*     */    ASSEMBLY_NY("assembly_ny.jasper", IconEnum.ICON_IGLAND, "Montering"),
+/*     */    ASSEMBLY_NY("assembly_ny_ny.jasper", IconEnum.ICON_IGLAND, "Montering"),
 /*     */    ASSEMBLY_NY_SVENSK("assembly_ny_svensk.jasper", IconEnum.ICON_IGLAND_SE, "Montering"),
 /*     */    ACCIDENT("accident.jasper", IconEnum.ICON_IGLAND, "Hendelse/ulykke"),
 /*     */    TAKSTOL_INFO("Takstolinfo.jasper", IconEnum.ICON_JATAK, "Takstolinfo"),

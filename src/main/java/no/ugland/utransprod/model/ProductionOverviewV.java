@@ -74,6 +74,49 @@ public class ProductionOverviewV {
     private Date orderReady;
 
 	private String antallStandardvegger;
+	private BigDecimal a;
+	private BigDecimal aPluss;
+	private BigDecimal b;
+	private BigDecimal bf;
+	private BigDecimal c;
+	private BigDecimal l;
+	
+	public BigDecimal getaPluss() {
+		return aPluss;
+	}
+	public void setaPluss(BigDecimal aPluss) {
+		this.aPluss = aPluss;
+	}
+	public BigDecimal getB() {
+		return b;
+	}
+	public void setB(BigDecimal b) {
+		this.b = b;
+	}
+	public BigDecimal getBf() {
+		return bf;
+	}
+	public void setBf(BigDecimal bf) {
+		this.bf = bf;
+	}
+	public BigDecimal getC() {
+		return c;
+	}
+	public void setC(BigDecimal c) {
+		this.c = c;
+	}
+	public BigDecimal getL() {
+		return l;
+	}
+	public void setL(BigDecimal l) {
+		this.l = l;
+	}
+	public BigDecimal getA() {
+		return a;
+	}
+	public void setA(BigDecimal a) {
+		this.a = a;
+	}
 
     public ProductionOverviewVPK getProductionOverviewVPK() {
 	return productionOverviewVPK;

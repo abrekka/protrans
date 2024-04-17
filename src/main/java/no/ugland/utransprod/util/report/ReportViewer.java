@@ -207,8 +207,11 @@ public class ReportViewer extends JDialog implements Closeable {
 			//Brukes for å kompilere rapporter laget i JasperSoft Studio
 //			InputStream rapport =getClass().getClassLoader().getResourceAsStream("reports/assembly_ny.jrxml");
 //			String filnavn=JasperCompileManager.compileReportToFile("reports/kontrollskjema_ny.jrxml");
-//			String filnavn2=JasperCompileManager.compileReportToFile("reports/assembly_ny.jrxml");
-//			String filnavn3=JasperCompileManager.compileReportToFile("reports/sjekkliste.jrxml");
+//			String filnavn2=JasperCompileManager.compileReportToFile("reports/assembly_ny_ny.jrxml");
+//			String filnavn3=JasperCompileManager.compileReportToFile("reports/hms2_ny_ny.jrxml");
+			String filnavn3=JasperCompileManager.compileReportToFile("reports/fraktbrev.jrxml");
+//			String filnavn4=JasperCompileManager.compileReportToFile("reports/hms_fraktbrev.jrxml");
+//			String filnavn4=JasperCompileManager.compileReportToFile("reports/deleliste_tillegg.jrxml");
 			
 			jasperPrintReport = JasperFillManager.fillReport(stream, parameters, datasource);
 

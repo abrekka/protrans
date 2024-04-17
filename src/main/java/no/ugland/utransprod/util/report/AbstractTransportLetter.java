@@ -892,6 +892,41 @@ public abstract class AbstractTransportLetter implements TransportLetter {
 			public Class<?> getColumnClass() {
 				return Integer.class;
 			}
+		},
+		TRANSPORT_FIRMA("transport_firma") {
+			@Override
+			public Object getValue(ReportObject reportObject, Integer colliCount) {
+				return reportObject.getTransportable().getTransport().getSupplier() == null ? null
+						: reportObject.getTransportable().getTransport().getSupplier().getSupplierName();
+			}
+
+			@Override
+			public Class<?> getColumnClass() {
+				return String.class;
+			}
+		},
+		TRANSPORT_DRIVER("transport_driver") {
+			@Override
+			public Object getValue(ReportObject reportObject, Integer colliCount) {
+				return reportObject.getTransportable().getTransport().getDriver();
+			}
+
+			@Override
+			public Class<?> getColumnClass() {
+				return String.class;
+			}
+		},
+		TRANSPORT_WEEK("transport_week") {
+			@Override
+			public Object getValue(ReportObject reportObject, Integer colliCount) {
+				return reportObject.getTransportable().getTransport().getTransportWeek() + " - "
+						+ reportObject.getTransportable().getTransport().getTransportYear();
+			}
+
+			@Override
+			public Class<?> getColumnClass() {
+				return String.class;
+			}
 		};
 		private String columnName;
 

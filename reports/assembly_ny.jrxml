@@ -71,25 +71,18 @@
 			<band height="97">
 				<subreport>
 					<reportElement positionType="Float" x="0" y="15" width="553" height="18"/>
-					<subreportExpression class="java.lang.String"><![CDATA["reports/kontrollskjema_ny.jasper"]]></subreportExpression>
+					<subreportExpression class="java.lang.String"><![CDATA["reports/kontrollskjema.jasper"]]></subreportExpression>
 				</subreport>
 				<break>
 					<reportElement x="0" y="7" width="100" height="1"/>
 				</break>
 				<break>
-					<reportElement x="0" y="35" width="100" height="1"/>
+					<reportElement x="0" y="45" width="100" height="1"/>
 				</break>
 				<subreport>
-					<reportElement positionType="Float" x="0" y="41" width="553" height="18"/>
+					<reportElement positionType="Float" x="0" y="55" width="553" height="18"/>
 					<subreportExpression class="java.lang.String"><![CDATA["reports/hms2.jasper"]]></subreportExpression>
 				</subreport>
-				<subreport>
-					<reportElement positionType="Float" x="0" y="73" width="553" height="18"/>
-					<subreportExpression class="java.lang.String"><![CDATA["reports/sjekkliste.jasper"]]></subreportExpression>
-				</subreport>
-				<break>
-					<reportElement x="0" y="69" width="100" height="1"/>
-				</break>
 			</band>
 		</groupFooter>
 	</group>

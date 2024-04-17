@@ -172,6 +172,7 @@ public class InvoiceViewHandler extends AbstractProductionPackageViewHandlerShor
 			if(!fakturerteOrdre.isEmpty()) {
 				for(Ord ordre:fakturerteOrdre) {
 					managerRepository.getOrderManager().settFakturert(ordre.getInf6(),ordre.getInvoicedDate());
+					managerRepository.getOrderManager().findByOrderNr(ordre.getInf6());
 				}
 			}
 		}

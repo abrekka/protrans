@@ -270,6 +270,42 @@
         type="java.lang.String"
         column="ANTALL_STANDARD_VEGGER"
         length="100"
+    /> 
+    <property
+        name="a"
+        type="java.math.BigDecimal"
+        column="A"
+        length="6"
+    />
+    <property
+        name="aPluss"
+        type="java.math.BigDecimal"
+        column="APLUSS"
+        length="6"
+    />
+    <property
+        name="b"
+        type="java.math.BigDecimal"
+        column="B"
+        length="6"
+    />
+    <property
+        name="bf"
+        type="java.math.BigDecimal"
+        column="BF"
+        length="6"
+    />
+    <property
+        name="c"
+        type="java.math.BigDecimal"
+        column="C"
+        length="6"
+    />
+    <property
+        name="l"
+        type="java.math.BigDecimal"
+        column="L"
+        length="6"
     />
 </class>
 </hibernate-mapping>

@@ -25,10 +25,10 @@
 	/*     */ public static final String PROPERTY_ACCIDENT_DATE = "accidentDate";
 	/*     */ public static final String PROPERTY_ACCIDENT_DESCRIPTION = "accidentDescription";
 	/*     */ public static final String PROPERTY_ACCIDENT_CAUSE = "accidentCause";
-	/*     */ public static final String PROPERTY_PERSONAL_INJURY_OVER_24 = "personalInjuryOver24";
-	/*     */ public static final String PROPERTY_PERSONAL_INJURY_UNDER_24 = "personalInjuryUnder24";
-	/*     */ public static final String PROPERTY_PERSONAL_INJURY_NOT_ABSENT = "personalInjuryNotAbsent";
-	/*     */ public static final String PROPERTY_NOT_PERSONAL_INJURY= "notPersonalInjury";
+	/*     */ public static final String PROPERTY_PERSONAL_INJURY_OVER_24_BOOLEAN = "personalInjuryOver24Boolean";
+	/*     */ public static final String PROPERTY_PERSONAL_INJURY_UNDER_24_BOOLEAN = "personalInjuryUnder24Boolean";
+	/*     */ public static final String PROPERTY_PERSONAL_INJURY_NOT_ABSENT_BOOLEAN = "personalInjuryNotAbsentBoolean";
+	/*     */ public static final String PROPERTY_NOT_PERSONAL_INJURY_BOOLEAN = "notPersonalInjuryBoolean";
 	/*     */ public static final String PROPERTY_PARTICIPANT_LIST = "participantList";
 	/*     */ public static final String PROPERTY_TIME = "time";
 	/*     */ public static final String PROPERTY_REPORTED_LEADER_BOOL = "reportedLeaderBool";
@@ -133,44 +133,56 @@
 		/* 110 */ this.firePropertyChange("accidentCause", oldCause, accidentCause);
 		/* 111 */ }
 
-	public final Integer getPersonalInjuryOver24() {
-		return ((Accident) this.object).getPersonalInjuryOver24();
+	public final Boolean getPersonalInjuryOver24Boolean() {
+		return ((Accident) this.object).getPersonalInjuryOver24() != null
+				&& ((Accident) this.object).getPersonalInjuryOver24() == 1;
 	}
 
-	public final void setPersonalInjuryOver24(Integer personalInjuryOver24) {
-		Integer oldPersonal = this.getPersonalInjuryOver24();
-		((Accident) this.object).setPersonalInjuryOver24(personalInjuryOver24);
-		this.firePropertyChange("personalInjuryOver24", oldPersonal, personalInjuryOver24);
+	public final void setPersonalInjuryOver24Boolean(Boolean personalInjuryOver24) {
+		Boolean oldPersonal = this.getPersonalInjuryOver24Boolean();
+		((Accident) this.object).setPersonalInjuryOver24(personalInjuryOver24 != null && personalInjuryOver24 ? 1 : 0);
+		this.firePropertyChange("personalInjuryOver24Boolean", oldPersonal, personalInjuryOver24);
 	}
 
-	public final Integer getPersonalInjuryUnder24() {
-		return ((Accident) this.object).getPersonalInjuryUnder24();
+	public final Boolean getPersonalInjuryUnder24Boolean() {
+		return ((Accident) this.object).getPersonalInjuryUnder24() != null
+				&& ((Accident) this.object).getPersonalInjuryUnder24() == 1;
+
 	}
 
-	public final void setPersonalInjuryUnder24(Integer personalInjuryUnder24) {
-		Integer oldPersonal = this.getPersonalInjuryUnder24();
-		((Accident) this.object).setPersonalInjuryUnder24(personalInjuryUnder24);
-		this.firePropertyChange("personalInjuryUnder24", oldPersonal, personalInjuryUnder24);
-	}
-	
-	public final Integer getPersonalInjuryNotAbsent() {
-		return ((Accident) this.object).getPersonalInjuryNotAbsent();
+	public final void setPersonalInjuryUnder24Boolean(Boolean personalInjuryUnder24) {
+		Boolean oldPersonal = this.getPersonalInjuryUnder24Boolean();
+		((Accident) this.object)
+				.setPersonalInjuryUnder24(personalInjuryUnder24 != null && personalInjuryUnder24 ? 1 : 0);
+
+		this.firePropertyChange("personalInjuryUnder24Boolean", oldPersonal, personalInjuryUnder24);
 	}
 
-	public final void setPersonalInjuryNotAbsent(Integer personalInjuryNotAbsent) {
-		Integer oldPersonal = this.getPersonalInjuryNotAbsent();
-		((Accident) this.object).setPersonalInjuryNotAbsent(personalInjuryNotAbsent);
-		this.firePropertyChange("personalInjuryNotAbsent", oldPersonal, personalInjuryNotAbsent);
-	}
-	
-	public final Integer getNotPersonalInjury() {
-		return ((Accident) this.object).getNotPersonalInjury();
+	public final Boolean getPersonalInjuryNotAbsentBoolean() {
+		return ((Accident) this.object).getPersonalInjuryNotAbsent() != null
+				&& ((Accident) this.object).getPersonalInjuryNotAbsent() == 1;
+
 	}
 
-	public final void setNotPersonalInjury(Integer notPersonalInjury) {
-		Integer oldPersonal = this.getNotPersonalInjury();
-		((Accident) this.object).setNotPersonalInjury(notPersonalInjury);
-		this.firePropertyChange("notPersonalInjury", oldPersonal, notPersonalInjury);
+	public final void setPersonalInjuryNotAbsentBoolean(Boolean personalInjuryNotAbsent) {
+		Boolean oldPersonal = this.getPersonalInjuryNotAbsentBoolean();
+		((Accident) this.object)
+				.setPersonalInjuryNotAbsent(personalInjuryNotAbsent != null && personalInjuryNotAbsent ? 1 : 0);
+
+		this.firePropertyChange("personalInjuryNotAbsentBoolean", oldPersonal, personalInjuryNotAbsent);
+	}
+
+	public final Boolean getNotPersonalInjuryBoolean() {
+		return ((Accident) this.object).getNotPersonalInjury() != null
+				&& ((Accident) this.object).getNotPersonalInjury() == 1;
+
+	}
+
+	public final void setNotPersonalInjuryBoolean(Boolean notPersonalInjury) {
+		Boolean oldPersonal = this.getNotPersonalInjuryBoolean();
+		((Accident) this.object).setNotPersonalInjury(notPersonalInjury != null && notPersonalInjury ? 1 : 0);
+
+		this.firePropertyChange("notPersonalInjuryBoolean", oldPersonal, notPersonalInjury);
 	}
 
 //	public final Integer getPersonalInjuryOver24() {
@@ -348,10 +360,10 @@
 		/* 233 */ presentationModel.getBufferedModel("accidentDate").addValueChangeListener(listener);
 		/* 234 */ presentationModel.getBufferedModel("accidentDescription").addValueChangeListener(listener);
 		/* 235 */ presentationModel.getBufferedModel("accidentCause").addValueChangeListener(listener);
-		/* 236 */ presentationModel.getBufferedModel("personalInjuryOver24").addValueChangeListener(listener);
-		/* 236 */ presentationModel.getBufferedModel("personalInjuryUnder24").addValueChangeListener(listener);
-		/* 236 */ presentationModel.getBufferedModel("personalInjuryNotAbsent").addValueChangeListener(listener);
-		/* 236 */ presentationModel.getBufferedModel("notPersonalInjury").addValueChangeListener(listener);
+		/* 236 */ presentationModel.getBufferedModel("personalInjuryOver24Boolean").addValueChangeListener(listener);
+		/* 236 */ presentationModel.getBufferedModel("personalInjuryUnder24Boolean").addValueChangeListener(listener);
+		/* 236 */ presentationModel.getBufferedModel("personalInjuryNotAbsentBoolean").addValueChangeListener(listener);
+		/* 236 */ presentationModel.getBufferedModel("notPersonalInjuryBoolean").addValueChangeListener(listener);
 //		presentationModel.getBufferedModel("personalInjuryOver24").addValueChangeListener(listener);
 		/* 237 */ presentationModel.getBufferedModel("participantList").addValueChangeListener(listener);
 		/* 238 */ presentationModel.getBufferedModel("time").addValueChangeListener(listener);
@@ -387,10 +399,14 @@
 		/*     */
 		/* 265 */ accidentModel.setAccidentCause((String) presentationModel.getBufferedValue("accidentCause"));
 		/*     */
-		/* 267 */ accidentModel.setPersonalInjuryOver24((Integer) presentationModel.getBufferedValue("personalInjuryOver24"));
-		accidentModel.setPersonalInjuryUnder24((Integer) presentationModel.getBufferedValue("personalInjuryUnder24"));
-		accidentModel.setPersonalInjuryNotAbsent((Integer) presentationModel.getBufferedValue("personalInjuryNotAbsent"));
-		accidentModel.setNotPersonalInjury((Integer) presentationModel.getBufferedValue("notPersonalInjury"));
+		accidentModel.setPersonalInjuryOver24Boolean(
+				(Boolean) presentationModel.getBufferedValue("personalInjuryOver24Boolean"));
+		accidentModel.setPersonalInjuryUnder24Boolean(
+				(Boolean) presentationModel.getBufferedValue("personalInjuryUnder24Boolean"));
+		accidentModel.setPersonalInjuryNotAbsentBoolean(
+				(Boolean) presentationModel.getBufferedValue("personalInjuryNotAbsentBoolean"));
+		accidentModel
+				.setNotPersonalInjuryBoolean((Boolean) presentationModel.getBufferedValue("notPersonalInjuryBoolean"));
 
 //		/* 267 */ accidentModel.setPersonalInjuryOver24((Integer) presentationModel.getBufferedValue("personalInjuryOver24"));
 		/*     */
@@ -425,19 +441,27 @@
 		/* 287 */ return accidentModel;
 		/*     */ }
 
-	/*     */
-	/*     */
-	/*     */ public void viewToModel() {
-		/* 292 */ Set<AccidentParticipant> participants = ((Accident) this.object).getAccidentParticipants();
-		/* 293 */ if (participants == null) {
-			/* 294 */ participants = new HashSet();
-			/*     */ }
-		/* 296 */ ((Set) participants).clear();
-		/* 297 */ ((Set) participants).addAll(this.participantList);
-		/* 298 */ ((Accident) this.object).setAccidentParticipants((Set) participants);
-		/* 298 */ ((Accident) this.object).setPersonalInjuryOver24(getPersonalInjuryOver24());
-		/* 298 */ ((Accident) this.object).setPersonalInjuryUnder24(getPersonalInjuryUnder24());
-		/* 298 */ ((Accident) this.object).setPersonalInjuryNotAbsent(getPersonalInjuryNotAbsent());
-		/* 298 */ ((Accident) this.object).setNotPersonalInjury(getNotPersonalInjury());
-		/* 299 */ }
-	/*     */ }
+	private Integer konverterTilInteger(Object objekt) {
+		if (objekt == null) {
+			return null;
+		}
+		if (Boolean.class.isInstance(objekt)) {
+			return (Boolean) objekt ? 1 : 0;
+		}
+		return (Integer) objekt;
+	}
+
+	public void viewToModel() {
+		Set<AccidentParticipant> participants = ((Accident) this.object).getAccidentParticipants();
+		if (participants == null) {
+			participants = new HashSet();
+		}
+		((Set) participants).clear();
+		((Set) participants).addAll(this.participantList);
+		((Accident) this.object).setAccidentParticipants((Set) participants);
+		((Accident) this.object).setPersonalInjuryOver24(getPersonalInjuryOver24Boolean() ? 1 : 0);
+		((Accident) this.object).setPersonalInjuryUnder24(getPersonalInjuryUnder24Boolean() ? 1 : 0);
+		((Accident) this.object).setPersonalInjuryNotAbsent(getPersonalInjuryNotAbsentBoolean() ? 1 : 0);
+		((Accident) this.object).setNotPersonalInjury(getNotPersonalInjuryBoolean() ? 1 : 0);
+	}
+}

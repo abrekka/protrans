@@ -1308,6 +1308,312 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 														.compareTo(productionOverviewV2.getEstimatedTimePack());
 			}
 		},
+		A("A", true, 90, true) {
+			@Override
+			public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				return transportable.getA();
+			}
+
+			@Override
+			public Class<?> getColumnClass() {
+				return BigDecimal.class;
+			}
+
+			@Override
+			public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap,
+					WindowInterface window, Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers,
+					JPopupMenu popupMenuProduction) {
+				return true;
+			}
+
+			@Override
+			public Component getFilterComponent(PresentationModel presentationModel) {
+				return BasicComponentFactory.createTextField(
+						presentationModel.getModel(ProductionoverviewFilter.ESTIMATED_TIME_PACK), false);
+			}
+
+			@Override
+			public boolean filter(ProductionOverviewV productionOverviewV,
+					ProductionoverviewFilter productionoverviewFilter, Map<String, String> statusMap,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				if (StringUtils.isNotBlank(productionoverviewFilter.getEstimatedTimePack())) {
+					return productionOverviewV.getEstimatedTimePack() != null
+							&& String.valueOf(productionOverviewV.getEstimatedTimePack()).toLowerCase()
+									.matches(productionoverviewFilter.getEstimatedTimePack().toLowerCase()
+											.replaceAll("%", ".*"));
+				}
+				return true;
+			}
+
+			@Override
+			public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2,
+					Map<String, String> statusMap1, Map<String, String> statusMap2,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				return productionOverviewV1.getA() == null
+						&& productionOverviewV2.getA() == null
+								? 0
+								: productionOverviewV1.getA() == null ? -1
+										: productionOverviewV2.getA() == null ? 1
+												: productionOverviewV1.getA()
+														.compareTo(productionOverviewV2.getA());
+			}
+		},
+		APLUSS("APluss", true, 90, true) {
+			@Override
+			public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				return transportable.getaPluss();
+			}
+
+			@Override
+			public Class<?> getColumnClass() {
+				return BigDecimal.class;
+			}
+
+			@Override
+			public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap,
+					WindowInterface window, Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers,
+					JPopupMenu popupMenuProduction) {
+				return true;
+			}
+
+			@Override
+			public Component getFilterComponent(PresentationModel presentationModel) {
+				return BasicComponentFactory.createTextField(
+						presentationModel.getModel(ProductionoverviewFilter.ESTIMATED_TIME_PACK), false);
+			}
+
+			@Override
+			public boolean filter(ProductionOverviewV productionOverviewV,
+					ProductionoverviewFilter productionoverviewFilter, Map<String, String> statusMap,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				if (StringUtils.isNotBlank(productionoverviewFilter.getEstimatedTimePack())) {
+					return productionOverviewV.getEstimatedTimePack() != null
+							&& String.valueOf(productionOverviewV.getEstimatedTimePack()).toLowerCase()
+									.matches(productionoverviewFilter.getEstimatedTimePack().toLowerCase()
+											.replaceAll("%", ".*"));
+				}
+				return true;
+			}
+
+			@Override
+			public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2,
+					Map<String, String> statusMap1, Map<String, String> statusMap2,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				return productionOverviewV1.getaPluss() == null
+						&& productionOverviewV2.getaPluss() == null
+								? 0
+								: productionOverviewV1.getaPluss() == null ? -1
+										: productionOverviewV2.getaPluss() == null ? 1
+												: productionOverviewV1.getaPluss()
+														.compareTo(productionOverviewV2.getaPluss());
+			}
+		},
+		B("B", true, 90, true) {
+			@Override
+			public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				return transportable.getB();
+			}
+
+			@Override
+			public Class<?> getColumnClass() {
+				return BigDecimal.class;
+			}
+
+			@Override
+			public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap,
+					WindowInterface window, Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers,
+					JPopupMenu popupMenuProduction) {
+				return true;
+			}
+
+			@Override
+			public Component getFilterComponent(PresentationModel presentationModel) {
+				return BasicComponentFactory.createTextField(
+						presentationModel.getModel(ProductionoverviewFilter.ESTIMATED_TIME_PACK), false);
+			}
+
+			@Override
+			public boolean filter(ProductionOverviewV productionOverviewV,
+					ProductionoverviewFilter productionoverviewFilter, Map<String, String> statusMap,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				if (StringUtils.isNotBlank(productionoverviewFilter.getEstimatedTimePack())) {
+					return productionOverviewV.getEstimatedTimePack() != null
+							&& String.valueOf(productionOverviewV.getEstimatedTimePack()).toLowerCase()
+									.matches(productionoverviewFilter.getEstimatedTimePack().toLowerCase()
+											.replaceAll("%", ".*"));
+				}
+				return true;
+			}
+
+			@Override
+			public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2,
+					Map<String, String> statusMap1, Map<String, String> statusMap2,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				return productionOverviewV1.getB() == null
+						&& productionOverviewV2.getB() == null
+								? 0
+								: productionOverviewV1.getB() == null ? -1
+										: productionOverviewV2.getB() == null ? 1
+												: productionOverviewV1.getB()
+														.compareTo(productionOverviewV2.getB());
+			}
+		},
+		BF("BF", true, 90, true) {
+			@Override
+			public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				return transportable.getBf();
+			}
+
+			@Override
+			public Class<?> getColumnClass() {
+				return BigDecimal.class;
+			}
+
+			@Override
+			public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap,
+					WindowInterface window, Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers,
+					JPopupMenu popupMenuProduction) {
+				return true;
+			}
+
+			@Override
+			public Component getFilterComponent(PresentationModel presentationModel) {
+				return BasicComponentFactory.createTextField(
+						presentationModel.getModel(ProductionoverviewFilter.ESTIMATED_TIME_PACK), false);
+			}
+
+			@Override
+			public boolean filter(ProductionOverviewV productionOverviewV,
+					ProductionoverviewFilter productionoverviewFilter, Map<String, String> statusMap,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				if (StringUtils.isNotBlank(productionoverviewFilter.getEstimatedTimePack())) {
+					return productionOverviewV.getEstimatedTimePack() != null
+							&& String.valueOf(productionOverviewV.getEstimatedTimePack()).toLowerCase()
+									.matches(productionoverviewFilter.getEstimatedTimePack().toLowerCase()
+											.replaceAll("%", ".*"));
+				}
+				return true;
+			}
+
+			@Override
+			public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2,
+					Map<String, String> statusMap1, Map<String, String> statusMap2,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				return productionOverviewV1.getBf() == null
+						&& productionOverviewV2.getBf() == null
+								? 0
+								: productionOverviewV1.getBf() == null ? -1
+										: productionOverviewV2.getBf() == null ? 1
+												: productionOverviewV1.getBf()
+														.compareTo(productionOverviewV2.getBf());
+			}
+		},
+		C("C", true, 90, true) {
+			@Override
+			public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				return transportable.getC();
+			}
+
+			@Override
+			public Class<?> getColumnClass() {
+				return BigDecimal.class;
+			}
+
+			@Override
+			public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap,
+					WindowInterface window, Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers,
+					JPopupMenu popupMenuProduction) {
+				return true;
+			}
+
+			@Override
+			public Component getFilterComponent(PresentationModel presentationModel) {
+				return BasicComponentFactory.createTextField(
+						presentationModel.getModel(ProductionoverviewFilter.ESTIMATED_TIME_PACK), false);
+			}
+
+			@Override
+			public boolean filter(ProductionOverviewV productionOverviewV,
+					ProductionoverviewFilter productionoverviewFilter, Map<String, String> statusMap,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				if (StringUtils.isNotBlank(productionoverviewFilter.getEstimatedTimePack())) {
+					return productionOverviewV.getEstimatedTimePack() != null
+							&& String.valueOf(productionOverviewV.getEstimatedTimePack()).toLowerCase()
+									.matches(productionoverviewFilter.getEstimatedTimePack().toLowerCase()
+											.replaceAll("%", ".*"));
+				}
+				return true;
+			}
+
+			@Override
+			public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2,
+					Map<String, String> statusMap1, Map<String, String> statusMap2,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				return productionOverviewV1.getC() == null
+						&& productionOverviewV2.getC() == null
+								? 0
+								: productionOverviewV1.getC() == null ? -1
+										: productionOverviewV2.getC() == null ? 1
+												: productionOverviewV1.getC()
+														.compareTo(productionOverviewV2.getC());
+			}
+		},
+		L("L", true, 90, true) {
+			@Override
+			public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				return transportable.getL();
+			}
+
+			@Override
+			public Class<?> getColumnClass() {
+				return BigDecimal.class;
+			}
+
+			@Override
+			public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap,
+					WindowInterface window, Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers,
+					JPopupMenu popupMenuProduction) {
+				return true;
+			}
+
+			@Override
+			public Component getFilterComponent(PresentationModel presentationModel) {
+				return BasicComponentFactory.createTextField(
+						presentationModel.getModel(ProductionoverviewFilter.ESTIMATED_TIME_PACK), false);
+			}
+
+			@Override
+			public boolean filter(ProductionOverviewV productionOverviewV,
+					ProductionoverviewFilter productionoverviewFilter, Map<String, String> statusMap,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				if (StringUtils.isNotBlank(productionoverviewFilter.getEstimatedTimePack())) {
+					return productionOverviewV.getEstimatedTimePack() != null
+							&& String.valueOf(productionOverviewV.getEstimatedTimePack()).toLowerCase()
+									.matches(productionoverviewFilter.getEstimatedTimePack().toLowerCase()
+											.replaceAll("%", ".*"));
+				}
+				return true;
+			}
+
+			@Override
+			public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2,
+					Map<String, String> statusMap1, Map<String, String> statusMap2,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				return productionOverviewV1.getL() == null
+						&& productionOverviewV2.getL() == null
+								? 0
+								: productionOverviewV1.getL() == null ? -1
+										: productionOverviewV2.getL() == null ? 1
+												: productionOverviewV1.getL()
+														.compareTo(productionOverviewV2.getL());
+			}
+		},
 		TEGNINGER_JATAK("Tegninger Jatak", true, 90, true) {
 			@Override
 			public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
@@ -2883,15 +3189,15 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 		// TextPaneRendererCustTr());
 
 		// table.getColumnExt(ProductionColumn.KOMPLETT.ordinal()).setVisible(false);
-		table.getColumnExt(20).setVisible(false);
-		table.getColumnExt(20).setVisible(false);
-		table.getColumnExt(20).setVisible(false);
-		table.getColumnExt(20).setVisible(false);
-		table.getColumnExt(20).setVisible(false);
-		table.getColumnExt(20).setVisible(false);
-		table.getColumnExt(27).setVisible(false);
-		table.getColumnExt(26).setVisible(false);
-		table.getColumnExt(25).setVisible(false);
+//		table.getColumnExt(20).setVisible(false);
+//		table.getColumnExt(20).setVisible(false);
+//		table.getColumnExt(20).setVisible(false);
+//		table.getColumnExt(20).setVisible(false);
+//		table.getColumnExt(20).setVisible(false);
+//		table.getColumnExt(20).setVisible(false);
+//		table.getColumnExt(27).setVisible(false);
+//		table.getColumnExt(26).setVisible(false);
+//		table.getColumnExt(25).setVisible(false);
 
 		// table.getColumnExt(ProductionColumn.VEGG.ordinal()).setVisible(false);
 		// table.getColumnExt(ProductionColumn.GULVSPON.ordinal()).setVisible(false);

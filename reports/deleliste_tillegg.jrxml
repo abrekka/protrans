@@ -876,7 +876,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
+				<text><![CDATA[  Hjørneforing + MB]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="252" width="75" height="13"/>

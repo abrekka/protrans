@@ -319,48 +319,47 @@ deviationStatusList.add(0, null);
 		return comboBox;
 	}
 
-	public JRadioButton getRadioButtonPersonalInjuryOver24(
+	public JCheckBox getCheckBoxPersonalInjuryOver24(
 			PresentationModel presentationModel) {
-		JRadioButton radioButton = BasicComponentFactory
-				.createRadioButton(
+		JCheckBox checkBox = BasicComponentFactory
+				.createCheckBox(
 						presentationModel
-								.getBufferedModel(AccidentModel.PROPERTY_PERSONAL_INJURY_OVER_24),
-						1, "TF1: Personskader med fravær over 24t");
-		radioButton.setName("RadioButtonPersonalInjuryOver24");
-		return radioButton;
+								.getBufferedModel(AccidentModel.PROPERTY_PERSONAL_INJURY_OVER_24_BOOLEAN), "TF1: Personskader med fravær over 24t");
+		checkBox.setName("RadioButtonPersonalInjuryOver24");
+		return checkBox;
 	}
 
-	public JRadioButton getRadioButtonPersonalInjuryUnder24(
+	public JCheckBox getCheckBoxPersonalInjuryUnder24(
 			PresentationModel presentationModel) {
-		JRadioButton radioButton = BasicComponentFactory
-				.createRadioButton(
+		JCheckBox checkBox= BasicComponentFactory
+				.createCheckBox(
 						presentationModel
-								.getBufferedModel(AccidentModel.PROPERTY_PERSONAL_INJURY_UNDER_24),
-						1, "TF2:Personskader med fravær under 24t");
-		radioButton.setName("RadioButtonPersonalInjuryUnder24");
-		return radioButton;
+								.getBufferedModel(AccidentModel.PROPERTY_PERSONAL_INJURY_UNDER_24_BOOLEAN),
+						 "TF2:Personskader med fravær under 24t");
+		checkBox.setName("RadioButtonPersonalInjuryUnder24");
+		return checkBox;
 	}
 	
-	public JRadioButton getRadioButtonPersonalInjuryNotAbsent(
+	public JCheckBox getCheckBoxPersonalInjuryNotAbsent(
 			PresentationModel presentationModel) {
-		JRadioButton radioButton = BasicComponentFactory
-				.createRadioButton(
+		JCheckBox checkBox= BasicComponentFactory
+				.createCheckBox(
 						presentationModel
-								.getBufferedModel(AccidentModel.PROPERTY_PERSONAL_INJURY_NOT_ABSENT),
-						1, "TF3: Personskader uten fravær");
-		radioButton.setName("RadioButtonPersonalInjuryNotAbsent");
-		return radioButton;
+								.getBufferedModel(AccidentModel.PROPERTY_PERSONAL_INJURY_NOT_ABSENT_BOOLEAN),
+						 "TF3: Personskader uten fravær");
+		checkBox.setName("RadioButtonPersonalInjuryNotAbsent");
+		return checkBox;
 	}
 	
-	public JRadioButton getRadioButtonNotPersonalInjury(
+	public JCheckBox getCheckBoxNotPersonalInjury(
 			PresentationModel presentationModel) {
-		JRadioButton radioButton = BasicComponentFactory
-				.createRadioButton(
+		JCheckBox checkBox= BasicComponentFactory
+				.createCheckBox(
 						presentationModel
-								.getBufferedModel(AccidentModel.PROPERTY_NOT_PERSONAL_INJURY),
-						1, "TF4:Materielle skader, nestenulykke, farlig forhold");
-		radioButton.setName("RadioButtonNotPersonalInjury");
-		return radioButton;
+								.getBufferedModel(AccidentModel.PROPERTY_NOT_PERSONAL_INJURY_BOOLEAN),
+						 "TF4:Materielle skader, nestenulykke, farlig forhold");
+		checkBox.setName("RadioButtonNotPersonalInjury");
+		return checkBox;
 	}
 
 	@Override

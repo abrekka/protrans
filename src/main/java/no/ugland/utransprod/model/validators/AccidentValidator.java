@@ -42,8 +42,8 @@ public class AccidentValidator implements Validator {
 			support.addError("funksjon", "må settes");
 		}
 
-		if (accidentModel.getPersonalInjuryOver24() == null && accidentModel.getPersonalInjuryUnder24() == null
-				&& accidentModel.getPersonalInjuryNotAbsent() == null && accidentModel.getNotPersonalInjury() == null) {
+		if (accidentModel.getPersonalInjuryOver24Boolean() == null && accidentModel.getPersonalInjuryUnder24Boolean() == null
+				&& accidentModel.getPersonalInjuryNotAbsentBoolean() == null && accidentModel.getNotPersonalInjuryBoolean() == null) {
 			support.addError("type", "må settes");
 		}
 

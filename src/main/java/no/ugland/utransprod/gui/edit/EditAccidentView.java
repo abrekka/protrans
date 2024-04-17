@@ -40,11 +40,11 @@ public class EditAccidentView extends AbstractEditView<AccidentModel, Accident> 
 
 	private JComboBox comboBoxJobFunction;
 
-	private JRadioButton radioButtonPersonalInjuryOver24;
+	private JCheckBox checkBoxPersonalInjuryOver24;
 
-	private JRadioButton radioButtonPersonalInjuryUnder24;
-	private JRadioButton radioButtonPersonalInjuryNotAbsent;
-	private JRadioButton radioButtonNotPersonalInjury;
+	private JCheckBox checkBoxPersonalInjuryUnder24;
+	private JCheckBox checkBoxPersonalInjuryNotAbsent;
+	private JCheckBox checkBoxNotPersonalInjury;
 
 	private JButton buttonAddParticipant;
 
@@ -199,14 +199,14 @@ public class EditAccidentView extends AbstractEditView<AccidentModel, Accident> 
 //		 PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
 		CellConstraints cc = new CellConstraints();
 
-		builder.add(radioButtonPersonalInjuryOver24, cc.xy(1, 1));
+		builder.add(checkBoxPersonalInjuryOver24, cc.xy(1, 1));
 		builder.addLabel("Antall fraværsdager:", cc.xy(3, 1));
 		builder.addLabel("Antall fast ansatte som er skadet:", cc.xy(3, 3));
 		builder.add(textFieldAbsentDays, cc.xy(5, 1));
 		builder.add(textFieldNumberOfOwnEmployess, cc.xy(5, 3));
-		builder.add(radioButtonPersonalInjuryUnder24, cc.xy(1, 3));
-		builder.add(radioButtonPersonalInjuryNotAbsent, cc.xy(1, 5));
-		builder.add(radioButtonNotPersonalInjury, cc.xy(1, 7));
+		builder.add(checkBoxPersonalInjuryUnder24, cc.xy(1, 3));
+		builder.add(checkBoxPersonalInjuryNotAbsent, cc.xy(1, 5));
+		builder.add(checkBoxNotPersonalInjury, cc.xy(1, 7));
 
 		return builder.getPanel();
 	}
@@ -247,8 +247,8 @@ public class EditAccidentView extends AbstractEditView<AccidentModel, Accident> 
 		ValidationComponentUtils.setMandatory(comboBoxJobFunction, true);
 		ValidationComponentUtils.setMessageKey(comboBoxJobFunction, "Ulykke.funksjon");
 
-		ValidationComponentUtils.setMandatory(radioButtonPersonalInjuryOver24, true);
-		ValidationComponentUtils.setMessageKey(radioButtonPersonalInjuryOver24, "Ulykke.type");
+		ValidationComponentUtils.setMandatory(checkBoxPersonalInjuryOver24, true);
+		ValidationComponentUtils.setMessageKey(checkBoxPersonalInjuryOver24, "Ulykke.type");
 
 		ValidationComponentUtils.setMandatory(dateChooserAccidentDate, true);
 		ValidationComponentUtils.setMessageKey(dateChooserAccidentDate, "Ulykke.ulykkesdato");
@@ -267,14 +267,14 @@ public class EditAccidentView extends AbstractEditView<AccidentModel, Accident> 
 		dateChooserRegistrationDate = ((AccidentViewHandler) viewHandler)
 				.getDateChooserRegistrationDate(presentationModel, search);
 		comboBoxJobFunction = ((AccidentViewHandler) viewHandler).getComboBoxJobFunction(presentationModel);
-		radioButtonPersonalInjuryOver24 = ((AccidentViewHandler) viewHandler)
-				.getRadioButtonPersonalInjuryOver24(presentationModel);
-		radioButtonPersonalInjuryUnder24 = ((AccidentViewHandler) viewHandler)
-				.getRadioButtonPersonalInjuryUnder24(presentationModel);
-		radioButtonPersonalInjuryNotAbsent = ((AccidentViewHandler) viewHandler)
-				.getRadioButtonPersonalInjuryNotAbsent(presentationModel);
-		radioButtonNotPersonalInjury = ((AccidentViewHandler) viewHandler)
-				.getRadioButtonNotPersonalInjury(presentationModel);
+		checkBoxPersonalInjuryOver24 = ((AccidentViewHandler) viewHandler)
+				.getCheckBoxPersonalInjuryOver24(presentationModel);
+		checkBoxPersonalInjuryUnder24 = ((AccidentViewHandler) viewHandler)
+				.getCheckBoxPersonalInjuryUnder24(presentationModel);
+		checkBoxPersonalInjuryNotAbsent = ((AccidentViewHandler) viewHandler)
+				.getCheckBoxPersonalInjuryNotAbsent(presentationModel);
+		checkBoxNotPersonalInjury = ((AccidentViewHandler) viewHandler)
+				.getCheckBoxNotPersonalInjury(presentationModel);
 		buttonAddParticipant = ((AccidentViewHandler) viewHandler).getButtonAddParticipant(aWindow, presentationModel);
 		buttonDeleteParticipant = ((AccidentViewHandler) viewHandler).getButtonDeleteParticipant(aWindow,
 				presentationModel);
