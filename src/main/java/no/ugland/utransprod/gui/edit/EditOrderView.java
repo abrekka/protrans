@@ -632,8 +632,8 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 		builder.add(orderDate, cc.xy(7, 1));
 		builder.addLabel("Avropsdato:", cc.xy(5, 3));
 		builder.add(agreementDate, cc.xy(7, 3));
-		builder.addLabel("Ønsket uke:", cc.xy(5, 5));
-		builder.add(comboBoxDeliveryWeek, cc.xy(7, 5));
+//		builder.addLabel("Ønsket uke:", cc.xy(5, 5));
+//		builder.add(comboBoxDeliveryWeek, cc.xy(7, 5));
 		builder.addLabel("Konstruksjonstype:", cc.xy(5, 7));
 		builder.add(comboBoxConstructionType, cc.xy(7, 7));
 		builder.addLabel("Transport:", cc.xy(5, 9));

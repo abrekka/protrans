@@ -21,6 +21,7 @@
 	<field name="order.assembly.assemblyWeek" class="java.lang.Integer"/>
 	<field name="bestillingsnrMontering" class="java.lang.Integer"/>
 	<field name="order.assembly.assemblyYear" class="java.lang.Integer"/>
+	<field name="vismaordrenr" class="java.lang.String"/>
 	<group name="hms">
 		<groupFooter>
 			<band height="38">
@@ -131,7 +132,7 @@
 	<pageHeader>
 		<band height="171" splitType="Stretch">
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-5" x="345" y="86" width="183" height="14"/>
+				<reportElement key="textField-5" x="345" y="69" width="183" height="14"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -300,7 +301,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{order.postalCode}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-17" x="257" y="86" width="89" height="14"/>
+				<reportElement key="staticText-17" x="257" y="69" width="89" height="14"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -426,6 +427,32 @@
 				</textElement>
 				<text><![CDATA[Monteringsvecka:]]></text>
 			</staticText>
+			<staticText>
+				<reportElement key="staticText-17" x="257" y="84" width="89" height="14"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Vismaordrenr:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-5" x="350" y="84" width="183" height="14"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vismaordrenr}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>

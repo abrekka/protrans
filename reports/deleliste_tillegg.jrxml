@@ -73,7 +73,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Kappliste - standard]]></text>
+				<text><![CDATA[  Gesimsstige- standard]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="5" width="75" height="13"/>
@@ -227,7 +227,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Utfôring innside - F.O.P.]]></text>
+				<text><![CDATA[  Belistning F.O.P.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="57" width="75" height="13"/>
@@ -249,7 +249,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[22x148]]></text>
+				<text><![CDATA[19x73]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="57" width="60" height="13"/>
@@ -293,7 +293,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Belistning F.O.P.]]></text>
+				<text><![CDATA[  Utforing - drager]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="70" width="75" height="13"/>
@@ -304,7 +304,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[19x73]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="83" width="160" height="13"/>
@@ -315,7 +315,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Vasshelle - F.O.P.]]></text>
+				<text><![CDATA[  Feste for portskinne]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="83" width="60" height="13"/>
@@ -348,7 +348,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[36x48]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="96" width="60" height="13"/>
@@ -370,7 +370,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
+				<text><![CDATA[19x148]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="96" width="75" height="13"/>
@@ -392,7 +392,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Utforing - drager]]></text>
+				<text><![CDATA[  Belistning drager]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="109" width="60" height="13"/>
@@ -414,7 +414,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
+				<text><![CDATA[19x137]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="109" width="160" height="13"/>
@@ -425,7 +425,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Feste for portskinne]]></text>
+				<text><![CDATA[  Belistning drager]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="109" width="75" height="13"/>
@@ -447,7 +447,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[19x148]]></text>
+				<text><![CDATA[19x73]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="122" width="160" height="13"/>
@@ -491,7 +491,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[19x123]]></text>
+				<text><![CDATA[19x25]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="135" width="75" height="13"/>
@@ -546,7 +546,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Belistning drager]]></text>
+				<text><![CDATA[  Kledning drager i bunn -d-fals tett]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="148" width="60" height="13"/>
@@ -568,7 +568,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[19x73]]></text>
+				<text><![CDATA[19x124/15°]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="161" width="60" height="13"/>
@@ -601,7 +601,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Belistning drager]]></text>
+				<text><![CDATA[  Kledning drager i topp -d-fals tett]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="161" width="75" height="13"/>
@@ -612,7 +612,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[19x25]]></text>
+				<text><![CDATA[19x13,0]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="174" width="75" height="13"/>
@@ -623,7 +623,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[19x13,0]]></text>
+				<text><![CDATA[19x148]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="174" width="60" height="13"/>
@@ -656,7 +656,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Kledning drager i bunn -d-fals rett]]></text>
+				<text><![CDATA[  Klending drager - d-fals tett]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="187" width="60" height="13"/>
@@ -678,7 +678,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[19x13,0]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="187" width="75" height="13"/>
@@ -700,7 +700,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Kledning drager i topp -d-fals rett]]></text>
+				<text><![CDATA[  Spikerslag for kledning/ drager]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="200" width="160" height="13"/>
@@ -711,7 +711,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Klending drager - d-fals rett]]></text>
+				<text><![CDATA[  Hjørneforing + MB]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="200" width="60" height="13"/>
@@ -733,7 +733,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[19x148]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="200" width="75" height="13"/>
@@ -766,7 +766,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
+				<text><![CDATA[19x98]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="213" width="60" height="13"/>
@@ -788,7 +788,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
+				<text><![CDATA[  Belistning - hjørner]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="226" width="75" height="13"/>
@@ -799,21 +799,10 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
+				<text><![CDATA[19x123]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="226" width="60" height="13"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="235" y="226" width="75" height="13"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -832,7 +821,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Spikerslag for kledning/ drager]]></text>
+				<text><![CDATA[  Belistning - hjørner]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="239" width="75" height="13"/>
@@ -854,7 +843,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
+				<text><![CDATA[19x148]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="239" width="60" height="13"/>
@@ -876,7 +865,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Hjørneforing + MB]]></text>
+				<text><![CDATA[  Belistning - hjørner]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="252" width="75" height="13"/>
@@ -920,7 +909,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Belistning - hjørner]]></text>
+				<text><![CDATA[  Skjøt/ vegger]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="265" width="160" height="13"/>
@@ -931,7 +920,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Belistning - hjørner]]></text>
+				<text><![CDATA[  Belistning - opplett/raft/gavl]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="265" width="75" height="13"/>
@@ -942,7 +931,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[19x123]]></text>
+				<text><![CDATA[19x98]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="265" width="60" height="13"/>
@@ -975,7 +964,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Belistning - hjørner]]></text>
+				<text><![CDATA[  Belistning - opplett/raft/gavl]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="278" width="75" height="13"/>
@@ -986,7 +975,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[19x148]]></text>
+				<text><![CDATA[19x123]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="278" width="60" height="13"/>
@@ -1019,7 +1008,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Skjøt/ vegger]]></text>
+				<text><![CDATA[  Belistning]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="291" width="75" height="13"/>
@@ -1030,7 +1019,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[19x98]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="291" width="60" height="13"/>
@@ -1063,7 +1052,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Belistning - opplett/raft/gavl]]></text>
+				<text><![CDATA[  Belistning  dør/ stå.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="304" width="75" height="13"/>
@@ -1107,7 +1096,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Belistning - opplett/raft/gavl]]></text>
+				<text><![CDATA[  Belistning dør ligg.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="317" width="75" height="13"/>
@@ -1118,7 +1107,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[19x123]]></text>
+				<text><![CDATA[19x98]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="317" width="60" height="13"/>
@@ -1151,7 +1140,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Belistning]]></text>
+				<text><![CDATA[  Losholt]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="330" width="75" height="13"/>
@@ -1162,7 +1151,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
+				<text><![CDATA[48x98]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="330" width="60" height="13"/>
@@ -1195,7 +1184,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Belistning  dør/ stå.]]></text>
+				<text><![CDATA[  Vasshelle over vindu og dør]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="343" width="75" height="13"/>
@@ -1206,7 +1195,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[19x98]]></text>
+				<text><![CDATA[36x48]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="343" width="60" height="13"/>
@@ -1239,7 +1228,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Belistning dør ligg.]]></text>
+				<text><![CDATA[  Veksling trapp]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="356" width="75" height="13"/>
@@ -1250,7 +1239,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[19x98]]></text>
+				<text><![CDATA[36x198]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="356" width="60" height="13"/>
@@ -1283,7 +1272,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Losholt]]></text>
+				<text><![CDATA[  Veksling horisontale krefter]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="369" width="60" height="13"/>
@@ -1305,7 +1294,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[48x98]]></text>
+				<text><![CDATA[36x198]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="369" width="75" height="13"/>
@@ -1327,7 +1316,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Vasshelle over vindu og dør]]></text>
+				<text><![CDATA[  Gesimsbord - fremskutt front]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="382" width="60" height="13"/>
@@ -1349,7 +1338,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[36x48]]></text>
+				<text><![CDATA[d-fals - tett]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="382" width="75" height="13"/>
@@ -1371,7 +1360,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Veksling trapp]]></text>
+				<text><![CDATA[  Spikerslag - fremskutt front]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="395" width="60" height="13"/>
@@ -1393,7 +1382,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[36x198]]></text>
+				<text><![CDATA[36x98]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="395" width="75" height="13"/>
@@ -1415,7 +1404,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Veksling horisontale krefter]]></text>
+				<text><![CDATA[  Spikerslag portåpner]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="408" width="60" height="13"/>
@@ -1437,7 +1426,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[36x198]]></text>
+				<text><![CDATA[36x98]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="408" width="75" height="13"/>
@@ -1459,7 +1448,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Gesimsbord - fremskutt front]]></text>
+				<text><![CDATA[  Skrålist]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="421" width="60" height="13"/>
@@ -1481,7 +1470,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[d-fals - tett]]></text>
+				<text><![CDATA[48x48]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="421" width="75" height="13"/>
@@ -1503,7 +1492,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Spikerslag - fremskutt front]]></text>
+				<text><![CDATA[  Grunnmurspapp]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="434" width="60" height="13"/>
@@ -1525,7 +1514,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[36x98]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="434" width="75" height="13"/>
@@ -1547,7 +1536,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Spikerslag portåpner]]></text>
+				<text><![CDATA[  Utlekting kvist/ opplett]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="447" width="60" height="13"/>
@@ -1569,7 +1558,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[36x98]]></text>
+				<text><![CDATA[36x48]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="447" width="75" height="13"/>
@@ -1591,7 +1580,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Skrålist]]></text>
+				<text><![CDATA[  Reisverk kvist/ opplett]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="460" width="75" height="13"/>
@@ -1602,7 +1591,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[48x48]]></text>
+				<text><![CDATA[36x98]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="460" width="75" height="13"/>
@@ -1635,7 +1624,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Grunnmurspapp]]></text>
+				<text><![CDATA[  Kledning kvist/ opplett]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="473" width="75" height="13"/>
@@ -1679,7 +1668,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Utlekting kvist/ opplett]]></text>
+				<text><![CDATA[  Vindski i topp]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="486" width="75" height="13"/>
@@ -1690,7 +1679,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[23x36]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="486" width="75" height="13"/>
@@ -1723,7 +1712,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Reisverk kvist/ opplett]]></text>
+				<text><![CDATA[Støtte/ Takutstikk]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="499" width="75" height="13"/>
@@ -1749,138 +1738,6 @@
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="499" width="60" height="13"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="512" width="160" height="13"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Kledning kvist/ opplett]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="235" y="512" width="75" height="13"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="160" y="512" width="75" height="13"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="310" y="512" width="60" height="13"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="525" width="160" height="13"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Vindski i topp]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="235" y="525" width="75" height="13"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="160" y="525" width="75" height="13"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="310" y="525" width="60" height="13"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="160" y="538" width="75" height="13"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[36x98]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="310" y="538" width="60" height="13"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="538" width="160" height="13"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement lineSpacing="Single"/>
-				<text><![CDATA[Støtte/ Takutstikk]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="235" y="538" width="75" height="13"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>

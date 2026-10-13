@@ -941,4 +941,11 @@
 			</bean>
 		</property>
 	</bean>
+		<bean id="produksjonskapasitetManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.service.impl.ProduksjonskapasitetImpl">
+				<property name="dao" ref="produksjonskapasitetDAO" />
+			</bean>
+		</property>
+	</bean>
 </beans>

@@ -39,6 +39,7 @@ import no.ugland.utransprod.gui.action.ImportAreasAction;
 import no.ugland.utransprod.gui.action.ImportCountiesAction;
 import no.ugland.utransprod.gui.action.ImportPostalCodesAction;
 import no.ugland.utransprod.gui.action.ImportProductionBudgetAction;
+import no.ugland.utransprod.gui.action.ImportProduksjonskapasitetAction;
 import no.ugland.utransprod.gui.action.ImportSaleBudgetAction;
 import no.ugland.utransprod.gui.action.ImportSalesmanBudgetAction;
 import no.ugland.utransprod.gui.action.ImportSnowloadAction;
@@ -155,6 +156,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	private ImportSnowloadAction importSnowloadAction;
 
 	private ImportProductionBudgetAction importProductionBudgetAction;
+	private ImportProduksjonskapasitetAction  importProduksjonskapasitetAction;
 
 	private ImportSaleBudgetAction importSaleBudgetAction;
 	private SalesGoalReportAction salesGoalReportAction;
@@ -185,7 +187,8 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 			ImportSnowloadAction aImportSnowloadAction, ImportProductionBudgetAction aImportBudgetAction,
 			ImportSaleBudgetAction aImportSaleBudgetAction, SalesGoalReportAction aSalesGoalReportAction,
 			ImportSalesmanBudgetAction aImportSalesmanBudgetAction,
-			ImportZoneAdditionAssemblyAction aImportZoneAdditionAssemblyAction)
+			ImportZoneAdditionAssemblyAction aImportZoneAdditionAssemblyAction,
+			ImportProduksjonskapasitetAction aImportProduksjonskapasitetAction)
 	// TrossDrawReportAction aTrossDrawReportAction)
 	{
 		// trossDrawReportAction = aTrossDrawReportAction;
@@ -193,6 +196,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 		salesGoalReportAction = aSalesGoalReportAction;
 		importSaleBudgetAction = aImportSaleBudgetAction;
 		importProductionBudgetAction = aImportBudgetAction;
+		importProduksjonskapasitetAction = aImportProduksjonskapasitetAction; 
 		importSnowloadAction = aImportSnowloadAction;
 		updateTransportPricesAction = aUpdateTransportPricesAction;
 		importAreasAction = aImportAreasAction;
@@ -282,6 +286,8 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 				"Importer budsjettall selger", false);
 		addMenuItem(menuBasis, importZoneadditionAssemblyAction, KeyEvent.VK_S, null, null, null,
 				"Importer sonetillegg montering", false);
+		addMenuItem(menuBasis, importProduksjonskapasitetAction, KeyEvent.VK_B, null, null, null, "Importer produksjonskapasitet",
+				false);
 		return menuBasis;
 	}
 

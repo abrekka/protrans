@@ -129,6 +129,7 @@
 				<value>hibernate/AssemblyV.hbm.xml</value>
 				<value>hibernate/OrderSegmentNoV.hbm.xml</value>
 				<value>hibernate/ProductionTime.hbm.xml</value>
+				<value>hibernate/Produksjonskapasitet.hbm.xml</value>
 			</list>
 		</property>
 	</bean>

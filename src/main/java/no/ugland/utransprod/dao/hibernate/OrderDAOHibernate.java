@@ -1351,7 +1351,7 @@ public class OrderDAOHibernate extends BaseDAOHibernate<Order> implements OrderD
 						+ " F0100.dbo.ordln.prodno='OVERSKRIFT' or" + " F0100.dbo.ordln.descr like 'Vegg:%' or"
 						+ " F0100.dbo.ordln.descr like 'Vägg:%' or" + " F0100.dbo.ordln.descr like 'Gavelspets:%' or"
 						+ " F0100.dbo.ordln.descr like 'Gavl:%' or" + " F0100.dbo.prod.PrCatNo2 in(29,30,9) or"
-						+ " (F0100.dbo.prod.PrCatNo = 509600 and F0100.dbo.ordln.purcno>0))";
+						+ " F0100.dbo.ordln.prodno='KRYSSLEKTES' or (F0100.dbo.prod.PrCatNo = 509600 and F0100.dbo.ordln.purcno>0))";
 
 				List<Ordreinfo> ordreinfo = Lists.newArrayList();
 				List<Object[]> resultater = session.createSQLQuery(sql).list();

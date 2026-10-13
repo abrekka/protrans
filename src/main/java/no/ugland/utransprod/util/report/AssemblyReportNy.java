@@ -39,11 +39,9 @@ public class AssemblyReportNy {
 
 		if (getCraningCost() == null) {
 			OrderManager orderManager = (OrderManager) ModelUtil.getBean("orderManager");
-			orderManager
-					.lazyLoadOrder(order,
-							new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES,
-									LazyLoadOrderEnum.ORDER_LINE_ATTRIBUTES, LazyLoadOrderEnum.ORDER_COSTS,
-									LazyLoadOrderEnum.COMMENTS });
+			orderManager.lazyLoadOrder(order,
+					new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ATTRIBUTES,
+							LazyLoadOrderEnum.ORDER_COSTS, LazyLoadOrderEnum.COMMENTS });
 			OrderLine trossOrderLine = order.getOrderLine("Takstoler");
 			OrderLine constructionTypeOrderLine = order.getOrderLine("Garasjetype");
 			OrderLine portOrderLine = order.getOrderLine("Port");
@@ -54,9 +52,14 @@ public class AssemblyReportNy {
 
 	}
 
-	public String getFirma(){
+	public String getVismaordrenr() {
+		return fakturagrunnlag == null || fakturagrunnlag.isEmpty() ? null : fakturagrunnlag.get(0).getOrdNo().toString();
+	}
+
+	public String getFirma() {
 		return "Rekke".equalsIgnoreCase(order.getProductArea().getProductArea()) ? FIRMA_REKKE : FIRMA_GARASJE;
 	}
+
 	public String getOrgnr() {
 		return "Rekke".equalsIgnoreCase(order.getProductArea().getProductArea()) ? ORGNR_REKKE : ORGNR_GARASJE;
 	}
@@ -138,8 +141,7 @@ public class AssemblyReportNy {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * no.ugland.utransprod.util.report.AssemblyReport#setVismaOrderLines(java
+	 * @see no.ugland.utransprod.util.report.AssemblyReport#setVismaOrderLines(java
 	 * .util.List)
 	 */
 	public void setFakturagrunnlag(final List<FakturagrunnlagV> fakturagrunnlag) {
@@ -149,8 +151,7 @@ public class AssemblyReportNy {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * no.ugland.utransprod.util.report.AssemblyReport#setCraningAddition(java
+	 * @see no.ugland.utransprod.util.report.AssemblyReport#setCraningAddition(java
 	 * .math.BigDecimal)
 	 */
 	public void setCraningCost(final BigDecimal aCraningCost) {
@@ -172,17 +173,17 @@ public class AssemblyReportNy {
 
 	/*
 	 * public static AssemblyReport create(final Order order, final List<Ordln>
-	 * vismaOrderLines) { AssemblyReport assemblyReport = new
-	 * AssemblyReportImpl(); assemblyReport.setOrder(order);
+	 * vismaOrderLines) { AssemblyReport assemblyReport = new AssemblyReportImpl();
+	 * assemblyReport.setOrder(order);
 	 * assemblyReport.setVismaOrderLines(vismaOrderLines);
 	 * 
-	 * if (assemblyReport.getCraningAddition() == null) { OrderManager
-	 * orderManager = (OrderManager) ModelUtil .getBean("orderManager");
+	 * if (assemblyReport.getCraningAddition() == null) { OrderManager orderManager
+	 * = (OrderManager) ModelUtil .getBean("orderManager");
 	 * orderManager.lazyLoadOrder(order, new LazyLoadOrderEnum[] {
 	 * LazyLoadOrderEnum.ORDER_LINES, LazyLoadOrderEnum.ORDER_LINE_ATTRIBUTES,
 	 * LazyLoadOrderEnum.ORDER_COSTS}); OrderLine trossOrderLine =
-	 * order.getOrderLine("Takstoler"); OrderLine constructionTypeOrderLine =
-	 * order .getOrderLine("Garasjetype"); OrderLine portOrderLine =
+	 * order.getOrderLine("Takstoler"); OrderLine constructionTypeOrderLine = order
+	 * .getOrderLine("Garasjetype"); OrderLine portOrderLine =
 	 * order.getOrderLine("Port"); CraningRulesEngine craningRulesEngine = new
 	 * CraningRulesEngine(craningCostManager); Craning craning = new
 	 * Craning(trossOrderLine, constructionTypeOrderLine, portOrderLine);

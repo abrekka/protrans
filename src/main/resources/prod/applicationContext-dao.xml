@@ -738,4 +738,10 @@
 				autowire="byName" />
 		</property>
 	</bean>
+		<bean id="produksjonskapasitetDAO" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="no.ugland.utransprod.dao.hibernate.ProduksjonskapasitetDAOHibernate"
+				autowire="byName" />
+		</property>
+	</bean>
 </beans>

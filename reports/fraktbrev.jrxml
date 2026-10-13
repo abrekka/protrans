@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 3.5.2  -->
+<!-- Created with Jaspersoft Studio version 6.21.5.final using JasperReports Library version 3.5.3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fraktbrev" pageWidth="595" pageHeight="842" columnWidth="539" leftMargin="28" rightMargin="28" topMargin="28" bottomMargin="28">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
@@ -58,7 +58,7 @@
 					<imageExpression class="java.io.InputStream"><![CDATA[$P{ugland_logo}]]></imageExpression>
 				</image>
 				<staticText>
-					<reportElement key="staticText-2" x="250" y="8" width="104" height="17"/>
+					<reportElement key="staticText-2" x="250" y="8" width="118" height="17"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -68,7 +68,7 @@
 					<textElement lineSpacing="Single">
 						<font fontName="Arial" size="12"/>
 					</textElement>
-					<text><![CDATA[Grimstad Industrier AS]]></text>
+					<text><![CDATA[Igland Garasjen AS]]></text>
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-3" x="250" y="25" width="104" height="17"/>
@@ -589,7 +589,60 @@
 		<band height="1" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band splitType="Stretch"/>
+		<band height="87" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-2" positionType="Float" x="17" y="20" width="146" height="17"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Godset er levert mottaker]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-2" positionType="Float" x="17" y="69" width="43" height="17"/>
+				<box>
+					<topPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Dato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-2" positionType="Float" x="83" y="69" width="112" height="17"/>
+				<box>
+					<topPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Sjåfør]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-2" positionType="Float" x="402" y="69" width="112" height="17"/>
+				<box>
+					<topPen lineWidth="0.75" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Mottaker]]></text>
+			</staticText>
+		</band>
 	</pageFooter>
 	<summary>
 		<band splitType="Stretch"/>

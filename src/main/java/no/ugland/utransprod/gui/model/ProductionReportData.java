@@ -1,6 +1,7 @@
 package no.ugland.utransprod.gui.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -33,6 +34,7 @@ public class ProductionReportData {
 	private Integer produksjonsuke;
 	private Set<OrderComment> kommentarer;
 	private List<Delelisteinfo> deleliste;
+	private static final List<String> standardvegg = Arrays.asList("43236113", "43236143","D43236143","D43236113");
 
 	public ProductionReportData(String ordrenummer) {
 		this.ordrenummer = ordrenummer;
@@ -105,6 +107,7 @@ public class ProductionReportData {
 								&& !ordreinfo.getBeskrivelse().contains("Gavl:")
 								&& !ordreinfo.getBeskrivelse().contains("Gavelspets:")
 								&& !ordreinfo.getBeskrivelse().contains("Vindsperre")
+								&& !ordreinfo.getBeskrivelse().contains("Takstol ")
 								&& !ordreinfo.getBeskrivelse().contains("Takstol:")
 								&& !ordreinfo.getProdno().contains("HJKASSSPES") && ordreinfo.getPrCatNo2() != 9;
 					}
@@ -191,7 +194,7 @@ public class ProductionReportData {
 			List<Ordreinfo> tilpasning = Lists.newArrayList(Iterables.filter(ordreinfo, new Predicate<Ordreinfo>() {
 
 				public boolean apply(Ordreinfo ordreinfo) {
-					return ordreinfo.getBeskrivelse().contains("Vegg:")||ordreinfo.getBeskrivelse().contains("Vägg:");
+					return ordreinfo.getBeskrivelse().contains("Vegg:") || ordreinfo.getBeskrivelse().contains("Vägg:");
 				}
 			}));
 			return tilpasning == null || tilpasning.isEmpty() ? "" : tilpasning.get(0).getBeskrivelse();
@@ -199,12 +202,55 @@ public class ProductionReportData {
 		return "";
 	}
 
+	public Integer getSpesialvegg() {
+		if (ordreinfo != null && !ordreinfo.isEmpty()) {
+			List<Ordreinfo> spesialvegger = Lists.newArrayList(Iterables.filter(ordreinfo, new Predicate<Ordreinfo>() {
+
+				public boolean apply(Ordreinfo ordreinfo) {
+					return (ordreinfo.getBeskrivelse().contains("Vegg:")
+							|| ordreinfo.getBeskrivelse().contains("Vägg:"))
+							&& !standardvegg.contains(ordreinfo.getProdno());
+				}
+			}));
+			return spesialvegger.isEmpty() ? 0 : 1;
+		}
+		return 0;
+	}
+	
+	public Integer getSpesialgavl() {
+		if (ordreinfo != null && !ordreinfo.isEmpty()) {
+			List<Ordreinfo> spesialgavl= Lists.newArrayList(Iterables.filter(ordreinfo, new Predicate<Ordreinfo>() {
+
+				public boolean apply(Ordreinfo ordreinfo) {
+					return (ordreinfo.getBeskrivelse().contains("Gavl:")
+							|| ordreinfo.getBeskrivelse().contains("Gavelspets"))
+							&& !standardvegg.contains(ordreinfo.getProdno());
+				}
+			}));
+			return spesialgavl.isEmpty() ? 0 : 1;
+		}
+		return 0;
+	}
+	
+	public Integer getKrysslektes() {
+		if (ordreinfo != null && !ordreinfo.isEmpty()) {
+			List<Ordreinfo> krysslektes= Lists.newArrayList(Iterables.filter(ordreinfo, new Predicate<Ordreinfo>() {
+
+				public boolean apply(Ordreinfo ordreinfo) {
+					return "KRYSSLEKTES".equalsIgnoreCase(ordreinfo.getProdno());
+				}
+			}));
+			return krysslektes.isEmpty() ? 0 : 1;
+		}
+		return 0;
+	}
+
 	public String getVeggtype() {
 		if (ordreinfo != null && !ordreinfo.isEmpty()) {
 			List<Ordreinfo> tilpasning = Lists.newArrayList(Iterables.filter(ordreinfo, new Predicate<Ordreinfo>() {
 
 				public boolean apply(Ordreinfo ordreinfo) {
-					return ordreinfo.getBeskrivelse().contains("Vegg:")||ordreinfo.getBeskrivelse().contains("Vägg:");
+					return ordreinfo.getBeskrivelse().contains("Vegg:") || ordreinfo.getBeskrivelse().contains("Vägg:");
 				}
 			}));
 			return tilpasning == null || tilpasning.isEmpty() ? "" : tilpasning.get(0).getType();
@@ -217,7 +263,8 @@ public class ProductionReportData {
 			List<Ordreinfo> tilpasning = Lists.newArrayList(Iterables.filter(ordreinfo, new Predicate<Ordreinfo>() {
 
 				public boolean apply(Ordreinfo ordreinfo) {
-					return ordreinfo.getBeskrivelse().contains("Gavl:")||ordreinfo.getBeskrivelse().contains("Gavelspets:");
+					return ordreinfo.getBeskrivelse().contains("Gavl:")
+							|| ordreinfo.getBeskrivelse().contains("Gavelspets:");
 				}
 			}));
 			return tilpasning == null || tilpasning.isEmpty() ? "" : tilpasning.get(0).getBeskrivelse();
@@ -230,7 +277,8 @@ public class ProductionReportData {
 			List<Ordreinfo> tilpasning = Lists.newArrayList(Iterables.filter(ordreinfo, new Predicate<Ordreinfo>() {
 
 				public boolean apply(Ordreinfo ordreinfo) {
-					return ordreinfo.getBeskrivelse().contains("Gavl:")||ordreinfo.getBeskrivelse().contains("Gavelspets:");
+					return ordreinfo.getBeskrivelse().contains("Gavl:")
+							|| ordreinfo.getBeskrivelse().contains("Gavelspets:");
 				}
 			}));
 			return tilpasning == null || tilpasning.isEmpty() ? "" : tilpasning.get(0).getType();
@@ -366,10 +414,11 @@ public class ProductionReportData {
 										.newArrayList(Iterables.filter(kommentar.getOrderCommentCommentTypes(),
 												new Predicate<OrderCommentCommentType>() {
 
-									public boolean apply(OrderCommentCommentType type) {
-										return "Pakking".equals(type.getCommentType().getCommentTypeName());
-									}
-								}));
+													public boolean apply(OrderCommentCommentType type) {
+														return "Pakking"
+																.equals(type.getCommentType().getCommentTypeName());
+													}
+												}));
 								return !pakkekommentarer.isEmpty();
 							}
 							return false;
@@ -414,7 +463,7 @@ public class ProductionReportData {
 				.newArrayList(Iterables.filter(deleliste, new Predicate<Delelisteinfo>() {
 
 					public boolean apply(Delelisteinfo del) {
-						return del.getBeskrivelse().contains("Reisverk:")||del.getBeskrivelse().contains("Reglverk:");
+						return del.getBeskrivelse().contains("Reisverk:") || del.getBeskrivelse().contains("Reglverk:");
 					}
 				}));
 		return reisverkliste.isEmpty() ? null : reisverkliste.get(0).getBeskrivelse();

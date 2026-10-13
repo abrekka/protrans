@@ -52,7 +52,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="555" splitType="Stretch">
+		<band height="551" splitType="Stretch">
 			<staticText>
 				<reportElement x="310" y="5" width="80" height="13"/>
 				<box>
@@ -227,7 +227,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Hjørnebelistning fremskutt front]]></text>
+				<text><![CDATA[  Belistning front ved port]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="57" width="75" height="13"/>
@@ -249,7 +249,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
+				<text><![CDATA[19x156mm]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="57" width="60" height="13"/>
@@ -293,7 +293,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Hjørnebelistning/ stå.]]></text>
+				<text><![CDATA[  Belistning front ved port]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="70" width="75" height="13"/>
@@ -304,7 +304,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[19x123mm]]></text>
+				<text><![CDATA[19x73mm]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="83" width="160" height="13"/>
@@ -315,7 +315,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Belistning front ved port]]></text>
+				<text><![CDATA[  Belistning frontveg ved port]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="83" width="60" height="13"/>
@@ -348,7 +348,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[19x140mm]]></text>
+				<text><![CDATA[19x98mm]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="96" width="60" height="13"/>
@@ -370,7 +370,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[19x73mm]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="96" width="75" height="13"/>
@@ -392,7 +392,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Belistning front ved port]]></text>
+				<text><![CDATA[  Søyle 90x90]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="109" width="60" height="13"/>
@@ -414,7 +414,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[19x98mm]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="109" width="160" height="13"/>
@@ -425,7 +425,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Belistning frontveg ved port]]></text>
+				<text><![CDATA[  Halv valm sett]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="109" width="75" height="13"/>
@@ -491,7 +491,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[20x220cm]]></text>
+				<text><![CDATA[30x220cm]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="148" width="75" height="13"/>
@@ -524,7 +524,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Plate + sidefront]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="161" width="75" height="13"/>
@@ -568,7 +568,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[25x220cm]]></text>
+				<text><![CDATA[40x220cm]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="174" width="60" height="13"/>
@@ -612,7 +612,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[30x220cm]]></text>
+				<text><![CDATA[45x220cm]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="187" width="75" height="13"/>
@@ -623,7 +623,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[40x220cm]]></text>
+				<text><![CDATA[50x220cm]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="187" width="60" height="13"/>
@@ -678,7 +678,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[45x220cm]]></text>
+				<text><![CDATA[55x220cm]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="200" width="75" height="13"/>
@@ -700,7 +700,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
+				<text><![CDATA[  Plate + sidefront]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="213" width="160" height="13"/>
@@ -711,7 +711,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
+				<text><![CDATA[  Sidefront]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="213" width="60" height="13"/>
@@ -733,7 +733,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[50x220cm]]></text>
+				<text><![CDATA[55x220cm]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="213" width="75" height="13"/>
@@ -766,7 +766,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[55x220cm]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="226" width="60" height="13"/>
@@ -788,7 +788,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Plate + sidefront]]></text>
+				<text><![CDATA[  Dørbelistning]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="239" width="75" height="13"/>
@@ -799,7 +799,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[55x220cm]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="239" width="60" height="13"/>
@@ -832,10 +832,10 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Sidefront]]></text>
+				<text><![CDATA[  Dørbelistning]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="235" y="252" width="75" height="13"/>
+				<reportElement x="160" y="252" width="75" height="13"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -843,7 +843,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
+				<text><![CDATA[36x98]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="252" width="60" height="13"/>
@@ -865,7 +865,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Feste for portskinne]]></text>
+				<text><![CDATA[Foring Hjørne + MB]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="265" width="75" height="13"/>
@@ -876,7 +876,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[36x198mm]]></text>
+				<text><![CDATA[36x98]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="265" width="60" height="13"/>
@@ -898,7 +898,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[150]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="265" width="160" height="13"/>
@@ -909,7 +909,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Veksling/ trapp]]></text>
+				<text><![CDATA[Feste for portskinner]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="278" width="160" height="13"/>
@@ -920,7 +920,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Veksling/ trapp]]></text>
+				<text><![CDATA[Foring Hjørne + MB]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="278" width="75" height="13"/>
@@ -931,7 +931,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[36x198mm]]></text>
+				<text><![CDATA[36x148]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="278" width="60" height="13"/>
@@ -953,7 +953,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[130]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="291" width="160" height="13"/>
@@ -964,7 +964,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Veksling/ trapp]]></text>
+				<text><![CDATA[Trefiber til bakvegg]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="291" width="75" height="13"/>
@@ -975,7 +975,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[36x98mm]]></text>
+				<text><![CDATA[3x9,5]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="291" width="60" height="13"/>
@@ -997,7 +997,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[56,4]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="304" width="160" height="13"/>
@@ -1008,7 +1008,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Hjørnekasse]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="304" width="75" height="13"/>
@@ -1052,7 +1052,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Hjørnekasse]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="317" width="75" height="13"/>
@@ -1096,7 +1096,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Dørbelistning]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="330" width="75" height="13"/>
@@ -1140,7 +1140,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[Foring Hjørne + MB]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="356" width="75" height="13"/>
@@ -1151,7 +1151,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[26x140]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="356" width="60" height="13"/>
@@ -1184,7 +1184,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[Feste for portskinner]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="369" width="75" height="13"/>
@@ -1195,7 +1195,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[36x98]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="369" width="60" height="13"/>
@@ -1338,7 +1338,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[Sett]]></text>
+				<text><![CDATA[Stk.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="370" y="109" width="20" height="13"/>
@@ -1349,7 +1349,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[Sett]]></text>
+				<text><![CDATA[Stk.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="370" y="460" width="20" height="13"/>
@@ -1448,7 +1448,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[Stk.]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="370" y="317" width="20" height="13"/>
@@ -1459,7 +1459,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[Stk.]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="370" y="252" width="20" height="13"/>
@@ -1470,7 +1470,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[Stk.]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="370" y="356" width="20" height="13"/>
@@ -1492,7 +1492,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[Stk.]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="370" y="382" width="20" height="13"/>
@@ -1514,7 +1514,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[Stk.]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="370" y="239" width="20" height="13"/>
@@ -1536,7 +1536,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[Stk.]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="370" y="369" width="20" height="13"/>
@@ -1558,7 +1558,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[Stk.]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="122" width="75" height="13"/>
@@ -1580,7 +1580,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Søyle 90x90]]></text>
+				<text><![CDATA[  Plate + sidefront]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="122" width="75" height="13"/>
@@ -1591,7 +1591,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
+				<text><![CDATA[20x220cm]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="122" width="60" height="13"/>
@@ -1624,7 +1624,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Halv valm sett]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="135" width="75" height="13"/>
@@ -1657,7 +1657,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" lineSpacing="Single"/>
-				<text><![CDATA[]]></text>
+				<text><![CDATA[25x220cm]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="310" y="135" width="60" height="13"/>
@@ -1690,7 +1690,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[Stk.]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="160" y="343" width="75" height="13"/>
@@ -1712,7 +1712,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement lineSpacing="Single"/>
-				<text><![CDATA[  Dørbelistning]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="235" y="343" width="75" height="13"/>
