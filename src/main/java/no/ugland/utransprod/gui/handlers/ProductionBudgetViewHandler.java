@@ -34,7 +34,7 @@ import com.jgoodies.binding.beans.PropertyConnector;
 import com.toedter.calendar.JYearChooser;
 
 /**
- * Håndterer produksjonsbudsjett
+ * Hï¿½ndterer produksjonsbudsjett
  * 
  * @author atle.brekka
  * 
@@ -68,10 +68,10 @@ DefaultAbstractViewHandler<Budget, ProductionBudgetModel> {
 	}
 
 	/**
-	 * Lag årvelger
+	 * Lag ï¿½rvelger
 	 * 
 	 * @param presentationModel
-	 * @return årvelger
+	 * @return ï¿½rvelger
 	 */
 	public JYearChooser getYearChooser(PresentationModel presentationModel) {
 		JYearChooser yearChooser = new JYearChooser();
@@ -107,7 +107,7 @@ DefaultAbstractViewHandler<Budget, ProductionBudgetModel> {
 	}
 
 	/**
-	 * Lager komboboks med produktområder
+	 * Lager komboboks med produktomrï¿½der
 	 * 
 	 * @param presentationModel
 	 * @return kombobkos
@@ -255,8 +255,8 @@ DefaultAbstractViewHandler<Budget, ProductionBudgetModel> {
 		/**
 		 * 
 		 */
-		private static final String[] COLUMNS = { "År", "Uke", "Budsjett",
-				"Produktområde" };
+		private static final String[] COLUMNS = { "Ã…r", "Uke", "Budsjett",
+				"ProduktomrÃ¥de" };
 
 		/**
 		 * @param listModel

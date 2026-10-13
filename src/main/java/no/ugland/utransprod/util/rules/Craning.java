@@ -90,7 +90,7 @@ public class Craning {
 	private void assignPortWidth() {
 		if (getPortOrderLine() != null) {
 			OrderLineAttribute attribute = getPortOrderLine()
-					.getAttributeByName("Portmål");
+					.getAttributeByName("PortmÃ¥l");
 			if (attribute != null) {
 				String attributeValue = attribute.getAttributeValue();
 				if (attributeValue != null && attributeValue.indexOf("x") > 0) {
@@ -107,7 +107,7 @@ public class Craning {
 			assignPortSupport();
 		}
 		if (portSupport == null) {
-			throw new ProTransException("Mangler bæring over port");
+			throw new ProTransException("Mangler bÃ¦ring over port");
 		}
 		return portSupport;
 
@@ -116,7 +116,7 @@ public class Craning {
 	private void assignPortSupport() {
 		if (getConstructionTypeOrderLine() != null) {
 			OrderLineAttribute attribute = getConstructionTypeOrderLine()
-					.getAttributeByName("Bæring over port");
+					.getAttributeByName("BÃ¦ring over port");
 			if (attribute != null) {
 
 				portSupport = attribute.getAttributeValueBool();
@@ -129,7 +129,7 @@ public class Craning {
 			assignBrickWallHeight();
 		}
 		if (brickWallHeight == null) {
-			throw new ProTransException("Mangler murhøyde");
+			throw new ProTransException("Mangler murhÃ¸yde");
 		}
 		return brickWallHeight;
 	}
@@ -137,7 +137,7 @@ public class Craning {
 	private void assignBrickWallHeight() {
 		if (getConstructionTypeOrderLine() != null) {
 			OrderLineAttribute attribute = getConstructionTypeOrderLine()
-					.getAttributeByName("Murhøyde");
+					.getAttributeByName("MurhÃ¸yde");
 			if (attribute != null) {
 
 				brickWallHeight = CraningValue.with(BigDecimal.valueOf(Double.valueOf(attribute
@@ -151,7 +151,7 @@ public class Craning {
 			assignWallHeight();
 		}
 		if (wallHeight == null) {
-			throw new ProTransException("Mangler vegghøyde");
+			throw new ProTransException("Mangler vegghÃ¸yde");
 		}
 		return wallHeight;
 	}
@@ -159,7 +159,7 @@ public class Craning {
 	private void assignWallHeight() {
 		if (getConstructionTypeOrderLine() != null) {
 			OrderLineAttribute attribute = getConstructionTypeOrderLine()
-					.getAttributeByName("Vegghøyde");
+					.getAttributeByName("VegghÃ¸yde");
 			if (attribute != null) {
 
 				wallHeight = CraningValue.with(Util.convertStringToBigDecimal(attribute

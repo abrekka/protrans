@@ -38,15 +38,15 @@ public class InfoValidator implements Validator {
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(infoModel
                 .getDateFrom()))) {
-            support.addError("fra dato", "må settes");
+            support.addError("fra dato", "mÃ¥ settes");
         }
         if (ValidationUtils.isBlank(ModelUtil.nullToString(infoModel
                 .getDateTo()))) {
-            support.addError("til dato", "må settes");
+            support.addError("til dato", "mÃ¥ settes");
         }
         if (ValidationUtils.isBlank(ModelUtil.nullToString(infoModel
                 .getInfoText()))) {
-            support.addError("informasjonstekst", "må settes");
+            support.addError("informasjonstekst", "mÃ¥ settes");
         }
 
         return support.getResult();

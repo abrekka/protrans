@@ -40,12 +40,12 @@ public class ExternalOrderLineAttributeValidator implements Validator {
         if (ValidationUtils.isBlank(ModelUtil
                 .nullToString(externalOrderLineAttributeModel
                         .getExternalOrderLineAttributeName()))) {
-            support.addError("navn", "må settes");
+            support.addError("navn", "mÃ¥ settes");
         }
         if (ValidationUtils.isBlank(ModelUtil
                 .nullToString(externalOrderLineAttributeModel
                         .getExternalOrderLineAttributeValue()))) {
-            support.addError("verdi", "må settes");
+            support.addError("verdi", "mÃ¥ settes");
         }
 
         return support.getResult();

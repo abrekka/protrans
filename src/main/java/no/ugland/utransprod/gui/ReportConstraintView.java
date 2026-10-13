@@ -17,7 +17,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JYearChooser;
 
 /**
- * Brukes til å sette rapportegenskaper som fra og til periode
+ * Brukes til ï¿½ sette rapportegenskaper som fra og til periode
  * 
  * @author atle.brekka
  * 
@@ -150,15 +150,15 @@ public class ReportConstraintView implements Viewer {
 		PanelBuilder builder = new PanelBuilder(layout);
 		CellConstraints cc = new CellConstraints();
 
-		builder.addLabel("Fra år:", cc.xy(1, 1));
+		builder.addLabel("Fra Ã¥r:", cc.xy(1, 1));
 		builder.add(yearChooserFrom, cc.xy(3, 1));
 		builder.addLabel("Fra uke:", cc.xy(5, 1));
 		builder.add(comboBoxWeekFrom, cc.xy(7, 1));
-		builder.addLabel("Til år:", cc.xy(1, 3));
+		builder.addLabel("Til Ã¥r:", cc.xy(1, 3));
 		builder.add(yearChooserTo, cc.xy(3, 3));
 		builder.addLabel("Til uke:", cc.xy(5, 3));
 		builder.add(comboBoxWeekTo, cc.xy(7, 3));
-		builder.addLabel("Produktområde:",cc.xyw(1, 5,3));
+		builder.addLabel("ProduktomrÃ¥de:",cc.xyw(1, 5,3));
 		builder.add(comboBoxProductArea,cc.xyw(5,5,3));
 
 		builder.add(radioButtonTransported, cc.xy(9, 1));

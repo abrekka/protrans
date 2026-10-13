@@ -15,7 +15,7 @@ import org.jdesktop.swingx.auth.LoginService;
 import com.google.inject.Singleton;
 
 /**
- * Klasse som håndterer innlogging
+ * Klasse som hï¿½ndterer innlogging
  * @author atle.brekka
  */
 @Singleton
@@ -83,7 +83,7 @@ public class LoginImpl extends LoginService implements Login {
         UIManager
                 .put(
                         "JXLoginPane.errorMessage",
-                        "<html><b>Kunne ikke logge inn</b><br><br>Sjekk brukernavn og passord. Sjekk om Caps Lock er skrudd på.</html>");
+                        "<html><b>Kunne ikke logge inn</b><br><br>Sjekk brukernavn og passord. Sjekk om Caps Lock er skrudd pÃ¥.</html>");
 
         LoginPanel.Status status = LoginPanel.showLoginDialog(null, this);
 
@@ -96,7 +96,7 @@ public class LoginImpl extends LoginService implements Login {
     }
 
     /**
-     * Prøver å autorisere bruker
+     * Prï¿½ver ï¿½ autorisere bruker
      * @param userName
      * @param password
      * @return true dersom bruker ble autorisert

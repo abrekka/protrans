@@ -52,7 +52,7 @@ public class CuttingImport {
 
     private CuttingType validateLine(int lineCount, String[] lineElements) throws ProTransException {
         if (lineElements == null || lineElements.length < 2) {
-            throw new ProTransException("Linje " + lineCount + " inneholder for få elementer");
+            throw new ProTransException("Linje " + lineCount + " inneholder for fÃ¥ elementer");
         }
         CuttingType cuttingType = CuttingType.valueOf(lineElements[0].trim());
 

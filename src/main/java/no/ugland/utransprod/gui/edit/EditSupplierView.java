@@ -26,7 +26,7 @@ import com.jgoodies.validation.Validator;
 import com.jgoodies.validation.view.ValidationComponentUtils;
 
 /**
- * Klasse for visning og editering av leverandør
+ * Klasse for visning og editering av leverandï¿½r
  * 
  * @author atle.brekka
  */
@@ -81,7 +81,7 @@ public class EditSupplierView extends AbstractEditView<SupplierModel, Supplier> 
 	builder.addLabel("Navn:", cc.xy(2, 2));
 	builder.add(textFieldSupplierName, cc.xy(4, 2));
 
-	builder.addLabel("Leverandørnr:", cc.xy(2, 4));
+	builder.addLabel("LeverandÃ¸rnr:", cc.xy(2, 4));
 	builder.add(textFieldSupplierNr, cc.xy(4, 4));
 
 	builder.addLabel("Type:", cc.xy(2, 6));
@@ -101,7 +101,7 @@ public class EditSupplierView extends AbstractEditView<SupplierModel, Supplier> 
 	builder.add(ButtonBarFactory.buildCenteredBar(buttonEmployee), cc.xy(6, 18));
 	builder.add(checkBoxInactive, cc.xy(2, 20));
 
-	builder.addLabel("Produktområder:", cc.xy(2, 22));
+	builder.addLabel("ProduktomrÃ¥der:", cc.xy(2, 22));
 	builder.add(new JScrollPane(listProductAreaGroyp), cc.xywh(4, 22, 1, 5));
 	builder.add(buildProductAreaGroupButtons(), cc.xywh(6, 22, 1, 5));
 
@@ -171,6 +171,6 @@ public class EditSupplierView extends AbstractEditView<SupplierModel, Supplier> 
     }
 
     public final String getHeading() {
-	return "Leverandør";
+	return "LeverandÃ¸r";
     }
 }

@@ -59,7 +59,7 @@ public class TransportCostView extends
         PanelBuilder builder = new PanelBuilder(layout);
         CellConstraints cc = new CellConstraints();
 
-        builder.addLabel("År:", cc.xy(1, 1));
+        builder.addLabel("Ã…r:", cc.xy(1, 1));
         builder.add(yearChooser, cc.xy(3, 1));
         builder.addLabel("Fra uke:", cc.xy(5, 1));
         builder.add(comboBoxWeekFrom, cc.xy(7, 1));

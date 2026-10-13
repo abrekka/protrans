@@ -8,7 +8,7 @@ import com.google.inject.Inject;
 public class ImportSnowloadAction extends AbstractImport {
 	@Inject
 	public ImportSnowloadAction(ManagerRepository aManagerRepository){
-		super("Importer snølaster...",aManagerRepository,TransportPriceHandler.TransportCostActionEnum.SNOW_LOAD);
+		super("Importer snÃ¸laster...",aManagerRepository,TransportPriceHandler.TransportCostActionEnum.SNOW_LOAD);
 	}
 
 }

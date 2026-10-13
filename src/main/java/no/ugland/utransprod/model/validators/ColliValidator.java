@@ -33,7 +33,7 @@ public class ColliValidator implements Validator {
 
 		if (!ValidationUtils.isEmpty(colliModel.getNumberOfCollies())
 				&& !ValidationUtils.isNumeric(colliModel.getNumberOfCollies())) {
-			support.addError("antall", "må settes");
+			support.addError("antall", "mÃ¥ settes");
 		}
 
 		return support.getResult();

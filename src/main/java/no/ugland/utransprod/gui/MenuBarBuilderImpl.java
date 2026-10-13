@@ -270,8 +270,8 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 		addMenuItem(menuBasis, functionCategoryAction, KeyEvent.VK_K, null, null, null, "Kategori", false);
 		addMenuItem(menuBasis, deviationStatusAction, KeyEvent.VK_G, null, null, null, "Avikstatus", false);
 		addMenuItem(menuBasis, attributeAction, KeyEvent.VK_K, null, null, null, "Attributter", false);
-		addMenuItem(menuBasis, supplierAction, KeyEvent.VK_L, null, null, null, "Leverandører", false);
-		addMenuItem(menuBasis, supplierTypeAction, KeyEvent.VK_T, null, null, null, "Leverandørtyper", false);
+		addMenuItem(menuBasis, supplierAction, KeyEvent.VK_L, null, null, null, "LeverandÃ¸rer", false);
+		addMenuItem(menuBasis, supplierTypeAction, KeyEvent.VK_T, null, null, null, "LeverandÃ¸rtyper", false);
 		addMenuItem(menuBasis, importCountiesAction, KeyEvent.VK_F, null, null, null, "Importer fylker", false);
 		addMenuItem(menuBasis, importAreasAction, KeyEvent.VK_K, null, null, null, "Importer kommuner", false);
 		addMenuItem(menuBasis, importPostalCodesAction, KeyEvent.VK_I, null, null, null, "Importer gyldige postnummer",
@@ -280,7 +280,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 				false);
 		addMenuItem(menuBasis, importProductionBudgetAction, KeyEvent.VK_B, null, null, null, "Importer budsjettall",
 				false);
-		addMenuItem(menuBasis, importSnowloadAction, KeyEvent.VK_S, null, null, null, "Importer snølast", false);
+		addMenuItem(menuBasis, importSnowloadAction, KeyEvent.VK_S, null, null, null, "Importer snÃ¸last", false);
 		addMenuItem(menuBasis, importSaleBudgetAction, KeyEvent.VK_B, null, null, null, "Importer budsjettall", false);
 		addMenuItem(menuBasis, importSalesmanBudgetAction, KeyEvent.VK_B, null, null, null,
 				"Importer budsjettall selger", false);
@@ -321,7 +321,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 		addMenuItem(menuSale, confirmReportAction, KeyEvent.VK_A, null, null, null, "Avropsrapport", false);
 		addMenuItem(menuSale, new SalesReportAction(), KeyEvent.VK_G, null, null, null, "Salgsrapport", false);
 		addMenuItem(menuSale, new SalesStatusReportAction(), KeyEvent.VK_T, null, null, null, "Salgsstatus", false);
-		addMenuItem(menuSale, salesGoalReportAction, KeyEvent.VK_T, null, null, null, "Salgsmål", false);
+		addMenuItem(menuSale, salesGoalReportAction, KeyEvent.VK_T, null, null, null, "SalgsmÃ¥l", false);
 
 		menuReport.add(menuSale);
 
@@ -357,9 +357,9 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 				false);
 		menuReport.add(menuTransport);
 
-		JMenu menuAdm = addMenu("Adm. og økonomi", KeyEvent.VK_A);
+		JMenu menuAdm = addMenu("Adm. og Ã¸konomi", KeyEvent.VK_A);
 		addMenuItem(menuAdm, new InvoiceReportAction(), KeyEvent.VK_I, null, null, null, "Ikke fakturert", false);
-		addMenuItem(menuAdm, new KeyReportAction(), KeyEvent.VK_N, null, null, null, "Nøkkeltall", false);
+		addMenuItem(menuAdm, new KeyReportAction(), KeyEvent.VK_N, null, null, null, "NÃ¸kkeltall", false);
 		addMenuItem(menuAdm, new OrderStatusReportAction(), KeyEvent.VK_S, null, null, null,
 				"Status alle ordre ikke sendt", false);
 		addMenuItem(menuAdm, new ReadyCountReportAction(), KeyEvent.VK_L, null, null, null, "Telleliste", false);
@@ -369,7 +369,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 
 		addMenuItem(menuDeviation, new DeviationReportAction(), KeyEvent.VK_V, null, null, null, "Avvik", false);
 		addMenuItem(menuDeviation, new SummaryReportDeviationAction(), KeyEvent.VK_J, null, null, null,
-				"Avvik - Skjema gjennomgåelse", false);
+				"Avvik - Skjema gjennomgÃ¥else", false);
 		addMenuItem(menuDeviation, new DeviationFunctionReportAction(), KeyEvent.VK_V, null, null, null,
 				"Avvik pr aviksfunksjon", false);
 		menuReport.add(menuDeviation);
@@ -495,7 +495,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	}
 
 	/**
-	 * Legger til menyvalg på meny
+	 * Legger til menyvalg pï¿½ meny
 	 * 
 	 * @param menu
 	 * @param menuItemAction
@@ -515,7 +515,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	}
 
 	/**
-	 * Legger til menyvalg på meny
+	 * Legger til menyvalg pï¿½ meny
 	 * 
 	 * @param menu
 	 * @param menuItemAction
@@ -586,7 +586,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	}
 
 	/**
-	 * Åpner vindu
+	 * ï¿½pner vindu
 	 * 
 	 * @param window
 	 * @param windowEnum
@@ -654,7 +654,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	 */
 
 	/**
-	 * Håndterer menyvalg Transport statistikk...
+	 * Hï¿½ndterer menyvalg Transport statistikk...
 	 * 
 	 * @author atle.brekka
 	 */
@@ -676,7 +676,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	}
 
 	/**
-	 * Håndterer menyvalg Transportoversikt
+	 * Hï¿½ndterer menyvalg Transportoversikt
 	 * 
 	 * @author atle.brekka
 	 */
@@ -700,7 +700,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	}
 
 	/**
-	 * Håndterer menyvalg Nøkkeltall...
+	 * Hï¿½ndterer menyvalg Nï¿½kkeltall...
 	 * 
 	 * @author atle.brekka
 	 */
@@ -708,7 +708,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 		private static final long serialVersionUID = 1L;
 
 		public KeyReportAction() {
-			super("Nøkkeltall...");
+			super("NÃ¸kkeltall...");
 		}
 
 		/**
@@ -722,7 +722,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	}
 
 	/**
-	 * Håndterer menyvalg Produktivitet
+	 * Hï¿½ndterer menyvalg Produktivitet
 	 * 
 	 * @author atle.brekka
 	 */
@@ -880,7 +880,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	}
 
 	/**
-	 * Håndterer menyvalg Avvik - Skjema gjennomgåelse
+	 * Hï¿½ndterer menyvalg Avvik - Skjema gjennomgï¿½else
 	 * 
 	 * @author atle.brekka
 	 */
@@ -888,7 +888,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 		private static final long serialVersionUID = 1L;
 
 		public SummaryReportDeviationAction() {
-			super("Avvik - Skjema gjennomgåelse...");
+			super("Avvik - Skjema gjennomgÃ¥else...");
 		}
 
 		/**
@@ -896,14 +896,14 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 		 */
 		public void actionPerformed(final ActionEvent arg0) {
 			ExcelReportViewHandlerDeviation excelReportViewHandler = new ExcelReportViewHandlerDeviation(
-					"Avvik - Skjema gjennomgåelse", false, ExcelReportEnum.DEVIATION_SUMMARY);
+					"Avvik - Skjema gjennomgÃ¥else", false, ExcelReportEnum.DEVIATION_SUMMARY);
 			openFrame(new ExcelReportView(excelReportViewHandler, false));
 
 		}
 	}
 
 	/**
-	 * Håndterer menyvalg Transportert i periode
+	 * Hï¿½ndterer menyvalg Transportert i periode
 	 * 
 	 * @author atle.brekka
 	 */
@@ -926,7 +926,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	}
 
 	/**
-	 * Håndterer menyvalg Egenproduksjon...
+	 * Hï¿½ndterer menyvalg Egenproduksjon...
 	 * 
 	 * @author atle.brekka
 	 */
@@ -949,7 +949,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	}
 
 	/**
-	 * Håndterer menyvalg Ikke fakturert...
+	 * Hï¿½ndterer menyvalg Ikke fakturert...
 	 * 
 	 * @author atle.brekka
 	 */
@@ -971,7 +971,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	}
 
 	/**
-	 * Håndterer menyvalg Pakkliste ikke klar
+	 * Hï¿½ndterer menyvalg Pakkliste ikke klar
 	 * 
 	 * @author atle.brekka
 	 */
@@ -993,7 +993,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	}
 
 	/**
-	 * Håndterer menyvalg Status alle ordre ikke sendt
+	 * Hï¿½ndterer menyvalg Status alle ordre ikke sendt
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1015,7 +1015,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	}
 
 	/**
-	 * Håndterer menyvalg Telleliste
+	 * Hï¿½ndterer menyvalg Telleliste
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1037,7 +1037,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	}
 
 	/**
-	 * Klasse som håndterer menyvalget Support...
+	 * Klasse som hï¿½ndterer menyvalget Support...
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1049,7 +1049,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 		}
 
 		/**
-		 * Åpner supportside med default browser
+		 * ï¿½pner supportside med default browser
 		 * 
 		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 		 */
@@ -1060,7 +1060,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	}
 
 	/**
-	 * Klasse som håndterer menyvalget Info...
+	 * Klasse som hï¿½ndterer menyvalget Info...
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1089,7 +1089,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	}
 
 	/**
-	 * Håndterer menyvalg Kaskade vinduer...
+	 * Hï¿½ndterer menyvalg Kaskade vinduer...
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1171,7 +1171,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 	}
 
 	/**
-	 * Klasse som håndterer menyvalget Hjelp...
+	 * Klasse som hï¿½ndterer menyvalget Hjelp...
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1184,7 +1184,7 @@ public class MenuBarBuilderImpl implements MenuBarBuilderInterface {
 		}
 
 		/**
-		 * Denne gjør ingenting for det er en klasse i JavaHelp som håndterer
+		 * Denne gjï¿½r ingenting for det er en klasse i JavaHelp som hï¿½ndterer
 		 * dette
 		 * 
 		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

@@ -68,13 +68,13 @@ public class ConfirmReportView implements Viewer {
         PanelBuilder builder = new PanelBuilder(layout);
         CellConstraints cc = new CellConstraints();
 
-        builder.addLabel("År:", cc.xy(1, 1));
+        builder.addLabel("Ã…r:", cc.xy(1, 1));
         builder.add(yearChooser, cc.xy(3, 1));
         builder.addLabel("Fra uke:", cc.xy(5, 1));
         builder.add(comboBoxWeekFrom, cc.xy(7, 1));
         builder.addLabel("Til uke:", cc.xy(9, 1));
         builder.add(comboBoxWeekTo, cc.xy(11, 1));
-        builder.addLabel("Produktområde:",cc.xy(13, 1));
+        builder.addLabel("ProduktomrÃ¥de:",cc.xy(13, 1));
         builder.add(comboBoxProductAreaGroup,cc.xy(15, 1));
         builder.add(ButtonBarFactory.buildCenteredBar(buttonGenerateReport), cc
                 .xyw(1, 3, 15));

@@ -35,7 +35,7 @@ public class CostUnitValidator implements Validator {
                 costUnitModel, "Kostnadsenhet");
 
         if (ValidationUtils.isBlank(costUnitModel.getCostUnitName())) {
-            support.addError("navn", "må settes");
+            support.addError("navn", "mÃ¥ settes");
         }
 
         return support.getResult();

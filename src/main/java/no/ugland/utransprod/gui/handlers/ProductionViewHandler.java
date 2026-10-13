@@ -39,7 +39,7 @@ import com.google.inject.internal.Lists;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 
 /**
- * Håndterer produksjonsvinduer
+ * Hï¿½ndterer produksjonsvinduer
  * 
  * @author atle.brekka
  */
@@ -237,13 +237,13 @@ public class ProductionViewHandler extends AbstractProductionPackageViewHandler<
 		 */
 		public ProductionTableModel(final ListModel listModel) {
 			super(listModel, new String[] { "Transport", "Ordre", "Prod.dato", "Antall", "Spesifikasjon", "Opplasting",
-					StringUtils.capitalize(applyText), "Produktområde", "Prod.enhet" });
+					StringUtils.capitalize(applyText), "ProduktomrÃ¥de", "Prod.enhet" });
 
 		}
 
 		public ProductionTableModel(final ListModel listModel, boolean userStarted) {
 			super(listModel, new String[] { "Transport", "Ordre", "Prod.dato", "Antall", "Spesifikasjon", "Opplasting",
-					StringUtils.capitalize(applyText), "Produktområde", "Prod.enhet", "Startet" });
+					StringUtils.capitalize(applyText), "ProduktomrÃ¥de", "Prod.enhet", "Startet" });
 
 		}
 

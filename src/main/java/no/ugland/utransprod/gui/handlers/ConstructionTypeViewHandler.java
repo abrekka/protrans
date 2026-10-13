@@ -157,7 +157,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Initierer liste med produktområde
+	 * Initierer liste med produktomrï¿½de
 	 */
 	private void initProductAreaList() {
 		if (productAreaList.size() == 0) {
@@ -244,7 +244,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Kloner attributtliste for å ikke jobbe på objekter som er knyttet til
+	 * Kloner attributtliste for ï¿½ ikke jobbe pï¿½ objekter som er knyttet til
 	 * database
 	 * 
 	 * @param list
@@ -283,7 +283,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Henter knapp for å legge til attributt
+	 * Henter knapp for ï¿½ legge til attributt
 	 * 
 	 * @param window
 	 * @param presentationModel
@@ -299,7 +299,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Henter knapp for å fjerne attributt
+	 * Henter knapp for ï¿½ fjerne attributt
 	 * 
 	 * @param window
 	 * @param presentationModel
@@ -315,7 +315,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Henter knapp for å editere attributt
+	 * Henter knapp for ï¿½ editere attributt
 	 * 
 	 * @param window
 	 * @param presentationModel
@@ -331,7 +331,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Henter knapp for å legge til artikkel
+	 * Henter knapp for ï¿½ legge til artikkel
 	 * 
 	 * @param window
 	 * @param presentationModel
@@ -347,7 +347,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Henter knapp for å fjerne artikkel
+	 * Henter knapp for ï¿½ fjerne artikkel
 	 * 
 	 * @param window
 	 * @param presentationModel
@@ -363,7 +363,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Henter knapp for å editere artikkel
+	 * Henter knapp for ï¿½ editere artikkel
 	 * 
 	 * @param window
 	 * @param presentationModel
@@ -379,7 +379,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Lager knapp for å kopierer fra master
+	 * Lager knapp for ï¿½ kopierer fra master
 	 * 
 	 * @param presentationModel
 	 * @param window
@@ -410,7 +410,7 @@ public class ConstructionTypeViewHandler extends
 		ConstructionType constructionType = object.getObject();
 		if (constructionType.getConstructionTypeId() == null
 				&& objectList.contains(constructionType)) {
-			errorString = "Kan ikke lagre konstruksjonstype med et navn som finnes fra før";
+			errorString = "Kan ikke lagre konstruksjonstype med et navn som finnes fra fÃ¸r";
 		}
 
 		if (constructionType.isMaster()) {
@@ -419,7 +419,7 @@ public class ConstructionTypeViewHandler extends
 			if (type != null
 					&& !type.getName().equalsIgnoreCase(
 							constructionType.getName())) {
-				errorString = "Kan ikke være to mastere for samme produktområde";
+				errorString = "Kan ikke vÃ¦re to mastere for samme produktomrÃ¥de";
 			}
 		}
 
@@ -509,7 +509,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Overfører endringer gjort med master til alle garasjetyper
+	 * Overfï¿½rer endringer gjort med master til alle garasjetyper
 	 * 
 	 * @param productArea
 	 */
@@ -540,8 +540,8 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Brukes ved overføring av endringer gjort på master til alla garasjetype.
-	 * Går gjennom alle avhengigheter mellom artikler og gjør endringer
+	 * Brukes ved overfï¿½ring av endringer gjort pï¿½ master til alla garasjetype.
+	 * Gï¿½r gjennom alle avhengigheter mellom artikler og gjï¿½r endringer
 	 * 
 	 * @param articles
 	 */
@@ -602,7 +602,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Overfører endringer gjort på atributter for master til alle garasjetyper
+	 * Overfï¿½rer endringer gjort pï¿½ atributter for master til alle garasjetyper
 	 */
 	private void changeUniversalAttributes(final ProductArea productArea) {
 
@@ -646,7 +646,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Overfører alle endringer gjort på attributter på artikler for master til
+	 * Overfï¿½rer alle endringer gjort pï¿½ attributter pï¿½ artikler for master til
 	 * alle grasjetyper
 	 */
 	private void changeUniversalArticleAttributes(final ProductArea productArea) {
@@ -676,7 +676,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Brukes ved overføring av endringer gjort med master til alle garasjetyper
+	 * Brukes ved overfï¿½ring av endringer gjort med master til alle garasjetyper
 	 * 
 	 * @param articles
 	 */
@@ -741,7 +741,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Overfører artikler fra master til allae garasjetyper
+	 * Overfï¿½rer artikler fra master til allae garasjetyper
 	 */
 	private void setUniversalArticles(final ProductArea productArea) {
 		if (masterDialog) {
@@ -778,7 +778,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Brukes ved overføring fra master til garasjetyper, og legger til
+	 * Brukes ved overfï¿½ring fra master til garasjetyper, og legger til
 	 * attributter
 	 * 
 	 * @param type
@@ -818,7 +818,7 @@ public class ConstructionTypeViewHandler extends
 		// Beskrivelse
 		col = table.getColumnModel().getColumn(1);
 		col.setPreferredWidth(100);
-		// Produktområde
+		// Produktomrï¿½de
 		table.getColumnExt(2).setPreferredWidth(100);
 
 	}
@@ -853,7 +853,7 @@ public class ConstructionTypeViewHandler extends
 		private static final long serialVersionUID = 1L;
 
 		private static final String[] COLUMNS = { "Navn", "Beskrivelse",
-				"Produktområde" };
+				"ProduktomrÃ¥de" };
 
 		/**
 		 * @param listModel
@@ -924,7 +924,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Åpnervindu for å editere attributte
+	 * ï¿½pnervindu for ï¿½ editere attributte
 	 * 
 	 * @param window
 	 * @param presentationModel
@@ -972,7 +972,7 @@ public class ConstructionTypeViewHandler extends
 					JOptionPane.PLAIN_MESSAGE, null, selectionValues, null);
 
 			String orderValue = (String) JOptionPane.showInputDialog(window
-					.getComponent(), "Rekkefølge", "Attributt",
+					.getComponent(), "RekkefÃ¸lge", "Attributt",
 					JOptionPane.PLAIN_MESSAGE, null, null, null);
 			Integer dialogOrder = null;
 
@@ -981,7 +981,7 @@ public class ConstructionTypeViewHandler extends
 			}
 			if (attributeValue == null || attributeValue.length() == 0) {
 				Util.showErrorDialog(window.getComponent(), "Feil",
-						"Attributt må ha verdi");
+						"Attributt mÃ¥ ha verdi");
 			} else {
 				ConstructionTypeAttribute constructionTypeAttribute = constructionTypeModel
 						.getArticleAttribute(newAttributes.get(0),
@@ -1002,7 +1002,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Åpner vindu for å editere artikler
+	 * ï¿½pner vindu for ï¿½ editere artikler
 	 * 
 	 * @param window
 	 * @param presentationModel
@@ -1175,7 +1175,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Åpner vindu for å sette attributtverdier
+	 * ï¿½pner vindu for ï¿½ sette attributtverdier
 	 * 
 	 * @param aConstructionTypeArticle
 	 * @param constructionTypeArticleAttributes
@@ -1203,7 +1203,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Klassesom håndterer oppdatering av attributter
+	 * Klassesom hï¿½ndterer oppdatering av attributter
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1280,7 +1280,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Klasse som håndterer oppdatering av artikkeltype
+	 * Klasse som hï¿½ndterer oppdatering av artikkeltype
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1364,7 +1364,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Åpner dialog for editering av attributt
+	 * ï¿½pner dialog for editering av attributt
 	 * 
 	 * @param window
 	 * @param presentationModel
@@ -1406,7 +1406,7 @@ public class ConstructionTypeViewHandler extends
 
 			if (attributeValue != null) {
 				String orderValue = JOptionPane.showInputDialog(window
-						.getComponent(), "Rekkefølge", attribute
+						.getComponent(), "RekkefÃ¸lge", attribute
 						.getDialogOrder());
 
 				if (attributeValue.length() != 0) {
@@ -1435,7 +1435,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Åpner vindu for editering av attributt for artikkeltype
+	 * ï¿½pner vindu for editering av attributt for artikkeltype
 	 * 
 	 * @param window
 	 * @param presentationModel
@@ -1482,7 +1482,7 @@ public class ConstructionTypeViewHandler extends
 
 			if (attributeValue != null) {
 				String orderValue = JOptionPane.showInputDialog(window
-						.getComponent(), "Rekkefølge", attribute
+						.getComponent(), "RekkefÃ¸lge", attribute
 						.getDialogOrder());
 
 				if (attributeValue.length() != 0) {
@@ -1523,7 +1523,7 @@ public class ConstructionTypeViewHandler extends
 					"Gi antall", numberOfValue);
 
 			String orderValue = JOptionPane.showInputDialog(window
-					.getComponent(), "Rekkefølge", article.getDialogOrder());
+					.getComponent(), "RekkefÃ¸lge", article.getDialogOrder());
 
 			if (numberOfValue != null && numberOfValue.length() != 0) {
 				article.setNumberOfItems(Integer.valueOf(numberOfValue.replace(
@@ -1549,7 +1549,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Klasesom håndterer trykk på knapp for editering av attributt
+	 * Klasesom hï¿½ndterer trykk pï¿½ knapp for editering av attributt
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1590,7 +1590,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Klasse som håndterer trykk på knapp for editering av artikkel
+	 * Klasse som hï¿½ndterer trykk pï¿½ knapp for editering av artikkel
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1632,11 +1632,11 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Henter klasse for håndtering av dobbelklikk på attributt
+	 * Henter klasse for hï¿½ndtering av dobbelklikk pï¿½ attributt
 	 * 
 	 * @param window
 	 * @param presentationModel
-	 * @return dobbelklikkhåndterer
+	 * @return dobbelklikkhï¿½ndterer
 	 */
 	public MouseListener getAttributeDoubleClickHandler(WindowInterface window,
 			PresentationModel presentationModel) {
@@ -1644,11 +1644,11 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Henter klase for håndtering av dobbeltklikk på attributt for artikkel
+	 * Henter klase for hï¿½ndtering av dobbeltklikk pï¿½ attributt for artikkel
 	 * 
 	 * @param window
 	 * @param presentationModel
-	 * @return dobbelklikkhåndterer
+	 * @return dobbelklikkhï¿½ndterer
 	 */
 	public MouseListener getArticleDoubleClickHandler(WindowInterface window,
 			PresentationModel presentationModel) {
@@ -1656,7 +1656,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Klasesom håndterer dobbelklikk på attributt
+	 * Klasesom hï¿½ndterer dobbelklikk pï¿½ attributt
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1695,7 +1695,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Klasse som håndterer dobbelklikk på attributt for artikkel
+	 * Klasse som hï¿½ndterer dobbelklikk pï¿½ attributt for artikkel
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1747,7 +1747,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Henter klasse som håndterer valg i liste
+	 * Henter klasse som hï¿½ndterer valg i liste
 	 * 
 	 * @return PropertyChangeListener
 	 */
@@ -1756,7 +1756,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Klasse som håndtere valg i liste
+	 * Klasse som hï¿½ndtere valg i liste
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1816,7 +1816,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Henter klasse som håndterer valg i liste over artikkeltyper
+	 * Henter klasse som hï¿½ndterer valg i liste over artikkeltyper
 	 * 
 	 * @return ListSelectionListner
 	 */
@@ -1825,7 +1825,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Klasse som håndterer valg i listen over artikkeltyper
+	 * Klasse som hï¿½ndterer valg i listen over artikkeltyper
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1856,8 +1856,8 @@ public class ConstructionTypeViewHandler extends
 				.getObject();
 
 		if (constructionType.getProductArea() == null) {
-			Util.showErrorDialog(window, "Ikke definert produktområde",
-					"Det er ikke satt noe produktområde");
+			Util.showErrorDialog(window, "Ikke definert produktomrÃ¥de",
+					"Det er ikke satt noe produktomrÃ¥de");
 			return;
 		}
 		ConstructionType master = ((ConstructionTypeManager) overviewManager)
@@ -1964,7 +1964,7 @@ public class ConstructionTypeViewHandler extends
 	}
 
 	/**
-	 * Klasse som sammenlikner attributter basert på navn
+	 * Klasse som sammenlikner attributter basert pï¿½ navn
 	 * 
 	 * @author atle.brekka
 	 */

@@ -27,10 +27,10 @@ public class CommentValidator implements Validator {
                 commentModel, "Kommentar");
 
         if(ValidationUtils.isEmpty(commentModel.getComment())){
-        	support.addError("kommentar", "kan ikke være tom");
+        	support.addError("kommentar", "kan ikke vÃ¦re tom");
         }
         if (ModelUtil.nullToString(commentModel.getComment()).length() >= ICommentModel.MAX_COMMENT_LENGTH) {
-            support.addError("kommentar", "kan ikke være lengre enn "
+            support.addError("kommentar", "kan ikke vÃ¦re lengre enn "
                     + ICommentModel.MAX_COMMENT_LENGTH);
         }
 

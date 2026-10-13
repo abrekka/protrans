@@ -64,7 +64,7 @@ import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JYearChooser;
 
 /**
- * Håndterer artikkelsøk
+ * Hï¿½ndterer artikkelsï¿½k
  * 
  * @author atle.brekka
  */
@@ -179,9 +179,9 @@ public class SearchAttributeViewHandler implements Closeable {
 	}
 
 	/**
-	 * Lager årvelger for fra år
+	 * Lager ï¿½rvelger for fra ï¿½r
 	 * 
-	 * @return årvelger
+	 * @return ï¿½rvelger
 	 */
 	public JYearChooser getYearChooserFrom() {
 		JYearChooser yearChooser = new JYearChooser();
@@ -193,9 +193,9 @@ public class SearchAttributeViewHandler implements Closeable {
 	}
 
 	/**
-	 * Lager årvelger for til år
+	 * Lager ï¿½rvelger for til ï¿½r
 	 * 
-	 * @return årvelger
+	 * @return ï¿½rvelger
 	 */
 	public JYearChooser getYearChooserTo() {
 		JYearChooser yearChooser = new JYearChooser();
@@ -304,7 +304,7 @@ public class SearchAttributeViewHandler implements Closeable {
 	}
 
 	/**
-	 * Lager knapp for å velge attributt
+	 * Lager knapp for ï¿½ velge attributt
 	 * 
 	 * @return knapp
 	 */
@@ -315,7 +315,7 @@ public class SearchAttributeViewHandler implements Closeable {
 	}
 
 	/**
-	 * Lager knapp mfor å fjerne attributt
+	 * Lager knapp mfor ï¿½ fjerne attributt
 	 * 
 	 * @return knapp
 	 */
@@ -326,7 +326,7 @@ public class SearchAttributeViewHandler implements Closeable {
 	}
 
 	/**
-	 * Lager søkeknapp
+	 * Lager sï¿½keknapp
 	 * 
 	 * @param window
 	 * @return knapp
@@ -446,7 +446,7 @@ public class SearchAttributeViewHandler implements Closeable {
 	}
 
 	/**
-	 * Initierere hendelsehåndtering
+	 * Initierere hendelsehï¿½ndtering
 	 */
 	public void initEventHandling() {
 
@@ -646,7 +646,7 @@ public class SearchAttributeViewHandler implements Closeable {
 	}
 
 	/**
-	 * Utfør attributtsøk
+	 * Utfï¿½r attributtsï¿½k
 	 */
 	/**
 	 * 
@@ -752,7 +752,7 @@ public class SearchAttributeViewHandler implements Closeable {
 	}
 
 	/**
-	 * Søk
+	 * Sï¿½k
 	 * 
 	 * @author atle.brekka
 	 */
@@ -771,7 +771,7 @@ public class SearchAttributeViewHandler implements Closeable {
 		 * @param aWindow
 		 */
 		public SearchAction(WindowInterface aWindow) {
-			super("Søk");
+			super("SÃ¸k");
 			window = aWindow;
 		}
 
@@ -800,7 +800,7 @@ public class SearchAttributeViewHandler implements Closeable {
 	}
 
 	/**
-	 * Håndterer selektering i tabelltre
+	 * Hï¿½ndterer selektering i tabelltre
 	 * 
 	 * @author atle.brekka
 	 */
@@ -817,7 +817,7 @@ public class SearchAttributeViewHandler implements Closeable {
 	}
 
 	/**
-	 * Håndterer selektering av artikkel
+	 * Hï¿½ndterer selektering av artikkel
 	 * 
 	 * @author atle.brekka
 	 */
@@ -835,7 +835,7 @@ public class SearchAttributeViewHandler implements Closeable {
 	}
 
 	/**
-	 * Håndterer dobbeltklikk
+	 * Hï¿½ndterer dobbeltklikk
 	 */
 	public void doDoubleClick() {
 		doSelect();
@@ -934,7 +934,7 @@ public class SearchAttributeViewHandler implements Closeable {
 	}
 
 	/**
-	 * Håndterer dobbeltklikk
+	 * Hï¿½ndterer dobbeltklikk
 	 * 
 	 * @author atle.brekka
 	 */

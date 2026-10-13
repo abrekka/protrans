@@ -38,7 +38,7 @@ public class PreventiveActionValidator implements Validator {
 
         if (ValidationUtils.isBlank(ModelUtil
                 .nullToString(preventiveActionModel.getPreventiveActionName()))) {
-            support.addError("prosjektnavn", "må settes");
+            support.addError("prosjektnavn", "mÃ¥ settes");
         }
 
         return support.getResult();

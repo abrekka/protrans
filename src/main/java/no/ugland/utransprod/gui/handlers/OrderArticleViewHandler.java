@@ -144,7 +144,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	}
 
 	/**
-	 * Henter knapp for å legge til artikkel
+	 * Henter knapp for ï¿½ legge til artikkel
 	 * 
 	 * @param window
 	 * @param listener
@@ -167,7 +167,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	}
 
 	/**
-	 * Henter knapp for å fjerne artikkel
+	 * Henter knapp for ï¿½ fjerne artikkel
 	 * 
 	 * @param window
 	 * @param listener
@@ -182,7 +182,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	}
 
 	/**
-	 * Henter knapp for å editere artikkel
+	 * Henter knapp for ï¿½ editere artikkel
 	 * 
 	 * @param window
 	 * @return knapp
@@ -196,7 +196,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	}
 
 	/**
-	 * Lager knapp for å editere alle artikler
+	 * Lager knapp for ï¿½ editere alle artikler
 	 * 
 	 * @return knapp
 	 */
@@ -208,7 +208,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	}
 
 	/**
-	 * Lager knapp for å bestille artikler
+	 * Lager knapp for ï¿½ bestille artikler
 	 * 
 	 * @param window
 	 * @return knapp
@@ -265,7 +265,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	}
 
 	/**
-	 * Henter klasse for håndtering av dobbeltklikk i tretabell
+	 * Henter klasse for hï¿½ndtering av dobbeltklikk i tretabell
 	 * 
 	 * @param window
 	 * @return muselytter
@@ -275,7 +275,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	}
 
 	/**
-	 * Henter klasse for håndtering av valg i tretabell
+	 * Henter klasse for hï¿½ndtering av valg i tretabell
 	 * 
 	 * @return lytter
 	 */
@@ -371,7 +371,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 					line.getNumberOfItems());
 
 			if (!ValidationUtils.isNumeric(numberOfValue)) {
-				Util.showErrorDialog(window, "Feil", "Antall må være et tall");
+				Util.showErrorDialog(window, "Feil", "Antall mÃ¥ vÃ¦re et tall");
 				return;
 			}
 
@@ -386,7 +386,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	}
 
 	/**
-	 * Åpner vindu for artikkel
+	 * ï¿½pner vindu for artikkel
 	 * 
 	 * @param window
 	 */
@@ -411,7 +411,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	}
 
 	/**
-	 * Viser vindu for å sette verdier for attributter
+	 * Viser vindu for ï¿½ sette verdier for attributter
 	 * 
 	 * @param newArticles
 	 * @param costable
@@ -552,7 +552,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	}
 
 	/**
-	 * Åpner vindu for å sette verdier på attributter
+	 * ï¿½pner vindu for ï¿½ sette verdier pï¿½ attributter
 	 * 
 	 * @param aOrderLine
 	 * @param orderLineAttributes
@@ -573,7 +573,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	}
 
 	/**
-	 * Åpner vindu for
+	 * ï¿½pner vindu for
 	 * 
 	 * @param orderLines
 	 */
@@ -713,7 +713,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	}
 
 	/**
-	 * Klasse som håndterer valg i artikkelliste
+	 * Klasse som hï¿½ndterer valg i artikkelliste
 	 * 
 	 * @author atle.brekka
 	 */
@@ -732,7 +732,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	}
 
 	/**
-	 * Klasse som håndterer dobbeltklikk i tretabell
+	 * Klasse som hï¿½ndterer dobbeltklikk i tretabell
 	 * 
 	 * @author atle.brekka
 	 */
@@ -758,7 +758,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	}
 
 	/**
-	 * Klasse som håndterer oppdatering av artikkel
+	 * Klasse som hï¿½ndterer oppdatering av artikkel
 	 * 
 	 * @author atle.brekka
 	 */
@@ -835,7 +835,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	}
 
 	/**
-	 * Klassesom håndterer editering av artikkel
+	 * Klassesom hï¿½ndterer editering av artikkel
 	 * 
 	 * @author atle.brekka
 	 */
@@ -865,7 +865,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 	}
 
 	/**
-	 * Klasse som håndterer endring av garasjetype.
+	 * Klasse som hï¿½ndterer endring av garasjetype.
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1065,8 +1065,8 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 				return;
 			}
 			try {
-				if (Util.showConfirmDialog(window, "Importere artikler på nytt?",
-						"Dette vil slette alle artikler og importere dem på nytt, vil du fortsette?")) {
+				if (Util.showConfirmDialog(window, "Importere artikler pÃ¥ nytt?",
+						"Dette vil slette alle artikler og importere dem pÃ¥ nytt, vil du fortsette?")) {
 					importOrderLines();
 				}
 			} catch (ProTransException e1) {
@@ -1170,7 +1170,7 @@ public class OrderArticleViewHandler<T, E> implements FlushListener {
 
 		if (inneholderOrdrelinjeSomErPakket) {
 			Util.showMsgDialog(null, "Allerede pakket",
-					"Noen ordrelinjer er allerede pakket og vil ikke bli importert på nytt");
+					"Noen ordrelinjer er allerede pakket og vil ikke bli importert pÃ¥ nytt");
 		}
 		managerRepository.getOrderManager().refreshObject(incomingOrder);
 		managerRepository.getOrderManager().lazyLoadOrder(incomingOrder, new LazyLoadOrderEnum[] {

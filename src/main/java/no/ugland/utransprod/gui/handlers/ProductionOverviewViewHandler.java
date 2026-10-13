@@ -541,6 +541,32 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 				return true;
 			}
 		},
+		MONTERING("Montering") {
+			@Override
+			public Class<?> getColumnClass() {
+				return String.class;
+			}
+
+			@Override
+			public Object getValue(Transportable transportable, Map<String, String> statusMap,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				String returnString = "";
+				if (transportable.getDoAssembly() != null && transportable.getDoAssembly() == 1) {
+					returnString = "M" + (transportable.getAssembly() == null ? ""
+							: transportable.getAssembly().getAssemblyWeek() == null ? ""
+									: transportable.getAssembly().getAssemblyWeek());
+				}
+				return returnString;
+			}
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap,
+					WindowInterface window, Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers,
+					JPopupMenu popupMenuProduction) {
+				return true;
+			}
+		},
 		ESTIMERT_TID_VEGG("Estimert tid vegg") {
 			@Override
 			public Object getValue(Transportable transportable, Map<String, String> statusMap,
@@ -823,32 +849,6 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 				return true;
 			}
 		},
-		MONTERING("Montering") {
-			@Override
-			public Class<?> getColumnClass() {
-				return String.class;
-			}
-
-			@Override
-			public Object getValue(Transportable transportable, Map<String, String> statusMap,
-					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-				String returnString = "";
-				if (transportable.getDoAssembly() != null && transportable.getDoAssembly() == 1) {
-					returnString = "M" + (transportable.getAssembly() == null ? ""
-							: transportable.getAssembly().getAssemblyWeek() == null ? ""
-									: transportable.getAssembly().getAssemblyWeek());
-				}
-				return returnString;
-			}
-
-			@SuppressWarnings("unchecked")
-			@Override
-			public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap,
-					WindowInterface window, Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers,
-					JPopupMenu popupMenuProduction) {
-				return true;
-			}
-		},
 		EGENPRODUKSJON("Egenproduksjon") {
 			@Override
 			public Object getValue(Transportable transportable, Map<String, String> statusMap,
@@ -978,7 +978,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 				return true;
 			}
 		},
-		ØNSKET_LEVERING("Ønsket levering") {
+		Ã˜SKET_LEVERING("Ã˜nsket levering") {
 			@Override
 			public Object getValue(Transportable transportable, Map<String, String> statusMap,
 					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
@@ -1054,7 +1054,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 			}
 		},
 
-		PRODUKTOMRÅDE("Produktområde") {
+		PRODUKTOMRÃ…DE("ProduktomrÃ¥de") {
 			@Override
 			public Class<?> getColumnClass() {
 				return String.class;
@@ -1479,7 +1479,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		// TextPaneRendererCustTr());
 
 		// table.getColumnExt(ProductionColumn.KOMPLETT.ordinal()).setVisible(false);
-		table.getColumnExt(ProductionColumn.PRODUKTOMRÅDE.ordinal()).setVisible(false);
+		table.getColumnExt(ProductionColumn.PRODUKTOMRÃ…DE.ordinal()).setVisible(false);
 		table.getColumnExt(ProductionColumn.KLAR.ordinal()).setVisible(false);
 		table.getColumnExt(ProductionColumn.KOMPLETT.ordinal()).setVisible(false);
 		// table.getColumnExt(10).setVisible(false);
@@ -1537,7 +1537,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	}
 
 	/**
-	 * Åpner ordrevindu
+	 * ï¿½pner ordrevindu
 	 * 
 	 * @param order
 	 * @param window
@@ -1549,7 +1549,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	}
 
 	/**
-	 * Håndterer klikk i tabell
+	 * Hï¿½ndterer klikk i tabell
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1626,7 +1626,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	}
 
 	/**
-	 * Håndterer menyvalg for pakkliste
+	 * Hï¿½ndterer menyvalg for pakkliste
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1675,7 +1675,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	}
 
 	/**
-	 * Håndterer menyvalg for å åpne ordre
+	 * Hï¿½ndterer menyvalg for ï¿½ ï¿½pne ordre
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1730,7 +1730,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	}
 
 	/**
-	 * Håndterer menyvalg for å visse mangler
+	 * Hï¿½ndterer menyvalg for ï¿½ visse mangler
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1756,7 +1756,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	}
 
 	/**
-	 * Håndterer menyvalg for å vise innhold
+	 * Hï¿½ndterer menyvalg for ï¿½ vise innhold
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1782,7 +1782,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	}
 
 	/**
-	 * Håndterer menyvalg for å registrere avvik
+	 * Hï¿½ndterer menyvalg for ï¿½ registrere avvik
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2059,13 +2059,13 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		} else if (order.getLastProcentDone() != null
 				&& order.getLastProcentDone().getProcent() > newProcentDone.getProcent()) {
 			checkObject = new CheckObject("Forrige prosent " + order.getLastProcentDone()
-					+ " er høyere enn denne. Vil du likevel lagre denne?", true, null);
+					+ " er hÃ¸yere enn denne. Vil du likevel lagre denne?", true, null);
 		}
 		return checkObject;
 	}
 
 	/**
-	 * Håndterer setting av filter
+	 * Hï¿½ndterer setting av filter
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2086,7 +2086,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	}
 
 	/**
-	 * Søking
+	 * Sï¿½king
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2096,7 +2096,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		private WindowInterface window;
 
 		public SearchAction(WindowInterface aWindow) {
-			super("Søk ordre...");
+			super("SÃ¸k ordre...");
 			window = aWindow;
 		}
 
@@ -2107,7 +2107,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	}
 
 	/**
-	 * Søker ordre
+	 * Sï¿½ker ordre
 	 * 
 	 * @param window
 	 */
@@ -2128,7 +2128,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	}
 
 	/**
-	 * Håndterer endring av filter
+	 * Hï¿½ndterer endring av filter
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2141,7 +2141,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 	}
 
 	/**
-	 * Håndterer filtrering
+	 * Hï¿½ndterer filtrering
 	 */
 	protected void handleFilter() {
 		table.clearSelection();
@@ -2162,7 +2162,7 @@ public class ProductionOverviewViewHandler extends DefaultAbstractViewHandler<Or
 		if (group != ProductAreaGroup.UNKNOWN) {
 			if (!group.getProductAreaGroupName().equalsIgnoreCase("Takstol")) {
 				filterList.add(new PatternFilter(group.getProductAreaGroupName(), Pattern.CASE_INSENSITIVE,
-						ProductionColumn.PRODUKTOMRÅDE.ordinal()));
+						ProductionColumn.PRODUKTOMRÃ…DE.ordinal()));
 			} else {
 				filterList
 						.add(new PatternFilter(".*e.*", Pattern.CASE_INSENSITIVE, ProductionColumn.TAKSTOL.ordinal()));

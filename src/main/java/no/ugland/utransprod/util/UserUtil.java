@@ -61,7 +61,7 @@ public final class UserUtil {
 
     public static boolean hasWriteAccess(final UserType userType, final String windowName) {
         if (userType == null) {
-            throw new IllegalArgumentException("Brukertype må være satt");
+            throw new IllegalArgumentException("Brukertype mÃ¥ vÃ¦re satt");
         }
         if (Util.convertNumberToBoolean(userType.getIsAdmin())) {
             return true;

@@ -28,7 +28,7 @@ import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JYearChooser;
 
 /**
- * Klasse som håndterer visning og editering av transport
+ * Klasse som hï¿½ndterer visning og editering av transport
  * 
  * @author atle.brekka
  * 
@@ -81,7 +81,7 @@ public class EditTransportView extends
 		CellConstraints cc = new CellConstraints();
 		builder.addLabel("Navn:", cc.xy(2, 2));
 		builder.add(textFieldName, cc.xyw(4, 2, 3));
-		builder.addLabel("År:", cc.xy(2, 4));
+		builder.addLabel("Ã…r:", cc.xy(2, 4));
 		builder.add(yearChooser, cc.xy(4, 4));
 		builder.addLabel("Uke:", cc.xy(2, 6));
 		builder.add(comboBoxWeek, cc.xy(4, 6));
@@ -116,7 +116,7 @@ public class EditTransportView extends
 	@Override
 	protected void initComponentAnnotations() {
 		ValidationComponentUtils.setMandatory(yearChooser, true);
-		ValidationComponentUtils.setMessageKey(yearChooser, "Transport.år");
+		ValidationComponentUtils.setMessageKey(yearChooser, "Transport.Ã¥r");
 
 		ValidationComponentUtils.setMandatory(comboBoxWeek, true);
 		ValidationComponentUtils.setMessageKey(comboBoxWeek, "Transport.uke");
@@ -127,7 +127,7 @@ public class EditTransportView extends
 	}
 
 	/**
-	 * Initierer hendelsehåndtering
+	 * Initierer hendelsehï¿½ndtering
 	 */
 	private void initEditEventHandling() {
 		PropertyConnector connYear = new PropertyConnector(

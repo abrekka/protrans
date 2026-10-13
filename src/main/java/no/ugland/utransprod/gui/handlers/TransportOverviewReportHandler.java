@@ -41,7 +41,7 @@ import com.jgoodies.binding.list.ArrayListModel;
 import com.toedter.calendar.JYearChooser;
 
 /**
- * Håndterer oversiktsrapport for transport
+ * Hï¿½ndterer oversiktsrapport for transport
  * @author atle.brekka
  */
 public class TransportOverviewReportHandler implements Closeable {
@@ -74,8 +74,8 @@ public class TransportOverviewReportHandler implements Closeable {
     }
 
     /**
-     * Lager årvelger
-     * @return årvelger
+     * Lager ï¿½rvelger
+     * @return ï¿½rvelger
      */
     public JYearChooser getYearChooser() {
         JYearChooser yearChooser = new JYearChooser();
@@ -136,15 +136,15 @@ public class TransportOverviewReportHandler implements Closeable {
     }
 
     /**
-     * Henter vindusstørrelse
-     * @return vindusstørrelse
+     * Henter vindusstï¿½rrelse
+     * @return vindusstï¿½rrelse
      */
     public Dimension getWindowSize() {
         return new Dimension(310, 130);
     }
 
     /**
-     * Holder på rapportsettinger
+     * Holder pï¿½ rapportsettinger
      * @author atle.brekka
      */
     public class ReportSetting extends Model {
@@ -232,7 +232,7 @@ public class TransportOverviewReportHandler implements Closeable {
         }
 
         /**
-         * @return år
+         * @return ï¿½r
          */
         public Integer getYear() {
             return year;
@@ -298,8 +298,8 @@ public class TransportOverviewReportHandler implements Closeable {
                 Util.runInThreadWheel(window.getRootPane(),new ReportGenerator(window), null);
                 
             } else {
-                Util.showErrorDialog(window, "Utvalg må settes",
-                        "Alle utvalg må settes");
+                Util.showErrorDialog(window, "Utvalg mÃ¥ settes",
+                        "Alle utvalg mÃ¥ settes");
             }
 
         }
@@ -453,7 +453,7 @@ public class TransportOverviewReportHandler implements Closeable {
     }
 
     /**
-     * Finner status for ønsket objekt
+     * Finner status for ï¿½nsket objekt
      * @param checker
      * @param statusMap
      * @param order
@@ -541,7 +541,7 @@ public class TransportOverviewReportHandler implements Closeable {
     }
 
     /**
-     * Sjekker om det skal kjøres dispose
+     * Sjekker om det skal kjï¿½res dispose
      * @return true dersom dispose
      */
     public boolean getDisposeOnClose() {

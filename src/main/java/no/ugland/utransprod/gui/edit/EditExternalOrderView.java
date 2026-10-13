@@ -133,7 +133,7 @@ public class EditExternalOrderView extends
 		// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
 		CellConstraints cc = new CellConstraints();
 
-		builder.addLabel("Leverandør:", cc.xy(2, 2));
+		builder.addLabel("LeverandÃ¸r:", cc.xy(2, 2));
 		builder.add(comboBoxSupplier, cc.xyw(4, 2, 5));
 		builder.addLabel("Eksternt ordrenr.:", cc.xy(2, 4));
 		builder.add(textFieldExternalOrderNr, cc.xy(4, 4));
@@ -145,7 +145,7 @@ public class EditExternalOrderView extends
 		builder.add(textFieldMarkedWith, cc.xy(14, 2));
 		builder.addLabel("Leveringsdato:", cc.xy(2, 6));
 		builder.add(dateChooserDeliveryDate, cc.xy(4, 6));
-		builder.addLabel("Vår ref.:", cc.xy(6, 6));
+		builder.addLabel("VÃ¥r ref.:", cc.xy(6, 6));
 		builder.add(textFieldOurRef, cc.xy(8, 6));
 		builder.addLabel("Fax:", cc.xy(12, 6));
 		builder.add(textFieldFaxNr, cc.xy(14, 6));
@@ -195,7 +195,7 @@ public class EditExternalOrderView extends
 	protected void initComponentAnnotations() {
 		ValidationComponentUtils.setMandatory(comboBoxSupplier, true);
 		ValidationComponentUtils.setMessageKey(comboBoxSupplier,
-				"Bestilling.leverandør");
+				"Bestilling.leverandÃ¸r");
 
 	}
 

@@ -177,7 +177,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	}
 
 	/**
-	 * Initierer liste med produktområdegrupper
+	 * Initierer liste med produktomrÃ¥degrupper
 	 */
 	private void initProductAreaGroup() {
 		productAreaGroupModel = new PresentationModel(new ProductAreaGroupModel(ProductAreaGroup.UNKNOWN));
@@ -190,14 +190,14 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	}
 
 	/**
-	 * Henter tekst som skal stå på tilordningsknapp
+	 * Henter tekst som skal stï¿½ pï¿½ tilordningsknapp
 	 * 
 	 * @return tekst
 	 */
 	protected abstract String getApplyText();
 
 	/**
-	 * Henter tekst som skal stå på knapp som fjerner tilordning
+	 * Henter tekst som skal stï¿½ pï¿½ knapp som fjerner tilordning
 	 * 
 	 * @return tekst
 	 */
@@ -223,14 +223,14 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	protected abstract void setPause(T object, boolean started);
 
 	/**
-	 * Henter tekst som skal stå på filter
+	 * Henter tekst som skal stï¿½ pï¿½ filter
 	 * 
 	 * @return tekst
 	 */
 	protected abstract String getCheckBoxText();
 
 	/**
-	 * Sjekker om tilordningsknapp skal være enablet
+	 * Sjekker om tilordningsknapp skal vï¿½re enablet
 	 * 
 	 * @param object
 	 * @return true dersom enablet
@@ -240,7 +240,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	protected abstract boolean getButtonStartEnabled(T object);
 
 	/**
-	 * Kjører lazy lasting dersom nødvendig
+	 * Kjï¿½rer lazy lasting dersom nï¿½dvendig
 	 * 
 	 * @param object
 	 */
@@ -264,14 +264,14 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	protected abstract Integer getStartColumn();
 
 	/**
-	 * Henter kolonne som inneholder produktområdegruppenavn
+	 * Henter kolonne som inneholder produktomrï¿½degruppenavn
 	 * 
 	 * @return kolonne
 	 */
 	protected abstract int getProductAreaColumn();
 
 	/**
-	 * Søker etter ordre
+	 * Sï¿½ker etter ordre
 	 * 
 	 * @param orderNr
 	 * @param customerNr
@@ -322,12 +322,12 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	protected abstract boolean hasWriteAccess();
 
 	/**
-	 * Setter kolonner som ikke skal være synlige
+	 * Setter kolonner som ikke skal vï¿½re synlige
 	 */
 	protected abstract void setInvisibleCells();
 
 	/**
-	 * Finner objekt som skal setter basert på transporterbart objekt
+	 * Finner objekt som skal setter basert pï¿½ transporterbart objekt
 	 * 
 	 * @param transportable
 	 * @return objekt som skal settes
@@ -412,7 +412,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	}
 
 	/**
-	 * Lager knapp for å fjerne tilordning
+	 * Lager knapp for ï¿½ fjerne tilordning
 	 * 
 	 * @param window
 	 * @return knapp
@@ -799,7 +799,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	}
 
 	/**
-	 * Lytter på seleksjon
+	 * Lytter pï¿½ seleksjon
 	 * 
 	 * @author atle.brekka
 	 */
@@ -825,7 +825,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	}
 
 	/**
-	 * Håndterer filter
+	 * Hï¿½ndterer filter
 	 * 
 	 * @author atle.brekka
 	 */
@@ -857,7 +857,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	}
 
 	/**
-	 * Håndterer filtrering
+	 * Hï¿½ndterer filtrering
 	 */
 	protected void handleFilter() {
 
@@ -894,9 +894,9 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	}
 
 	/**
-	 * Henter vindusstørrelse
+	 * Henter vindusstï¿½rrelse
 	 * 
-	 * @return størrelse
+	 * @return stï¿½rrelse
 	 */
 	public abstract Dimension getWindowSize();
 
@@ -926,7 +926,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	public abstract String getTableWidth();
 
 	/**
-	 * Lager søkeknapp
+	 * Lager sï¿½keknapp
 	 * 
 	 * @param window
 	 * @return kapp
@@ -954,7 +954,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	}
 
 	/**
-	 * Lager komboboks for produktområdegruppe
+	 * Lager komboboks for produktomrï¿½degruppe
 	 * 
 	 * @return komboboks
 	 */
@@ -973,7 +973,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	}
 
 	/**
-	 * Søk
+	 * Sï¿½k
 	 * 
 	 * @author atle.brekka
 	 */
@@ -986,7 +986,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 		 * @param aWindow
 		 */
 		public SearchAction(final WindowInterface aWindow) {
-			super("Søk...");
+			super("SÃ¸k...");
 			window = aWindow;
 		}
 
@@ -998,7 +998,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 			objectSelectionList.clearSelection();
 
 			SearchOrderView searchOrderView = new SearchOrderView(true);
-			JDialog dialog = Util.getDialog(window, "Søk", true);
+			JDialog dialog = Util.getDialog(window, "SÃ¸k", true);
 			WindowInterface dialogWindow = new JDialogAdapter(dialog);
 			dialog.add(searchOrderView.buildPanel(dialogWindow));
 			dialog.pack();
@@ -1195,7 +1195,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	}
 
 	/**
-	 * Velger objekt dersom flere tilfrdsstilte søk
+	 * Velger objekt dersom flere tilfrdsstilte sï¿½k
 	 * 
 	 * @param window
 	 * @param objects
@@ -1236,7 +1236,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	}
 
 	/**
-	 * Håndterer popupmeny
+	 * Hï¿½ndterer popupmeny
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1269,7 +1269,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	}
 
 	/**
-	 * Håndterer innlegging av kommentar
+	 * Hï¿½ndterer innlegging av kommentar
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1331,7 +1331,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	}
 
 	/**
-	 * Hådterer høyreklikk i tabell
+	 * Hï¿½dterer hï¿½yreklikk i tabell
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1352,7 +1352,7 @@ public abstract class AbstractProductionPackageViewHandler<T extends Applyable>
 	}
 
 	/**
-	 * Håndterer filtrering
+	 * Hï¿½ndterer filtrering
 	 * 
 	 * @author atle.brekka
 	 */

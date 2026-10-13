@@ -54,8 +54,9 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -321,5 +322,5 @@
 			<version>2.0</version>
 		</dependency>
 	</dependencies>
-	<version>5.1.28</version>
+	<version>5.1.39</version>
 </project>

@@ -23,7 +23,7 @@ import com.jgoodies.binding.adapter.AbstractTableAdapter;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
 
 /**
- * Håndterer leveradørtyper
+ * Hï¿½ndterer leveradï¿½rtyper
  * 
  * @author atle.brekka
  * 
@@ -40,7 +40,7 @@ DefaultAbstractViewHandler<SupplierType, SupplierTypeModel> {
 	 * @param userType
 	 */
 	public SupplierTypeViewHandler(UserType userType,SupplierTypeManager supplierTypeManager) {
-		super("Leverandørtyper", supplierTypeManager, userType, true);
+		super("LeverandÃ¸rtyper", supplierTypeManager, userType, true);
 	}
 
 	/**
@@ -102,7 +102,7 @@ DefaultAbstractViewHandler<SupplierType, SupplierTypeModel> {
 	 */
 	@Override
 	public String getAddRemoveString() {
-		return "leverandørtype";
+		return "leverandÃ¸rtype";
 	}
 
 	/**
@@ -142,7 +142,7 @@ DefaultAbstractViewHandler<SupplierType, SupplierTypeModel> {
 	 */
 	@Override
 	public String getTitle() {
-		return "Leverandørtyper";
+		return "LeverandÃ¸rtyper";
 	}
 
 	/**
@@ -154,11 +154,11 @@ DefaultAbstractViewHandler<SupplierType, SupplierTypeModel> {
 	}
 
 	/**
-	 * Lager ny leverandørtype
+	 * Lager ny leverandï¿½rtype
 	 * 
 	 * @param window
 	 * 
-	 * @return leverandørtype
+	 * @return leverandï¿½rtype
 	 */
 	public SupplierType insertNewSupplierType(WindowInterface window) {
 		SupplierType supplierType = new SupplierType();
@@ -177,7 +177,7 @@ DefaultAbstractViewHandler<SupplierType, SupplierTypeModel> {
 	}
 
 	/**
-	 * Tabellmodell for leverandørtyper
+	 * Tabellmodell for leverandï¿½rtyper
 	 * 
 	 * @author atle.brekka
 	 * 
@@ -243,7 +243,7 @@ DefaultAbstractViewHandler<SupplierType, SupplierTypeModel> {
 	 */
 	@Override
 	public Boolean hasWriteAccess() {
-		return UserUtil.hasWriteAccess(userType, "Leverandørtyper");
+		return UserUtil.hasWriteAccess(userType, "LeverandÃ¸rtyper");
 	}
 
 	/**

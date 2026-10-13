@@ -57,11 +57,13 @@ public class AssemblyReportNy {
 	}
 
 	public String getFirma() {
-		return "Rekke".equalsIgnoreCase(order.getProductArea().getProductArea()) ? FIRMA_REKKE : FIRMA_GARASJE;
+//		return "Rekke".equalsIgnoreCase(order.getProductArea().getProductArea()) ? FIRMA_REKKE : FIRMA_GARASJE;
+		return FIRMA_GARASJE;
 	}
 
 	public String getOrgnr() {
-		return "Rekke".equalsIgnoreCase(order.getProductArea().getProductArea()) ? ORGNR_REKKE : ORGNR_GARASJE;
+//		return "Rekke".equalsIgnoreCase(order.getProductArea().getProductArea()) ? ORGNR_REKKE : ORGNR_GARASJE;
+		return ORGNR_GARASJE;
 	}
 
 	/*

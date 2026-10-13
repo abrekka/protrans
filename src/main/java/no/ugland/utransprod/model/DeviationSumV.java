@@ -47,7 +47,7 @@ public class DeviationSumV extends BaseObject implements Columnable {
 	 * 
 	 */
     private static final List<String> columnNames = new ArrayList<String>(
-            Arrays.asList(new String[] { "Produktområde","Avviksfunksjon", "Kategori",
+            Arrays.asList(new String[] { "ProduktomrÃ¥de","Avviksfunksjon", "Kategori",
                     "Status", "Antall", "Intern kostnad", "Ekstern kostnad"
                      }));
 
@@ -140,7 +140,7 @@ public class DeviationSumV extends BaseObject implements Columnable {
     }
 
     /**
-     * @return registreringsår
+     * @return registreringsï¿½r
      */
     public Integer getRegistrationYear() {
         return deviationSumVPK.getRegistrationYear();

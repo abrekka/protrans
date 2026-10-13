@@ -304,7 +304,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Initierer liste med produktområdegrupper
+	 * Initierer liste med produktomrï¿½degrupper
 	 */
 	// private void initProductAreaGroup() {
 	// productAreaGroupModel = new PresentationModel(new
@@ -546,9 +546,9 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Henter størrelse på vindu
+	 * Henter stï¿½rrelse pï¿½ vindu
 	 * 
-	 * @return størrelse
+	 * @return stï¿½rrelse
 	 */
 	public Dimension getWindowSize() {
 		return new Dimension(1300, 700);
@@ -570,7 +570,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		 * @param listModel
 		 */
 		public PackageOrderTableModel(ListModel listModel) {
-			super(listModel, new String[] { "Ordre", "Transport", "Pakket", "Klar", "Opplasting", "Produktområde",
+			super(listModel, new String[] { "Ordre", "Transport", "Pakket", "Klar", "Opplasting", "ProduktomrÃ¥de",
 					"Sannsynlighet", "Prod.uke" });
 		}
 
@@ -645,7 +645,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		 * @param listModel
 		 */
 		public PackagePostShipmentTableModel(ListModel listModel) {
-			super(listModel, new String[] { "Ordre", "Transport", "Pakket", "Produktområde", "Opplastning" });
+			super(listModel, new String[] { "Ordre", "Transport", "Pakket", "ProduktomrÃ¥de", "Opplastning" });
 		}
 
 		/**
@@ -700,7 +700,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Henter knapp for å legge til artikkel
+	 * Henter knapp for ï¿½ legge til artikkel
 	 * 
 	 * @param window
 	 * @return knapp
@@ -713,7 +713,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Henter knapp for å fjerne artikkel
+	 * Henter knapp for ï¿½ fjerne artikkel
 	 * 
 	 * @param window
 	 * @return knapp
@@ -725,7 +725,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Initierer hendelsehåndtering
+	 * Initierer hendelsehï¿½ndtering
 	 * 
 	 * @param aMainPackageView
 	 * @param window
@@ -815,10 +815,10 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		try {
 			overviewManager.saveObject(abstractOrderModel.getObject());
 		} catch (ProTransException e) {
-			Util.showErrorDialog(window, "Feil", "Ordre er oppdatert av noen andre, oppdater før lagring");
+			Util.showErrorDialog(window, "Feil", "Ordre er oppdatert av noen andre, oppdater fÃ¸r lagring");
 			e.printStackTrace();
 		} catch (HibernateOptimisticLockingFailureException e) {
-			Util.showErrorDialog(window, "Feil", "Ordre er oppdatert av noen andre, oppdater før lagring");
+			Util.showErrorDialog(window, "Feil", "Ordre er oppdatert av noen andre, oppdater fÃ¸r lagring");
 			e.printStackTrace();
 		}
 		tableModelOrderLines.fireTableDataChanged();
@@ -1222,7 +1222,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Håndterer editering av kolli
+	 * Hï¿½ndterer editering av kolli
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1268,7 +1268,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	 */
 
 	/**
-	 * Håndterer valg av ordre
+	 * Hï¿½ndterer valg av ordre
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1302,7 +1302,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Håndterer selektering av etterlevering
+	 * Hï¿½ndterer selektering av etterlevering
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1396,7 +1396,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 
 	private void checkBuffering(WindowInterface window) {
 		if (presentationModelPackable.isBuffering()) {
-			if (JOptionPane.showConfirmDialog(window.getComponent(), "Det er gjort endringer, ønsker du å lagre?",
+			if (JOptionPane.showConfirmDialog(window.getComponent(), "Det er gjort endringer, Ã¸nsker du Ã¥ lagre?",
 					"Lagre?", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
 				saveComment(window);
 			} else {
@@ -1486,7 +1486,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Henter sjekkboks for å sette ordre klar
+	 * Henter sjekkboks for ï¿½ sette ordre klar
 	 * 
 	 * @param window
 	 * @return sjekkboks
@@ -1536,7 +1536,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Håndterer visning eller ikke visning av pakkede ordre
+	 * Hï¿½ndterer visning eller ikke visning av pakkede ordre
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1583,7 +1583,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		/**
 		 * @param order1
 		 * @param order2
-		 * @return 1 dersom større, -1 dersom mindre og 0 dersom lik
+		 * @return 1 dersom stï¿½rre, -1 dersom mindre og 0 dersom lik
 		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 		 */
 		public int compare(MainPackageV order1, MainPackageV order2) {
@@ -1614,7 +1614,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		/**
 		 * @param postShipment1
 		 * @param postShipment2
-		 * @return 1 dersom større, -1 dersom minder eller 0 dersom lik
+		 * @return 1 dersom stï¿½rre, -1 dersom minder eller 0 dersom lik
 		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 		 */
 		public int compare(PostShipment postShipment1, PostShipment postShipment2) {
@@ -1648,11 +1648,11 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	public class ColliComparator implements Comparator<Colli> {
 
 		/**
-		 * Sammenlikner på navn
+		 * Sammenlikner pï¿½ navn
 		 * 
 		 * @param colli1
 		 * @param colli2
-		 * @return 1 dersom større, -1 dersom mindre og 0 dersom lik
+		 * @return 1 dersom stï¿½rre, -1 dersom mindre og 0 dersom lik
 		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 		 */
 		public int compare(Colli colli1, Colli colli2) {
@@ -1689,7 +1689,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Åpner dialog for setting av attributter for ordrelinje
+	 * ï¿½pner dialog for setting av attributter for ordrelinje
 	 * 
 	 * @param aOrderLine
 	 * @param orderLineAttributes
@@ -1852,7 +1852,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Håndterer å legge til artikkel
+	 * Hï¿½ndterer ï¿½ legge til artikkel
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1903,7 +1903,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Håndterer sletting av artikkel
+	 * Hï¿½ndterer sletting av artikkel
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1953,7 +1953,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Setter høyde på garasjepakke.
+	 * Setter hï¿½yde pï¿½ garasjepakke.
 	 * 
 	 * @param colliHeight
 	 */
@@ -1970,7 +1970,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Håndterer avkrysning i sjekkboks.
+	 * Hï¿½ndterer avkrysning i sjekkboks.
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2212,7 +2212,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Håndterer valg av ordrelinje
+	 * Hï¿½ndterer valg av ordrelinje
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2255,7 +2255,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Lager knapp for å legge til kommentar
+	 * Lager knapp for ï¿½ legge til kommentar
 	 * 
 	 * @param window
 	 * @return knapp
@@ -2268,7 +2268,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Lager komboboks for produktområdegruppe
+	 * Lager komboboks for produktomrï¿½degruppe
 	 * 
 	 * @return komboboks
 	 */
@@ -2330,7 +2330,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Håndterer lagring av kommentar
+	 * Hï¿½ndterer lagring av kommentar
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2365,7 +2365,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Håndterer dobbeltklikk på ordrelinje
+	 * Hï¿½ndterer dobbeltklikk pï¿½ ordrelinje
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2449,7 +2449,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Henter knapp for å søke etter ordre
+	 * Henter knapp for ï¿½ sï¿½ke etter ordre
 	 * 
 	 * @param window
 	 * @return knapp
@@ -2459,7 +2459,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Søker ordre
+	 * Sï¿½ker ordre
 	 * 
 	 * @param orderNr
 	 * @param customerNr
@@ -2499,7 +2499,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Håndterer søking etter ordre
+	 * Hï¿½ndterer sï¿½king etter ordre
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2512,7 +2512,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 		 * @param aWindow
 		 */
 		public SearchOrderAction(WindowInterface aWindow) {
-			super("Søk ordre...");
+			super("SÃ¸k ordre...");
 			window = aWindow;
 		}
 
@@ -2538,7 +2538,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Søker
+	 * Sï¿½ker
 	 * 
 	 * @param window
 	 * @return order dersom funnet
@@ -2598,7 +2598,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Henter meny for å kunne aksessere gulvsponpakkevindu
+	 * Henter meny for ï¿½ kunne aksessere gulvsponpakkevindu
 	 * 
 	 * @param user
 	 * @param gulvsponPackageVManager
@@ -2616,7 +2616,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Håndterer menyvalget gulvspon
+	 * Hï¿½ndterer menyvalget gulvspon
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2684,7 +2684,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Henter om vindu skal kjøre dispose
+	 * Henter om vindu skal kjï¿½re dispose
 	 * 
 	 * @return true dersom dispose
 	 */
@@ -2693,7 +2693,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Håndterer museklikk i tabell for etterleveringer
+	 * Hï¿½ndterer museklikk i tabell for etterleveringer
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2821,7 +2821,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Håndterer popupmeny for registrering av avvik
+	 * Hï¿½ndterer popupmeny for registrering av avvik
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2884,7 +2884,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Håndterer høyreklikk i tabell over ordre
+	 * Hï¿½ndterer hï¿½yreklikk i tabell over ordre
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2902,7 +2902,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Håndterer filtrering
+	 * Hï¿½ndterer filtrering
 	 */
 	protected void handleFilter() {
 		// gi beskjed til alle transportlister at de skal filtrere
@@ -2982,7 +2982,7 @@ public class MainPackageViewHandler implements Closeable, Updateable, ListDataLi
 	}
 
 	/**
-	 * Håndterer endring av filter
+	 * Hï¿½ndterer endring av filter
 	 * 
 	 * @author atle.brekka
 	 */

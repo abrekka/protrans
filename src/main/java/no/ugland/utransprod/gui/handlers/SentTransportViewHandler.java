@@ -58,7 +58,7 @@ import com.jgoodies.binding.list.ArrayListModel;
 import com.jgoodies.binding.list.SelectionInList;
 
 /**
- * Håndterer sending av ordre
+ * Hï¿½ndterer sending av ordre
  * 
  * @author atle.brekka
  */
@@ -408,7 +408,7 @@ public class SentTransportViewHandler implements Closeable {
 			if (orderLinesNotSent != null && orderLinesNotSent.size() != 0) {
 				if (Util.showConfirmDialog(window.getComponent(), "Mangler!", "Det finnes ordrelinjer for ordre "
 						+ transportlistable
-						+ "\n som ikke er sent, dersom den sendes må det registreres et avvik.\nVil du allikevel sende denne?")) {
+						+ "\n som ikke er sent, dersom den sendes mÃ¥ det registreres et avvik.\nVil du allikevel sende denne?")) {
 					registerDeviation(orderLinesNotSent, transportlistable);
 					transportlistable.setSent(sentDate);
 				} else {
@@ -418,7 +418,7 @@ public class SentTransportViewHandler implements Closeable {
 				/*
 				 * MsgDialog( null, "Ikke sent",
 				 * "Det finnes ordrelinjer for ordre " + transportlistable +
-				 * " som ikke er sent, dersom den sendes må registreres et avvik.\nVil du allikevel sende denne?"
+				 * " som ikke er sent, dersom den sendes mï¿½ registreres et avvik.\nVil du allikevel sende denne?"
 				 * ); registerDeviation(orderLinesNotSent, transportlistable);
 				 */
 			}
@@ -578,7 +578,7 @@ public class SentTransportViewHandler implements Closeable {
 	}
 
 	/**
-	 * Lager knapp for å vise kollier
+	 * Lager knapp for ï¿½ vise kollier
 	 * 
 	 * @return knapp
 	 */
@@ -659,7 +659,7 @@ public class SentTransportViewHandler implements Closeable {
 	}
 
 	/**
-	 * Lytter på selektering i tabell
+	 * Lytter pï¿½ selektering i tabell
 	 * 
 	 * @author atle.brekka
 	 */

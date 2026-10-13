@@ -54,7 +54,7 @@ import no.ugland.utransprod.util.ModelUtil;
 import no.ugland.utransprod.util.Util;
 
 /**
- * Håndterer sending av ordre
+ * Hï¿½ndterer sending av ordre
  * 
  * @author atle.brekka
  */
@@ -400,7 +400,7 @@ public class LevertTransportViewHandler implements Closeable {
 			if (orderLinesNotLevert != null && orderLinesNotLevert.size() != 0) {
 				if (Util.showConfirmDialog(window.getComponent(), "Mangler!", "Det finnes ordrelinjer for ordre "
 						+ transportlistable
-						+ "\n som ikke er levert, dersom den sendes må det registreres et avvik.\nVil du allikevel sende denne?")) {
+						+ "\n som ikke er levert, dersom den sendes mÃ¥ det registreres et avvik.\nVil du allikevel sende denne?")) {
 					registerDeviation(orderLinesNotLevert, transportlistable);
 					transportlistable.setLevert(levertDate);
 				} else {
@@ -410,7 +410,7 @@ public class LevertTransportViewHandler implements Closeable {
 				/*
 				 * MsgDialog( null, "Ikke sent",
 				 * "Det finnes ordrelinjer for ordre " + transportlistable +
-				 * " som ikke er sent, dersom den sendes må registreres et avvik.\nVil du allikevel sende denne?"
+				 * " som ikke er sent, dersom den sendes mï¿½ registreres et avvik.\nVil du allikevel sende denne?"
 				 * ); registerDeviation(orderLinesNotSent, transportlistable);
 				 */
 			}
@@ -550,7 +550,7 @@ public class LevertTransportViewHandler implements Closeable {
 	}
 
 	/**
-	 * Lager knapp for å vise kollier
+	 * Lager knapp for ï¿½ vise kollier
 	 * 
 	 * @return knapp
 	 */
@@ -631,7 +631,7 @@ public class LevertTransportViewHandler implements Closeable {
 	}
 
 	/**
-	 * Lytter på selektering i tabell
+	 * Lytter pï¿½ selektering i tabell
 	 * 
 	 * @author atle.brekka
 	 */

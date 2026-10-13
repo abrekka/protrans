@@ -355,7 +355,7 @@ public class TakstolProductionViewHandler extends ProductionViewHandler
 				return 70;
 			}
 		},
-		PRODUKTOMRÅDE("Produktområde") {
+		PRODUKTOMRÃ…DE("ProduktomrÃ¥de") {
 			@Override
 			public Class<?> getColumnClass() {
 				return String.class;

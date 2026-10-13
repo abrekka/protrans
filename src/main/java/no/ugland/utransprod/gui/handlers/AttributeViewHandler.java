@@ -221,7 +221,7 @@ public class AttributeViewHandler extends
 	}
 
 	/**
-	 * Henter knapp for å legge til attributt
+	 * Henter knapp for ï¿½ legge til attributt
 	 * 
 	 * @param aWindow
 	 * @return knapp
@@ -234,7 +234,7 @@ public class AttributeViewHandler extends
 	}
 
 	/**
-	 * Henter knapp for å fjerne attributt
+	 * Henter knapp for ï¿½ fjerne attributt
 	 * 
 	 * @param aWindow
 	 * @return knapp
@@ -335,7 +335,7 @@ public class AttributeViewHandler extends
 						.showConfirmDialog(
 								window.getComponent(),
 								"Oppdatere order?",
-								"Dersom spesielt hensyn er oppdatert bør alle ordre oppdateres. Ønsker du å gjøre det?")) {
+								"Dersom spesielt hensyn er oppdatert bÃ¸r alle ordre oppdateres. Ã˜nsker du Ã¥ gjÃ¸re det?")) {
 			return;
 		}
 
@@ -352,7 +352,7 @@ public class AttributeViewHandler extends
 	}
 
 	/**
-	 * Håndterer dobbeltklikk i liste over attributter
+	 * Hï¿½ndterer dobbeltklikk i liste over attributter
 	 * 
 	 * @author atle.brekka
 	 * 
@@ -453,7 +453,7 @@ public class AttributeViewHandler extends
 	}
 
 	/**
-	 * Håndterer oppdtering av spesielt hensyn
+	 * Hï¿½ndterer oppdtering av spesielt hensyn
 	 * 
 	 * @author atle.brekka
 	 * 
@@ -555,7 +555,7 @@ public class AttributeViewHandler extends
 		/**
 		 * @param att1
 		 * @param att2
-		 * @return mindre enn, lik, større enn
+		 * @return mindre enn, lik, stï¿½rre enn
 		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 		 */
 		public int compare(Attribute att1, Attribute att2) {
@@ -579,7 +579,7 @@ public class AttributeViewHandler extends
 	}
 
 	/**
-	 * Klasse som oppdaterer knapper når det velges attributt
+	 * Klasse som oppdaterer knapper nï¿½r det velges attributt
 	 * 
 	 * @author atle.brekka
 	 * 
@@ -597,7 +597,7 @@ public class AttributeViewHandler extends
 	}
 
 	/**
-	 * Klasse som håndterer oppdatering av selsksjonsliste ved valg av
+	 * Klasse som hï¿½ndterer oppdatering av selsksjonsliste ved valg av
 	 * sttributt(er)
 	 * 
 	 * @author atle.brekka

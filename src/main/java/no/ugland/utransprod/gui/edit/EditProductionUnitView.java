@@ -48,7 +48,7 @@ public class EditProductionUnitView extends
 		builder.add(textFieldProductionUnitName, cc.xy(4, 2));
 		builder.addLabel("Artikkel:", cc.xy(2, 4));
 		builder.add(comboBoxArticleType, cc.xy(4, 4));
-		builder.addLabel("Produktområder:", cc.xy(2, 6));
+		builder.addLabel("ProduktomrÃ¥der:", cc.xy(2, 6));
 		builder.add(new JScrollPane(listProductAreaGroup), cc.xywh(4, 6, 1, 3));
 		builder.add(buildButtonPanel(), cc.xywh(6, 6, 1, 3));
 		builder.add(
@@ -84,7 +84,7 @@ public class EditProductionUnitView extends
 
 		ValidationComponentUtils.setMandatory(listProductAreaGroup, true);
 		ValidationComponentUtils.setMessageKey(listProductAreaGroup,
-				"Produksjonsenhet.produktområde");
+				"Produksjonsenhet.produktomrÃ¥de");
 
 	}
 

@@ -70,7 +70,7 @@ public class DesktopUtil {
             if (window == null
                     || Util
                             .showConfirmDialog(window, "Filtype?",
-                                    "Det er ingen applikasjon assosiert med denne file, vil du åpne med teksteditor?")) {
+                                    "Det er ingen applikasjon assosiert med denne file, vil du Ã¥pne med teksteditor?")) {
                 Association assoc = getFileAccociation(".txt");
 
                 Association newAssoc = new Association();

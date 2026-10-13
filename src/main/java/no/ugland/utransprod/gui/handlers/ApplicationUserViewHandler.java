@@ -44,7 +44,7 @@ import com.jgoodies.binding.list.ArrayListModel;
 import com.jgoodies.binding.list.SelectionInList;
 
 /**
- * Håndterer brukere
+ * Hï¿½ndterer brukere
  * 
  * @author atle.brekka
  * 
@@ -141,7 +141,7 @@ public class ApplicationUserViewHandler extends
 	}
 
 	/**
-	 * Lager knapp for å legge til bruker
+	 * Lager knapp for ï¿½ legge til bruker
 	 * 
 	 * @param window
 	 * @param presentationModel
@@ -154,7 +154,7 @@ public class ApplicationUserViewHandler extends
 	}
 
 	/**
-	 * Lager knapp fpr å legge til produktområde
+	 * Lager knapp fpr ï¿½ legge til produktomrï¿½de
 	 * 
 	 * @param window
 	 * @param presentationModel
@@ -162,12 +162,12 @@ public class ApplicationUserViewHandler extends
 	 */
 	public JButton getButtonAddProductAreaGroup(WindowInterface window,
 			PresentationModel presentationModel) {
-		return new NewButton("produktområde", new ProductAreaGroupUpdater(
+		return new NewButton("produktomrÃ¥de", new ProductAreaGroupUpdater(
 				presentationModel), window, "Nytt");
 	}
 
 	/**
-	 * Lager knapp for å slette bruker
+	 * Lager knapp for ï¿½ slette bruker
 	 * 
 	 * @param window
 	 * @param presentationModel
@@ -182,7 +182,7 @@ public class ApplicationUserViewHandler extends
 	}
 
 	/**
-	 * Lager knapp for å fjerne produktområde
+	 * Lager knapp for ï¿½ fjerne produktomrï¿½de
 	 * 
 	 * @param window
 	 * @param presentationModel
@@ -190,7 +190,7 @@ public class ApplicationUserViewHandler extends
 	 */
 	public JButton getButtonRemoveProductAreaGroup(WindowInterface window,
 			PresentationModel presentationModel) {
-		buttonRemoveProductAreaGroup = new DeleteButton("produktområde",
+		buttonRemoveProductAreaGroup = new DeleteButton("produktomrÃ¥de",
 				new ProductAreaGroupUpdater(presentationModel), window);
 		buttonRemoveProductAreaGroup.setEnabled(false);
 		return buttonRemoveProductAreaGroup;
@@ -301,7 +301,7 @@ public class ApplicationUserViewHandler extends
 		// Gruppebruker
 		col = table.getColumnModel().getColumn(3);
 		col.setPreferredWidth(80);
-		// Produktområde
+		// Produktomrï¿½de
 		table.getColumnExt(4).setPreferredWidth(100);
 
 	}
@@ -322,7 +322,7 @@ public class ApplicationUserViewHandler extends
 	}
 
 	/**
-	 * Henter liste med produktområde
+	 * Henter liste med produktomrï¿½de
 	 * 
 	 * @param presentationModel
 	 * @return liste
@@ -346,7 +346,7 @@ public class ApplicationUserViewHandler extends
 	}
 
 	/**
-	 * Liste med alle produktområder
+	 * Liste med alle produktomrï¿½der
 	 * 
 	 * @return liste
 	 */
@@ -372,7 +372,7 @@ public class ApplicationUserViewHandler extends
 		 * 
 		 */
 		private static final String[] COLUMNS = { "Brukernavn", "Fornavn",
-				"Etternavn", "Gruppebruker", "Produktområde" };
+				"Etternavn", "Gruppebruker", "Produktomrï¿½de" };
 
 		/**
 		 * @param listModel
@@ -454,7 +454,7 @@ public class ApplicationUserViewHandler extends
 	}
 
 	/**
-	 * Legger til produktområde
+	 * Legger til produktomrï¿½de
 	 * 
 	 * @param window
 	 * @param presentationModel
@@ -470,8 +470,8 @@ public class ApplicationUserViewHandler extends
 			groups.remove(user.getProductArea().getProductAreaGroup());
 		}
 		ProductAreaGroup selectedGroup = (ProductAreaGroup) JOptionPane
-				.showInputDialog(window.getComponent(), "Velg produktområde",
-						"Legg til produktområde",
+				.showInputDialog(window.getComponent(), "Velg produktomrÃ¥de",
+						"Legg til produktomrÃ¥de",
 						JOptionPane.INFORMATION_MESSAGE, null,
 						groups.toArray(), null);
 		if (selectedGroup != null) {
@@ -506,7 +506,7 @@ public class ApplicationUserViewHandler extends
 	}
 
 	/**
-	 * Fjerner produktområde
+	 * Fjerner produktomrï¿½de
 	 * 
 	 * @param presentationModel
 	 */
@@ -523,7 +523,7 @@ public class ApplicationUserViewHandler extends
 	}
 
 	/**
-	 * Håndterer valg av brukertype
+	 * Hï¿½ndterer valg av brukertype
 	 * 
 	 * @author atle.brekka
 	 * 
@@ -542,7 +542,7 @@ public class ApplicationUserViewHandler extends
 	}
 
 	/**
-	 * Håndterer valg i liste over produktområder
+	 * Hï¿½ndterer valg i liste over produktomrï¿½der
 	 * 
 	 * @author atle.brekka
 	 * 
@@ -562,7 +562,7 @@ public class ApplicationUserViewHandler extends
 	}
 
 	/**
-	 * Håndterer editeing av brukerprofiler
+	 * Hï¿½ndterer editeing av brukerprofiler
 	 * 
 	 * @author atle.brekka
 	 * 
@@ -611,7 +611,7 @@ public class ApplicationUserViewHandler extends
 	}
 
 	/**
-	 * Håndterer legge til og fjerne produktområde
+	 * Hï¿½ndterer legge til og fjerne produktomrï¿½de
 	 * 
 	 * @author atle.brekka
 	 * 

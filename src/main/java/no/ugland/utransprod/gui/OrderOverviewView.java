@@ -98,7 +98,7 @@ public class OrderOverviewView extends OverviewView<Order, OrderModel> {
 	CellConstraints cc = new CellConstraints();
 	scrollPaneTable.setBorder(Borders.EMPTY_BORDER);
 	builder.add(labelHeading, cc.xy(2, 2));
-	builder.addLabel("Produktområde:", cc.xy(3, 2));
+	builder.addLabel("ProduktomrÃ¥de:", cc.xy(3, 2));
 	builder.add(comboBoxProductAreaGroup, cc.xy(5, 2));
 	builder.add(new JScrollPane(labelFilterInfo), cc.xyw(2, 14, 5));
 	builder.add(scrollPaneTable, cc.xywh(2, 4, 5, 9));

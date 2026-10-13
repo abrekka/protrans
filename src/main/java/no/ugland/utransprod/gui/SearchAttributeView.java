@@ -22,7 +22,7 @@ import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JYearChooser;
 
 /**
- * Vindu som brukes til å søke opp ordre med gitte kriterier for attributter
+ * Vindu som brukes til ï¿½ sï¿½ke opp ordre med gitte kriterier for attributter
  * 
  * @author atle.brekka
  * 
@@ -205,12 +205,12 @@ public class SearchAttributeView {
 		PanelBuilder builder = new PanelBuilder(layout);
 		CellConstraints cc = new CellConstraints();
 
-		builder.addLabel("Fra år:", cc.xy(1, 1));
+		builder.addLabel("Fra Ã¥r:", cc.xy(1, 1));
 		builder.add(yearChooserFrom, cc.xy(3, 1));
 		builder.addLabel("Fra uke:", cc.xy(5, 1));
 		builder.add(comboBoxWeeksFrom, cc.xy(7, 1));
 
-		builder.addLabel("Til år:", cc.xy(1, 3));
+		builder.addLabel("Til Ã¥r:", cc.xy(1, 3));
 		builder.add(yearChooserTo, cc.xy(3, 3));
 		builder.addLabel("Til uke:", cc.xy(5, 3));
 		builder.add(comboBoxWeeksTo, cc.xy(7, 3));
@@ -267,7 +267,7 @@ public class SearchAttributeView {
 	}
 
 	/**
-	 * Initierer hendelsehåndtering
+	 * Initierer hendelsehï¿½ndtering
 	 */
 	private void initEventHandling() {
 		PropertyConnector connDates = new PropertyConnector(panelDates,

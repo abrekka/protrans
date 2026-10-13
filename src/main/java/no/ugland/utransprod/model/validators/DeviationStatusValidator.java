@@ -38,7 +38,7 @@ public class DeviationStatusValidator implements Validator {
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(deviationStatusModel
                 .getDeviationStatusName()))) {
-            support.addError("navn", "må settes");
+            support.addError("navn", "mÃ¥ settes");
         }
 
         return support.getResult();

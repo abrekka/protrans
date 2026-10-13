@@ -271,7 +271,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Initierer liste med produktområdegrupper
+	 * Initierer liste med produktomrï¿½degrupper
 	 */
 	// private void initProductAreaGroup() {
 	// productAreaGroupModel = new PresentationModel(new
@@ -328,10 +328,10 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Lager årvelger
+	 * Lager ï¿½rvelger
 	 * 
 	 * @param window
-	 * @return årvelger
+	 * @return ï¿½rvelger
 	 */
 	public JYearChooser getYearChooser(WindowInterface window) {
 		JYearChooser yearChooser = new JYearChooser();
@@ -374,7 +374,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Lager knapp for å legge til etterleveringer
+	 * Lager knapp for ï¿½ legge til etterleveringer
 	 * 
 	 * @param window
 	 * @return knapp
@@ -386,7 +386,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Lager knapp for å slette etterlvering
+	 * Lager knapp for ï¿½ slette etterlvering
 	 * 
 	 * @param window
 	 * @return knapp
@@ -402,7 +402,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Lager knapp for å generere excel
+	 * Lager knapp for ï¿½ generere excel
 	 * 
 	 * @param window
 	 * @return knapp
@@ -414,7 +414,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Lager label for å vise antall order
+	 * Lager label for ï¿½ vise antall order
 	 * 
 	 * @return label
 	 */
@@ -424,7 +424,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Lager label for å vise garasjeverdi
+	 * Lager label for ï¿½ vise garasjeverdi
 	 * 
 	 * @return label
 	 */
@@ -444,7 +444,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Lager komboboks for produktområdegruppe
+	 * Lager komboboks for produktomrï¿½degruppe
 	 * 
 	 * @return komboboks
 	 */
@@ -475,7 +475,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Lager label for å vise status om søk
+	 * Lager label for ï¿½ vise status om sï¿½k
 	 * 
 	 * @return label
 	 */
@@ -485,7 +485,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Lager knapp for å søke etter ordre
+	 * Lager knapp for ï¿½ sï¿½ke etter ordre
 	 * 
 	 * @param window
 	 * @return knapp
@@ -496,7 +496,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Lager knapp for å hente ut statistikk
+	 * Lager knapp for ï¿½ hente ut statistikk
 	 * 
 	 * @return knapp
 	 */
@@ -528,7 +528,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Lager napp for å oppdatere
+	 * Lager napp for ï¿½ oppdatere
 	 * 
 	 * @param window
 	 * @return knapp
@@ -548,7 +548,7 @@ public class RouteViewHandler
 		if (transportWeekViewHandler != null) {
 			if (transportWeekViewHandler.hasChanges()) {
 				if (Util.showConfirmDialog(window.getComponent(), "Lagre?",
-						"Det er gjort endringer, ønsker du å lagre?")) {
+						"Det er gjort endringer, Ã¸nsker du Ã¥ lagre?")) {
 					canClose = false;
 				} else {
 					transportWeekViewHandler.resetChanges();
@@ -573,9 +573,9 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Henter vindusstørrelse
+	 * Henter vindusstï¿½rrelse
 	 * 
-	 * @return vindusstørrelse
+	 * @return vindusstï¿½rrelse
 	 */
 	public Dimension getWindowSize() {
 		return new Dimension(1500, 800);
@@ -604,7 +604,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Håndterer endring av uke.
+	 * Hï¿½ndterer endring av uke.
 	 * 
 	 * @author atle.brekka
 	 */
@@ -661,7 +661,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Håndterer endring av år
+	 * Hï¿½ndterer endring av ï¿½r
 	 * 
 	 * @author atle.brekka
 	 */
@@ -747,7 +747,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Håndterer endringer på transport i gjeldende uke
+	 * Hï¿½ndterer endringer pï¿½ transport i gjeldende uke
 	 * 
 	 * @author atle.brekka
 	 */
@@ -877,7 +877,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Søker etter ordre
+	 * Sï¿½ker etter ordre
 	 * 
 	 * @param window
 	 */
@@ -903,7 +903,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Håndterer søk
+	 * Hï¿½ndterer sï¿½k
 	 * 
 	 * @author atle.brekka
 	 */
@@ -916,7 +916,7 @@ public class RouteViewHandler
 		 * @param aWindow
 		 */
 		public SearchOrderAction(WindowInterface aWindow) {
-			super("Søk ordre...");
+			super("SÃ¸k ordre...");
 			window = aWindow;
 		}
 
@@ -930,7 +930,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Håndterer statistikk
+	 * Hï¿½ndterer statistikk
 	 * 
 	 * @author atle.brekka
 	 */
@@ -984,7 +984,7 @@ public class RouteViewHandler
 			super(listModel,
 					new String[] { "Kunde", "Ordrenr", "Adresse", "Postnummer", "Poststed", "Type",
 							// "Kommentar",
-							"Klar", "Produktområde" });
+							"Klar", "ProduktomrÃ¥de" });
 		}
 
 		/**
@@ -1051,7 +1051,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Lager lytter til høyreklikk
+	 * Lager lytter til hï¿½yreklikk
 	 * 
 	 * @param setPostShipment
 	 * @return muslytter
@@ -1062,7 +1062,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Lytter til høyreklikk
+	 * Lytter til hï¿½yreklikk
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1090,7 +1090,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Setter transport på ordre
+	 * Setter transport pï¿½ ordre
 	 * 
 	 * @param setPostShipment
 	 * @param window
@@ -1138,7 +1138,7 @@ public class RouteViewHandler
 		boolean weekValid = !Util.isAfter(new YearWeek(Util.getCurrentYear(), Util.getCurrentWeek()),
 				new YearWeek(transport.getTransportYear(), transport.getTransportWeek()));
 		weekValid = !weekValid ? Util.showConfirmDialog(window.getComponent(), "Gammel uke",
-				"Du prøver å sette transport til en gammel uke, ønsker du å gjøre dette?") : true;
+				"Du prÃ¸ver Ã¥ sette transport til en gammel uke, Ã¸nsker du Ã¥ gjÃ¸re dette?") : true;
 		return weekValid;
 	}
 
@@ -1196,7 +1196,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Håndterer menyvalg for ordre
+	 * Hï¿½ndterer menyvalg for ordre
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1248,7 +1248,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Håndterer menyvalg for etterleveringer
+	 * Hï¿½ndterer menyvalg for etterleveringer
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1288,7 +1288,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Håndterer å legge til etterleveringer
+	 * Hï¿½ndterer ï¿½ legge til etterleveringer
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1323,7 +1323,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Håndterer sletting av etterlevering
+	 * Hï¿½ndterer sletting av etterlevering
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1365,7 +1365,7 @@ public class RouteViewHandler
 							for (OrderLine orderLine : orderLines) {
 								if (orderLine.getOrder().getSent() != null) {
 									if (!Util.showConfirmDialog(window.getComponent(), "Slette?",
-											"Ordre som ordrelinjer hører til har blitt sendt, vil du allikevel slette ettersending?")) {
+											"Ordre som ordrelinjer hÃ¸rer til har blitt sendt, vil du allikevel slette ettersending?")) {
 										return;
 									}
 								}
@@ -1399,7 +1399,7 @@ public class RouteViewHandler
 
 						if (deviation != null) {
 							if (Util.showConfirmDialog(window.getComponent(), "Slette?",
-									"Etterlevering er koblet til avvik som også vil bli slettet, vil du allikevel slette?")) {
+									"Etterlevering er koblet til avvik som ogsÃ¥ vil bli slettet, vil du allikevel slette?")) {
 								managerRepository.getDeviationManager().removeObject(deviation);
 							}
 						} else {
@@ -1443,7 +1443,7 @@ public class RouteViewHandler
 		if (orderNr != null) {
 			// OrderManager orderManager = (OrderManager)
 			// ModelUtil.getBean("orderManager");
-			// finner ordre basert på ordrenr
+			// finner ordre basert pï¿½ ordrenr
 			order = managerRepository.getOrderManager().findByOrderNr(orderNr);
 
 			if (order == null) {
@@ -1467,7 +1467,7 @@ public class RouteViewHandler
 			}
 		}
 
-		// dersom ordre ikke er funnet må det lages en ordre
+		// dersom ordre ikke er funnet mï¿½ det lages en ordre
 		if (order == null) {
 			order = createOrder(orderNr, parentWindow);
 
@@ -1545,7 +1545,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Håndterer valg i etterlevringstabell
+	 * Hï¿½ndterer valg i etterlevringstabell
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1566,7 +1566,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Håndterer utskrift av transport til excel
+	 * Hï¿½ndterer utskrift av transport til excel
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1718,7 +1718,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Håndterer visning av innhold i etterlevering
+	 * Hï¿½ndterer visning av innhold i etterlevering
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1874,7 +1874,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Wrapper klasse rundt transport for å lage en passende toString-metode
+	 * Wrapper klasse rundt transport for ï¿½ lage en passende toString-metode
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1913,7 +1913,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * @return true dersom dispose skal kjøres
+	 * @return true dersom dispose skal kjï¿½res
 	 */
 	public boolean getDisposeOnClose() {
 		return disposeOnClose;
@@ -1961,7 +1961,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Håndterer setting av filter
+	 * Hï¿½ndterer setting av filter
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1983,7 +1983,7 @@ public class RouteViewHandler
 	}
 
 	/**
-	 * Håndterer endring av filter
+	 * Hï¿½ndterer endring av filter
 	 * 
 	 * @author atle.brekka
 	 */

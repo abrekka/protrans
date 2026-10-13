@@ -161,7 +161,7 @@ public class ExcelReportViewHandlerDeviation extends ExcelReportViewHandler {
 	}
 
 	/**
-	 * Lager komboboks for produktområde
+	 * Lager komboboks for produktomrï¿½de
 	 * 
 	 * @return komboboks
 	 */
@@ -172,7 +172,7 @@ public class ExcelReportViewHandlerDeviation extends ExcelReportViewHandler {
 	 */
 
 	/**
-	 * Lager komboboks med alle måneder
+	 * Lager komboboks med alle mï¿½neder
 	 * 
 	 * @return komboboks
 	 */
@@ -235,15 +235,15 @@ public class ExcelReportViewHandlerDeviation extends ExcelReportViewHandler {
 		// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
 		CellConstraints cc = new CellConstraints();
 
-		builder.addLabel("År:", cc.xy(1, 1));
+		builder.addLabel("Ã…r:", cc.xy(1, 1));
 		builder.add(yearChooser, cc.xy(3, 1));
 
 		switch (((ExcelReportSetting) presentationModel.getBean())
 				.getExcelReportType()) {
 		case DEVIATION_SUMMARY:
-			builder.addLabel("Måned:", cc.xy(5, 1));
+			builder.addLabel("MÃ¥ned:", cc.xy(5, 1));
 			builder.add(comboBoxMonths, cc.xy(7, 1));
-			builder.addLabel("Produktområde:", cc.xy(5, 3));
+			builder.addLabel("ProduktomrÃ¥de:", cc.xy(5, 3));
 			builder.add(comboBoxProductArea, cc.xyw(7, 3, 1));
 			break;
 		case DEVIATION_SUM:
@@ -261,7 +261,7 @@ public class ExcelReportViewHandlerDeviation extends ExcelReportViewHandler {
 		case DEVIATION_JOB_FUNCTION_SUM:
 			builder.addLabel("Avviksfunksjon:", cc.xy(5, 1));
 			builder.add(comboBoxDeviationFunction, cc.xy(7, 1));
-			builder.addLabel("Produktområde:", cc.xy(5, 3));
+			builder.addLabel("ProduktomrÃ¥de:", cc.xy(5, 3));
 			builder.add(comboBoxProductAreaGroup, cc.xy(7, 3));
 			break;
 		}
@@ -286,7 +286,7 @@ public class ExcelReportViewHandlerDeviation extends ExcelReportViewHandler {
 	}
 
 	/**
-	 * Håndterer endring av avviksfunksjon
+	 * Hï¿½ndterer endring av avviksfunksjon
 	 * 
 	 * @author atle.brekka
 	 */
@@ -311,23 +311,23 @@ public class ExcelReportViewHandlerDeviation extends ExcelReportViewHandler {
 			WindowInterface window) {
 		String errorString = null;
 		if (excelReportEnum.useFrom() && setting.getWeekFrom() == null) {
-			errorString = "Det må velges fra uke";
+			errorString = "Det mÃ¥ velges fra uke";
 		} else if (excelReportEnum.useTo() && setting.getWeekTo() == null) {
-			errorString = "Det må velges til uke";
+			errorString = "Det mÃ¥ velges til uke";
 		} else if (setting.getExcelReportType() == null) {
-			errorString = "Det må velges rapport";
+			errorString = "Det mÃ¥ velges rapport";
 		} else if (setting.getExcelReportType() == ExcelReportEnum.DEVIATION_SUMMARY
 				&& ((ExcelReportSettingDeviation) setting).getProductArea() == null) {
-			errorString = "Det må velges et produktområde!";
+			errorString = "Det mÃ¥ velges et produktomrÃ¥de!";
 		} else if (setting.getExcelReportType() == ExcelReportEnum.DEVIATION_SUMMARY
 				&& ((ExcelReportSettingDeviation) setting).getMonthEnum() == null) {
-			errorString = "Det må velges en måned!";
+			errorString = "Det mÃ¥ velges en mÃ¥ned!";
 		}
 		if(setting.getExcelReportType()==ExcelReportEnum.DEVIATION_JOB_FUNCTION_SUM){
 			if(((ExcelReportSettingDeviation)setting).getDeviationFunction()==null){
-				errorString = "Det må velges en aviksfunksjon!";
+				errorString = "Det mÃ¥ velges en aviksfunksjon!";
 			}else if(((ExcelReportSettingDeviation)setting).getProductAreaGroup()==null){
-				errorString = "Det må velges et produktområde!";
+				errorString = "Det mÃ¥ velges et produktomrÃ¥de!";
 			}
 		}
 

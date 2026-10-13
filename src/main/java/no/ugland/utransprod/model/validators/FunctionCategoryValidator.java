@@ -38,11 +38,11 @@ public class FunctionCategoryValidator implements Validator {
 
         if (ValidationUtils.isBlank(ModelUtil
                 .nullToString(functionCategoryModel.getFunctionCategoryName()))) {
-            support.addError("navn", "må settes");
+            support.addError("navn", "mÃ¥ settes");
         }
 
         if (functionCategoryModel.getJobFunction() == null) {
-            support.addError("funksjon", "må settes");
+            support.addError("funksjon", "mÃ¥ settes");
         }
 
         return support.getResult();

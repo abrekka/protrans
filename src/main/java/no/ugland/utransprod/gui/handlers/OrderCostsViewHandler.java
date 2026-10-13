@@ -203,7 +203,7 @@ public class OrderCostsViewHandler implements CostChangeListener {
     }
 
     /**
-     * Henter knapp for å legge til kostnad
+     * Henter knapp for ï¿½ legge til kostnad
      * 
      * @param window
      * @return knapp
@@ -216,7 +216,7 @@ public class OrderCostsViewHandler implements CostChangeListener {
     }
 
     /**
-     * Henter knapp for å fjerne kostnad
+     * Henter knapp for ï¿½ fjerne kostnad
      * 
      * @param window
      * @return knapp
@@ -230,7 +230,7 @@ public class OrderCostsViewHandler implements CostChangeListener {
     }
 
     /**
-     * Henter knapp for å editere kostnad
+     * Henter knapp for ï¿½ editere kostnad
      * 
      * @param window
      * @return knapp
@@ -257,7 +257,7 @@ public class OrderCostsViewHandler implements CostChangeListener {
     }
 
     /**
-     * Åpner vindu for å editere kostnad
+     * ï¿½pner vindu for ï¿½ editere kostnad
      * 
      * @param window
      * @param selectedOrderCost
@@ -329,7 +329,7 @@ public class OrderCostsViewHandler implements CostChangeListener {
     }
 
     /**
-     * Klasse som håndterer dobbeltklikk i tabell
+     * Klasse som hï¿½ndterer dobbeltklikk i tabell
      * 
      * @author atle.brekka
      * 
@@ -357,7 +357,7 @@ public class OrderCostsViewHandler implements CostChangeListener {
     }
 
     /**
-     * Klasse som håndterer editering av kostnad
+     * Klasse som hï¿½ndterer editering av kostnad
      * 
      * @author atle.brekka
      * 
@@ -397,7 +397,7 @@ public class OrderCostsViewHandler implements CostChangeListener {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String[] COLUMNS = { "Kostnad", "Betales av", "Beløp", "Mva", "Av." };
+	private static final String[] COLUMNS = { "Kostnad", "Betales av", "BelÃ¸p", "Mva", "Av." };
 
 	private boolean editable;
 	private PresentationModel presentationModel;
@@ -494,7 +494,7 @@ public class OrderCostsViewHandler implements CostChangeListener {
     }
 
     /**
-     * Klasse som håndterer oppdatering av kostnader
+     * Klasse som hï¿½ndterer oppdatering av kostnader
      * 
      * @author atle.brekka
      * 
@@ -555,7 +555,7 @@ public class OrderCostsViewHandler implements CostChangeListener {
     }
 
     /**
-     * Klasse som håndterer valg i liste
+     * Klasse som hï¿½ndterer valg i liste
      * 
      * @author atle.brekka
      * 
@@ -571,7 +571,7 @@ public class OrderCostsViewHandler implements CostChangeListener {
     }
 
     /**
-     * Initierer hendelsehåndtering
+     * Initierer hendelsehï¿½ndtering
      * 
      * @param window
      */

@@ -12,7 +12,7 @@ import no.ugland.utransprod.service.ManagerRepository;
 import com.google.inject.Inject;
 
 /**
- * Håndterer menyvalg Leverandører
+ * Hï¿½ndterer menyvalg Leverandï¿½rer
  * 
  * @author atle.brekka
  */
@@ -29,7 +29,7 @@ public class SupplierAction extends AbstractAction {
 	public SupplierAction(MenuBarBuilderInterface aMenuBarBuilder,
 Login aLogin,
 			ManagerRepository aManagerRepository) {
-		super("Leverandører...");
+		super("LeverandÃ¸rer...");
 		login = aLogin;
 		manageRepository = aManagerRepository;
 		this.menuBarBuilder = aMenuBarBuilder;

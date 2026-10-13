@@ -37,7 +37,7 @@ import com.jgoodies.validation.Validator;
 import com.jgoodies.validation.view.ValidationComponentUtils;
 
 /**
- * Klase som håndterer visning og editering av garasjetype
+ * Klase som hï¿½ndterer visning og editering av garasjetype
  * 
  * @author atle.brekka
  * 
@@ -91,7 +91,7 @@ public class EditConstructionTypeView extends
 		builder.addLabel("Skisse:", cc.xy(2, 6));
 		builder.add(comboBoxSketch, cc.xyw(4, 6, 1));
 		// builder.add(checkBoxVilla, cc.xyw(4, 8, 1));
-		builder.addLabel("Produktområde:", cc.xy(2, 8));
+		builder.addLabel("ProduktomrÃ¥de:", cc.xy(2, 8));
 		builder.add(comboBoxProductArea, cc.xyw(4, 8, 1));
 		if (!((ConstructionTypeViewHandler) viewHandler).isMaster()) {
 			builder.add(buttonCopyMaster, cc.xyw(4, 10, 1));
@@ -125,7 +125,7 @@ public class EditConstructionTypeView extends
 	}
 
 	/**
-	 * Bygger panel for knapper tilhørende attributtpanel
+	 * Bygger panel for knapper tilhï¿½rende attributtpanel
 	 * 
 	 * @return panel
 	 */
@@ -158,7 +158,7 @@ public class EditConstructionTypeView extends
 	}
 
 	/**
-	 * Bygger panel for knapper tilhørende artikkelpanel
+	 * Bygger panel for knapper tilhï¿½rende artikkelpanel
 	 * 
 	 * @return pnel
 	 */
@@ -195,7 +195,7 @@ public class EditConstructionTypeView extends
 
 		ValidationComponentUtils.setMandatory(comboBoxProductArea, true);
 		ValidationComponentUtils.setMessageKey(comboBoxProductArea,
-				"Garasjetype.produktområde");
+				"Garasjetype.produktomrÃ¥de");
 
 	}
 
@@ -289,13 +289,13 @@ public class EditConstructionTypeView extends
 		col = treeTableArticles.getColumnModel().getColumn(1);
 		col.setPreferredWidth(50);
 
-		// Rekkefølge
+		// Rekkefï¿½lge
 		col = treeTableArticles.getColumnModel().getColumn(2);
 		col.setPreferredWidth(80);
 	}
 
 	/**
-	 * Initierer hendelsehåndtering
+	 * Initierer hendelsehï¿½ndtering
 	 */
 	private void initEventHandling() {
 		((ConstructionTypeViewHandler) viewHandler).getAttributeSelection()

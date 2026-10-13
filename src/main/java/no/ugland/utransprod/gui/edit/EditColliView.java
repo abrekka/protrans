@@ -18,7 +18,7 @@ import com.jgoodies.validation.Validator;
 import com.jgoodies.validation.view.ValidationComponentUtils;
 
 /**
- * Klasse som håndterer editering av kolli
+ * Klasse som hï¿½ndterer editering av kolli
  * 
  * @author atle.brekka
  * 
@@ -48,7 +48,7 @@ public class EditColliView extends AbstractEditView<ColliModel, Colli> {
 	builder.add(textFieldLenght, cc.xy(4, 6));
 	builder.addLabel("Bredde:", cc.xy(2, 8));
 	builder.add(textFieldWidht, cc.xy(4, 8));
-	builder.addLabel("Høyde:", cc.xy(2, 10));
+	builder.addLabel("HÃ¸yde:", cc.xy(2, 10));
 	builder.add(textFieldHeight, cc.xy(4, 10));
 	builder.add(ButtonBarFactory.buildCenteredBar(buttonSave, buttonCancel), cc.xyw(2, 12, 4));
 

@@ -173,7 +173,7 @@ public class EditAccidentView extends AbstractEditView<AccidentModel, Accident> 
 		builder.add(buildDateTimePanel(), cc.xy(2, 8));
 		builder.addLabel("Beskrivelse av hendelse/ulykke:", cc.xy(2, 10));
 		builder.add(new JScrollPane(textAreaDescription), cc.xy(2, 12));
-		builder.addLabel("Årsak til hendelse/ulykke:", cc.xy(2, 14));
+		builder.addLabel("Ã…rsak til hendelse/ulykke:", cc.xy(2, 14));
 		builder.add(new JScrollPane(textAreaCause), cc.xy(2, 16));
 
 		builder.addLabel("Beskrivelse av tiltak:", cc.xy(2, 18));
@@ -200,7 +200,7 @@ public class EditAccidentView extends AbstractEditView<AccidentModel, Accident> 
 		CellConstraints cc = new CellConstraints();
 
 		builder.add(checkBoxPersonalInjuryOver24, cc.xy(1, 1));
-		builder.addLabel("Antall fraværsdager:", cc.xy(3, 1));
+		builder.addLabel("Antall fravÃ¦rsdager:", cc.xy(3, 1));
 		builder.addLabel("Antall fast ansatte som er skadet:", cc.xy(3, 3));
 		builder.add(textFieldAbsentDays, cc.xy(5, 1));
 		builder.add(textFieldNumberOfOwnEmployess, cc.xy(5, 3));
@@ -257,7 +257,7 @@ public class EditAccidentView extends AbstractEditView<AccidentModel, Accident> 
 		ValidationComponentUtils.setMessageKey(textAreaDescription, "Ulykke.beskrivelse");
 
 		ValidationComponentUtils.setMandatory(textAreaCause, true);
-		ValidationComponentUtils.setMessageKey(textAreaCause, "Ulykke.årsak");
+		ValidationComponentUtils.setMessageKey(textAreaCause, "Ulykke.Ã¥rsak");
 
 	}
 

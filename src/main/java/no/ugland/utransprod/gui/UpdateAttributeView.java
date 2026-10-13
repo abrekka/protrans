@@ -35,7 +35,7 @@ import com.jgoodies.validation.ValidationResultModel;
 import com.jgoodies.validation.view.ValidationComponentUtils;
 
 /**
- * Klasse som hånderer visning av attributter som det skal settes verdi på i
+ * Klasse som hï¿½nderer visning av attributter som det skal settes verdi pï¿½ i
  * forbindelse med at en artikkel har blitt valgt
  * 
  * @author atle.brekka
@@ -158,7 +158,7 @@ public class UpdateAttributeView {
 			checkBoxes = new LinkedHashMap<String, JCheckBox>();
 			comboBoxes = new LinkedHashMap<String, JComboBox>();
 
-			// går gjennom alle attributter og lager et tekstfelt, checkboks
+			// gï¿½r gjennom alle attributter og lager et tekstfelt, checkboks
 			// eller comboboks for hver
 			for (IArticleAttribute attribute : attributes) {
 				BeanAdapter beanAdapter = new BeanAdapter(new IArticleAttributeModel(attribute), true);
@@ -228,7 +228,7 @@ public class UpdateAttributeView {
 		if (article != null) {
 			builder.append(articleName + " - antall:"+metric, textFieldNumberOf);
 			if (showOrder) {
-				builder.append("Rekkefølge:", textFieldOrder);
+				builder.append("RekkefÃ¸lge:", textFieldOrder);
 			}
 			builder.nextLine();
 		}
@@ -237,7 +237,7 @@ public class UpdateAttributeView {
 			for (String label : labels) {
 				builder.append(label, textFields.get(label));
 				if (showOrder) {
-					builder.append("Rekkefølge:", textFieldDialogOrders
+					builder.append("RekkefÃ¸lge:", textFieldDialogOrders
 							.get(label));
 				}
 				builder.nextLine();
@@ -247,7 +247,7 @@ public class UpdateAttributeView {
 			for (String label : labels) {
 				builder.append(label, checkBoxes.get(label));
 				if (showOrder) {
-					builder.append("Rekkefølge:", textFieldDialogOrders
+					builder.append("RekkefÃ¸lge:", textFieldDialogOrders
 							.get(label));
 				}
 				builder.nextLine();
@@ -258,7 +258,7 @@ public class UpdateAttributeView {
 			for (String label : labels) {
 				builder.append(label, comboBoxes.get(label));
 				if (showOrder) {
-					builder.append("Rekkefølge:", textFieldDialogOrders
+					builder.append("RekkefÃ¸lge:", textFieldDialogOrders
 							.get(label));
 				}
 				builder.nextLine();
@@ -287,7 +287,7 @@ public class UpdateAttributeView {
 	}
 
 	/**
-	 * Initierere hendelsehåndtering
+	 * Initierere hendelsehï¿½ndtering
 	 */
 	private void initEventHandling() {
 		PropertyChangeListener handler = new ValidationUpdateHandler();
@@ -329,7 +329,7 @@ public class UpdateAttributeView {
 	}
 
 	/**
-	 * Klasse som håndterer feilrapportering
+	 * Klasse som hï¿½ndterer feilrapportering
 	 * 
 	 * @author atle.brekka
 	 * 

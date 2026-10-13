@@ -41,7 +41,7 @@ public class SystemSetupView implements EditViewable{
         builder.add(comboBoxWindows,cc.xy(4, 2));
         builder.addLabel("Tabell:",cc.xy(2, 4));
         builder.add(comboBoxTables,cc.xy(4, 4));
-        builder.addLabel("Produktområde:",cc.xy(2, 6));
+        builder.addLabel("ProduktomrÃ¥de:",cc.xy(2, 6));
         builder.add(comboBoxProductAreaGroup,cc.xy(4, 6));
         builder.addLabel("Usynlige kolonner:",cc.xy(2, 8));
         builder.add(new JScrollPane(listColumns),cc.xyw(2, 10, 1));

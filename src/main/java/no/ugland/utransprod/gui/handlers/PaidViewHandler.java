@@ -42,7 +42,7 @@ import com.google.inject.Inject;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 
 /**
- * Håndterer forhåndsbetaling
+ * Hï¿½ndterer forhï¿½ndsbetaling
  * 
  * @author atle.brekka
  */
@@ -67,7 +67,7 @@ public class PaidViewHandler extends AbstractProductionPackageViewHandlerShort<P
     @Inject
     public PaidViewHandler(final PaidApplyList productionInterface, final Login login, final ManagerRepository managerRepository,
 	    DeviationViewHandlerFactory deviationViewHandlerFactory) {
-	super(login, managerRepository, deviationViewHandlerFactory, productionInterface, "Forhåndsbetaling", TableEnum.TABLEPAID);
+	super(login, managerRepository, deviationViewHandlerFactory, productionInterface, "ForhÃ¥ndsbetaling", TableEnum.TABLEPAID);
 
 	filterListener = new FilterListener();
     }
@@ -139,7 +139,7 @@ public class PaidViewHandler extends AbstractProductionPackageViewHandlerShort<P
     void initColumnWidthExt() {
 	table.getColumnExt(0).setPreferredWidth(200);
 	table.getColumnExt(4).setPreferredWidth(80);
-	// restbeløp
+	// restbelï¿½p
 	table.getColumnExt(5).setPreferredWidth(80);
 	// forfalsdato
 	table.getColumnExt(6).setPreferredWidth(80);
@@ -160,7 +160,7 @@ public class PaidViewHandler extends AbstractProductionPackageViewHandlerShort<P
 	 * @param listModel
 	 */
 	public PaidTableModel(final ListModel listModel) {
-	    super(listModel, new String[] { "Ordre", "Beløp", "Betalt", "Montering", "Produktområde", "Fakturabeløp", "Restbeløp", "Forfallsdato",
+	    super(listModel, new String[] { "Ordre", "BelÃ¸p", "Betalt", "Montering", "ProduktomrÃ¥de", "FakturabelÃ¸p", "RestbelÃ¸p", "Forfallsdato",
 		    "Visma" });
 	}
 
@@ -316,7 +316,7 @@ public class PaidViewHandler extends AbstractProductionPackageViewHandlerShort<P
     }
 
     /**
-     * Lager radioknapp for å se alle
+     * Lager radioknapp for ï¿½ se alle
      * 
      * @return radioknapp
      */
@@ -330,7 +330,7 @@ public class PaidViewHandler extends AbstractProductionPackageViewHandlerShort<P
     }
 
     /**
-     * Lager radioknapp for å se de som skal ha montering
+     * Lager radioknapp for ï¿½ se de som skal ha montering
      * 
      * @return radioknapp
      */
@@ -343,7 +343,7 @@ public class PaidViewHandler extends AbstractProductionPackageViewHandlerShort<P
     }
 
     /**
-     * Lager radioknapp for å se byggesett
+     * Lager radioknapp for ï¿½ se byggesett
      * 
      * @return radioknapp
      */
@@ -405,7 +405,7 @@ public class PaidViewHandler extends AbstractProductionPackageViewHandlerShort<P
     }
 
     /**
-     * Håndterer setting av filtrering
+     * Hï¿½ndterer setting av filtrering
      * 
      * @author atle.brekka
      */

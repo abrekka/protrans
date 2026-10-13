@@ -19,7 +19,7 @@ import com.jgoodies.validation.Validator;
 import com.jgoodies.validation.view.ValidationComponentUtils;
 
 /**
- * Klasse for visning og editering av leverandørtype
+ * Klasse for visning og editering av leverandï¿½rtype
  * 
  * @author atle.brekka
  * 
@@ -109,6 +109,6 @@ public class EditSupplierTypeView extends
 	}
 
 	public final String getHeading() {
-		return "Leverandørtype";
+		return "LeverandÃ¸rtype";
 	}
 }

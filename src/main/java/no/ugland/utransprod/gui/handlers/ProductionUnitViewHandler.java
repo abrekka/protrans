@@ -172,7 +172,7 @@ public class ProductionUnitViewHandler extends
 
 		public AddProductAreaGroupAction(WindowInterface aWindow,
 				PresentationModel aPresentationModel) {
-			super("Legg til produktområde...");
+			super("Legg til produktomrÃ¥de...");
 			window = aWindow;
 			presentationModel = aPresentationModel;
 		}
@@ -188,7 +188,7 @@ public class ProductionUnitViewHandler extends
 		private PresentationModel presentationModel;
 
 		public RemoveProductAreaGroupAction(PresentationModel aPresentationModel) {
-			super("Fjern produktområde");
+			super("Fjern produktomrÃ¥de");
 			presentationModel = aPresentationModel;
 		}
 
@@ -255,7 +255,7 @@ public class ProductionUnitViewHandler extends
 			PresentationModel presentationModel) {
 		ProductAreaGroup productAreaGroup = (ProductAreaGroup) Util
 				.showOptionsDialogCombo(window, Util.getProductAreaGroupList(),
-						"Velg produktområde", true, null);
+						"Velg produktomrÃ¥de", true, null);
 		if (productAreaGroup != null) {
 			ProductionUnitProductAreaGroup group = new ProductionUnitProductAreaGroup();
 			group.setProductAreaGroup(productAreaGroup);

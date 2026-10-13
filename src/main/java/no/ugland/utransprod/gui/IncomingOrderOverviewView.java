@@ -68,7 +68,7 @@ public class IncomingOrderOverviewView extends OverviewView<Order, OrderModel> {
         scrollPaneTable.setBorder(Borders.EMPTY_BORDER);
 
         builder.add(labelHeading, cc.xy(2, 2));
-        builder.addLabel("Produktområde:", cc.xy(3, 2));
+        builder.addLabel("ProduktomrÃ¥de:", cc.xy(3, 2));
         builder.add(comboBoxProductAreaGroup, cc.xy(5, 2));
         builder.add(scrollPaneTable, cc.xywh(2, 4, 5, 9));
         builder.add(buildButtonPanel(), cc.xywh(8, 5, 1, 10));

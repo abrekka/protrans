@@ -82,7 +82,7 @@ public class EditProductionBudgetView extends
 	}
 
 	/**
-	 * Lager panel med felter for år, uke og budsjett
+	 * Lager panel med felter for ï¿½r, uke og budsjett
 	 * 
 	 * @return panel
 	 */
@@ -92,13 +92,13 @@ public class EditProductionBudgetView extends
 		PanelBuilder builder = new PanelBuilder(layout);
 		CellConstraints cc = new CellConstraints();
 
-		builder.addLabel("År:", cc.xy(1, 1));
+		builder.addLabel("Ã…r:", cc.xy(1, 1));
 		builder.add(yearChooser, cc.xy(3, 1));
 		builder.addLabel("Uke:", cc.xy(1, 3));
 		builder.add(comboBoxWeek, cc.xy(3, 3));
 		builder.addLabel("Budsjett:", cc.xy(1, 5));
 		builder.add(textFieldBudget, cc.xyw(3, 5, 2));
-		builder.addLabel("Produktområde:", cc.xy(1, 7));
+		builder.addLabel("ProduktomrÃ¥de:", cc.xy(1, 7));
 		builder.add(comboBoxProductionArea, cc.xyw(3, 7, 2));
 
 		return builder.getPanel();
@@ -122,7 +122,7 @@ public class EditProductionBudgetView extends
 	protected void initComponentAnnotations() {
 		ValidationComponentUtils.setMandatory(yearChooser, true);
 		ValidationComponentUtils.setMessageKey(yearChooser,
-				"Produksjonsbudsjett.år");
+				"Produksjonsbudsjett.Ã¥r");
 
 		ValidationComponentUtils.setMandatory(comboBoxWeek, true);
 		ValidationComponentUtils.setMessageKey(comboBoxWeek,
@@ -134,7 +134,7 @@ public class EditProductionBudgetView extends
 
 		ValidationComponentUtils.setMandatory(comboBoxProductionArea, true);
 		ValidationComponentUtils.setMessageKey(comboBoxProductionArea,
-				"Produksjonsbudsjett.produktområde");
+				"Produksjonsbudsjett.produktomrÃ¥de");
 
 	}
 

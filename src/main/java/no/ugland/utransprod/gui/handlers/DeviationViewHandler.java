@@ -166,7 +166,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	private DeviationViewHandler deviationViewHandlerOtherDeviations;
 
 	/**
-	 * Lyttere på om ordre endrer seg
+	 * Lyttere pï¿½ om ordre endrer seg
 	 */
 	private List<PropertyChangeListener> orderChangeListeners = new ArrayList<PropertyChangeListener>();
 
@@ -652,7 +652,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	}
 
 	/**
-	 * Lager kombobks for produktområde
+	 * Lager kombobks for produktomrï¿½de
 	 * 
 	 * @param presentationModel
 	 * @param search
@@ -700,7 +700,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	}
 
 	/**
-	 * Lager sjekkboks for å filtrere på egne avvik
+	 * Lager sjekkboks for ï¿½ filtrere pï¿½ egne avvik
 	 * 
 	 * @return sjekkboks
 	 */
@@ -775,7 +775,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 
 	public JRadioButton getRadioButtonEntrepenoer(PresentationModel presentationModel) {
 		JRadioButton radioButton = BasicComponentFactory.createRadioButton(
-				presentationModel.getBufferedModel(DeviationModel.PROPERTY_INITIATED_BY), "Entreprenør", "Entreprenør");
+				presentationModel.getBufferedModel(DeviationModel.PROPERTY_INITIATED_BY), "EntreprenÃ¸r", "EntreprenÃ¸r");
 		radioButton.setName("RadioButtonEntrepenoer");
 		return radioButton;
 	}
@@ -794,27 +794,27 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	}
 
 	/**
-	 * Lager radioknapp for initiert av montør
+	 * Lager radioknapp for initiert av montï¿½r
 	 * 
 	 * @param presentationModel
 	 * @return radioknapp
 	 */
 	public JRadioButton getRadioButtonAssembly(PresentationModel presentationModel) {
 		JRadioButton radioButton = BasicComponentFactory.createRadioButton(
-				presentationModel.getBufferedModel(DeviationModel.PROPERTY_INITIATED_BY), "Montør", "Montør");
+				presentationModel.getBufferedModel(DeviationModel.PROPERTY_INITIATED_BY), "MontÃ¸r", "MontÃ¸r");
 		radioButton.setName("RadioButtonAssembly");
 		return radioButton;
 	}
 
 	/**
-	 * Lager radioknapp for initiert av transportør
+	 * Lager radioknapp for initiert av transportï¿½r
 	 * 
 	 * @param presentationModel
 	 * @return radioknapp
 	 */
 	public JRadioButton getRadioButtonTransport(PresentationModel presentationModel) {
 		JRadioButton radioButton = BasicComponentFactory.createRadioButton(
-				presentationModel.getBufferedModel(DeviationModel.PROPERTY_INITIATED_BY), "Transportør", "Transportør");
+				presentationModel.getBufferedModel(DeviationModel.PROPERTY_INITIATED_BY), "TransportÃ¸r", "TransportÃ¸r");
 		radioButton.setName("RadioButtonTransport");
 		return radioButton;
 	}
@@ -1199,9 +1199,9 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	}
 
 	/**
-	 * Henter størrelse for registreringsvindu
+	 * Henter stï¿½rrelse for registreringsvindu
 	 * 
-	 * @return størrelse
+	 * @return stï¿½rrelse
 	 */
 
 	public Dimension getRegisterWindowSize() {
@@ -1288,7 +1288,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 		} else if (postShipment != null
 				&& (postShipment.getOrderLines() == null || postShipment.getOrderLines().size() != 0)) {
 			Util.showErrorDialog(window, "Ingen artikler",
-					"Det er ikke registert noen artikler, så det vil ikke bli laget noen etterlevering");
+					"Det er ikke registert noen artikler, sï¿½ det vil ikke bli laget noen etterlevering");
 		}
 
 	}
@@ -1413,7 +1413,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 			col = table.getColumnModel().getColumn(6);
 			col.setPreferredWidth(50);
 
-			// Prouktområde
+			// Prouktomrï¿½de
 			col = table.getColumnModel().getColumn(7);
 			col.setPreferredWidth(90);
 
@@ -1459,7 +1459,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	}
 
 	/**
-	 * Lytter på avviksfunskjon
+	 * Lytter pï¿½ avviksfunskjon
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1484,7 +1484,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	}
 
 	/**
-	 * Lytter på endringer av katgeori
+	 * Lytter pï¿½ endringer av katgeori
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1746,7 +1746,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 				return deviation.getOrderNr();
 			}
 		},
-		PRODUKTOMRÅDE("Produktområde") {
+		PRODUKTOMRÃ…DE("ProduktomrÃ¥de") {
 			@SuppressWarnings("unchecked")
 			@Override
 			public Class getClassFor() {
@@ -1994,7 +1994,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 				return deviation.getOrderNr();
 			}
 		},
-		PRODUKTOMRÅDE("Produktområde") {
+		PRODUKTOMRÃ…DE("ProduktomrÃ¥de") {
 			@SuppressWarnings("unchecked")
 			@Override
 			public Class getClassFor() {
@@ -2115,7 +2115,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 				return deviation.getCost("Kunde");
 			}
 		},
-		KOST_TRANSPORTØR("Kost Transportør") {
+		KOST_TRANSPORTÃ˜R("Kost TransportÃ¸r") {
 			@SuppressWarnings("unchecked")
 			@Override
 			public Class getClassFor() {
@@ -2124,10 +2124,10 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 
 			@Override
 			public Object getValue(Deviation deviation) {
-				return deviation.getCost("Transportør");
+				return deviation.getCost("TransportÃ¸r");
 			}
 		},
-		KOST_MONTØR("Kost montør") {
+		KOST_MONTÃ˜R("Kost montÃ¸r") {
 			@SuppressWarnings("unchecked")
 			@Override
 			public Class getClassFor() {
@@ -2136,10 +2136,10 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 
 			@Override
 			public Object getValue(Deviation deviation) {
-				return deviation.getCost("Montør");
+				return deviation.getCost("MontÃ¸r");
 			}
 		},
-		KOST_UNDERLEVERANDØR("Kost underleverandør") {
+		KOST_UNDERLEVERANDÃ˜R("Kost underleverandÃ¸r") {
 			@SuppressWarnings("unchecked")
 			@Override
 			public Class getClassFor() {
@@ -2148,7 +2148,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 
 			@Override
 			public Object getValue(Deviation deviation) {
-				return deviation.getCost("Underleverandør");
+				return deviation.getCost("UnderleverandÃ¸r");
 			}
 		},
 		KOST_INTERN("Kost intern") {
@@ -2398,7 +2398,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	}
 
 	/**
-	 * Håndterer ok-knapp
+	 * Hï¿½ndterer ok-knapp
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2430,7 +2430,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 		public void actionPerformed(ActionEvent arg0) {
 			Util.setWaitCursor(window);
 			if (validationResultModel.hasErrors()) {
-				Util.showErrorDialog(window, "Rett feil", "Rett alle feil før lagring!");
+				Util.showErrorDialog(window, "Rett feil", "Rett alle feil fÃ¸r lagring!");
 				return;
 			}
 			presentationModel.triggerCommit();
@@ -2492,7 +2492,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	}
 
 	/**
-	 * Håndterer utskrift
+	 * Hï¿½ndterer utskrift
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2601,7 +2601,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	}
 
 	/**
-	 * Lager knapp for å legge til kommentar
+	 * Lager knapp for ï¿½ legge til kommentar
 	 * 
 	 * @param window
 	 * @param presentationModel
@@ -2621,7 +2621,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	}
 
 	/**
-	 * Lager knapp for å legge til prevantivt tiltak
+	 * Lager knapp for ï¿½ legge til prevantivt tiltak
 	 * 
 	 * @param presentationModel
 	 * @param window
@@ -2667,7 +2667,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	}
 
 	/**
-	 * Lager knapp for å legge til ordrelinjer til avvik
+	 * Lager knapp for ï¿½ legge til ordrelinjer til avvik
 	 * 
 	 * @param presentationModel
 	 * @param window
@@ -2689,7 +2689,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	}
 
 	/**
-	 * Lager knapp for å ta vekk ordrelinjer fra avvik
+	 * Lager knapp for ï¿½ ta vekk ordrelinjer fra avvik
 	 * 
 	 * @param presentationModel
 	 * @param window
@@ -2968,7 +2968,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	}
 
 	/**
-	 * Lytter på valg av linjer i ordrelinje liste
+	 * Lytter pï¿½ valg av linjer i ordrelinje liste
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2997,7 +2997,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	}
 
 	/**
-	 * Tar bort filtrering på tabell
+	 * Tar bort filtrering pï¿½ tabell
 	 */
 	void clearFilter() {
 		checkBoxFilterDone.setSelected(true);
@@ -3006,7 +3006,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	}
 
 	/**
-	 * Lytter på sjekkboks for filtrering
+	 * Lytter pï¿½ sjekkboks for filtrering
 	 * 
 	 * @author atle.brekka
 	 */
@@ -3068,7 +3068,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	}
 
 	/**
-	 * Lytter på endring av avvikstatus
+	 * Lytter pï¿½ endring av avvikstatus
 	 * 
 	 * @author atle.brekka
 	 */
@@ -3139,7 +3139,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	}
 
 	/**
-	 * Lytter på om artikler legges til
+	 * Lytter pï¿½ om artikler legges til
 	 * 
 	 * @author atle.brekka
 	 */
@@ -3258,7 +3258,7 @@ public class DeviationViewHandler extends AbstractViewHandler<Deviation, Deviati
 	}
 
 	/**
-	 * Sjekker om knapper for editering skal være med. Dersom det er et panel
+	 * Sjekker om knapper for editering skal vï¿½re med. Dersom det er et panel
 	 * med andre avvik for samme ordre som gjeldende avvik skal det ikke vises
 	 * knapper
 	 * 

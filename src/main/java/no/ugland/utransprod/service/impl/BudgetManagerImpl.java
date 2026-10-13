@@ -137,7 +137,7 @@ public class BudgetManagerImpl extends ManagerImpl<Budget> implements BudgetMana
 		ProductArea productArea = productAreaManager.findByName(productAreaName);
 
 		if (productArea == null) {
-			throw new ProTransException("Produktområde " + productAreaName + " ble ikke funnet");
+			throw new ProTransException("ProduktomrÃ¥de " + productAreaName + " ble ikke funnet");
 		}
 
 		while (week != null) {

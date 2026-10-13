@@ -3,12 +3,12 @@ package no.ugland.utransprod.util.excel;
 import org.apache.poi.hssf.util.HSSFColor;
 
 public enum DayEnum {
-    SUNDAY(1, "Søndag", HSSFColor.AQUA.index), MONDAY(2, "Mandag",
+    SUNDAY(1, "SÃ¸ndag", HSSFColor.AQUA.index), MONDAY(2, "Mandag",
             HSSFColor.LEMON_CHIFFON.index), TUESDAY(3, "Tirsdag",
             HSSFColor.LIGHT_GREEN.index), WEDNESDAY(4, "Onsdag",
             HSSFColor.LIGHT_TURQUOISE.index), THURSDAY(5, "Torsdag",
             HSSFColor.LIGHT_YELLOW.index), FRIDAY(6, "Fredag",
-            HSSFColor.TAN.index), SATURDAY(7, "Lørdag",
+            HSSFColor.TAN.index), SATURDAY(7, "LÃ¸rdag",
             HSSFColor.LIGHT_CORNFLOWER_BLUE.index);
 
     private int dayNumber;
@@ -58,7 +58,7 @@ public enum DayEnum {
     }
 
     public static DayEnum getDayEnum(final String day) {
-        if (day.equalsIgnoreCase("Søndag")) {
+        if (day.equalsIgnoreCase("SÃ¸ndag")) {
             return SUNDAY;
         } else if (day.equalsIgnoreCase("Mandag")) {
             return MONDAY;
@@ -70,7 +70,7 @@ public enum DayEnum {
             return THURSDAY;
         } else if (day.equalsIgnoreCase("Fredag")) {
             return FRIDAY;
-        } else if (day.equalsIgnoreCase("Lørdag")) {
+        } else if (day.equalsIgnoreCase("LÃ¸rdag")) {
             return SATURDAY;
         } else {
             throw new IllegalStateException("Dag " + day + " er ikke definert");

@@ -35,12 +35,12 @@ public class ConstructionTypeValidator implements Validator {
 
         if (ValidationUtils.isBlank(ModelUtil
                 .nullToString(constructionTypeModel.getName()))) {
-            support.addError("navn", "må settes");
+            support.addError("navn", "mÃ¥ settes");
         }
 
         if (ValidationUtils.isBlank(ModelUtil
                 .nullToString(constructionTypeModel.getProductArea()))) {
-            support.addError("produktområde", "må settes");
+            support.addError("produktomrÃ¥de", "mÃ¥ settes");
         }
 
         return support.getResult();

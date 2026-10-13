@@ -73,7 +73,7 @@ public class ProductionOverviewView implements Viewer {
 	CellConstraints cc = new CellConstraints();
 	JScrollPane scrollPane = new JScrollPane(productionTable);
 	scrollPane.setName("ScrollPaneTable");
-	builder.addLabel("Produktområde:", cc.xy(2, 2));
+	builder.addLabel("ProduktomrÃ¥de:", cc.xy(2, 2));
 	builder.add(comboBoxProductAreaGroup, cc.xy(4, 2));
 	builder.add(buttonSearch, cc.xy(6, 2));
 	builder.add(checkBoxFilter, cc.xy(8, 2));
@@ -94,7 +94,7 @@ public class ProductionOverviewView implements Viewer {
     }
 
     /**
-     * Gjør ingenting
+     * Gjï¿½r ingenting
      * 
      * @see no.ugland.utransprod.gui.Viewer#cleanUp()
      */
@@ -109,7 +109,7 @@ public class ProductionOverviewView implements Viewer {
     }
 
     /**
-     * Gjør ingenting
+     * Gjï¿½r ingenting
      * 
      * @see no.ugland.utransprod.gui.Viewer#initWindow()
      */

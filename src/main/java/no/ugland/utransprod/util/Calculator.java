@@ -10,7 +10,7 @@ import org.nfunk.jep.JEP;
 import org.nfunk.jep.Variable;
 
 /**
- * Klasse som brukes til å beregne mattematiske uttrykk.
+ * Klasse som brukes til ï¿½ beregne mattematiske uttrykk.
  * 
  * @author atle.brekka
  */
@@ -88,13 +88,13 @@ public final class Calculator {
 	}
 
 	/**
-	 * Brukes for å teste.
+	 * Brukes for ï¿½ teste.
 	 * 
 	 * @param args
 	 */
 	public static void main(final String[] args) {
 		Pattern pattern = Pattern.compile("\\d*\\.\\d*");
-		Matcher matcher = pattern.matcher("22.5¨");
+		Matcher matcher = pattern.matcher("22.5Â¨");
 		if (matcher.lookingAt()) {
 			String string = matcher.group();
 			System.out.println(string);

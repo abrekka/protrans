@@ -47,7 +47,7 @@ import com.google.common.collect.Lists;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 
 /**
- * Håndterer gavlproduksjon. Måtte lage en egen for gavl siden denne skal vise
+ * Hï¿½ndterer gavlproduksjon. Mï¿½tte lage en egen for gavl siden denne skal vise
  * info om takstol
  * 
  * @author atle.brekka
@@ -209,7 +209,7 @@ public class GavlProductionViewHandler extends ProductionViewHandler {
 						? Util.SHORT_DATE_TIME_FORMAT.format(gavlProductionV.getProduced()) : "---";
 			}
 		},
-		PRODUKTOMRÅDE("Produktområde") {
+		PRODUKTOMRÃ…DE("ProduktomrÃ¥de") {
 			@Override
 			public Class getColumnClass() {
 				return String.class;

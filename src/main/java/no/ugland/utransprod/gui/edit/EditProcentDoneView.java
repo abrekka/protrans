@@ -46,7 +46,7 @@ public class EditProcentDoneView extends
 		PanelBuilder builder = new PanelBuilder(layout);
 		CellConstraints cc = new CellConstraints();
 
-		builder.addLabel("År:", cc.xy(2, 2));
+		builder.addLabel("Ã…r:", cc.xy(2, 2));
 		builder.add(yearChooser, cc.xy(4, 2));
 		builder.addLabel("Uke:", cc.xy(6, 2));
 		builder.add(comboBoxWeek, cc.xy(8, 2));

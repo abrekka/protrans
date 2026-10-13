@@ -16,7 +16,7 @@ import no.ugland.utransprod.service.PaidVManager;
 import com.google.inject.Inject;
 
 /**
- * Håndterer menyvalg Forhåndsbetaling...
+ * Hï¿½ndterer menyvalg Forhï¿½ndsbetaling...
  * 
  * @author atle.brekka
  */
@@ -37,13 +37,13 @@ public class PaidAction extends AbstractAction {
 	@Inject
 	public PaidAction(MenuBarBuilderInterface aMenuBarBuilder,
 			PaidViewFactory paidViewFactory) {
-		super("Forhåndsbetaling...");
+		super("ForhÃ¥ndsbetaling...");
 		paidView = paidViewFactory.create(false);
 		this.menuBarBuilder = aMenuBarBuilder;
 	}
 
 	/**
-	 * Åpner kundevindu
+	 * ï¿½pner kundevindu
 	 * 
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */

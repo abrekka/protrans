@@ -364,20 +364,20 @@ public class ExcelUtil {
 	 * @param table
 	 *            tabell med data som skal vises
 	 * @param numberCols
-	 *            - kolonner som skal være tall
+	 *            - kolonner som skal vï¿½re tall
 	 * @param colSize
-	 *            - kolonnestørrelser
+	 *            - kolonnestï¿½rrelser
 	 * @param headFontSize
-	 *            - fontstørrelse på overskrift
+	 *            - fontstï¿½rrelse pï¿½ overskrift
 	 * @param groupColumn
-	 *            - kolonne det skal grupperes på, denne kolonnen vil da bli
+	 *            - kolonne det skal grupperes pï¿½, denne kolonnen vil da bli
 	 *            brukt som overskrift for hver gruppering
 	 * @param notVisibleColumns
-	 *            - kolonner som ikke skal være synlige
+	 *            - kolonner som ikke skal vï¿½re synlige
 	 * @param groupSumValueColumn
 	 *            - kolonne det skal grupperes og summeres etter
 	 * @param groupSumColumn
-	 *            - kolonne som skal summeres når det er en ny gruppering ut fra
+	 *            - kolonne som skal summeres nï¿½r det er en ny gruppering ut fra
 	 *            groupSumValueColumn
 	 * @param groupResultColumn
 	 *            - kolonne summeringen av grupperingen skal skrives til
@@ -394,7 +394,7 @@ public class ExcelUtil {
 			throw new ProTransException("Katalog ikke satt");
 		}
 		int notVisibleColumnsSize = 0;
-		// dersom kolonner skal være usynlige må disse trekkes fra ved laging av
+		// dersom kolonner skal vï¿½re usynlige mï¿½ disse trekkes fra ved laging av
 		// celler
 		if (notVisibleColumns != null) {
 			notVisibleColumnsSize = notVisibleColumns.size();
@@ -433,7 +433,7 @@ public class ExcelUtil {
 		int j;
 		int k;
 		int l = currentRow;
-		// Går gjennom alle rader og kolonner
+		// Gï¿½r gjennom alle rader og kolonner
 		for (j = currentRow; j < rowCount + currentRow; j++) {
 			// dersom data skal grupperes
 			if (groupColumn != null && !table.getValueAt(j - currentRow, groupColumn).equals(groupValue)) {
@@ -458,9 +458,9 @@ public class ExcelUtil {
 			row = sheet.createRow((short) l);
 			l++;
 
-			// går gjennom alle kolonner for rad
+			// gï¿½r gjennom alle kolonner for rad
 			for (k = 0; k < columnCount; k++) {
-				// dersom kolonne skal være synlig
+				// dersom kolonne skal vï¿½re synlig
 				if (notVisibleColumns == null || !notVisibleColumns.contains(k)) {
 					// dersom kolonnebredde er satt
 					if (colSize != null) {
@@ -499,7 +499,7 @@ public class ExcelUtil {
 							setCellValue(table, numberCols, currentRow, 0, cell, j, k);
 						}
 						// dersom celle ikke har verdi settes den til tomstreng
-						// for å få med eventuell formatering
+						// for ï¿½ fï¿½ med eventuell formatering
 					} else {
 						cell.setCellStyle(cellStyle.createDayStyle(false, null));
 						cell.setCellValue(new XSSFRichTextString(""));
@@ -513,7 +513,7 @@ public class ExcelUtil {
 			formulaCells.add(currentExcelGroupSum);
 		}
 
-		// går gjennom grupperingssummer og skriver inn formler
+		// gï¿½r gjennom grupperingssummer og skriver inn formler
 		setFormulas(groupResultColumn, sheet, 0, formulaCells);
 		openExcelFile(fileName, directory, wb, true);
 	}
@@ -554,14 +554,14 @@ public class ExcelUtil {
 		int j;
 		int k;
 		int l = currentRow;
-		// Går gjennom alle rader og kolonner
+		// Gï¿½r gjennom alle rader og kolonner
 		for (j = currentRow; j < rowCount + currentRow; j++) {
 			setLabelInfo(labelInfo, infoString, j);
 
 			row = sheet.createRow((short) l);
 			l++;
 
-			// går gjennom alle kolonner for rad
+			// gï¿½r gjennom alle kolonner for rad
 			for (k = 0; k < columnCount; k++) {
 				if (colSize != null) {
 					Integer columnSize = colSize.get(k);
@@ -624,10 +624,10 @@ public class ExcelUtil {
 
 		row = sheet.createRow((short) currentRow++);
 
-		createCell(row, cellStyle.getStyle10Bold(), (short) 0, "Avvik måned");
+		createCell(row, cellStyle.getStyle10Bold(), (short) 0, "Avvik mÃ¥ned");
 		createCell(row, cellStyle.getStyle10Bold(), (short) 1,
 				((ExcelReportSettingDeviation) reportSetting).getMonthEnum().getMonthString());
-		createCell(row, cellStyle.getStyle10Bold(), (short) 3, "År");
+		createCell(row, cellStyle.getStyle10Bold(), (short) 3, "Ã…r");
 		createCell(row, cellStyle.getStyle10Bold(), (short) 4, String.valueOf(reportSetting.getYear()));
 
 		row = sheet.createRow((short) currentRow++);
@@ -643,9 +643,9 @@ public class ExcelUtil {
 		currentRow = generateDeviationSummarySub(wb, sheet, currentRow, data, "Period", "Antall Avvik", "Sum",
 				cellStyle);
 		// **************************HITTIL I
-		// ÅR***************************************
-		currentRow = generateDeviationSummarySub(wb, sheet, currentRow, data, "Year", "Avvik hittil i år",
-				"Sum hittil i år", cellStyle);
+		// ï¿½R***************************************
+		currentRow = generateDeviationSummarySub(wb, sheet, currentRow, data, "Year", "Avvik hittil i Ã¥r",
+				"Sum hittil i Ã¥r", cellStyle);
 
 		// **************************SAMMENLIKNING MED I
 		// FJOR***************************************
@@ -857,7 +857,7 @@ public class ExcelUtil {
 		}
 
 		if (transport.getEmployee() != null) {
-			transportFirm += " sjåfør:" + Util.nullToString(transport.getEmployee().getFirstName()) + " "
+			transportFirm += " sjÃ¥fÃ¸r:" + Util.nullToString(transport.getEmployee().getFirstName()) + " "
 					+ Util.nullToString(transport.getEmployee().getLastName());
 
 			if (transport.getEmployee().getPhone() != null) {
@@ -1079,7 +1079,7 @@ public class ExcelUtil {
 		int l = currentRow;
 		int rowNumber = 0;
 
-		// det skal legges til en summeringsformel på sluttet
+		// det skal legges til en summeringsformel pï¿½ sluttet
 		if (sumFormula != null) {
 			sumFormula.setFromRow(l + 1);
 		}
@@ -1088,7 +1088,7 @@ public class ExcelUtil {
 		List<ExcelGroupSum> formulaCells = new ArrayList<ExcelGroupSum>();
 		String groupSumValue = "";
 		ExcelGroupSum currentExcelGroupSum = null;
-		// Går gjennom alle rader og kolonner
+		// Gï¿½r gjennom alle rader og kolonner
 		for (j = currentRow; j < rowCount + currentRow; j++) {
 			rowNumber++;
 			// dersom data skal grupperes
@@ -1124,9 +1124,9 @@ public class ExcelUtil {
 				cell = row.createCell((short) (startCell - 1));
 				cell.setCellValue(rowNumber);
 			}
-			// går gjennom alle kolonner for rad
+			// gï¿½r gjennom alle kolonner for rad
 			for (k = startCell; k < columnCount + startCell; k++) {
-				// dersom kolonne skal være synlig
+				// dersom kolonne skal vï¿½re synlig
 				if (notVisibleColumns == null || !notVisibleColumns.contains(k - startCell)) {
 					setColumnSize(colSize, excelSheet, startCell, addedColumn, k);
 					cell = row.createCell((short) k);
@@ -1154,7 +1154,7 @@ public class ExcelUtil {
 						setCellValueForNotSumColumn(table, numberCols, groupResultColumn, currentRow, startCell, cell,
 								j, k);
 						// dersom celle ikke har verdi settes den til tomstreng
-						// for å få med eventuell formatering
+						// for ï¿½ fï¿½ med eventuell formatering
 					} else {
 						// cell.setCellStyle(cellStyle.getDayStyle(wrapText,
 						// null));
@@ -1164,7 +1164,7 @@ public class ExcelUtil {
 				}
 			}
 		}
-		// det skal legges til en summeringsformel på sluttet
+		// det skal legges til en summeringsformel pï¿½ sluttet
 		if (sumFormula != null) {
 			sumFormula.setToRow(l);
 		}
@@ -1262,7 +1262,7 @@ public class ExcelUtil {
 
 	private static void setFormulas(final Integer groupResultColumn, final Sheet excelSheet, final int addedColumn,
 			final List<ExcelGroupSum> formulaCells) {
-		// går gjennom grupperingssummer og skriver inn formler
+		// gï¿½r gjennom grupperingssummer og skriver inn formler
 		for (ExcelGroupSum excelGroupSum : formulaCells) {
 			excelGroupSum.setFormula();
 
@@ -1316,10 +1316,10 @@ public class ExcelUtil {
 	}
 
 	/**
-	 * Finner kolonnenummer basert på kolonnebokstav.
+	 * Finner kolonnenummer basert pï¿½ kolonnebokstav.
 	 * 
 	 * @param colLetter
-	 * @return kolonnenummer basert på kolonnebokstav
+	 * @return kolonnenummer basert pï¿½ kolonnebokstav
 	 * @throws ProTransException
 	 */
 	@SuppressWarnings("unused")
@@ -1373,10 +1373,10 @@ public class ExcelUtil {
 	}
 
 	/**
-	 * Finner kolonnebokstav basert på kolonnenummer.
+	 * Finner kolonnebokstav basert pï¿½ kolonnenummer.
 	 * 
 	 * @param col
-	 * @return kolonnebokstav basert på kolonnenummer
+	 * @return kolonnebokstav basert pï¿½ kolonnenummer
 	 */
 	@SuppressWarnings("unused")
 	static String getColLetter(final int col) {
@@ -1733,13 +1733,13 @@ public class ExcelUtil {
 		currentRow = createEmptyRows(sheet, currentRow, 1);
 		row = sheet.createRow((short) currentRow++);
 		createCell(row, cellStyle.getStyle10Bold(), (short) 3,
-				"Totalt per måned antall åpne (lukkede) fordelt per funksjon");
+				"Totalt per mï¿½ned antall ï¿½pne (lukkede) fordelt per funksjon");
 
 		row = sheet.createRow((short) currentRow++);
 		createCell(row, cellStyle.getStyle10BoldWithBorders(), (short) 1, "Nye");
 		createCell(row, cellStyle.getStyle10BoldWithBorders(), (short) 2, "Totalt");
 
-		// Henter ut alle avvik for alle måneder
+		// Henter ut alle avvik for alle mï¿½neder
 		Map<MonthEnum, Map<String, SumAvvikV>> deviationList = (Map<MonthEnum, Map<String, SumAvvikV>>) data
 				.get("DeviationList");
 
@@ -1749,7 +1749,7 @@ public class ExcelUtil {
 		Map<Integer, String> jobFunctionNameColumns = new Hashtable<Integer, String>();
 		Set<String> jobFunctionNames = new TreeSet<String>();
 
-		// Legger til alle funksjoner som har avvik totalt for å få alle
+		// Legger til alle funksjoner som har avvik totalt for ï¿½ fï¿½ alle
 		// overskrifter
 		for (Map<String, SumAvvikV> monthList : allMonths) {
 			jobFunctionNames.addAll(monthList.keySet());
@@ -1760,19 +1760,19 @@ public class ExcelUtil {
 		List<MonthEnum> months = MonthEnum.getMonthList();
 		Map<String, SumAvvikV> monthDeviations;
 		Set<Integer> columns;
-		// Antall nye avvik for gjeldende måned
+		// Antall nye avvik for gjeldende mï¿½ned
 		SumAvvikV newDeviations = null;
 		SumAvvikV totalDeviations = new SumAvvikV();
 
 		// Total for alle fiunksjoner
 		Map<String, SumAvvikV> totalDeviationMap = new Hashtable<String, SumAvvikV>();
 
-		// Går gjennom alle måneder og skriver ut antall avvik, åpne og lukkede
+		// Gï¿½r gjennom alle mï¿½neder og skriver ut antall avvik, ï¿½pne og lukkede
 		for (MonthEnum month : months) {
 			row = sheet.createRow((short) currentRow++);
 			createCell(row, cellStyle.getStyle10BoldWithBorders(), (short) 0, month.getMonthString());
 
-			// Henter ut avvik for gjeldende måned
+			// Henter ut avvik for gjeldende mï¿½ned
 			monthDeviations = deviationList.get(month);
 			if (monthDeviations != null) {
 				columns = jobFunctionNameColumns.keySet();
@@ -1797,7 +1797,7 @@ public class ExcelUtil {
 			final Map<Integer, String> jobFunctionNameColumns, final Map<String, SumAvvikV> monthDeviations,
 			final Set<Integer> columns, final SumAvvikV newDeviations, final SumAvvikV totalDeviations,
 			final Map<String, SumAvvikV> totalDeviationMap) {
-		// Går gjennom alle funksjoner
+		// Gï¿½r gjennom alle funksjoner
 		for (Integer nameColumn : columns) {
 			createDeviationCellForFunction(cellStyle, row, jobFunctionNameColumns, monthDeviations, newDeviations,
 					totalDeviations, totalDeviationMap, nameColumn);
@@ -1811,11 +1811,11 @@ public class ExcelUtil {
 		SumAvvikV deviation;
 		deviation = monthDeviations.get(jobFunctionNameColumns.get(nameColumn));
 
-		// Dersom måned har avvik for gjeldende funskjon skrives
+		// Dersom mï¿½ned har avvik for gjeldende funskjon skrives
 		// denne ut
 		if (deviation != null) {
 
-			// Legger til nye avvik for måned
+			// Legger til nye avvik for mï¿½ned
 			newDeviations.addDeviationCount(deviation.getDeviationCount());
 			newDeviations.addClosedCount(deviation.getClosedCount());
 
@@ -1864,7 +1864,7 @@ public class ExcelUtil {
 			final Map<Integer, String> jobFunctionNameColumns, final Set<String> jobFunctionNames,
 			final int currentColumn) {
 		int column = currentColumn;
-		// Går gjennom alle funskjoner og skriver ut overskrifter
+		// Gï¿½r gjennom alle funskjoner og skriver ut overskrifter
 		for (String jobFunctionName : jobFunctionNames) {
 			column++;
 			createCell(row, cellStyle.getStyle10BoldWithBorders(), (short) column, jobFunctionName);
@@ -2233,11 +2233,11 @@ public class ExcelUtil {
 
 		row = sheet.createRow((short) currentRow++);
 
-		createCell(row, cellStyle.getStyle18Bold(), (short) 2, "Rapport pr funksjonsområde - "
+		createCell(row, cellStyle.getStyle18Bold(), (short) 2, "Rapport pr funksjonsomrÃ¥de - "
 				+ ((ExcelReportSettingDeviation) reportSetting).getProductAreaGroup().getProductAreaGroupName());
 
 		row = sheet.createRow((short) currentRow++);
-		createCell(row, cellStyle.getStyle(cellStyle.getFont12Bold(), null, null, null, null), (short) 0, "År:");
+		createCell(row, cellStyle.getStyle(cellStyle.getFont12Bold(), null, null, null, null), (short) 0, "Ã…r:");
 		createCell(row, cellStyle.getStyle(cellStyle.getFont12Bold(), null, null, null, null), (short) 1,
 				String.valueOf(((ExcelReportSettingDeviation) reportSetting).getYear()));
 		row = sheet.createRow((short) currentRow++);
@@ -2251,7 +2251,7 @@ public class ExcelUtil {
 		createCell(row, cellStyle.getStyle(cellStyle.getFont10Bold(), CellStyle.BORDER_THIN, null, null, null),
 				(short) 2, "Kategori");
 		row = sheet.createRow((short) currentRow++);
-		createCell(row, cellStyle.getStyle(cellStyle.getFont10Bold(), null, null, null, null), (short) 0, "Måned");
+		createCell(row, cellStyle.getStyle(cellStyle.getFont10Bold(), null, null, null, null), (short) 0, "MÃ¥ned");
 		createCell(row, cellStyle.getStyle(cellStyle.getFont10Bold(), null, null, null, null), (short) 1, "Uke");
 		Set<String> functionCategories = (Set<String>) data.get("FunctionCategory");
 		int column = 2;
@@ -2266,7 +2266,7 @@ public class ExcelUtil {
 				.get("ReportData");
 		String lastMonth = "";
 		boolean writeMonth = false;
-		for (int i = 1; i < 54; i++) {// går gjennom alle uker i et år
+		for (int i = 1; i < 54; i++) {// gï¿½r gjennom alle uker i et ï¿½r
 			String month = Util.getMonthByWeek(i);
 			writeMonth = false;
 			if (!month.equalsIgnoreCase(lastMonth)) {
@@ -2465,7 +2465,7 @@ public class ExcelUtil {
 				cellStyle.getStyle((short) 16, Font.BOLDWEIGHT_BOLD, CellStyle.ALIGN_CENTER,
 						HSSFColor.SEA_GREEN.index, CellStyle.BORDER_MEDIUM, CellStyle.BORDER_MEDIUM,
 						CellStyle.BORDER_MEDIUM, CellStyle.BORDER_MEDIUM, null),
-				(short) 0, "SALGSMÅL");
+				(short) 0, "SALGSMÃ…L");
 
 		sheet.addMergedRegion(new CellRangeAddress(currentRow - 1, 0, currentRow - 1, 20));
 
@@ -2483,7 +2483,7 @@ public class ExcelUtil {
 				cellStyle.getStyle((short) 10, Font.BOLDWEIGHT_BOLD, CellStyle.ALIGN_CENTER,
 						HSSFColor.GREY_25_PERCENT.index, CellStyle.BORDER_MEDIUM, CellStyle.BORDER_MEDIUM,
 						CellStyle.BORDER_MEDIUM, CellStyle.BORDER_THIN, null),
-				(short) 2, "Salgsmål " + reportSetting.getYear());
+				(short) 2, "SalgsmÃ¥l " + reportSetting.getYear());
 
 		sheet.addMergedRegion(new CellRangeAddress(currentRow - 1, 2, currentRow - 1, 4));
 
@@ -2573,7 +2573,7 @@ public class ExcelUtil {
 				cellStyle.getStyle((short) 10, Font.BOLDWEIGHT_NORMAL, CellStyle.ALIGN_LEFT,
 						HSSFColor.GREY_25_PERCENT.index, null, null, CellStyle.BORDER_MEDIUM,
 						CellStyle.BORDER_MEDIUM, null),
-				(short) 0, "Produktområde");
+				(short) 0, "ProduktomrÃ¥de");
 
 		createCell(row,
 				cellStyle.getStyle((short) 10, Font.BOLDWEIGHT_NORMAL, CellStyle.ALIGN_LEFT,
@@ -2881,13 +2881,13 @@ public class ExcelUtil {
 				null, null, null, CellStyle.BORDER_THIN, null), (short) column++, "Timer");
 
 		createCell(row, cellStyle.getStyle((short) 10, Font.BOLDWEIGHT_BOLD, CellStyle.ALIGN_LEFT, (short) -1,
-				null, null, null, CellStyle.BORDER_THIN, null), (short) column++, "Maxhøyde");
+				null, null, null, CellStyle.BORDER_THIN, null), (short) column++, "MaxhÃ¸yde");
 
 		createCell(row, cellStyle.getStyle((short) 10, Font.BOLDWEIGHT_BOLD, CellStyle.ALIGN_LEFT, (short) -1,
 				null, null, null, CellStyle.BORDER_THIN, null), (short) column++, "Prosent");
 
 		createCell(row, cellStyle.getStyle((short) 10, Font.BOLDWEIGHT_BOLD, CellStyle.ALIGN_LEFT, (short) -1,
-				null, null, null, CellStyle.BORDER_THIN, null), (short) column++, "Produktområde");
+				null, null, null, CellStyle.BORDER_THIN, null), (short) column++, "ProduktomrÃ¥de");
 
 		createCell(row, cellStyle.getStyle((short) 10, Font.BOLDWEIGHT_BOLD, CellStyle.ALIGN_LEFT, (short) -1,
 				null, null, null, CellStyle.BORDER_THIN, null), (short) column++, "Pakkliste klar");

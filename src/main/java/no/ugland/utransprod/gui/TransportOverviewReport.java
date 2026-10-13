@@ -89,13 +89,13 @@ public class TransportOverviewReport implements Viewer {
 		//PanelBuilder builder = new PanelBuilder(layout,new FormDebugPanel());
 		CellConstraints cc = new CellConstraints();
 
-		builder.addLabel("År:", cc.xy(2, 2));
+		builder.addLabel("Ã…r:", cc.xy(2, 2));
 		builder.add(yearChooser, cc.xy(4, 2));
 		builder.addLabel("Fra uke:", cc.xy(6, 2));
 		builder.add(comboBoxFromWeek, cc.xy(8, 2));
 		builder.addLabel("Til uke:", cc.xy(10, 2));
 		builder.add(comboBoxToWeek, cc.xy(12, 2));
-		builder.addLabel("Produktområde:",cc.xyw(2, 4,5));
+		builder.addLabel("ProduktomrÃ¥de:",cc.xyw(2, 4,5));
 		builder.add(comboBoxProductAreaGroup,cc.xyw(8, 4,5));
 		builder.add(ButtonBarFactory
 				.buildCenteredBar(buttonPrint, buttonCancel), cc.xyw(2, 6, 11));

@@ -84,7 +84,7 @@ import com.jgoodies.binding.list.SelectionInList;
 import com.toedter.calendar.JDateChooser;
 
 /**
- * Håndterer eksterne ordre
+ * Hï¿½ndterer eksterne ordre
  * 
  * @author atle.brekka
  * 
@@ -357,7 +357,7 @@ public class ExternalOrderViewHandler extends
 	}
 
 	/**
-	 * Lager knapp for å bestille artikkel
+	 * Lager knapp for ï¿½ bestille artikkel
 	 * 
 	 * @param presentationModel
 	 * @param window
@@ -375,7 +375,7 @@ public class ExternalOrderViewHandler extends
 	}
 
 	/**
-	 * Lager komboboks for leverandører
+	 * Lager komboboks for leverandï¿½rer
 	 * 
 	 * @param presentationModel
 	 * @return komboboks
@@ -496,7 +496,7 @@ public class ExternalOrderViewHandler extends
 	}
 
 	/**
-	 * Lager knapp for å legge til artikkel
+	 * Lager knapp for ï¿½ legge til artikkel
 	 * 
 	 * @param window
 	 * 
@@ -509,7 +509,7 @@ public class ExternalOrderViewHandler extends
 	}
 
 	/**
-	 * Lager knapp for å editere ekstern orderlinje
+	 * Lager knapp for ï¿½ editere ekstern orderlinje
 	 * 
 	 * @param window
 	 * @param presentationModel
@@ -524,7 +524,7 @@ public class ExternalOrderViewHandler extends
 	}
 
 	/**
-	 * Lager knapp for å fjerne orderlinje
+	 * Lager knapp for ï¿½ fjerne orderlinje
 	 * 
 	 * @param presentationModel
 	 * @return knapp
@@ -751,7 +751,7 @@ public class ExternalOrderViewHandler extends
 	 */
 	@Override
 	public void setColumnWidth(JXTable table) {
-		// Leverandør
+		// Leverandï¿½r
 		table.getColumnExt(0).setPreferredWidth(150);
 
 		// Ordernr
@@ -777,7 +777,7 @@ public class ExternalOrderViewHandler extends
 		/**
 		 * 
 		 */
-		private static final String[] COLUMNS = { "Leverandør", "Ordernr",
+		private static final String[] COLUMNS = { "LeverandÃ¸r", "Ordernr",
 				"Leveringsdato" };
 
 		/**
@@ -994,7 +994,7 @@ public class ExternalOrderViewHandler extends
 	}
 
 	/**
-	 * Åpner dialog for editering av ordrelinje
+	 * ï¿½pner dialog for editering av ordrelinje
 	 * 
 	 * @param externalOrderLine
 	 * @param window
@@ -1132,7 +1132,7 @@ public class ExternalOrderViewHandler extends
 	}
 
 	/**
-	 * Håndterer selektering av ordrelinjer
+	 * Hï¿½ndterer selektering av ordrelinjer
 	 * 
 	 * @author atle.brekka
 	 * 
@@ -1179,7 +1179,7 @@ public class ExternalOrderViewHandler extends
 	}
 
 	/**
-	 * Håndterer selektering av eksterne artikler
+	 * Hï¿½ndterer selektering av eksterne artikler
 	 * 
 	 * @author atle.brekka
 	 * 
@@ -1245,7 +1245,7 @@ public class ExternalOrderViewHandler extends
 	}
 
 	/**
-	 * Håndterer selektering av leverandør
+	 * Hï¿½ndterer selektering av leverandï¿½r
 	 * 
 	 * @author atle.brekka
 	 * 

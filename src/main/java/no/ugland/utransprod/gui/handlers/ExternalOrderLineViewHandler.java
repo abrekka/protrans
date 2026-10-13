@@ -46,7 +46,7 @@ import com.jgoodies.binding.list.ArrayListModel;
 import com.jgoodies.binding.list.SelectionInList;
 
 /**
- * Håndterer eksterne orderlinjer
+ * Hï¿½ndterer eksterne orderlinjer
  * 
  * @author atle.brekka
  * 
@@ -148,7 +148,7 @@ public class ExternalOrderLineViewHandler extends
 	}
 
 	/**
-	 * Lager knapp for å legge til attributt
+	 * Lager knapp for ï¿½ legge til attributt
 	 * 
 	 * @param presentationModel
 	 * @param window
@@ -160,7 +160,7 @@ public class ExternalOrderLineViewHandler extends
 	}
 
 	/**
-	 * Lager knapp for å editere attributt
+	 * Lager knapp for ï¿½ editere attributt
 	 * 
 	 * @param window
 	 * @return knapp
@@ -172,7 +172,7 @@ public class ExternalOrderLineViewHandler extends
 	}
 
 	/**
-	 * Lager knapp for å slette attributt
+	 * Lager knapp for ï¿½ slette attributt
 	 * 
 	 * @return knapp
 	 */
@@ -359,7 +359,7 @@ public class ExternalOrderLineViewHandler extends
 
 				if (attributeValue == null || attributeValue.length() == 0) {
 					Util.showErrorDialog(window.getComponent(), "Feil",
-							"Attributt må ha verdi");
+							"Attributt mÃ¥ ha verdi");
 				} else {
 					ExternalOrderLine externalOrderLine = ((ExternalOrderLineModel) presentationModel
 							.getBean()).getObject();
@@ -452,7 +452,7 @@ public class ExternalOrderLineViewHandler extends
 	}
 
 	/**
-	 * Håndterer selektering av attributter
+	 * Hï¿½ndterer selektering av attributter
 	 * 
 	 * @author atle.brekka
 	 * 

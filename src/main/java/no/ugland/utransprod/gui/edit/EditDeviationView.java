@@ -46,7 +46,7 @@ import com.jgoodies.validation.view.ValidationComponentUtils;
 import com.toedter.calendar.JDateChooser;
 
 /**
- * Klasse som håndterer editering av avvik
+ * Klasse som hï¿½ndterer editering av avvik
  * 
  * @author atle.brekka
  */
@@ -182,7 +182,7 @@ public class EditDeviationView extends AbstractEditView<DeviationModel, Deviatio
 		}
 		builder.add(buildCheckBoxPanel(), cc.xyw(2, 23, 7));
 
-		builder.addLabel("Produktområde:", cc.xy(6, 3));
+		builder.addLabel("ProduktomrÃ¥de:", cc.xy(6, 3));
 		builder.add(comboBoxProductArea, cc.xy(8, 3));
 		builder.addLabel("Egen funksjon:", cc.xy(6, 5));
 		builder.add(comboBoxOwnFunction, cc.xy(8, 5));
@@ -363,7 +363,7 @@ public class EditDeviationView extends AbstractEditView<DeviationModel, Deviatio
 	}
 
 	/**
-	 * Bygger panel for å søke fra og til dato
+	 * Bygger panel for ï¿½ sï¿½ke fra og til dato
 	 * 
 	 * @return panel
 	 */
@@ -537,7 +537,7 @@ public class EditDeviationView extends AbstractEditView<DeviationModel, Deviatio
 	}
 
 	/**
-	 * Håndterer endring av ordre
+	 * Hï¿½ndterer endring av ordre
 	 * 
 	 * @author atle.brekka
 	 */

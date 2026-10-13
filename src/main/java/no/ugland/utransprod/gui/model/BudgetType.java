@@ -54,7 +54,7 @@ public enum BudgetType {
 
 	        if (budget != Budget.UNKNOWN) {
 	            throw new ProTransException("Det finnes allerede budsjett for " + year + " selger " + salesman
-	                    + " produktområde " + productArea);
+	                    + " produktomrÃ¥de " + productArea);
 	        }
 	        budget = new Budget();
 	        
@@ -115,7 +115,7 @@ public enum BudgetType {
 
         if (budget != Budget.UNKNOWN) {
             throw new ProTransException("Det finnes allerede budsjett for " + year + " uke " + week
-                    + " produktområde " + productArea);
+                    + " produktomrÃ¥de " + productArea);
         }
         
         budget = new Budget();

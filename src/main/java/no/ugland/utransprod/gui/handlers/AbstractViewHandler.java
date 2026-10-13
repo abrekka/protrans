@@ -50,7 +50,7 @@ import com.jgoodies.binding.beans.Model;
 import com.jgoodies.binding.list.ArrayListModel;
 import com.jgoodies.binding.list.SelectionInList;
 /**
- * Abstrakt klasse som brukes for de klasser som håndterer vindusvariable
+ * Abstrakt klasse som brukes for de klasser som hï¿½ndterer vindusvariable
  * 
  * @author atle.brekka
  * @param <T>
@@ -112,7 +112,7 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
 	T currentObject;
 
 	/**
-	 * Holder rede på om modell blir flushet
+	 * Holder rede pï¿½ om modell blir flushet
 	 */
 	boolean flushing = false;
 
@@ -137,7 +137,7 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
 	private JButton buttonExcel;
 
 	/**
-	 * Konstruktør
+	 * Konstruktï¿½r
 	 * 
 	 * @param aHeading
 	 *            tittel
@@ -220,7 +220,7 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
 	public abstract String getClassName();
 
 	/**
-	 * Henter streng som skal være på add- og removeknapp
+	 * Henter streng som skal vï¿½re pï¿½ add- og removeknapp
 	 * 
 	 * @return streng
 	 */
@@ -234,10 +234,10 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
 	public abstract Boolean hasWriteAccess();
 
 	/**
-	 * Henter streng som skal være på legg til knapp, dersom denne er null vil
+	 * Henter streng som skal vï¿½re pï¿½ legg til knapp, dersom denne er null vil
 	 * streng fra getAddRemoveString bli brukt
 	 * 
-	 * @return strenk på legg til knapp
+	 * @return strenk pï¿½ legg til knapp
 	 */
 	abstract String getAddString();
 
@@ -253,12 +253,12 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
 			boolean searching);
 
 	/**
-	 * Åpner editeringsvindu
+	 * ï¿½pner editeringsvindu
 	 * 
 	 * @param object
 	 *            objekt som skal editeres
 	 * @param searching
-	 *            true dersom det skal søkes
+	 *            true dersom det skal sï¿½kes
 	 * @param parentWindow
 	 */
 	protected final boolean openEditView(final T object, final boolean searching, final WindowInterface parentWindow,
@@ -345,30 +345,30 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
 	public abstract String getTitle();
 
 	/**
-	 * Henter vindusstørrelse
+	 * Henter vindusstï¿½rrelse
 	 * 
-	 * @return vindusstørrelse
+	 * @return vindusstï¿½rrelse
 	 */
 	public abstract Dimension getWindowSize();
 
 	/**
-	 * Henter størrelse for tabell
+	 * Henter stï¿½rrelse for tabell
 	 * 
-	 * @return tabellstørrelse
+	 * @return tabellstï¿½rrelse
 	 */
 	public abstract String getTableWidth();
 
 	/**
-	 * Henter tabellhøyde
+	 * Henter tabellhï¿½yde
 	 * 
-	 * @return tabellhøyde
+	 * @return tabellhï¿½yde
 	 */
 	public String getTableHeight() {
 		return "80dlu";
 	}
 
 	/**
-	 * Setter kolonnestørrelse for tabell
+	 * Setter kolonnestï¿½rrelse for tabell
 	 * 
 	 * @param table
 	 *            tabell det skal settes kolonnebredde for
@@ -386,7 +386,7 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
 	public abstract CheckObject checkSaveObject(E object, PresentationModel presentationModel, WindowInterface window);
 
 	/**
-	 * Sjekker objekt før det slettes
+	 * Sjekker objekt fï¿½r det slettes
 	 * 
 	 * @param object
 	 * @return feilstreng dersom er feil
@@ -604,7 +604,7 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
 	}
 
 	/**
-	 * Henter knapp for å legge til
+	 * Henter knapp for ï¿½ legge til
 	 * 
 	 * @param window
 	 *            vindu som skal vise knapp
@@ -643,7 +643,7 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
 	}
 
 	/**
-	 * Henter søkeknapp
+	 * Henter sï¿½keknapp
 	 * 
 	 * @param window
 	 * @return knapp
@@ -656,7 +656,7 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
 	}
 
 	/**
-	 * Legger på tilleggsinformasjon etter at alle objekter er hentet fra
+	 * Legger pï¿½ tilleggsinformasjon etter at alle objekter er hentet fra
 	 * database
 	 */
 	protected void addObjectInfo() {
@@ -734,7 +734,7 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
 	}
 
 	/**
-	 * Henter klasse for håndtering av dobelltklikk
+	 * Henter klasse for hï¿½ndtering av dobelltklikk
 	 * 
 	 * @param window
 	 * @return klasse for dobbeltklikk
@@ -793,7 +793,7 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
 	}
 
 	/**
-	 * Klassesom håndterer søking
+	 * Klassesom hï¿½ndterer sï¿½king
 	 * 
 	 * @author atle.brekka
 	 */
@@ -812,7 +812,7 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
 		 * @param aWindow
 		 */
 		public SearchAction(WindowInterface aWindow) {
-			super("Søk...");
+			super("SÃ¸k...");
 			window = aWindow;
 		}
 
@@ -846,7 +846,7 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
 	}
 
 	/**
-	 * Klassesom håndtrer editering
+	 * Klassesom hï¿½ndtrer editering
 	 * 
 	 * @author atle.brekka
 	 */
@@ -879,7 +879,7 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
 	}
 
 	/**
-	 * Klassesom håndterer dobbeltklikk
+	 * Klassesom hï¿½ndterer dobbeltklikk
 	 * 
 	 * @author atle.brekka
 	 */
@@ -958,7 +958,7 @@ public abstract class AbstractViewHandler<T, E> extends Model implements Updatea
 	}
 
 	/**
-	 * Håndterer ensdring av filtrering
+	 * Hï¿½ndterer ensdring av filtrering
 	 * 
 	 * @author atle.brekka
 	 */

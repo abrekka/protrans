@@ -158,7 +158,7 @@ public class TrossReadyViewHandler implements Closeable {
 	public JRadioButton getRadioButtonStart() {
 		JRadioButton radioButton = BasicComponentFactory.createRadioButton(
 				presentationModel.getModel(TrossReady.PROPERTY_FINSIH), 0,
-				"Påbegynt");
+				"PÃ¥begynt");
 		radioButton.setName("RadioButtonStart");
 		return radioButton;
 	}

@@ -31,32 +31,32 @@ public class AccidentValidator implements Validator {
 		PropertyValidationSupport support = new PropertyValidationSupport(accidentModel, "Ulykke");
 
 		if (ValidationUtils.isBlank(ModelUtil.nullToString(accidentModel.getRegisteredBy()))) {
-			support.addError("registert av", "må settes");
+			support.addError("registert av", "mÃ¥ settes");
 		}
 
 		if (accidentModel.getRegistrationDate() == null) {
-			support.addError("registreringsdato", "må settes");
+			support.addError("registreringsdato", "mÃ¥ settes");
 		}
 
 		if (accidentModel.getJobFunction() == null) {
-			support.addError("funksjon", "må settes");
+			support.addError("funksjon", "mÃ¥ settes");
 		}
 
 		if (accidentModel.getPersonalInjuryOver24Boolean() == null && accidentModel.getPersonalInjuryUnder24Boolean() == null
 				&& accidentModel.getPersonalInjuryNotAbsentBoolean() == null && accidentModel.getNotPersonalInjuryBoolean() == null) {
-			support.addError("type", "må settes");
+			support.addError("type", "mÃ¥ settes");
 		}
 
 		if (accidentModel.getAccidentDate() == null) {
-			support.addError("ulykkesdato", "må settes");
+			support.addError("ulykkesdato", "mÃ¥ settes");
 		}
 
 		if (ValidationUtils.isBlank(ModelUtil.nullToString(accidentModel.getAccidentDescription()))) {
-			support.addError("beskrivelse", "må settes");
+			support.addError("beskrivelse", "mÃ¥ settes");
 		}
 
 		if (ValidationUtils.isBlank(ModelUtil.nullToString(accidentModel.getAccidentCause()))) {
-			support.addError("årsak", "må settes");
+			support.addError("Ã¥rsak", "mÃ¥ settes");
 		}
 
 		return support.getResult();

@@ -17,7 +17,7 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 /**
- * Vindu som brukes for å søke etter ordre
+ * Vindu som brukes for ï¿½ sï¿½ke etter ordre
  * 
  * @author atle.brekka
  * 
@@ -99,7 +99,7 @@ public class SearchOrderView implements Closeable {
 		if (useCustomer) {
 			builder.add(checkBoxOrderNr, cc.xy(2, 2));
 		}
-		builder.addLabel("Søkekriterie:", cc.xy(2, 4));
+		builder.addLabel("SÃ¸kekriterie:", cc.xy(2, 4));
 		builder.add(textFieldSearch, cc.xy(4, 4));
 		builder.add(ButtonBarFactory.buildCenteredBar(buttonOk), cc
 				.xyw(2, 6, 3));
@@ -108,7 +108,7 @@ public class SearchOrderView implements Closeable {
 	}
 
 	/**
-	 * Klasse som brukes til å holde på søkekriterier
+	 * Klasse som brukes til ï¿½ holde pï¿½ sï¿½kekriterier
 	 * 
 	 * @author atle.brekka
 	 * 

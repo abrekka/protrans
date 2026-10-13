@@ -15,7 +15,7 @@ import no.ugland.utransprod.util.Util;
 import com.google.inject.Inject;
 
 /**
- * Selvstendig vindu fpr å sette forhåndsbetaling
+ * Selvstendig vindu fpr ï¿½ sette forhï¿½ndsbetaling
  * 
  * @author atle.brekka
  * 
@@ -42,7 +42,7 @@ public class PaidWindow implements MainWindow, CloseListener {
 						.getUserType(), login.getApplicationUser());
 		paidViewHandler.addCloseListener(this);
 		PaidView paidView = new PaidView(paidViewHandler, false);*/
-		JFrame jFrame = new JFrame("Forhåndsbetaling");
+		JFrame jFrame = new JFrame("ForhÃ¥ndsbetaling");
 		jFrame.setSize(paidView.getWindowSize());
 		jFrame.setIconImage(IconEnum.ICON_UGLAND_BIG.getIcon().getImage());
 		jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

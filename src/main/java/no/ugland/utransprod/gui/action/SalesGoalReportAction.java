@@ -16,7 +16,7 @@ public class SalesGoalReportAction extends AbstractAction{
 	private final MenuBarBuilderInterface menuBarBuilder;
 	@Inject
 	public SalesGoalReportAction(MenuBarBuilderInterface aMenuBarBuilder){
-		super("Salgsmålrapport...");
+		super("SalgsmÃ¥lrapport...");
 		this.menuBarBuilder = aMenuBarBuilder;
 	}
 

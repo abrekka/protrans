@@ -81,7 +81,7 @@ public class AssemblyCostReportTest {
 		List<AssemblyReport> orderList = new ArrayList<AssemblyReport>();
 		orderList.add(assemblyReport);
 		reportViewer.generateProtransReportFromBeanAndShow(orderList,
-				"Montering", ReportEnum.ASSEMBLY, null, null, null, false);
+				"Montering", ReportEnum.ASSEMBLY, null, null, null, false, null);
 
 		DialogFixture dialog = WindowFinder.findDialog(
 				ReportEnum.ASSEMBLY.getReportName()).using(

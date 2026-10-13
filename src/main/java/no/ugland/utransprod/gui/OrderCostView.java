@@ -24,7 +24,7 @@ import com.jgoodies.validation.ValidationResultModel;
 import com.jgoodies.validation.view.ValidationComponentUtils;
 
 /**
- * Klasse som håndterer visning og editering av kostnad for ordre
+ * Klasse som hï¿½ndterer visning og editering av kostnad for ordre
  * 
  * @author atle.brekka
  * 
@@ -149,11 +149,11 @@ public class OrderCostView {
 		builder.add(comboBoxCostType, cc.xy(4, 2));
 		builder.addLabel("Kostnadsenhet:", cc.xy(2, 4));
 		builder.add(comboBoxCostUnit, cc.xy(4, 4));
-		builder.addLabel("Beløp:", cc.xy(2, 6));
+		builder.addLabel("BelÃ¸p:", cc.xy(2, 6));
 		builder.add(textFieldAmount, cc.xy(4, 6));
 		builder.addLabel("Inkl. mva:", cc.xy(2, 8));
 		builder.add(comboBoxVat, cc.xy(4, 8));
-		builder.addLabel("Leverandør:", cc.xy(2, 10));
+		builder.addLabel("LeverandÃ¸r:", cc.xy(2, 10));
 		builder.add(comboBoxSupplier, cc.xy(4, 10));
 		builder.add(buttonAddSupplier, cc.xy(6, 10));
 		builder.addLabel("Fakturanr:", cc.xy(2, 12));
@@ -169,7 +169,7 @@ public class OrderCostView {
 	protected void initComponentAnnotations() {
 		ValidationComponentUtils.setMandatory(textFieldAmount, true);
 		ValidationComponentUtils
-				.setMessageKey(textFieldAmount, "Kostnad.beløp");
+				.setMessageKey(textFieldAmount, "Kostnad.belÃ¸p");
         
         ValidationComponentUtils.setMandatory(comboBoxCostUnit, true);
         ValidationComponentUtils
@@ -192,7 +192,7 @@ public class OrderCostView {
 	}
 
 	/**
-	 * Initierer hendelsehåndtering
+	 * Initierer hendelsehï¿½ndtering
 	 */
 	private void initEventHandling() {
 		PropertyChangeListener handler = new ValidationUpdateHandler();
@@ -201,7 +201,7 @@ public class OrderCostView {
 	}
 
 	/**
-	 * Klasse som håndterer oppdatering av feilrapportering
+	 * Klasse som hï¿½ndterer oppdatering av feilrapportering
 	 * 
 	 * @author atle.brekka
 	 * 

@@ -82,21 +82,21 @@
 			var10000 = false;
 		}
 		if (StringUtils.isNotBlank(transportable.getSpecialConcern())
-				&& transportable.getSpecialConcern().contains("Stående gavl")) {
+				&& transportable.getSpecialConcern().contains("StÃ¥ende gavl")) {
 
 			icons.add(IconEnum.ICON_WARNING.getIcon());
 		} else {
 			var10000 = false;
 		}
 		if (StringUtils.isNotBlank(transportable.getSpecialConcern())
-				&& transportable.getSpecialConcern().contains("Stående tak")) {
+				&& transportable.getSpecialConcern().contains("StÃ¥ende tak")) {
 
 			icons.add(IconEnum.ICON_WARNING_BLUE.getIcon());
 		} else {
 			var10000 = false;
 		}
 		if (StringUtils.isNotBlank(transportable.getSpecialConcern())
-				&& transportable.getSpecialConcern().contains("Høye vegger")) {
+				&& transportable.getSpecialConcern().contains("HÃ¸ye vegger")) {
 
 			icons.add(IconEnum.ICON_WARNING_YELLOW.getIcon());
 		} else {

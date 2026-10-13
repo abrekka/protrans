@@ -10,17 +10,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import no.ugland.utransprod.ProTransException;
+import no.ugland.utransprod.util.report.ReportViewer;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.jdesktop.jdic.desktop.Desktop;
 import org.jdesktop.jdic.desktop.Message;
 
 /**
- * Brukes til å sende mail.
+ * Brukes til ï¿½ sende mail.
  * 
  * @author atle.brekka
  */
 public final class MailUtil {
+	private static final Logger LOGGER = Logger.getLogger(MailUtil.class);
 
 	// private static String deviationSubject;
 
@@ -88,7 +91,7 @@ public final class MailUtil {
 	 */
 
 	/**
-	 * Sender mail til mailprogram som er satt opp på maskinen.
+	 * Sender mail til mailprogram som er satt opp pï¿½ maskinen.
 	 * 
 	 * @param toMail
 	 * @param subject
@@ -109,6 +112,7 @@ public final class MailUtil {
 //			java.awt.Desktop.getDesktop()
 //					.mail(new URI(mail));
 //			init();
+			LOGGER.info("MailUtil.sendMailWithAttachmentDesktop");
 			Message msg = new Message();
 			msg.setToAddrs(getToList(toMail));
 			msg.setSubject(subject);

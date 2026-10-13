@@ -36,7 +36,7 @@ public class PostShipmentCountSum implements Columnable {
 	/**
 	 * 
 	 */
-	private static final List<String> columnNames = new ArrayList<String>(Arrays.asList(new String[]{"År","Uke"}));
+	private static final List<String> columnNames = new ArrayList<String>(Arrays.asList(new String[]{"Ã…r","Uke"}));
 
 	/**
 	 * 
@@ -54,7 +54,7 @@ public class PostShipmentCountSum implements Columnable {
 		week = aWeek;
 	}
 	/**
-	 * @return år
+	 * @return ï¿½r
 	 */
 	public Integer getYear(){
 		return year;
@@ -105,7 +105,7 @@ public class PostShipmentCountSum implements Columnable {
 	 */
 	public static void clearColumnNames(){
 		columnNames.clear();
-		columnNames.add("År");
+		columnNames.add("Ã…r");
 		columnNames.add("Uke");
 	}
 }

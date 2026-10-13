@@ -70,7 +70,7 @@ public class TakstolApplyListView extends ApplyListView<Produceable> {
 	// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
 	CellConstraints cc = new CellConstraints();
 	builder.add(checkBoxFilter, cc.xy(17, 2));
-	builder.addLabel("Produktområde:", cc.xy(2, 2));
+	builder.addLabel("ProduktomrÃ¥de:", cc.xy(2, 2));
 	// builder.add(comboBoxProductAreaGroup, cc.xy(4, 2));
 	builder.addLabel("Produksjonsenhet:", cc.xy(6, 2));
 	builder.add(comboBoxProductionUnit, cc.xy(8, 2));

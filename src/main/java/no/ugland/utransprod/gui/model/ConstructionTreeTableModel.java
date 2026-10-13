@@ -99,7 +99,7 @@ public class ConstructionTreeTableModel extends DefaultTreeTableModel {
 		case 1:
 			return "Verdi";
 		case 2:
-			return "Rekkefølge";
+			return "RekkefÃ¸lge";
 		default:
 			return "";
 		}

@@ -838,7 +838,7 @@ public class PostShipment extends AbstractTransportable implements TextRenderabl
 
 	public void cacheTakstolHeight() {
 		OrderLine takstol = getOrderLine(Util.getTakstolArticleName());
-		String value = takstol.getAttributeValue("Makshøyde");
+		String value = takstol.getAttributeValue("MakshÃ¸yde");
 		setTakstolHeight(
 				value.length() != 0 && StringUtils.isNumeric(value) ? Integer.valueOf(value) : Integer.valueOf(0));
 	}

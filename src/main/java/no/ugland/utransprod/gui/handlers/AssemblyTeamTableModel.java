@@ -281,7 +281,7 @@ public final class AssemblyTeamTableModel extends AbstractTableAdapter {
 				return String.class;
 			}
 		},
-		PRODUKTOMRÅDE("Produktområde") {
+		PRODUKTOMRÃ…DE("ProduktomrÃ¥de") {
 			@Override
 			public Object getValue(Assembly assembly, Order order, Deviation deviation) {
 				if (order != null) {

@@ -40,34 +40,34 @@ public class ApplicationUserValidator implements Validator {
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(applicationUserModel
                 .getFirstName()))) {
-            support.addError("fornavn", "må settes");
+            support.addError("fornavn", "mÃ¥ settes");
         }
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(applicationUserModel
                 .getUserName()))) {
-            support.addError("brukernavn", "må settes");
+            support.addError("brukernavn", "mÃ¥ settes");
         }
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(applicationUserModel
                 .getLastName()))) {
-            support.addError("etternavn", "må settes");
+            support.addError("etternavn", "mÃ¥ settes");
         }
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(applicationUserModel
                 .getPassword()))) {
-            support.addError("passord", "må settes");
+            support.addError("passord", "mÃ¥ settes");
         }
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(applicationUserModel
                 .getGroupUser()))) {
-            support.addError("gruppebruker", "må settes");
+            support.addError("gruppebruker", "mÃ¥ settes");
         }
 
         if (applicationUserModel.getUserRoleList().size() == 0) {
-            support.addError("rolle", "må ha minst en rolle");
+            support.addError("rolle", "mÃ¥ ha minst en rolle");
         }
         if (applicationUserModel.getProductArea() == null) {
-            support.addError("produktområde", "må settes");
+            support.addError("produktomrÃ¥de", "mÃ¥ settes");
         }
 
         return support.getResult();

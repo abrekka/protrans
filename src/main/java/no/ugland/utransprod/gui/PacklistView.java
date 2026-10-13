@@ -43,6 +43,7 @@ public class PacklistView extends ApplyListView<PacklistV> {
 	private JButton buttonProductionReport;
 	private JButton buttonDelelisteReport;
 	private JButton buttonMonteringsanvisning;
+	private JButton buttonMonteringsanvisningSO;
 
 	public PacklistView(AbstractProductionPackageViewHandler<PacklistV> aViewHandler) {
 		super(aViewHandler, false);
@@ -52,6 +53,7 @@ public class PacklistView extends ApplyListView<PacklistV> {
 	protected void initComponents(WindowInterface window) {
 		super.initComponents(window);
 		buttonMonteringsanvisning= ((PacklistViewHandler) viewHandler).getButtonMonteringsanvisning(window);
+		buttonMonteringsanvisningSO= ((PacklistViewHandler) viewHandler).getButtonMonteringsanvisningSO(window);
 		buttonProductionReport = ((PacklistViewHandler) viewHandler).getButtonProductionReport(window);
 		buttonDelelisteReport = ((PacklistViewHandler) viewHandler).getButtonDelelisteReport(window);
 		buttonExcel = ((PacklistViewHandler) viewHandler).getButtonExcel(window);
@@ -80,13 +82,13 @@ public class PacklistView extends ApplyListView<PacklistV> {
 		// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),
 		// layout);
 		CellConstraints cc = new CellConstraints();
-		// builder.addLabel("Produktområde:", cc.xy(2, 2));
+		// builder.addLabel("Produktomrï¿½de:", cc.xy(2, 2));
 		// builder.add(comboBoxProductAreaGroup, cc.xy(4, 2));
 		builder.addLabel("Budsjett:", cc.xy(6, 2));
 		builder.add(labelBudget, cc.xy(8, 2));
 		builder.addLabel("# denne uke:", cc.xy(10, 2));
 		builder.add(labelCountWeek, cc.xy(12, 2));
-		builder.addLabel("# dette året:", cc.xy(14, 2));
+		builder.addLabel("# dette Ã¥ret:", cc.xy(14, 2));
 		builder.add(labelCountYear, cc.xy(16, 2));
 		builder.addLabel("uke fra:", cc.xy(18, 2));
 		builder.add(textFieldWeekFrom, cc.xy(20, 2));
@@ -126,6 +128,8 @@ public class PacklistView extends ApplyListView<PacklistV> {
 		builder.addGridded(buttonDelelisteReport);
 		builder.addRelatedGap();
 		builder.addGridded(buttonMonteringsanvisning);
+		builder.addRelatedGap();
+		builder.addGridded(buttonMonteringsanvisningSO);
 
 		return builder.getPanel();
 	}

@@ -16,8 +16,8 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JYearChooser;
 
 /**
- * Brukes til å vise dialog for å sette parametre i forbindelse med
- * nøkkeltallsrapporter
+ * Brukes til ï¿½ vise dialog for ï¿½ sette parametre i forbindelse med
+ * nï¿½kkeltallsrapporter
  * 
  * @author atle.brekka
  * 
@@ -102,9 +102,9 @@ public class KeyReportView implements Viewer {
 
 		builder.addLabel("Rapporttype:", cc.xyw(2, 2, 3));
 		builder.add(comboBoxReportType, cc.xyw(6, 2, 6));
-		builder.addLabel("Produktområde:", cc.xyw(2, 4, 5));
+		builder.addLabel("ProduktomrÃ¥de:", cc.xyw(2, 4, 5));
 		builder.add(comboBoxProductArea, cc.xyw(8, 4, 4));
-		builder.addLabel("År:", cc.xy(2, 6));
+		builder.addLabel("Ã…r:", cc.xy(2, 6));
 		builder.add(yearChooser, cc.xyw(4, 6, 1));
 		builder.addLabel("Uke:", cc.xy(6, 6));
 		builder.add(comboBoxWeek, cc.xy(8, 6));
@@ -131,7 +131,7 @@ public class KeyReportView implements Viewer {
 	 * @see no.ugland.utransprod.gui.Viewer#getTitle()
 	 */
 	public String getTitle() {
-		return "Nøkkeltallrapport :: parametre";
+		return "Nï¿½kkeltallrapport :: parametre";
 	}
 
 	/**

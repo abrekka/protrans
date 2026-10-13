@@ -53,7 +53,7 @@ import com.jgoodies.binding.list.ArrayListModel;
 import com.jgoodies.binding.list.SelectionInList;
 
 /**
- * Håndterer leverandører
+ * Hï¿½ndterer leverandï¿½rer
  * 
  * @author atle.brekka
  * 
@@ -80,7 +80,7 @@ public class SupplierViewHandler extends DefaultAbstractViewHandler<Supplier, Su
      * @param userType
      */
     public SupplierViewHandler(Login login, ManagerRepository aManagerRepository) {
-	super("Leverandører", aManagerRepository.getSupplierManager(), login.getUserType(), true);
+	super("LeverandÃ¸rer", aManagerRepository.getSupplierManager(), login.getUserType(), true);
 	managerRepository = aManagerRepository;
 
 	productAreaGroupArray = new ArrayListModel();
@@ -188,7 +188,7 @@ public class SupplierViewHandler extends DefaultAbstractViewHandler<Supplier, Su
     }
 
     /**
-     * Lager komboboks for leverandørtype
+     * Lager komboboks for leverandï¿½rtype
      * 
      * @param presentationModel
      * @return komboboks
@@ -237,7 +237,7 @@ public class SupplierViewHandler extends DefaultAbstractViewHandler<Supplier, Su
     @Override
     public CheckObject checkDeleteObject(Supplier supplier) {
 	if (((SupplierManager) overviewManager).hasOrderCosts(supplier)) {
-	    return new CheckObject("Kan ikke slette leverandør som er knyttet opp mot kostnader!", false);
+	    return new CheckObject("Kan ikke slette leverandÃ¸r som er knyttet opp mot kostnader!", false);
 	}
 	return null;
     }
@@ -261,7 +261,7 @@ public class SupplierViewHandler extends DefaultAbstractViewHandler<Supplier, Su
      */
     @Override
     public String getAddRemoveString() {
-	return "leverandør";
+	return "leverandÃ¸r";
     }
 
     /**
@@ -301,7 +301,7 @@ public class SupplierViewHandler extends DefaultAbstractViewHandler<Supplier, Su
      */
     @Override
     public String getTitle() {
-	return "Leverandører";
+	return "LeverandÃ¸rer";
     }
 
     /**
@@ -313,11 +313,11 @@ public class SupplierViewHandler extends DefaultAbstractViewHandler<Supplier, Su
     }
 
     /**
-     * Legger til ny leverandør
+     * Legger til ny leverandï¿½r
      * 
      * @param window
      * 
-     * @return leverandør
+     * @return leverandï¿½r
      */
     public Supplier insertNewSupplier(WindowInterface window) {
 	Supplier supplier = new Supplier();
@@ -341,7 +341,7 @@ public class SupplierViewHandler extends DefaultAbstractViewHandler<Supplier, Su
     }
 
     /**
-     * Tabellmodell for leverandør
+     * Tabellmodell for leverandï¿½r
      * 
      * @author atle.brekka
      * 
@@ -356,7 +356,7 @@ public class SupplierViewHandler extends DefaultAbstractViewHandler<Supplier, Su
 	/**
 		 * 
 		 */
-	private static final String[] COLUMNS = { "Navn", "Leverandørnr", "Telefon", "Beskrivelse", "Type", "Inaktiv", "Aktiv" };
+	private static final String[] COLUMNS = { "Navn", "LeverandÃ¸rnr", "Telefon", "Beskrivelse", "Type", "Inaktiv", "Aktiv" };
 
 	/**
 	 * @param listModel
@@ -460,7 +460,7 @@ public class SupplierViewHandler extends DefaultAbstractViewHandler<Supplier, Su
 	private WindowInterface window;
 
 	public AddProductAreaGroupAction(PresentationModel aPresentationModel, WindowInterface awindow) {
-	    super("Legg til produktområde");
+	    super("Legg til produktomrÃ¥de");
 	    presentationModel = aPresentationModel;
 	    window = awindow;
 	}
@@ -473,8 +473,8 @@ public class SupplierViewHandler extends DefaultAbstractViewHandler<Supplier, Su
 
 	    List<ProductAreaGroup> groups = Util.getProductAreaGroupList();
 
-	    ProductAreaGroup selectedGroup = (ProductAreaGroup) JOptionPane.showInputDialog(window.getComponent(), "Velg produktområde",
-		    "Legg til produktområde", JOptionPane.INFORMATION_MESSAGE, null, groups.toArray(), null);
+	    ProductAreaGroup selectedGroup = (ProductAreaGroup) JOptionPane.showInputDialog(window.getComponent(), "Velg produktomrÃ¥de",
+		    "Legg til produktomrÃ¥de", JOptionPane.INFORMATION_MESSAGE, null, groups.toArray(), null);
 
 	    if (selectedGroup != null) {
 		if (selectedGroup.getProductAreaGroupName().equalsIgnoreCase("Alle")) {
@@ -495,7 +495,7 @@ public class SupplierViewHandler extends DefaultAbstractViewHandler<Supplier, Su
 	private PresentationModel presentationModel;
 
 	public DeleteProductAreaGroupAction(PresentationModel aPresentationModel) {
-	    super("Fjern produktområde");
+	    super("Fjern produktomrÃ¥de");
 	    presentationModel = aPresentationModel;
 	}
 
@@ -518,7 +518,7 @@ public class SupplierViewHandler extends DefaultAbstractViewHandler<Supplier, Su
      */
     @Override
     public Boolean hasWriteAccess() {
-	return UserUtil.hasWriteAccess(userType, "Leverandører");
+	return UserUtil.hasWriteAccess(userType, "LeverandÃ¸rer");
     }
 
     /**

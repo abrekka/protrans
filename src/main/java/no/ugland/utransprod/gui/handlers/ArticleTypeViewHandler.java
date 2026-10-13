@@ -125,7 +125,7 @@ public class ArticleTypeViewHandler extends DefaultAbstractViewHandler<ArticleTy
     private JXTable tableAttributes;
 
     /**
-     * Brukes av test for å slå av oppdatering av garasjetype
+     * Brukes av test for ï¿½ slï¿½ av oppdatering av garasjetype
      * 
      * @param usedArticles
      * @param userType
@@ -188,7 +188,7 @@ public class ArticleTypeViewHandler extends DefaultAbstractViewHandler<ArticleTy
     }
 
     /**
-     * Lager knapp for å legge til artikkel
+     * Lager knapp for ï¿½ legge til artikkel
      * 
      * @return knapp
      */
@@ -262,21 +262,21 @@ public class ArticleTypeViewHandler extends DefaultAbstractViewHandler<ArticleTy
     }
 
     /**
-     * Lager checkboks for toppnivå
+     * Lager checkboks for toppnivï¿½
      * 
      * @param presentationModel1
      * @return checkboks
      */
     public JCheckBox getCheckBoxTopLevel(PresentationModel presentationModel1) {
 	JCheckBox checkBox = BasicComponentFactory.createCheckBox(presentationModel1.getBufferedModel(ArticleTypeModel.PROPERTY_TOP_LEVEL_BOOL),
-		"Toppnivå");
+		"Toppnivï¿½");
 	checkBox.setEnabled(hasWriteAccess());
 	return checkBox;
     }
 
     public JCheckBox getCheckBoxForceImport(PresentationModel presentationModel1) {
 	JCheckBox checkBox = BasicComponentFactory.createCheckBox(presentationModel1.getBufferedModel(ArticleTypeModel.PROPERTY_FORCE_IMPORT_BOOL),
-		"Må importeres");
+		"Mï¿½ importeres");
 	checkBox.setEnabled(hasWriteAccess());
 	return checkBox;
     }
@@ -314,7 +314,7 @@ public class ArticleTypeViewHandler extends DefaultAbstractViewHandler<ArticleTy
     }
 
     /**
-     * Henter knapp for å legge til attributt
+     * Henter knapp for ï¿½ legge til attributt
      * 
      * @param window
      * @return knapp
@@ -327,7 +327,7 @@ public class ArticleTypeViewHandler extends DefaultAbstractViewHandler<ArticleTy
     }
 
     /**
-     * Henter knapp for å fjerne attributt
+     * Henter knapp for ï¿½ fjerne attributt
      * 
      * @param window
      * @return knapp
@@ -369,7 +369,7 @@ public class ArticleTypeViewHandler extends DefaultAbstractViewHandler<ArticleTy
 	ArticleType articleType = (object).getObject();
 	List<ArticleTypeArticleType> list = (List) aPresentationModel.getBufferedValue(ArticleTypeModel.PROPERTY_ARTICLE_TYPE_ARTICLE_TYPES);
 	if (articleType.getArticleTypeId() == null && objectList.contains(articleType)) {
-	    errorString = "Kan ikke lagre artikkeltype som finnes fra før";
+	    errorString = "Kan ikke lagre artikkeltype som finnes fra fÃ¸r";
 	} else if (list != null) {
 	    for (ArticleTypeArticleType ref : list) {
 		if (ref.getArticleTypeRef().equals(articleType)) {
@@ -441,14 +441,14 @@ public class ArticleTypeViewHandler extends DefaultAbstractViewHandler<ArticleTy
     final void afterSaveObject(ArticleType articleType, WindowInterface window) {
 	if (window != null && updateConstructionType) {
 	    if (Util.showConfirmDialog(window.getComponent(), "Oppdaterer garsjetyper?",
-		    "Ønsker du å oppdatere garsjetyper som bruker denne artikkelen?")) {
+		    "ï¿½nsker du ï¿½ oppdatere garsjetyper som bruker denne artikkelen?")) {
 		updateConstructionTypes(articleType);
 	    }
 	}
     }
 
     /**
-     * Oppdater garasjetyper i henhold til endringer som er gjort på artikkel
+     * Oppdater garasjetyper i henhold til endringer som er gjort pï¿½ artikkel
      * 
      * @param articleType
      */
@@ -572,7 +572,7 @@ public class ArticleTypeViewHandler extends DefaultAbstractViewHandler<ArticleTy
     }
 
     /**
-     * Åpner vindu for å velge attributter
+     * ï¿½pner vindu for ï¿½ velge attributter
      */
     public void openAttributeView(AttributeManager attributeManager) {
 
@@ -598,7 +598,7 @@ public class ArticleTypeViewHandler extends DefaultAbstractViewHandler<ArticleTy
     }
 
     /**
-     * Klasse som håndtrer oppdatering av attributter
+     * Klasse som hï¿½ndtrer oppdatering av attributter
      * 
      * @author atle.brekka
      */
@@ -678,7 +678,7 @@ public class ArticleTypeViewHandler extends DefaultAbstractViewHandler<ArticleTy
     }
 
     /**
-     * Henter knapp for å legge til artikkel
+     * Henter knapp for ï¿½ legge til artikkel
      * 
      * @param window
      * @return knapp
@@ -707,7 +707,7 @@ public class ArticleTypeViewHandler extends DefaultAbstractViewHandler<ArticleTy
     }
 
     /**
-     * Henter knapp for å fjerne artikkel
+     * Henter knapp for ï¿½ fjerne artikkel
      * 
      * @param window
      * @return knapp
@@ -720,7 +720,7 @@ public class ArticleTypeViewHandler extends DefaultAbstractViewHandler<ArticleTy
     }
 
     /**
-     * Klase som håndterer oppdatering av artikkel
+     * Klase som hï¿½ndterer oppdatering av artikkel
      * 
      * @author atle.brekka
      */
@@ -774,7 +774,7 @@ public class ArticleTypeViewHandler extends DefaultAbstractViewHandler<ArticleTy
     }
 
     /**
-     * Åpner vindu for å legge til artikkel
+     * ï¿½pner vindu for ï¿½ legge til artikkel
      * 
      * @param window
      */
@@ -799,7 +799,7 @@ public class ArticleTypeViewHandler extends DefaultAbstractViewHandler<ArticleTy
     }
 
     /**
-     * Viser vindu for å legg til artikkel
+     * Viser vindu for ï¿½ legg til artikkel
      * 
      * @param newArticles
      * @param currentArticleType
@@ -841,7 +841,7 @@ public class ArticleTypeViewHandler extends DefaultAbstractViewHandler<ArticleTy
     }
 
     /**
-     * Klasse som håndterer endring av valg av artikkel
+     * Klasse som hï¿½ndterer endring av valg av artikkel
      * 
      * @author atle.brekka
      */
@@ -876,7 +876,7 @@ public class ArticleTypeViewHandler extends DefaultAbstractViewHandler<ArticleTy
     }
 
     /**
-     * Håndterer dobbelklikk i liste
+     * Hï¿½ndterer dobbelklikk i liste
      * 
      * @author atle.brekka
      */
@@ -924,7 +924,7 @@ public class ArticleTypeViewHandler extends DefaultAbstractViewHandler<ArticleTy
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-	    String articleName = JOptionPane.showInputDialog("Navn på artikkel");
+	    String articleName = JOptionPane.showInputDialog("Navn pÃ¥ artikkel");
 	    if (articleName != null && articleName.length() != 0) {
 		ArticleType articleType = new ArticleType();
 		articleType.setArticleTypeName(articleName);
@@ -949,7 +949,7 @@ public class ArticleTypeViewHandler extends DefaultAbstractViewHandler<ArticleTy
     }
 
     /**
-     * Håndterer avbryt
+     * Hï¿½ndterer avbryt
      * 
      * @author atle.brekka
      */
@@ -1028,7 +1028,7 @@ public class ArticleTypeViewHandler extends DefaultAbstractViewHandler<ArticleTy
     }
 
     /**
-     * Klasse som sammenlikner to artikkeltyper basert på navn
+     * Klasse som sammenlikner to artikkeltyper basert pï¿½ navn
      * 
      * @author atle.brekka
      */

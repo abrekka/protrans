@@ -16,6 +16,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.table.TableModel;
 
+import org.apache.log4j.Logger;
+
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -30,6 +32,7 @@ import no.ugland.utransprod.gui.IconEnum;
 import no.ugland.utransprod.gui.JDialogAdapter;
 import no.ugland.utransprod.gui.WindowInterface;
 import no.ugland.utransprod.gui.buttons.CancelButton;
+import no.ugland.utransprod.gui.handlers.TransportViewHandler;
 import no.ugland.utransprod.gui.model.ReportEnum;
 import no.ugland.utransprod.util.ApplicationParamUtil;
 import no.ugland.utransprod.util.JRViewerProTrans;
@@ -37,16 +40,18 @@ import no.ugland.utransprod.util.MailUtil;
 import no.ugland.utransprod.util.Util;
 
 import com.jgoodies.forms.builder.PanelBuilder;
+import com.jgoodies.forms.debug.FormDebugPanel;
 import com.jgoodies.forms.factories.ButtonBarFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 /**
- * Brukes til å generere rapporter.
+ * Brukes til ï¿½ generere rapporter.
  * 
  * @author atle.brekka
  */
 public class ReportViewer extends JDialog implements Closeable {
+	private static final Logger LOGGER = Logger.getLogger(ReportViewer.class);
 	private static final long serialVersionUID = 1L;
 
 	private static final String UGLAND_LOGO_PARAMETER = "ugland_logo";
@@ -58,11 +63,13 @@ public class ReportViewer extends JDialog implements Closeable {
 	private JButton buttonCancel;
 
 	private JButton buttonMail;
+	private JButton buttonSO;
 
 	JasperPrint jasperPrintReport;
 
 	String fileName;
 	private MailConfig mailConfig;
+	private String ordernr;
 
 	public ReportViewer() {
 
@@ -99,11 +106,11 @@ public class ReportViewer extends JDialog implements Closeable {
 		initComponents(window);
 		FormLayout layout = new FormLayout("400dlu:grow", "fill:300dlu:grow,3dlu,p");
 		PanelBuilder builder = new PanelBuilder(layout);
-		// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
+		 //PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
 		CellConstraints cc = new CellConstraints();
 		builder.add(pnlMain, cc.xy(1, 1));
 		if (mailConfig != null) {
-			builder.add(ButtonBarFactory.buildCenteredBar(buttonMail, buttonCancel), cc.xy(1, 3));
+			builder.add(ButtonBarFactory.buildCenteredBar(buttonMail,buttonSO, buttonCancel), cc.xy(1, 3));
 		} else {
 			builder.add(ButtonBarFactory.buildCenteredBar(buttonCancel), cc.xy(1, 3));
 		}
@@ -126,7 +133,8 @@ public class ReportViewer extends JDialog implements Closeable {
 
 	public final void generateProtransReportFromBeanAndShow(final Collection<?> beans, final String heading,
 			final ReportEnum reportEnum, final Map<String, Object> extraParams, final String reportFileName,
-			final WindowInterface window, final boolean isModal) throws ProTransException {
+			final WindowInterface window, final boolean isModal, String ordernr) throws ProTransException {
+		this.ordernr=ordernr;
 		JDialog dialog = Util.getDialog(window, heading, isModal);
 		WindowInterface dialogWindow = new JDialogAdapter(dialog);
 		dialogWindow.setName(heading);
@@ -142,7 +150,7 @@ public class ReportViewer extends JDialog implements Closeable {
 
 	public final void generateProtransReportAndShow(final TableModel tableModel, final String heading,
 			final ReportEnum reportEnum, final Map<String, Object> extraParams, final WindowInterface window)
-					throws ProTransException {
+			throws ProTransException {
 		JDialog dialog = Util.getDialog(window, heading, true);
 		WindowInterface dialogWindow = new JDialogAdapter(dialog);
 
@@ -167,7 +175,7 @@ public class ReportViewer extends JDialog implements Closeable {
 	 */
 	public final void generateProtransReportFromBean(final Collection<?> beans, final String heading,
 			final ReportEnum reportEnum, final Map<String, Object> extraParams, final String reportFileName)
-					throws ProTransException {
+			throws ProTransException {
 		fileName = reportFileName;
 		generateProtransReportFromDatasource(new JRBeanCollectionDataSource(beans), heading, reportEnum, extraParams);
 	}
@@ -183,6 +191,8 @@ public class ReportViewer extends JDialog implements Closeable {
 		buttonCancel.setName("ButtonCancel");
 		buttonMail = new JButton(new MailAction(window));
 		buttonMail.setIcon(IconEnum.ICON_MAIL.getIcon());
+		buttonSO = new JButton(new SOAction(window));
+		
 		pnlMain = new javax.swing.JPanel();
 		pnlMain.setLayout(new java.awt.BorderLayout());
 
@@ -201,19 +211,20 @@ public class ReportViewer extends JDialog implements Closeable {
 			InputStream stream = getClass().getClassLoader().getResourceAsStream(reportFile);
 
 			if (stream == null) {
-				throw new ProTransException(String.format("Fant ikke rapport %s",reportFile));
+				throw new ProTransException(String.format("Fant ikke rapport %s", reportFile));
 			}
-			
-			//Brukes for å kompilere rapporter laget i JasperSoft Studio
+
+			// Brukes for ï¿½ kompilere rapporter laget i JasperSoft Studio
 //			InputStream rapport =getClass().getClassLoader().getResourceAsStream("reports/assembly_ny.jrxml");
 //			String filnavn=JasperCompileManager.compileReportToFile("reports/feil_ved_leveranse.jrxml");
 //			String filnavn2=JasperCompileManager.compileReportToFile("reports/assembly_ny_svensk.jrxml");
 //			String filnavn3=JasperCompileManager.compileReportToFile("reports/hms2_ny_ny.jrxml");
 //			String filnavn3=JasperCompileManager.compileReportToFile("reports/fraktbrev.jrxml");
-//			String filnavn4=JasperCompileManager.compileReportToFile("reports/hms_fraktbrev.jrxml");
+//			String filnavn4=JasperCompileManager.compileReportToFile("reports/assembly_ny_ny.jrxml");
+//			JasperCompileManager.compileReportToFile("reports/fakturagrunnlag.jrxml");
 //			JasperCompileManager.compileReportToFile("reports/ekstraarbeide.jrxml");
 //			JasperCompileManager.compileReportToFile("reports/deleliste_tillegg2.jrxml");
-			
+
 			jasperPrintReport = JasperFillManager.fillReport(stream, parameters, datasource);
 
 			JRViewerProTrans viewer = new JRViewerProTrans(jasperPrintReport);
@@ -239,6 +250,7 @@ public class ReportViewer extends JDialog implements Closeable {
 		addLogoToParameters(reportEnum, parameters, extraParams);
 		parameters.put("HEADING", heading);
 		InputStream iconStream = getClass().getClassLoader().getResourceAsStream("images/igland_garasjen.png");
+//		InputStream iconStream = getClass().getClassLoader().getResourceAsStream("images/IG 2025 stor.bmp");
 		parameters.put("IGLAND_GARASJE_LOGO", iconStream);
 
 		if (extraParams != null) {
@@ -277,7 +289,7 @@ public class ReportViewer extends JDialog implements Closeable {
 	}
 
 	/**
-	 * Håndterer sending av rapport som mail.
+	 * Hï¿½ndterer sending av rapport som mail.
 	 * 
 	 * @author atle.brekka
 	 */
@@ -305,6 +317,45 @@ public class ReportViewer extends JDialog implements Closeable {
 		}
 
 	}
+	
+	private class SOAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+
+		private WindowInterface window;
+
+		/**
+		 * @param aWindow
+		 */
+		public SOAction(final WindowInterface aWindow) {
+			super("Send til SO...");
+			window = aWindow;
+		}
+
+		/**
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
+		public final void actionPerformed(final ActionEvent arg0) {
+			try {
+				Util.setWaitCursor(window.getComponent());
+//				HtmlEx
+				String soPath = getSODir();
+				String tempFileName = soPath+"/"+ordernr+"-516-montor.pdf";
+				LOGGER.info("Skal lagre til SO fil="+tempFileName);
+				File pdfFile = new File(tempFileName);
+				
+				JRPdfSaveContributor pdfSaver = new JRPdfSaveContributor(null, null);
+				pdfSaver.save(jasperPrintReport, pdfFile);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				Util.showErrorDialog(window, "Feil", e.getMessage());
+			} finally {
+				Util.setDefaultCursor(window.getComponent());
+			}
+
+		}
+
+	}
 
 	private void sendMail(final WindowInterface window) {
 		try {
@@ -315,7 +366,8 @@ public class ReportViewer extends JDialog implements Closeable {
 			File pdfFile = new File(tempFileName);
 			JRPdfSaveContributor pdfSaver = new JRPdfSaveContributor(null, null);
 			pdfSaver.save(jasperPrintReport, pdfFile);
-
+			LOGGER.info("Skal sende mail toMail=" + mailConfig.getToMailAddress() + ", heading="
+					+ mailConfig.getHeading() + ", msg=" + mailConfig.getMsg() + ", filenbame=" + tempFileName);
 			MailUtil.sendMailWithAttachmentDesktop(mailConfig.getToMailAddress(), mailConfig.getHeading(),
 					mailConfig.getMsg(), tempFileName);
 			// MailUtil.sendDeviationMail(tempFileName, fileName);
@@ -337,9 +389,22 @@ public class ReportViewer extends JDialog implements Closeable {
 		}
 		return tempFileName;
 	}
+	
+	
 
 	final String getTempDir() throws ProTransException {
 		String tmpPath = ApplicationParamUtil.findParamByName("temp_dir");
+		File tempDir = new File(tmpPath);
+		if (!tempDir.exists()) {
+			if (!tempDir.mkdir()) {
+				throw new ProTransException("Kunne ikke lage temp katalog " + tmpPath);
+			}
+		}
+		return tmpPath;
+	}
+	
+	final String getSODir() throws ProTransException {
+		String tmpPath = ApplicationParamUtil.findParamByName("SO_dir");
 		File tempDir = new File(tmpPath);
 		if (!tempDir.exists()) {
 			if (!tempDir.mkdir()) {

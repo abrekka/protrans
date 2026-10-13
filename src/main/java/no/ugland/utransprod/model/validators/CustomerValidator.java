@@ -38,15 +38,15 @@ public class CustomerValidator implements Validator {
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(customerModel
                 .getCustomerNr()))) {
-            support.addError("nummer", "må settes");
+            support.addError("nummer", "mÃ¥ settes");
         }
 
         if (ValidationUtils.isBlank(customerModel.getFirstName())) {
-            support.addError("fornavn", "må settes");
+            support.addError("fornavn", "mÃ¥ settes");
         }
 
         if (ValidationUtils.isBlank(customerModel.getLastName())) {
-            support.addError("etternavn", "må settes");
+            support.addError("etternavn", "mÃ¥ settes");
         }
 
         return support.getResult();

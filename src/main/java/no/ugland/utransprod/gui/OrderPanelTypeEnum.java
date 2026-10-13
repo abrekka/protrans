@@ -10,31 +10,31 @@ import no.ugland.utransprod.model.PostShipment;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * Enum for å holde rede på hva slags type ordrepanel som skal vises
+ * Enum for ï¿½ holde rede pï¿½ hva slags type ordrepanel som skal vises
  * 
  * @author atle.brekka
  */
 public enum OrderPanelTypeEnum {
-    NEW_ORDERS(new String[] { "ØUke", "Type", "Mont.", "Pnr.", "Poststed", "Stein", "Kunde", "Ordrenr", "Adresse", "Produktområde", "Sannsynlighet",
+    NEW_ORDERS(new String[] { "Ã˜Uke", "Type", "Mont.", "Pnr.", "Poststed", "Stein", "Kunde", "Ordrenr", "Adresse", "ProduktomrÃ¥de", "Sannsynlighet",
 	    "Takstoltegner", "Prod.uke" }, 9) {
 	@Override
 	public Object getKundeInfo(Transportable transportable) {
 	    return transportable.getOrder();
 	}
     },
-    ASSEMBLY_ORDERS(new String[] { "Type", "Pnr.", "Poststed", "Kunde", "Ordrenr", "Adresse", "Transport", "Produktområde", "Prod.uke" }, 7) {
+    ASSEMBLY_ORDERS(new String[] { "Type", "Pnr.", "Poststed", "Kunde", "Ordrenr", "Adresse", "Transport", "ProduktomrÃ¥de", "Prod.uke" }, 7) {
 	@Override
 	public Object getKundeInfo(Transportable transportable) {
 	    return transportable.getOrder();
 	}
     },
-    ORDER(new String[] { "Kunde", "Ordrenr", "Adresse", "Postnummer", "Poststed", "Type", "Transport", "Produktområde" }, 7) {
+    ORDER(new String[] { "Kunde", "Ordrenr", "Adresse", "Postnummer", "Poststed", "Type", "Transport", "ProduktomrÃ¥de" }, 7) {
 	@Override
 	public Object getKundeInfo(Transportable transportable) {
 	    return transportable.getCustomer();
 	}
     },
-    DEVIATION(new String[] { "Kunde", "Ordrenr", "Adresse", "Postnummer", "Poststed", "Type", "Transport", "Produktområde" }, 7) {
+    DEVIATION(new String[] { "Kunde", "Ordrenr", "Adresse", "Postnummer", "Poststed", "Type", "Transport", "ProduktomrÃ¥de" }, 7) {
 	@Override
 	public Object getKundeInfo(Transportable transportable) {
 	    return transportable.getCustomer();
@@ -47,7 +47,7 @@ public enum OrderPanelTypeEnum {
 	    return transportable.getCustomer();
 	}
     },
-    INCOMING_ORDER(new String[] { "Kunde", "Ordrenr", "Adresse", "Postnummer", "Poststed", "Type", "Transport", "Produktområde", "Status" }, 7) {
+    INCOMING_ORDER(new String[] { "Kunde", "Ordrenr", "Adresse", "Postnummer", "Poststed", "Type", "Transport", "ProduktomrÃ¥de", "Status" }, 7) {
 	@Override
 	public Object getKundeInfo(Transportable transportable) {
 	    return transportable.getCustomer();
@@ -79,7 +79,7 @@ public enum OrderPanelTypeEnum {
     public abstract Object getKundeInfo(Transportable transportable);
 
     public enum OrderColumn {
-	ØUKE {
+	Ã˜UKE {
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> steinChecker,
 		    OrderPanelTypeEnum orderPanelTypeEnum) {
@@ -153,7 +153,7 @@ public enum OrderPanelTypeEnum {
 		return transportable.getOrder().getDeliveryAddress();
 	    }
 	},
-	PRODUKTOMRÅDE {
+	PRODUKTOMRÃ…DE {
 	    @Override
 	    public Object getValue(Transportable transportable, Map<String, String> statusMap, StatusCheckerInterface<Transportable> steinChecker,
 		    OrderPanelTypeEnum orderPanelTypeEnum) {

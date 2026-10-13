@@ -14,7 +14,7 @@ import no.ugland.utransprod.service.SupplierTypeManager;
 import com.google.inject.Inject;
 
 /**
- * Håndterer menyvalg Leverandørtype
+ * Hï¿½ndterer menyvalg Leverandï¿½rtype
  * 
  * @author atle.brekka
  */
@@ -28,7 +28,7 @@ public class SupplierTypeAction extends AbstractAction {
 
 	@Inject
 	public SupplierTypeAction(MenuBarBuilderInterface aMenuBarBuilder,SupplierTypeManager aSupplierTypeManager) {
-		super("Leverandørtyper...");
+		super("LeverandÃ¸rtyper...");
 		supplierTypeManager=aSupplierTypeManager;
 		this.menuBarBuilder = aMenuBarBuilder;
 	}

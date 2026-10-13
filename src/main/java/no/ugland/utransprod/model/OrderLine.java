@@ -88,7 +88,7 @@ public class OrderLine extends BaseObject
 		private static final long serialVersionUID = 1L;
 	};
 	/**
-	 * Brukes til å lagre info fra visma
+	 * Brukes til ï¿½ lagre info fra visma
 	 */
 	private Ordln ordln;
 
@@ -239,7 +239,7 @@ public class OrderLine extends BaseObject
 	}
 
 	/**
-	 * @return ordrelinje som denn ordrelinjen tilhører
+	 * @return ordrelinje som denn ordrelinjen tilhï¿½rer
 	 */
 	public OrderLine getOrderLineRef() {
 		return orderLineRef;
@@ -764,7 +764,7 @@ public class OrderLine extends BaseObject
 	}
 
 	/**
-	 * Denne metoden kjøres ved utskrift av fraktbrev og vil bare returnere noe
+	 * Denne metoden kjï¿½res ved utskrift av fraktbrev og vil bare returnere noe
 	 * dersom order er takstein eller takstol
 	 * 
 	 * @see no.ugland.utransprod.gui.handlers.TransportLetterObject#getDetails()
@@ -874,9 +874,9 @@ public class OrderLine extends BaseObject
 		if (orderLineAttributes != null) {
 
 			for (OrderLineAttribute attribute : orderLineAttributes) {
-				if ("Stående tak".equalsIgnoreCase(attribute.getAttributeName())
+				if ("StÃ¥ende tak".equalsIgnoreCase(attribute.getAttributeName())
 						&& "Ja".equalsIgnoreCase(attribute.getAttributeValue())) {
-					detailsBuilder.append("Stående tak");
+					detailsBuilder.append("StÃ¥ende tak");
 					// break;
 				}
 			}
@@ -962,10 +962,10 @@ public class OrderLine extends BaseObject
 	}
 
 	/**
-	 * Kalkulerere attributter som har formel satt. Formel er på formen
+	 * Kalkulerere attributter som har formel satt. Formel er pï¿½ formen
 	 * artikkelnavn#attributtnavn@attributtverdi;[formel] Dersom formel
-	 * inneholder betingelser for attributtverdi sjekkes det først om disse
-	 * kriteriene er overholdt. Dersom de er det kjøres formelen som er satt i
+	 * inneholder betingelser for attributtverdi sjekkes det fï¿½rst om disse
+	 * kriteriene er overholdt. Dersom de er det kjï¿½res formelen som er satt i
 	 * [formel]
 	 */
 	public void calculateAttributes() {
@@ -978,8 +978,8 @@ public class OrderLine extends BaseObject
 				if (attribute.getAttributeFormula() != null) {
 					String allFormula = attribute.getAttributeFormula();
 					boolean runFormula = true;
-					// henter ut eventuelle betingelser satt på attributter eks
-					// $$Kledning#Retning@Stående$$
+					// henter ut eventuelle betingelser satt pï¿½ attributter eks
+					// $$Kledning#Retning@Stï¿½ende$$
 					if (allFormula.indexOf(";") != -1) {
 						String conditionString = allFormula.substring(0, allFormula.lastIndexOf(";"));
 						String[] conditions = conditionString.split(";");
@@ -1024,7 +1024,7 @@ public class OrderLine extends BaseObject
 	}
 
 	/**
-	 * Legger på detaljer for ordrelinje
+	 * Legger pï¿½ detaljer for ordrelinje
 	 * 
 	 * @param builder
 	 */

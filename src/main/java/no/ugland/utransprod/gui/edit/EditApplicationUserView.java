@@ -32,7 +32,7 @@ import com.jgoodies.validation.Validator;
 import com.jgoodies.validation.view.ValidationComponentUtils;
 
 /**
- * Klasse som håndterer editering av brukere
+ * Klasse som hï¿½ndterer editering av brukere
  * 
  * @author atle.brekka
  */
@@ -93,14 +93,14 @@ public class EditApplicationUserView extends AbstractEditView<ApplicationUserMod
 	builder.add(comboBoxGroupUser, cc.xy(4, 10));
 	builder.addLabel("Funksjon:", cc.xy(2, 12));
 	builder.add(comboBoxJobFunction, cc.xy(4, 12));
-	builder.addLabel("Produktområde:", cc.xy(2, 14));
+	builder.addLabel("ProduktomrÃ¥de:", cc.xy(2, 14));
 	builder.add(comboBoxProductArea, cc.xy(4, 14));
 	builder.addLabel("Pakketype:", cc.xy(2, 16));
 	builder.add(comboBoxPakketype, cc.xy(4, 16));
 
 	JTabbedPane tabbedPane = new JTabbedPane();
 	tabbedPane.add("Profiler", buildUserProfilePanel());
-	tabbedPane.add("Produktområder", buildProductAreaPanel());
+	tabbedPane.add("ProduktomrÃ¥der", buildProductAreaPanel());
 	builder.add(tabbedPane, cc.xyw(2, 18, 3));
 
 	builder.add(ButtonBarFactory.buildCenteredBar(buttonSave, buttonCancel), cc.xyw(2, 20, 6));
@@ -109,7 +109,7 @@ public class EditApplicationUserView extends AbstractEditView<ApplicationUserMod
     }
 
     /**
-     * Bygger panel for produktområde
+     * Bygger panel for produktomrï¿½de
      * 
      * @return panel
      */
@@ -154,7 +154,7 @@ public class EditApplicationUserView extends AbstractEditView<ApplicationUserMod
     }
 
     /**
-     * Bygger knappepanel for produktområde
+     * Bygger knappepanel for produktomrï¿½de
      * 
      * @return panel
      */
@@ -200,7 +200,7 @@ public class EditApplicationUserView extends AbstractEditView<ApplicationUserMod
 	ValidationComponentUtils.setMessageKey(listUserRoles, "Bruker.rolle");
 
 	ValidationComponentUtils.setMandatory(comboBoxProductArea, true);
-	ValidationComponentUtils.setMessageKey(comboBoxProductArea, "Bruker.produktområde");
+	ValidationComponentUtils.setMessageKey(comboBoxProductArea, "Bruker.produktomrÃ¥de");
 
     }
 

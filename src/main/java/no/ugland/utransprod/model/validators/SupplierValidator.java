@@ -9,7 +9,7 @@ import com.jgoodies.validation.util.PropertyValidationSupport;
 import com.jgoodies.validation.util.ValidationUtils;
 
 /**
- * Validator for leverandør
+ * Validator for leverandï¿½r
  * @author atle.brekka
  */
 public class SupplierValidator implements Validator {
@@ -38,7 +38,7 @@ public class SupplierValidator implements Validator {
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(supplierModel
                 .getSupplierName()))) {
-            support.addError("navn", "må settes");
+            support.addError("navn", "mÃ¥ settes");
         }
 
         if (supplierModel.getPostalCode() != null
@@ -50,11 +50,11 @@ public class SupplierValidator implements Validator {
                 .getPostalCode()))
                 && !ValidationUtils.isAlphanumeric(supplierModel
                         .getPostalCode())) {
-            support.addError("postnr", "må være tall");
+            support.addError("postnr", "mÃ¥ vÃ¦re tall");
         }
 
         if (supplierModel.getSupplierType() == null) {
-            support.addWarning("type", "bør registreres");
+            support.addWarning("type", "bÃ¸r registreres");
         }
 
         return support.getResult();

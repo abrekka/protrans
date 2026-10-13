@@ -164,7 +164,7 @@ public class AssemblyPlannerView implements Viewer {
 	}
 
 	/**
-	 * Initierer hendelsehåndtering
+	 * Initierer hendelsehï¿½ndtering
 	 * 
 	 * @param window
 	 */
@@ -193,7 +193,7 @@ public class AssemblyPlannerView implements Viewer {
 	 * 
 	 * //PanelBuilder builder = new PanelBuilder(layout); PanelBuilder builder =
 	 * new PanelBuilder(new FormDebugPanel(),layout); CellConstraints cc = new
-	 * CellConstraints(); builder.addLabel("År:", cc.xy(2, 2));
+	 * CellConstraints(); builder.addLabel("ï¿½r:", cc.xy(2, 2));
 	 * builder.add(yearChooser, cc.xy(4, 2)); builder.addLabel("Uke:", cc.xy(6,
 	 * 2)); builder.add(comboBoxWeeks, cc.xy(8, 2));
 	 * builder.add(buttonSearchOrder, cc.xyw(2, 4, 5));
@@ -312,10 +312,10 @@ public class AssemblyPlannerView implements Viewer {
 		CellConstraints cc = new CellConstraints();
 
 		/*
-		 * builder.addLabel("År:", cc.xy(1, 1)); builder.add(yearChooser,
+		 * builder.addLabel("ï¿½r:", cc.xy(1, 1)); builder.add(yearChooser,
 		 * cc.xy(3, 1)); builder.addLabel("Uke:", cc.xy(5, 1));
 		 * builder.add(comboBoxWeeks, cc.xy(7, 1));
-		 * builder.addLabel("Produktområde:", cc.xyw(11, 1, 1));
+		 * builder.addLabel("Produktomrï¿½de:", cc.xyw(11, 1, 1));
 		 * 
 		 * builder.add(ButtonBarFactory.buildLeftAlignedBar(buttonSearchOrder,
 		 * buttonReport), cc.xyw(1, 3, 10));
@@ -338,11 +338,11 @@ public class AssemblyPlannerView implements Viewer {
 		// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),
 		// layout);
 		CellConstraints cc = new CellConstraints();
-		builder.addLabel("År:", cc.xy(1, 1));
+		builder.addLabel("Ã…r:", cc.xy(1, 1));
 		builder.add(yearChooser, cc.xy(3, 1));
 		builder.addLabel("Uke:", cc.xy(5, 1));
 		builder.add(comboBoxWeeks, cc.xy(7, 1));
-		// builder.addLabel("Produktområde:", cc.xy(10, 1));
+		// builder.addLabel("Produktomrï¿½de:", cc.xy(10, 1));
 		// builder.add(comboBoxProductAreaGroup, cc.xy(10, 3));
 		builder.add(buttonSearchOrder, cc.xyw(1, 3, 5));
 		builder.add(labelWarning, cc.xyw(7, 3, 3));
@@ -543,7 +543,7 @@ public class AssemblyPlannerView implements Viewer {
 	}
 
 	/**
-	 * Ved forandring av uke må hele vinduet genereres på nytt
+	 * Ved forandring av uke mï¿½ hele vinduet genereres pï¿½ nytt
 	 * 
 	 * @param newYearWeek
 	 */

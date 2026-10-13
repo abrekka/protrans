@@ -34,7 +34,7 @@ public class AttributeChoiceValidator implements Validator {
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(attributeChoiceModel
                 .getChoiceValue()))) {
-            support.addError("valg", "må settes");
+            support.addError("valg", "mÃ¥ settes");
         }
         
 

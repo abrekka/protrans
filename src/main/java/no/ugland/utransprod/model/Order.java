@@ -181,7 +181,7 @@ public class Order extends AbstractTransportable
 		private static final long serialVersionUID = 1L;
 	};
 
-	private static final String MAX_HEIGTH_ATTRIBUTE = "Makshøyde";
+	private static final String MAX_HEIGTH_ATTRIBUTE = "MakshÃ¸yde";
 
 	private static final String COST_TYPE_NAME_TAKSTOLER = "Takstoler";
 
@@ -924,7 +924,7 @@ public class Order extends AbstractTransportable
 	}
 
 	/**
-	 * @return ønsket leveringsuke
+	 * @return ï¿½nsket leveringsuke
 	 */
 	public Integer getDeliveryWeek() {
 		return deliveryWeek;
@@ -1336,7 +1336,7 @@ public class Order extends AbstractTransportable
 	}
 
 	/**
-	 * @return produktområde
+	 * @return produktomrï¿½de
 	 */
 	public ProductArea getProductArea() {
 		return productArea;

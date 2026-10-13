@@ -103,7 +103,7 @@ public class ProductionReportData {
 
 					public boolean apply(Ordreinfo ordreinfo) {
 						return !ordreinfo.getBeskrivelse().contains("Vegg:")
-								&& !ordreinfo.getBeskrivelse().contains("Vägg:")
+								&& !ordreinfo.getBeskrivelse().contains("VÃ¤gg:")
 								&& !ordreinfo.getBeskrivelse().contains("Gavl:")
 								&& !ordreinfo.getBeskrivelse().contains("Gavelspets:")
 								&& !ordreinfo.getBeskrivelse().contains("Vindsperre")
@@ -194,7 +194,7 @@ public class ProductionReportData {
 			List<Ordreinfo> tilpasning = Lists.newArrayList(Iterables.filter(ordreinfo, new Predicate<Ordreinfo>() {
 
 				public boolean apply(Ordreinfo ordreinfo) {
-					return ordreinfo.getBeskrivelse().contains("Vegg:") || ordreinfo.getBeskrivelse().contains("Vägg:");
+					return ordreinfo.getBeskrivelse().contains("Vegg:") || ordreinfo.getBeskrivelse().contains("VÃ¤gg:");
 				}
 			}));
 			return tilpasning == null || tilpasning.isEmpty() ? "" : tilpasning.get(0).getBeskrivelse();
@@ -208,7 +208,7 @@ public class ProductionReportData {
 
 				public boolean apply(Ordreinfo ordreinfo) {
 					return (ordreinfo.getBeskrivelse().contains("Vegg:")
-							|| ordreinfo.getBeskrivelse().contains("Vägg:"))
+							|| ordreinfo.getBeskrivelse().contains("VÃ¤gg:"))
 							&& !standardvegg.contains(ordreinfo.getProdno());
 				}
 			}));
@@ -250,7 +250,7 @@ public class ProductionReportData {
 			List<Ordreinfo> tilpasning = Lists.newArrayList(Iterables.filter(ordreinfo, new Predicate<Ordreinfo>() {
 
 				public boolean apply(Ordreinfo ordreinfo) {
-					return ordreinfo.getBeskrivelse().contains("Vegg:") || ordreinfo.getBeskrivelse().contains("Vägg:");
+					return ordreinfo.getBeskrivelse().contains("Vegg:") || ordreinfo.getBeskrivelse().contains("VÃ¤gg:");
 				}
 			}));
 			return tilpasning == null || tilpasning.isEmpty() ? "" : tilpasning.get(0).getType();

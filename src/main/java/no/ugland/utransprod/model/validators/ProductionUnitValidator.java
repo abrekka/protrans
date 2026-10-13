@@ -35,15 +35,15 @@ public class ProductionUnitValidator implements Validator {
         
         if (ValidationUtils.isBlank(ModelUtil.nullToString(productionUnitModel
                 .getProductionUnitName()))) {
-            support.addError("navn", "må settes");
+            support.addError("navn", "mÃ¥ settes");
         }
         
         if (productionUnitModel.getArticleType()==null) {
-            support.addError("artikkel", "må settes");
+            support.addError("artikkel", "mÃ¥ settes");
         }
         
         if (productionUnitModel.getProductionUnitProductAreaGroupList()==null||productionUnitModel.getProductionUnitProductAreaGroupList().size()==0) {
-            support.addError("produktområde", "må settes");
+            support.addError("produktomrÃ¥de", "mÃ¥ settes");
         }
         
 

@@ -38,15 +38,15 @@ public class EmployeeValidator implements Validator {
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(employeeModel
                 .getFirstName()))) {
-            support.addError("fornavn", "må settes");
+            support.addError("fornavn", "mÃ¥ settes");
         }
         if (ValidationUtils.isBlank(ModelUtil.nullToString(employeeModel
                 .getLastName()))) {
-            support.addError("etternavn", "må settes");
+            support.addError("etternavn", "mÃ¥ settes");
         }
 
         if (employeeModel.getEmployeeType() == null) {
-            support.addWarning("type", "bør registreres");
+            support.addWarning("type", "bÃ¸r registreres");
         }
 
         return support.getResult();

@@ -80,7 +80,7 @@ public class InvoiceViewHandler extends AbstractProductionPackageViewHandlerShor
 
 	/**
 	 * @param faktureringV
-	 * @return true dersom knapp skal være enablet
+	 * @return true dersom knapp skal vï¿½re enablet
 	 * @see no.ugland.utransprod.gui.handlers.AbstractProductionPackageViewHandler#getButtonApplyEnabled(no.ugland.utransprod.gui.model.Applyable)
 	 */
 	@Override
@@ -138,7 +138,7 @@ public class InvoiceViewHandler extends AbstractProductionPackageViewHandlerShor
 		FaktureringV currentFaktureringV = managerRepository.getFaktureringVManager()
 				.findByOrderNr(faktureringV.getOrderNr());
 		if (currentFaktureringV == null) {
-			Util.showErrorDialog(window, "Finnes ikke", "Objekt finnes ikke, kjør oppdater av listen");
+			Util.showErrorDialog(window, "Finnes ikke", "Objekt finnes ikke, kjÃ¸r oppdater av listen");
 			return false;
 		}
 		return true;
@@ -217,7 +217,7 @@ public class InvoiceViewHandler extends AbstractProductionPackageViewHandlerShor
 		 * @param listModel
 		 */
 		public InvoiceTableModel(ListModel listModel) {
-			super(listModel, new String[] { "Ordre", "Levert", "Beløp", "Fakturert", "Montert", "Produktområde",
+			super(listModel, new String[] { "Ordre", "Levert", "BelÃ¦p", "Fakturert", "Montert", "ProduktomrÃ¥de",
 					"Ordrekorodinator", "Sendt mail" });
 		}
 

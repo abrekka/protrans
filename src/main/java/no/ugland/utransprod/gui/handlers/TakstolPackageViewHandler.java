@@ -76,7 +76,7 @@ public class TakstolPackageViewHandler extends PackageViewHandler {
 	}
 
 	/**
-	 * Legger til filter for kun å vise hovedartiklene
+	 * Legger til filter for kun ï¿½ vise hovedartiklene
 	 * 
 	 * @see no.ugland.utransprod.gui.handlers.AbstractProductionPackageViewHandler#setAdditionFilters(java.util.List)
 	 */
@@ -206,7 +206,7 @@ public class TakstolPackageViewHandler extends PackageViewHandler {
 				return "---";
 			}
 		},
-		PRODUKTOMRÅDE("Produktområde") {
+		PRODUKTOMRÃ…DE("ProduktomrÃ¥de") {
 			@Override
 			public Class<?> getColumnClass() {
 				return String.class;

@@ -597,7 +597,7 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 	}
 
 	/**
-	 * Henter knapp for å legge til transport
+	 * Henter knapp for ï¿½ legge til transport
 	 * 
 	 * @param window
 	 * @return knapp
@@ -609,7 +609,7 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 	}
 
 	/**
-	 * Lager knapp for å fjerne transport
+	 * Lager knapp for ï¿½ fjerne transport
 	 * 
 	 * @param window
 	 * @return knapp
@@ -622,7 +622,7 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 	}
 
 	/**
-	 * Lager knapp for å editere transport
+	 * Lager knapp for ï¿½ editere transport
 	 * 
 	 * @param window
 	 * @return knapp
@@ -654,7 +654,7 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 	}
 
 	/**
-	 * Åpner vindu for editering av transport
+	 * ï¿½pner vindu for editering av transport
 	 * 
 	 * @param transport
 	 */
@@ -815,7 +815,7 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 	}
 
 	/**
-	 * Lytter på bufferendringer
+	 * Lytter pï¿½ bufferendringer
 	 * 
 	 * @author atle.brekka
 	 */
@@ -839,7 +839,7 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 	}
 
 	/**
-	 * Håndterer sending
+	 * Hï¿½ndterer sending
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1045,7 +1045,7 @@ public class TransportWeekViewHandler implements Updateable, TransportSelectionL
 		if (transport.getLoadingDate() == null || !Util.SHORT_DATE_FORMAT.format(transport.getLoadingDate())
 				.equals(Util.getCurrentDateAsDateString())) {
 			if (Util.showConfirmDialog(window.getComponent(), "Sent dato",
-					"Sent dato er forskjellig fra opplastingsdato, ønsker du å endre sent dato?")) {
+					"Sendt dato er forskjellig fra opplastingsdato, Ã¸nsker du Ã¥ endre sendt dato?")) {
 				sentDate = Util.getDate(window);
 			}
 		}

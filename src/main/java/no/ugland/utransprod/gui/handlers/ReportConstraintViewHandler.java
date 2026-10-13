@@ -50,7 +50,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JYearChooser;
 
 /**
- * Håndterer rapportutvalg
+ * Hï¿½ndterer rapportutvalg
  * 
  * @author atle.brekka
  * 
@@ -95,9 +95,9 @@ public class ReportConstraintViewHandler implements Closeable {
     }
 
     /**
-     * Lager årvelger for fra år
+     * Lager ï¿½rvelger for fra ï¿½r
      * 
-     * @return årvelger
+     * @return ï¿½rvelger
      */
     public JYearChooser getYearChooserFrom() {
 	JYearChooser yearChooser = new JYearChooser();
@@ -106,9 +106,9 @@ public class ReportConstraintViewHandler implements Closeable {
     }
 
     /**
-     * Lager årvelger for til år
+     * Lager ï¿½rvelger for til ï¿½r
      * 
-     * @return årvelger
+     * @return ï¿½rvelger
      */
     public JYearChooser getYearChooserTo() {
 	JYearChooser yearChooser = new JYearChooser();
@@ -305,7 +305,7 @@ public class ReportConstraintViewHandler implements Closeable {
     }
 
     /**
-     * Holde på rapportsettinger
+     * Holde pï¿½ rapportsettinger
      * 
      * @author atle.brekka
      * 
@@ -454,7 +454,7 @@ public class ReportConstraintViewHandler implements Closeable {
 	}
 
 	/**
-	 * @return fra år
+	 * @return fra ï¿½r
 	 */
 	public Integer getYearFrom() {
 	    return yearFrom;
@@ -470,7 +470,7 @@ public class ReportConstraintViewHandler implements Closeable {
 	}
 
 	/**
-	 * @return til år
+	 * @return til ï¿½r
 	 */
 	public Integer getYearTo() {
 	    return yearTo;
@@ -486,14 +486,14 @@ public class ReportConstraintViewHandler implements Closeable {
 	}
 
 	/**
-	 * @return fra år og uke som streng
+	 * @return fra ï¿½r og uke som streng
 	 */
 	public String getFromString() {
 	    return String.format("%1$d%2$02d", yearFrom, weekFrom + 10);
 	}
 
 	/**
-	 * @return til år og uke som streng
+	 * @return til ï¿½r og uke som streng
 	 */
 	public String getToString() {
 	    return String.format("%1$d%2$02d", yearTo, weekTo + 10);
@@ -566,7 +566,7 @@ public class ReportConstraintViewHandler implements Closeable {
 	}
 
 	/**
-	 * Finner enum basert på strengverdi
+	 * Finner enum basert pï¿½ strengverdi
 	 * 
 	 * @param aString
 	 * @return enum
@@ -748,7 +748,7 @@ public class ReportConstraintViewHandler implements Closeable {
 		tableBasis.getColumnExt(5).setPreferredWidth(60);
 		// Transport
 		tableBasis.getColumnExt(6).setPreferredWidth(100);
-		// År
+		// ï¿½r
 		tableBasis.getColumnExt(7).setPreferredWidth(40);
 		// Uke
 		tableBasis.getColumnExt(8).setPreferredWidth(40);
@@ -759,7 +759,7 @@ public class ReportConstraintViewHandler implements Closeable {
 		}
 
 	    } else {
-		// År
+		// ï¿½r
 		tableReport.getColumnExt(0).setPreferredWidth(40);
 		// Uke
 		tableReport.getColumnExt(1).setPreferredWidth(40);
@@ -830,12 +830,12 @@ public class ReportConstraintViewHandler implements Closeable {
 	/**
 		 * 
 		 */
-	public static String[] COLUMN_HEADINGS_SUM = { "År", "Uke", "Antall" };
+	public static String[] COLUMN_HEADINGS_SUM = { "Ã…r", "Uke", "Antall" };
 
 	/**
 		 * 
 		 */
-	public static String[] COLUMN_HEADINGS_BASIS = { "Etterlevering", "Ordrenr", "Kundenr", "Navn", "Adresse", "Postnr", "Transport", "År",
+	public static String[] COLUMN_HEADINGS_BASIS = { "Etterlevering", "Ordrenr", "Kundenr", "Navn", "Adresse", "Postnr", "Transport", "Ã…r",
 		"Uke", "Prod.uke" };
 
 	/**
@@ -1026,21 +1026,21 @@ public class ReportConstraintViewHandler implements Closeable {
     }
 
     /**
-     * @return vindusstørrelse
+     * @return vindusstï¿½rrelse
      */
     public Dimension getWindowSize() {
 	return new Dimension(580, 400);
     }
 
     /**
-     * @return true dersom dispose skal kjøres
+     * @return true dersom dispose skal kjï¿½res
      */
     public boolean getDisposeOnClose() {
 	return disposeOnClose;
     }
 
     /**
-     * Håndterer grunnlagpanel
+     * Hï¿½ndterer grunnlagpanel
      * 
      * @author atle.brekka
      * 
@@ -1074,7 +1074,7 @@ public class ReportConstraintViewHandler implements Closeable {
     }
 
     /**
-     * Håndterer visning av rapport
+     * Hï¿½ndterer visning av rapport
      * 
      * @author atle.brekka
      * 

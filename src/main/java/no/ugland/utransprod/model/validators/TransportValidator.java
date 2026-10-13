@@ -37,17 +37,17 @@ public class TransportValidator implements Validator {
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(transportModel
                 .getTransportYear()))) {
-            support.addError("år", "må settes");
+            support.addError("Ã¥r", "mÃ¥ settes");
         }
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(transportModel
                 .getTransportWeek()))) {
-            support.addError("uke", "må settes");
+            support.addError("uke", "mÃ¥ settes");
         }
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(transportModel
                 .getTransportName()))) {
-            support.addError("navn", "må settes");
+            support.addError("navn", "mÃ¥ settes");
         }
 
         return support.getResult();

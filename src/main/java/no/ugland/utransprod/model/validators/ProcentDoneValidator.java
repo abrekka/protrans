@@ -28,16 +28,16 @@ public class ProcentDoneValidator implements Validator {
         
         if (!ValidationUtils.isAlphanumeric(ModelUtil.nullToString(procentDoneModel
                 .getProcentString()))) {
-            support.addError("prosent", "må være tall");
+            support.addError("prosent", "mÃ¥ vÃ¦re tall");
         }
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(procentDoneModel
                 .getProcentString()))) {
-            support.addError("prosent", "må settes");
+            support.addError("prosent", "mÃ¥ settes");
         }
         
         if(procentDoneModel.getProcent()!=null&&procentDoneModel.getProcent()>100){
-            support.addError("prosent", "kan ikke være større enn 100");
+            support.addError("prosent", "kan ikke vÃ¦re stÃ¸rre enn 100");
         }
 
         return support.getResult();

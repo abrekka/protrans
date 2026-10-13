@@ -19,7 +19,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JYearChooser;
 
 /**
- * Klasse som håndtrer visning av monteringsinfo for ordre
+ * Klasse som hï¿½ndtrer visning av monteringsinfo for ordre
  * 
  * @author atle.brekka
  */
@@ -30,7 +30,7 @@ public class AssemblyViewOld {
     private JComboBox comboBoxAssemblyTeam;
 
     /**
-     * Komponent for valg av år
+     * Komponent for valg av ï¿½r
      */
     private JYearChooser yearChooser;
 
@@ -45,7 +45,7 @@ public class AssemblyViewOld {
     private PresentationModel presentationModel;
 
     /**
-     * Klasse for håndtering av vindusvariable
+     * Klasse for hï¿½ndtering av vindusvariable
      */
     private SupplierOrderViewHandler viewHandler;
 
@@ -89,7 +89,7 @@ public class AssemblyViewOld {
 	FormLayout layout = new FormLayout("p,3dlu,30dlu,3dlu,p,3dlu,p,3dlu,p", "p,3dlu,p");
 	PanelBuilder builder = new PanelBuilder(layout);
 	CellConstraints cc = new CellConstraints();
-	builder.addLabel("År:", cc.xy(1, 1));
+	builder.addLabel("Ã…r:", cc.xy(1, 1));
 	builder.add(yearChooser, cc.xy(3, 1));
 	builder.addLabel("Uke:", cc.xy(5, 1));
 	builder.add(comboBoxAssemblyWeek, cc.xy(7, 1));

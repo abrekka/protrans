@@ -231,7 +231,7 @@ DefaultAbstractViewHandler<Customer, CustomerModel> {
 		String errorString = null;
 		Customer customer = (object).getObject();
 		if (customer.getCustomerId() == null && objectList.contains(customer)) {
-			errorString = "Kan ikke lagre kunde med et kundenummer som finnes fra før";
+			errorString = "Kan ikke lagre kunde med et kundenummer som finnes fra fÃ¸r";
 		}
 		return new CheckObject(errorString,false);
 	}

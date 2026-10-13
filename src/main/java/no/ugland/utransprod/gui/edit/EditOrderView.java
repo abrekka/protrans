@@ -53,7 +53,7 @@ import no.ugland.utransprod.util.IconFeedbackPanel;
 import no.ugland.utransprod.util.Util;
 
 /**
- * Klasse som håndterer editeringsvindu for ordre
+ * Klasse som hï¿½ndterer editeringsvindu for ordre
  * 
  */
 public class EditOrderView extends AbstractEditView<OrderModel, Order> {
@@ -465,7 +465,7 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 		FormLayout layout = new FormLayout("min(p;95dlu),3dlu,30dlu,3dlu,p,3dlu,p,3dlu,p,3dlu,85dlu", "p");// ,3dlu,p,3dlu,p");
 		PanelBuilder builder = new PanelBuilder(layout);
 		CellConstraints cc = new CellConstraints();
-		builder.addLabel("År:", cc.xy(1, 1));
+		builder.addLabel("Ã…r:", cc.xy(1, 1));
 		builder.add(yearChooser, cc.xy(3, 1));
 		builder.addLabel("Uke:", cc.xy(5, 1));
 		builder.add(comboBoxAssemblyWeek, cc.xy(7, 1));
@@ -625,14 +625,14 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 		builder.add(textFieldPostoffice, cc.xy(3, 17));
 		builder.addLabel("Selger:", cc.xy(1, 19));
 		builder.add(textFieldSalesman, cc.xy(3, 19));
-		builder.addLabel("Produktområde:", cc.xy(1, 21));
+		builder.addLabel("ProduktomrÃ¥de:", cc.xy(1, 21));
 		builder.add(comboBoxProductArea, cc.xy(3, 21));
 
 		builder.addLabel("Ordedato:", cc.xy(5, 1));
 		builder.add(orderDate, cc.xy(7, 1));
 		builder.addLabel("Avropsdato:", cc.xy(5, 3));
 		builder.add(agreementDate, cc.xy(7, 3));
-//		builder.addLabel("Ønsket uke:", cc.xy(5, 5));
+//		builder.addLabel("ï¿½nsket uke:", cc.xy(5, 5));
 //		builder.add(comboBoxDeliveryWeek, cc.xy(7, 5));
 		builder.addLabel("Konstruksjonstype:", cc.xy(5, 7));
 		builder.add(comboBoxConstructionType, cc.xy(7, 7));
@@ -651,7 +651,7 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 		if (!search) {
 			builder.addLabel("Registrert:", cc.xy(5, 21));
 			builder.add(textFieldRegistered, cc.xy(7, 21));
-			builder.addLabel("Makshøyde takstol:", cc.xy(5, 23));
+			builder.addLabel("MakshÃ¸yde takstol:", cc.xy(5, 23));
 			builder.add(textFieldMaxTrossHeight, cc.xy(7, 23));
 			builder.addLabel("Prosjektnr:", cc.xy(1, 25));
 			builder.add(textFieldProjectNr, cc.xy(3, 25));
@@ -790,7 +790,7 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 		ValidationComponentUtils.setMessageKey(comboBoxAssemblyTeam, "Ordre.monteringsteam");
 
 		ValidationComponentUtils.setMandatory(comboBoxProductArea, true);
-		ValidationComponentUtils.setMessageKey(comboBoxProductArea, "Ordre.produktområde");
+		ValidationComponentUtils.setMessageKey(comboBoxProductArea, "Ordre.produktomrÃ¥de");
 
 	}
 
@@ -813,7 +813,7 @@ public class EditOrderView extends AbstractEditView<OrderModel, Order> {
 	}
 
 	/**
-	 * Klassesom håndterer valg av kunde
+	 * Klassesom hï¿½ndterer valg av kunde
 	 * 
 	 * @author atle.brekka
 	 */

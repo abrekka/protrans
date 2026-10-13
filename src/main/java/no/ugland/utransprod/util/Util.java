@@ -189,7 +189,7 @@ public final class Util {
 	}
 
 	/**
-	 * Henter alle uker i et år.
+	 * Henter alle uker i et ï¿½r.
 	 * 
 	 * @return uker
 	 */
@@ -212,9 +212,9 @@ public final class Util {
 	}
 
 	/**
-	 * Henter gjeldende år.
+	 * Henter gjeldende ï¿½r.
 	 * 
-	 * @return år
+	 * @return ï¿½r
 	 */
 	public static Integer getCurrentYear() {
 		Calendar cal = Calendar.getInstance();
@@ -228,7 +228,7 @@ public final class Util {
 	}
 
 	/**
-	 * Lokaliserer komponent sentralt på skjerm.
+	 * Lokaliserer komponent sentralt pï¿½ skjerm.
 	 * 
 	 * @param component
 	 */
@@ -239,7 +239,7 @@ public final class Util {
 	}
 
 	/**
-	 * Lokaliserer komponent sentralt på skjerm.
+	 * Lokaliserer komponent sentralt pï¿½ skjerm.
 	 * 
 	 * @param window
 	 */
@@ -285,7 +285,7 @@ public final class Util {
 	}
 
 	/**
-	 * Finner senter basert på hovedvindu og vindu som skal vise.
+	 * Finner senter basert pï¿½ hovedvindu og vindu som skal vise.
 	 * 
 	 * @param mainFrameSize
 	 * @param frameSize
@@ -306,7 +306,7 @@ public final class Util {
 	}
 
 	/**
-	 * Viser vindu med melding som må bekreftes.
+	 * Viser vindu med melding som mï¿½ bekreftes.
 	 * 
 	 * @param askedBy
 	 * @param heading
@@ -318,7 +318,7 @@ public final class Util {
 	}
 
 	/**
-	 * Viser dialog som det må svares på.
+	 * Viser dialog som det mï¿½ svares pï¿½.
 	 * 
 	 * @param askedBy
 	 * @param heading
@@ -382,7 +382,7 @@ public final class Util {
 	}
 
 	/**
-	 * Viser dialog det må svares på.
+	 * Viser dialog det mï¿½ svares pï¿½.
 	 * 
 	 * @param askedBy
 	 * @param title
@@ -512,7 +512,7 @@ public final class Util {
 	}
 
 	/**
-	 * Kjørerer metode i egen tråd og viser et hjul for fremdrift.
+	 * Kjï¿½rerer metode i egen trï¿½d og viser et hjul for fremdrift.
 	 * 
 	 * @param component
 	 * @param loadClass
@@ -1245,7 +1245,7 @@ public final class Util {
 			groupList.addAll(productAreaGroupList);
 		}
 		if (groupList.size() == 0) {
-			throw new ProTransRuntimeException("Bruker har ikke definert noe produktområde");
+			throw new ProTransRuntimeException("Bruker har ikke definert noe produktomrÃ¥de");
 		}
 		JComboBox comboBox = new JComboBox(new ComboBoxAdapter(groupList,
 				productAreaGroupModel.getModel(ProductAreaGroupModel.PROPERTY_PRODUCT_AREA_GROUP)));

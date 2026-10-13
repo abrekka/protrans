@@ -30,7 +30,7 @@ import com.google.inject.assistedinject.Assisted;
 import com.jgoodies.binding.adapter.AbstractTableAdapter;
 
 /**
- * Håndterer visning og editering av pakkevinduer
+ * Hï¿½ndterer visning og editering av pakkevinduer
  * 
  * @author atle.brekka
  */
@@ -308,7 +308,7 @@ public class PackageViewHandler extends AbstractProductionPackageViewHandler<Pac
 		return "---";
 	    }
 	},
-	PRODUKTOMRÅDE("Produktområde") {
+	PRODUKTOMRÃ…DE("ProduktomrÃ¥de") {
 	    @Override
 	    public Class<?> getColumnClass() {
 		return String.class;

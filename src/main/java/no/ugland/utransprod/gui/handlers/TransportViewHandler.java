@@ -257,7 +257,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	}
 
 	/**
-	 * Lagern komboboks for leverandør.
+	 * Lagern komboboks for leverandï¿½r.
 	 * 
 	 * @return komboboks
 	 */
@@ -578,7 +578,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		updateTransportableList(false);
 
 		/**************************
-		 * prøver å fjerne denne
+		 * prï¿½ver ï¿½ fjerne denne
 		 ***********************/
 		// initOrders(transportableList, window);
 
@@ -763,7 +763,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 		boolean weekValid = !Util.isAfter(new YearWeek(Util.getCurrentYear(), Util.getCurrentWeek()),
 				new YearWeek(transport.getTransportYear(), transport.getTransportWeek()));
 		weekValid = !weekValid ? Util.showConfirmDialog(window.getComponent(), "Gammel uke",
-				"Du prøver å sette transport til en gammel uke, ønsker du å gjøre dette?") : true;
+				"Du prÃ¸ver Ã¥ sette transport til en gammel uke, Ã¸nsker du Ã¥ gjÃ¸re dette?") : true;
 		return weekValid;
 	}
 
@@ -874,7 +874,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	}
 
 	/**
-	 * Cacher høyde på garasjekolli
+	 * Cacher hï¿½yde pï¿½ garasjekolli
 	 * 
 	 * @param transportable
 	 * @param window
@@ -998,7 +998,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	}
 
 	/**
-	 * Håndterer selektering av transport
+	 * Hï¿½ndterer selektering av transport
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1151,7 +1151,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	}
 
 	/**
-	 * Initierer hendelsehåndtering
+	 * Initierer hendelsehï¿½ndtering
 	 */
 	public void initEventHandling() {
 		checkBoxSelection.addActionListener(
@@ -1161,7 +1161,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	}
 
 	/**
-	 * Håndterer buffering
+	 * Hï¿½ndterer buffering
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1177,7 +1177,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	}
 
 	/**
-	 * Åpner dialog for ordre
+	 * ï¿½pner dialog for ordre
 	 * 
 	 * @param order
 	 * @param window
@@ -1188,7 +1188,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	}
 
 	/**
-	 * Håndterer klikk i tabell
+	 * Hï¿½ndterer klikk i tabell
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1391,8 +1391,8 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	private Date checkLoadingDate(WindowInterface window, Date sentDate, Transport transport) {
 		if (transport.getLoadingDate() == null || !Util.SHORT_DATE_FORMAT.format(transport.getLoadingDate())
 				.equals(Util.getCurrentDateAsDateString())) {
-			if (Util.showConfirmDialog(window.getComponent(), "Sent dato",
-					"Sent dato er forskjellig fra opplastingsdato, ønsker du å endre sent dato?")) {
+			if (Util.showConfirmDialog(window.getComponent(), "Sendt dato",
+					"Sendt dato er forskjellig fra opplastingsdato, Ã¸nsker du Ã¥ endre sendt dato?")) {
 				sentDate = Util.getDate(window);
 			}
 		}
@@ -1689,9 +1689,9 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	}
 
 	/**
-	 * Klasse som håndtere at sent settes på transport. Dersom det settes til sent
-	 * skal det komme opp en dialog med alle ordre som er med på denne transporten
-	 * og det skal være mulig å utelate ordre
+	 * Klasse som hï¿½ndtere at sent settes pï¿½ transport. Dersom det settes til sent
+	 * skal det komme opp en dialog med alle ordre som er med pï¿½ denne transporten
+	 * og det skal vï¿½re mulig ï¿½ utelate ordre
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1833,7 +1833,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	}
 
 	/**
-	 * Håndterer popupmenyvalg fjern transport
+	 * Hï¿½ndterer popupmenyvalg fjern transport
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1867,7 +1867,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	}
 
 	/**
-	 * Håndterer popupmeny for registrering av avvik
+	 * Hï¿½ndterer popupmeny for registrering av avvik
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2100,7 +2100,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	}
 
 	/**
-	 * Håndterer popupmenyvalg vis mangler
+	 * Hï¿½ndterer popupmenyvalg vis mangler
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2126,7 +2126,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	}
 
 	/**
-	 * Håndterer popupmenyvalg fraktbrev
+	 * Hï¿½ndterer popupmenyvalg fraktbrev
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2152,7 +2152,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	}
 
 	/**
-	 * Håndterer popupmenyvalg pakkliste
+	 * Hï¿½ndterer popupmenyvalg pakkliste
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2259,7 +2259,7 @@ public class TransportViewHandler extends AbstractViewHandler<Transport, Transpo
 	}
 
 	/**
-	 * Håndterer endring av valgt leverandør
+	 * Hï¿½ndterer endring av valgt leverandï¿½r
 	 * 
 	 * @author atle.brekka
 	 */

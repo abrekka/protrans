@@ -38,23 +38,23 @@ public class ProductionBudgetValidator implements Validator {
 
         if (ValidationUtils.isBlank(ModelUtil
                 .nullToString(productionBudgetModel.getBudgetYear()))) {
-            support.addError("år", "må settes");
+            support.addError("Ã¥r", "mÃ¥ settes");
         }
         if (ValidationUtils.isBlank(ModelUtil
                 .nullToString(productionBudgetModel.getBudgetWeek()))) {
-            support.addError("uke", "må settes");
+            support.addError("uke", "mÃ¥ settes");
         }
         if (!Util.isNumber(productionBudgetModel.getBudgetValue())) {
-            support.addError("budsjett", "må være tall");
+            support.addError("budsjett", "mÃ¥ vÃ¦re tall");
 
         }
         if (ValidationUtils.isBlank(ModelUtil
                 .nullToString(productionBudgetModel.getBudgetValue()))) {
-            support.addError("budsjett", "må settes");
+            support.addError("budsjett", "mÃ¥ settes");
         }
         if (ValidationUtils.isBlank(ModelUtil
                 .nullToString(productionBudgetModel.getProductArea()))) {
-            support.addError("produktområde", "må settes");
+            support.addError("produktomrÃ¥de", "mÃ¥ settes");
         }
 
         return support.getResult();

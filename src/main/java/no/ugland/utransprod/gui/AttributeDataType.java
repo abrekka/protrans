@@ -39,7 +39,7 @@ public enum AttributeDataType {
         @Override
         public void addError(OrderLineAttribute attribute, PropertyValidationSupport support) {
             if(!ValidationUtils.isNumeric(attribute.getAttributeValue())){
-                support.addError(attribute.getAttributeName(), "Må være tall");
+                support.addError(attribute.getAttributeName(), "MÃ¥ vÃ¦re tall");
             }
         }
 

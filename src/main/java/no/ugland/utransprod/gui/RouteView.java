@@ -27,7 +27,7 @@ import no.ugland.utransprod.gui.model.ColorEnum;
 import no.ugland.utransprod.util.InternalFrameBuilder;
 
 /**
- * Klasse som håndterer visning av transportruter for gitt år og uke
+ * Klasse som hï¿½ndterer visning av transportruter for gitt ï¿½r og uke
  * 
  * @author atle.brekka
  */
@@ -135,7 +135,7 @@ public class RouteView implements Viewer {
 	}
 
 	/**
-	 * Initierer hendelsehåndtering
+	 * Initierer hendelsehï¿½ndtering
 	 * 
 	 * @param window
 	 */
@@ -149,11 +149,11 @@ public class RouteView implements Viewer {
 		// PanelBuilder builder = new PanelBuilder(new FormDebugPanel(),layout);
 		CellConstraints cc = new CellConstraints();
 
-		builder.addLabel("År:", cc.xy(1, 1));
+		builder.addLabel("Ã…r:", cc.xy(1, 1));
 		builder.add(yearChooser, cc.xy(3, 1));
 		builder.addLabel("Uke:", cc.xy(5, 1));
 		builder.add(comboBoxWeeks, cc.xy(7, 1));
-		// builder.addLabel("Produktområde:", cc.xyw(11, 1, 1));
+		// builder.addLabel("Produktomrï¿½de:", cc.xyw(11, 1, 1));
 
 		builder.add(ButtonBarFactory.buildLeftAlignedBar(buttonSearchOrder, buttonReport), cc.xyw(1, 3, 10));
 		// builder.add(comboBoxProductAreaGroup, cc.xyw(11, 3, 1));
@@ -254,7 +254,7 @@ public class RouteView implements Viewer {
 	}
 
 	/**
-	 * Bygger panel som viser transportruter for gitt år og uke
+	 * Bygger panel som viser transportruter for gitt ï¿½r og uke
 	 * 
 	 * @param window
 	 * @return panel

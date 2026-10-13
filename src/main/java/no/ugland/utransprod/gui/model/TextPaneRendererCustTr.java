@@ -71,9 +71,9 @@ public class TextPaneRendererCustTr extends TextPaneRenderer<Transportable> {
 		StringBuilder toolTipText = new StringBuilder();
 		BigDecimal restAmount = BigDecimal.ZERO;
 		for (CustTr custTr : custTrSet) {
-			toolTipText.append("Fakturabeløp:").append(
+			toolTipText.append("FakturabelÃ¸p:").append(
 					Util.convertBigDecimalToString(custTr.getInvoiceAmount()))
-					.append(" Restbeløp:").append(
+					.append(" RestbelÃ¸p:").append(
 							Util.convertBigDecimalToString(custTr
 									.getRestAmount())).append(" Forfallsdato:")
 					.append(

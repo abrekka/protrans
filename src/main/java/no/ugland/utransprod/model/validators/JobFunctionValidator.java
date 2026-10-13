@@ -39,7 +39,7 @@ public class JobFunctionValidator implements Validator {
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(jobFunctionModel
                 .getJobFunctionName()))) {
-            support.addError("navn", "må settes");
+            support.addError("navn", "mÃ¥ settes");
         }
 
         return support.getResult();

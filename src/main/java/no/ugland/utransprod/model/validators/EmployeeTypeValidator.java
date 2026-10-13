@@ -38,7 +38,7 @@ public class EmployeeTypeValidator implements Validator {
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(employeeTypeModel
                 .getEmployeeTypeName()))) {
-            support.addError("navn", "må settes");
+            support.addError("navn", "mÃ¥ settes");
         }
 
         return support.getResult();

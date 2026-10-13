@@ -510,7 +510,7 @@ public class TransportCostManagerImpl implements TransportCostManager {
 	private Supplier getSupplierForTransportable(final Transportable transportable) throws ProTransException {
 		Supplier supplier = transportable.getTransport().getSupplier();
 		if (supplier == null) {
-			throw new ProTransException("Order " + transportable + " mangler transportør");
+			throw new ProTransException("Order " + transportable + " mangler transportÃ¸r");
 		}
 		return supplier;
 	}

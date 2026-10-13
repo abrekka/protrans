@@ -121,19 +121,19 @@ public class ProductionTimeView implements Viewer, Closeable {
 		menuItemSetOvertime.setName("MenuItemSetOvertime");
 		popupMenuProduction.add(menuItemSetOvertime);
 
-		menuItemFilterOrderNr = new JMenuItem("Filtrer på ordrenr...");
+		menuItemFilterOrderNr = new JMenuItem("Filtrer pÃ¥ ordrenr...");
 		menuItemFilterOrderNr.setName("menuItemFilterOrderNr");
 		popupMenuProduction.add(menuItemFilterOrderNr);
 
-		menuItemFilterName = new JMenuItem("Filtrer på navn...");
+		menuItemFilterName = new JMenuItem("Filtrer pÃ¥ navn...");
 		menuItemFilterName.setName("menuItemFilterName");
 		popupMenuProduction.add(menuItemFilterName);
 
-		menuItemFilterProduction = new JMenuItem("Filtrer på produksjonstype...");
+		menuItemFilterProduction = new JMenuItem("Filtrer pÃ¥ produksjonstype...");
 		menuItemFilterProduction.setName("menuItemFilterProduction");
 		popupMenuProduction.add(menuItemFilterProduction);
 
-		menuItemFilterProductionWeek = new JMenuItem("Filtrer på produksjonsuke...");
+		menuItemFilterProductionWeek = new JMenuItem("Filtrer pÃ¥ produksjonsuke...");
 		menuItemFilterProductionWeek.setName("menuItemFilterProductionWeek");
 		popupMenuProduction.add(menuItemFilterProductionWeek);
 
@@ -388,7 +388,7 @@ public class ProductionTimeView implements Viewer, Closeable {
 				nyttTidspunkt.setMinutes(Integer.valueOf(tidspunkt.substring(tidspunkt.indexOf(":") + 1)));
 
 				if (productionTime.getStopped() != null && nyttTidspunkt.after(productionTime.getStopped())) {
-					Util.showErrorDialog(window, "Feil tidspunkt", "Starttidspunkt kan ikke være etter sluttidspunkt");
+					Util.showErrorDialog(window, "Feil tidspunkt", "Starttidspunkt kan ikke vÃ¦re etter sluttidspunkt");
 					return;
 				}
 
@@ -422,7 +422,7 @@ public class ProductionTimeView implements Viewer, Closeable {
 				nyttStopptidspunkt.setMinutes(Integer.valueOf(tidspunkt.substring(tidspunkt.indexOf(":") + 1)));
 
 				if (nyttStopptidspunkt != null && productionTime.getStarted().after(nyttStopptidspunkt)) {
-					Util.showErrorDialog(window, "Feil tidspunkt", "Starttidspunkt kan ikke være etter sluttidspunkt");
+					Util.showErrorDialog(window, "Feil tidspunkt", "Starttidspunkt kan ikke vÃ¦re etter sluttidspunkt");
 					return;
 				}
 
@@ -520,7 +520,7 @@ public class ProductionTimeView implements Viewer, Closeable {
 		CellConstraints cc = new CellConstraints();
 		JScrollPane scrollPane = new JScrollPane(productionTimeTable);
 		scrollPane.setName("ScrollPaneTable");
-		// builder.addLabel("Produktområde:", cc.xy(2, 2));
+		// builder.addLabel("Produktomrï¿½de:", cc.xy(2, 2));
 		// builder.add(comboBoxProductAreaGroup, cc.xy(4, 2));
 		// builder.add(buttonSearch, cc.xy(6, 2));
 //		builder.add(checkBoxFilter, cc.xy(2, 2));

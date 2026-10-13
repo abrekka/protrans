@@ -55,7 +55,7 @@ public class AttributeSetValidator implements Validator {
             final IArticleAttribute attribute) {
         if (ValidationUtils.isBlank(ModelUtil.nullToString(attribute
                 .getAttributeValue()))) {
-            support.addError(attribute.getAttributeName(), "må settes");
+            support.addError(attribute.getAttributeName(), "mÃ¥ settes");
         }
     }
 }

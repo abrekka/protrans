@@ -21,14 +21,14 @@ public enum ExcelReportEnum {
     /**
      * Produktivitet - pakking.
      */
-    PRODUCTIVITY_PACK("Produktivitet - pakking", "Produktivitet_pakking", "nokkelProduksjonVManager", new String[] { "År", "Uke", "Antall", "Verdi",
+    PRODUCTIVITY_PACK("Produktivitet - pakking", "Produktivitet_pakking", "nokkelProduksjonVManager", new String[] { "Ã…r", "Uke", "Antall", "Verdi",
 	    "Budsjett" }, new Integer[] { 0, 1, 2, 3, 4 }, new String[] { "NokkelProduksjonVPK.OrderReadyYear", "NokkelProduksjonVPK.OrderReadyWeek",
 	    "CountOrderReady", "PackageSumWeek", "BudgetValue" }, null, 16, null, new Integer[] {}, null, null, null, false, true, 0, null, true,
 	    false, null, true, true),
     /**
      * Produktivitet - pakkliste.
      */
-    PRODUCTIVITY_PACKLIST("Produktivitet - pakkliste", "Produktivitet_pakkliste", "orderPacklistReadyVManager", new String[] { "År", "Uke", "Antall",
+    PRODUCTIVITY_PACKLIST("Produktivitet - pakkliste", "Produktivitet_pakkliste", "orderPacklistReadyVManager", new String[] { "Ã…r", "Uke", "Antall",
 	    "Verdi" }, new Integer[] { 0, 1, 2, 3 }, new String[] { "OrderPacklistReadyVPK.PacklistYear", "OrderPacklistReadyVPK.PacklistWeek",
 	    "OrderCount", "CustomerCost" }, null, 16, null, new Integer[] {}, null, null, null, false, true, 0, null, true, false, null, true, true),
     /**
@@ -48,21 +48,21 @@ public enum ExcelReportEnum {
 	    false, false),
 
     OWN_PRODUCTION_SUM("Sum egenproduksjon", "Sum egenproduksjon", "nokkelProduksjonVManager",
-	    new String[] { "Område", "Reelt", "Budsjett", "Avvik" }, new Integer[] { 1, 2, 3 }, new String[] { "ProductArea", "PackageSumWeek",
+	    new String[] { "OmrÃ¥de", "Reelt", "Budsjett", "Avvik" }, new Integer[] { 1, 2, 3 }, new String[] { "ProductArea", "PackageSumWeek",
 		    "BudgetValue", "BudgetDeviation" }, null, 10, null, new Integer[] {}, null, null, null, false, true, 1, null, false, false, null,
 	    false, true), OWN_PRODUCTION_PACKLIST("Egenproduksjon pakklister", "Egenproduksjon pakklister", "ownProductionVManager", new String[] {
-	    "Transportuke", "Ordrenr", "Navn", "Verdi", "Dato pakkliste", "Produktområde" }, new Integer[] { 3 }, new String[] { "TransportYearWeek",
+	    "Transportuke", "Ordrenr", "Navn", "Verdi", "Dato pakkliste", "ProduktomrÃ¥de" }, new Integer[] { 3 }, new String[] { "TransportYearWeek",
 	    "OrderNr", "CustomerName", "GarageValue", "PacklistReadyFormat", "ProductArea" }, null, 10, null, new Integer[] {}, null, null, null,
 	    false, false, 1, null, false, true, new ExcelSumFormula(new Integer[] { 3 }, "Total sum", null, null, 3), false, true), OWN_PRODUCTION_PACKLIST_NOT_READY(
 	    "Pakkliste ikke klar", "Pakkliste_ikke_klar", "ownProductionVManager", new String[] { "Transportuke", "Kundenr", "Navn", "Verdi",
-		    "Produktområde" }, new Integer[] { 1, 3 }, new String[] { "TransportYearWeek", "CustomerNr", "CustomerName", "GarageValue",
+		    "ProduktomrÃ¥de" }, new Integer[] { 1, 3 }, new String[] { "TransportYearWeek", "CustomerNr", "CustomerName", "GarageValue",
 		    "ProductArea" }, new Integer[][] { { 2, 6500 } }, 10, null, new Integer[] {}, null, null, null, false, false, 1, null, false,
 	    true, new ExcelSumFormula(new Integer[] { 3 }, "Total sum", null, null, 3), false, false),
     /**
      * Egenproduksjon.
      */
     OWN_PRODUCTION("Egenproduksjon", "Egenproduksjon", "ownProductionVManager", new String[] { "Att:", "Transport", "Ordrenr", "Navn", "Verdi",
-	    "Pakket", "Pr. dag", "Pakkliste", "Prod.uke", "Produktområde" }, new Integer[] { 2, 4 }, new String[] { "PackedBy", "TransportYearWeek",
+	    "Pakket", "Pr. dag", "Pakkliste", "Prod.uke", "ProduktomrÃ¥de" }, new Integer[] { 2, 4 }, new String[] { "PackedBy", "TransportYearWeek",
 	    "OrderNr", "CustomerName", "GarageValue", "OrderReadyDayString", "GarageValue", "PacklistReadyFormat", "ProductionWeek", "ProductArea" },
 	    new Integer[][] { { 0, 3000 }, { 1, 2000 }, { 2, 2000 }, { 3, 5000 }, { 4, 2000 }, { 5, 2000 }, { 6, 2000 }, { 7, 4000 }, { 8, 4000 } },
 	    10, 9, new Integer[] { 9 }, 5, 4, 6, false, true, 0, new ExcelReportEnum[] { OWN_PRODUCTION_SUM, OWN_PRODUCTION_PACKLIST,
@@ -70,10 +70,10 @@ public enum ExcelReportEnum {
     /**
      * Ettersendinger sent.
      */
-    POST_SHIPMENT_SENT_COUNT("Ettersendinger sent", "Ettersendinger_sent", "postShipmentCountVManager", new String[] { "År", "Uke", "Transport",
-	    "Salg", "Drift/Prosjektering", "Produksjon", "Underleverandør", "Montering", "Kunde", "Økonomi", "Annet" }, new Integer[] { 0, 1, 2, 3,
-	    4, 5, 6, 7, 8, 9 }, new String[] { "År", "Uke", "Transport", "Salg", "Drift/Prosjektering", "Produksjon", "Underleverandør", "Montering",
-	    "Kunde", "Økonomi", "Annet" }, new Integer[][] { { 2, 3500 } }, 12, null, new Integer[] {}, null, null, null, true, true, 0, null, true,
+    POST_SHIPMENT_SENT_COUNT("Ettersendinger sent", "Ettersendinger_sent", "postShipmentCountVManager", new String[] { "Ã…r", "Uke", "Transport",
+	    "Salg", "Drift/Prosjektering", "Produksjon", "UnderleverandÃ¸r", "Montering", "Kunde", "Ã˜konomi", "Annet" }, new Integer[] { 0, 1, 2, 3,
+	    4, 5, 6, 7, 8, 9 }, new String[] { "Ã…r", "Uke", "Transport", "Salg", "Drift/Prosjektering", "Produksjon", "UnderleverandÃ¸r", "Montering",
+	    "Kunde", "Ã˜konomi", "Annet" }, new Integer[][] { { 2, 3500 } }, 12, null, new Integer[] {}, null, null, null, true, true, 0, null, true,
 	    false, null, true, true),
     /**
      * Telleliste for alle ordre som er pakket men ikke sendt.
@@ -94,8 +94,8 @@ public enum ExcelReportEnum {
      * Salgsrapport grunnlag.
      */
     DEVIATION_BASIS("Avvik - grunnlag", "Avvik", "deviationVManager", new String[] { "Id", "Ordre klar", "Opprettet", "Navn", "Kundenr", "Kundenavn",
-	    "Ordrenr", "Produktområde", "Behandlingsansvarlig", "Egen funksjon", "Avviksfunksjon", "Kategori", "Status", "Initiert av",
-	    "Intern kostnad", "Ekstern kostnad","Montørlag" }, new Integer[] { 14, 15 }, new String[] { "DeviationId", "OrderReady", "RegistrationDate",
+	    "Ordrenr", "ProduktomrÃ¥de", "Behandlingsansvarlig", "Egen funksjon", "Avviksfunksjon", "Kategori", "Status", "Initiert av",
+	    "Intern kostnad", "Ekstern kostnad","MontÃ¸rlag" }, new Integer[] { 14, 15 }, new String[] { "DeviationId", "OrderReady", "RegistrationDate",
 	    "UserName", "CustomerNr", "CustomerName", "OrderNr", "ProductArea", "Responsible", "OwnFunction", "DeviationFunction",
 	    "FunctionCategoryName", "DeviationStatusName", "InitiatedBy", "InternalCost", "ExternalCost","Montoernavn" }, new Integer[][] { { 7, 4500 },
 	    { 9, 4500 }, { 10, 4500 }, { 11, 4500 }, { 12, 3500 }, { 13, 4500 }, { 14, 4500 }, { 15, 4500 },{16,6000} }, 13, null, null, null, null, null,
@@ -103,7 +103,7 @@ public enum ExcelReportEnum {
     /**
      * Avvik.
      */
-    DEVIATION_SUM("Avvik", "Avvik", "deviationSumVManager", new String[] { "Produktområde", "Avviksfunksjon", "Kategori", "Status", "Uke", "År",
+    DEVIATION_SUM("Avvik", "Avvik", "deviationSumVManager", new String[] { "ProduktomrÃ¥de", "Avviksfunksjon", "Kategori", "Status", "Uke", "Ã…r",
 	    "Sum" }, new Integer[] { 4, 5, 6 }, new String[] { "ProductArea", "JobFunctionName", "FunctionCategoryName", "DeviationStatusName",
 	    "RegistrationWeek", "RegistrationYear", "SumCost" }, new Integer[][] { { 0, 4500 }, { 1, 4500 }, { 2, 4500 }, { 3, 4500 }, { 4, 3500 },
 	    { 5, 4500 }, { 6, 4500 } }, 12, null, new Integer[] {}, null, null, null, true, true, 0, new ExcelReportEnum[] { DEVIATION_BASIS }, true,
@@ -113,7 +113,7 @@ public enum ExcelReportEnum {
 	    new Integer[] {}, null, null, null, false, false, 0, null, false, true, new ExcelSumFormula(new Integer[] { 3 }, "Total sum", null, null,
 		    2), false, false),
 
-    DEVIATION_SUMMARY("Avvik - Gjennomgåelse", "Avvik_gjennomgåelse", "sumAvvikVManager", "generateDeviationSummary", false, true, true), DEVIATION_JOB_FUNCTION_SUM(
+    DEVIATION_SUMMARY("Avvik - GjennomgÃ¥else", "Avvik_gjennomgÃ¥else", "sumAvvikVManager", "generateDeviationSummary", false, true, true), DEVIATION_JOB_FUNCTION_SUM(
 	    "Avvik pr aviksfunksjon", "Avvik_pr_aviksfunksjon", "deviationSumJobFunctionVManager", "generateDeviationSumJobFunction", false, true,
 	    true),
 
@@ -186,14 +186,14 @@ public enum ExcelReportEnum {
     /**
      * Tegningsrapport grunnlag.
      */
-    DRAWER_REPORT_BASIS("Tegningsrapport - grunnlag", "Tegningsrapport", "drawerVManager", new String[] { "Kundenr", "Ordrenr", "Produktområde",
+    DRAWER_REPORT_BASIS("Tegningsrapport - grunnlag", "Tegningsrapport", "drawerVManager", new String[] { "Kundenr", "Ordrenr", "ProduktomrÃ¥de",
 	    "Kundenavn", "Kategori", "Registert", "Egenproduksjon", "Tegner" }, new Integer[] { 0, 6 }, new String[] { "CustomerNr", "OrderNr",
 	    "ProductArea", "CustomerName", "CategoryName", "RegisteredDate", "OwnProduction", "DrawerName" }, null, 10, null, null, null, null, null,
 	    false, true, 0, null, true, false, null, null, true, true, true),
     /**
      * Tegnerrapport
      */
-    DRAWER_REPORT("Tegningsrapport", "Tegningsrapport", "drawerVManager", new String[] { "Kategori", "Produktområde", "Tegner", "Antall",
+    DRAWER_REPORT("Tegningsrapport", "Tegningsrapport", "drawerVManager", new String[] { "Kategori", "ProduktomrÃ¥de", "Tegner", "Antall",
 	    "Sum egenproduksjon" }, new Integer[] { 4, 5 },
 	    new String[] { "CategoryName", "ProductArea", "DrawerName", "Count", "SumOwnProduction" }, new Integer[][] { { 0, 3000 }, { 1, 3000 },
 		    { 2, 3000 }, { 3, 3000 }, { 4, 3000 } }, 10, null, null, null, null, null, false, true, 0,
@@ -201,14 +201,14 @@ public enum ExcelReportEnum {
     /**
      * Grunnlag for apport egenordre takstol.
      */
-    TAKSTOL_OWN_ORDER_BASIS("Grunnlag Egenordre takstol", "Grunnlag Egenordre takstol", "orderLineManager", new String[] { "Produktområde",
+    TAKSTOL_OWN_ORDER_BASIS("Grunnlag Egenordre takstol", "Grunnlag Egenordre takstol", "orderLineManager", new String[] { "ProduktomrÃ¥de",
 	    "Ordrenr", "Kunde", "Egenproduksjon", "Kost takstol" }, new Integer[] { 3, 4 }, new String[] { "ProductArea", "OrderNr", "Customer",
 	    "OwnProductionTakstol", "InternalCostTakstol" }, new Integer[][] { { 0, 3000 }, { 1, 3000 }, { 2, 3000 } }, 10, null, null, null, null,
 	    null, false, true, 0, null, true, false, null, null, true, true, false),
     /**
      * Rapport egenordre takstol.
      */
-    TAKSTOL_OWN_ORDER_REPORT("Egenordre takstol", "Egenordre takstol", "orderLineManager", new String[] { "Produktområde", "Antall",
+    TAKSTOL_OWN_ORDER_REPORT("Egenordre takstol", "Egenordre takstol", "orderLineManager", new String[] { "ProduktomrÃ¥de", "Antall",
 	    "Egenproduksjon", "Kost takstol" }, new Integer[] { 1, 2, 3 }, new String[] { "ProductArea", "NumberOfOrders", "SumOwnProduction",
 	    "SumInternalCost" }, new Integer[][] { { 0, 3000 }, { 1, 3000 }, { 2, 3000 }, { 3, 3000 } }, 10, null, null, null, null, null, false,
 	    true, 0, new ExcelReportEnum[] { TAKSTOL_OWN_ORDER_BASIS }, true, false, new ExcelSumFormula(new Integer[] { 1, 2, 3 }, "Sum:", null,
@@ -216,8 +216,8 @@ public enum ExcelReportEnum {
     /**
      * Rapport salgsstatus order(tilbud).
      */
-    SALE_STATUS_REPORT("Salgsstatus", "Salgsstatus", "saleStatusVManager", new String[] { "Kundenr", "Navn", "Ordrenr", "Beløp", "Sannsynlig",
-	    "Dato", "År", "Uke", "Byggestart", "Salgsstatus", "Selger", "Produktområde" }, new Integer[] { 0, 3 }, new String[] { "CustomerNr",
+    SALE_STATUS_REPORT("Salgsstatus", "Salgsstatus", "saleStatusVManager", new String[] { "Kundenr", "Navn", "Ordrenr", "BelÃ¸p", "Sannsynlig",
+	    "Dato", "Ã…r", "Uke", "Byggestart", "Salgsstatus", "Selger", "ProduktomrÃ¥de" }, new Integer[] { 0, 3 }, new String[] { "CustomerNr",
 	    "CustomerName", "OrderNr", "Amount", "Probability", "SaleDateAsDate", "SaleYear", "SaleWeek", "BuildDateAsDate", "SaleStatus",
 	    "Salesman", "ProductArea" }, new Integer[][] { { 0, 2000 }, { 1, 5000 }, { 2, 2000 }, { 4, 3000 }, { 5, 3000 }, { 8, 3000 }, { 9, 3000 },
 	    { 10, 3000 }, { 11, 4000 } }, 10, null, null, null, null, null, false, true, 0, null, true, false, new ExcelSumFormula(
@@ -233,7 +233,7 @@ public enum ExcelReportEnum {
      * new Integer[][] { { 0, 3000 }, { 1, 3000 }, { 2, 3000 } }, 10, null,
      * null, null, null, null, false, true, 0, null, true, false, null, null,
      * false, false, false)
-     */, SALES_GOAL("Salgsmål", "Salgsmål", "salesVManager", "generateSalesGoalReport", false, true, false), TAKSTOLTEGNER("Takstoltegner",
+     */, SALES_GOAL("SalgsmÃ¥l", "SalgsmÃ¥l", "salesVManager", "generateSalesGoalReport", false, true, false), TAKSTOLTEGNER("Takstoltegner",
 	    "Takstoltegner", "takstoltegnerVManager", "generateTakstoltegnerReport", true, true, false);
 
     private final String reportName;
@@ -390,7 +390,7 @@ public enum ExcelReportEnum {
     }
 
     /**
-     * @return fontstørrelse på overskrift
+     * @return fontstï¿½rrelse pï¿½ overskrift
      */
     public int getHeadFontSize() {
 	return headFontSize;
@@ -419,7 +419,7 @@ public enum ExcelReportEnum {
     }
 
     /**
-     * @return navn på manager som skal hente data
+     * @return navn pï¿½ manager som skal hente data
      */
     public String getExcelManagerName() {
 	return excelManagerName;
@@ -453,7 +453,7 @@ public enum ExcelReportEnum {
     }
 
     /**
-     * @return kolonnestørrelser
+     * @return kolonnestï¿½rrelser
      */
     public Map<Integer, Integer> getColumnSizes() {
 	return colSize;

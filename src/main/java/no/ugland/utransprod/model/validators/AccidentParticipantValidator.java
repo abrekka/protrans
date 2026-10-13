@@ -36,11 +36,11 @@ public class AccidentParticipantValidator implements Validator {
         
         if (ValidationUtils.isBlank(ModelUtil.nullToString(accidentParticipantModel
                 .getFirstName()))) {
-            support.addError("fornavn", "må settes");
+            support.addError("fornavn", "mÃ¥ settes");
         }
         if (ValidationUtils.isBlank(ModelUtil.nullToString(accidentParticipantModel
                 .getLastName()))) {
-            support.addError("etternavn", "må settes");
+            support.addError("etternavn", "mÃ¥ settes");
         }
         
       

@@ -9,7 +9,7 @@ import no.ugland.utransprod.util.Util;
 import com.jgoodies.binding.beans.Model;
 
 /**
- * Klasse som brukes for å sette utvlag ved statistikk
+ * Klasse som brukes for ï¿½ sette utvlag ved statistikk
  * @author atle.brekka
  *
  */
@@ -285,8 +285,8 @@ public class QuerySettings extends Model{
 	}
 
 	/**
-	 * Henter fra år
-	 * @return år
+	 * Henter fra ï¿½r
+	 * @return ï¿½r
 	 */
 	public Integer getYearFrom() {
 		return yearFrom;
@@ -302,8 +302,8 @@ public class QuerySettings extends Model{
 	}
 
 	/**
-	 * Henter år til
-	 * @return år
+	 * Henter ï¿½r til
+	 * @return ï¿½r
 	 */
 	public Integer getYearTo() {
 		return yearTo;
@@ -328,12 +328,12 @@ public class QuerySettings extends Model{
 		case INVOICE_DATE:
 		case ORDER_DATE:
 			if(dateFrom==null||dateTo==null){
-				errorString = "Dato fra og til må settes";
+				errorString = "Dato fra og til mÃ¥ settes";
 			}
 			break;
 		case TRANSPORT_WEEK:
 			if(yearFrom==null||yearTo==null||weekFrom==null||weekTo==null){
-				errorString = "Uke fra og til må settes";
+				errorString = "Uke fra og til mÃ¥ settes";
 			}
 			break;
 		}

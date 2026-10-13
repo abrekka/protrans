@@ -35,7 +35,7 @@ public class ExternalOrderValidator implements Validator {
                 externalOrderModel, "Bestilling");
 
         if (externalOrderModel.getSupplier() == null) {
-            support.addError("leverandør", "må settes");
+            support.addError("leverandÃ¸r", "mÃ¥ settes");
         }
 
         return support.getResult();

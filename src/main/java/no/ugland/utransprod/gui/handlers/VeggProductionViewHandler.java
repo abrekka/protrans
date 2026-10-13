@@ -102,7 +102,7 @@ public class VeggProductionViewHandler extends ProductionViewHandler {
 			super(listModel, new String[] { "Transport", "Ordre", "Prod. uke",
 					// "Antall", "Spesifikasjon",
 					// "Front",
-					"Opplasting", "Produsert", "Produktområde", "Prod.enhet", "Startet", "Reell tidsforbruk",
+					"Opplasting", "Produsert", "ProduktomrÃ¥de", "Prod.enhet", "Startet", "Reell tidsforbruk",
 					"Gjort av" });
 			frontChecker = Util.getFrontChecker();
 			window = aWindow;

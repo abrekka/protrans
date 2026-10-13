@@ -222,7 +222,7 @@ public class VismaFileCreatorImpl implements VismaFileCreator {
 
 			public boolean apply(FakturagrunnlagV grunnlag) {
 				return grunnlag.harBestillingsnr() && (grunnlag.erMontering() || grunnlag.erKranbil()
-						|| grunnlag.erAvfallsfjerning() || grunnlag.erMonteringsspiker());
+						|| grunnlag.erAvfallsfjerning() || grunnlag.erMonteringsspiker()||grunnlag.erRigg());
 			}
 		};
 	}

@@ -123,7 +123,6 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 
 	JPopupMenu popupMenuEdit;
 	JPopupMenu popupMenuHoliday;
-	
 
 	JMenuItem menuItemEdit;
 	JMenuItem menuItemHoliday;
@@ -139,7 +138,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 	JMenuItem menuItemShowDeviation;
 
 	JMenuItem menuItemAssemblyReport;
-	JMenuItem menuItemAssemblyReportSvensk;
+//	JMenuItem menuItemAssemblyReportSvensk;
 	JMenuItem menuItemAddWeek;
 
 	private List<String> plannedList;
@@ -210,7 +209,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 		menuItemShowContent = new JMenuItem("Se innhold...");
 		menuItemDeviation = new JMenuItem("Registrere avvik...");
 		menuItemAssemblyReport = new JMenuItem("Fakturagrunnlag...");
-		menuItemAssemblyReportSvensk = new JMenuItem("Fakturagrunnlag svensk...");
+//		menuItemAssemblyReportSvensk = new JMenuItem("Fakturagrunnlag svensk...");
 		menuItemShowDeviation = new JMenuItem("Se avvik...");
 		menuItemAddWeek = new JMenuItem("Legg til monteringsuke...");
 
@@ -218,7 +217,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 		popupMenuEdit.add(menuItemRemoveAssembly);
 		popupMenuEdit.add(menuItemShowMissing);
 		popupMenuEdit.add(menuItemAssemblyReport);
-		popupMenuEdit.add(menuItemAssemblyReportSvensk);
+//		popupMenuEdit.add(menuItemAssemblyReportSvensk);
 		popupMenuEdit.add(menuItemAddWeek);
 
 		popupMenuHoliday.add(menuItemHoliday);
@@ -352,12 +351,12 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 			menuItemRemoveHoliday.addActionListener(menuItemListener);
 			AssemblyReportListener assemblyReportListener = new AssemblyReportListener();
 			menuItemAssemblyReport.addActionListener(assemblyReportListener);
-			menuItemAssemblyReportSvensk.addActionListener(new AssemblyReportListener());
+//			menuItemAssemblyReportSvensk.addActionListener(new AssemblyReportListener());
 		}
 	}
 
 	/**
-	 * Åpner ordrevindu
+	 * ï¿½pner ordrevindu
 	 * 
 	 * @param order
 	 * @param window
@@ -367,7 +366,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 	}
 
 	/**
-	 * Håndterer museklikk
+	 * Hï¿½ndterer museklikk
 	 * 
 	 * @author atle.brekka
 	 */
@@ -405,11 +404,11 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 					popupMenuEdit.add(menuItemShowContent);
 					popupMenuEdit.remove(menuItemDeviation);
 					popupMenuEdit.remove(menuItemAssemblyReport);
-					popupMenuEdit.remove(menuItemAssemblyReportSvensk);
+//					popupMenuEdit.remove(menuItemAssemblyReportSvensk);
 					popupMenuEdit.add(menuItemShowDeviation);
 				} else {
 					popupMenuEdit.add(menuItemAssemblyReport);
-					popupMenuEdit.add(menuItemAssemblyReportSvensk);
+//					popupMenuEdit.add(menuItemAssemblyReportSvensk);
 					popupMenuEdit.remove(menuItemShowContent);
 					popupMenuEdit.add(menuItemDeviation);
 					popupMenuEdit.remove(menuItemShowDeviation);
@@ -569,7 +568,6 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 				managerRepository.getSupplierManager().saveObject(currentSupplier);
 				fireAsesemblyChanged();
 			}
-			
 
 		}
 
@@ -887,9 +885,10 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 						// generateAssemblyReport();
 						if (event.getActionCommand().equalsIgnoreCase(menuItemAssemblyReport.getText())) {
 							generateAssemblyReportNy(ReportEnum.ASSEMBLY_NY);
-						} else if (event.getActionCommand().equalsIgnoreCase(menuItemAssemblyReportSvensk.getText())) {
-							generateAssemblyReportNy(ReportEnum.ASSEMBLY_NY_SVENSK);
 						}
+//						else if (event.getActionCommand().equalsIgnoreCase(menuItemAssemblyReportSvensk.getText())) {
+//							generateAssemblyReportNy(ReportEnum.ASSEMBLY_NY_SVENSK);
+//						}
 
 					} catch (ProTransException e) {
 						errorMsg = e.getMessage();
@@ -927,7 +926,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 			List<AssemblyReport> assemblyReportList = new ArrayList<AssemblyReport>();
 			assemblyReportList.add(assemblyReport);
 			reportViewer.generateProtransReportFromBeanAndShow(assemblyReportList, "Montering", ReportEnum.ASSEMBLY,
-					null, null, window, true);
+					null, null, window, true, assemblyReport.getOrder().getOrderNr());
 
 		}
 	}
@@ -963,7 +962,7 @@ public class SupplierOrderViewHandler extends AbstractViewHandler<Assembly, Asse
 			assemblyReportList.add(assemblyReport);
 
 			reportViewer.generateProtransReportFromBeanAndShow(assemblyReportList, "Montering", report, null, null,
-					window, true);
+					window, true, assemblyReport.getOrder().getOrderNr());
 
 		}
 	}

@@ -41,7 +41,7 @@ import no.ugland.utransprod.util.UserUtil;
 import no.ugland.utransprod.util.Util;
 
 /**
- * Håndterer ordre til avrop
+ * Hï¿½ndterer ordre til avrop
  * @author atle.brekka
  */
 public class IncomingOrderViewHandler extends
@@ -107,14 +107,14 @@ public class IncomingOrderViewHandler extends
 
     
     /**
-     * Søk
+     * Sï¿½k
      */
     private void doSearch() {
 
         objectSelectionList.clearSelection();
 
         SearchOrderView searchOrderView = new SearchOrderView(false);
-        JDialog dialog = new JDialog(ProTransMain.PRO_TRANS_MAIN, "Søk", true);
+        JDialog dialog = new JDialog(ProTransMain.PRO_TRANS_MAIN, "SÃ¸k", true);
         WindowInterface dialogWindow = new JDialogAdapter(dialog);
         dialog.add(searchOrderView.buildPanel(dialogWindow));
         dialog.pack();
@@ -204,7 +204,7 @@ public class IncomingOrderViewHandler extends
         table.getColumnExt(3).setPreferredWidth(100);
         // poststed
         table.getColumnExt(4).setPreferredWidth(100);
-        // produmtområde
+        // produmtomrï¿½de
         table.getColumnExt(7).setPreferredWidth(100);
     }
 

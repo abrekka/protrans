@@ -15,6 +15,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -96,7 +97,7 @@ import no.ugland.utransprod.util.excel.ExcelUtil;
 import no.ugland.utransprod.util.report.ReportViewer;
 
 /**
- * Håndterer setting av pakkliste klar
+ * Hï¿½ndterer setting av pakkliste klar
  * 
  * @author atle.brekka
  */
@@ -121,7 +122,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	public PacklistViewHandler(Login login, ManagerRepository aManagerRepository,
 			DeviationViewHandlerFactory deviationViewHandlerFactory, OrderViewHandlerFactory orderViewHandlerFactory,
 			PacklistApplyList productionInterface, @Named("kostnadTypeTakstoler") CostType aCostTypeTross,
-			@Named("kostnadEnhetTakstoler") CostUnit aCostUnitTross,Collicreator aCollicreator) {
+			@Named("kostnadEnhetTakstoler") CostUnit aCostUnitTross, Collicreator aCollicreator) {
 		super(login, aManagerRepository, deviationViewHandlerFactory, productionInterface, "Pakklister",
 				TableEnum.TABLEPACKLIST);
 		costTypeTross = aCostTypeTross;
@@ -139,7 +140,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 		menuItemUpdateStatus = new JMenuItem("Oppdater status");
 
 		popupMenu.add(menuItemUpdateStatus);
-		collicreator=aCollicreator;
+		collicreator = aCollicreator;
 	}
 
 	/**
@@ -181,7 +182,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	}
 
 	/**
-	 * Lager knapp for å editere ordre
+	 * Lager knapp for ï¿½ editere ordre
 	 * 
 	 * @param window
 	 * @return knapp
@@ -309,7 +310,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 				order.setPacklistDoneBy(editPacklistView.getDoneBy());
 				order.setProductionBasis(Integer.valueOf(100));
 				managerRepository.getOrderManager().saveOrder(order);
-				collicreator.opprettKollier(order,"Pakkliste");
+				collicreator.opprettKollier(order, "Pakkliste");
 			}
 
 			// Date packlistDate = Util.getDate(window);
@@ -475,7 +476,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	}
 
 	/**
-	 * Åpne ordre
+	 * ï¿½pne ordre
 	 * 
 	 * @param window
 	 */
@@ -490,7 +491,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	}
 
 	/**
-	 * Håndterer dobbeltklikk på ordre
+	 * Hï¿½ndterer dobbeltklikk pï¿½ ordre
 	 * 
 	 * @author atle.brekka
 	 */
@@ -792,7 +793,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 		// }
 		// },
 
-		PRODUKTOMRÅDE("Produktområde", 70, false) {
+		PRODUKTOMRÃ…DE("ProduktomrÃ¥de", 70, false) {
 			@Override
 			public Class<?> getColumnClass() {
 				return String.class;
@@ -809,6 +810,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 			}
 
 		};
+
 		private String columnName;
 		private int columnWidth;
 		private boolean skalTilExcel;
@@ -907,7 +909,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	}
 
 	/**
-	 * Holder rede på antall pakklister gjeldende uke og akkumulert
+	 * Holder rede pï¿½ antall pakklister gjeldende uke og akkumulert
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1024,7 +1026,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 	 */
 	@Override
 	protected int getProductAreaColumn() {
-		return PacklistColumn.PRODUKTOMRÅDE.ordinal();
+		return PacklistColumn.PRODUKTOMRÃ…DE.ordinal();
 		// return 5;
 	}
 
@@ -1055,6 +1057,13 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 
 	public JButton getButtonMonteringsanvisning(WindowInterface window) {
 		JButton buttonMonteringsanvisning = new JButton(new MonteringsanvisningAction(window));
+		buttonMonteringsanvisning.setEnabled(false);
+		emptySelectionListener.addButton(buttonMonteringsanvisning);
+		return buttonMonteringsanvisning;
+	}
+
+	public JButton getButtonMonteringsanvisningSO(WindowInterface window) {
+		JButton buttonMonteringsanvisning = new JButton(new MonteringsanvisningSOAction(window));
 		buttonMonteringsanvisning.setEnabled(false);
 		emptySelectionListener.addButton(buttonMonteringsanvisning);
 		return buttonMonteringsanvisning;
@@ -1238,6 +1247,53 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 
 	}
 
+	private class MonteringsanvisningSOAction extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+		private WindowInterface window;
+
+		public MonteringsanvisningSOAction(WindowInterface aWindow) {
+			super("Monteringsanvisning til SO...");
+			window = aWindow;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			Util.runInThreadWheel(window.getRootPane(), new Threadable() {
+
+				public void enableComponents(boolean enable) {
+				}
+
+				public Object doWork(Object[] params, JLabel labelInfo) {
+					labelInfo.setText("Genererer monteringsanvisning...");
+					String errorMsg = null;
+					try {
+						opprettOgVisMonteringsanvisningSO(window);
+					} catch (ProTransException e) {
+						errorMsg = e.getMessage();
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (URISyntaxException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (JRException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return errorMsg;
+				}
+
+				public void doWhenFinished(Object object) {
+					if (object != null) {
+						Util.showErrorDialog(window, "Feil", object.toString());
+					}
+				}
+
+			}, null);
+
+		}
+
+	}
+
 	private void opprettOgVisMonteringsanvisning(WindowInterface window)
 			throws IOException, URISyntaxException, JRException {
 		PacklistV packlistV = getSelectedObject();
@@ -1246,10 +1302,26 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 
 		if (monteringsanvisninger != null && !monteringsanvisninger.isEmpty()) {
 			String monteringsanvisning = PdfUtil.slaaSammenFiler(packlistV.getCustomerDetails(), packlistV.getOrderNr(),
-					monteringsanvisninger);
+					monteringsanvisninger, ApplicationParamUtil.findParamByName("excel_path"));
 			if (Desktop.isDesktopSupported()) {
 				Desktop.getDesktop().open(new File(monteringsanvisning));
 			}
+		}
+	}
+
+	private void opprettOgVisMonteringsanvisningSO(WindowInterface window)
+			throws IOException, URISyntaxException, JRException {
+		PacklistV packlistV = getSelectedObject();
+		List<String> monteringsanvisninger = managerRepository.getOrderManager()
+				.finnMonteringsanvisninger(packlistV.getOrderNr());
+		
+//		List<String> monteringsanvisninger = Arrays.asList("C:\\Users\\atle.brekka\\eclipse-workspace\\protrans\\protrans\\monteringsanvisning.pdf");
+
+		if (monteringsanvisninger != null && !monteringsanvisninger.isEmpty()) {
+			String monteringsanvisning = PdfUtil.slaaSammenFilerUtenForside(packlistV.getCustomerDetails(),
+					packlistV.getOrderNr(), monteringsanvisninger, ApplicationParamUtil.findParamByName("SO_dir"));
+			Util.showMsgDialog(null, "Monteringsanvisning",
+					"Sendt monteringsanvisning til SO med filnavn: " + monteringsanvisning);
 		}
 	}
 
@@ -1337,11 +1409,11 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 					// .medTaktekke(takstein.getDetailsWithoutNoAttributes())
 					.medPakketAv(order.getPacklistDoneBy()).medBruker(login.getApplicationUser().getFullName())
 					.medProductArea(order.getProductArea()).medDeleliste(deleliste);
-					// Order order = packlistV.getOrder() == null ?
-					// assembly.getDeviation().getOrder() : assembly.getOrder();
-					// managerRepository.getOrderManager().lazyLoadOrder(order,
-					// new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_COSTS,
-					// LazyLoadOrderEnum.COMMENTS });
+			// Order order = packlistV.getOrder() == null ?
+			// assembly.getDeviation().getOrder() : assembly.getOrder();
+			// managerRepository.getOrderManager().lazyLoadOrder(order,
+			// new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_COSTS,
+			// LazyLoadOrderEnum.COMMENTS });
 
 			// List<Ordln> vismaOrderLines =
 			// managerRepository.getOrdlnManager().findForFakturagrunnlag(assembly.getOrder().getOrderNr());
@@ -1374,7 +1446,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 			List<ProductionReportData> reportList = Lists.newArrayList(productionReportData);
 			// assemblyReportList.add(assemblyReport);
 			reportViewer.generateProtransReportFromBeanAndShow(reportList, "Produksjon", ReportEnum.PRODUCTION_REPORT,
-					null, null, window, true);
+					null, null, window, true, null);
 
 		}
 	}
@@ -1426,7 +1498,7 @@ public class PacklistViewHandler extends AbstractProductionPackageViewHandlerSho
 			ReportViewer reportViewer = new ReportViewer("Deleliste kunde");
 			List<ProductionReportData> reportList = Lists.newArrayList(productionReportData);
 			reportViewer.generateProtransReportFromBeanAndShow(reportList, "Deleliste kunde",
-					ReportEnum.DELELISTE_KUNDE_REPORT, null, null, window, true);
+					ReportEnum.DELELISTE_KUNDE_REPORT, null, null, window, true, order.getOrderNr());
 
 		}
 	}

@@ -23,7 +23,7 @@ import com.jgoodies.binding.adapter.AbstractTableAdapter;
 import com.jgoodies.binding.adapter.BasicComponentFactory;
 
 /**
- * Håndterer editring av ansatttyper
+ * Hï¿½ndterer editring av ansatttyper
  * 
  * @author atle.brekka
  * 
@@ -230,7 +230,7 @@ DefaultAbstractViewHandler<EmployeeType, EmployeeTypeModel> {
 	 */
 	@Override
 	public Boolean hasWriteAccess() {
-		return UserUtil.hasWriteAccess(userType, "Leverandører");
+		return UserUtil.hasWriteAccess(userType, "LeverandÃ¸rer");
 	}
 
 	/**

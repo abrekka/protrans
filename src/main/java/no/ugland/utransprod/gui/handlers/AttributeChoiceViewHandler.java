@@ -269,7 +269,7 @@ public class AttributeChoiceViewHandler extends
 		public void actionPerformed(ActionEvent e) {
 			if (validationResultModel.hasErrors()) {
 				Util.showErrorDialog(window, "Rett feil",
-						"Rett alle feil før lagring!");
+						"Rett alle feil fÃ¸r lagring!");
 			} else {
 				AttributeChoiceModel model = (AttributeChoiceModel) presentationModel
 						.getBean();

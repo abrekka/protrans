@@ -91,7 +91,7 @@ public class DeviationValidator implements Validator {
 	// }
 	//
 	// if (!criteriaSet) {
-	// support.addError("navn", "kriterier må settes");
+	// support.addError("navn", "kriterier mï¿½ settes");
 	// }
 
 	return support.getResult();
@@ -101,34 +101,34 @@ public class DeviationValidator implements Validator {
 	PropertyValidationSupport support = new PropertyValidationSupport(deviationModel, "Avvik");
 
 	if (ValidationUtils.isBlank(ModelUtil.nullToString(deviationModel.getUserName()))) {
-	    support.addError("navn", "må settes");
+	    support.addError("navn", "mÃ¥ settes");
 	}
 
 	if (!isOrderNrAndProjectNrValid()) {
-	    support.addError("ordrenr", "ordrenr eller prosjektnr må settes");
+	    support.addError("ordrenr", "ordrenr eller prosjektnr mÃ¥ settes");
 	}
 
 	if (ValidationUtils.isBlank(ModelUtil.nullToString(deviationModel.getInitiatedBy()))) {
-	    support.addError("initiert av", "må settes");
+	    support.addError("initiert av", "mÃ¥ settes");
 	}
 
 	if (ValidationUtils.isBlank(ModelUtil.nullToString(deviationModel.getResponsible()))) {
-	    support.addError("behandlingsansvarlig", "må settes");
+	    support.addError("behandlingsansvarlig", "mÃ¥ settes");
 	}
 
 	if (deviationModel.getDeviationFunction() == null) {
-	    support.addError("avviksfunksjon", "må settes");
+	    support.addError("avviksfunksjon", "mÃ¥ settes");
 	}
 	if (deviationModel.getFunctionCategory() == null) {
-	    support.addError("kategori", "må settes");
+	    support.addError("kategori", "mÃ¥ settes");
 	}
 
 	if (deviationModel.getDeviationStatus() == null) {
-	    support.addError("status", "må settes");
+	    support.addError("status", "mÃ¥ settes");
 	}
 
 	if (!validateNewComments()) {
-	    support.addError("kommentar", "må settes");
+	    support.addError("kommentar", "mÃ¥ settes");
 	}
 
 	return support.getResult();

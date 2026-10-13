@@ -150,7 +150,7 @@ import com.toedter.calendar.JDateChooser;
 import net.sf.jasperreports.engine.JRException;
 
 /**
- * Klassesom håndtrer vindusvariable for visning av ordre
+ * Klassesom hï¿½ndtrer vindusvariable for visning av ordre
  * 
  * @author atle.brekka
  */
@@ -257,7 +257,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Initierer liste med produktområder
+	 * Initierer liste med produktomrï¿½der
 	 */
 	private void initProductAreaList() {
 		if (productAreaList.size() == 0) {
@@ -409,7 +409,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Lager tekstfelt for når gavl er ferdig
+	 * Lager tekstfelt for nï¿½r gavl er ferdig
 	 * 
 	 * @param presentationModel
 	 * @return tekstfelt
@@ -451,7 +451,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Lager tekstfelt for når vegg er ferdig
+	 * Lager tekstfelt for nï¿½r vegg er ferdig
 	 * 
 	 * @param presentationModel
 	 * @return tekstfelt
@@ -479,7 +479,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Lager tekstfelt for når takstoler er pakket
+	 * Lager tekstfelt for nï¿½r takstoler er pakket
 	 * 
 	 * @param presentationModel
 	 * @return tekstfelt
@@ -548,7 +548,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Lager komboboks med produktområder
+	 * Lager komboboks med produktomrï¿½der
 	 * 
 	 * @param presentationModel
 	 * @return komboboks
@@ -630,7 +630,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 					customer.setCustomerNr(Integer.valueOf(orderModel.getCustomerNr()));
 				}
 			} catch (NumberFormatException e) {
-				throw new ProTransException("Kundenr må være tall");
+				throw new ProTransException("Kundenr mÃ¥ vÃ¦re tall");
 
 			}
 			customer.setFirstName(orderModel.getCustomerFirstName());
@@ -651,11 +651,10 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 							LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES, LazyLoadOrderEnum.COMMENTS,
 							LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.PROCENT_DONE });
 		} else {
-			lazyLoadOrder(order,
-					new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_COSTS, // LazyLoadOrderEnum.ORDER_LINES,
-							// LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES,
-							LazyLoadOrderEnum.COMMENTS, // LazyLoadOrderEnum.COLLIES,
-							LazyLoadOrderEnum.PROCENT_DONE });
+			lazyLoadOrder(order, new LazyLoadOrderEnum[] { LazyLoadOrderEnum.ORDER_COSTS, // LazyLoadOrderEnum.ORDER_LINES,
+					// LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES,
+					LazyLoadOrderEnum.COMMENTS, // LazyLoadOrderEnum.COLLIES,
+					LazyLoadOrderEnum.PROCENT_DONE });
 		}
 
 		ProjectManager projectManager = (ProjectManager) ModelUtil.getBean("projectManager");
@@ -708,7 +707,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 
 			handleAssembly(object);
 		} catch (HibernateOptimisticLockingFailureException e) {
-			Util.showErrorDialog(window, "Feil", "Ordre er oppdatert av noen andre, oppdater før lagring");
+			Util.showErrorDialog(window, "Feil", "Ordre er oppdatert av noen andre, oppdater fÃ¸r lagring");
 			e.printStackTrace();
 		}
 
@@ -731,7 +730,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 			List<OrderLine> orderLines = order.getOrderLineList();
 			Colli tmpColli;
 
-			tmpColli = new Colli(null, order, null, null, null, null, null, null, null,"Ordrevindu");
+			tmpColli = new Colli(null, order, null, null, null, null, null, null, null, "Ordrevindu");
 			if (collies == null) {
 				collies = new ArrayList<Colli>();
 
@@ -751,7 +750,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 						}
 						if (shouldHaveColli(orderLines, colliSetup.get(colliName), order.getTransportable())) {
 							Colli newColli = new Colli(null, tmpColli.getOrder(), tmpColli.getColliName(), null, null,
-									null, tmpColli.getPostShipment(), null, null,"Ordrevindu");
+									null, tmpColli.getPostShipment(), null, null, "Ordrevindu");
 							order.addColli(newColli);
 
 							if (colliName.equalsIgnoreCase("Takstein")) {
@@ -1148,7 +1147,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 		col = table.getColumnModel().getColumn(6);
 		col.setPreferredWidth(100);
 
-		// Produktområde
+		// ProduktomrÃ¥de
 		col = table.getColumnModel().getColumn(7);
 		col.setPreferredWidth(100);
 
@@ -1172,7 +1171,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 
 		Order order = object.getObject();
 		if (order.getOrderId() == null && objectList.contains(order)) {
-			errorString = "Kan ikke lagre ordre med et ordrenummer som finnes fra før";
+			errorString = "Kan ikke lagre ordre med et ordrenummer som finnes fra fÃ¸r";
 		}
 
 		if (object.getCustomer() == null) {
@@ -1180,12 +1179,12 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 			customer = customerManager.findByCustomerNr(Integer.valueOf(object.getCustomerNr()));
 			if (customer != null) {
 				if (JOptionPane.showConfirmDialog(window.getComponent(),
-						"Kunde med dette kundenr finnes fra før med navn " + customer.getFirstName() + " "
-								+ customer.getLastName() + " ønskes denne kunden å benyttes?",
-						"Kunde finnes fra før", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+						"Kunde med dette kundenr finnes fra fÃ¸r med navn " + customer.getFirstName() + " "
+								+ customer.getLastName() + " Ã¸nskes denne kunden Ã¥ benyttes?",
+						"Kunde finnes fra fÃ¸r", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
 					presentationModel1.setBufferedValue(OrderModel.PROPERTY_CUSTOMER, customer);
 				} else {
-					errorString = "Kan ikke lagre kunde med et kundenr som finnes fra før";
+					errorString = "Kan ikke lagre kunde med et kundenr som finnes fra fÃ¸r";
 				}
 			}
 		}
@@ -1260,7 +1259,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Henter ordreliste basert på paneltype
+	 * Henter ordreliste basert pï¿½ paneltype
 	 * 
 	 * @param orderPanelType
 	 * @return ordreliste
@@ -1391,7 +1390,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	private void setColumnWidth(OrderPanelTypeEnum orderPanelTypeEnum) {
 		switch (orderPanelTypeEnum) {
 		case NEW_ORDERS:
-			// ØUke
+			// ï¿½Uke
 			tableOrders.getColumnExt(0).setPreferredWidth(40);
 			// Type
 			tableOrders.getColumnExt(1).setPreferredWidth(50);
@@ -1527,7 +1526,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Henter knapp for å editere ordre
+	 * Henter knapp for ï¿½ editere ordre
 	 * 
 	 * @param aWindow
 	 * @return knapp
@@ -1541,7 +1540,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Klassesom håndterer dobbelklikk i vindu for nye ordre
+	 * Klassesom hï¿½ndterer dobbelklikk i vindu for nye ordre
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1575,7 +1574,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Klasse som håndterer editering av nye ordre
+	 * Klasse som hï¿½ndterer editering av nye ordre
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1627,7 +1626,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Lager sjekkboks for låsing av vindu
+	 * Lager sjekkboks for lï¿½sing av vindu
 	 * 
 	 * @return sjekkboks
 	 */
@@ -1640,7 +1639,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Håndterer låsing av vindu
+	 * Hï¿½ndterer lï¿½sing av vindu
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1648,7 +1647,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 		private static final long serialVersionUID = 1L;
 
 		public LockAction() {
-			super("Låst");
+			super("LÃ¥st");
 		}
 
 		/**
@@ -1746,7 +1745,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Lager knapp for å vise statistikk
+	 * Lager knapp for ï¿½ vise statistikk
 	 * 
 	 * @param aWindow
 	 * @return knapp
@@ -1758,7 +1757,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Lager knapp for å genererer excel
+	 * Lager knapp for ï¿½ genererer excel
 	 * 
 	 * @param window
 	 * @return knapp
@@ -1799,7 +1798,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Håndterer genererering av excel
+	 * Hï¿½ndterer genererering av excel
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1836,7 +1835,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Lager label for å vise antall
+	 * Lager label for ï¿½ vise antall
 	 * 
 	 * @return label
 	 */
@@ -1855,7 +1854,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Lager label for å vise filterinfo
+	 * Lager label for ï¿½ vise filterinfo
 	 * 
 	 * @return label
 	 */
@@ -1872,7 +1871,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Klasse som holder på antallinfo
+	 * Klasse som holder pï¿½ antallinfo
 	 * 
 	 * @author atle.brekka
 	 */
@@ -1976,7 +1975,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Muselytter som benyttes når det skal velges en order med dobbeltklikk
+	 * Muselytter som benyttes nï¿½r det skal velges en order med dobbeltklikk
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2073,7 +2072,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 				Order order = ((OrderManager) overviewManager).findByOrderNr(orderNr);
 
 				if (order != null) {
-					Util.showMsgDialog(window.getComponent(), "Ordre finnes fra før", "Ordre finnes fra før");
+					Util.showMsgDialog(window.getComponent(), "Ordre finnes fra fÃ¸r", "Ordre finnes fra fÃ¸r");
 				}
 			}
 
@@ -2172,7 +2171,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Lager knapp for å legge til kommentar
+	 * Lager knapp for ï¿½ legge til kommentar
 	 * 
 	 * @param window
 	 * @param presentationModel
@@ -2253,7 +2252,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Håndterer endring av produktområde
+	 * Hï¿½ndterer endring av produktomrï¿½de
 	 * 
 	 * @author atle.brekka
 	 */
@@ -2293,7 +2292,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Søker ordre
+	 * Sï¿½ker ordre
 	 * 
 	 * @param window
 	 * @return ordre
@@ -2401,7 +2400,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 	}
 
 	/**
-	 * Håndterer filtrering
+	 * Hï¿½ndterer filtrering
 	 * 
 	 * @param productAreaGroup
 	 */
@@ -2438,7 +2437,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 			if (group != null && !group.getProductAreaGroupName().equalsIgnoreCase("Alle")) {
 
 				Filter filter = new PatternFilter(group.getProductAreaGroupName(), Pattern.CASE_INSENSITIVE,
-						table.getColumnExt("Produktområde").getModelIndex());
+						table.getColumnExt("ProduktomrÃ¥de").getModelIndex());
 				FilterPipeline filterPipeline = new FilterPipeline(new Filter[] { filter });
 				table.setFilters(filterPipeline);
 				numberOf.setNumbers(table.getRowCount(), noOfObjects);
@@ -2543,7 +2542,7 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 
 		if (monteringsanvisninger != null && !monteringsanvisninger.isEmpty()) {
 			String monteringsanvisning = PdfUtil.slaaSammenFiler(order.getCustomerString(), order.getOrderNr(),
-					monteringsanvisninger);
+					monteringsanvisninger, ApplicationParamUtil.findParamByName("excel_path"));
 			if (Desktop.isDesktopSupported()) {
 				Desktop.getDesktop().open(new File(monteringsanvisning));
 			}
@@ -2609,11 +2608,9 @@ public class OrderViewHandler extends DefaultAbstractViewHandler<Order, OrderMod
 
 	private void showCuttingFile(Order order, WindowInterface aWindow) {
 		overviewManager.refreshObject(order);
-		overviewManager.lazyLoad(order,
-				new LazyLoadEnum[][] { { LazyLoadEnum.ORDER_COSTS, LazyLoadEnum.NONE },
-						{ LazyLoadEnum.ORDER_COMMENTS, LazyLoadEnum.NONE },
-						{ LazyLoadEnum.ORDER_LINES, LazyLoadEnum.NONE }, { LazyLoadEnum.COLLIES, LazyLoadEnum.NONE },
-						{ LazyLoadEnum.PROCENT_DONES, LazyLoadEnum.NONE } });
+		overviewManager.lazyLoad(order, new LazyLoadEnum[][] { { LazyLoadEnum.ORDER_COSTS, LazyLoadEnum.NONE },
+				{ LazyLoadEnum.ORDER_COMMENTS, LazyLoadEnum.NONE }, { LazyLoadEnum.ORDER_LINES, LazyLoadEnum.NONE },
+				{ LazyLoadEnum.COLLIES, LazyLoadEnum.NONE }, { LazyLoadEnum.PROCENT_DONES, LazyLoadEnum.NONE } });
 		Cutting cutting = order.getCutting();
 		CuttingManager cuttingManager = (CuttingManager) ModelUtil.getBean(CuttingManager.MANAGER_NAME);
 		cuttingManager.lazyLoad(cutting, new LazyLoadEnum[][] { { LazyLoadEnum.CUTTING_LINES, LazyLoadEnum.NONE } });

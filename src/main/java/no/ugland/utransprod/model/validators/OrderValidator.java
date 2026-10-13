@@ -9,7 +9,7 @@ import com.jgoodies.validation.util.PropertyValidationSupport;
 import com.jgoodies.validation.util.ValidationUtils;
 
 /**
- * Klassesom håndterer validering av ordre
+ * Klassesom hï¿½ndterer validering av ordre
  * 
  * @author atle.brekka
  */
@@ -49,40 +49,40 @@ public class OrderValidator implements Validator {
     private ValidationResult validateOrder() {
 	PropertyValidationSupport support = new PropertyValidationSupport(orderModel, "Ordre");
 	if (ValidationUtils.isBlank(ModelUtil.nullToString(orderModel.getOrderNr()))) {
-	    support.addError("ordrenummer", "må settes");
+	    support.addError("ordrenummer", "mÃ¥ settes");
 	}
 
 	if (ValidationUtils.isBlank(orderModel.getDeliveryAddress())) {
-	    support.addError("adresse", "må settes");
+	    support.addError("adresse", "mÃ¥ settes");
 	}
 
 	if (ValidationUtils.isBlank(orderModel.getPostalCode())) {
-	    support.addError("postnummer", "må settes");
+	    support.addError("postnummer", "mÃ¥ settes");
 	} else if (!ValidationUtils.isNumeric(orderModel.getPostalCode())) {
-	    support.addError("postnummer", "må være et tall");
+	    support.addError("postnummer", "mÃ¥ vÃ¦re et tall");
 	} else if (orderModel.getPostalCode().length() > 4) {
-	    support.addError("postnummer", "kan ikke være mer enn 4 tall");
+	    support.addError("postnummer", "kan ikke vÃ¦re mer enn 4 tall");
 	}
 
 	if (ValidationUtils.isBlank(orderModel.getPostOffice())) {
-	    support.addError("poststed", "må settes");
+	    support.addError("poststed", "mÃ¥ settes");
 	}
 	if (orderModel.getCustomer() == null
 		&& (ValidationUtils.isBlank(ModelUtil.nullToString(orderModel.getCustomerNr()))
 			|| ValidationUtils.isBlank(ModelUtil.nullToString(orderModel.getCustomerFirstName())) || ValidationUtils.isBlank(ModelUtil
 			.nullToString(orderModel.getCustomerLastName())))) {
-	    support.addError("kunde", "må settes");
+	    support.addError("kunde", "mÃ¥ settes");
 	}
 	if (orderModel.getConstructionType() == null) {
-	    support.addError("garasjetype", "må settes");
+	    support.addError("garasjetype", "mÃ¥ settes");
 	}
 
 	if (orderModel.getOrderDate() == null) {
-	    support.addError("ordredato", "må settes");
+	    support.addError("ordredato", "mÃ¥ settes");
 	}
 
 	if (ValidationUtils.isBlank(ModelUtil.nullToString(orderModel.getProductArea()))) {
-	    support.addError("produktområde", "må settes");
+	    support.addError("produktomrÃ¥de", "mÃ¥ settes");
 	}
 	return support.getResult();
     }
@@ -113,9 +113,9 @@ public class OrderValidator implements Validator {
 	if (!ValidationUtils.isBlank(orderModel.getPostalCode())) {
 	    criteriaSet = true;
 	    if (!ValidationUtils.isNumeric(orderModel.getPostalCode())) {
-		support.addError("postnummer", "må være et tall");
+		support.addError("postnummer", "mÃ¥ vÃ¦re et tall");
 	    } else if (orderModel.getPostalCode().length() > 4) {
-		support.addError("postnummer", "kan ikke være mer enn 4 tall");
+		support.addError("postnummer", "kan ikke vÃ¦re mer enn 4 tall");
 	    }
 	}
 
@@ -165,7 +165,7 @@ public class OrderValidator implements Validator {
 	}
 
 	if (!criteriaSet) {
-	    support.addError("ordrenummer", "må sette inn søkekriteria i ett av feltene");
+	    support.addError("ordrenummer", "mÃ¥ sette inn sÃ¸kekriteria i ett av feltene");
 	}
 
 	return support.getResult();

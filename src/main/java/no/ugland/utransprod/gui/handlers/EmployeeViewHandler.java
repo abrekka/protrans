@@ -48,7 +48,7 @@ import com.jgoodies.binding.adapter.ComboBoxAdapter;
 import com.jgoodies.binding.list.ArrayListModel;
 
 /**
- * Håndterer ansatte
+ * Hï¿½ndterer ansatte
  * 
  * @author atle.brekka
  * 
@@ -139,7 +139,7 @@ DefaultAbstractViewHandler<Employee, EmployeeModel> {
 	}
 
 	/**
-	 * Lager knapp for å legge til ansattyper
+	 * Lager knapp for ï¿½ legge til ansattyper
 	 * 
 	 * @return knapp
 	 */
@@ -345,7 +345,7 @@ DefaultAbstractViewHandler<Employee, EmployeeModel> {
 	}
 
 	/**
-	 * Åpner dialog for ansattyper
+	 * ï¿½pner dialog for ansattyper
 	 * 
 	 * @author atle.brekka
 	 * 
@@ -413,7 +413,7 @@ DefaultAbstractViewHandler<Employee, EmployeeModel> {
 	 */
 	@Override
 	public Boolean hasWriteAccess() {
-		return UserUtil.hasWriteAccess(userType, "Leverandører");
+		return UserUtil.hasWriteAccess(userType, "LeverandÃ¸rer");
 	}
 
 	/**

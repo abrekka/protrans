@@ -37,17 +37,17 @@ public class OrderCostValidator implements Validator {
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(orderCostModel
                 .getCostType()))) {
-            support.addError("type", "må settes");
+            support.addError("type", "mÃ¥ settes");
         }
         
         if (ValidationUtils.isBlank(ModelUtil.nullToString(orderCostModel
                 .getCostUnit()))) {
-            support.addError("enhet", "må settes");
+            support.addError("enhet", "mÃ¥ settes");
         }
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(orderCostModel
                 .getCostAmount()))) {
-            support.addError("beløp", "må settes");
+            support.addError("belÃ¸p", "mÃ¥ settes");
         }
 
         return support.getResult();

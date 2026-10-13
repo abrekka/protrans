@@ -37,12 +37,12 @@ public class ArticleTypeValidator implements Validator {
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(articleTypeModel
                 .getArticleTypeName()))) {
-            support.addError("navn", "må settes");
+            support.addError("navn", "mÃ¥ settes");
         }
         
         if(!ValidationUtils.isNumeric(ModelUtil.nullToString(articleTypeModel
                 .getProdCatNo()))){
-            support.addError("produktkategori", "må være tall");
+            support.addError("produktkategori", "mÃ¥ vÃ¦re tall");
         }
 
         return support.getResult();

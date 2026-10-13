@@ -38,12 +38,12 @@ public class UserTypeValidator implements Validator {
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(userTypeModel
                 .getDescription()))) {
-            support.addError("beskrivelse", "må settes");
+            support.addError("beskrivelse", "mÃ¥ settes");
         }
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(userTypeModel
                 .getStartupWindowEnum()))) {
-            support.addError("oppstartsvindu", "må settes");
+            support.addError("oppstartsvindu", "mÃ¥ settes");
         }
 
         return support.getResult();

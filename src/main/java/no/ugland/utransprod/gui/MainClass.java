@@ -87,13 +87,13 @@ public final class MainClass {
 
 	private static void initDesktopDll() {
 		MainClass.class.getClassLoader();
-		URL dllUrl = ClassLoader.getSystemResource("jdic.dll");
-		if (dllUrl == null) {
-			Util.showErrorDialog((Component) null, "Feil", "Finner ikke jdic.dll");
-		} else {
-			System.loadLibrary("jdic");
-			// System.load(dllUrl.getPath());
-		}
+//		URL dllUrl = ClassLoader.getSystemResource("jdic.dll");
+//		if (dllUrl == null) {
+//			Util.showErrorDialog((Component) null, "Feil", "Finner ikke jdic.dll");
+//		} else {
+//			System.loadLibrary("jdic");
+//			// System.load(dllUrl.getPath());
+//		}
 		// if (dllUrl != null) {
 		// System.load(dllUrl.getPath());
 		// }

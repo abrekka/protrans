@@ -176,7 +176,7 @@ public class TransportCostViewHandler extends
 		tableTransportCostOrder.getColumnExt(6).setPreferredWidth(150);
 		// transport
 		tableTransportCostOrder.getColumnExt(7).setPreferredWidth(100);
-		// sjåfør
+		// sjï¿½fï¿½r
 		tableTransportCostOrder.getColumnExt(8).setPreferredWidth(100);
 
 		return tableTransportCostOrder;
@@ -392,7 +392,7 @@ public class TransportCostViewHandler extends
 
 		private static final String[] COLUMNS = { "Ordrenr", "Kunde", "Postnr",
 				"Poststed", "Type", "Kostnad", "Kostdetaljer", "Transport",
-				"Sjåfør" };
+				"SjÃ¥fÃ¸r" };
 
 		TransportCostOrderTableModel(ListModel listModel) {
 			super(listModel, COLUMNS);
@@ -623,7 +623,7 @@ public class TransportCostViewHandler extends
 						transportCostBasisList, "Transportkostnad",
 						ReportEnum.TRANSPORT_COST, null, "transportkostnad"
 								+ transportCostBasis.getTransportCostBasisId()
-								+ ".pdf", owner, true);
+								+ ".pdf", owner, true, null);
 
 			} catch (ProTransException e) {
 				e.printStackTrace();

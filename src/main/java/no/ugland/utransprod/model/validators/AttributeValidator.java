@@ -38,7 +38,7 @@ public class AttributeValidator implements Validator {
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(attributeModel
                 .getName()))) {
-            support.addError("navn", "må settes");
+            support.addError("navn", "mÃ¥ settes");
         }
         
         if (!attributeModel.getYesNo()&&(!ValidationUtils.isBlank(attributeModel.getProdCatNo())||!ValidationUtils.isBlank(attributeModel.getProdCatNo2()))) {

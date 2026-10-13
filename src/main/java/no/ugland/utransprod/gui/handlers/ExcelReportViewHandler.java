@@ -72,9 +72,9 @@ public class ExcelReportViewHandler implements Closeable {
 	}
 
 	/**
-	 * Lager årsvelger
+	 * Lager ï¿½rsvelger
 	 * 
-	 * @return årsvelger
+	 * @return ï¿½rsvelger
 	 */
 	public JYearChooser getYearChooser() {
 		JYearChooser yearChooser1 = new JYearChooser();
@@ -138,7 +138,7 @@ public class ExcelReportViewHandler implements Closeable {
 	}
 
 	/**
-	 * Lager knapp for å vise excelrapport
+	 * Lager knapp for ï¿½ vise excelrapport
 	 * 
 	 * @param window
 	 * @return knapp
@@ -169,9 +169,9 @@ public class ExcelReportViewHandler implements Closeable {
 	}
 
 	/**
-	 * Henter vindusstørrels
+	 * Henter vindusstï¿½rrels
 	 * 
-	 * @return vindusstørrelse
+	 * @return vindusstï¿½rrelse
 	 */
 	public Dimension getWindowSize() {
 		if (windowSize != null) {
@@ -288,15 +288,15 @@ public class ExcelReportViewHandler implements Closeable {
 	protected boolean checkParameters(ExcelReportSetting setting, WindowInterface window) {
 		String errorString = null;
 		if (excelReportEnum.useFrom() && setting.getWeekFrom() == null) {
-			errorString = "Det må velges fra uke";
+			errorString = "Det mÃ¥ velges fra uke";
 		} else if (excelReportEnum.useTo() && setting.getWeekTo() == null) {
-			errorString = "Det må velges til uke";
+			errorString = "Det mÃ¥ velges til uke";
 		} else if (setting.getExcelReportType() == null) {
-			errorString = "Det må velges rapport";
+			errorString = "Det mÃ¥ velges rapport";
 		}
 		// else if (excelReportEnum.useProductArea() && setting.getProductArea()
 		// == null) {
-		// errorString = "Det må velges produktområde";
+		// errorString = "Det mï¿½ velges produktomrï¿½de";
 		// }
 
 		if (errorString != null) {
@@ -334,7 +334,7 @@ public class ExcelReportViewHandler implements Closeable {
 		CellConstraints cc = new CellConstraints();
 
 		if (excelReportEnum.useFrom()) {
-			builder.addLabel("År:", cc.xy(1, 1));
+			builder.addLabel("Ã…r:", cc.xy(1, 1));
 			builder.add(yearChooser, cc.xy(3, 1));
 			if (excelReportEnum.useTo()) {
 				builder.addLabel("Fra uke:", cc.xy(5, 1));
@@ -351,7 +351,7 @@ public class ExcelReportViewHandler implements Closeable {
 			builder.add(comboBoxReportType, cc.xyw(5, 3, 7));
 		}
 		if (excelReportEnum.useProductArea()) {
-			builder.addLabel("Produktområde:", cc.xyw(1, 5, 5));
+			builder.addLabel("ProduktomrÃ¥de:", cc.xyw(1, 5, 5));
 			builder.add(comboBoxProductArea, cc.xyw(6, 5, 6));
 		}
 

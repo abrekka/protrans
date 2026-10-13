@@ -836,7 +836,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 														.compareTo(productionOverviewV2.getConstructionTypeName());
 			}
 		},
-		STØRRELSE("Størrelse", false, 80, true) {
+		STÃ˜RRELSE("StÃ¸rrelse", false, 80, true) {
 			@Override
 			public Object getValue(ProductionOverviewV productionOverviewV, Map<String, String> statusMap,
 					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
@@ -1033,6 +1033,64 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 					Map<String, String> statusMap1, Map<String, String> statusMap2,
 					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
 				return hentTransport(productionOverviewV1).compareTo(hentTransport(productionOverviewV2));
+			}
+		},
+		MONTERING("Montering", true, 80, true) {
+			@Override
+			public Class<?> getColumnClass() {
+				return String.class;
+			}
+
+			@Override
+			public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				return hentMontering(transportable);
+			}
+
+			private String hentMontering(ProductionOverviewV transportable) {
+				String returnString = "";
+				if (transportable.getDoAssembly() != null && transportable.getDoAssembly() == 1) {
+					returnString = "M"
+							+ (transportable.getAssemblyWeek() == null ? "" : transportable.getAssemblyWeek());
+				}
+				return returnString;
+			}
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap,
+					WindowInterface window, Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers,
+					JPopupMenu popupMenuProduction) {
+				return true;
+			}
+
+			@Override
+			public Component getFilterComponent(PresentationModel presentationModel) {
+				return BasicComponentFactory
+						.createTextField(presentationModel.getModel(ProductionoverviewFilter.MONTERING), false);
+			}
+
+			@Override
+			public boolean filter(ProductionOverviewV productionOverviewV,
+					ProductionoverviewFilter productionoverviewFilter, Map<String, String> statusMap,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				if (StringUtils.isNotBlank(productionoverviewFilter.getMontering())) {
+					return hentMontering(productionOverviewV) != null
+							&& hentMontering(productionOverviewV).toLowerCase().matches(
+									productionoverviewFilter.getMontering().toLowerCase().replaceAll("%", ".*") + ".*");
+				}
+				return true;
+			}
+
+			@Override
+			public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2,
+					Map<String, String> statusMap1, Map<String, String> statusMap2,
+					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+				return hentMontering(productionOverviewV1) == null && hentMontering(productionOverviewV2) == null ? 0
+						: hentMontering(productionOverviewV1) == null ? -1
+								: hentMontering(productionOverviewV2) == null ? 1
+										: hentMontering(productionOverviewV1)
+												.compareTo(hentMontering(productionOverviewV2));
 			}
 		},
 		ESTIMERT_TID_VEGG("Estimert tid vegg", true, 100, true) {
@@ -1350,66 +1408,60 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 			public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2,
 					Map<String, String> statusMap1, Map<String, String> statusMap2,
 					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-				return productionOverviewV1.getA() == null
-						&& productionOverviewV2.getA() == null
-								? 0
-								: productionOverviewV1.getA() == null ? -1
-										: productionOverviewV2.getA() == null ? 1
-												: productionOverviewV1.getA()
-														.compareTo(productionOverviewV2.getA());
+				return productionOverviewV1.getA() == null && productionOverviewV2.getA() == null ? 0
+						: productionOverviewV1.getA() == null ? -1
+								: productionOverviewV2.getA() == null ? 1
+										: productionOverviewV1.getA().compareTo(productionOverviewV2.getA());
 			}
 		},
-		APLUSS("APluss", true, 90, true) {
-			@Override
-			public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
-					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-				return transportable.getaPluss();
-			}
-
-			@Override
-			public Class<?> getColumnClass() {
-				return BigDecimal.class;
-			}
-
-			@Override
-			public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap,
-					WindowInterface window, Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers,
-					JPopupMenu popupMenuProduction) {
-				return true;
-			}
-
-			@Override
-			public Component getFilterComponent(PresentationModel presentationModel) {
-				return BasicComponentFactory.createTextField(
-						presentationModel.getModel(ProductionoverviewFilter.ESTIMATED_TIME_PACK), false);
-			}
-
-			@Override
-			public boolean filter(ProductionOverviewV productionOverviewV,
-					ProductionoverviewFilter productionoverviewFilter, Map<String, String> statusMap,
-					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-				if (StringUtils.isNotBlank(productionoverviewFilter.getEstimatedTimePack())) {
-					return productionOverviewV.getEstimatedTimePack() != null
-							&& String.valueOf(productionOverviewV.getEstimatedTimePack()).toLowerCase()
-									.matches(productionoverviewFilter.getEstimatedTimePack().toLowerCase()
-											.replaceAll("%", ".*"));
-				}
-				return true;
-			}
-
-			@Override
-			public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2,
-					Map<String, String> statusMap1, Map<String, String> statusMap2,
-					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-				return productionOverviewV1.getaPluss() == null
-						&& productionOverviewV2.getaPluss() == null
-								? 0
-								: productionOverviewV1.getaPluss() == null ? -1
-										: productionOverviewV2.getaPluss() == null ? 1
-												: productionOverviewV1.getaPluss()
-														.compareTo(productionOverviewV2.getaPluss());
-			}
-		},
+//		APLUSS("APluss", true, 90, true) {
+//			@Override
+//			public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
+//					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+//				return transportable.getaPluss();
+//			}
+//
+//			@Override
+//			public Class<?> getColumnClass() {
+//				return BigDecimal.class;
+//			}
+//
+//			@Override
+//			public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap,
+//					WindowInterface window, Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers,
+//					JPopupMenu popupMenuProduction) {
+//				return true;
+//			}
+//
+//			@Override
+//			public Component getFilterComponent(PresentationModel presentationModel) {
+//				return BasicComponentFactory.createTextField(
+//						presentationModel.getModel(ProductionoverviewFilter.ESTIMATED_TIME_PACK), false);
+//			}
+//
+//			@Override
+//			public boolean filter(ProductionOverviewV productionOverviewV,
+//					ProductionoverviewFilter productionoverviewFilter, Map<String, String> statusMap,
+//					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+//				if (StringUtils.isNotBlank(productionoverviewFilter.getEstimatedTimePack())) {
+//					return productionOverviewV.getEstimatedTimePack() != null
+//							&& String.valueOf(productionOverviewV.getEstimatedTimePack()).toLowerCase()
+//									.matches(productionoverviewFilter.getEstimatedTimePack().toLowerCase()
+//											.replaceAll("%", ".*"));
+//				}
+//				return true;
+//			}
+//
+//			@Override
+//			public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2,
+//					Map<String, String> statusMap1, Map<String, String> statusMap2,
+//					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
+//				return productionOverviewV1.getaPluss() == null && productionOverviewV2.getaPluss() == null ? 0
+//						: productionOverviewV1.getaPluss() == null ? -1
+//								: productionOverviewV2.getaPluss() == null ? 1
+//										: productionOverviewV1.getaPluss().compareTo(productionOverviewV2.getaPluss());
+//			}
+//		},
 		B("B", true, 90, true) {
 			@Override
 			public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
@@ -1452,13 +1504,10 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 			public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2,
 					Map<String, String> statusMap1, Map<String, String> statusMap2,
 					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-				return productionOverviewV1.getB() == null
-						&& productionOverviewV2.getB() == null
-								? 0
-								: productionOverviewV1.getB() == null ? -1
-										: productionOverviewV2.getB() == null ? 1
-												: productionOverviewV1.getB()
-														.compareTo(productionOverviewV2.getB());
+				return productionOverviewV1.getB() == null && productionOverviewV2.getB() == null ? 0
+						: productionOverviewV1.getB() == null ? -1
+								: productionOverviewV2.getB() == null ? 1
+										: productionOverviewV1.getB().compareTo(productionOverviewV2.getB());
 			}
 		},
 		BF("BF", true, 90, true) {
@@ -1503,13 +1552,10 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 			public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2,
 					Map<String, String> statusMap1, Map<String, String> statusMap2,
 					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-				return productionOverviewV1.getBf() == null
-						&& productionOverviewV2.getBf() == null
-								? 0
-								: productionOverviewV1.getBf() == null ? -1
-										: productionOverviewV2.getBf() == null ? 1
-												: productionOverviewV1.getBf()
-														.compareTo(productionOverviewV2.getBf());
+				return productionOverviewV1.getBf() == null && productionOverviewV2.getBf() == null ? 0
+						: productionOverviewV1.getBf() == null ? -1
+								: productionOverviewV2.getBf() == null ? 1
+										: productionOverviewV1.getBf().compareTo(productionOverviewV2.getBf());
 			}
 		},
 		C("C", true, 90, true) {
@@ -1554,13 +1600,10 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 			public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2,
 					Map<String, String> statusMap1, Map<String, String> statusMap2,
 					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-				return productionOverviewV1.getC() == null
-						&& productionOverviewV2.getC() == null
-								? 0
-								: productionOverviewV1.getC() == null ? -1
-										: productionOverviewV2.getC() == null ? 1
-												: productionOverviewV1.getC()
-														.compareTo(productionOverviewV2.getC());
+				return productionOverviewV1.getC() == null && productionOverviewV2.getC() == null ? 0
+						: productionOverviewV1.getC() == null ? -1
+								: productionOverviewV2.getC() == null ? 1
+										: productionOverviewV1.getC().compareTo(productionOverviewV2.getC());
 			}
 		},
 		L("L", true, 90, true) {
@@ -1605,13 +1648,10 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 			public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2,
 					Map<String, String> statusMap1, Map<String, String> statusMap2,
 					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-				return productionOverviewV1.getL() == null
-						&& productionOverviewV2.getL() == null
-								? 0
-								: productionOverviewV1.getL() == null ? -1
-										: productionOverviewV2.getL() == null ? 1
-												: productionOverviewV1.getL()
-														.compareTo(productionOverviewV2.getL());
+				return productionOverviewV1.getL() == null && productionOverviewV2.getL() == null ? 0
+						: productionOverviewV1.getL() == null ? -1
+								: productionOverviewV2.getL() == null ? 1
+										: productionOverviewV1.getL().compareTo(productionOverviewV2.getL());
 			}
 		},
 		TEGNINGER_JATAK("Tegninger Jatak", true, 90, true) {
@@ -1666,7 +1706,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 														.compareTo(productionOverviewV2.getReceivedTrossDrawing());
 			}
 		},
-		ØNSKET_LEVERING("Ønsket levering", true, 90, true) {
+		Ã˜NSKET_LEVERING("Ã˜nsket levering", true, 90, true) {
 			@Override
 			public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
 					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
@@ -2140,64 +2180,6 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 														.compareTo(hentTaksteinstatus(statusMap2, statusCheckers));
 			}
 		},
-		MONTERING("Montering", true, 80, true) {
-			@Override
-			public Class<?> getColumnClass() {
-				return String.class;
-			}
-
-			@Override
-			public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
-					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-				return hentMontering(transportable);
-			}
-
-			private String hentMontering(ProductionOverviewV transportable) {
-				String returnString = "";
-				if (transportable.getDoAssembly() != null && transportable.getDoAssembly() == 1) {
-					returnString = "M"
-							+ (transportable.getAssemblyWeek() == null ? "" : transportable.getAssemblyWeek());
-				}
-				return returnString;
-			}
-
-			@SuppressWarnings("unchecked")
-			@Override
-			public boolean setMenus(Transportable transportable, Map<String, JMenuItem> menuItemMap,
-					WindowInterface window, Map<String, AbstractProductionPackageViewHandler> productionPackageHandlers,
-					JPopupMenu popupMenuProduction) {
-				return true;
-			}
-
-			@Override
-			public Component getFilterComponent(PresentationModel presentationModel) {
-				return BasicComponentFactory
-						.createTextField(presentationModel.getModel(ProductionoverviewFilter.MONTERING), false);
-			}
-
-			@Override
-			public boolean filter(ProductionOverviewV productionOverviewV,
-					ProductionoverviewFilter productionoverviewFilter, Map<String, String> statusMap,
-					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-				if (StringUtils.isNotBlank(productionoverviewFilter.getMontering())) {
-					return hentMontering(productionOverviewV) != null
-							&& hentMontering(productionOverviewV).toLowerCase().matches(
-									productionoverviewFilter.getMontering().toLowerCase().replaceAll("%", ".*") + ".*");
-				}
-				return true;
-			}
-
-			@Override
-			public int sort(ProductionOverviewV productionOverviewV1, ProductionOverviewV productionOverviewV2,
-					Map<String, String> statusMap1, Map<String, String> statusMap2,
-					Map<String, StatusCheckerInterface<Transportable>> statusCheckers) {
-				return hentMontering(productionOverviewV1) == null && hentMontering(productionOverviewV2) == null ? 0
-						: hentMontering(productionOverviewV1) == null ? -1
-								: hentMontering(productionOverviewV2) == null ? 1
-										: hentMontering(productionOverviewV1)
-												.compareTo(hentMontering(productionOverviewV2));
-			}
-		},
 		EGENPRODUKSJON("Egenproduksjon", true, 90, true) {
 			@Override
 			public Object getValue(ProductionOverviewV transportable, Map<String, String> statusMap,
@@ -2514,7 +2496,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 			}
 		},
 
-		PRODUKTOMRÅDE("Produktområde", true, 80, false) {
+		PRODUKTOMRÃ…DE("ProduktomrÃ¥de", true, 80, false) {
 			@Override
 			public Class<?> getColumnClass() {
 				return String.class;
@@ -3314,7 +3296,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 			List<DokumentV> dokumenter = dokumentVManager.finnDokumenter(transportable.getOrderNr());
 //			List<DokumentV> dokumenter = Arrays.asList(new DokumentV(1, "123", "123 - Test Tstesen - MODELL",
 //					"BFL - Endelig ordrebekreftelse for produksjon dette fblir en mye lengre teskt", "Ordre: SO-123 (PDF)", new Date()));
-			
+
 			Collection<?> valgteDokumenter = Util.showOptionsDialog(window, dokumenter, "Velg dokument", true, false,
 					true);
 
@@ -3337,7 +3319,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	}
 
 	/**
-	 * Åpner ordrevindu
+	 * ï¿½pner ordrevindu
 	 * 
 	 * @param order
 	 * @param window
@@ -3350,7 +3332,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	}
 
 	/**
-	 * Håndterer klikk i tabell
+	 * Hï¿½ndterer klikk i tabell
 	 * 
 	 * @author atle.brekka
 	 */
@@ -3442,7 +3424,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	}
 
 	/**
-	 * Håndterer menyvalg for pakkliste
+	 * Hï¿½ndterer menyvalg for pakkliste
 	 * 
 	 * @author atle.brekka
 	 */
@@ -3508,6 +3490,13 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 			OrderManager orderManager = (OrderManager) ModelUtil.getBean(OrderManager.MANAGER_NAME);
 			boolean needToSave = false;
 			Order order = null;
+
+			order = orderManager.findByOrderNr(productionOverviewV.getOrderNr());
+			orderManager.lazyLoadOrder(order,
+					new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.ORDER_LINES,
+							LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES, LazyLoadOrderEnum.COMMENTS,
+							LazyLoadOrderEnum.PROCENT_DONE });
+
 			for (String checkerName : checkers) {
 				StatusCheckerInterface<Transportable> checker = statusCheckers.get(checkerName);
 				String status = statusMap.get(checker.getArticleName());
@@ -3515,19 +3504,22 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 				if (status == null) {
 					needToSave = true;
 					if (!productionOverviewV.isPostShipment()) {
-						order = orderManager.findByOrderNr(productionOverviewV.getOrderNr());
-						orderManager.lazyLoadOrder(order,
-								new LazyLoadOrderEnum[] { LazyLoadOrderEnum.COLLIES, LazyLoadOrderEnum.ORDER_LINES,
-										LazyLoadOrderEnum.ORDER_LINE_ORDER_LINES, LazyLoadOrderEnum.COMMENTS,
-										LazyLoadOrderEnum.PROCENT_DONE });
+
 						status = checker.getArticleStatus(order);
 						statusMap.put(checker.getArticleName(), status);
 						order.setStatus(Util.statusMapToString(statusMap));
+
 					}
 
 				}
 
 			}
+
+			if (order.isDonePackage()) {
+				needToSave = true;
+				order.setOrderComplete(Util.getCurrentDate());
+			}
+
 			if (needToSave && order != null) {
 				orderManager.saveObject(order);
 			}
@@ -3538,7 +3530,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	}
 
 	/**
-	 * Håndterer menyvalg for å åpne ordre
+	 * Hï¿½ndterer menyvalg for ï¿½ ï¿½pne ordre
 	 * 
 	 * @author atle.brekka
 	 */
@@ -3605,7 +3597,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	// }
 
 	/**
-	 * Håndterer menyvalg for å visse mangler
+	 * Hï¿½ndterer menyvalg for ï¿½ visse mangler
 	 * 
 	 * @author atle.brekka
 	 */
@@ -3633,7 +3625,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	}
 
 	/**
-	 * Håndterer menyvalg for å vise innhold
+	 * Hï¿½ndterer menyvalg for ï¿½ vise innhold
 	 * 
 	 * @author atle.brekka
 	 */
@@ -3661,7 +3653,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	}
 
 	/**
-	 * Håndterer menyvalg for å registrere avvik
+	 * Hï¿½ndterer menyvalg for ï¿½ registrere avvik
 	 * 
 	 * @author atle.brekka
 	 */
@@ -3964,13 +3956,13 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 		} else if (order.getLastProcentDone() != null
 				&& order.getLastProcentDone().getProcent() > newProcentDone.getProcent()) {
 			checkObject = new CheckObject("Forrige prosent " + order.getLastProcentDone()
-					+ " er høyere enn denne. Vil du likevel lagre denne?", true, null);
+					+ " er hÃ¸yere enn denne. Vil du likevel lagre denne?", true, null);
 		}
 		return checkObject;
 	}
 
 	/**
-	 * Håndterer setting av filter
+	 * Hï¿½ndterer setting av filter
 	 * 
 	 * @author atle.brekka
 	 */
@@ -3994,7 +3986,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	}
 
 	/**
-	 * Søking
+	 * Sï¿½king
 	 * 
 	 * @author atle.brekka
 	 */
@@ -4004,7 +3996,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 		private WindowInterface window;
 
 		public SearchAction(WindowInterface aWindow) {
-			super("Søk ordre...");
+			super("SÃ¸k ordre...");
 			window = aWindow;
 		}
 
@@ -4015,7 +4007,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	}
 
 	/**
-	 * Søker ordre
+	 * Sï¿½ker ordre
 	 * 
 	 * @param window
 	 */
@@ -4036,7 +4028,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	}
 
 	/**
-	 * Håndterer endring av filter
+	 * Hï¿½ndterer endring av filter
 	 * 
 	 * @author atle.brekka
 	 */
@@ -4049,7 +4041,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 	}
 
 	/**
-	 * Håndterer filtrering
+	 * Hï¿½ndterer filtrering
 	 */
 	protected void handleFilter() {
 		table.clearSelection();
@@ -4072,7 +4064,7 @@ public class ProductionOverviewViewHandler2 implements ProductAreaGroupProvider,
 		// if (!group.getProductAreaGroupName().equalsIgnoreCase("Takstol")) {
 		// filterList
 		// .add(new PatternFilter(group.getProductAreaGroupName(),
-		// Pattern.CASE_INSENSITIVE, ProductionColumn.PRODUKTOMRÅDE.ordinal()));
+		// Pattern.CASE_INSENSITIVE, ProductionColumn.PRODUKTOMRï¿½DE.ordinal()));
 		// } else {
 		// filterList.add(new PatternFilter(".*e.*", Pattern.CASE_INSENSITIVE,
 		// ProductionColumn.TAKSTOL.ordinal()));

@@ -9,7 +9,7 @@ import com.jgoodies.validation.util.PropertyValidationSupport;
 import com.jgoodies.validation.util.ValidationUtils;
 
 /**
- * Validator for leverandørtype
+ * Validator for leverandï¿½rtype
  * @author atle.brekka
  */
 public class SupplierTypeValidator implements Validator {
@@ -38,7 +38,7 @@ public class SupplierTypeValidator implements Validator {
 
         if (ValidationUtils.isBlank(ModelUtil.nullToString(supplierTypeModel
                 .getSupplierTypeName()))) {
-            support.addError("navn", "må settes");
+            support.addError("navn", "mÃ¥ settes");
         }
 
         return support.getResult();

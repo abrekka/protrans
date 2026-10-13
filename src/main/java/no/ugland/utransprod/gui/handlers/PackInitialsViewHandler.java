@@ -21,7 +21,7 @@ import com.jgoodies.binding.beans.Model;
 import com.toedter.calendar.JDateChooser;
 
 /**
- * Håndterer setting av initialer for pakkere
+ * Hï¿½ndterer setting av initialer for pakkere
  * 
  * @author atle.brekka
  */
@@ -77,7 +77,7 @@ public class PackInitialsViewHandler implements Closeable {
     }
 
     /**
-     * Lager tekstfelt for kollihøyde
+     * Lager tekstfelt for kollihï¿½yde
      * 
      * @return tekstfelt
      */
@@ -135,9 +135,9 @@ public class PackInitialsViewHandler implements Closeable {
     }
 
     /**
-     * Henter kollihøyde
+     * Henter kollihï¿½yde
      * 
-     * @return kollihøyde
+     * @return kollihï¿½yde
      */
     // public Integer getColliHeight() {
     // return (Integer)
@@ -145,7 +145,7 @@ public class PackInitialsViewHandler implements Closeable {
     // }
 
     /**
-     * Intern klasse som holder på alle initialer.
+     * Intern klasse som holder pï¿½ alle initialer.
      * 
      * @author atle.brekka
      */
@@ -251,7 +251,7 @@ public class PackInitialsViewHandler implements Closeable {
 	}
 
 	/**
-	 * @return kollihøyde som streng
+	 * @return kollihï¿½yde som streng
 	 */
 	// public String getColliHeightString() {
 	// if (colliHeight != null) {
@@ -295,7 +295,7 @@ public class PackInitialsViewHandler implements Closeable {
      */
     public boolean canClose(String actionString, WindowInterface window) {
 	if (presentationModel.getValue(Initials.PROPERTY_INITIALS_1) == null) {
-	    Util.showErrorDialog(window, "Må sette pakker", "Må sette mins en pakker!");
+	    Util.showErrorDialog(window, "MÃ¥ sette pakker", "MÃ¥ sette mins en pakker!");
 	    return false;
 	}
 	return true;

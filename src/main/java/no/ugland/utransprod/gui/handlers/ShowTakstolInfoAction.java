@@ -34,8 +34,7 @@ public class ShowTakstolInfoAction extends AbstractAction {
 
 	// private InputStream iconStream;
 	@Inject
-	public ShowTakstolInfoAction(final ManagerRepository aManagerRepository,
-			@Assisted WindowInterface aWindow,
+	public ShowTakstolInfoAction(final ManagerRepository aManagerRepository, @Assisted WindowInterface aWindow,
 			@Assisted OrderNrProvider aProduceableProvider) {
 		super("Takstolinfo...");
 		managerRepository = aManagerRepository;
@@ -44,50 +43,46 @@ public class ShowTakstolInfoAction extends AbstractAction {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		Util.runInThreadWheel(window != null ? window.getRootPane() : null,
-				new Threadable() {
+		Util.runInThreadWheel(window != null ? window.getRootPane() : null, new Threadable() {
 
-					public void enableComponents(boolean enable) {
-						// TODO Auto-generated method stub
+			public void enableComponents(boolean enable) {
+				// TODO Auto-generated method stub
 
-					}
+			}
 
-					public Object doWork(Object[] params, JLabel labelInfo) {
-						labelInfo.setText("Genererer takstolinfo...");
-						String errorString = null;
-						try {
-							showTakstolInfo();
-						} catch (ProTransException e1) {
-							errorString = e1.getMessage();
+			public Object doWork(Object[] params, JLabel labelInfo) {
+				labelInfo.setText("Genererer takstolinfo...");
+				String errorString = null;
+				try {
+					showTakstolInfo();
+				} catch (ProTransException e1) {
+					errorString = e1.getMessage();
 
-						}
-						return errorString;
-					}
+				}
+				return errorString;
+			}
 
-					public void doWhenFinished(Object object) {
-						if (object != null) {
-							Util.showErrorDialog(window, "Feil", object
-									.toString());
-						}
+			public void doWhenFinished(Object object) {
+				if (object != null) {
+					Util.showErrorDialog(window, "Feil", object.toString());
+				}
 
-					}
-				}, null);
+			}
+		}, null);
 
 	}
 
 	void showTakstolInfo() throws ProTransException {
 		String orderNr = orderNrProvider.getSelectedOrderNr();
-		List<TakstolInfoV> list = managerRepository.getTakstolInfoVManager()
-				.findByOrderNr(orderNr);
+		List<TakstolInfoV> list = managerRepository.getTakstolInfoVManager().findByOrderNr(orderNr);
 		if (list.size() != 0) {
 			TakstolInfoV takstolInfoV = getTakstolInfoV(list);
-			if(takstolInfoV!=null){
-			String reportFileName = getReportfileName(takstolInfoV);
-			Map<String, Object> params = getParams(takstolInfoV);
-			ReportViewer reportViewer = new ReportViewer("Takstolinfo");
-			reportViewer.generateProtransReportFromBeanAndShow(list,
-					"Takstolinfo", ReportEnum.TAKSTOL_INFO, params,
-					reportFileName, null, false);
+			if (takstolInfoV != null) {
+				String reportFileName = getReportfileName(takstolInfoV);
+				Map<String, Object> params = getParams(takstolInfoV);
+				ReportViewer reportViewer = new ReportViewer("Takstolinfo");
+				reportViewer.generateProtransReportFromBeanAndShow(list, "Takstolinfo", ReportEnum.TAKSTOL_INFO, params,
+						reportFileName, null, false, orderNr);
 			}
 		}
 	}
@@ -96,12 +91,9 @@ public class ShowTakstolInfoAction extends AbstractAction {
 		Map<String, Object> params = new Hashtable<String, Object>();
 
 		if (takstolInfoV.getUtstikkType() != null) {
-			String imagePath = ImageSelector.valueOf(
-					"UTSTIKKTYPE_" + takstolInfoV.getUtstikkType())
-					.getImagePath();
+			String imagePath = ImageSelector.valueOf("UTSTIKKTYPE_" + takstolInfoV.getUtstikkType()).getImagePath();
 			if (imagePath != null) {
-				InputStream iconStream = this.getClass().getClassLoader()
-						.getResourceAsStream(imagePath);
+				InputStream iconStream = this.getClass().getClassLoader().getResourceAsStream(imagePath);
 
 				params.put(UTSTIKK_BILDE, iconStream);
 			}
@@ -110,8 +102,7 @@ public class ShowTakstolInfoAction extends AbstractAction {
 	}
 
 	private String getReportfileName(TakstolInfoV takstolInfoV) {
-		String reportFileName = "Takstolinfo - " + takstolInfoV.getOrdernr()
-				+ ".pdf";
+		String reportFileName = "Takstolinfo - " + takstolInfoV.getOrdernr() + ".pdf";
 		return reportFileName;
 	}
 
@@ -121,10 +112,8 @@ public class ShowTakstolInfoAction extends AbstractAction {
 	}
 
 	private enum ImageSelector {
-		UTSTIKKTYPE_0(null), UTSTIKKTYPE_1(IconEnum.ICON_UTSTIKKTYPE_1), UTSTIKKTYPE_2(
-				IconEnum.ICON_UTSTIKKTYPE_2), UTSTIKKTYPE_3(
-				IconEnum.ICON_UTSTIKKTYPE_3), UTSTIKKTYPE_4(
-				IconEnum.ICON_UTSTIKKTYPE_4);
+		UTSTIKKTYPE_0(null), UTSTIKKTYPE_1(IconEnum.ICON_UTSTIKKTYPE_1), UTSTIKKTYPE_2(IconEnum.ICON_UTSTIKKTYPE_2),
+		UTSTIKKTYPE_3(IconEnum.ICON_UTSTIKKTYPE_3), UTSTIKKTYPE_4(IconEnum.ICON_UTSTIKKTYPE_4);
 
 		private IconEnum iconEnum;
 

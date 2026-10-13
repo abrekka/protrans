@@ -24,7 +24,7 @@ import no.ugland.utransprod.ProTransException;
 
 public class PdfUtil {
 
-	public static String slaaSammenFiler(String kundenavn, String ordrenummer, List<String> filer) {
+	public static String slaaSammenFiler(String kundenavn, String ordrenummer, List<String> filer,String path) {
 		try {
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("kundenavn", kundenavn);
@@ -38,27 +38,67 @@ public class PdfUtil {
 				throw new ProTransException("Fant ikke rapport");
 			}
 
-			String excelDirectory = ApplicationParamUtil.findParamByName("excel_path");
+//			String excelDirectory = ApplicationParamUtil.findParamByName("excel_path");
 			JasperPrint jasperPrintReport;
 
 			jasperPrintReport = JasperFillManager.fillReport(stream, parameters);
 
 			JRPdfSaveContributor pdfSaveContrib = new JRPdfSaveContributor(null, null);
-			pdfSaveContrib.save(jasperPrintReport, new File(excelDirectory + "/forside_" + ordrenummer + ".pdf"));
+			pdfSaveContrib.save(jasperPrintReport, new File(path + "/forside_" + ordrenummer + ".pdf"));
 
 			PDFMergerUtility merger = new PDFMergerUtility();
-			merger.addSource(new File(excelDirectory + "/forside_" + ordrenummer + ".pdf"));
+			merger.addSource(new File(path + "/forside_" + ordrenummer + ".pdf"));
 
 			for (String fil : filer) {
 				merger.addSource(fil);
 			}
 
-			String filnavn = excelDirectory + "/monteringsanvisning_" + ordrenummer + ".pdf";
+			String filnavn = path + "/"+ordrenummer+"-538-monteringsanvisning.pdf";
 			merger.setDestinationFileName(filnavn);
 			merger.mergeDocuments();
 			return filnavn;
 		} catch (JRException e) {
 			throw new ProTransException(e);
+		} catch (FileNotFoundException e) {
+			throw new ProTransException(e);
+		} catch (IOException e) {
+			throw new ProTransException(e);
+		}
+	}
+	
+	public static String slaaSammenFilerUtenForside(String kundenavn, String ordrenummer, List<String> filer,String path) {
+		try {
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put("kundenavn", kundenavn);
+			parameters.put("ordrenummer", ordrenummer);
+//			InputStream iconStream = PdfUtil.class.getClassLoader().getResourceAsStream("images/montering_forside.jpg");
+//			parameters.put("bakgrunn", iconStream);
+
+//			InputStream stream = PdfUtil.class.getClassLoader().getResourceAsStream("reports/montering_forside.jasper");
+//
+//			if (stream == null) {
+//				throw new ProTransException("Fant ikke rapport");
+//			}
+
+//			String excelDirectory = ApplicationParamUtil.findParamByName("excel_path");
+//			JasperPrint jasperPrintReport;
+//
+//			jasperPrintReport = JasperFillManager.fillReport(stream, parameters);
+//
+//			JRPdfSaveContributor pdfSaveContrib = new JRPdfSaveContributor(null, null);
+//			pdfSaveContrib.save(jasperPrintReport, new File(path + "/forside_" + ordrenummer + ".pdf"));
+//
+			PDFMergerUtility merger = new PDFMergerUtility();
+//			merger.addSource(new File(path + "/forside_" + ordrenummer + ".pdf"));
+
+			for (String fil : filer) {
+				merger.addSource(fil);
+			}
+
+			String filnavn = path + "/"+ordrenummer+"-538-monteringsanvisning.pdf";
+			merger.setDestinationFileName(filnavn);
+			merger.mergeDocuments();
+			return filnavn;
 		} catch (FileNotFoundException e) {
 			throw new ProTransException(e);
 		} catch (IOException e) {

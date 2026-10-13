@@ -594,7 +594,7 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 		//
 		// }
 		// },
-		// GHØYDE("GHøyde", ForExcel.TABLE) {
+		// GHï¿½YDE("GHï¿½yde", ForExcel.TABLE) {
 		// @Override
 		// public Object getValue(Transportable transportable, Map<String,
 		// String> statusMap, StatusCheckerInterface<Transportable> gavlChecker,
@@ -619,7 +619,7 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 		//
 		// }
 		// },
-		PRODUKTOMRÅDE("Produktområde", ForExcel.TABLE) {
+		PRODUKTOMRÃ…DE("ProduktomrÃ¥de", ForExcel.TABLE) {
 			@Override
 			public Object getValue(Transportable transportable, Map<String, String> statusMap,
 					StatusCheckerInterface<Transportable> gavlChecker,
@@ -645,7 +645,7 @@ public final class TransportOrderTableModel extends AbstractTableAdapter {
 
 			}
 		},
-		// THØYDE("THøyde", ForExcel.TABLE) {
+		// THï¿½YDE("THï¿½yde", ForExcel.TABLE) {
 		// @Override
 		// public Class<?> getColumnClass() {
 		// return Integer.class;

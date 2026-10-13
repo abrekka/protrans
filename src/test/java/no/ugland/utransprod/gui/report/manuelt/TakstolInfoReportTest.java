@@ -100,7 +100,7 @@ public class TakstolInfoReportTest  {
 				+ ".pdf";
 		reportViewer.generateProtransReportFromBeanAndShow(heads,
 				"Takstolinfo", ReportEnum.TAKSTOL_INFO, null, reportFileName,
-				null, false);
+				null, false, null);
 
 		DialogFixture dialog = WindowFinder.findDialog(
 				ReportEnum.TAKSTOL_INFO.getReportName()).using(

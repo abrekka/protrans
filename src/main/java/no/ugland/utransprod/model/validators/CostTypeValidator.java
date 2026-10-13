@@ -35,7 +35,7 @@ public class CostTypeValidator implements Validator {
                 costTypeModel, "Kostnadstype");
 
         if (ValidationUtils.isBlank(costTypeModel.getCostTypeName())) {
-            support.addError("navn", "må settes");
+            support.addError("navn", "mÃ¥ settes");
         }
 
         return support.getResult();

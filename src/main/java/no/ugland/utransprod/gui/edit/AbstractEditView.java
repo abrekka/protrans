@@ -61,27 +61,27 @@ public abstract class AbstractEditView<E, T> implements Closeable, Updateable, C
 	PresentationModel presentationModel;
 
 	/**
-	 * Trigger som brukes til å trigge commit eller flush av objekter
+	 * Trigger som brukes til ï¿½ trigge commit eller flush av objekter
 	 */
 	Trigger trigger;
 
 	/**
-	 * Validerinsresultat for objekt det editeres på
+	 * Validerinsresultat for objekt det editeres pï¿½
 	 */
 	final ValidationResultModel validationResultModel = new DefaultValidationResultModel();
 
 	/**
-	 * Klasse som håndterer vindusvariable
+	 * Klasse som hï¿½ndterer vindusvariable
 	 */
 	AbstractViewHandler<T, E> viewHandler;
 
 	/**
-	 * True dersom det skal søkes
+	 * True dersom det skal sï¿½kes
 	 */
 	boolean search = false;
 
 	/**
-	 * True dersom søkeknappen er trykket, for å skille på Avbrytknapp
+	 * True dersom sï¿½keknappen er trykket, for ï¿½ skille pï¿½ Avbrytknapp
 	 */
 	boolean searchPressed = false;
 
@@ -96,12 +96,12 @@ public abstract class AbstractEditView<E, T> implements Closeable, Updateable, C
 	private boolean canceled = false;
 
 	/**
-	 * Konstruktør
+	 * Konstruktï¿½r
 	 * 
 	 * @param searchDialog
-	 *            true dersom det er en søkedialog
+	 *            true dersom det er en sï¿½kedialog
 	 * @param object
-	 *            objektet som det skal editeres på
+	 *            objektet som det skal editeres pï¿½
 	 * @param aViewHandler
 	 */
 	public AbstractEditView(final boolean searchDialog, final AbstractModel<T, E> object,
@@ -203,7 +203,7 @@ public abstract class AbstractEditView<E, T> implements Closeable, Updateable, C
 	}
 
 	/**
-	 * Initierer hendelsehåndtering
+	 * Initierer hendelsehï¿½ndtering
 	 */
 	private void initEventHandling() {
 		// if (!search) {
@@ -265,7 +265,7 @@ public abstract class AbstractEditView<E, T> implements Closeable, Updateable, C
 	@SuppressWarnings("unchecked")
 	public final void doSave(final WindowInterface window1) {
 		if (validationResultModel.hasErrors()) {
-			Util.showErrorDialog((Component) null, "Rett feil", "Rett alle feil før lagring!");
+			Util.showErrorDialog((Component) null, "Rett feil", "Rett alle feil fÃ¸r lagring!");
 		} else {
 			E object = currentObject.getBufferedObjectModel(presentationModel);
 			CheckObject checkObject = viewHandler.checkSaveObject(object, presentationModel, window1);
@@ -321,7 +321,7 @@ public abstract class AbstractEditView<E, T> implements Closeable, Updateable, C
 	}
 
 	/**
-	 * Klasse som håndterer oppdatering av validering når kunde endrer seg
+	 * Klasse som hï¿½ndterer oppdatering av validering nï¿½r kunde endrer seg
 	 * 
 	 * @author atle.brekka
 	 */
@@ -350,7 +350,7 @@ public abstract class AbstractEditView<E, T> implements Closeable, Updateable, C
 	}
 
 	/**
-	 * Klasse som håndterer søking
+	 * Klasse som hï¿½ndterer sï¿½king
 	 * 
 	 * @author atle.brekka
 	 */
@@ -360,12 +360,12 @@ public abstract class AbstractEditView<E, T> implements Closeable, Updateable, C
 		private static final long serialVersionUID = 1L;
 
 		/**
-		 * Konstruktør
+		 * Konstruktï¿½r
 		 * 
 		 * @param aWindow
 		 */
 		public SearchAction(final WindowInterface aWindow) {
-			super("Søk");
+			super("SÃ¸k");
 			window = aWindow;
 		}
 
@@ -374,7 +374,7 @@ public abstract class AbstractEditView<E, T> implements Closeable, Updateable, C
 		 */
 		public void actionPerformed(final ActionEvent arg0) {
 			if (validationResultModel.hasErrors()) {
-				Util.showErrorDialog((Component) null, "Mangler søkekriteria", "Legg inn søkekriteria for å søke");
+				Util.showErrorDialog((Component) null, "Mangler sÃ¸kekriteria", "Legg inn sÃ¸kekriteria for Ã¥ sÃ¸ke");
 			} else {
 				trigger.triggerCommit();
 				searchPressed = true;
@@ -385,9 +385,9 @@ public abstract class AbstractEditView<E, T> implements Closeable, Updateable, C
 	}
 
 	/**
-	 * Sjekker om søkeknappen er trykket
+	 * Sjekker om sï¿½keknappen er trykket
 	 * 
-	 * @return true dersom søkeknapp er trykket
+	 * @return true dersom sï¿½keknapp er trykket
 	 */
 	public final boolean isSearch() {
 		return searchPressed;
@@ -423,7 +423,7 @@ public abstract class AbstractEditView<E, T> implements Closeable, Updateable, C
 
 		public boolean canClose(final String actionString, final WindowInterface window) {
 			if (validationResultModel.hasErrors()) {
-				Util.showErrorDialog(window.getComponent(), "Rett feil", "Rett alle feil før lagring!");
+				Util.showErrorDialog(window.getComponent(), "Rett feil", "Rett alle feil fÃ¸r lagring!");
 				return false;
 			}
 			trigger.triggerCommit();

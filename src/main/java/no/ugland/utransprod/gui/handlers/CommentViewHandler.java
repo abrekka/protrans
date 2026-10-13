@@ -100,9 +100,9 @@ public class CommentViewHandler extends
         return textField;
     }
     /**
-     * Lager tekstområde for kommentar
+     * Lager tekstomrï¿½de for kommentar
      * @param presentationModel
-     * @return tekstområde
+     * @return tekstomrï¿½de
      */
     public JTextArea getTextAreaComment(PresentationModel presentationModel) {
         JTextArea textArea = BasicComponentFactory
@@ -220,7 +220,7 @@ public class CommentViewHandler extends
     }
 
     /**
-     * Håndterer ok-knapp
+     * Hï¿½ndterer ok-knapp
      * @author atle.brekka
      */
     class OkAction implements Closeable {
@@ -232,7 +232,7 @@ public class CommentViewHandler extends
         public boolean canClose(String actionString, WindowInterface window) {
             if (validationResultModel.hasErrors()) {
                 Util.showErrorDialog((Component) null, "Rett feil",
-                        "Rett alle feil før lagring!");
+                        "Rett alle feil fÃ¸r lagring!");
                 return false;
             }
             ok = true;

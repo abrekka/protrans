@@ -106,7 +106,7 @@ public class FrontProductionViewHandler extends ProductionViewHandler {
 
 		public FrontProductionTableModel(ListModel listModel, WindowInterface aWindow) {
 			super(listModel, new String[] { "Transport", "Ordre", "Prod. uke", "Antall", "Vegg", "Opplasting",
-					"Produsert", "Produktområde", "Prod.enhet", "Startet", "Reell tidsforbruk", "Gjort av" });
+					"Produsert", "ProduktomrÃ¥de", "Prod.enhet", "Startet", "Reell tidsforbruk", "Gjort av" });
 			window = aWindow;
 			veggChecker = Util.getVeggChecker();
 			// initStatus(listModel);

@@ -34,7 +34,7 @@ import com.jgoodies.binding.beans.PropertyConnector;
 import com.toedter.calendar.JYearChooser;
 
 /**
- * Håndterer nøkkelrapporter
+ * Hï¿½ndterer nï¿½kkelrapporter
  * 
  * @author atle.brekka
  */
@@ -59,7 +59,7 @@ public class KeyReportViewHandler implements Closeable {
 	}
 
 	/**
-	 * Initierer liste med produktområder
+	 * Initierer liste med produktomrï¿½der
 	 */
 	private void initProductAreaList() {
 		if (productAreaList.size() == 0) {
@@ -76,9 +76,9 @@ public class KeyReportViewHandler implements Closeable {
 	}
 
 	/**
-	 * Lager årvelger
+	 * Lager ï¿½rvelger
 	 * 
-	 * @return årvelger
+	 * @return ï¿½rvelger
 	 */
 	public JYearChooser getYearChooser() {
 		JYearChooser yearChooser = new JYearChooser();
@@ -115,7 +115,7 @@ public class KeyReportViewHandler implements Closeable {
 	}
 
 	/**
-	 * Lager komboboks for produktområde
+	 * Lager komboboks for produktomrï¿½de
 	 * 
 	 * @return komboboks
 	 */
@@ -128,7 +128,7 @@ public class KeyReportViewHandler implements Closeable {
 	}
 
 	/**
-	 * Lager knapp for å vise rapport
+	 * Lager knapp for ï¿½ vise rapport
 	 * 
 	 * @param window
 	 * @return knapp
@@ -151,7 +151,7 @@ public class KeyReportViewHandler implements Closeable {
 	}
 
 	/**
-	 * Holder på rapportsettinger
+	 * Holder pï¿½ rapportsettinger
 	 * 
 	 * @author atle.brekka
 	 */
@@ -195,7 +195,7 @@ public class KeyReportViewHandler implements Closeable {
 		}
 
 		/**
-		 * @return produktområde
+		 * @return produktomrï¿½de
 		 */
 		public String getProductArea() {
 			return productArea;
@@ -231,16 +231,16 @@ public class KeyReportViewHandler implements Closeable {
 		}
 
 		/**
-		 * Henter år
+		 * Henter ï¿½r
 		 * 
-		 * @return år
+		 * @return ï¿½r
 		 */
 		public Integer getYear() {
 			return year;
 		}
 
 		/**
-		 * Setter år
+		 * Setter ï¿½r
 		 * 
 		 * @param year
 		 */
@@ -275,13 +275,13 @@ public class KeyReportViewHandler implements Closeable {
 		public void actionPerformed(ActionEvent arg0) {
 			if (keyReportSetting.getReportType() == null) {
 				Util.showErrorDialog(window, "Ikke valgt rapport",
-						"Det må velges en rapporttype!");
+						"Det mÃ¥ velges en rapporttype!");
 				return;
 			}
 
 			if (keyReportSetting.getProductArea() == null) {
-				Util.showErrorDialog(window, "Ikke valgt produktområde",
-						"Det må velges et produktområde!");
+				Util.showErrorDialog(window, "Ikke valgt produktomrÃ¥de",
+						"Det mÃ¥ velges et produktomrÃ¥de!");
 				return;
 			}
 			window
@@ -299,7 +299,7 @@ public class KeyReportViewHandler implements Closeable {
 	 * @return tittel
 	 */
 	public String getWindowTitle() {
-		return "Nøkkeltallrapport";
+		return "NÃ¸kkeltallrapport";
 	}
 
 	/**
@@ -364,9 +364,9 @@ public class KeyReportViewHandler implements Closeable {
 	}
 
 	/**
-	 * Henter vindusstørrelse
+	 * Henter vindusstï¿½rrelse
 	 * 
-	 * @return vindusstørrelse
+	 * @return vindusstï¿½rrelse
 	 */
 	public Dimension getWindowSize() {
 		return new Dimension(330, 150);
@@ -381,7 +381,7 @@ public class KeyReportViewHandler implements Closeable {
 	}
 
 	/**
-	 * Tabellmodell for nøkkelrapport. Dette er bare en tom modell for å vise
+	 * Tabellmodell for nï¿½kkelrapport. Dette er bare en tom modell for ï¿½ vise
 	 * rapport
 	 * 
 	 * @author atle.brekka
@@ -406,7 +406,7 @@ public class KeyReportViewHandler implements Closeable {
 	}
 
 	/**
-	 * Sjekker om dialog skal kjøre dispose
+	 * Sjekker om dialog skal kjï¿½re dispose
 	 * 
 	 * @return true dersom dispose
 	 */

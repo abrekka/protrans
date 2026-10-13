@@ -136,7 +136,7 @@ public class SalesVManagerImpl implements SalesVManager {
 			throws ProTransException {
 		reportMap.clear();
 		LOGGER.debug("getSalesMap");
-		// LOGGER.debug("Produktområde: "+productArea.getProductArea());
+		// LOGGER.debug("Produktomrï¿½de: "+productArea.getProductArea());
 		LOGGER.debug("Periode: " + periode.getFormattetYearFromWeekToWeek());
 		List<SaleReportData> salesDataList = getSaleReportByProductAreaPeriode(productArea, periode);
 		LOGGER.debug("SalesDataList Antall: " + salesDataList.size());
@@ -186,7 +186,7 @@ public class SalesVManagerImpl implements SalesVManager {
 		if (periode.getYear() == currentYear
 				&& ((periode.getWeek() == currentWeek && periode.getToWeek() != currentWeek)
 						|| (periode.getWeek() != currentWeek && periode.getToWeek() == currentWeek))) {
-			throw new ProTransException("Salgsdata for gjeldende uke må genereres for seg selv");
+			throw new ProTransException("Salgsdata for gjeldende uke mÃ¥ genereres for seg selv");
 		}
 	}
 
@@ -257,7 +257,7 @@ public class SalesVManagerImpl implements SalesVManager {
 	private void generateForEachReportType(Periode periode, ProductArea productArea,
 			Map<String, SalesmanGoal> salesmanGoals, PeriodeEnum periodeEnum) throws ProTransException {
 		for (SalesReportType reportType : SalesReportType.getSalesGoalReportTypes()) {
-			// første uka i året
+			// fï¿½rste uka i ï¿½ret
 			if (periode.getToWeek() == 0) {
 				setAccumulatedLikeWeek(salesmanGoals);
 			} else {

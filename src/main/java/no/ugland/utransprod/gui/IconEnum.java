@@ -54,7 +54,7 @@ public enum IconEnum {
 	ICON_EXCEL("images/excel.jpeg"),
 
 	/**
-	 * Søk
+	 * Sï¿½k
 	 */
 	ICON_SEARCH("images/search.png"),
 
@@ -68,7 +68,7 @@ public enum IconEnum {
 	// ICON_UGLAND_GRIMSTAD_GARASJENE("images/GRIMSTAD_GARASJENE_logo.jpg"),
 	// ICON_GRIMSTAD_INDUSTRIER("images/GRIMSTAD_INDUSTRIER_logo.jpg"),
 	/**
-	 * Ikon som brukes på dialoger
+	 * Ikon som brukes pï¿½ dialoger
 	 */
 	// ICON_UGLAND("images/ugland.png"),
 	ICON_UGLAND("images/G.png"),
@@ -102,7 +102,9 @@ public enum IconEnum {
 	ICON_UGLAND_TAKSTOL_BYGGELEMENT("images/takstol_byggelement.jpg"), ICON_UTSTIKKTYPE_1("images/Utstikktype1.jpg"),
 	ICON_UTSTIKKTYPE_2("images/Utstikktype2.jpg"), ICON_UTSTIKKTYPE_3("images/Utstikktype3.jpg"),
 	ICON_UTSTIKKTYPE_4("images/Utstikktype4.jpg"), ICON_JATAK("images/Jatak.JPG"),
-	ICON_IGLAND("images/igland_garasjen.png"), ICON_IGLAND_SE("images/igland_garagen_se.png");
+//	ICON_IGLAND("images/igland_garasjen.png"), 
+	ICON_IGLAND("images/IG 2025 stor.bmp"),
+	ICON_IGLAND_SE("images/igland_garagen_se.png");
 
 	/**
 	 * Ikon
@@ -110,7 +112,7 @@ public enum IconEnum {
 	String iconPath;
 
 	/**
-	 * Kosntruktør
+	 * Kosntruktï¿½r
 	 * 
 	 * @param aIconPath
 	 */

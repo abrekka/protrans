@@ -24,7 +24,7 @@ import no.ugland.utransprod.gui.model.TransportModel;
 import no.ugland.utransprod.model.Transport;
 
 /**
- * Klasse som håndterer visning av transportuke.
+ * Klasse som hï¿½ndterer visning av transportuke.
  * 
  * @author atle.brekka
  */
@@ -137,7 +137,7 @@ public class TransportView {
 	builder.add(textFieldLoadTime, cc.xy(18, 1));
 	builder.addLabel("Firma:", cc.xyw(1, 3, 3));
 	builder.add(comboBoxSupplier, cc.xyw(4, 3, 3));
-	builder.addLabel("Sjåfør:", cc.xy(10, 3));
+	builder.addLabel("SjÃ¥fÃ¸r:", cc.xy(10, 3));
 	builder.add(comboBoxEmployee, cc.xyw(12, 3, 3));
 	builder.addLabel("Tralle:", cc.xy(16, 3));
 	builder.add(textFieldTrolley, cc.xy(18, 3));
