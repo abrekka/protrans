@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+
+<class name="no.ugland.utransprod.model.DokumentV" table="DOKUMENT_V">
+<id name="documentId" type="java.lang.Integer" column="DOCUMENT_ID">
+        <generator class="assigned"/>
+        </id>
+	<property
+        name="projectNumber"
+        type="java.lang.String"
+        column="PROJECT_NUMBER"
+        length="32"
+    />
+    <property
+        name="projectname"
+        type="java.lang.String"
+        column="PROJECTNAME"
+        length="32"
+    />
+    <property
+        name="type"
+        type="java.lang.String"
+        column="TYPE"
+        length="32"
+    />
+	<property
+        name="header"
+        type="java.lang.String"
+        column="HEADER"
+        length="100"
+    />
+	<property
+        name="registered"
+        type="java.util.Date"
+        column="REGISTERED"
+        length="32"
+    />
+</class>
+</hibernate-mapping>

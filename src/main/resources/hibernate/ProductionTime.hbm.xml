@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping default-lazy="false">
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="no.ugland.utransprod.model.ProductionTime" 
+    table="PRODUCTION_TIME"
+>
+<id name="productionTimeId" type="java.lang.Integer" column="PRODUCTION_TIME_ID">
+        <generator class="identity"/>
+        </id>
+
+    
+
+	<property
+        name="orderNr"
+        type="java.lang.String"
+        column="ORDER_NR"
+        length="50"
+    />
+    <property
+        name="productionname"
+        type="java.lang.String"
+        column="PRODUCTIONNAME"
+        length="255"
+    />
+    <property
+        name="username"
+        type="java.lang.String"
+        column="USERNAME"
+        length="255"
+    />
+    <property
+        name="created"
+        type="java.util.Date"
+        column="CREATED"
+        length="32"
+    />
+    <property
+        name="updated"
+        type="java.util.Date"
+        column="UPDATED"
+        length="32"
+    />
+    <property
+        name="started"
+        type="java.util.Date"
+        column="STARTED"
+        length="32"
+    />
+    <property
+        name="stopped"
+        type="java.util.Date"
+        column="STOPPED"
+        length="32"
+    />
+    <property
+        name="overtime"
+        type="java.lang.Integer"
+        column="OVERTIME"
+        length="32"
+    />
+  
+
+</class>
+</hibernate-mapping>

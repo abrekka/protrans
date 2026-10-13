@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping default-lazy="false">
+<class name="no.ugland.utransprod.model.Produksjonskapasitet" table="Produksjonskapasitet">
+<id name="id" type="java.lang.Integer" column="ID">
+        <generator class="identity"/>
+        </id>
+    <property
+        name="aar"
+        type="java.lang.Integer"
+        column="AAR"
+        length="32"
+    />
+    <property
+        name="uke"
+        type="java.lang.Integer"
+        column="UKE"
+        length="32"
+    />
+    
+    <property
+        name="avdeling"
+        type="java.lang.String"
+        column="AVDELING"
+        length="50"
+    />
+    <property
+        name="navn"
+        type="java.lang.String"
+        column="NAVN"
+        length="250"
+    />
+    <property
+        name="timer"
+        type="java.math.BigDecimal"
+        column="TIMER"
+        length="32"
+    />
+<property
+        name="service"
+        type="java.math.BigDecimal"
+        column="SERVICE"
+        length="32"
+    />
+    <property
+        name="innarbeiding"
+        type="java.math.BigDecimal"
+        column="INNARBEIDING"
+        length="32"
+    />
+    <property
+        name="avspasering"
+        type="java.math.BigDecimal"
+        column="AVSPASERING"
+        length="32"
+    />
+    <property
+        name="lager"
+        type="java.math.BigDecimal"
+        column="LAGER"
+        length="32"
+    />
+    <property
+        name="annet"
+        type="java.math.BigDecimal"
+        column="ANNET"
+        length="32"
+    />
+    <property
+        name="hms"
+        type="java.math.BigDecimal"
+        column="HMS"
+        length="32"
+    />
+    <property
+        name="estimert"
+        type="java.math.BigDecimal"
+        column="ESTIMERT"
+        length="32"
+    />
+    <property
+        name="prodinternt"
+        type="java.math.BigDecimal"
+        column="PRODINTERNT"
+        length="32"
+    />
+    <property
+        name="prodestimert"
+        type="java.math.BigDecimal"
+        column="PRODESTIMERT"
+        length="32"
+    />
+    <property
+        name="kommentar"
+        type="java.lang.String"
+        column="KOMMENTAR"
+        length="250"
+    />
+
+</class>
+</hibernate-mapping>
