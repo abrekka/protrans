@@ -1,5 +1,6 @@
 package no.ugland.utransprod.util;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.save.JRPdfSaveContributor;
@@ -71,25 +73,27 @@ public class PdfUtil {
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("kundenavn", kundenavn);
 			parameters.put("ordrenummer", ordrenummer);
-//			InputStream iconStream = PdfUtil.class.getClassLoader().getResourceAsStream("images/montering_forside.jpg");
-//			parameters.put("bakgrunn", iconStream);
+			InputStream iconStream = PdfUtil.class.getClassLoader().getResourceAsStream("images/montering_forside.jpg");
+			parameters.put("bakgrunn", iconStream);
 
-//			InputStream stream = PdfUtil.class.getClassLoader().getResourceAsStream("reports/montering_forside.jasper");
+			InputStream stream = PdfUtil.class.getClassLoader().getResourceAsStream("reports/montering_forside.jasper");
 //
-//			if (stream == null) {
-//				throw new ProTransException("Fant ikke rapport");
-//			}
+			if (stream == null) {
+				throw new ProTransException("Fant ikke rapport");
+			}
 
-//			String excelDirectory = ApplicationParamUtil.findParamByName("excel_path");
-//			JasperPrint jasperPrintReport;
+			JasperPrint jasperPrintReport;
 //
-//			jasperPrintReport = JasperFillManager.fillReport(stream, parameters);
+			jasperPrintReport = JasperFillManager.fillReport(stream, parameters);
+			
+			InputStream forside = new ByteArrayInputStream(JasperExportManager.exportReportToPdf(jasperPrintReport));
 //
 //			JRPdfSaveContributor pdfSaveContrib = new JRPdfSaveContributor(null, null);
 //			pdfSaveContrib.save(jasperPrintReport, new File(path + "/forside_" + ordrenummer + ".pdf"));
 //
 			PDFMergerUtility merger = new PDFMergerUtility();
 //			merger.addSource(new File(path + "/forside_" + ordrenummer + ".pdf"));
+			merger.addSource(forside);
 
 			for (String fil : filer) {
 				merger.addSource(fil);
@@ -102,6 +106,8 @@ public class PdfUtil {
 		} catch (FileNotFoundException e) {
 			throw new ProTransException(e);
 		} catch (IOException e) {
+			throw new ProTransException(e);
+		} catch (JRException e) {
 			throw new ProTransException(e);
 		}
 	}
